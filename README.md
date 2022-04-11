@@ -1,8 +1,5 @@
 ### init git submodules
 git submodule init && git submodule update
 
-### tufa_client up to date
-git submodule init && git submodule update
-
-### tufa_server up to date
-git submodule init && git submodule update
+### submodules up to date
+cd tufa_client && git checkout main && cd tufa_server && git checkout main && cd ..
