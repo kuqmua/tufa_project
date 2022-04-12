@@ -1,21 +1,8 @@
-### just init
+### init submodules
 git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..
-
-### init git submodules
-git submodule init && git submodule update
-
-### submodules up to date
-cd tufa_client && git checkout main && cd tufa_server && git checkout main && cd ..
 
 <table style="width:200px">
    <thead>
-      <tr>
-      init submodules
-         <!-- <th></th> -->
-      </tr>
-      <!-- <tr>
-         <th>git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..</th>
-      </tr> -->
       <tr>
          <th>tufa_client</th>
          <th>tufa_server</th>
