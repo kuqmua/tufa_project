@@ -18,26 +18,26 @@ cd tufa_client && git checkout main && cd tufa_server && git checkout main && cd
       <tr>
          <td>example git submodule</td>
          <td>example git submodule</td>
-         <td></td>
-         <td>up databases</td>
-         <td></td>
-         <td>run postgres migrations</td>
       </tr>
       <tr>
          <td>git submodule add https://github.com/kuqmua/tufa_client.git</td>
          <td>git submodule add https://github.com/kuqmua/tufa_server.git</td>
-         <td></td>
-         <td>cd tufa_server && sudo docker-compose up -d && cd ..</td>
-         <td></td>
-         <td>cd tufa_server && sqlx migrate run && cd ..</td>
       </tr>
       <tr>
-         <td>ddf</td>
-         <td>f</td>
-         <td>f</td>
-         <td>f</td>
-         <td>f</td>
-         <td>f</td>
+         <td>empty</td>
+         <td>up databases</td>
+      </tr>
+      <tr>
+         <td>empty</td>
+         <td>cd tufa_server && sudo docker-compose up -d && cd ..</td>
+      </tr>
+      <tr>
+         <td>empty</td>
+         <td>run postgres migrations</td>
+      </tr>
+      <tr>
+         <td>empty</td>
+         <td>cd tufa_server && sqlx migrate run && cd ..</td>
       </tr>
    </tbody>
 </table>
