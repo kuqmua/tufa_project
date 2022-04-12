@@ -39,6 +39,6 @@ git submodule add https://github.com/kuqmua/tufa_server.git
    </tbody>
 </table>
 
-| <div style="width:290px">property</div> | description                           |
+| <div style="width:990px">property</div> | description                           |
 | --------------------------------------- | ------------------------------------- |
 | `border-bottom-right-radius`            | Defines the shape of the bottom-right |
