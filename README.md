@@ -20,25 +20,19 @@ git submodule add https://github.com/kuqmua/tufa_server.git
 <table style="width:200px">
    <thead>
       <tr>
-         <th>Header1</th>
-         <th>Header2</th>
-         <th>Header3</th>
+         <th>tufa_client</th>
+         <th>tufa_server</th>
       </tr>
    </thead>
    <tbody>
       <tr>
-         <td>data1</td>
-         <td>data2</td>
-         <td>data3</td>
+         <td>something</td>
+         <td>something description</td>
       </tr>
       <tr>
-         <td>data11</td>
-         <td>data12</td>
-         <td>data13</td>
+         <td>
+         ### just init
+         git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..</td>
       </tr>
    </tbody>
 </table>
-
-| <div style="width:990px">property</div> | <div style="width:990px">somethfgnffjfg</div>|
-| --------------------------------------- | ------------------------------------- |
-| `border-bottom-right-radius`            | Defines the shape of the bottom-right |
