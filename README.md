@@ -27,10 +27,10 @@ git submodule add https://github.com/kuqmua/tufa_server.git
    <tbody>
       <tr>
          <td>git submodule add</td>
-         <td>https://github.com/kuqmua/tufa_client.git</td>
+         <td>git submodule add</td>
       </tr>
       <tr>
-         <td>git submodule add</td>
+         <td>https://github.com/kuqmua/tufa_client.git</td>
          <td>https://github.com/kuqmua/tufa_server.git</td>
       </tr>
    </tbody>
