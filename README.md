@@ -31,5 +31,13 @@ cd tufa_client && git checkout main && cd tufa_server && git checkout main && cd
          <td></td>
          <td>cd tufa_server && sqlx migrate run && cd ..</td>
       </tr>
+      <tr>
+         <td>ddf</td>
+         <td>f</td>
+         <td>f</td>
+         <td>f</td>
+         <td>f</td>
+         <td>f</td>
+      </tr>
    </tbody>
 </table>
