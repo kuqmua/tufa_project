@@ -26,13 +26,12 @@ git submodule add https://github.com/kuqmua/tufa_server.git
    </thead>
    <tbody>
       <tr>
-         <td>something</td>
-         <td>something description</td>
+         <td>git submodule add</td>
+         <td>https://github.com/kuqmua/tufa_client.git</td>
       </tr>
       <tr>
-         <td>
-         ### just init
-         git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..</td>
+         <td>git submodule add</td>
+         <td>https://github.com/kuqmua/tufa_server.git</td>
       </tr>
    </tbody>
 </table>
