@@ -67,8 +67,6 @@ cd tufa_server && sqlx migrate run && cd ..
 </tbody>
 </table>
 
-### ffffffffffffffffffffffffff
-
 <table style="width:200px">
 <thead>
 <tr>
@@ -96,6 +94,33 @@ git submodule add https://github.com/kuqmua/tufa_client.git
    
 ```
 git submodule add https://github.com/kuqmua/tufa_server.git
+```
+</td>
+</tr>
+////////
+<tr>
+<td>empty</td>
+<td>up databases</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>
+   
+```
+cd tufa_server && sudo docker-compose up -d && cd ..
+```
+</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>run postgres migrations</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>
+   
+```  
+cd tufa_server && sqlx migrate run && cd ..
 ```
 </td>
 </tr>
