@@ -35,8 +35,9 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
          <td>example git submodule</td>
          <td>
          ```
-            git submodule add https://github.com/kuqmua/tufa_client.git</td>
+            git submodule add https://github.com/kuqmua/tufa_client.git
          ```
+         </td>
       </tr>
       <tr>
          <td>up databases</td>
