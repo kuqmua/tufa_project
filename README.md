@@ -11,7 +11,8 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
    </thead>
    <tbody>
 <tr>
-<td>    
+<td>  
+   
 ```
 git submodule add https://github.com/kuqmua/tufa_server.git
 ```
@@ -32,8 +33,9 @@ git submodule add https://github.com/kuqmua/tufa_server.git
       <tr>
          <td>example git submodule</td>
          <td>
+            
          ```
-            git submodule add https://github.com/kuqmua/tufa_server.git
+         git submodule add https://github.com/kuqmua/tufa_server.git
          ```
          </td>
       </tr>
@@ -52,24 +54,27 @@ git submodule add https://github.com/kuqmua/tufa_server.git
       <tr>
          <td>example git submodule</td>
          <td>
+            
          ```
-            git submodule add https://github.com/kuqmua/tufa_client.git
+         git submodule add https://github.com/kuqmua/tufa_client.git
          ```
          </td>
       </tr>
       <tr>
          <td>up databases</td>
          <td>
+            
          ```
-            cd tufa_server && sudo docker-compose up -d && cd ..
+         cd tufa_server && sudo docker-compose up -d && cd ..
          ```
          </td>
       </tr>
       <tr>
          <td>run postgres migrations</td>
          <td>
+            
          ```  
-            cd tufa_server && sqlx migrate run && cd ..
+         cd tufa_server && sqlx migrate run && cd ..
          ```
          </td>
       </tr>
