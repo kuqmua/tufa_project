@@ -14,7 +14,6 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
          <td>    
 
 ```json
-json
 {
     "example_git_submodule": "git submodule add https://github.com/kuqmua/tufa_server.git",
 }
@@ -23,6 +22,7 @@ json
          </td>
       </tr>
    </tbody>
+</table>
    
 ### tufa_client
 <table style="width:200px">
