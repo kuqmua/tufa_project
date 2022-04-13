@@ -10,8 +10,8 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
       </tr>
    </thead>
    <tbody>
-      <tr>
-         <td>    
+<tr>
+<td>    
 
 ```json
 {
@@ -19,9 +19,9 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
 }
 ```
 
-         </td>
-      </tr>
-   </tbody>
+</td>
+</tr>
+</tbody>
 </table>
    
 ### tufa_client
