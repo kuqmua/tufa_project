@@ -4,12 +4,12 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
 ```
 
 <table style="width:200px">
-   <thead>
-      <tr>
-         <th>tufa_client</th>
-      </tr>
-   </thead>
-   <tbody>
+<thead>
+<tr>
+<th>tufa_client</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td>  
    
