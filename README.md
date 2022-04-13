@@ -4,7 +4,7 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
 ```
    
 ### tufa_client
-<table style="width:200px">
+<table style="color:green;font-weight:700;font-size:20px">
 <thead>
 <tr>
 <th>description</th>
