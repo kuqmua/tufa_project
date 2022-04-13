@@ -1,5 +1,7 @@
 ### init submodules
-```git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..```
+```
+git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..
+```
 
 <table style="width:200px">
    <thead>
