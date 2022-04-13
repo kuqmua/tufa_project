@@ -97,7 +97,6 @@ git submodule add https://github.com/kuqmua/tufa_server.git
 ```
 </td>
 </tr>
-////////
 <tr>
 <td>empty</td>
 <td>up databases</td>
