@@ -15,7 +15,6 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
 
 ```
 git submodule add https://github.com/kuqmua/tufa_server.git
-
 ```
 </td>
 </tr>
