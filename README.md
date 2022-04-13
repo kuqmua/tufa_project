@@ -17,10 +17,6 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
 </thead>
 <tbody>
 <tr>
-<td>description</td>
-<td>commands</td>
-</tr>
-<tr>
 <td>example git submodule</td>
 <td>  
    
@@ -41,10 +37,6 @@ git submodule add https://github.com/kuqmua/tufa_client.git
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>description</td>
-<td>commands</td>
-</tr>
 <tr>
 <td>example git submodule</td>
 <td>
@@ -85,6 +77,10 @@ cd tufa_server && sqlx migrate run && cd ..
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>description</td>
+<td>commands</td>
+</tr>
 <tr>
 <td>example git submodule</td>
 <td>example git submodule</td>
