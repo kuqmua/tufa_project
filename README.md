@@ -65,4 +65,32 @@ cd tufa_server && sqlx migrate run && cd ..
 
 ### ffffffffffffffffffffffffff
 
+<table style="width:200px">
+<thead>
+<tr>
+<th>tufa_client</th>
+<th>tufa-server</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>example git submodule</td>
+<td>example git submodule</td>
+</tr>
+<tr>
+<td>
+   
+```
+git submodule add https://github.com/kuqmua/tufa_client.git
+```
+</td>
+<td>
+   
+```
+git submodule add https://github.com/kuqmua/tufa_server.git
+```
+</td>
+</tr>
+</tbody>
+</table>
 
