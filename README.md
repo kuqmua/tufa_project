@@ -82,12 +82,4 @@ json
 
 </td>
 </tr>
-<tr>
-<td> 400 </td>
-<td>
-
-**Markdown** _here_. (Blank lines needed before and after!)
-
-</td>
-</tr>
 </table>
