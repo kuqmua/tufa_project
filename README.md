@@ -23,23 +23,23 @@ git submodule add https://github.com/kuqmua/tufa_server.git
    
 ### tufa_client
 <table style="width:200px">
-   <thead>
-      <tr>
-         <th>description</th>
-         <th>command</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>example git submodule</td>
-         <td>
-            
-         ```
-         git submodule add https://github.com/kuqmua/tufa_server.git
-         ```
-         </td>
-      </tr>
-   </tbody>
+<thead>
+<tr>
+<th>description</th>
+<th>command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>example git submodule</td>
+<td>  
+   
+```
+git submodule add https://github.com/kuqmua/tufa_server.git
+```
+</td>
+</tr>
+</tbody>
 </table>
 
 ### tufa_server
