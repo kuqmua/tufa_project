@@ -3,8 +3,12 @@
 git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..
 ```
    
+<span style="color:green;font-weight:700;font-size:20px">
+    markdown color font styles
+</span>
+
 ### tufa_client
-<table style="color:green;font-weight:700;font-size:20px">
+<table>
 <thead>
 <tr>
 <th>description</th>
