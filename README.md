@@ -2,24 +2,6 @@
 ```
 git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..
 ```
-
-<table style="width:200px">
-<thead>
-<tr>
-<th>tufa_client</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>  
-   
-```
-git submodule add https://github.com/kuqmua/tufa_server.git
-```
-</td>
-</tr>
-</tbody>
-</table>
    
 ### tufa_client
 <table style="width:200px">
