@@ -13,7 +13,7 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
 <tr>
 <td>    
 
-```json
+```
 git submodule add https://github.com/kuqmua/tufa_server.git
 
 ```
