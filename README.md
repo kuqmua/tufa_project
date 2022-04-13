@@ -1,5 +1,5 @@
 ### init submodules
-git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..
+```git submodule init && git submodule update && cd tufa_client && git checkout main && cd .. && cd tufa_server && git checkout main && cd ..```
 
 <table style="width:200px">
    <thead>
@@ -14,7 +14,7 @@ git submodule init && git submodule update && cd tufa_client && git checkout mai
          <td>example git submodule</td>
       </tr>
       <tr>
-         <td>```git submodule add https://github.com/kuqmua/tufa_client.git```</td>
+         <td>git submodule add https://github.com/kuqmua/tufa_client.git```</td>
          <td>git submodule add https://github.com/kuqmua/tufa_server.git</td>
       </tr>
       <tr>
