@@ -1,6 +1,7 @@
 [workspace]
+default-members = ["tufa_server"]
 members = [
   "tufa_client",
   "tufa_common",
-  "tufa_server"
+  "tufa_server",
 ]
