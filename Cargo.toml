@@ -1,1 +1,5 @@
-
+[workspace]
+members = [
+  "tufa_client",
+  "tufa_server"
+]
