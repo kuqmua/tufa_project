@@ -2,6 +2,9 @@
 [submodule "tufa_client"]
 	path = tufa_client
 	url = https://github.com/kuqmua/tufa_client.git
+[submodule "tufa_common"]
+	path = tufa_common
+	url = git@github.com:kuqmua/tufa_common.git
 [submodule "tufa_server"]
 	path = tufa_server
 	url = https://github.com/kuqmua/tufa_server.git
