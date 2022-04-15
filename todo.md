@@ -6,3 +6,7 @@ https://github.com/saschagrunert/webapp.rs
 Cargo nexttest run
 https://nexte.st/
 <br/>
+
+Share cache between workspaces
+https://github.com/mozilla/sccache
+<br/>
