@@ -7,6 +7,11 @@ Cargo nexttest run
 https://nexte.st/
 <br/>
 
-Share cache between workspaces
+share cache between workspaces
 https://github.com/mozilla/sccache
+<br/>
+
+.md file to html converter
+https://dillinger.io/
+use this inside /api/info
 <br/>
