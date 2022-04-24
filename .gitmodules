@@ -17,3 +17,6 @@
 [submodule "proc_macros/enum_extention"]
 	path = proc_macros/enum_extention
 	url = git@github.com:kuqmua/enum_extention.git
+[submodule "proc_macros/error_display"]
+	path = proc_macros/error_display
+	url = git@github.com:kuqmua/error_display.git
