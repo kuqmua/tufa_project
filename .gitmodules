@@ -11,3 +11,6 @@
 [submodule "tufa_telegram_bot"]
 	path = tufa_telegram_bot
 	url = git@github.com:kuqmua/tufa_telegram_bot.git
+[submodule "tufa_proc_macros"]
+	path = tufa_proc_macros
+	url = git@github.com:kuqmua/tufa_proc_macros.git
