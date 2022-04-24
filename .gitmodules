@@ -26,3 +26,6 @@
 [submodule "proc_macros/gen_enum_without_values"]
 	path = proc_macros/gen_enum_without_values
 	url = git@github.com:kuqmua/gen_enum_without_values.git
+[submodule "proc_macros/git_info"]
+	path = proc_macros/git_info
+	url = git@github.com:kuqmua/git_info.git
