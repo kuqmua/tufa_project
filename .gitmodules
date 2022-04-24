@@ -32,3 +32,6 @@
 [submodule "proc_macros/impl_display"]
 	path = proc_macros/impl_display
 	url = git@github.com:kuqmua/impl_display.git
+[submodule "proc_macros/impl_from_for_upper_struct"]
+	path = proc_macros/impl_from_for_upper_struct
+	url = git@github.com:kuqmua/impl_from_for_upper_struct.git
