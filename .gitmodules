@@ -11,3 +11,6 @@
 [submodule "tufa_telegram_bot"]
 	path = tufa_telegram_bot
 	url = git@github.com:kuqmua/tufa_telegram_bot.git
+[submodule "proc_macros/box_err_from_err"]
+	path = proc_macros/box_err_from_err
+	url = git@github.com:kuqmua/box_err_from_err.git
