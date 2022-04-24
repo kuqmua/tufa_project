@@ -20,3 +20,6 @@
 [submodule "proc_macros/error_display"]
 	path = proc_macros/error_display
 	url = git@github.com:kuqmua/error_display.git
+[submodule "proc_macros/gen_enum"]
+	path = proc_macros/gen_enum
+	url = git@github.com:kuqmua/gen_enum.git
