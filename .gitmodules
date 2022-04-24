@@ -14,3 +14,6 @@
 [submodule "proc_macros/box_err_from_err"]
 	path = proc_macros/box_err_from_err
 	url = git@github.com:kuqmua/box_err_from_err.git
+[submodule "proc_macros/enum_extention"]
+	path = proc_macros/enum_extention
+	url = git@github.com:kuqmua/enum_extention.git
