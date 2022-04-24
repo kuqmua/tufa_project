@@ -8,3 +8,6 @@
 [submodule "tufa_server"]
 	path = tufa_server
 	url = https://github.com/kuqmua/tufa_server.git
+[submodule "tufa_telegram_bot"]
+	path = tufa_telegram_bot
+	url = git@github.com:kuqmua/tufa_telegram_bot.git
