@@ -4,40 +4,40 @@
 	url = https://github.com/kuqmua/tufa_client.git
 [submodule "tufa_common"]
 	path = tufa_common
-	url = git@github.com:kuqmua/tufa_common.git
+	url = https://github.com/kuqmua/tufa_common.git
 [submodule "tufa_server"]
 	path = tufa_server
 	url = https://github.com/kuqmua/tufa_server.git
 [submodule "tufa_telegram_bot"]
 	path = tufa_telegram_bot
-	url = git@github.com:kuqmua/tufa_telegram_bot.git
+	url = https://github.com/kuqmua/tufa_telegram_bot.git
 [submodule "proc_macros/box_err_from_err"]
 	path = proc_macros/box_err_from_err
-	url = git@github.com:kuqmua/box_err_from_err.git
+	url = https://github.com/kuqmua/box_err_from_err.git
 [submodule "proc_macros/enum_extention"]
 	path = proc_macros/enum_extention
-	url = git@github.com:kuqmua/enum_extention.git
+	url = https://github.com/kuqmua/enum_extention.git
 [submodule "proc_macros/error_display"]
 	path = proc_macros/error_display
-	url = git@github.com:kuqmua/error_display.git
+	url = https://github.com/kuqmua/error_display.git
 [submodule "proc_macros/gen_enum"]
 	path = proc_macros/gen_enum
-	url = git@github.com:kuqmua/gen_enum.git
+	url = https://github.com/kuqmua/gen_enum.git
 [submodule "proc_macros/gen_enum_without_values"]
 	path = proc_macros/gen_enum_without_values
-	url = git@github.com:kuqmua/gen_enum_without_values.git
+	url = https://github.com/kuqmua/gen_enum_without_values.git
 [submodule "proc_macros/git_info"]
 	path = proc_macros/git_info
-	url = git@github.com:kuqmua/git_info.git
+	url = https://github.com/kuqmua/git_info.git
 [submodule "proc_macros/impl_display"]
 	path = proc_macros/impl_display
-	url = git@github.com:kuqmua/impl_display.git
+	url = https://github.com/kuqmua/impl_display.git
 [submodule "proc_macros/impl_from_for_upper_struct"]
 	path = proc_macros/impl_from_for_upper_struct
-	url = git@github.com:kuqmua/impl_from_for_upper_struct.git
+	url = https://github.com/kuqmua/impl_from_for_upper_struct.git
 [submodule "proc_macros/init_from_env"]
 	path = proc_macros/init_from_env
-	url = git@github.com:kuqmua/init_from_env.git
+	url = https://github.com/kuqmua/init_from_env.git
 [submodule "proc_macros/provider_kind_from_config"]
 	path = proc_macros/provider_kind_from_config
-	url = git@github.com:kuqmua/provider_kind_from_config.git
+	url = https://github.com/kuqmua/provider_kind_from_config.git
