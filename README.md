@@ -35,3 +35,7 @@ cd tufa_server && sudo docker-compose up -d && cd ..
 ```  
 cd tufa_server && sqlx migrate run && cd ..
 ```
+### repo tracker example
+```
+https://github-stats.com/kuqmua/tufa_project
+```
