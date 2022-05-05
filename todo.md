@@ -25,3 +25,7 @@ maybe write proc macro?
 OR MAYBE USE HTML FROM CARGO DOC?
 mayb use nodemon cargo doc (maybe some params like exclude)
 <br/>
+
+another rust web dev book
+https://www.manning.com/books/rust-web-development
+<br/>
