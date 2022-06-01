@@ -20,4 +20,6 @@ OR MAYBE USE HTML FROM CARGO DOC? <br/>
 mayb use nodemon cargo doc (maybe some params like exclude) <br/>
 * another rust web dev book <br/>
 https://www.manning.com/books/rust-web-development <br/>
-*find out how to restrict user(or something) in postgres to not have foreign key creation possibility to the choosen by you table
+* find out how to restrict user(or something) in postgres <br/>
+to not have foreign key creation possibility to the choosen by you table <br/>
+queries to the choosen table too <br/>
