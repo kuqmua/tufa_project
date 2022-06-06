@@ -44,3 +44,5 @@ fn main() {
 }
 ```
 * for loop into iterators?
+* wasm server components <br/>
+https://spin.fermyon.dev/
