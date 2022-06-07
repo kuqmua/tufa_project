@@ -43,3 +43,6 @@
 [submodule "tufa_grpc_client"]
 	path = tufa_grpc_client
 	url = https://github.com/kuqmua/tufa_grpc_client.git
+[submodule "tufa_grpc_server"]
+	path = tufa_grpc_server
+	url = https://github.com/kuqmua/tufa_grpc_server.git
