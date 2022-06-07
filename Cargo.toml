@@ -8,10 +8,12 @@ members = [
   "proc_macros/git_info",
   "proc_macros/impl_display",
   "proc_macros/impl_from_for_upper_struct",
-  "proc_macros/init_from_env", 
+  "proc_macros/init_from_env",
   "proc_macros/provider_kind_from_config",
   "tufa_client",
   "tufa_common",
   "tufa_server",
   "tufa_telegram_bot",
+  "tufa_grpc_client",
+  "tufa_grpc_server",
 ]
