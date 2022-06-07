@@ -18,6 +18,10 @@ cd proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd ..
 cd proc_macros/init_from_env && git checkout main && cd .. && cd .. &&
 cd proc_macros/provider_kind_from_config && git checkout main && cd .. && cd ..
 ```
+### install cmake for grpc
+```
+sudo apt install cmake
+```
 ### build submodules dependency cache
 ```
 cargo build
