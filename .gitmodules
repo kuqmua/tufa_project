@@ -40,3 +40,6 @@
 [submodule "proc_macros/provider_kind_from_config"]
 	path = proc_macros/provider_kind_from_config
 	url = https://github.com/kuqmua/provider_kind_from_config.git
+[submodule "tufa_grpc_client"]
+	path = tufa_grpc_client
+	url = https://github.com/kuqmua/tufa_grpc_client.git
