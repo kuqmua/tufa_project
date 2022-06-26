@@ -46,3 +46,6 @@
 [submodule "tufa_grpc_server"]
 	path = tufa_grpc_server
 	url = https://github.com/kuqmua/tufa_grpc_server.git
+[submodule "proc_macros/svg_component"]
+	path = proc_macros/svg_component
+	url = https://github.com/kuqmua/svg_component.git
