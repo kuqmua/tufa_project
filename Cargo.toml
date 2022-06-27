@@ -10,6 +10,7 @@ members = [
   "proc_macros/impl_from_for_upper_struct",
   "proc_macros/init_from_env",
   "proc_macros/provider_kind_from_config",
+  "proc_macros/svg_component",
   "tufa_client",
   "tufa_common",
   "tufa_server",
