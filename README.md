@@ -46,3 +46,7 @@ cd tufa_server && sqlx migrate run && cd ..
 ```
 https://github-stats.com/kuqmua/tufa_project
 ```
+### cargo expand issue (works here only with --lib flag)
+```
+cargo expand your::path::to::module --lib
+```
