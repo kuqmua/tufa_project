@@ -50,7 +50,15 @@ https://spin.fermyon.dev/
 https://youtu.be/eIB3Pd5LBkc
 * require constants inside trait and init them by default
 ```
-trait SomeTrait {
+trait HasNumbers {
   const NUMBERS = [i32; 5];
+  const LAST_NUMBER: i32 = 5;
+}
+
+struct IHaveNumbers {}
+
+impl HasNumbers for IHaveNumbers {
+  const NUMBERS: [i32; 5] = [1, 2, 3, 4, IHaveNumbers::LAST_NUMBER];
 }
 ```
+
