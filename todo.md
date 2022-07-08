@@ -93,6 +93,7 @@ const fn five_numbers() -> [i32; 5] {
   
   // Note that for loops can not (yet) be used in constant functions.
   // So we have to go for a while loop;
+  println!("execute");
   let mut i = 0;
   while i < 5 {
     numbers[i] = i as i32 + 1;
@@ -101,7 +102,10 @@ const fn five_numbers() -> [i32; 5] {
   numbers
 }
 fn main() {
+  //compile time "execute message in console"
   const FIVE_NUMBERS: [i32; 5] = five_numbers();
+  //run time "execute message in console"
+  let five_numbers: [i32; 5] = five_numbers();
 }
 ```
 * const generic functions
