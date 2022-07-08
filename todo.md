@@ -79,3 +79,10 @@ fn main() {
   }
 }
 ```
+* compile time functions as constants
+```
+const _: () = {
+  //some logic in compile time
+  ()
+}
+```
