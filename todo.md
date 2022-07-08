@@ -54,10 +54,13 @@ trait HasNumbers {
   const NUMBERS = [i32; 5];
   const LAST_NUMBER: i32 = 5;
 }
-
 struct IHaveNumbers {}
-
 impl HasNumbers for IHaveNumbers {
+  const NUMBERS: [i32; 5] = [1, 2, 3, 4, IHaveNumbers::LAST_NUMBER];
+}
+struct IHaveOtherNumbers {}
+impl HasNumbers for IHaveOtherNumbers {
+  const LAST_NUMBER: i32 = 6; 
   const NUMBERS: [i32; 5] = [1, 2, 3, 4, IHaveNumbers::LAST_NUMBER];
 }
 ```
