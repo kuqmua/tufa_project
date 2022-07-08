@@ -104,3 +104,19 @@ fn main() {
   const FIVE_NUMBERS: [i32; 5] = five_numbers();
 }
 ```
+* const generic functions
+```
+const fn numbers<const N: usize>() -> [i32; N] {
+  let mut numbers = [0i32; N];
+  let mut i = 0;
+  while i < N {
+    numbers[i] = i as i32 + 1;
+    i += 1;
+  }
+  numbers
+}
+fn main() {
+  const TWO_NUMBERS = five_numbers::<2>();
+  const TEN_NUMBERS: [i32; 10] = five_numbers();
+}
+```
