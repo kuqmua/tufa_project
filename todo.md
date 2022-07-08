@@ -86,3 +86,21 @@ const _: () = {
   ()
 }
 ```
+* another compile time functions as constants
+```
+const fn five_numbers() -> [i32; 5] {
+  let mut numbers = [0i32; 5];
+  
+  // Note that for loops can not (yet) be used in constant functions.
+  // So we have to go for a while loop;
+  let mut i = 0;
+  while i < 5 {
+    numbers[i] = i as i32 + 1;
+    i += 1;
+  }
+  numbers
+}
+fn main() {
+  const FIVE_NUMBERS: [i32; 5] = five_numbers();
+}
+```
