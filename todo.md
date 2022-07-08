@@ -64,4 +64,18 @@ impl HasNumbers for IHaveOtherNumbers {
   const NUMBERS: [i32; 5] = [1, 2, 3, 4, IHaveNumbers::LAST_NUMBER];
 }
 ```
-
+* const destructors
+```
+struct WillSayGoodbye<'a>(&'a str);
+impl<'a> Drop for WillSayGoodbye<'a> {
+  fn drop(&mut self) {
+    println!("{}", self.0);
+  }
+}
+const GOODBYE: WillSayGoodbye = WillSayGoodbye("bye");
+fn main() {
+  {
+    let _goodbye = GOODBYE;
+  }
+}
+```
