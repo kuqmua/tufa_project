@@ -124,3 +124,35 @@ fn main() {
   const TEN_NUMBERS: [i32; 10] = five_numbers();
 }
 ```
+* trait bounds on generic parameters for constant function
+```
+#[derive(Debug, Clone, Copy)]
+struct Customer<'a> {
+  name: &'a str,
+  age: i32,
+}
+
+const CUSTOMER: Customer = Customer {
+  name: "John",
+  age: 42,
+};
+
+const fn nth<T: Copy, const N: usize>(items: [T; N], index: usize) -> T {
+  items[index]
+}
+
+fn main() {
+  const CUSTOMERS: [Customer; 2] = [
+    Customer {
+      name: "John",
+      age: 30,
+    },
+    Customer {
+      name: "Jane",
+      age: 25,
+    },
+  ];
+  const NTH_CUSTOMER: Customer = nth(CUSTOMERS, 1);
+  println!("{:?}", NTH_CUSTOMER);
+}
+```
