@@ -156,3 +156,38 @@ fn main() {
   println!("{:?}", NTH_CUSTOMER);
 }
 ```
+* dynamic dispatching
+```
+trait Animal {
+  fn make_sound<'a>(&self) -> &'a str;
+}
+struct Cat {}
+struct Dog {}
+impl Animal for Cat {
+  fn make_sound<'a>(&self) -> &'a str {
+    "meow"
+  }
+}
+impl Animal for Cat {
+  fn make_sound<'a>(&self) -> &'a str {
+    "woof"
+  }
+}
+const fn favorite_animal() -> Animal {
+  Cat {}
+}
+const fn animal_by_sound<'a>(can_purr: bool) -> &'a dyn Animal {
+  match can_purr {
+    true => &Cat {},
+    false => &Dog {},
+  }
+}
+
+fn main() {
+  const FAVORITE_ANIMAL: &dyn Animal = &favorite_animal();
+  println!("My favorite animal makes {}", FAVORITE_ANIMAL.make_sound());
+  
+  const PURRING_ANIMAL: &dyn Animal = animal_by_sound(true);
+  println!("Animal that can purr say {}", PURRING_ANIMAL.make_sound());
+}
+```
