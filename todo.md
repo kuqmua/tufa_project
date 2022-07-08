@@ -48,3 +48,7 @@ fn main() {
 https://spin.fermyon.dev/
 * benchmarks </br>
 https://youtu.be/eIB3Pd5LBkc
+* require constants inside trait and init them by default
+trait SomeTrait {
+  const NUMBERS = [i32; 5];
+}
