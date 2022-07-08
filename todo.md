@@ -192,3 +192,19 @@ fn main() {
 }
 ```
  * some lazy_static can be replaced with const functions
+ * Mutex now const(on nightly)
+ ```
+use std::sync::Mutex;
+ 
+static ARRAY: Mutex<Vec<u8>> = Mutex::new(vec![]);
+ 
+fn main() {
+  {
+    let mut arr = ARRAY.lock().unwrap();
+    for _ in 0..10 {
+      arr.push(1);
+    }
+  }
+  println!("Called push {} times", ARRAY.lock().unwrap().len());
+}
+ ```
