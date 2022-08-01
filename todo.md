@@ -208,3 +208,4 @@ fn main() {
   println!("Called push {} times", ARRAY.lock().unwrap().len());
 }
  ```
+Wrapper around component or do not use function component also there is a way to use html without html!{} Macro
