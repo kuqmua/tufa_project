@@ -209,3 +209,5 @@ fn main() {
 }
  ```
 Wrapper around component or do not use function component also there is a way to use html without html!{} Macro
+* how to create struct fields from different struct fields (mixin)
+https://crates.io/crates/mixin
