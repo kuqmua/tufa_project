@@ -1,7 +1,7 @@
 [workspace]
 members = [
   "proc_macros/box_err_from_err",
-  "proc_macros/enum_extention",
+  "proc_macros/enum_extension",
   "proc_macros/error_display",
   "proc_macros/gen_enum",
   "proc_macros/gen_enum_without_values",
