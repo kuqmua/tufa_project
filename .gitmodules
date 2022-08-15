@@ -49,3 +49,6 @@
 [submodule "proc_macros/enum_extension"]
 	path = proc_macros/enum_extension
 	url = git@github.com:kuqmua/enum_extension.git
+[submodule "proc_macros/struct_field_getter"]
+	path = proc_macros/struct_field_getter
+	url = git@github.com:kuqmua/struct_field_getter.git
