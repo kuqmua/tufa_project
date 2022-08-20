@@ -58,3 +58,6 @@
 [submodule "proc_macros/init_error_with_tracing"]
 	path = proc_macros/init_error_with_tracing
 	url = git@github.com:kuqmua/init_error_with_tracing.git
+[submodule "proc_macros/init_error"]
+	path = proc_macros/init_error
+	url = git@github.com:kuqmua/init_error.git
