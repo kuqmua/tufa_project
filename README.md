@@ -50,3 +50,4 @@ https://github-stats.com/kuqmua/tufa_project
 ```
 cargo expand your::path::to::module --lib
 ```
+### [all algorithms written in rust](https://github.com/TheAlgorithms/Rust)
