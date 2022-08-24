@@ -82,3 +82,6 @@
 [submodule "proc_macros/impl_get_source_for_original_error_struct"]
 	path = proc_macros/impl_get_source_for_original_error_struct
 	url = git@github.com:kuqmua/impl_get_source_for_original_error_struct.git
+[submodule "proc_macros/impl_get_source_for_parent_error_struct"]
+	path = proc_macros/impl_get_source_for_parent_error_struct
+	url = git@github.com:kuqmua/impl_get_source_for_parent_error_struct.git
