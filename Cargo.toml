@@ -10,7 +10,7 @@ members = [
   "proc_macros/impl_from_for_upper_struct",
   "proc_macros/impl_get_source", # rewmove later
   "proc_macros/impl_get_source_for_simple_error_enum",
-  "proc/macros/impl_get_where_was_for_error_struct",
+  "proc_macros/impl_get_where_was_for_error_struct",
   "proc_macros/impl_display_for_simple_error_enum",
   "proc_macros/init_error",
   "proc_macros/init_error_with_tracing",
