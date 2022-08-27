@@ -211,3 +211,6 @@ fn main() {
 Wrapper around component or do not use function component also there is a way to use html without html!{} Macro
 * how to create struct fields from different struct fields (mixin)
 https://crates.io/crates/mixin
+* cargo install cargo-show-asm
+tool to view asm files in readable format
+[video](https://youtu.be/lRV_5IBUTes) 10minute
