@@ -216,3 +216,4 @@ tool to view asm files in readable format
 [video](https://youtu.be/lRV_5IBUTes) 10minute
 * in docs function/struct/macro description must be maximum words, phrases and symbols what descripe function
 otherwise user may not find it or know about what function doing
+and need to give users possibility to add additional words/phrases to describe it
