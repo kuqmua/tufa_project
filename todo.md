@@ -218,3 +218,4 @@ tool to view asm files in readable format
 otherwise user may not find it or know about what function doing
 and need to give users possibility to add additional words/phrases to describe it
 * tracing throught few microservises with error handlers
+* runtime tests with bot loggin in some messanger
