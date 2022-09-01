@@ -7,7 +7,7 @@ cd tufa_common && git checkout main && cd .. &&
 cd tufa_telegram_bot && git checkout main && cd .. && 
 cd tufa_grpc_client && git checkout main && cd .. && 
 cd tufa_grpc_server && git checkout main && cd .. && 
-cd proc_macros/box_err_from_err && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_box_err_source_from_err && git checkout main && cd .. && cd .. &&
 cd proc_macros/enum_extension && git checkout main && cd .. && cd .. &&
 cd proc_macros/error_display && git checkout main && cd .. && cd .. &&
 cd proc_macros/gen_enum && git checkout main && cd .. && cd .. &&
