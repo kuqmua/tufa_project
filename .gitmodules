@@ -12,7 +12,7 @@
 	url = https://github.com/kuqmua/tufa_telegram_bot.git
 [submodule "proc_macros/impl_box_err_source_from_err"]
 	path = proc_macros/impl_box_err_source_from_err
-	url = https://github.com/kuqmua/impl_box_err_source_from_err.git
+	url = git@github.com:kuqmua/impl_box_err_source_from_err.git
 [submodule "proc_macros/error_display"]
 	path = proc_macros/error_display
 	url = https://github.com/kuqmua/error_display.git
