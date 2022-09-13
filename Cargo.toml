@@ -29,7 +29,6 @@ members = [
   "tufa_common",
   "tufa_server",
   "tufa_telegram_bot",
-  "tufa_traits",
   "tufa_grpc_client",
   "tufa_grpc_server",
 ]

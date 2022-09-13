@@ -94,6 +94,3 @@
 [submodule "proc_macros/impl_error_with_tracing_for_original_error_struct_without_source_enum"]
 	path = proc_macros/impl_error_with_tracing_for_original_error_struct_without_source_enum
 	url = git@github.com:kuqmua/impl_error_with_tracing_for_original_error_struct_without_source_enum.git
-[submodule "tufa_traits"]
-	path = tufa_traits
-	url = git@github.com:kuqmua/tufa_traits.git
