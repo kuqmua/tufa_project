@@ -221,3 +221,4 @@ and need to give users possibility to add additional words/phrases to describe i
 * runtime tests with bot loggin in some messanger
 * try_ prefix if function can return Err or None
 * move traits into own repository to reuse them properly
+* use https://crates.io/crates/serde_yaml to control deps versions and features in different repos
