@@ -2,7 +2,6 @@
 * fix where was for github_file_line_column
 * fix proc macro submodules, rename them
 * fix github_file_line_column logic
-* lazy static constants mod
 
 ### init submodules 
 ```
