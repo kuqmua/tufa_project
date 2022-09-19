@@ -19,7 +19,6 @@ cd proc_macros/impl_get_source_for_parent_error_struct && git checkout main && c
 cd proc_macros/impl_get_source_for_simple_error_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_source_error_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_for_enum && git checkout main && cd .. && cd .. &&
-cd proc_macros/impl_get_where_was_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_display_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_error_with_tracing_for_original_error_struct_without_source_enum && git checkout main && cd .. && cd .. &&
