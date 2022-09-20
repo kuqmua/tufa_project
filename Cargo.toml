@@ -13,6 +13,7 @@ members = [
   "proc_macros/impl_get_source_for_simple_error_enum",
   "proc_macros/impl_get_source_for_source_error_enum",
   "proc_macros/impl_get_where_was_for_enum",
+  "proc_macros/impl_get_where_was_one_or_many_for_enum",
   "proc_macros/impl_get_where_was_one_or_many_one_for_error_struct",
   "proc_macros/impl_display_for_error_struct",
   "proc_macros/impl_display_for_simple_error_enum",
