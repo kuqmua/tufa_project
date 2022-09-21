@@ -2,6 +2,7 @@
 * fix where was for github_file_line_column
 * fix proc macro submodules, rename them
 * fix github_file_line_column logic
+* impl GetWhereWasOneOrMany for structs where source is HashMap or Vec or Enum
 
 ### init submodules 
 ```
