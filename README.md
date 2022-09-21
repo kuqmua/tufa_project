@@ -3,6 +3,7 @@
 * fix proc macro submodules, rename them
 * fix github_file_line_column logic
 * impl GetWhereWasOneOrMany for structs where source is HashMap or Vec or Enum
+* recreate impl_error_with_tracing_for_original_error_struct_without_source_enum and impl_error_with_tracing_for_original_error_struct with different names
 
 ### init submodules 
 ```
