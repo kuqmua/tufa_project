@@ -1,25 +1,26 @@
-#[proc_macro_derive(ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource)]
-pub fn derive_impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source(
+#[proc_macro_derive(ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod)]
+pub fn derive_impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method(
     input: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let ast: syn::DeriveInput = syn::parse(input)
-        .expect("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource syn::parse(input) failed");
+    let ast: syn::DeriveInput = syn::parse(input).expect(
+        "ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod syn::parse(input) failed",
+    );
     let ident = &ast.ident;
     match ast.data {
         syn::Data::Union(_) => {
-            panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work on structs!")
+            panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work on structs!")
         }
         syn::Data::Enum(_) => {
-            panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work on structs!")
+            panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work on structs!")
         }
         syn::Data::Struct(data_struct) => {
             match data_struct.fields {
                 syn::Fields::Named(fields_named) => {
                     match fields_named.named.len() {
                         2 => {
-                            let source_field_ident = fields_named.named[0].ident.clone().expect("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource - there is no first field ident!");
+                            let source_field_ident = fields_named.named[0].ident.clone().expect("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod - there is no first field ident!");
                             if format!("{}", source_field_ident) != *"source" {
-                                panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource - no 'source'-named field found!");
+                                panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod - no 'source'-named field found!");
                             }
                             match fields_named.named[0].ty.clone() {
                                 // syn::Type::Array(type_array) => {},
@@ -91,21 +92,21 @@ pub fn derive_impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_sourc
                                                 gen.into()
                                             }
                                             else {
-                                                panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work on Type::Path!");
+                                                panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work on Type::Path!");
                                             }
                                         }
-                                        _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work with type_path.path.segments.len() == 1!"),
+                                        _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work with type_path.path.segments.len() == 1!"),
                                     }
                                 },
-                                _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work on Type::Path!")
+                                _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work on Type::Path!")
                             }
                         }
-                        _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work on structs with 2 named fields!")
+                        _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work on structs with 2 named fields!")
                     }
                 },
                 // syn::Fields::Unnamed(_) => {},
                 // syn::Fields::Unit(_) => {},
-                _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSource only work with syn::Fields::Named!")
+                _ => panic!("ImplGetWhereWasOneOrManyForStructWithHasmapOrVecSourceWithMethod only work with syn::Fields::Named!")
             }
         }
     }
