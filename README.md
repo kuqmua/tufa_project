@@ -3,6 +3,7 @@
 * fix proc macro submodules, rename them
 * fix github_file_line_column logic
 * make refactoring for module-like implementation (no external dependencies from different modules)
+* write impl_get_source_for_enum_with_method and impl_get_source_for_struct_with_method
 
 ### init submodules 
 ```
