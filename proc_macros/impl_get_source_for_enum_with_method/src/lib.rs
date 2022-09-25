@@ -92,19 +92,30 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                                 formatted.pop();
                                                             }
                                                             format!("[{}]", formatted)
-                                                            // String::from("kke")
-
                                                         }
                                                     }
                                                 }
-                                                // else if segment_ident == *"HashMap" {
-                                                //     quote::quote! {
-                                                        
-                                                //     }
-                                                // }
+                                                else if segment_ident == *"HashMap" {
+                                                    quote::quote! {
+                                                        #ident::#variant_ident(error_hashmap) => {
+                                                            let mut formatted = error_hashmap
+                                                                .iter()
+                                                                .map(|(key, error)| format!("[{} {}],", key, error.get_source()))
+                                                                .fold(String::from(""), |mut acc, elem| {
+                                                                        acc.push_str(&elem);
+                                                                        acc
+                                                                }
+                                                            );
+                                                            if !formatted.is_empty() {
+                                                                formatted.pop();
+                                                            }
+                                                            format!("[{}]", formatted)
+                                                        }
+                                                    }
+                                                }
                                                 else {
                                                     quote::quote! {
-                                                        //
+                                                        #ident::#variant_ident(error) => format!("{}", error.get_source())
                                                     }
                                                 }
                                             },
