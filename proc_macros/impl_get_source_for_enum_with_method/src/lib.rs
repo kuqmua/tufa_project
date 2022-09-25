@@ -16,7 +16,6 @@ pub fn derive_impl_get_source_for_enum_with_method(
                         "ImplGetSourceForEnumWithMethod still not work with syn::Fields::Unit"
                     ),
                     syn::Fields::Named(fields_named) => {
-                        println!("{:#?}", fields_named);
                         let fields_list = fields_named.named.iter().map(|field_named| {
                             let field_ident = &field_named.ident;
                             quote::quote! {
@@ -79,7 +78,7 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                 }
                                                 else if segment_ident.contains("Enum") {
                                                     quote::quote! {
-                                                        let #field_ident = format!("{}", #field_ident.get_source());
+                                                        let #field_ident = #field_ident.get_source();
                                                     }
                                                 }
                                                 else {
@@ -103,7 +102,6 @@ pub fn derive_impl_get_source_for_enum_with_method(
                             fields_bracket_string.pop();
                         }
                         fields_bracket_string = format!("[{}]", fields_bracket_string);
-                        // let fields_bracket_string_ident = syn::Ident::new(&fields_bracket_string, ident.span());
                         let fields_arguments = fields_named.named.iter().map(|field_named| {
                             let field_ident = &field_named.ident;
                             quote::quote! {
@@ -116,7 +114,6 @@ pub fn derive_impl_get_source_for_enum_with_method(
                              } => {
                                 #(#fields_logic)*
                                 format!(#fields_bracket_string, #(#fields_arguments,)*)
-                                // String::from("meh")
                              }
                         }
                     }
@@ -147,7 +144,7 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                         #ident::#variant_ident(error_vec) => {
                                                             let mut formatted = error_vec
                                                                 .iter()
-                                                                .map(|error| format!("{} ,", error.get_source()))
+                                                                .map(|error| error.get_source())
                                                                 .fold(String::from(""), |mut acc, elem| {
                                                                         acc.push_str(&elem);
                                                                         acc
@@ -181,7 +178,7 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                 }
                                                 else {
                                                     quote::quote! {
-                                                        #ident::#variant_ident(error) => format!("{}", error.get_source())
+                                                        #ident::#variant_ident(error) => error.get_source()
                                                     }
                                                 }
                                             },
