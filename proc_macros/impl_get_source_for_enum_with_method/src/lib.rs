@@ -77,10 +77,13 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                             let #field_ident = format!("[{}]", #field_ident);
                                                         }
                                                 }
-                                                else {
+                                                else if segment_ident.contains("Enum") {
                                                     quote::quote! {
                                                         let #field_ident = format!("{}", #field_ident.get_source());
                                                     }
+                                                }
+                                                else {
+                                                    panic!("ImplGetSourceForEnumWithMethod only work on enums with HashMap<Key, StructOrEnumWithGetSourceMethod>, Vec<StructOrEnumWithGetSourceMethod> or EnumWithGetSourceMethod which name contains \"Enum\" keyword!")
                                                 }
                                             },
                                             _ => panic!("ImplGetSourceForEnumWithMethod only work on enums with type_path.segments.len() == 1!")
