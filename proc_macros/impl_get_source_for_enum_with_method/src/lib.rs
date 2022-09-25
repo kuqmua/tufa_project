@@ -16,42 +16,105 @@ pub fn derive_impl_get_source_for_enum_with_method(
                         "ImplGetSourceForEnumWithMethod still not work with syn::Fields::Unit"
                     ),
                     syn::Fields::Named(fields_named) => {
-                        
-                        // let one = fields_named.clone();
-                        // let two = fields_named.clone();
-                        // let mut scopes = one.named.iter().map(|_| String::from("{}\n")).fold(
-                        //     String::from(""),
-                        //     |mut acc, elem| {
-                        //         acc.push_str(&elem);
-                        //         acc
-                        //     },
-                        // );
-                        // if !scopes.is_empty() {
-                        //     scopes.pop();
-                        // }
-                        // let fields_idents = two.named.iter().map(|field| {
-                        //     let field_ident = field
-                        //         .ident
-                        //         .clone()
-                        //         .expect("some of named fields doesnt have ident");
-                        //     quote::quote! { #field_ident }
-                        // });
-                        // let fields_idents_map = fields_named.named.iter().map(|field| {
-                        //     let field_ident = field
-                        //         .ident
-                        //         .clone()
-                        //         .expect("some of named fields doesnt have ident");
-                        //     quote::quote! { #field_ident.get_source() }
-                        // });
+                        println!("{:#?}", fields_named);
+                        let fields_list = fields_named.named.iter().map(|field_named| {
+                            let field_ident = &field_named.ident;
+                            quote::quote! {
+                                #field_ident
+                            }
+                        });
+                        let fields_logic = fields_named.named.iter().map(|field_named| {
+                            let field_ident = &field_named.ident;
+                                match &field_named.ty {
+                                    // Array(TypeArray),
+                                    // BareFn(TypeBareFn),
+                                    // Group(TypeGroup),
+                                    // ImplTrait(TypeImplTrait),
+                                    // Infer(TypeInfer),
+                                    // Macro(TypeMacro),
+                                    // Never(TypeNever),
+                                    // Paren(TypeParen),
+                                    // Ptr(TypePtr),
+                                    // Reference(TypeReference),
+                                    // Slice(TypeSlice),
+                                    // TraitObject(TypeTraitObject),
+                                    // Tuple(TypeTuple),
+                                    // Verbatim(TokenStream),
+                                    syn::Type::Path(type_path) => {
+                                        match type_path.path.segments.len() {
+                                            1 => {
+                                                let segment_ident = format!("{}", type_path.path.segments[0].ident);
+                                                if segment_ident == *"Vec" {
+                                                    quote::quote! {
+                                                        let mut #field_ident = #field_ident
+                                                            .iter()
+                                                            .map(|error| format!("{} ,", error.get_source()))
+                                                            .fold(String::from(""), |mut acc, elem| {
+                                                                acc.push_str(&elem);
+                                                                acc
+                                                            }
+                                                        );
+                                                        if !#field_ident.is_empty() {
+                                                            #field_ident.pop();
+                                                            #field_ident.pop();
+                                                        }
+                                                        format!("[{}]", #field_ident)
+                                                    }
+                                                }
+                                                else if segment_ident == *"HashMap" {
+                                                    quote::quote! {
+                                                        let mut #field_ident = #field_ident
+                                                            .iter()
+                                                            .map(|(key, error)| format!("[{} {}],", key, error.get_source()))
+                                                            .fold(String::from(""), |mut acc, elem| {
+                                                                acc.push_str(&elem);
+                                                                acc
+                                                            }
+                                                            );
+                                                            if !#field_ident.is_empty() {
+                                                                #field_ident.pop();
+                                                            }
+                                                            format!("[{}]", #field_ident)
+                                                        }
+                                                }
+                                                else {
+                                                    quote::quote! {
+                                                        let #field_ident = format!("{}", #field_ident.get_source());
+                                                    }
+                                                }
+                                            },
+                                            _ => panic!("ImplGetSourceForEnumWithMethod only work on enums with type_path.segments.len() == 1!")
+                                        }
+                                    },
+                                    _ => panic!("ImplGetSourceForEnumWithMethod only work on enums with Path(type_path)!")
+                                }
+                        });
+                        let mut fields_bracket_string = fields_named.named.iter().map(|_| {
+                            String::from("{} ")
+                        })
+                        .fold(String::from(""), |mut acc, elem| {
+                            acc.push_str(&elem);
+                            acc
+                        });
+                        if !fields_bracket_string.is_empty() {
+                            fields_bracket_string.pop();
+                        }
+                        fields_bracket_string = format!("[{}]", fields_bracket_string);
+                        // let fields_bracket_string_ident = syn::Ident::new(&fields_bracket_string, ident.span());
+                        let fields_arguments = fields_named.named.iter().map(|field_named| {
+                            let field_ident = &field_named.ident;
+                            quote::quote! {
+                                #field_ident
+                            }
+                        });
                         quote::quote! {
-                            // #ident::#variant_ident{
-                            //     #(#fields_idents,)*
-                            // } => {
-                            //     format!(
-                            //         #scopes,
-                            //         #(#fields_idents_map,)*
-                            //     )
-                            // }
+                             #ident::#variant_ident{
+                                #(#fields_list,)*
+                             } => {
+                                #(#fields_logic)*
+                                format!(#fields_bracket_string, #(#fields_arguments,)*)
+                                // String::from("meh")
+                             }
                         }
                     }
                     syn::Fields::Unnamed(unnamed) => {
