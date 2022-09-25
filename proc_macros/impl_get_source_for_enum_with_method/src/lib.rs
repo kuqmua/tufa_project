@@ -58,7 +58,7 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                             #field_ident.pop();
                                                             #field_ident.pop();
                                                         }
-                                                        format!("[{}]", #field_ident)
+                                                        #field_ident = format!("[{}]", #field_ident);
                                                     }
                                                 }
                                                 else if segment_ident == *"HashMap" {
@@ -74,7 +74,7 @@ pub fn derive_impl_get_source_for_enum_with_method(
                                                             if !#field_ident.is_empty() {
                                                                 #field_ident.pop();
                                                             }
-                                                            format!("[{}]", #field_ident)
+                                                            let #field_ident = format!("[{}]", #field_ident);
                                                         }
                                                 }
                                                 else {
