@@ -3,7 +3,6 @@
 * fix proc macro submodules, rename them
 * fix github_file_line_column logic
 * make refactoring for module-like implementation (no external dependencies from different modules)
-* write impl_get_source_for_enum_with_method and impl_get_source_for_struct_with_method
 
 ### init submodules 
 ```
@@ -23,6 +22,7 @@ cd proc_macros/impl_get_source_for_parent_error_struct && git checkout main && c
 cd proc_macros/impl_get_source_for_simple_error_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_source_error_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_struct_with_method && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_get_source_for_struct_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method && git checkout main && cd .. && cd .. &&
