@@ -9,6 +9,7 @@ members = [
   "proc_macros/impl_display",
   "proc_macros/impl_from_for_upper_struct",
   "proc_macros/impl_get_source_for_enum_with_method",
+  "proc_macros/impl_get_source_for_enum_without_method",
   "proc_macros/impl_get_source_for_original_error_struct",
   "proc_macros/impl_get_source_for_parent_error_struct",
   "proc_macros/impl_get_source_for_simple_error_enum",
