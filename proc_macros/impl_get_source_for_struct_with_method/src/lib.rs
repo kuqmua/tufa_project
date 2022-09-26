@@ -2,9 +2,8 @@
 pub fn derive_impl_get_source_for_struct_with_method(
     input: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let ast: syn::DeriveInput = syn::parse(input).expect(
-        "ImplGetSourceForStructWithMethod syn::parse(input) failed",
-    );
+    let ast: syn::DeriveInput =
+        syn::parse(input).expect("ImplGetSourceForStructWithMethod syn::parse(input) failed");
     let ident = &ast.ident;
     match ast.data {
         syn::Data::Union(_) => {
@@ -44,7 +43,7 @@ pub fn derive_impl_get_source_for_struct_with_method(
                                             if possible_vec_or_hashmap_ident_as_string == *"Vec" {
                                                 let gen = quote::quote! {
                                                     impl tufa_common::traits::get_source::GetSource for #ident {
-                                                    
+                                                        self.source.get_source()
                                                     }
                                                 };
                                                 gen.into()
@@ -52,7 +51,20 @@ pub fn derive_impl_get_source_for_struct_with_method(
                                             else if possible_vec_or_hashmap_ident_as_string == *"HashMap" {
                                                 let gen = quote::quote! {
                                                     impl tufa_common::traits::get_source::GetSource for #ident {
-                                                    
+                                                        let mut formatted = self
+                                                        .source
+                                                        .iter()
+                                                        .map(|(key, error)| format!("{} {},", key, error.get_source()))
+                                                        .collect::<Vec<String>>()
+                                                        .iter()
+                                                        .fold(String::from(""), |mut acc, elem| {
+                                                            acc.push_str(elem);
+                                                            acc
+                                                        });
+                                                        if !formatted.is_empty() {
+                                                            formatted.pop();
+                                                        }
+                                                        formatted
                                                     }
                                                 };
                                                 gen.into()
@@ -60,7 +72,18 @@ pub fn derive_impl_get_source_for_struct_with_method(
                                             else {
                                                 let gen = quote::quote! {
                                                     impl tufa_common::traits::get_source::GetSource for #ident {
-                                                    
+                                                        let mut formatted = self
+                                                        .source
+                                                        .iter()
+                                                        .map(|error| format!("{},", error.get_source()))
+                                                        .fold(String::from(""), |mut acc, elem| {
+                                                            acc.push_str(&elem);
+                                                            acc
+                                                        });
+                                                        if !formatted.is_empty() {
+                                                            formatted.pop();
+                                                        }
+                                                        formatted
                                                     }
                                                 };
                                                 gen.into()
@@ -74,10 +97,10 @@ pub fn derive_impl_get_source_for_struct_with_method(
                         }
                         _ => panic!("ImplGetSourceForStructWithMethod only work on structs with 2 named fields!")
                     }
-                },
+                }
                 // syn::Fields::Unnamed(_) => {},
                 // syn::Fields::Unit(_) => {},
-                _ => panic!("ImplGetSourceForStructWithMethod only work with syn::Fields::Named!")
+                _ => panic!("ImplGetSourceForStructWithMethod only work with syn::Fields::Named!"),
             }
         }
     }

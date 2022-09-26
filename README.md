@@ -22,6 +22,7 @@ cd proc_macros/impl_get_source_for_original_error_struct && git checkout main &&
 cd proc_macros/impl_get_source_for_parent_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_simple_error_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_source_error_enum && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_get_source_for_struct_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method && git checkout main && cd .. && cd .. &&

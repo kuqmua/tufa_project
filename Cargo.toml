@@ -14,6 +14,7 @@ members = [
   "proc_macros/impl_get_source_for_parent_error_struct",
   "proc_macros/impl_get_source_for_simple_error_enum",
   "proc_macros/impl_get_source_for_source_error_enum",
+  "proc_macros/impl_get_source_for_struct_with_method",
   "proc_macros/impl_get_where_was_one_or_many_for_enum",
   "proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method",
   "proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method",
