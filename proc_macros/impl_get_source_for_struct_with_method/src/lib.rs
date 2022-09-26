@@ -40,54 +40,53 @@ pub fn derive_impl_get_source_for_struct_with_method(
                                     match type_path.path.segments.len() {
                                         1 => {
                                             let possible_vec_or_hashmap_ident_as_string = format!("{}", type_path.path.segments[0].ident);
-                                            if possible_vec_or_hashmap_ident_as_string == *"Vec" {
-                                                let gen = quote::quote! {
-                                                    impl tufa_common::traits::get_source::GetSource for #ident {
-                                                        self.source.get_source()
+                                            let gen = if possible_vec_or_hashmap_ident_as_string == *"Vec" {
+                                                quote::quote! {
+                                                    let mut formatted = self
+                                                    .source
+                                                    .iter()
+                                                    .map(|error| format!("{},", error.get_source()))
+                                                    .fold(String::from(""), |mut acc, elem| {
+                                                        acc.push_str(&elem);
+                                                        acc
+                                                    });
+                                                    if !formatted.is_empty() {
+                                                        formatted.pop();
                                                     }
-                                                };
-                                                gen.into()
+                                                    formatted
+                                                }
                                             }
                                             else if possible_vec_or_hashmap_ident_as_string == *"HashMap" {
-                                                let gen = quote::quote! {
-                                                    impl tufa_common::traits::get_source::GetSource for #ident {
-                                                        let mut formatted = self
-                                                        .source
-                                                        .iter()
-                                                        .map(|(key, error)| format!("{} {},", key, error.get_source()))
-                                                        .collect::<Vec<String>>()
-                                                        .iter()
-                                                        .fold(String::from(""), |mut acc, elem| {
-                                                            acc.push_str(elem);
-                                                            acc
-                                                        });
-                                                        if !formatted.is_empty() {
-                                                            formatted.pop();
-                                                        }
-                                                        formatted
+                                                quote::quote! {
+                                                    let mut formatted = self
+                                                    .source
+                                                    .iter()
+                                                    .map(|(key, error)| format!("{} {},", key, error.get_source()))
+                                                    .collect::<Vec<String>>()
+                                                    .iter()
+                                                    .fold(String::from(""), |mut acc, elem| {
+                                                        acc.push_str(elem);
+                                                        acc
+                                                    });
+                                                    if !formatted.is_empty() {
+                                                        formatted.pop();
                                                     }
-                                                };
-                                                gen.into()
+                                                    formatted
+                                                }
                                             }
                                             else {
-                                                let gen = quote::quote! {
-                                                    impl tufa_common::traits::get_source::GetSource for #ident {
-                                                        let mut formatted = self
-                                                        .source
-                                                        .iter()
-                                                        .map(|error| format!("{},", error.get_source()))
-                                                        .fold(String::from(""), |mut acc, elem| {
-                                                            acc.push_str(&elem);
-                                                            acc
-                                                        });
-                                                        if !formatted.is_empty() {
-                                                            formatted.pop();
-                                                        }
-                                                        formatted
+                                                quote::quote! {
+                                                    self.source.get_source()
+                                                }
+                                            };
+                                            let generated = quote::quote! {
+                                                impl tufa_common::traits::get_source::GetSource for #ident {
+                                                    fn get_source(&self) -> String {
+                                                        #gen
                                                     }
-                                                };
-                                                gen.into()
-                                            }
+                                                }
+                                            };
+                                            generated.into()
                                         }
                                         _ => panic!("ImplGetSourceForStructWithMethod only work with type_path.path.segments.len() == 1!"),
                                     }
