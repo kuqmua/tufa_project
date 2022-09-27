@@ -61,9 +61,6 @@
 [submodule "proc_macros/init_error"]
 	path = proc_macros/init_error
 	url = git@github.com:kuqmua/init_error.git
-[submodule "proc_macros/impl_get_source_for_simple_error_enum"]
-	path = proc_macros/impl_get_source_for_simple_error_enum
-	url = git@github.com:kuqmua/impl_get_source_for_simple_error_enum.git
 [submodule "proc_macros/impl_display_for_simple_error_enum"]
 	path = proc_macros/impl_display_for_simple_error_enum
 	url = git@github.com:kuqmua/impl_display_for_simple_error_enum.git
