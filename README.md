@@ -26,6 +26,8 @@ cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method
 cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_display_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_error_with_tracing_for_struct_with_method && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_error_with_tracing_for_struct_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error_with_tracing_for_original_error_struct_without_source_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error_with_tracing && git checkout main && cd .. && cd .. &&
