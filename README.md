@@ -4,6 +4,7 @@
 * fix github_file_line_column logic
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
+* remove old init_error_with_tracing macros
 
 ### init submodules 
 ```
