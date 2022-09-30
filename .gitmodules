@@ -79,9 +79,6 @@
 [submodule "proc_macros/impl_get_where_was_one_or_many_for_enum"]
 	path = proc_macros/impl_get_where_was_one_or_many_for_enum
 	url = git@github.com:kuqmua/impl_get_where_was_one_or_many_for_enum.git
-[submodule "proc_macros/init_error_with_tracing_for_original_error_struct_without_source_enum"]
-	path = proc_macros/init_error_with_tracing_for_original_error_struct_without_source_enum
-	url = git@github.com:kuqmua/init_error_with_tracing_for_original_error_struct_without_source_enum.git
 [submodule "proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method"]
 	path = proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method
 	url = git@github.com:kuqmua/impl_get_where_was_one_or_many_for_struct_with_source_enum_method.git
