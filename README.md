@@ -31,7 +31,6 @@ cd proc_macros/impl_error_with_tracing_for_struct_with_method && git checkout ma
 cd proc_macros/impl_error_with_tracing_for_struct_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error_with_tracing && git checkout main && cd .. && cd .. &&
-cd proc_macros/init_error_with_tracing_for_original_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_from_env && git checkout main && cd .. && cd .. &&
 cd proc_macros/provider_kind_from_config && git checkout main && cd .. && cd ..
 cd proc_macros/struct_field_getter && git checkout main && cd .. && cd ..
