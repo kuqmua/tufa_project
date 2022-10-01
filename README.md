@@ -4,7 +4,6 @@
 * fix github_file_line_column logic
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
-* remove old init_error_with_tracing macros
 
 ### init submodules 
 ```
@@ -31,7 +30,6 @@ cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_sour
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error && git checkout main && cd .. && cd .. &&
-cd proc_macros/init_error_with_tracing && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_from_env && git checkout main && cd .. && cd .. &&
 cd proc_macros/provider_kind_from_config && git checkout main && cd .. && cd ..
 cd proc_macros/struct_field_getter && git checkout main && cd .. && cd ..

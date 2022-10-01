@@ -22,7 +22,6 @@ members = [
   "proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method",
   "proc_macros/impl_get_where_was_one_or_many_one_for_error_struct",
   "proc_macros/init_error",
-  "proc_macros/init_error_with_tracing",
   "proc_macros/init_from_env",
   "proc_macros/provider_kind_from_config",
   "proc_macros/struct_field_getter",
