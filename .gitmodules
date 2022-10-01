@@ -94,3 +94,6 @@
 [submodule "proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was"]
 	path = proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was
 	url = git@github.com:kuqmua/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was.git
+[submodule "proc_macros/impl_error_with_tracing_for_struct_without_get_source"]
+	path = proc_macros/impl_error_with_tracing_for_struct_without_get_source
+	url = git@github.com:kuqmua/impl_error_with_tracing_for_struct_without_get_source.git
