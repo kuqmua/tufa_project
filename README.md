@@ -16,6 +16,11 @@ cd proc_macros/gen_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/gen_enum_without_values && git checkout main && cd .. && cd .. &&
 cd proc_macros/git_info && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_display && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_display_for_error_struct && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was && cd .. && cd .. &&
+cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_error_with_tracing_for_struct_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_enum_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_enum_without_method && git checkout main && cd .. && cd .. &&
@@ -25,10 +30,6 @@ cd proc_macros/impl_get_where_was_one_or_many_for_enum && git checkout main && c
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
-cd proc_macros/impl_display_for_error_struct && git checkout main && cd .. && cd .. &&
-cd proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. &&
-cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && cd .. && cd .. &&
-cd proc_macros/impl_error_with_tracing_for_struct_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error_with_tracing && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_from_env && git checkout main && cd .. && cd .. &&
