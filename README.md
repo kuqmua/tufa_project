@@ -25,7 +25,6 @@ cd proc_macros/impl_get_source_for_enum_with_method && git checkout main && cd .
 cd proc_macros/impl_get_source_for_enum_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_struct_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_struct_without_method && git checkout main && cd .. && cd .. &&
-cd proc_macros/impl_get_where_was_one_or_many_for_enum && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
