@@ -70,9 +70,6 @@
 [submodule "proc_macros/impl_get_where_was_one_or_many_one_for_error_struct"]
 	path = proc_macros/impl_get_where_was_one_or_many_one_for_error_struct
 	url = git@github.com:kuqmua/impl_get_where_was_one_or_many_one_for_error_struct.git
-[submodule "proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method"]
-	path = proc_macros/impl_get_where_was_one_or_many_for_struct_with_source_enum_method
-	url = git@github.com:kuqmua/impl_get_where_was_one_or_many_for_struct_with_source_enum_method.git
 [submodule "proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method"]
 	path = proc_macros/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method
 	url = git@github.com:kuqmua/impl_get_where_was_one_or_many_for_struct_with_hasmap_or_vec_source_with_method.git
