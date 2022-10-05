@@ -73,3 +73,5 @@ https://github-stats.com/kuqmua/tufa_project
 cargo expand your::path::to::module --lib
 ```
 ### [all algorithms written in rust](https://github.com/TheAlgorithms/Rust)
+
+### [use AI in with rust](https://youtu.be/StMP7g-0wK4)
