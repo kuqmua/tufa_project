@@ -31,6 +31,7 @@ cd proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main &
 cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_from_env && git checkout main && cd .. && cd .. &&
+cd proc_macros/init_from_env_with_panic_if_failed && git checkout main && cd .. && cd .. &&
 cd proc_macros/provider_kind_from_config && git checkout main && cd .. && cd ..
 cd proc_macros/struct_field_getter && git checkout main && cd .. && cd ..
 cd proc_macros/struct_field_setter && git checkout main && cd .. && cd ..
