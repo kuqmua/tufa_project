@@ -88,3 +88,6 @@
 [submodule "proc_macros/impl_get_where_was_one_or_many_with_method"]
 	path = proc_macros/impl_get_where_was_one_or_many_with_method
 	url = git@github.com:kuqmua/impl_get_where_was_one_or_many_with_method.git
+[submodule "proc_macros/init_from_env_with_panic_if_failed"]
+	path = proc_macros/init_from_env_with_panic_if_failed
+	url = git@github.com:kuqmua/init_from_env_with_panic_if_failed.git
