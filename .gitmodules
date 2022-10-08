@@ -94,3 +94,6 @@
 [submodule "proc_macros/impl_get_source_without_method"]
 	path = proc_macros/impl_get_source_without_method
 	url = git@github.com:kuqmua/impl_get_source_without_method.git
+[submodule "proc_macros/impl_get_source_with_method"]
+	path = proc_macros/impl_get_source_with_method
+	url = git@github.com:kuqmua/impl_get_source_with_method.git
