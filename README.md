@@ -5,7 +5,6 @@
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
 * format!("{}, ", e)) for error refactor in format tufa_server/src/preparation/check_availability.rs:91:29 error_string
-* if should trace active then trace where_was + error 
 
 ### init submodules 
 ```
@@ -27,6 +26,8 @@ cd proc_macros/impl_get_source_for_enum_with_method && git checkout main && cd .
 cd proc_macros/impl_get_source_for_enum_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_struct_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_source_for_struct_without_method && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_get_source_with_method && git checkout main && cd .. && cd .. &&
+cd proc_macros/impl_get_source_without_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main && cd .. && cd .. &&
 cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
 cd proc_macros/init_error && git checkout main && cd .. && cd .. &&
