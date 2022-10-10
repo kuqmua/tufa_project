@@ -1,5 +1,6 @@
 [workspace]
 members = [
+  "git_sync_command",
   "proc_macros/enum_extension",
   "proc_macros/error_display",
   "proc_macros/gen_enum",
