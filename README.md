@@ -38,7 +38,7 @@ cd tufa_common && git checkout main && cd .. &&
 cd tufa_server && git checkout main && cd .. && 
 cd tufa_telegram_bot && git checkout main && cd .. && 
 cd tufa_grpc_client && git checkout main && cd .. && 
-cd tufa_grpc_server && git checkout main && cd .. && 
+cd tufa_grpc_server && git checkout main && cd .. 
 
 ```
 ### install cmake for grpc
