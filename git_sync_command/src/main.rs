@@ -1,7 +1,10 @@
+use std::env;
 use std::process::Command;
 
 fn main() {
-    let output = if cfg!(target_os = "linux") {
+    let path = env::current_dir().expect("cannot get current directory");
+    println!("The current directory is {}", path.display());
+    let first_step = if cfg!(target_os = "linux") {
         Command::new("dir")
             // .args(["/C", "echo hello"])
             .output()
@@ -12,7 +15,7 @@ fn main() {
             // .arg("echo hello")
             .output()
             .expect("failed to execute process")
-    };
-    let hello = output.stdout;
-    println!("{}", String::from_utf8(hello).unwrap());
+    }
+    .stdout;
+    println!("{}", String::from_utf8(first_step).unwrap());
 }
