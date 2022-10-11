@@ -14,35 +14,38 @@ fn is_hidden(entry: &DirEntry) -> bool {
 fn main() {
     let contents =
         fs::read_to_string("../.gitmodules").expect("Should have been able to read the file");
-    let g: Vec<_> = contents.lines().collect();
-    println!("g {:#?} )))", g);
-    let f: Vec<_> = contents.match_indices("path = ").collect();
-    println!("f {:#?} )))", f);
-    println!("With text:\n{contents}");
-    let walker = WalkDir::new("../tufa_server/src").into_iter();
-    for entry in walker.filter_entry(|e| is_hidden(e)) {
-        let entry = entry.unwrap();
-        println!("{}", entry.path().display());
-    }
-
-    // for entry in WalkDir::new("../tufa_server/src") {
-    //     let entry = entry.unwrap();
-    //     println!("{}", entry.path().display());
-    // }
-    let path = env::current_dir().expect("cannot get current directory");
-    println!("The current directory is {}", path.display());
-    let path = env::home_dir().expect("cannot get home directory");
-    println!("The home directory is {}", path.display());
+    let substring_value = "path = ";
+    let paths_vec: Vec<String> = contents
+        .lines()
+        .filter_map(|e| match e.find("path = ") {
+            Some(index) => Some(e[index + substring_value.len()..].to_string()),
+            None => None,
+        })
+        .collect();
+    println!("g {:#?} )))", paths_vec);
+    //
     let first_step = if cfg!(target_os = "linux") {
-        Command::new("ls")
-            // .args(["/C", "echo hello"])
-            .output()
+        println!("before");
+        Command::new("cd")
+            // .status()
+            .args(["~home"])
+            .spawn()
+            // .arg("..")
+            // .output()
             .expect("failed to execute process")
         // ;
-        // Command::new("dir")
+        // println!("ffffff");
+        // // f
+        // Command::new("ls")
+        //     // .args([".."])
+        //     .output()
+        //     .expect("failed to execute process")
+        // paths_vec.iter().for_each(|e|{
+        //     Command::new("ls")
         //     // .args(["/C", "echo hello"])
         //     .output()
         //     .expect("failed to execute process");
+        // });
     } else if cfg!(target_os = "windows") {
         Command::new("dir")
             // .arg("-c")
@@ -54,6 +57,46 @@ fn main() {
     }
     .stdout;
     println!("{}", String::from_utf8(first_step).unwrap());
+    //
+    // let f: Vec<_> = contents.match_indices("path = ").collect();
+    // println!("f {:#?} )))", f);
+    // println!("With text:\n{contents}");
+    // let walker = WalkDir::new("../tufa_server/src").into_iter();
+    // for entry in walker.filter_entry(|e| is_hidden(e)) {
+    //     let entry = entry.unwrap();
+    //     println!("{}", entry.path().display());
+    // }
+
+    // // for entry in WalkDir::new("../tufa_server/src") {
+    // //     let entry = entry.unwrap();
+    // //     println!("{}", entry.path().display());
+    // // }
+    // let path = env::current_dir().expect("cannot get current directory");
+    // println!("The current directory is {}", path.display());
+    // let path = env::home_dir().expect("cannot get home directory");
+    // println!("The home directory is {}", path.display());
+    // let first_step = if cfg!(target_os = "linux") {
+    //     Command::new("ls")
+    //         // .args(["/C", "echo hello"])
+    //         .output()
+    //         .expect("failed to execute process")
+    //     // ;
+    //     // Command::new("dir")
+    //     //     // .args(["/C", "echo hello"])
+    //     //     .output()
+    //     //     .expect("failed to execute process");
+    // } else if cfg!(target_os = "windows") {
+    //     Command::new("dir")
+    //         // .arg("-c")
+    //         // .arg("echo hello")
+    //         .output()
+    //         .expect("failed to execute process")
+    // } else {
+    //     panic!("cannot find out target os")
+    // }
+    // .stdout;
+    // println!("{}", String::from_utf8(first_step).unwrap());
+    // git checkout .
 }
 // git config
 // git init
