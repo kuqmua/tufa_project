@@ -1,5 +1,7 @@
 use std::env;
 use std::fs;
+// use std::path::absolute;
+use std::path::PathBuf;
 use std::process::Command;
 use walkdir::{DirEntry, WalkDir};
 
@@ -11,7 +13,17 @@ fn is_hidden(entry: &DirEntry) -> bool {
         .unwrap_or(false)
 }
 
+#[feature(absolute_path)]
 fn main() {
+    // let absolute = path::absolute("").expect("path::absolute failed");
+    let srcdir = PathBuf::from("../");
+    let can = fs::canonicalize(&srcdir)
+        .expect("fs::canonicalize error")
+        .into_os_string()
+        .into_string()
+        .unwrap();
+    println!("{}", can);
+
     let contents =
         fs::read_to_string("../.gitmodules").expect("Should have been able to read the file");
     let substring_value = "path = ";
@@ -24,39 +36,64 @@ fn main() {
         .collect();
     println!("g {:#?} )))", paths_vec);
     //
-    let first_step = if cfg!(target_os = "linux") {
+    if cfg!(target_os = "linux") {
         println!("before");
-        Command::new("cd")
-            // .status()
-            .args(["~home"])
-            .spawn()
-            // .arg("..")
-            // .output()
-            .expect("failed to execute process")
+        // Command::new("cd").arg("--").status().unwrap();
+        // match Command::new("cd")
+        //     // .status()
+        //     .args(["~home"])
+        //     .spawn()
+        //     // .arg("..")
+        //     // .output()
+        //     {
+        //         Ok(_) => println!("ok"),
+        //         Err(e) => println!("err {:#?}", e),
+        //     };
         // ;
         // println!("ffffff");
         // // f
-        // Command::new("ls")
+        let mut list_dir = Command::new("ls");
+
+        // Execute `ls` in the current directory of the program.
+        list_dir.status().expect("process failed to execute");
+
+        println!();
+
+        // Change `ls` to execute in the root directory.
+        let b = format!("{}/tufa_client", can);
+        println!("{}", b);
+        list_dir.current_dir(b);
+
+        // And then execute `ls` again but in the root directory.
+        list_dir.status().expect("process failed to execute");
+        // let f = list_dir.get_current_dir().unwrap();
+        println!("##{}##", list_dir.get_current_dir().unwrap().display());
+        // Command::new("cd").arg("home").status().unwrap();
+        // let first_step = Command::new("ls")
+        //     .current_dir("/home")
         //     // .args([".."])
         //     .output()
         //     .expect("failed to execute process")
+        //     .stdout;
+        // println!("@@@{}@@@", String::from_utf8(first_step).unwrap());
         // paths_vec.iter().for_each(|e|{
         //     Command::new("ls")
         //     // .args(["/C", "echo hello"])
         //     .output()
         //     .expect("failed to execute process");
         // });
-    } else if cfg!(target_os = "windows") {
-        Command::new("dir")
-            // .arg("-c")
-            // .arg("echo hello")
-            .output()
-            .expect("failed to execute process")
-    } else {
-        panic!("cannot find out target os")
     }
-    .stdout;
-    println!("{}", String::from_utf8(first_step).unwrap());
+    // else if cfg!(target_os = "windows") {
+    //     Command::new("dir")
+    //         // .arg("-c")
+    //         // .arg("echo hello")
+    //         .output()
+    //         .expect("failed to execute process")
+    // } else {
+    //     panic!("cannot find out target os")
+    // };
+    // .stdout;
+    // println!("{}", String::from_utf8(first_step).unwrap());
     //
     // let f: Vec<_> = contents.match_indices("path = ").collect();
     // println!("f {:#?} )))", f);
@@ -98,6 +135,26 @@ fn main() {
     // println!("{}", String::from_utf8(first_step).unwrap());
     // git checkout .
 }
+
+//
+// let dir = "./libwally-core";
+// if !Path::new(&format!("{}/.git", dir)).exists() {
+//     Command::new("git")
+//         .args(&["submodule", "update", "--init", "--recursive"])
+//         .status()
+//         .unwrap();
+//     Command::new("cd").arg(dir).status().unwrap();
+//     Command::new("git")
+//         .args(&["submodule", "sync", "--recursive"])
+//         .status()
+//         .unwrap();
+//     Command::new("git")
+//         .args(&["submodule", "update", "--init", "--recursive"])
+//         .status()
+//         .unwrap();
+//     Command::new("cd").arg("--").status().unwrap();
+// }
+//
 // git config
 // git init
 // git clone
