@@ -31,84 +31,53 @@ fn main() {
             None => None,
         })
         .collect();
-    println!("g {:#?} )))", paths_vec);
+    println!("{:#?}", paths_vec);
     if cfg!(target_os = "linux") {
-        // let mut list_dir = Command::new("ls");
-        // list_dir.status().expect("process failed to execute");
-
-        // println!("{}", b);
-        // list_dir.current_dir(b);
-
-        // // And then execute `ls` again but in the root directory.
-        // list_dir.status().expect("process failed to execute");
-        // // let f = list_dir.get_current_dir().unwrap();
-        // println!("##{}##", list_dir.get_current_dir().unwrap().display());
-        // Command::new("cd").arg("home").status().unwrap();
-        // let first_step = Command::new("ls")
-        //     .current_dir("/home")
-        //     // .args([".."])
-        //     .output()
-        //     .expect("failed to execute process")
-        //     .stdout;
-        // println!("@@@{}@@@", String::from_utf8(first_step).unwrap());
         paths_vec.iter().for_each(|path| {
             let path = format!("{}/{}", canonicalize_pathbuf_as_string, path);
             println!("path {}", path);
-            let first_step = Command::new("ls")
-                // .args(["/C", "echo hello"])
-                .current_dir(path)
+            let first_step = Command::new("git")
+                .args(["checkout", "."])
+                .current_dir(&path)
                 .output()
                 .expect("failed to execute process")
                 .stdout;
             println!("{}\n", String::from_utf8(first_step).unwrap());
+            let second_step = Command::new("git")
+                .args(["checkout", "main"])
+                .current_dir(&path)
+                .output()
+                .expect("failed to execute process")
+                .stdout;
+            println!("{}\n", String::from_utf8(second_step).unwrap());
+            let third_step = Command::new("git")
+                .args(["pull"])
+                .current_dir(&path)
+                .output()
+                .expect("failed to execute process")
+                .stdout;
+            println!("{}\n", String::from_utf8(third_step).unwrap());
+            // let fouth_step = Command::new("git")
+            //     .args(["checkout", "."])
+            //     .current_dir(path)
+            //     .output()
+            //     .expect("failed to execute process")
+            //     .stdout;
+            // println!("{}\n", String::from_utf8(fouth_step).unwrap());
+            // //proc_macros/impl_box_err_source_from_err && git checkout main && git pull
+            // let fifth_step = Command::new("git")
+            //     .args(["checkout", "."])
+            //     .current_dir(path)
+            //     .output()
+            //     .expect("failed to execute process")
+            //     .stdout;
+            // println!("{}\n", String::from_utf8(fifth_step).unwrap());
         });
     } else if cfg!(target_os = "windows") {
         todo!("todo on windows")
     } else {
         panic!("cannot find out target os")
     };
-    // .stdout;
-    // println!("{}", String::from_utf8(first_step).unwrap());
-    //
-    // let f: Vec<_> = contents.match_indices("path = ").collect();
-    // println!("f {:#?} )))", f);
-    // println!("With text:\n{contents}");
-    // let walker = WalkDir::new("../tufa_server/src").into_iter();
-    // for entry in walker.filter_entry(|e| is_hidden(e)) {
-    //     let entry = entry.unwrap();
-    //     println!("{}", entry.path().display());
-    // }
-
-    // // for entry in WalkDir::new("../tufa_server/src") {
-    // //     let entry = entry.unwrap();
-    // //     println!("{}", entry.path().display());
-    // // }
-    // let path = env::current_dir().expect("cannot get current directory");
-    // println!("The current directory is {}", path.display());
-    // let path = env::home_dir().expect("cannot get home directory");
-    // println!("The home directory is {}", path.display());
-    // let first_step = if cfg!(target_os = "linux") {
-    //     Command::new("ls")
-    //         // .args(["/C", "echo hello"])
-    //         .output()
-    //         .expect("failed to execute process")
-    //     // ;
-    //     // Command::new("dir")
-    //     //     // .args(["/C", "echo hello"])
-    //     //     .output()
-    //     //     .expect("failed to execute process");
-    // } else if cfg!(target_os = "windows") {
-    //     Command::new("dir")
-    //         // .arg("-c")
-    //         // .arg("echo hello")
-    //         .output()
-    //         .expect("failed to execute process")
-    // } else {
-    //     panic!("cannot find out target os")
-    // }
-    // .stdout;
-    // println!("{}", String::from_utf8(first_step).unwrap());
-    // git checkout .
 }
 
 //
