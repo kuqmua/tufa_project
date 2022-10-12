@@ -91,3 +91,6 @@
 [submodule "proc_macros/impl_get_source_with_method"]
 	path = proc_macros/impl_get_source_with_method
 	url = git@github.com:kuqmua/impl_get_source_with_method.git
+[submodule "git_sync_command"]
+	path = git_sync_command
+	url = git@github.com:kuqmua/git_sync_command.git
