@@ -1,28 +1,33 @@
+use core::fmt::Display;
 use std::env;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
-use walkdir::{DirEntry, WalkDir};
-
-fn is_hidden(entry: &DirEntry) -> bool {
-    entry
-        .file_name()
-        .to_str()
-        .map(|s| s.starts_with("."))
-        .unwrap_or(false)
-}
+use std::sync::Arc;
+use std::sync::Mutex;
+use std::thread;
 
 #[feature(absolute_path)]
 fn main() {
     let parent_dir_pathbuf = PathBuf::from("../");
+    let parent_dir_pathbuf_as_string = parent_dir_pathbuf
+        .clone()
+        .into_os_string()
+        .into_string()
+        .expect("cannot convert parent_dir_pathbuf to string");
     let canonicalize_pathbuf = match fs::canonicalize(&parent_dir_pathbuf) {
         Ok(pathbuf) => pathbuf,
-        Err(e) => panic!("{e}"),
+        Err(e) => panic!("error: {e}, path: {parent_dir_pathbuf_as_string}"),
     };
-    let canonicalize_pathbuf_as_string =
-        canonicalize_pathbuf.into_os_string().into_string().unwrap();
-    let contents =
-        fs::read_to_string("../.gitmodules").expect("Should have been able to read the file");
+    let canonicalize_pathbuf_as_string = canonicalize_pathbuf
+        .into_os_string()
+        .into_string()
+        .expect("cannot convert canonicalize_pathbuf_as_string to string");
+    let contents = fs::read_to_string("../.gitmodules").expect("cannot read .gitmodules file");
+    Command::new("git")
+        .args(["version"])
+        .output()
+        .expect("failed use git version (just to check is there git installed or not)");
     let substring_value = "path = ";
     let paths_vec: Vec<String> = contents
         .lines()
@@ -31,236 +36,87 @@ fn main() {
             None => None,
         })
         .collect();
-    println!("{:#?}", paths_vec);
     if cfg!(target_os = "linux") {
-        paths_vec.iter().for_each(|path| {
-            let path = format!("{}/{}", canonicalize_pathbuf_as_string, path);
-            println!("path {}", path);
-            let first_step = Command::new("git")
-                .args(["checkout", "."])
-                .current_dir(&path)
-                .output()
-                .expect("failed to execute process")
-                .stdout;
-            println!("{}\n", String::from_utf8(first_step).unwrap());
-            let second_step = Command::new("git")
-                .args(["checkout", "main"])
-                .current_dir(&path)
-                .output()
-                .expect("failed to execute process")
-                .stdout;
-            println!("{}\n", String::from_utf8(second_step).unwrap());
-            let third_step = Command::new("git")
-                .args(["pull"])
-                .current_dir(&path)
-                .output()
-                .expect("failed to execute process")
-                .stdout;
-            println!("{}\n", String::from_utf8(third_step).unwrap());
-            // let fouth_step = Command::new("git")
-            //     .args(["checkout", "."])
-            //     .current_dir(path)
-            //     .output()
-            //     .expect("failed to execute process")
-            //     .stdout;
-            // println!("{}\n", String::from_utf8(fouth_step).unwrap());
-            // //proc_macros/impl_box_err_source_from_err && git checkout main && git pull
-            // let fifth_step = Command::new("git")
-            //     .args(["checkout", "."])
-            //     .current_dir(path)
-            //     .output()
-            //     .expect("failed to execute process")
-            //     .stdout;
-            // println!("{}\n", String::from_utf8(fifth_step).unwrap());
-        });
+        threads_logic(paths_vec, canonicalize_pathbuf_as_string);
     } else if cfg!(target_os = "windows") {
-        todo!("todo on windows")
+        threads_logic(paths_vec, canonicalize_pathbuf_as_string);
     } else {
         panic!("cannot find out target os")
     };
 }
 
-//
-// let dir = "./libwally-core";
-// if !Path::new(&format!("{}/.git", dir)).exists() {
-//     Command::new("git")
-//         .args(&["submodule", "update", "--init", "--recursive"])
-//         .status()
-//         .unwrap();
-//     Command::new("cd").arg(dir).status().unwrap();
-//     Command::new("git")
-//         .args(&["submodule", "sync", "--recursive"])
-//         .status()
-//         .unwrap();
-//     Command::new("git")
-//         .args(&["submodule", "update", "--init", "--recursive"])
-//         .status()
-//         .unwrap();
-//     Command::new("cd").arg("--").status().unwrap();
-// }
-//
-// git config
-// git init
-// git clone
-// git add
-// git commit
-// git diff
-// git reset
-// git status
-// git rm
-// git log
-// git show
-// git tag
-// git branch
-// git checkout
-// git merge
-// git remote
-// git push
-// git pull
-// git stash
-////////////////////////////////
-// git submodule init && git submodule update &&
-// cd proc_macros/impl_box_err_source_from_err && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/enum_extension && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/error_display && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/gen_enum && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/gen_enum_without_values && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/git_info && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_display && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_display_for_error_struct && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_display_for_simple_error_enum && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_error_with_tracing_for_struct_without_get_source && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_from_for_upper_struct && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_source_with_method && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_source_without_method && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/init_error && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/init_from_env && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/init_from_env_with_panic_if_failed && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/provider_kind_from_config && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/struct_field_getter && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/struct_field_setter && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/svg_component && git checkout main && git pull && cd .. && cd .. &&
-// cd tufa_client && git checkout main && git pull && cd .. &&
-// cd tufa_common && git checkout main && git pull && cd .. &&
-// cd tufa_server && git checkout main && git pull && cd .. &&
-// cd tufa_telegram_bot && git checkout main && git pull && cd .. &&
-// cd tufa_grpc_client && git checkout main && git pull && cd .. &&
-// cd tufa_grpc_server && git checkout main && git pull && cd ..
-////////////////////////////
-// git submodule init && git submodule update &&
-// cd proc_macros/impl_box_err_source_from_err && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/enum_extension && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/error_display && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/gen_enum && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/gen_enum_without_values && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/git_info && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_display && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_display_for_error_struct && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_display_for_simple_error_enum && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_error_with_tracing_for_struct_without_get_source && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_from_for_upper_struct && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_source_with_method && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_source_without_method && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/init_error && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/init_from_env && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/init_from_env_with_panic_if_failed && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/provider_kind_from_config && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/struct_field_getter && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/struct_field_setter && git checkout main && git pull && cd .. && cd .. &&
-// cd proc_macros/svg_component && git checkout main && git pull && cd .. && cd .. &&
-// cd tufa_client && git checkout main && git pull && cd .. &&
-// cd tufa_common && git checkout main && git pull && cd .. &&
-// cd tufa_server && git checkout main && git pull && cd .. &&
-// cd tufa_telegram_bot && git checkout main && git pull && cd .. &&
-// cd tufa_grpc_client && git checkout main && git pull && cd .. &&
-// cd tufa_grpc_server && git checkout main && git pull && cd ..
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// Уже на «main»
-// Ваша ветка обновлена в соответствии с «origin/main».
-// Уже обновлено.
-// M       README.md
-// Уже на «main»
-// Ваша ветка отстает от «origin/main» на 1 коммит и может быть перемотана вперед.
-//   (используйте «git pull», чтобы обновить вашу локальную ветку)
-// Обновление a23e16e..f2c1e88
-// error: Ваши локальные изменения в указанных файлах будут перезаписаны при слиянии:
-//         README.md
-// Сделайте коммит или спрячьте ваши изменения перед слиянием веток.
-// Прерываю
+#[derive(Clone, Debug)]
+enum GitCommandError {
+    Checkout { path: String, error: String },
+    Pull { path: String, error: String },
+}
+
+impl Display for GitCommandError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            GitCommandError::Checkout { path, error } => {
+                write!(f, "git checkout main error: {}, path: {}", error, path)
+            }
+            GitCommandError::Pull { path, error } => {
+                write!(f, "git pull error: {}, path: {}", error, path)
+            }
+        }
+    }
+}
+
+fn threads_logic(paths_vec: Vec<String>, canonicalize_pathbuf_as_string: String) {
+    println!("working..");
+    let mut threads_vector = Vec::with_capacity(paths_vec.len());
+    let error_vec_arc_mutex = Arc::new(Mutex::new(Vec::<GitCommandError>::new()));
+    paths_vec.into_iter().for_each(|path| {
+        let error_vec_arc_mutex_arc_cloned = Arc::clone(&error_vec_arc_mutex);
+        let canonicalize_pathbuf_as_string_cloned = canonicalize_pathbuf_as_string.clone();
+        let handle = thread::spawn(move || {
+            if let Err(e) = commands(canonicalize_pathbuf_as_string_cloned, path) {
+                let mut error_vec_arc_mutex_arc_cloned_locked = error_vec_arc_mutex_arc_cloned
+                    .lock()
+                    .expect("cannot lock error_vec_arc_mutex_arc_cloned");
+                error_vec_arc_mutex_arc_cloned_locked.push(e);
+            }
+        });
+        threads_vector.push(handle);
+    });
+    threads_vector.into_iter().for_each(|t| {
+        t.join().expect("cannot join one of the threads");
+    });
+    let error_vec_arc_mutex_done = error_vec_arc_mutex
+        .lock()
+        .expect("cannot lock error_vec_arc_mutex")
+        .to_vec();
+    match error_vec_arc_mutex_done.is_empty() {
+        true => println!("done!"),
+        false => {
+            eprint!("{:#?}", error_vec_arc_mutex_done)
+        }
+    }
+}
+
+fn commands(canonicalize_pathbuf_as_string: String, path: String) -> Result<(), GitCommandError> {
+    let path = format!("{}/{}", canonicalize_pathbuf_as_string, path);
+    if let Err(e) = Command::new("git")
+        .args(["checkout", "main"])
+        .current_dir(&path)
+        .output()
+    {
+        return Err(GitCommandError::Checkout {
+            path: path,
+            error: format!("{e}"),
+        });
+    }
+    if let Err(e) = Command::new("git")
+        .args(["pull"])
+        .current_dir(&path)
+        .output()
+    {
+        return Err(GitCommandError::Pull {
+            path: path,
+            error: format!("{e}"),
+        });
+    }
+    Ok(())
+}
