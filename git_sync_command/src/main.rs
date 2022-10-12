@@ -1,5 +1,4 @@
 use core::fmt::Display;
-use std::env;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -45,25 +44,6 @@ fn main() {
     };
 }
 
-#[derive(Clone, Debug)]
-enum GitCommandError {
-    Checkout { path: String, error: String },
-    Pull { path: String, error: String },
-}
-
-impl Display for GitCommandError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            GitCommandError::Checkout { path, error } => {
-                write!(f, "git checkout main error: {}, path: {}", error, path)
-            }
-            GitCommandError::Pull { path, error } => {
-                write!(f, "git pull error: {}, path: {}", error, path)
-            }
-        }
-    }
-}
-
 fn threads_logic(paths_vec: Vec<String>, canonicalize_pathbuf_as_string: String) {
     println!("working..");
     let mut threads_vector = Vec::with_capacity(paths_vec.len());
@@ -96,14 +76,47 @@ fn threads_logic(paths_vec: Vec<String>, canonicalize_pathbuf_as_string: String)
     }
 }
 
+#[derive(Clone, Debug)]
+enum GitCommandError {
+    CheckoutDot { path: String, error: String },
+    CheckoutMain { path: String, error: String },
+    Pull { path: String, error: String },
+}
+
+impl Display for GitCommandError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            GitCommandError::CheckoutDot { path, error } => {
+                write!(f, "git checkout . error: {}, path: {}", error, path)
+            }
+            GitCommandError::CheckoutMain { path, error } => {
+                write!(f, "git checkout main error: {}, path: {}", error, path)
+            }
+            GitCommandError::Pull { path, error } => {
+                write!(f, "git pull error: {}, path: {}", error, path)
+            }
+        }
+    }
+}
+
 fn commands(canonicalize_pathbuf_as_string: String, path: String) -> Result<(), GitCommandError> {
     let path = format!("{}/{}", canonicalize_pathbuf_as_string, path);
+    if let Err(e) = Command::new("git")
+        .args(["checkout", "."])
+        .current_dir(&path)
+        .output()
+    {
+        return Err(GitCommandError::CheckoutDot {
+            path: path,
+            error: format!("{e}"),
+        });
+    }
     if let Err(e) = Command::new("git")
         .args(["checkout", "main"])
         .current_dir(&path)
         .output()
     {
-        return Err(GitCommandError::Checkout {
+        return Err(GitCommandError::CheckoutMain {
             path: path,
             error: format!("{e}"),
         });
