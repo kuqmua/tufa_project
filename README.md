@@ -15,36 +15,37 @@ git submodule update --init --recursive --checkout
 ```
 git submodule init && git submodule update && 
 cd scripts/git_sync_command && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_box_err_source_from_err && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/enum_extension && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/error_display && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/gen_enum && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/gen_enum_without_values && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/git_info && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_display && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_display_for_error_struct && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was && cd .. && cd .. &&
-cd src/proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_error_with_tracing_for_struct_without_get_source && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_get_source_with_method && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_get_source_without_method && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/init_error && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/init_from_env_with_panic_if_failed && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/provider_kind_from_config && git checkout main && cd .. && cd ..
-cd src/proc_macros/struct_field_getter && git checkout main && cd .. && cd ..
-cd src/proc_macros/struct_field_setter && git checkout main && cd .. && cd ..
-cd src/proc_macros/svg_component && git checkout main && cd .. && cd ..
-cd src/tufa_client && git checkout main && cd .. && 
-cd src/tufa_common && git checkout main && cd .. && 
-cd src/tufa_server && git checkout main && cd .. && 
-cd src/tufa_telegram_bot && git checkout main && cd .. && 
-cd src/tufa_grpc_client && git checkout main && cd .. && 
-cd src/tufa_grpc_server && git checkout main && cd .. 
+cd src/proc_macros/impl_box_err_source_from_err && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/enum_extension && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/error_display && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/gen_enum && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/gen_enum_without_values && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/git_info && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_display && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_display_for_error_struct && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_where_was && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_error_with_tracing_for_struct_without_get_source && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_get_source_with_method && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_get_source_without_method && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/init_error && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/init_from_env_with_panic_if_failed && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/provider_kind_from_config && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/struct_field_getter && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/struct_field_setter && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
+cd src/tufa_client && git checkout main && cd .. &&  cd .. &&
+cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
+cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
+cd src/tufa_telegram_bot && git checkout main && cd .. &&  cd .. &&
+cd src/tufa_grpc_client && git checkout main && cd .. &&  cd .. &&
+cd src/tufa_grpc_server && git checkout main && cd ..  cd ..
+
 
 ```
 ### install cmake for grpc
