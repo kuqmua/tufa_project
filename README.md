@@ -11,6 +11,11 @@
 git submodule update --init --recursive --checkout
 ```
 
+### another alternative init submodules command
+```
+cd scripts && git submodule init git_sync_command && git submodule update git_sync_command && cd git_sync_command/ && cargo run
+```
+
 ### init submodules 
 ```
 git submodule init && git submodule update && 
