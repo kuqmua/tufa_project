@@ -28,3 +28,6 @@
 [submodule "src/proc_macros/git_info"]
 	path = src/proc_macros/git_info
 	url = https://github.com/kuqmua/git_info.git
+[submodule "src/proc_macros/impl_display"]
+	path = src/proc_macros/impl_display
+	url = https://github.com/kuqmua/impl_display.git
