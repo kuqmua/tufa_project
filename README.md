@@ -14,6 +14,7 @@ git submodule update --init --recursive --checkout
 ### init submodules 
 ```
 git submodule init && git submodule update && 
+cd scripts/git_sync_command && git checkout main && cd .. && cd .. &&
 cd src/proc_macros/impl_box_err_source_from_err && git checkout main && cd .. && cd .. &&
 cd src/proc_macros/enum_extension && git checkout main && cd .. && cd .. &&
 cd src/proc_macros/error_display && git checkout main && cd .. && cd .. &&
