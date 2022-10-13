@@ -19,3 +19,6 @@
 [submodule "src/proc_macros/impl_box_err_source_from_err"]
 	path = src/proc_macros/impl_box_err_source_from_err
 	url = https://github.com/kuqmua/impl_box_err_source_from_err.git
+[submodule "src/proc_macros/gen_enum"]
+	path = src/proc_macros/gen_enum
+	url = https://github.com/kuqmua/gen_enum.git
