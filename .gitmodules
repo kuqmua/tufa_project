@@ -22,3 +22,6 @@
 [submodule "src/proc_macros/gen_enum"]
 	path = src/proc_macros/gen_enum
 	url = https://github.com/kuqmua/gen_enum.git
+[submodule "src/proc_macros/gen_enum_without_values"]
+	path = src/proc_macros/gen_enum_without_values
+	url = https://github.com/kuqmua/gen_enum_without_values.git
