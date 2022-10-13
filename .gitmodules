@@ -64,3 +64,6 @@
 [submodule "src/proc_macros/proc_macro_helpers"]
 	path = src/proc_macros/proc_macro_helpers
 	url = https://github.com/kuqmua/proc_macro_helpers.git
+[submodule "src/proc_macros/impl_get_where_was_one_or_many_one_for_error_struct"]
+	path = src/proc_macros/impl_get_where_was_one_or_many_one_for_error_struct
+	url = https://github.com/kuqmua/impl_get_where_was_one_or_many_one_for_error_struct.git
