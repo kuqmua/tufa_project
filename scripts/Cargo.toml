@@ -1,0 +1,7 @@
+[workspace]
+members = [
+  "git_sync_command",
+]
+# exclude = [
+#   "your_exclude_member_here",
+# ]
