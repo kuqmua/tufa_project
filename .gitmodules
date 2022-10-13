@@ -49,3 +49,6 @@
 [submodule "src/proc_macros/struct_field_getter"]
 	path = src/proc_macros/struct_field_getter
 	url = https://github.com/kuqmua/struct_field_getter.git
+[submodule "src/proc_macros/struct_field_setter"]
+	path = src/proc_macros/struct_field_setter
+	url = https://github.com/kuqmua/struct_field_setter.git
