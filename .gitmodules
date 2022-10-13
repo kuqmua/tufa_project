@@ -91,3 +91,6 @@
 [submodule "src/tufa_grpc_server"]
 	path = src/tufa_grpc_server
 	url = https://github.com/kuqmua/tufa_grpc_server.git
+[submodule "src/tufa_grpc_client"]
+	path = src/tufa_grpc_client
+	url = https://github.com/kuqmua/tufa_grpc_client.git
