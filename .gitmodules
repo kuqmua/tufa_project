@@ -1,3 +1,6 @@
 [submodule "scripts/git_sync_command"]
 	path = scripts/git_sync_command
 	url = git@github.com:kuqmua/git_sync_command.git
+[submodule "src/tufa_client"]
+	path = src/tufa_client
+	url = https://github.com/kuqmua/tufa_client.git
