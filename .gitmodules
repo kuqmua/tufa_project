@@ -58,3 +58,6 @@
 [submodule "src/proc_macros/impl_display_for_simple_error_enum"]
 	path = src/proc_macros/impl_display_for_simple_error_enum
 	url = https://github.com/kuqmua/impl_display_for_simple_error_enum.git
+[submodule "src/proc_macros/impl_display_for_error_struct"]
+	path = src/proc_macros/impl_display_for_error_struct
+	url = https://github.com/kuqmua/impl_display_for_error_struct.git
