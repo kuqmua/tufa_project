@@ -10,3 +10,9 @@
 [submodule "src/tufa_server"]
 	path = src/tufa_server
 	url = https://github.com/kuqmua/tufa_server.git
+[submodule "src/tufa_telegram_bot"]
+	path = src/tufa_telegram_bot
+	url = https://github.com/kuqmua/tufa_telegram_bot.git
+[submodule "src/proc_macros/error_display"]
+	path = src/proc_macros/error_display
+	url = https://github.com/kuqmua/error_display.git
