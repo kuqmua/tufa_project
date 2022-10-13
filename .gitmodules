@@ -61,3 +61,6 @@
 [submodule "src/proc_macros/impl_display_for_error_struct"]
 	path = src/proc_macros/impl_display_for_error_struct
 	url = https://github.com/kuqmua/impl_display_for_error_struct.git
+[submodule "src/proc_macros/proc_macro_helpers"]
+	path = src/proc_macros/proc_macro_helpers
+	url = https://github.com/kuqmua/proc_macro_helpers.git
