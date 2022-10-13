@@ -52,3 +52,6 @@
 [submodule "src/proc_macros/struct_field_setter"]
 	path = src/proc_macros/struct_field_setter
 	url = https://github.com/kuqmua/struct_field_setter.git
+[submodule "src/proc_macros/init_error"]
+	path = src/proc_macros/init_error
+	url = https://github.com/kuqmua/init_error.git
