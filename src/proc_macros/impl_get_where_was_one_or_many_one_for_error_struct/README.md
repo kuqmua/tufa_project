@@ -1,0 +1,2 @@
+# impl_get_where_was_one_or_many_one_for_error_struct
+rust project template
