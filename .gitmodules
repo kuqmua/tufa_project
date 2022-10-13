@@ -34,3 +34,6 @@
 [submodule "src/proc_macros/impl_from_for_upper_struct"]
 	path = src/proc_macros/impl_from_for_upper_struct
 	url = https://github.com/kuqmua/impl_from_for_upper_struct.git
+[submodule "src/proc_macros/init_from_env"]
+	path = src/proc_macros/init_from_env
+	url = https://github.com/kuqmua/init_from_env.git
