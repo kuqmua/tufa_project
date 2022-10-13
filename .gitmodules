@@ -16,3 +16,6 @@
 [submodule "src/proc_macros/error_display"]
 	path = src/proc_macros/error_display
 	url = https://github.com/kuqmua/error_display.git
+[submodule "src/proc_macros/impl_box_err_source_from_err"]
+	path = src/proc_macros/impl_box_err_source_from_err
+	url = https://github.com/kuqmua/impl_box_err_source_from_err.git
