@@ -7,3 +7,6 @@
 [submodule "src/tufa_common"]
 	path = src/tufa_common
 	url = https://github.com/kuqmua/tufa_common.git
+[submodule "src/tufa_server"]
+	path = src/tufa_server
+	url = https://github.com/kuqmua/tufa_server.git
