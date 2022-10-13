@@ -37,3 +37,6 @@
 [submodule "src/proc_macros/init_from_env"]
 	path = src/proc_macros/init_from_env
 	url = https://github.com/kuqmua/init_from_env.git
+[submodule "src/proc_macros/provider_kind_from_config"]
+	path = src/proc_macros/provider_kind_from_config
+	url = https://github.com/kuqmua/provider_kind_from_config.git
