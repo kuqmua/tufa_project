@@ -8,6 +8,7 @@
 * time: DateTime::<Utc>::from_utc(Local::now().naive_utc(), Utc)
                     .with_timezone(&FixedOffset::east(CONFIG.timezone)), - remove CONFIG.timezone and field time must not be an argument(remove it) and init throught the func
 * it possible to implement traits for Vec<u8> for example
+* maybe write into implementation ofr errors to use ? syntax
 
 ### alternative init submodules command
 ```
