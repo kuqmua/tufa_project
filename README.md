@@ -10,6 +10,21 @@
 * it possible to implement traits for Vec<u8> for example
 * maybe write into implementation ofr errors to use ? syntax
 
+#### Location instead of WhereWas
+```
+use core::panic::Location;
+
+#[track_caller]
+fn location() -> Location<'static> {
+    *Location::caller()
+}
+
+fn main() {
+    println!("{:?}", location());
+    println!("{:?}", location());
+}
+```
+
 ### alternative init submodules command
 ```
 git submodule update --init --recursive --checkout
