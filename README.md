@@ -7,6 +7,7 @@
 * format!("{}, ", e)) for error refactor in format tufa_server/src/preparation/check_availability.rs:91:29 error_string
 * it possible to implement traits for Vec<u8> for example
 * maybe write into implementation ofr errors to use ? syntax
+* proc macreo input parameter crate or tufa_common
 
 #### Location instead of WhereWas
 ```
