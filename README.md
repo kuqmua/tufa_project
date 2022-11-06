@@ -8,6 +8,7 @@
 * it possible to implement traits for Vec<u8> for example
 * maybe write into implementation ofr errors to use ? syntax
 * proc macreo input parameter crate or tufa_common
+* use once_cell intead of lazy_static(lazy_static can be initialize only globally)
 
 #### Location instead of WhereWas
 ```
