@@ -9,6 +9,7 @@
 * maybe write into implementation ofr errors to use ? syntax
 * proc macreo input parameter crate or tufa_common
 * use once_cell intead of lazy_static(lazy_static can be initialize only globally)
+* for each field in config - generate trait and his implemetation 
 
 #### Location instead of WhereWas
 ```
