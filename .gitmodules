@@ -94,3 +94,6 @@
 [submodule "src/tufa_grpc_client"]
 	path = src/tufa_grpc_client
 	url = https://github.com/kuqmua/tufa_grpc_client.git
+[submodule "src/proc_macros/generate_gettter_traits_for_struct_fields"]
+	path = src/proc_macros/generate_gettter_traits_for_struct_fields
+	url = git@github.com:kuqmua/generate_gettter_traits_for_struct_fields.git
