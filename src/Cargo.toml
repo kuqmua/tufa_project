@@ -4,6 +4,7 @@ members = [
   "proc_macros/error_display",
   "proc_macros/gen_enum",
   "proc_macros/gen_enum_without_values",
+  "proc_macros/generate_getter_traits_for_struct_fields",
   "proc_macros/git_info",
   "proc_macros/impl_box_err_source_from_err",
   "proc_macros/impl_display",
