@@ -8,7 +8,8 @@
 * it possible to implement traits for Vec<u8> for example
 * maybe write into implementation ofr errors to use ? syntax
 * proc macreo input parameter crate or tufa_common
-* for each field in config - generate trait and his implemetation 
+* think about config field traits
+* once_cell for git info must be a macros
 
 #### Location instead of WhereWas
 ```
