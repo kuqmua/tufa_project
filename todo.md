@@ -191,7 +191,6 @@ fn main() {
   println!("Animal that can purr say {}", PURRING_ANIMAL.make_sound());
 }
 ```
- * some lazy_static can be replaced with const functions
  * Mutex now const(on nightly)
  ```
 use std::sync::Mutex;
