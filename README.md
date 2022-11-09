@@ -10,6 +10,13 @@
 * proc macreo input parameter crate or tufa_common
 * think about config field traits
 * once_cell for git info must be a macros
+* add use trait import in the scope in case of macro like this 
+```
+let f: u32 = {
+    use tufa_common::traits::something::Something;
+    0
+};
+```
 
 #### Location instead of WhereWas
 ```
