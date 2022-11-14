@@ -17,6 +17,7 @@ let f: u32 = {
 };
 ```
 * naming convention for enum variants to parse and know - is it simple error without get where was and get source or get_where_was
+* some logic around location() - maybe generate all other functions -github link and others on compiletime instead of runtime?
 
 #### Location instead of WhereWas
 ```
