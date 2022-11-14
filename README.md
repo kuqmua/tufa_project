@@ -16,6 +16,7 @@ let f: u32 = {
     0
 };
 ```
+* naming convention for enum variants to parse and know - is it simple error without get where was and get source or get_where_was
 
 #### Location instead of WhereWas
 ```
