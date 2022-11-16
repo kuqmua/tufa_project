@@ -62,7 +62,7 @@ cd src/proc_macros/impl_error_with_tracing_for_struct_with_get_source_with_get_w
 cd src/proc_macros/impl_error_with_tracing_for_struct_with_get_source_without_get_where_was && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_error_with_tracing_for_struct_without_get_source && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/impl_get_source_with_method && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_get_source && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_where_was_one_or_many_with_method && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_where_was_one_or_many_one_for_error_struct && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/init_error && git checkout main && cd .. && cd .. && cd .. &&
