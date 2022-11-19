@@ -88,3 +88,6 @@
 [submodule "src/proc_macros/impl_get_where_was_origin_or_wrapper"]
 	path = src/proc_macros/impl_get_where_was_origin_or_wrapper
 	url = git@github.com:kuqmua/impl_get_where_was_origin_or_wrapper.git
+[submodule "src/proc_macros/impl_error_with_tracing"]
+	path = src/proc_macros/impl_error_with_tracing
+	url = git@github.com:kuqmua/impl_error_with_tracing.git
