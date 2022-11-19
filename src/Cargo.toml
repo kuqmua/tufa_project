@@ -8,7 +8,7 @@ members = [
   "proc_macros/generate_getter_traits_for_struct_fields",
   "proc_macros/git_info",
   "proc_macros/impl_box_err_source_from_err",
-  "proc_macros/impl_display_for_simple_error_enum",
+  "proc_macros/impl_display_for_error",
   "proc_macros/impl_error_with_tracing",
   "proc_macros/impl_from_for_upper_struct",
   "proc_macros/impl_get_source",

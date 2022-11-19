@@ -55,7 +55,7 @@ cd src/proc_macros/gen_enum && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/gen_enum_without_values && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/git_info && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/impl_display_for_simple_error_enum && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_display_for_error && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_error_with_tracing && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_source && git checkout main && cd .. && cd .. && cd .. &&
