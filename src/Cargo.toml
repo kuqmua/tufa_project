@@ -6,7 +6,6 @@ members = [
   "proc_macros/gen_enum",
   "proc_macros/gen_enum_without_values",
   "proc_macros/generate_getter_traits_for_struct_fields",
-  "proc_macros/impl_box_err_source_from_err",
   "proc_macros/impl_display_for_error",
   "proc_macros/impl_error_with_tracing",
   "proc_macros/impl_from_for_upper_struct",
