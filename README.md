@@ -19,6 +19,7 @@ let f: u32 = {
 * naming convention for enum variants to parse and know - is it simple error without get where was and get source or get_where_was
 * some logic around location() - maybe generate all other functions -github link and others on compiletime instead of runtime?
 * fix github path from main binary and lib submodule
+* for all function with git_info input parameters - use get_git_info instead 
 
 #### Location instead of WhereWas
 ```
