@@ -76,3 +76,6 @@
 [submodule "src/proc_macros/impl_display_for_error"]
 	path = src/proc_macros/impl_display_for_error
 	url = git@github.com:kuqmua/impl_display_for_error.git
+[submodule "src/proc_macros/impl_get_git_info"]
+	path = src/proc_macros/impl_get_git_info
+	url = git@github.com:kuqmua/impl_get_git_info.git
