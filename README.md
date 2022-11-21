@@ -57,6 +57,7 @@ cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main
 cd src/proc_macros/impl_display_for_error && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_error_with_tracing && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/impl_get_git_info && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_source && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_where_was_origin_or_wrapper && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/init_error && git checkout main && cd .. && cd .. && cd .. &&
