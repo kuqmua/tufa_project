@@ -20,6 +20,7 @@ let f: u32 = {
 * some logic around location() - maybe generate all other functions -github link and others on compiletime instead of runtime?
 * fix github path from main binary and lib submodule
 * for all function with git_info input parameters - use get_git_info instead 
+* to get right github links backtrace in different service through serialization/deserialization - u need to store git_info struct inside error or parts of that to generate github links
 
 #### Location instead of WhereWas
 ```
