@@ -21,7 +21,7 @@ let f: u32 = {
 * fix github path from main binary and lib submodule
 * for all function with git_info input parameters - use get_git_info instead 
 * to get right github links backtrace in different service through serialization/deserialization - u need to store git_info struct inside error or parts of that to generate github links
-* clippy settings token stream 
+* clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
 
 #### Location instead of WhereWas
 ```
