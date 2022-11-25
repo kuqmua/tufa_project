@@ -1,0 +1,11 @@
+# allow-dbg-in-tests                 cyclomatic-complexity-threshold          literal-representation-threshold       too-large-for-stack
+# allow-expect-in-tests              disallowed-macros                        max-fn-params-bools                    too-many-arguments-threshold
+# allow-unwrap-in-tests              disallowed-methods                       max-include-file-size                  too-many-lines-threshold
+# allowed-scripts                    disallowed-names                         max-struct-bools                       trivial-copy-size-limit
+# arithmetic-side-effects-allowed    disallowed-types                         max-suggested-slice-pattern-length     type-complexity-threshold
+# array-size-threshold               doc-valid-idents                         max-trait-bounds                       unreadable-literal-lint-fractions
+# avoid-breaking-exported-api        enable-raw-pointer-heuristic-for-send    msrv                                   upper-case-acronyms-aggressive
+# await-holding-invalid-types        enforced-import-renames                  pass-by-value-size-limit               vec-box-size-threshold
+# blacklisted-names                  enum-variant-name-threshold              single-char-binding-names-threshold    verbose-bit-mask-threshold
+# cargo-ignore-publish               enum-variant-size-threshold              standard-macro-braces                  warn-on-all-wildcard-imports
+# cognitive-complexity-threshold     large-error-threshold                    third-party
