@@ -1,3 +1,5 @@
+avoid-breaking-exported-api = false
+warn-on-all-wildcard-imports = true
 # allow-dbg-in-tests                 cyclomatic-complexity-threshold          literal-representation-threshold       too-large-for-stack
 # allow-expect-in-tests              disallowed-macros                        max-fn-params-bools                    too-many-arguments-threshold
 # allow-unwrap-in-tests              disallowed-methods                       max-include-file-size                  too-many-lines-threshold
