@@ -23,6 +23,11 @@ let f: u32 = {
 * to get right github links backtrace in different service through serialization/deserialization - u need to store git_info struct inside error or parts of that to generate github links
 * clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
 
+### check warning/errors(not the same)
+1. cargo check
+2. cargo clippy
+3. rust-analyzer from vscode extension
+
 #### Location instead of WhereWas
 ```
 use core::panic::Location;
