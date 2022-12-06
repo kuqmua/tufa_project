@@ -43,4 +43,7 @@ macro_rules! my_concat {
     }}
 }
 ```
-
+* one_cell into value
+```
+&once_cell::sync::Lazy::<tufa_common::config_mods::config_struct::ConfigStruct>::into_value(CONFIG).unwrap()
+```
