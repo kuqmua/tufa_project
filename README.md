@@ -1,14 +1,9 @@
 ### todo tomorrow
-* fix where was for github_file_line_column
 * fix proc macro submodules, rename them
-* fix github_file_line_column logic
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
 * format!("{}, ", e)) for error refactor in format tufa_server/src/preparation/check_availability.rs:91:29 error_string
-* it possible to implement traits for Vec<u8> for example
-* maybe write into implementation ofr errors to use ? syntax
 * proc macreo input parameter crate or tufa_common
-* think about config field traits
 * add use trait import in the scope in case of macro like this 
 ```
 let f: u32 = {
@@ -16,12 +11,11 @@ let f: u32 = {
     0
 };
 ```
-* naming convention for enum variants to parse and know - is it simple error without get where was and get source or get_where_was
-* some logic around location() - maybe generate all other functions -github link and others on compiletime instead of runtime?
-* fix github path from main binary and lib submodule
+* some logic around location() file!() line!() column!() - maybe generate all other functions -github link and others on compiletime instead of runtime?
 * for all function with git_info input parameters - use get_git_info instead 
-* to get right github links backtrace in different service through serialization/deserialization - u need to store git_info struct inside error or parts of that to generate github links
 * clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
+* remove CONFIG usage from tufa_common
+* write logic around concurrent_or_parallel_execution_index
 
 ### check warning/errors(not the same)
 1. cargo check
