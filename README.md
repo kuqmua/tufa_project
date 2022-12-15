@@ -46,6 +46,21 @@ git submodule update --init --recursive --checkout
 ```
 cd scripts && git submodule init git_sync_command && git submodule update git_sync_command && cd git_sync_command/ && cargo run && cd .. && cd ..
 ```
+### thoughts about error handling
+variants for vec and hashmap, wrapper and origin must be differenet
+then hashmap occurse - get_source somehow must different, without printing time
+get_source must return parallel prints for hashmap and vec?
+but what need to do if inside hashmap - another hashmap? add some space increment?
+and if its a vec or hashmap -  code occurence must not propagate to parents
+
+time [key] error1
+ tufa_common/src/server/mongo/something1.rs:70:37 
+ tufa_server/src/preparation/something1.rs:92:29
+time [key] error2
+ tufa_common/src/server/mongo/something2.rs:70:37 
+ tufa_server/src/preparation/something2.rs:92:29
+tufa_server/src/preparation/parent.rs:92:29
+tufa_server/src/preparation/parent.rs:45:29
 
 ### init submodules 
 ```
