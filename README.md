@@ -16,6 +16,9 @@ let f: u32 = {
 * clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
 * remove CONFIG usage from tufa_common
 * write logic around concurrent_or_parallel_execution_index
+* hashmap<git_info, file_line_column> - useless for serialization and compression
+* or maybe put git_info vec only in struct for serialization ?
+* must use vec of parallel execution vectors vec;
 
 ### check warning/errors(not the same)
 1. cargo check
