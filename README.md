@@ -19,6 +19,11 @@ let f: u32 = {
 * hashmap<git_info, file_line_column> - useless for serialization and compression
 * or maybe put git_info vec only in struct for serialization ?
 * must use vec of parallel execution vectors vec;
+* rust can compile resursive function and get stackoverflow
+```
+thread 'main' has overflowed its stack
+fatal runtime error: stack overflow
+```
 
 ### check warning/errors(not the same)
 1. cargo check
