@@ -1,7 +1,7 @@
 # Table of contents
-2. [git_sync_command](#heading)
-3. [compile_time_git_info
-4. [enum_extension
+. [git_sync_command](#heading)
+. [compile_time_git_info
+. [enum_extension
 5. [error_display
 6. [gen_enum
 7. [gen_enum_without_values
