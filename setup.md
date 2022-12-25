@@ -53,3 +53,7 @@
 ### tufa_server 
 
 ### tufa_telegram_bot
+#### run
+```
+RUST_LOG=info TELOXIDE_TOKEN="" cargo run
+```
