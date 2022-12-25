@@ -28,6 +28,8 @@
 27. [tufa_server](#heading27) 
 28. [tufa_telegram_bot](#heading28)
 
+<!-- its better to add elements only to the end -->
+
 ### git_sync_command <a name="heading1"/>
 
 ### compile_time_git_info <a name="heading2"/>
@@ -73,10 +75,28 @@
 ### svg_component <a name="heading22"/>
 
 ### tufa_client <a name="heading23"/> 
+```
+cargo install --locked trunk
+```
+```
+rustup target add wasm32-unknown-unknown
+```
+### usage
+```
+trunk serve
+```
+### fonts source
+[link](https://fonts.google.com/)
+### yew highlighting
+https://github.com/Alexandre-Borghi/yew-highlighting
 
 ### tufa_common <a name="heading24"/> 
 
 ### tufa_grpc_client <a name="heading25"/> 
+#### install dependencies
+```
+sudo apt install cmake
+```
 
 ### tufa_grpc_server <a name="heading26"/> 
 
