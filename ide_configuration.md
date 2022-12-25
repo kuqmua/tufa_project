@@ -1,4 +1,4 @@
-### Extensions list
+### VsCode extensions list
 
 * rust-analyzer
 * CodeLLDB
