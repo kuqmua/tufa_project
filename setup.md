@@ -104,7 +104,7 @@ sudo apt install cmake
 sudo apt install cmake
 ```
 
-### tufa_server <a name="heading27"/> 
+## tufa_server <a name="heading27"/> 
 #### tufa_server setup content
 1. [simple route request](#heading271)
 2. [get_providers_posts route request](#heading272)
