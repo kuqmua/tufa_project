@@ -81,6 +81,10 @@
 ### tufa_grpc_server <a name="heading26"/> 
 
 ### tufa_server <a name="heading27"/> 
+#### install dependencies
+```
+sudo apt install cmake
+```
 
 ### tufa_telegram_bot <a name="heading28"/>
 #### run
