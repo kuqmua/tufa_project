@@ -1,95 +1,88 @@
 # Table of contents
 1. [git_sync_command](#heading1)
-1. [compile_time_git_info](#heading1)
-1. [enum_extension](#heading1)
-1. [error_display](#heading1)
-1. [gen_enum](#heading2)
-1. [gen_enum_without_values](#heading3)
-1. [generate_getter_traits_for_struct_fields](#heading)
-1. [impl_display_for_error](#heading)
-1. [impl_error_with_tracing](#heading)
-1. [impl_from_for_upper_struct](#heading)
-1. [impl_get_code_occurence](#heading)
-1. [impl_get_git_info](#heading)
-1. [impl_get_source](#heading)
-1. [impl_get_where_was_origin_or_wrapper](#heading)
-1. [init_error](#heading)
-1. [init_from_env](#heading)
-1. [init_from_env_with_panic_if_failed](#heading)
-1. [proc_macro_helpers](#heading)
-1. [provider_kind_from_config](#heading)
-1. [struct_field_getter](#heading)
-1. [struct_field_setter](#heading)
-1. [svg_component](#heading)
-1. [tufa_client](#heading)
-1. [tufa_common](#heading) 
-1. [tufa_grpc_client](#heading)
-1. [tufa_grpc_server](#heading)
-1. [tufa_server](#heading) 
-1. [tufa_telegram_bot](#heading)
--------------------------------------------
+2. [compile_time_git_info](#heading2)
+3. [enum_extension](#heading3)
+4. [error_display](#heading4)
+5. [gen_enum](#heading5)
+6. [gen_enum_without_values](#heading6)
+7. [generate_getter_traits_for_struct_fields](#heading7)
+8. [impl_display_for_error](#heading8)
+9. [impl_error_with_tracing](#heading9)
+10. [impl_from_for_upper_struct](#heading10)
+11. [impl_get_code_occurence](#heading11)
+12. [impl_get_git_info](#heading12)
+13. [impl_get_source](#heading13)
+14. [impl_get_where_was_origin_or_wrapper](#heading14)
+15. [init_error](#heading15)
+16. [init_from_env](#heading16)
+17. [init_from_env_with_panic_if_failed](#heading17)
+18. [proc_macro_helpers](#heading18)
+19. [provider_kind_from_config](#heading19)
+20. [struct_field_getter](#heading20)
+21. [struct_field_setter](#heading21)
+22. [svg_component](#heading22)
+23. [tufa_client](#heading23)
+24. [tufa_common](#heading24) 
+25. [tufa_grpc_client](#heading25)
+26. [tufa_grpc_server](#heading26)
+27. [tufa_server](#heading27) 
+28. [tufa_telegram_bot](#heading28)
 
-## simple route request <a name="heading1"/>
+### git_sync_command <a name="heading1"/>
 
-## simple route request <a name="heading2"/>
+### compile_time_git_info <a name="heading2"/>
 
-## simple route request <a name="heading3"/>
+### enum_extension <a name="heading3"/>
 
-### git_sync_command
+### error_display <a name="heading4"/>
 
-### compile_time_git_info
+### gen_enum <a name="heading5"/>
 
-### enum_extension
+### gen_enum_without_values <a name="heading6"/>
 
-### error_display
+### generate_getter_traits_for_struct_fields <a name="heading7"/>
 
-### gen_enum
+### impl_display_for_error <a name="heading8"/>
 
-### gen_enum_without_values
+### impl_error_with_tracing <a name="heading9"/>
 
-### generate_getter_traits_for_struct_fields
+### impl_from_for_upper_struct <a name="heading10"/>
 
-### impl_display_for_error
+### impl_get_code_occurence <a name="heading11"/>
 
-### impl_error_with_tracing
+### impl_get_git_info <a name="heading12"/>
 
-### impl_from_for_upper_struct
+### impl_get_source <a name="heading13"/>
 
-### impl_get_code_occurence
+### impl_get_where_was_origin_or_wrapper <a name="heading14"/>
 
-### impl_get_git_info
+### init_error <a name="heading15"/>
 
-### impl_get_source
+### init_from_env <a name="heading16"/>
 
-### impl_get_where_was_origin_or_wrapper
+### init_from_env_with_panic_if_failed <a name="heading17"/>
 
-### init_error
+### proc_macro_helpers <a name="heading18"/>
 
-### init_from_env
+### provider_kind_from_config <a name="heading19"/>
 
-### init_from_env_with_panic_if_failed
+### struct_field_getter <a name="heading20"/>
 
-### proc_macro_helpers
+### struct_field_setter <a name="heading21"/>
 
-### provider_kind_from_config
+### svg_component <a name="heading22"/>
 
-### struct_field_getter
+### tufa_client <a name="heading23"/> 
 
-### struct_field_setter
+### tufa_common <a name="heading24"/> 
 
-### svg_component
+### tufa_grpc_client <a name="heading25"/> 
 
-### tufa_client 
+### tufa_grpc_server <a name="heading26"/> 
 
-### tufa_common 
+### tufa_server <a name="heading27"/> 
 
-### tufa_grpc_client 
-
-### tufa_grpc_server 
-
-### tufa_server 
-
-### tufa_telegram_bot
+### tufa_telegram_bot <a name="heading28"/>
 #### run
 ```
 RUST_LOG=info TELOXIDE_TOKEN="" cargo run
