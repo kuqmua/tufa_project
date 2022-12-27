@@ -1,4 +1,4 @@
-### MOVE IT todo tomorrow
+### MOVE IT todo tomorrow and merge with notes
 * fix proc macro submodules, rename them
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
