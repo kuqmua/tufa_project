@@ -7,4 +7,4 @@
 * Error Lens
 * Tabnine
 * Rust Test Explorer
-
+* activitus bar - icons on bottom panel instead of left
