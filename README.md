@@ -24,6 +24,7 @@ let f: u32 = {
 thread 'main' has overflowed its stack
 fatal runtime error: stack overflow
 ```
+* todos with github links on place to do
 
 ### check warning/errors(not the same)
 1. cargo check
