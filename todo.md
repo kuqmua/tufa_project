@@ -222,3 +222,4 @@ and need to give users possibility to add additional words/phrases to describe i
 * move traits into own repository to reuse them properly
 * use https://crates.io/crates/serde_yaml to control deps versions and features in different repos
 * script\program for recursive submodule and repo git syncronization
+* add api route to return info about all api routes map/tree in current service
