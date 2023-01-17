@@ -25,6 +25,7 @@ thread 'main' has overflowed its stack
 fatal runtime error: stack overflow
 ```
 * todos with github links on place to do
+* try to implement message stack with display
 
 ### check warning/errors(not the same)
 1. cargo check
