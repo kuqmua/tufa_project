@@ -52,3 +52,4 @@ macro_rules! my_concat {
 ```
 cargo expand something::something --lib > generated.rs
 ```
+* [rust type state builder pattern](https://github.com/jeremychone-channel/rust-builder)
