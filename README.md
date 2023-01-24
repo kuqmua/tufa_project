@@ -25,7 +25,7 @@ thread 'main' has overflowed its stack
 fatal runtime error: stack overflow
 ```
 * todos with github links on place to do
-* try to implement message stack with display
+* impl error trait for errors + hostname, pid, ip, port must be inside error struct to show properly error stack on different service
 
 ### check warning/errors(not the same)
 1. cargo check
