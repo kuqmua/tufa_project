@@ -15,16 +15,10 @@ let f: u32 = {
 * for all function with git_info input parameters - use get_git_info instead 
 * clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
 * remove CONFIG usage from tufa_common
-* hashmap<git_info, file_line_column> - useless for serialization and compression
-* or maybe put git_info vec only in struct for serialization ?
 * must use vec of parallel execution vectors vec;
 * rust can compile resursive function and get stackoverflow
-```
-thread 'main' has overflowed its stack
-fatal runtime error: stack overflow
-```
 * todos with github links on place to do
-* impl error trait for errors + hostname, pid, ip, port must be inside error struct to show properly error stack on different service
+* implements two different methods for code_ocurence with github and just project source. display only for simple impl
 
 ### check warning/errors(not the same)
 1. cargo check
