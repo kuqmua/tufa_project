@@ -71,6 +71,7 @@ git submodule init && git submodule update &&
 cd scripts/git_sync_command && git checkout main && cd .. && cd .. &&
 cd src/proc_macros/enum_extension && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/error_display && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/error_occurence && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/gen_enum && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/gen_enum_without_values && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main && cd .. && cd .. && cd .. &&

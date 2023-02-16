@@ -27,6 +27,7 @@
 26. [tufa_grpc_server](#heading26)
 27. [tufa_server](#heading27) 
 28. [tufa_telegram_bot](#heading28)
+29. [error_occurence](#heading29)
 
 <!-- its better to add elements only to the end -->
 
@@ -74,7 +75,9 @@
 
 ## svg_component <a name="heading22"/>
 
-## tufa_client <a name="heading23"/> 
+## tufa_client <a name="heading23"/>
+
+## error_occurence <a name="heading29"/> 
 ```
 cargo install --locked trunk
 ```

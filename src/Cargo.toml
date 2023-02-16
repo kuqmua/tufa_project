@@ -3,6 +3,7 @@ members = [
   "proc_macros/compile_time_git_info",
   "proc_macros/enum_extension",
   "proc_macros/error_display",
+  "proc_macros/error_occurence",
   "proc_macros/gen_enum",
   "proc_macros/gen_enum_without_values",
   "proc_macros/generate_getter_traits_for_struct_fields",
