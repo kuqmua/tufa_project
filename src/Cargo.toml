@@ -30,3 +30,7 @@ members = [
 # exclude = [
 #   "your_exclude_member_here",
 # ]
+
+#this flag make cargo download crates faster
+[registries.crates.io]
+protocol = "sparse"
