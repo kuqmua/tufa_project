@@ -88,6 +88,8 @@ cd src/proc_macros/provider_kind_from_config && git checkout main && cd .. && cd
 cd src/proc_macros/struct_field_getter && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/struct_field_setter && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/compile_time_check_line_break && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/compile_time_git_info && git checkout main && cd .. && cd .. cd .. &&
 cd src/tufa_client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
