@@ -85,6 +85,3 @@
 [submodule "src/proc_macros/error_occurence"]
 	path = src/proc_macros/error_occurence
 	url = git@github.com:kuqmua/error_occurence.git
-[submodule "src/proc_macros/compile_time_check_line_break"]
-	path = src/proc_macros/compile_time_check_line_break
-	url = git@github.com:kuqmua/compile_time_check_line_break.git

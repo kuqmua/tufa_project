@@ -28,7 +28,6 @@
 27. [tufa_server](#heading27) 
 28. [tufa_telegram_bot](#heading28)
 29. [error_occurence](#heading29)
-30. [compile_time_check_line_break](#heading30)
 
 <!-- its better to add elements only to the end -->
 
@@ -80,7 +79,6 @@
 
 ## error_occurence <a name="heading29"/> 
 
-## compile_time_check_line_break <a name="heading30"/> 
 ```
 cargo install --locked trunk
 ```
