@@ -79,7 +79,6 @@ cd src/proc_macros/impl_display_for_error && git checkout main && cd .. && cd ..
 cd src/proc_macros/impl_from_for_upper_struct && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_git_info && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/impl_get_source && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/init_from_env_with_panic_if_failed && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/provider_kind_from_config && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/struct_field_getter && git checkout main && cd .. && cd .. cd .. &&
