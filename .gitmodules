@@ -31,9 +31,6 @@
 [submodule "src/proc_macros/enum_extension"]
 	path = src/proc_macros/enum_extension
 	url = https://github.com/kuqmua/enum_extension.git
-[submodule "src/proc_macros/struct_field_getter"]
-	path = src/proc_macros/struct_field_getter
-	url = https://github.com/kuqmua/struct_field_getter.git
 [submodule "src/proc_macros/proc_macro_helpers"]
 	path = src/proc_macros/proc_macro_helpers
 	url = https://github.com/kuqmua/proc_macro_helpers.git

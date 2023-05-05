@@ -11,7 +11,6 @@ members = [
   "proc_macros/impl_get_git_info",
   "proc_macros/init_from_env_with_panic_if_failed",
   "proc_macros/provider_kind_from_config",
-  "proc_macros/struct_field_getter",
   "proc_macros/svg_component",
   "tufa_client",
   "tufa_common",
