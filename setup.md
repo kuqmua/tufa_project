@@ -2,7 +2,6 @@
 1. [git_sync_command](#heading1)
 2. [compile_time_git_info](#heading2)
 3. [enum_extension](#heading3)
-4. [error_display](#heading4)
 5. [gen_enum](#heading5)
 6. [gen_enum_without_values](#heading6)
 7. [generate_getter_traits_for_struct_fields](#heading7)
@@ -25,8 +24,6 @@
 ## compile_time_git_info <a name="heading2"/>
 
 ## enum_extension <a name="heading3"/>
-
-## error_display <a name="heading4"/>
 
 ## gen_enum <a name="heading5"/>
 

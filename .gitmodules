@@ -13,9 +13,6 @@
 [submodule "src/tufa_telegram_bot"]
 	path = src/tufa_telegram_bot
 	url = https://github.com/kuqmua/tufa_telegram_bot.git
-[submodule "src/proc_macros/error_display"]
-	path = src/proc_macros/error_display
-	url = https://github.com/kuqmua/error_display.git
 [submodule "src/proc_macros/gen_enum"]
 	path = src/proc_macros/gen_enum
 	url = https://github.com/kuqmua/gen_enum.git
