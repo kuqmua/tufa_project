@@ -7,7 +7,6 @@
 6. [gen_enum_without_values](#heading6)
 7. [generate_getter_traits_for_struct_fields](#heading7)
 8. [impl_display_for_error](#heading8)
-10. [impl_from_for_upper_struct](#heading10)
 11. [impl_get_code_occurence](#heading11)
 12. [impl_get_git_info](#heading12)
 13. [impl_get_source](#heading13)
@@ -42,8 +41,6 @@
 ## generate_getter_traits_for_struct_fields <a name="heading7"/>
 
 ## impl_display_for_error <a name="heading8"/>
-
-## impl_from_for_upper_struct <a name="heading10"/>
 
 ## impl_get_code_occurence <a name="heading11"/>
 

@@ -22,9 +22,6 @@
 [submodule "src/proc_macros/gen_enum_without_values"]
 	path = src/proc_macros/gen_enum_without_values
 	url = https://github.com/kuqmua/gen_enum_without_values.git
-[submodule "src/proc_macros/impl_from_for_upper_struct"]
-	path = src/proc_macros/impl_from_for_upper_struct
-	url = https://github.com/kuqmua/impl_from_for_upper_struct.git
 [submodule "src/proc_macros/provider_kind_from_config"]
 	path = src/proc_macros/provider_kind_from_config
 	url = https://github.com/kuqmua/provider_kind_from_config.git
