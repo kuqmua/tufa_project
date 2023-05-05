@@ -11,7 +11,6 @@
 11. [impl_get_code_occurence](#heading11)
 12. [impl_get_git_info](#heading12)
 13. [impl_get_source](#heading13)
-15. [init_error](#heading15)
 16. [init_from_env](#heading16)
 17. [init_from_env_with_panic_if_failed](#heading17)
 18. [proc_macro_helpers](#heading18)
@@ -52,8 +51,6 @@
 ## impl_get_git_info <a name="heading12"/>
 
 ## impl_get_source <a name="heading13"/>
-
-## init_error <a name="heading15"/>
 
 ## init_from_env <a name="heading16"/>
 

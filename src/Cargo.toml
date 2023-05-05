@@ -11,7 +11,6 @@ members = [
   "proc_macros/impl_from_for_upper_struct",
   "proc_macros/impl_get_git_info",
   "proc_macros/impl_get_source",
-  "proc_macros/init_error",
   "proc_macros/init_from_env",
   "proc_macros/init_from_env_with_panic_if_failed",
   "proc_macros/provider_kind_from_config",
