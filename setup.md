@@ -12,7 +12,6 @@
 18. [proc_macro_helpers](#heading18)
 19. [provider_kind_from_config](#heading19)
 20. [struct_field_getter](#heading20)
-21. [struct_field_setter](#heading21)
 22. [svg_component](#heading22)
 23. [tufa_client](#heading23)
 24. [tufa_common](#heading24) 
@@ -49,8 +48,6 @@
 ## provider_kind_from_config <a name="heading19"/>
 
 ## struct_field_getter <a name="heading20"/>
-
-## struct_field_setter <a name="heading21"/>
 
 ## svg_component <a name="heading22"/>
 

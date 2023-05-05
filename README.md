@@ -80,7 +80,6 @@ cd src/proc_macros/impl_get_git_info && git checkout main && cd .. && cd .. && c
 cd src/proc_macros/init_from_env_with_panic_if_failed && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/provider_kind_from_config && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/struct_field_getter && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/struct_field_setter && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/compile_time_git_info && git checkout main && cd .. && cd .. cd .. &&
 cd src/tufa_client && git checkout main && cd .. &&  cd .. &&
