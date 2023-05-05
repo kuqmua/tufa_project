@@ -6,7 +6,6 @@
 5. [gen_enum](#heading5)
 6. [gen_enum_without_values](#heading6)
 7. [generate_getter_traits_for_struct_fields](#heading7)
-8. [impl_display_for_error](#heading8)
 17. [init_from_env_with_panic_if_failed](#heading17)
 18. [proc_macro_helpers](#heading18)
 19. [provider_kind_from_config](#heading19)
@@ -34,8 +33,6 @@
 ## gen_enum_without_values <a name="heading6"/>
 
 ## generate_getter_traits_for_struct_fields <a name="heading7"/>
-
-## impl_display_for_error <a name="heading8"/>
 
 ## init_from_env_with_panic_if_failed <a name="heading17"/>
 
