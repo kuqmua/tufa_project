@@ -13,12 +13,6 @@
 [submodule "src/tufa_telegram_bot"]
 	path = src/tufa_telegram_bot
 	url = https://github.com/kuqmua/tufa_telegram_bot.git
-[submodule "src/proc_macros/gen_enum"]
-	path = src/proc_macros/gen_enum
-	url = https://github.com/kuqmua/gen_enum.git
-[submodule "src/proc_macros/gen_enum_without_values"]
-	path = src/proc_macros/gen_enum_without_values
-	url = https://github.com/kuqmua/gen_enum_without_values.git
 [submodule "src/proc_macros/provider_kind_from_config"]
 	path = src/proc_macros/provider_kind_from_config
 	url = https://github.com/kuqmua/provider_kind_from_config.git

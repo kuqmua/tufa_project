@@ -2,8 +2,6 @@
 1. [git_sync_command](#heading1)
 2. [compile_time_git_info](#heading2)
 3. [enum_extension](#heading3)
-5. [gen_enum](#heading5)
-6. [gen_enum_without_values](#heading6)
 7. [generate_getter_traits_for_struct_fields](#heading7)
 17. [init_from_env_with_panic_if_failed](#heading17)
 18. [proc_macro_helpers](#heading18)
@@ -24,10 +22,6 @@
 ## compile_time_git_info <a name="heading2"/>
 
 ## enum_extension <a name="heading3"/>
-
-## gen_enum <a name="heading5"/>
-
-## gen_enum_without_values <a name="heading6"/>
 
 ## generate_getter_traits_for_struct_fields <a name="heading7"/>
 
