@@ -5,7 +5,6 @@
 7. [generate_getter_traits_for_struct_fields](#heading7)
 17. [init_from_env_with_panic_if_failed](#heading17)
 18. [proc_macro_helpers](#heading18)
-19. [provider_kind_from_config](#heading19)
 22. [svg_component](#heading22)
 23. [tufa_client](#heading23)
 24. [tufa_common](#heading24) 
@@ -28,8 +27,6 @@
 ## init_from_env_with_panic_if_failed <a name="heading17"/>
 
 ## proc_macro_helpers <a name="heading18"/>
-
-## provider_kind_from_config <a name="heading19"/>
 
 ## svg_component <a name="heading22"/>
 
