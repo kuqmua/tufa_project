@@ -40,3 +40,6 @@
 [submodule "src/proc_macros/error_occurence"]
 	path = src/proc_macros/error_occurence
 	url = git@github.com:kuqmua/error_occurence.git
+[submodule "src/proc_macros/user_port_try_from_u16"]
+	path = src/proc_macros/user_port_try_from_u16
+	url = git@github.com:kuqmua/user_port_try_from_u16.git
