@@ -6,6 +6,7 @@ members = [
   "proc_macros/generate_getter_traits_for_struct_fields",
   "proc_macros/init_from_env_with_panic_if_failed",
   "proc_macros/svg_component",
+  "proc_macros/user_port_try_from_u16",
   "tufa_client",
   "tufa_common",
   "tufa_server",

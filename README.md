@@ -75,6 +75,7 @@ cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main
 cd src/proc_macros/init_from_env_with_panic_if_failed && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/compile_time_git_info && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/user_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
 cd src/tufa_client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
