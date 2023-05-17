@@ -45,7 +45,7 @@ macro_rules! my_concat {
 ```
 * one_cell into value
 ```
-&once_cell::sync::Lazy::<tufa_common::config_mods::config_struct::ConfigStruct>::into_value(CONFIG).unwrap()
+&once_cell::sync::Lazy::<tufa_common::config_mods::config_struct::Config>::into_value(CONFIG).unwrap()
 ```
 * [nine rules for creating procedural macros in rust(carl kadie)](https://www.youtube.com/watch?v=zkk0Hyzm30E&list=WL&index=175&t=1132s)
 * cargo expand can put generated content into file
