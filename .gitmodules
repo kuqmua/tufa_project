@@ -22,9 +22,6 @@
 [submodule "src/proc_macros/proc_macro_helpers"]
 	path = src/proc_macros/proc_macro_helpers
 	url = https://github.com/kuqmua/proc_macro_helpers.git
-[submodule "src/proc_macros/init_from_env_with_panic_if_failed"]
-	path = src/proc_macros/init_from_env_with_panic_if_failed
-	url = https://github.com/kuqmua/init_from_env_with_panic_if_failed.git
 [submodule "src/tufa_grpc_server"]
 	path = src/tufa_grpc_server
 	url = https://github.com/kuqmua/tufa_grpc_server.git
@@ -43,3 +40,6 @@
 [submodule "src/proc_macros/user_port_try_from_u16"]
 	path = src/proc_macros/user_port_try_from_u16
 	url = git@github.com:kuqmua/user_port_try_from_u16.git
+[submodule "src/proc_macros/init_from_env"]
+	path = src/proc_macros/init_from_env
+	url = https://github.com/kuqmua/init_from_env.git
