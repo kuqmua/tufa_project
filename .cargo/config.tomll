@@ -227,7 +227,7 @@
 #   "-Dclippy::inline_fn_without_body",
 #   "-Dclippy::inspect_for_each",
 #   "-Dclippy::int_plus_one",
-#   "-Dclippy::integer_arithmetic",
+#   "-Dclippy::arithmetic_side_effects,
 #   "-Dclippy::integer_division",
 #   "-Dclippy::into_iter_on_ref",
 #   "-Dclippy::invalid_null_ptr_usage",
