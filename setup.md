@@ -33,10 +33,6 @@
 
 ## tufa_client <a name="heading23"/>
 
-## error_occurence <a name="heading29"/> 
-
-## user_port_try_from_u16 <a name="heading30"/> 
-
 ```
 cargo install --locked trunk
 ```
@@ -51,6 +47,11 @@ trunk serve
 [link](https://fonts.google.com/)
 #### yew highlighting
 https://github.com/Alexandre-Borghi/yew-highlighting
+
+
+## error_occurence <a name="heading29"/> 
+
+## user_port_try_from_u16 <a name="heading30"/> 
 
 ## tufa_common <a name="heading24"/> 
 
