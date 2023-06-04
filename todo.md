@@ -492,9 +492,6 @@ type = ....
 * wrap blocking diesel function into spawn blocking under tokio runtime
 (rustacean station - tokio ecosystem with alice ryhl) 24:30
 
-* Common projects constants as lazy static to reuse
-Them inside parent modules
-  
 * procedural macros for config fields like vec![]. with correct naming require
 without typed enums
 like 
