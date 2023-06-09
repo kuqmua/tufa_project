@@ -119,3 +119,5 @@ cargo expand your::path::to::module --lib
 ### [all algorithms written in rust](https://github.com/TheAlgorithms/Rust)
 
 ### [use AI in with rust](https://youtu.be/StMP7g-0wK4)
+
+### do not compile program if there is no explecit version of dependencies. proc macro open cargo toml files
