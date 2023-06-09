@@ -14,6 +14,7 @@
 28. [tufa_telegram_bot](#heading28)
 29. [error_occurence](#heading29)
 30. [user_port_try_from_u16](#heading30)
+31. [check_specific_dependency_version_usage](#heading31)
 
 <!-- its better to add elements only to the end -->
 
@@ -52,6 +53,8 @@ https://github.com/Alexandre-Borghi/yew-highlighting
 ## error_occurence <a name="heading29"/> 
 
 ## user_port_try_from_u16 <a name="heading30"/> 
+
+## check_specific_dependency_version_usage <a name="heading31"/> 
 
 ## tufa_common <a name="heading24"/> 
 

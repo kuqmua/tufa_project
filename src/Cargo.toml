@@ -1,5 +1,6 @@
 [workspace]
 members = [
+  "proc_macros/check_specific_dependency_version_usage",
   "proc_macros/compile_time_git_info",
   "proc_macros/enum_extension",
   "proc_macros/error_occurence",
