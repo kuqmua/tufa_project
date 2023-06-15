@@ -1202,4 +1202,6 @@ https://youtu.be/JkSa-qA2jnY
 
 * https://github.com/baptiste0928/cargo-install
 
+* maybe use std::any::type_name::<>() for printing type names
+
 //end server thoughts
