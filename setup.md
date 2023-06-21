@@ -15,6 +15,7 @@
 29. [error_occurence](#heading29)
 30. [user_port_try_from_u16](#heading30)
 31. [check_specific_dependency_version_usage](#heading31)
+32. [from_sqlx_postgres_error](#heading32)
 
 <!-- its better to add elements only to the end -->
 

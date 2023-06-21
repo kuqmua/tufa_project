@@ -71,6 +71,7 @@ git submodule init && git submodule update &&
 cd scripts/git_sync_command && git checkout main && cd .. && cd .. &&
 cd src/proc_macros/enum_extension && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/error_occurence && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/from_sqlx_postgres_error && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
