@@ -16,6 +16,7 @@
 30. [user_port_try_from_u16](#heading30)
 31. [check_specific_dependency_version_usage](#heading31)
 32. [from_sqlx_postgres_error](#heading32)
+32. [from_enum](#heading33)
 
 <!-- its better to add elements only to the end -->
 
@@ -56,6 +57,8 @@ https://github.com/Alexandre-Borghi/yew-highlighting
 ## user_port_try_from_u16 <a name="heading30"/> 
 
 ## check_specific_dependency_version_usage <a name="heading31"/> 
+
+## from_enum <a name="heading33"/> 
 
 ## tufa_common <a name="heading24"/> 
 
