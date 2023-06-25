@@ -8,6 +8,7 @@ members = [
   "proc_macros/from_sqlx_postgres_error",
   "proc_macros/generate_getter_traits_for_struct_fields",
   "proc_macros/init_from_env",
+  "proc_macros/into_actix_web_http_response",
   "proc_macros/svg_component",
   "proc_macros/user_port_try_from_u16",
   "tufa_client",

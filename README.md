@@ -75,6 +75,7 @@ cd src/proc_macros/from_enum && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/from_sqlx_postgres_error && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. && cd .. &&
+cd src/proc_macros/into_actix_web_http_response && git checkout main && cd .. && cd .. && cd .. &&
 cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/check_specific_dependency_version_usage && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/compile_time_git_info && git checkout main && cd .. && cd .. cd .. &&
