@@ -549,8 +549,6 @@ https://rust-lang.github.io/rust-clippy/master/#await_holding_lock
 * add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
   
 * https://blog.turbo.fish/proc-macro-error-handling/
-  
-* web-server library-agnostic modules architecture. must add actix, rocket, warp, axum
 
 * actix-web html + session-based-authentication
 https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
