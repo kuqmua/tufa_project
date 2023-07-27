@@ -17,7 +17,6 @@
 31. [check_specific_dependency_version_usage](#heading31)
 32. [from_sqlx_postgres_error](#heading32)
 32. [from_enum](#heading33)
-33. [into_actix_web_http_response](#heading34)
 34. [type_variants_from_reqwest_response](#heading35)
 
 <!-- its better to add elements only to the end -->
