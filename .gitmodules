@@ -49,9 +49,6 @@
 [submodule "src/proc_macros/from_sqlx_postgres_error"]
 	path = src/proc_macros/from_sqlx_postgres_error
 	url = git@github.com:kuqmua/from_sqlx_postgres_error.git
-[submodule "src/proc_macros/from_enum"]
-	path = src/proc_macros/from_enum
-	url = git@github.com:kuqmua/from_enum.git
 [submodule "src/proc_macros/type_variants_from_reqwest_response"]
 	path = src/proc_macros/type_variants_from_reqwest_response
 	url = git@github.com:kuqmua/type_variants_from_reqwest_response.git
