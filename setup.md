@@ -431,3 +431,13 @@ cargo run -q | bunyan
 ```
 RUST_LOG=info TELOXIDE_TOKEN="" cargo run
 ```
+
+#### prepare run scripts like with npm
+```
+cargo install cargo-run-script
+```
+
+#### run custom cargo package.metadata.script
+```
+cargo run-script *script name*
+```
