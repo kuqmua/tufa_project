@@ -6,6 +6,7 @@ members = [
   "proc_macros/error_occurence",
   "proc_macros/from_sqlx_postgres_error",
   "proc_macros/generate_getter_traits_for_struct_fields",
+  "proc_macros/generate_postgresql_crud",
   "proc_macros/init_from_env",
   "proc_macros/type_variants_from_reqwest_response",
   "proc_macros/svg_component",

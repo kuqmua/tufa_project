@@ -3,6 +3,7 @@
 2. [compile_time_git_info](#heading2)
 3. [enum_extension](#heading3)
 7. [generate_getter_traits_for_struct_fields](#heading7)
+8. [generate_postgresql_crud](#heading8)
 17. [init_from_env](#heading17)
 18. [proc_macro_helpers](#heading18)
 22. [svg_component](#heading22)
@@ -27,6 +28,8 @@
 ## enum_extension <a name="heading3"/>
 
 ## generate_getter_traits_for_struct_fields <a name="heading7"/>
+
+## generate_postgresql_crud <a name="heading8"/>
 
 ## init_from_env <a name="heading17"/>
 
