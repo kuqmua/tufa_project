@@ -739,11 +739,6 @@ Find out why its triggers for tokio:main functions
 
 * find out how tokio runtime works if there is no join all method and will it be actuall in parallel or not
 
-* Compile on save
-```
-cargo watch -q -c -x run 
-```
-    
 * add stackoverflow provider
 https://stackoverflow.com/feeds/question/23412033
     
