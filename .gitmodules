@@ -3,31 +3,31 @@
 	url = git@github.com:kuqmua/git_sync_command.git
 [submodule "src/tufa_client"]
 	path = src/tufa_client
-	url = https://github.com/kuqmua/tufa_client.git
+	url = git@github.com:kuqmua/tufa_client.git
 [submodule "src/tufa_common"]
 	path = src/tufa_common
-	url = https://github.com/kuqmua/tufa_common.git
+	url = git@github.com:kuqmua/tufa_common.git
 [submodule "src/tufa_server"]
 	path = src/tufa_server
-	url = https://github.com/kuqmua/tufa_server.git
+	url = git@github.com:kuqmua/tufa_server.git
 [submodule "src/tufa_telegram_bot"]
 	path = src/tufa_telegram_bot
-	url = https://github.com/kuqmua/tufa_telegram_bot.git
+	url = git@github.com:kuqmua/tufa_telegram_bot.git
 [submodule "src/proc_macros/svg_component"]
 	path = src/proc_macros/svg_component
-	url = https://github.com/kuqmua/svg_component.git
+	url = git@github.com:kuqmua/svg_component.git
 [submodule "src/proc_macros/enum_extension"]
 	path = src/proc_macros/enum_extension
-	url = https://github.com/kuqmua/enum_extension.git
+	url = git@github.com:kuqmua/enum_extension.git
 [submodule "src/proc_macros/proc_macro_helpers"]
 	path = src/proc_macros/proc_macro_helpers
-	url = https://github.com/kuqmua/proc_macro_helpers.git
+	url = git@github.com:kuqmua/proc_macro_helpers.git
 [submodule "src/tufa_grpc_server"]
 	path = src/tufa_grpc_server
-	url = https://github.com/kuqmua/tufa_grpc_server.git
+	url = git@github.com:kuqmua/tufa_grpc_server.git
 [submodule "src/tufa_grpc_client"]
 	path = src/tufa_grpc_client
-	url = https://github.com/kuqmua/tufa_grpc_client.git
+	url = git@github.com:kuqmua/tufa_grpc_client.git
 [submodule "src/proc_macros/generate_getter_traits_for_struct_fields"]
 	path = src/proc_macros/generate_getter_traits_for_struct_fields
 	url = git@github.com:kuqmua/generate_getter_traits_for_struct_fields.git
@@ -42,7 +42,7 @@
 	url = git@github.com:kuqmua/user_port_try_from_u16.git
 [submodule "src/proc_macros/init_from_env"]
 	path = src/proc_macros/init_from_env
-	url = https://github.com/kuqmua/init_from_env.git
+	url = git@github.com:kuqmua/init_from_env.git
 [submodule "src/proc_macros/check_specific_dependency_version_usage"]
 	path = src/proc_macros/check_specific_dependency_version_usage
 	url = git@github.com:kuqmua/check_specific_dependency_version_usage.git
