@@ -55,3 +55,6 @@
 [submodule "src/proc_macros/generate_postgresql_crud"]
 	path = src/proc_macros/generate_postgresql_crud
 	url = git@github.com:kuqmua/generate_postgresql_crud.git
+[submodule "src/proc_macros/from_str"]
+	path = src/proc_macros/from_str
+	url = git@github.com:kuqmua/from_str.git
