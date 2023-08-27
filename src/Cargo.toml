@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 members = [
   "proc_macros/check_specific_dependency_version_usage",
   "proc_macros/compile_time_git_info",
