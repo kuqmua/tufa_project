@@ -52,3 +52,49 @@ cargo expand something::something --lib > generated.rs
 * [5 Better ways to code in Rust](https://www.youtube.com/watch?v=BU1LYFkpJuk)
 
 * [crate to validate string length and other values](https://crates.io/crates/validator)
+
+* const check init
+
+```
+#![feature(inline_const)]
+
+struct S{ 
+    one: std::string::String,
+    two: i32
+}
+impl S {
+    pub fn new(one: &str, two: i32) -> Self {
+        //case2 - error[E0435]: attempt to use a non-constant value in a constant
+        // let one = const { S::one_not_batman(one) };
+        // let two = const { S::two_not_negative(two) };
+        S{
+            one: one.to_string(),
+            two
+        }
+    }
+    pub const fn one_not_batman(one: &str) -> &str {
+        if matches!(one.as_bytes(), b"batman") {
+            panic!("one can't be a batman")
+        }
+        one
+    }
+    pub const fn two_not_negative(two: i32) -> i32 {
+        if two <= 0 {
+            panic!("two can't be a negative")
+        }
+        two
+    }
+}
+fn main() {
+    //case1 - works
+    // let _s = S::new(
+    //     const { S::one_not_batman("notbatman") },
+    //     const { S::two_not_negative(1) }
+    // );
+    //case2
+    let _s = S::new(
+        "notbatman",
+        10
+    );
+}
+```
