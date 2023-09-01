@@ -63,6 +63,7 @@ struct S{
     two: i32
 }
 impl S {
+    #[must_use]
     pub fn new(one: &str, two: i32) -> Self {
         //case2 - error[E0435]: attempt to use a non-constant value in a constant
         // let one = const { S::one_not_batman(one) };

@@ -659,13 +659,6 @@ Rc::new(<RefCell::new(Data { value: 42}))
 
 * 
 ```
-impl UserCredentialsStruct {
-    pub fn new() -> Result<Self, ConfigError> {
-        maybe add different user logic later ?
-```
-
-* 
-```
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
 Finished dev [unoptimized + debuginfo] target(s) in 0.10s
@@ -868,6 +861,7 @@ enum CreationError {
     Zero,
 }
 impl PositiveNonzeroInteger {
+    #[must_use]
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
         match value {
             x if x < 0 => Err(CreationError::Negative),
