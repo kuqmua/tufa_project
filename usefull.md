@@ -99,3 +99,44 @@ fn main() {
     );
 }
 ```
+
+* next iteration of const init
+
+```
+#![feature(inline_const)]
+mod something {
+    #[allow(dead_code)]
+    pub struct Something {
+        one: std::string::String,
+        two: i32,
+    }
+    pub struct One<'a>(&'a str);
+    pub struct Two(i32);
+    impl Something {
+        pub fn new(one: One<'_>, two: Two) -> Self {
+            Self {
+                one: one.0.to_string(),
+                two: two.0,
+            }
+        }
+        pub const fn one_not_batman(one: &str) -> One<'_> {
+            if matches!(one.as_bytes(), b"batman") {
+                panic!("one can't be a batman")
+            }
+            One(one)
+        }
+        pub const fn two_not_negative(two: i32) -> Two {
+            if two <= 0 {
+                panic!("two can't be a negative")
+            }
+            Two(two)
+        }
+    }
+}
+fn main() {
+    let _s = something::Something::new(
+        const { something::Something::one_not_batman("notbatman") },
+        const { something::Something::two_not_negative(1) },
+    );
+}
+```
