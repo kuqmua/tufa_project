@@ -107,37 +107,82 @@ fn main() {
 #![feature(inline_const)]
 mod something {
     #[allow(dead_code)]
+    #[derive(Debug)]
     pub struct Something {
         one: std::string::String,
         two: i32,
     }
-    pub struct One<'a>(&'a str);
-    pub struct Two(i32);
+    pub struct InputCheckedSomething<'a> {
+        one: &'a str,
+        two: i32,
+    }
+    pub struct UncheckedSomething<'a> {
+        pub one: &'a str,
+        pub two: i32,
+    }
+    #[derive(Debug)]
+    pub enum SomethingError {
+        IsBatman,
+        IsNegative,
+    }
     impl Something {
-        pub fn new(one: One<'_>, two: Two) -> Self {
+        const fn check(value: UncheckedSomething) -> Result<UncheckedSomething, SomethingError> {
+            if matches!(value.one.as_bytes(), b"batman") {
+                return Err(SomethingError::IsBatman);
+            }
+            if value.two <= 0 {
+                return Err(SomethingError::IsNegative);
+            }
+            Ok(value)
+        }
+        pub fn runtime_new_with_compile_time_check(value: InputCheckedSomething) -> Self {
             Self {
-                one: one.0.to_string(),
-                two: two.0,
+                one: value.one.to_string(),
+                two: value.two,
             }
         }
-        pub const fn one_not_batman(one: &str) -> One<'_> {
-            if matches!(one.as_bytes(), b"batman") {
-                panic!("one can't be a batman")
+        pub fn try_run_time_new_with_runtime_check(
+            unchecked_value: UncheckedSomething,
+        ) -> Result<Self, SomethingError> {
+            match Self::check(unchecked_value) {
+                Ok(value) => Ok(Self {
+                    one: value.one.to_string(),
+                    two: value.two,
+                }),
+                Err(e) => Err(e),
             }
-            One(one)
         }
-        pub const fn two_not_negative(two: i32) -> Two {
-            if two <= 0 {
-                panic!("two can't be a negative")
+        pub const fn compile_time_check(
+            unchecked_value: UncheckedSomething,
+        ) -> InputCheckedSomething {
+            match Self::check(unchecked_value) {
+                Ok(value) => InputCheckedSomething {
+                    one: value.one,
+                    two: value.two,
+                },
+                Err(e) => match e {
+                    SomethingError::IsBatman => panic!("is batman"),
+                    SomethingError::IsNegative => panic!("is negative"),
+                },
             }
-            Two(two)
         }
     }
 }
 fn main() {
-    let _s = something::Something::new(
-        const { something::Something::one_not_batman("notbatman") },
-        const { something::Something::two_not_negative(1) },
+    let _compile_time_params_check = something::Something::runtime_new_with_compile_time_check(
+        const {
+            something::Something::compile_time_check(something::UncheckedSomething {
+                one: "notbatman",
+                two: 1,
+            })
+        },
     );
+    let _runtime_params_check =
+        something::Something::try_run_time_new_with_runtime_check(something::UncheckedSomething {
+            one: "notbatman",
+            two: 1,
+        })
+        .unwrap();
+    println!("123");
 }
 ```
