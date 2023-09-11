@@ -42,6 +42,7 @@ macro_rules! my_concat {
         unsafe { core::str::from_utf8_unchecked(&CONCAT_BUF.0)}
     }}
 }
+```
 * [nine rules for creating procedural macros in rust(carl kadie)](https://www.youtube.com/watch?v=zkk0Hyzm30E&list=WL&index=175&t=1132s)
 * cargo expand can put generated content into file
 ```
