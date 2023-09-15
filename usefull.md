@@ -186,3 +186,5 @@ fn main() {
     println!("123");
 }
 ```
+
+* -- create or update operation i think is irrelevant coz i think its not working properly with GENERATED ALWAYS AS IDENTITY PRIMARY KEY
