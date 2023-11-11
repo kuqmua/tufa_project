@@ -17,9 +17,8 @@ members = [
   "tufa_common",
   "tufa_server",
   "tufa_telegram_bot",
+]
+exclude = [
   "tufa_grpc_client",
   "tufa_grpc_server",
 ]
-# exclude = [
-#   "your_exclude_member_here",
-# ]
