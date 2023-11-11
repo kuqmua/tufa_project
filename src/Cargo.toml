@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-  "proc_macros/check_specific_dependency_version_usage",
+  "integration_tests",
   "proc_macros/compile_time_git_info",
   "proc_macros/enum_extension",
   "proc_macros/error_occurence",
@@ -15,8 +15,7 @@ members = [
   "proc_macros/user_port_try_from_u16",
   "tufa_common",
   "tufa_server",
-  "tufa_telegram_bot",
-  "integration_tests"
+  "tufa_telegram_bot"
 ]
 exclude = [
   "tufa_client",

@@ -43,9 +43,6 @@
 [submodule "src/proc_macros/init_from_env"]
 	path = src/proc_macros/init_from_env
 	url = git@github.com:kuqmua/init_from_env.git
-[submodule "src/proc_macros/check_specific_dependency_version_usage"]
-	path = src/proc_macros/check_specific_dependency_version_usage
-	url = git@github.com:kuqmua/check_specific_dependency_version_usage.git
 [submodule "src/proc_macros/from_sqlx_postgres_error"]
 	path = src/proc_macros/from_sqlx_postgres_error
 	url = git@github.com:kuqmua/from_sqlx_postgres_error.git
