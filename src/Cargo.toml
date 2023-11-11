@@ -13,12 +13,13 @@ members = [
   "proc_macros/type_variants_from_reqwest_response",
   "proc_macros/svg_component",
   "proc_macros/user_port_try_from_u16",
-  "tufa_client",
   "tufa_common",
   "tufa_server",
   "tufa_telegram_bot",
+  "integration_tests"
 ]
 exclude = [
+  "tufa_client",
   "tufa_grpc_client",
   "tufa_grpc_server",
 ]
