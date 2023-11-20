@@ -1192,3 +1192,5 @@ https://youtu.be/JkSa-qA2jnY
 * maybe use std::any::type_name::<>() for printing type names
 
 //end server thoughts
+
+* use rust lints declarations in Cargo.toml https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-lints-section https://doc.rust-lang.org/stable/cargo/reference/workspaces.html#the-lints-table
