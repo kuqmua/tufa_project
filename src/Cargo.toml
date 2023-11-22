@@ -24,4 +24,4 @@ exclude = [
 ]
 
 [workspace.lints.rust]
-unsafe_code = "forbid"
+unsafe_code = { level = "forbid", priority = 0 }
