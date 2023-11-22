@@ -8,3 +8,6 @@ edition = "2021"
 [dev-dependencies]
 quote = {version = "=1.0.33"}
 toml = {version = "=0.7.4"}
+
+[lints]
+workspace = true
