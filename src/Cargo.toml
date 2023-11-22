@@ -24,4 +24,198 @@ exclude = [
 ]
 
 [workspace.lints.rust]
-unsafe_code = { level = "forbid", priority = 0 }
+unsafe_code = { level = "allow", priority = 0 }
+absolute-paths-not-starting-with-crate = { level = "allow", priority = 0 } #fully qualified paths that start with a module name instead of `crate`, `self`, or an extern crate name
+box-pointers = { level = "allow", priority = 0 } #use of owned (Box type) heap memory
+deprecated-in-future = { level = "allow", priority = 0 } #detects use of items that will be deprecated in a future version
+elided-lifetimes-in-paths = { level = "allow", priority = 0 } #hidden lifetime parameters in types are deprecated
+explicit-outlives-requirements = { level = "allow", priority = 0 } #outlives requirements can be inferred
+ffi-unwind-calls = { level = "allow", priority = 0 } #call to foreign functions or function pointers with FFI-unwind ABI
+# fuzzy-provenance-casts = { level = "allow", priority = 0 } #a fuzzy integer to pointer cast is used
+keyword-idents = { level = "allow", priority = 0 } #detects edition keywords being used as an identifier
+let-underscore-drop = { level = "allow", priority = 0 } #non-binding let on a type that implements `Drop`
+# lossy-provenance-casts = { level = "allow", priority = 0 } #a lossy pointer to integer cast is used
+macro-use-extern-crate = { level = "allow", priority = 0 } #the `#[macro_use]` attribute is now deprecated in favor of using macros via the module system
+meta-variable-misuse = { level = "allow", priority = 0 } #possible meta-variable misuse at macro definition
+missing-abi = { level = "allow", priority = 0 } #No declared ABI for extern declaration
+missing-copy-implementations = { level = "allow", priority = 0 } #detects potentially-forgotten implementations of `Copy`
+missing-debug-implementations = { level = "allow", priority = 0 } #detects missing implementations of Debug
+missing-docs = { level = "allow", priority = 0 } #detects missing documentation for public members
+# multiple-supertrait-upcastable = { level = "allow", priority = 0 } #detect when an object-safe trait has multiple supertraits
+# must-not-suspend = { level = "allow", priority = 0 } #use of a `#[must_not_suspend]` value across a yield point
+non-ascii-idents = { level = "allow", priority = 0 } #detects non-ASCII identifiers
+# non-exhaustive-omitted-patterns = { level = "allow", priority = 0 } #detect when patterns of types marked `non_exhaustive` are missed
+rust-2021-incompatible-closure-captures = { level = "allow", priority = 0 } #detects closures affected by Rust 2021 changes
+rust-2021-incompatible-or-patterns = { level = "allow", priority = 0 } #detects usage of old versions of or-patterns
+rust-2021-prefixes-incompatible-syntax = { level = "allow", priority = 0 } #identifiers that will be parsed as a prefix in Rust 2021
+rust-2021-prelude-collisions = { level = "allow", priority = 0 } #detects the usage of trait methods which are ambiguous with traits added to the prelude in future editions
+single-use-lifetimes = { level = "allow", priority = 0 } #detects lifetime parameters that are only used once
+trivial-casts = { level = "allow", priority = 0 } #detects trivial casts which could be removed
+trivial-numeric-casts = { level = "allow", priority = 0 } #detects trivial casts of numeric types which could be removed
+# unnameable-types = { level = "allow", priority = 0 } #effective visibility of a type is larger than the area in which it can be named
+unreachable-pub = { level = "allow", priority = 0 } #`pub` items not reachable from crate root
+unsafe-code = { level = "allow", priority = 0 } #usage of `unsafe` code and other potentially unsound constructs
+unsafe-op-in-unsafe-fn = { level = "allow", priority = 0 } #unsafe operations in unsafe functions without an explicit unsafe block are deprecated
+unstable-features = { level = "allow", priority = 0 } #enabling unstable features (deprecated. do not use)
+unused-crate-dependencies = { level = "allow", priority = 0 } #crate dependencies that are never used
+unused-extern-crates = { level = "allow", priority = 0 } #extern crates that are never used
+unused-import-braces = { level = "allow", priority = 0 } #unnecessary braces around an imported item
+unused-lifetimes = { level = "allow", priority = 0 } #detects lifetime parameters that are never used
+unused-macro-rules = { level = "allow", priority = 0 } #detects macro rules that were not used
+unused-qualifications = { level = "allow", priority = 0 } #detects unnecessarily qualified names
+unused-results = { level = "allow", priority = 0 } #unused result of an expression in a statement
+unused-tuple-struct-fields = { level = "allow", priority = 0 } #detects tuple struct fields that are never read
+variant-size-differences = { level = "warn", priority = 0 } #detects enums with widely varying variant sizes
+ambiguous-glob-imports = { level = "warn", priority = 0 } #detects certain glob imports that require reporting an ambiguity error
+ambiguous-glob-reexports = { level = "warn", priority = 0 } #ambiguous glob re-exports
+anonymous-parameters = { level = "warn", priority = 0 } #detects anonymous parameters
+array-into-iter = { level = "warn", priority = 0 } #detects calling `into_iter` on arrays in Rust 2015 and 2018
+asm-sub-register = { level = "warn", priority = 0 } #using only a subset of a register for inline asm inputs
+async-fn-in-trait = { level = "warn", priority = 0 } #use of `async fn` in definition of a publicly-reachable trait
+bad-asm-style = { level = "warn", priority = 0 } #incorrect use of inline assembly
+bare-trait-objects = { level = "warn", priority = 0 } #suggest using `dyn Trait` for trait objects
+break-with-label-and-loop = { level = "warn", priority = 0 } #`break` expression with label and unlabeled loop as value expression
+byte-slice-in-packed-struct-with-derive = { level = "warn", priority = 0 } #`[u8]` or `str` used in a packed struct with `derive`
+clashing-extern-declarations = { level = "warn", priority = 0 } #detects when an extern fn has been declared with the same name but different types
+coherence-leak-check = { level = "warn", priority = 0 } #distinct impls distinguished only by the leak-check code
+confusable-idents = { level = "warn", priority = 0 } #detects visually confusable pairs between identifiers
+const-evaluatable-unchecked = { level = "warn", priority = 0 } #detects a generic constant is used in a type without a emitting a warning
+const-item-mutation = { level = "warn", priority = 0 } #detects attempts to mutate a `const` item
+const-patterns-without-partial-eq = { level = "warn", priority = 0 } #constant in pattern does not implement `PartialEq`
+dead-code = { level = "warn", priority = 0 } #detect unused, unexported items
+deprecated = { level = "warn", priority = 0 } #detects use of deprecated items
+deprecated-where-clause-location = { level = "warn", priority = 0 } #deprecated where clause location
+deref-into-dyn-supertrait = { level = "warn", priority = 0 } #`Deref` implementation usage with a supertrait trait object for output might be shadowed in the future
+deref-nullptr = { level = "warn", priority = 0 } #detects when an null pointer is dereferenced
+dropping-copy-types = { level = "warn", priority = 0 } #calls to `std::mem::drop` with a value that implements Copy
+dropping-references = { level = "warn", priority = 0 } #calls to `std::mem::drop` with a reference instead of an owned value
+drop-bounds = { level = "warn", priority = 0 } #bounds of the form `T: Drop` are most likely incorrect
+duplicate-macro-attributes = { level = "warn", priority = 0 } #duplicated attribute
+dyn-drop = { level = "warn", priority = 0 } #trait objects of the form `dyn Drop` are useless
+elided-lifetimes-in-associated-constant = { level = "warn", priority = 0 } #elided lifetimes cannot be used in associated constants in impls
+ellipsis-inclusive-range-patterns = { level = "warn", priority = 0 } #`...` range patterns are deprecated
+exported-private-dependencies = { level = "warn", priority = 0 } #public interface leaks type from a private dependency
+forbidden-lint-groups = { level = "warn", priority = 0 } #applying forbid to lint-groups
+forgetting-copy-types = { level = "warn", priority = 0 } #calls to `std::mem::forget` with a value that implements Copy
+forgetting-references = { level = "warn", priority = 0 } #calls to `std::mem::forget` with a reference instead of an owned value
+for-loops-over-fallibles = { level = "warn", priority = 0 } #for-looping over an `Option` or a `Result`, which is more clearly expressed as an `if let`
+function-item-references = { level = "warn", priority = 0 } #suggest casting to a function pointer when attempting to take references to function items
+hidden-glob-reexports = { level = "warn", priority = 0 } #name introduced by a private item shadows a name introduced by a public glob re-export
+illegal-floating-point-literal-pattern = { level = "warn", priority = 0 } #floating-point literals cannot be used in patterns
+improper-ctypes = { level = "warn", priority = 0 } #proper use of libc types in foreign modules
+improper-ctypes-definitions = { level = "warn", priority = 0 } #proper use of libc types in foreign item definitions
+incomplete-features = { level = "warn", priority = 0 } #incomplete features that may function improperly in some or all cases
+indirect-structural-match = { level = "warn", priority = 0 } #constant used in pattern contains value of non-structural-match type in a field or a variant
+inline-no-sanitize = { level = "warn", priority = 0 } #detects incompatible use of `#[inline(always)]` and `#[no_sanitize(...)]`
+internal-features = { level = "warn", priority = 0 } #internal features are not supposed to be used
+invalid-doc-attributes = { level = "warn", priority = 0 } #detects invalid `#[doc(...)]` attributes
+invalid-from-utf8 = { level = "warn", priority = 0 } #using a non UTF-8 literal in `std::str::from_utf8`
+invalid-macro-export-arguments = { level = "warn", priority = 0 } #"invalid_parameter" isn't a valid argument for `#[macro_export]`
+invalid-nan-comparisons = { level = "warn", priority = 0 } #detects invalid floating point NaN comparisons
+invalid-value = { level = "warn", priority = 0 } #an invalid value is being created (such as a null reference)
+irrefutable-let-patterns = { level = "warn", priority = 0 } #detects irrefutable patterns in `if let` and `while let` statements
+large-assignments = { level = "warn", priority = 0 } #detects large moves or copies
+late-bound-lifetime-arguments = { level = "warn", priority = 0 } #detects generic lifetime arguments in path segments with late bound lifetime parameters
+legacy-derive-helpers = { level = "warn", priority = 0 } #detects derive helper attributes that are used before they are introduced
+map-unit-fn = { level = "warn", priority = 0 } #`Iterator::map` call that discard the iterator's values
+mixed-script-confusables = { level = "warn", priority = 0 } #detects Unicode scripts whose mixed script confusables codepoints are solely used
+named-arguments-used-positionally = { level = "warn", priority = 0 } #named arguments in format used positionally
+nontrivial-structural-match = { level = "warn", priority = 0 } #constant used in pattern of non-structural-match type and the constant's initializer expression contains values of non-structural-match types
+non-camel-case-types = { level = "warn", priority = 0 } #types, variants, traits and type parameters should have camel case names
+non-fmt-panics = { level = "warn", priority = 0 } #detect single-argument panic!() invocations in which the argument is not a format string
+non-shorthand-field-patterns = { level = "warn", priority = 0 } #using `Struct { x: x }` instead of `Struct { x }` in a pattern
+non-snake-case = { level = "warn", priority = 0 } #variables, methods, functions, lifetime parameters and modules should have snake case names
+non-upper-case-globals = { level = "warn", priority = 0 } #static constants should have uppercase identifiers
+noop-method-call = { level = "warn", priority = 0 } #detects the use of well-known noop methods
+no-mangle-generic-items = { level = "warn", priority = 0 } #generic items must be mangled
+opaque-hidden-inferred-bound = { level = "warn", priority = 0 } #detects the use of nested `impl Trait` types in associated type bounds that are not general enough
+overlapping-range-endpoints = { level = "warn", priority = 0 } #detects range patterns with overlapping endpoints
+path-statements = { level = "warn", priority = 0 } #path statements with no effect
+pointer-structural-match = { level = "warn", priority = 0 } #pointers are not structural-match
+private-bounds = { level = "warn", priority = 0 } #private type in secondary interface of an item
+private-interfaces = { level = "warn", priority = 0 } #private type in primary interface of an item
+redundant-semicolons = { level = "warn", priority = 0 } #detects unnecessary trailing semicolons
+refining-impl-trait = { level = "warn", priority = 0 } #impl trait in impl method signature does not match trait method signature
+renamed-and-removed-lints = { level = "warn", priority = 0 } #lints that have been renamed or removed
+repr-transparent-external-private-fields = { level = "warn", priority = 0 } #transparent type contains an external ZST that is marked #[non_exhaustive] or contains private fields
+semicolon-in-expressions-from-macros = { level = "warn", priority = 0 } #trailing semicolon in macro body used as expression
+special-module-name = { level = "warn", priority = 0 } #module declarations for files with a special meaning
+stable-features = { level = "warn", priority = 0 } #stable features found in `#[feature]` directive
+suspicious-auto-trait-impls = { level = "warn", priority = 0 } #the rules governing auto traits have recently changed resulting in potential breakage
+suspicious-double-ref-op = { level = "warn", priority = 0 } #suspicious call of trait method on `&&T`
+temporary-cstring-as-ptr = { level = "warn", priority = 0 } #detects getting the inner pointer of a temporary `CString`
+trivial-bounds = { level = "warn", priority = 0 } #these bounds don't depend on an type parameters
+type-alias-bounds = { level = "warn", priority = 0 } #bounds in type aliases are not enforced
+tyvar-behind-raw-pointer = { level = "warn", priority = 0 } #raw pointer to an inference variable
+uncommon-codepoints = { level = "warn", priority = 0 } #detects uncommon Unicode codepoints in identifiers
+unconditional-recursion = { level = "warn", priority = 0 } #functions that cannot return without calling themselves
+undefined-naked-function-abi = { level = "warn", priority = 0 } #undefined naked function ABI
+unexpected-cfgs = { level = "warn", priority = 0 } #detects unexpected names and values in `#[cfg]` conditions
+# unfulfilled-lint-expectations = { level = "warn", priority = 0 } #unfulfilled lint expectation
+ungated-async-fn-track-caller = { level = "warn", priority = 0 } #enabling track_caller on an async fn is a no-op unless the async_fn_track_caller feature is enabled
+uninhabited-static = { level = "warn", priority = 0 } #uninhabited static
+unknown-lints = { level = "warn", priority = 0 } #unrecognized lint attribute
+# unknown-or-malformed-diagnostic-attributes = { level = "warn", priority = 0 } #unrecognized or malformed diagnostic attribute
+unnameable-test-items = { level = "warn", priority = 0 } #detects an item that cannot be named being marked as `#[test_case]`
+unreachable-code = { level = "warn", priority = 0 } #detects unreachable code paths
+unreachable-patterns = { level = "warn", priority = 0 } #detects unreachable patterns
+unstable-name-collisions = { level = "warn", priority = 0 } #detects name collision with an existing but unstable method
+unstable-syntax-pre-expansion = { level = "warn", priority = 0 } #unstable syntax can change at any point in the future, causing a hard error!
+unsupported-calling-conventions = { level = "warn", priority = 0 } #use of unsupported calling convention
+unused-allocation = { level = "warn", priority = 0 } #detects unnecessary allocations that can be eliminated
+unused-assignments = { level = "warn", priority = 0 } #detect assignments that will never be read
+unused-associated-type-bounds = { level = "warn", priority = 0 } #detects unused `Foo = Bar` bounds in `dyn Trait<Foo = Bar>`
+unused-attributes = { level = "warn", priority = 0 } #detects attributes that were not used by the compiler
+unused-braces = { level = "warn", priority = 0 } #unnecessary braces around an expression
+unused-comparisons = { level = "warn", priority = 0 } #comparisons made useless by limits of the types involved
+unused-doc-comments = { level = "warn", priority = 0 } #detects doc comments that aren't used by rustdoc
+unused-features = { level = "warn", priority = 0 } #unused features found in crate-level `#[feature]` directives
+unused-imports = { level = "warn", priority = 0 } #imports that are never used
+unused-labels = { level = "warn", priority = 0 } #detects labels that are never used
+unused-macros = { level = "warn", priority = 0 } #detects macros that were not used
+unused-must-use = { level = "warn", priority = 0 } #unused result of a type flagged as `#[must_use]`
+unused-mut = { level = "allow", priority = 0 } #detect mut variables which don't need to be mutable
+unused-parens = { level = "warn", priority = 0 } #`if`, `match`, `while` and `return` do not need parentheses
+unused-unsafe = { level = "warn", priority = 0 } #unnecessary use of an `unsafe` block
+unused-variables = { level = "warn", priority = 0 } #detect variables which are not used in any way
+useless-ptr-null-checks = { level = "warn", priority = 0 } #useless checking of non-null-typed pointer
+warnings = { level = "warn", priority = 0 } #mass-change the level for lints which produce warnings
+where-clauses-object-safety = { level = "warn", priority = 0 } #checks the object safety of where clauses
+while-true = { level = "warn", priority = 0 } #suggest using `loop { }` instead of `while true { }`
+ambiguous-associated-items = { level = "deny", priority = 0 } #ambiguous associated items
+arithmetic-overflow = { level = "deny", priority = 0 } #arithmetic operation overflows
+bindings-with-variant-name = { level = "deny", priority = 0 } #detects pattern bindings with the same name as one of the matched variants
+cenum-impl-drop-cast = { level = "deny", priority = 0 } #a C-like enum implementing Drop is cast
+coinductive-overlap-in-coherence = { level = "deny", priority = 0 } #impls that are not considered to overlap may be considered to overlap in the future
+conflicting-repr-hints = { level = "deny", priority = 0 } #conflicts between `#[repr(..)]` hints that were previously accepted and used in practice
+deprecated-cfg-attr-crate-type-name = { level = "deny", priority = 0 } #detects usage of `#![cfg_attr(..., crate_type/crate_name = "...")]`
+enum-intrinsics-non-enums = { level = "deny", priority = 0 } #detects calls to `core::mem::discriminant` and `core::mem::variant_count` with non-enum types
+ill-formed-attribute-input = { level = "deny", priority = 0 } #ill-formed attribute inputs that were previously accepted and used in practice
+implied-bounds-entailment = { level = "deny", priority = 0 } #impl method assumes more implied bounds than its corresponding trait method
+incomplete-include = { level = "deny", priority = 0 } #trailing content in included file
+ineffective-unstable-trait-impl = { level = "deny", priority = 0 } #detects `#[unstable]` on stable trait implementations for stable types
+invalid-atomic-ordering = { level = "deny", priority = 0 } #usage of invalid atomic ordering in atomic operations and memory fences
+invalid-from-utf8-unchecked = { level = "deny", priority = 0 } #using a non UTF-8 literal in `std::str::from_utf8_unchecked`
+invalid-reference-casting = { level = "deny", priority = 0 } #casts of `&T` to `&mut T` without interior mutability
+invalid-type-param-default = { level = "deny", priority = 0 } #type parameter default erroneously allowed in invalid location
+let-underscore-lock = { level = "deny", priority = 0 } #non-binding let on a synchronization lock
+long-running-const-eval = { level = "deny", priority = 0 } #detects long const eval operations
+macro-expanded-macro-exports-accessed-by-absolute-paths = { level = "deny", priority = 0 } #macro-expanded `macro_export` macros from the current crate cannot be referred to by absolute paths
+missing-fragment-specifier = { level = "deny", priority = 0 } #detects missing fragment specifiers in unused `macro_rules!` patterns
+mutable-transmutes = { level = "deny", priority = 0 } #transmuting &T to &mut T is undefined behavior, even if the reference is unused
+named-asm-labels = { level = "deny", priority = 0 } #named labels in inline assembly
+no-mangle-const-items = { level = "deny", priority = 0 } #const items will not have their symbols exported
+order-dependent-trait-objects = { level = "deny", priority = 0 } #trait-object types were treated as different depending on marker-trait order
+overflowing-literals = { level = "deny", priority = 0 } #literal out of range for its type
+patterns-in-fns-without-body = { level = "deny", priority = 0 } #patterns in functions without body were erroneously allowed
+proc-macro-back-compat = { level = "deny", priority = 0 } #detects usage of old versions of certain proc-macro crates
+proc-macro-derive-resolution-fallback = { level = "deny", priority = 0 } #detects proc macro derives using inaccessible names from parent modules
+pub-use-of-private-extern-crate = { level = "deny", priority = 0 } #detect public re-exports of private extern crates
+soft-unstable = { level = "deny", priority = 0 } #a feature gate that doesn't break dependent crates
+# test-unstable-lint = { level = "deny", priority = 0 } #this unstable lint is only for testing
+text-direction-codepoint-in-comment = { level = "deny", priority = 0 } #invisible directionality-changing codepoints in comment
+text-direction-codepoint-in-literal = { level = "deny", priority = 0 } #detect special Unicode codepoints that affect the visual representation of text on screen, changing the direction in which text flows
+unconditional-panic = { level = "deny", priority = 0 } #operation will cause a panic at runtime
+undropped-manually-drops = { level = "deny", priority = 0 } #calls to `std::mem::drop` with `std::mem::ManuallyDrop` instead of it's inner value
+unknown-crate-types = { level = "deny", priority = 0 } #unknown crate type found in `#[crate_type]` directive
+useless-deprecated = { level = "deny", priority = 0 } #detects deprecation attributes with no effect
