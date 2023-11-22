@@ -22,3 +22,6 @@ exclude = [
   "tufa_grpc_client",
   "tufa_grpc_server",
 ]
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
