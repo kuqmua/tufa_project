@@ -221,7 +221,7 @@ unknown-crate-types = { level = "deny", priority = 0 } #unknown crate type found
 useless-deprecated = { level = "deny", priority = 0 } #detects deprecation attributes with no effect
 
 [workspace.lints.clippy]#usage "cargo clippy"
-absolute_pathsss = { level = "allow", priority = 0 }
+absolute_paths = { level = "allow", priority = 0 }
 absurd_extreme_comparisons = { level = "deny", priority = 0 }
 alloc_instead_of_core = { level = "allow", priority = 0 }
 allow_attributes = { level = "allow", priority = 0 }
