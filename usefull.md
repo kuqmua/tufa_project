@@ -189,3 +189,4 @@ fn main() {
 
 * -- create or update operation i think is irrelevant coz i think its not working properly with GENERATED ALWAYS AS IDENTITY PRIMARY KEY
 * few interesting ideas from grpc implementation api https://www.youtube.com/watch?v=zPbaKUIcFx0&t=2889s
+* postgresql memory limits https://vremont-e.ru/ogranicenie-razmera-xranimyx-dannyx-v-postgresql/
