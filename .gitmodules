@@ -55,3 +55,6 @@
 [submodule "src/proc_macros/from_str"]
 	path = src/proc_macros/from_str
 	url = git@github.com:kuqmua/from_str.git
+[submodule "src/proc_macros/proc_macro_assistants"]
+	path = src/proc_macros/proc_macro_assistants
+	url = git@github.com:kuqmua/proc_macro_assistants.git
