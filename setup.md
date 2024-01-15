@@ -18,6 +18,7 @@
 32. [from_sqlx_postgres_error](#heading32)
 33. [from_str](#heading32)
 34. [type_variants_from_reqwest_response](#heading35)
+35. [proc_macro_assistants](#heading35)
 
 <!-- its better to add elements only to the end -->
 
@@ -38,6 +39,8 @@
 ## svg_component <a name="heading22"/>
 
 ## tufa_client <a name="heading23"/>
+
+## proc_macro_assistants <a name="heading35"/>
 
 ```
 cargo install --locked trunk
