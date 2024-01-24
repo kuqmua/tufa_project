@@ -20,6 +20,7 @@
 34. [type_variants_from_reqwest_response](#heading35)
 35. [proc_macro_assistants](#heading35)
 36. [proc_macro_common](#heading35)
+37. [tufa_postgresql_crud](#heading37)
 
 <!-- its better to add elements only to the end -->
 
@@ -44,6 +45,8 @@
 ## proc_macro_assistants <a name="heading35"/>
 
 ## proc_macro_common <a name="heading35"/>
+
+## tufa_postgresql_crud <a name="heading37"/>
 
 ```
 cargo install --locked trunk
