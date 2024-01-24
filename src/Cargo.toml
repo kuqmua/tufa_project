@@ -16,7 +16,6 @@ members = [
   "proc_macros/user_port_try_from_u16",
   "tufa_common",
   "tufa_postgresql_crud",
-  "tufa_postgresql_crud/generate_postgresql_crud",
   "tufa_server",
   "tufa_telegram_bot"
 ]
