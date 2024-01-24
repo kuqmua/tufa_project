@@ -61,3 +61,6 @@
 [submodule "src/proc_macros/proc_macro_common"]
 	path = src/proc_macros/proc_macro_common
 	url = git@github.com:kuqmua/proc_macro_common.git
+[submodule "src/tufa_postgresql_crud"]
+	path = src/tufa_postgresql_crud
+	url = git@github.com:kuqmua/tufa_postgresql_crud.git
