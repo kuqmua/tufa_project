@@ -8,7 +8,6 @@ members = [
   "proc_macros/from_sqlx_postgres_error",
   "proc_macros/from_str",
   "proc_macros/generate_getter_traits_for_struct_fields",
-  "proc_macros/generate_postgresql_crud",
   "proc_macros/init_from_env",
   "proc_macros/proc_macro_assistants",
   "proc_macros/proc_macro_common",
@@ -17,6 +16,7 @@ members = [
   "proc_macros/user_port_try_from_u16",
   "tufa_common",
   "tufa_postgresql_crud",
+  "tufa_postgresql_crud/generate_postgresql_crud",
   "tufa_server",
   "tufa_telegram_bot"
 ]
