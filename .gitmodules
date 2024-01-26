@@ -61,3 +61,6 @@
 [submodule "src/tufa_postgresql_crud"]
 	path = src/tufa_postgresql_crud
 	url = git@github.com:kuqmua/tufa_postgresql_crud.git
+[submodule "src/error_occurence_lib"]
+	path = src/error_occurence_lib
+	url = git@github.com:kuqmua/error_occurence_lib.git
