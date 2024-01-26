@@ -7,7 +7,7 @@ fn check_specific_dependency_version_usage() {
         std::fs::File::open(cargo_toml)
             .unwrap_or_else(|e| panic!("{cannot_open_file}{cargo_toml}{file_error}\"{e}\"")),
     );
-    let mut cargo_toml_workspace_content = String::new();
+    let mut cargo_toml_workspace_content = std::string::String::new();
     {
         std::io::Read::read_to_string(&mut buf_reader, &mut cargo_toml_workspace_content)
             .unwrap_or_else(|e| {
@@ -62,7 +62,7 @@ fn check_specific_dependency_version_usage() {
                         panic!("{cannot_open_file}{path_to_cargo_toml_member}{file_error}\"{e}\"")
                     }),
             );
-            let mut cargo_toml_member_content = String::new();
+            let mut cargo_toml_member_content = std::string::String::new();
             {
                 std::io::Read::read_to_string(
                     &mut buf_reader_member,
