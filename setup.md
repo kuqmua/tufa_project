@@ -20,6 +20,7 @@
 35. [proc_macro_assistants](#heading35)
 36. [proc_macro_common](#heading35)
 37. [tufa_postgresql_crud](#heading37)
+38. [error_occurence_lib](#heading38)
 
 <!-- its better to add elements only to the end -->
 
@@ -44,6 +45,8 @@
 ## proc_macro_common <a name="heading35"/>
 
 ## tufa_postgresql_crud <a name="heading37"/>
+
+## error_occurence_lib <a name="heading38"/>
 
 ```
 cargo install --locked trunk
