@@ -485,7 +485,7 @@ impl StatusCode {
         }
     }
     pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = format!("#[{}]", self.to_string());
+        let value_stringified = format!("#[{self}]");
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
@@ -496,7 +496,7 @@ impl TryFrom<&syn::Variant> for StatusCode {
     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
         let mut option_self: Option<Self> = None;
         for element in &value.attrs {
-            if let true = element.path.segments.len() == 1 {
+            if element.path.segments.len() == 1 {
                 match element.path.segments.first() {
                     Some(segment) => {
                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
@@ -530,7 +530,7 @@ impl TryFrom<&&syn::Variant> for StatusCode {
     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
         let mut option_self: Option<Self> = None;
         for element in &value.attrs {
-            if let true = element.path.segments.len() == 1 {
+            if element.path.segments.len() == 1 {
                 match element.path.segments.first() {
                     Some(segment) => {
                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
