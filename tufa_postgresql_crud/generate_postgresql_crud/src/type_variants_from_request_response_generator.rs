@@ -11,7 +11,6 @@ pub fn type_variants_from_request_response_generator(
     derive_debug_serialize_deserialize_to_schema_token_stream: &proc_macro2::TokenStream,
     type_variants_from_request_response_syn_variants: std::vec::Vec<&syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
-    // code_occurence_upper_camel_case_stringified: &str,
     operation: &crate::Operation,
 ) -> proc_macro2::TokenStream {
     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();

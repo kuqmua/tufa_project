@@ -2503,13 +2503,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
         let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
@@ -3091,13 +3092,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
@@ -3542,13 +3544,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
@@ -4358,13 +4361,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
@@ -4774,13 +4778,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_helpers::naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_snake_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeSnakeCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_snake_sase_token_stream(&operation);
         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_upper_camel_case_stringified,
@@ -5429,13 +5434,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            &additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     &additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
@@ -5966,13 +5972,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
@@ -6799,13 +6806,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
-        let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
-            &ast,
-            &operation_name_snake_case_stringified,
-            additional_http_status_codes_error_variants_snake_case_stringified,
-            &proc_macro_name_snake_case,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        let additional_http_status_codes_error_variants = vec![];//todo find out why rust analyzer crashes
+        // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
+        //     &ast,
+        //     &operation_name_snake_case_stringified,
+        //     additional_http_status_codes_error_variants_snake_case_stringified,
+        //     &proc_macro_name_snake_case,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified,
