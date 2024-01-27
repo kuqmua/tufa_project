@@ -1,6 +1,6 @@
 pub fn generate_with_serialize_deserialize_version(
     supported_enum_variant: &crate::error_occurence::supported_enum_variant::SuportedEnumVariant,
-    variants: &[&syn::Variant], //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
+    variants: &Vec<&syn::Variant>, //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
     proc_macro_name_ident_stringified: &str,
     generics_len: usize,
     ident_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
@@ -111,7 +111,7 @@ pub fn generate_with_serialize_deserialize_version(
                             let attribute = {
                                 let mut option_attribute = None;
                                 field.attrs.iter().for_each(|attr|{
-                                    if attr.path.segments.len() == 1 {
+                                    if let true = attr.path.segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
                                         let attr_ident = match attr.path.segments.iter().next() {
                                             Some(path_segment) => &path_segment.ident,
