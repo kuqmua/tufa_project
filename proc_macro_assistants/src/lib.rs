@@ -40,13 +40,13 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let function_name_snake_case_token_stream =
         proc_macro_common::generate_function_name_snake_case_token_stream(
-            &proc_macro_name_upper_camel_case_stringified,
+            proc_macro_name_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
     let trait_path_token_stream = proc_macro_common::trait_path_token_stream();
     let proc_macro_name_upper_camel_case_token_stream =
         proc_macro_common::generate_function_name_upper_camel_case_token_stream(
-            &proc_macro_name_upper_camel_case_stringified,
+            proc_macro_name_upper_camel_case_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
     let gen = quote::quote! {

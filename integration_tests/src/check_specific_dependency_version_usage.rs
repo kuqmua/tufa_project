@@ -85,7 +85,7 @@ fn check_specific_dependency_version_usage() {
                                 if let Some(version_value) = crate_value_map.get("version") {
                                     if let toml::Value::String(version) = version_value {
                                         forbidden_dependency_logic_symbols.iter().for_each(|symbol|{
-                                            if let true = version.contains(*symbol) {
+                                            if version.contains(*symbol) {
                                                 panic!("{crate_name} version of {member} contains forbidden symbol {symbol}");
                                             }
                                         });
@@ -120,10 +120,10 @@ fn check_specific_dependency_version_usage() {
             is_logic_executed = true;
             acc
         });
-    if let false = is_logic_executed {
+    if !is_logic_executed {
         panic!("logic is not executed, please check tokenized crate name(input parameter for check_specific_dependency_version_usage!(HERE)");
     }
-    if let false = unspecified_dependencies.is_empty() {
+    if !unspecified_dependencies.is_empty() {
         let mut error_message = std::string::String::from(
             "must use concrete versions with '=' symbol(like \"=1.2.3\") for: ",
         );
