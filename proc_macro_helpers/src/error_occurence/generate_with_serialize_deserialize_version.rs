@@ -1729,7 +1729,7 @@ pub fn generate_supported_container(
             ));
             if path_segment.ident == crate::naming_conventions::vec_upper_camel_case_stringified() {
                 let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = &path_segment.arguments {
-                    if let true = angle_brackets_generic_arguments.args.len() == 1 {
+                    if angle_brackets_generic_arguments.args.len() == 1 {
                         if let syn::GenericArgument::Type(type_handle) =
                             angle_brackets_generic_arguments.args
                             .iter().next()
@@ -1748,7 +1748,7 @@ pub fn generate_supported_container(
                                 },
                                 syn::Type::Reference(type_reference) => {
                                     let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem.clone() {
-                                        if let true = type_path.path.segments.len() == 1 {
+                                        if type_path.path.segments.len() == 1 {
                                             type_path.path.segments
                                             .into_iter().next()
                                             .unwrap_or_else(|| panic!(
@@ -1809,7 +1809,7 @@ pub fn generate_supported_container(
                     hashmap_key_type,
                     hashmap_value_type
                 ) = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = &path_segment.arguments {
-                    if let true = angle_brackets_generic_arguments.args.len() == 2 {
+                    if angle_brackets_generic_arguments.args.len() == 2 {
                         let (
                             key_generic_argument,
                             value_generic_argument
@@ -1857,7 +1857,7 @@ pub fn generate_supported_container(
                                 },
                                 syn::Type::Reference(type_reference) => {
                                     let key_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem.clone() {
-                                        if let true = type_path.path.segments.len() == 1 {
+                                        if type_path.path.segments.len() == 1 {
                                             type_path.path.segments
                                             .into_iter().next()
                                             .unwrap_or_else(|| panic!(
@@ -1910,7 +1910,7 @@ pub fn generate_supported_container(
                                 },
                                 syn::Type::Reference(type_reference) => {
                                     let value_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem.clone() {
-                                        if let true = type_path.path.segments.len() == 1 {
+                                        if type_path.path.segments.len() == 1 {
                                             type_path.path.segments
                                             .into_iter().next()
                                             .unwrap_or_else(|| panic!(
@@ -1980,7 +1980,7 @@ pub fn generate_supported_container(
         },
         syn::Type::Reference(type_reference) => {
             let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem.clone() {
-                if let true = type_path.path.segments.len() == 1 {
+                if type_path.path.segments.len() == 1 {
                     type_path.path.segments
                     .into_iter().next()
                     .unwrap_or_else(|| panic!(
