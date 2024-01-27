@@ -2,7 +2,6 @@ pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_token_stream: &proc_macro2::TokenStream,
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    try_operation_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
@@ -18,6 +17,7 @@ pub fn type_variants_from_request_response_generator(
     operation: &crate::Operation,
 ) -> proc_macro2::TokenStream {
     let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
+    let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseStringified::try_self_response_variants_upper_camel_case_stringified(operation);
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let try_operation_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_with_serialize_deserialize_upper_camel_case_token_stream(operation);
