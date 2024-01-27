@@ -9,7 +9,7 @@ pub fn create_supported_enum_variant(
     proc_macro_name_ident_stringified: &std::string::String,
 ) -> SuportedEnumVariant {
     let mut all_equal: Option<SuportedEnumVariant> = None;
-    if let true = &data_enum.variants.is_empty() {
+    if &data_enum.variants.is_empty() {
         panic!("{proc_macro_name_ident_stringified} enum variants are empty");
     }
     let error_message = format!("{proc_macro_name_ident_stringified} {} enums where all variants are {}::{} or all variants are {}::{}",
