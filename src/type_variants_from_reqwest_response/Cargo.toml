@@ -15,7 +15,7 @@ strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 convert_case = {version = "=0.6.0"}
 enum_extension = {path = "../enum_extension"}
-proc_macro_helpers = {path = "../proc_macros/proc_macro_helpers"}
+proc_macro_helpers = {path = "../proc_macro_helpers"}
 proc_macro_common = {path = "../proc_macro_common"}
 
 [lints]
