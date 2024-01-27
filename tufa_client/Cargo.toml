@@ -1,0 +1,37 @@
+[package]
+edition = "2021"
+name = "tufa_client"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+log = {version = "=0.4.19"}
+reqwasm = {version = "=0.2"}
+serde = {version = "=1.0", features = ["derive"]}
+serde_json = {version = "=1.0"}
+colorsys = {version = "=0.6.5"}
+# derive_more = "0.99.17"//for children components 
+convert_case = {version = "=0.5.0"}
+gloo = {version = "=0.7.0"} # wasm-logger = "0.2.0" (al;ternative to gloo)
+js-sys = {version = "=0.3.58"} 
+stylist = {version = "=0.10.0", features = ["yew"]} 
+wasm-bindgen = {version = "=0.2.86"} 
+wasm-bindgen-futures = {version = "=0.4"} 
+web-sys = {version = "=0.3.58", features = ["HtmlInputElement", "Window", "Document", "Element", "StyleSheetList", "HtmlSelectElement"]} 
+yew = {version = "=0.19"} 
+yew-router = {version = "=0.16.0"} 
+# yew-stdweb = "0.18.0" // web_sys alternative
+yewdux = {version = "=0.7.0"}
+yewdux-functional = {version = "=0.1.0"}
+#prod
+# svg_component = {path = "https://github.com/kuqmua/svg_component"}
+#dev
+tufa_common = {path = "../tufa_common"}# local dev test without commits version
+# tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version           
+compile_time_git_info = {path = "../compile_time_git_info"}
+user_port_try_from_u16 = {path = "../user_port_try_from_u16"}
+svg_component = {path = "../svg_component"}
+
+[lints]
+workspace = true

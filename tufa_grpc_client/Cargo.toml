@@ -1,0 +1,16 @@
+[package]
+edition = "2021"
+name = "tufa_grpc_client"
+version = "0.1.0"
+
+[dependencies]
+prost = {version = "=0.10"}
+tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
+tonic = {version = "=0.7"}
+
+[build-dependencies]
+tonic-build = {version = "=0.7"}
+compile_time_git_info = {path = "../compile_time_git_info"}
+
+[lints]
+workspace = true

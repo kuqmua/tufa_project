@@ -1,0 +1,16 @@
+[package]
+name = "error_occurence_lib"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+serde = {version = "=1.0", features = ["derive"]}
+serde_derive = {version = "=1.0"}
+tracing = {version = "=0.1", features = ["log", "valuable"]}
+reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
+
+[lints]
+workspace = true
