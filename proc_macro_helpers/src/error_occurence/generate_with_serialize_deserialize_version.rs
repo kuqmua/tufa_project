@@ -1,6 +1,6 @@
 pub fn generate_with_serialize_deserialize_version(
     supported_enum_variant: &crate::error_occurence::supported_enum_variant::SuportedEnumVariant,
-    variants: &std::vec::Vec<&syn::Variant>, //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
+    variants: &syn::punctuated::Punctuated<&syn::Variant, syn::token::Comma>, //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
     proc_macro_name_ident_stringified: &str,
     generics_len: usize,
     ident_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
