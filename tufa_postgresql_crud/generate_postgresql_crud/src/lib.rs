@@ -2758,8 +2758,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -3266,8 +3264,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -3780,8 +3776,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -4521,8 +4515,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -5053,8 +5045,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -5640,8 +5630,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -6190,8 +6178,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
@@ -6961,8 +6947,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
-                &code_occurence_upper_camel_case_stringified,
-                &code_occurence_snake_case_stringified,
                 &operation,
             )
         };
