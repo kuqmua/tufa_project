@@ -1,0 +1,22 @@
+SERVER_PORT="" # 8080
+HMAC_SECRET="" # super-long-and-secret-random-key-needed-to-verify-message-integrity
+BASE_URL="" # http://127.0.0.1
+ACCESS_CONTROL_MAX_AGE="3600" # Set a maximum time (in seconds) for which this CORS request may be cached
+ACCESS_CONTROL_ALLOW_ORIGIN="" # http://127.0.0.1:8080
+
+GITHUB_NAME=""
+GITHUB_TOKEN=""
+
+TIMEZONE="0" # i32, in seconds. main is 10800. value = hours * 3600. -24 < hours < 24. so value is -86_400 < secs && secs < 86_400. Otherwise panics on start.  Makes a new FixedOffset for the Eastern Hemisphere with given timezone difference. The negative secs means the Western Hemisphere
+
+REDIS_URL=""
+
+MONGO_URL=""
+
+DATABASE_URL="" # postgres
+
+STARTING_CHECK_LINK="" # https://www.google.com/
+
+TRACING_TYPE="error" # trace|debug|info|warn|error
+SOURCE_PLACE_TYPE="source" # source|github
+ENABLE_API_GIT_COMMIT_CHECK="false"
