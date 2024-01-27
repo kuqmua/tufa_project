@@ -3,7 +3,7 @@ static RESPONSE_VARIANTS: &str = "ResponseVariants";
 
 fn get_vec_enum_paths(
     attribute: &syn::Attribute,
-    ident_stringified: &std::string::String
+    ident_stringified: &std::string::String,
 ) -> Vec<std::string::String> {
     let mut stringified_tokens = quote::ToTokens::to_token_stream(&attribute.tokens).to_string();
     stringified_tokens.retain(|c| !c.is_whitespace());
@@ -35,7 +35,7 @@ fn get_vec_enum_paths(
 fn generate_from_logic(
     ident: &syn::Ident,
     ident_response_variants_stringified: &std::string::String,
-    variants: &syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
+    variants: &syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>,
 ) -> proc_macro2::TokenStream {
     let ident_with_serialize_deserialize_stringified = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
     let ident_with_serialize_deserialize_token_stream = ident_with_serialize_deserialize_stringified
@@ -64,7 +64,7 @@ fn generate_from_logic(
                     }
                 }
                 syn::Fields::Unnamed(fields_unnamed) => {
-                    if let false = fields_unnamed.unnamed.len() == 1 {
+                    if fields_unnamed.unnamed.len() != 1 {
                         panic!("{ident} fields_unnamed.unnamed.len() != 1");
                     }
                     quote::quote! {
@@ -257,7 +257,7 @@ fn generate_from_logic(
 //         .unwrap_or_else(|_| panic!("{ident} {try_error_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     };
 //     let (
-//         unique_status_codes, 
+//         unique_status_codes,
 //         variants_from_status_code,
 //         desirable_try_from_ident,
 //     ) = data_enum.variants.iter().fold(
@@ -314,7 +314,7 @@ fn generate_from_logic(
 //                             quote::quote! { _ }
 //                         }
 //                         else {
-//                             panic!("{ident} fields_unnamed.unnamed.len() != 1");                           
+//                             panic!("{ident} fields_unnamed.unnamed.len() != 1");
 //                         };
 //                         (
 //                             quote::quote! {
@@ -422,7 +422,7 @@ fn generate_from_logic(
 //                     .unwrap_or_else(|_| panic!("{ident} {status_code_enum_name_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //                 };
 //                 let (
-//                     optional_additional_named_variant, 
+//                     optional_additional_named_variant,
 //                     additional_from_variant
 //                 ) = match attribute == &desirable_attribute {
 //                     true => {
@@ -465,9 +465,9 @@ fn generate_from_logic(
 //                         let fields_cloned =  fields.clone();
 //                         let variant_ident = &variant.ident;
 //                         quote::quote! {
-//                             #status_code_enum_name_token_stream::#variant_ident{ 
+//                             #status_code_enum_name_token_stream::#variant_ident{
 //                                 #(#fields_cloned),*
-//                             } => Self::#variant_ident{ 
+//                             } => Self::#variant_ident{
 //                                 #(#fields),*
 //                             }
 //                         }
@@ -480,7 +480,7 @@ fn generate_from_logic(
 //                                     #(#variants),*
 //                                 }
 //                             }
-//                         } 
+//                         }
 //                     }
 //                 };
 //                 quote::quote!{
@@ -492,17 +492,17 @@ fn generate_from_logic(
 //                 if let false = response_without_body {
 //                     //todo maybe for desirable status code can be few different response variants - rewrite logic
 //                     generated_status_code_enums_with_from_impls.push(quote::quote!{
-//                         #[derive(Debug, serde::Serialize, serde::Deserialize)] 
+//                         #[derive(Debug, serde::Serialize, serde::Deserialize)]
 //                         enum #desirable_enum_name {
 //                             #desirable_name_token_stream(#desirable_token_stream)
-//                         } 
+//                         }
 //                         impl std::convert::From<#desirable_enum_name> for #ident_response_variants_token_stream {
 //                             fn from(value: #desirable_enum_name) -> Self {
-//                                 match value { 
-//                                     #desirable_enum_name::#desirable_name_token_stream(i) => Self::#desirable_name_token_stream(i) 
+//                                 match value {
+//                                     #desirable_enum_name::#desirable_name_token_stream(i) => Self::#desirable_name_token_stream(i)
 //                                 }
 //                             }
-//                         }    
+//                         }
 //                     });
 //                 }
 //             }
@@ -526,9 +526,9 @@ fn generate_from_logic(
 //                 false => quote::quote! {
 //                     match response.text().await {
 //                         Ok(response_text) => match serde_json::from_str::<#desirable_enum_name>(&response_text){
-//                             Ok(value) => Ok(#ident_response_variants_token_stream::from(value)), 
+//                             Ok(value) => Ok(#ident_response_variants_token_stream::from(value)),
 //                             Err(e) => Err(
-//                                 #api_request_unexpected_error_path_token_stream::DeserializeBody{ 
+//                                 #api_request_unexpected_error_path_token_stream::DeserializeBody{
 //                                     serde: e,
 //                                     status_code,
 //                                     headers,response_text
@@ -555,7 +555,7 @@ fn generate_from_logic(
 //             .into_iter()
 //             .enumerate()
 //             .for_each(
-//                 |(index, status_code_attribute)| 
+//                 |(index, status_code_attribute)|
 //             {
 //                 let status_code_enum_name_stringified = format!("{ident_response_variants_token_stream}{status_code_attribute}");
 //                 let status_code_enum_name_token_stream = status_code_enum_name_stringified
@@ -592,9 +592,9 @@ fn generate_from_logic(
 //                                 else if status_code == #http_status_code_token_stream {
 //                                     match response.text().await {
 //                                         Ok(response_text) => match serde_json::from_str::<#status_code_enum_name_token_stream>(&response_text){
-//                                             Ok(value) => Ok(#ident_response_variants_token_stream::from(value)), 
+//                                             Ok(value) => Ok(#ident_response_variants_token_stream::from(value)),
 //                                             Err(e) => Err(
-//                                                 #api_request_unexpected_error_path_token_stream::DeserializeBody{ 
+//                                                 #api_request_unexpected_error_path_token_stream::DeserializeBody{
 //                                                     serde: e,
 //                                                     status_code,
 //                                                     headers,response_text
@@ -717,7 +717,7 @@ fn generate_from_logic(
 //                     Ok(response) => match #try_from_response_ident_snake_case_token_stream(response).await {
 //                         #response_without_body_logic_token_stream,
 //                         Err(e) => match e {
-//                             #api_request_unexpected_error_path_token_stream::StatusCode { 
+//                             #api_request_unexpected_error_path_token_stream::StatusCode {
 //                                 status_code,
 //                                 headers,
 //                                 response_text_result,
@@ -730,9 +730,9 @@ fn generate_from_logic(
 //                                 }
 //                             ),
 //                             #api_request_unexpected_error_path_token_stream::FailedToGetResponseText {
-//                                 reqwest, 
-//                                 status_code, 
-//                                 headers 
+//                                 reqwest,
+//                                 status_code,
+//                                 headers
 //                             } => Err(
 //                                 #ident_request_error_upper_camel_case_token_stream::FailedToGetResponseText {
 //                                     reqwest,
@@ -742,13 +742,13 @@ fn generate_from_logic(
 //                                 }
 //                             ),
 //                             #api_request_unexpected_error_path_token_stream::DeserializeBody {
-//                                 serde, 
+//                                 serde,
 //                                 status_code,
 //                                 headers,
 //                                 response_text,
 //                             } => Err(
 //                                 #ident_request_error_upper_camel_case_token_stream::DeserializeResponse {
-//                                     serde, 
+//                                     serde,
 //                                     status_code,
 //                                     headers,
 //                                     response_text,
@@ -944,7 +944,9 @@ fn generate_from_logic(
         tvfrr_511_network_authentication_required,
     )
 )]
-pub fn type_variants_from_reqwest_response_from_checker(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn type_variants_from_reqwest_response_from_checker(
+    input: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location(); //panic_location function from https://github.com/kuqmua/proc_macro_helpers
     let ast: syn::DeriveInput = syn::parse_macro_input!(input as syn::DeriveInput);
     let ident = &ast.ident;
@@ -966,18 +968,14 @@ pub fn type_variants_from_reqwest_response_from_checker(input: proc_macro::Token
         proc_macro_helpers::get_macro_attribute::get_macro_attribute(
             &ast.attrs,
             &format!("{PATH}::type_variants_from_reqwest_response_from_checker_paths"),
-            &ident.to_string()
+            &ident.to_string(),
         ),
-        &ident.to_string()
+        &ident.to_string(),
     );
     let generated_response_variants_logic_token_stream = {
-        let generated_response_variants = vec_enum_paths.iter().map(
-            |enum_path| generate_from_logic(
-                ident,
-                &format!("{enum_path}{RESPONSE_VARIANTS}"),
-                &variants
-            )
-        );
+        let generated_response_variants = vec_enum_paths.iter().map(|enum_path| {
+            generate_from_logic(ident, &format!("{enum_path}{RESPONSE_VARIANTS}"), &variants)
+        });
         quote::quote! {
             #(#generated_response_variants)*
         }
@@ -1026,7 +1024,7 @@ pub fn type_variants_from_reqwest_response_from_checker(input: proc_macro::Token
                         }
                     }
                     syn::Fields::Unnamed(fields_unnamed) => {
-                        let fields_token_stream = if let true = fields_unnamed.unnamed.len() == 1 {
+                        let fields_token_stream = if fields_unnamed.unnamed.len() == 1 {
                             quote::quote! { _ }
                         }
                         else {
@@ -1042,7 +1040,7 @@ pub fn type_variants_from_reqwest_response_from_checker(input: proc_macro::Token
                 }
             },
         );
-        quote::quote!{
+        quote::quote! {
             impl From<&#ident> for http::StatusCode {
                 fn from(val: &#ident) -> Self {
                     match &val {
@@ -1101,7 +1099,7 @@ pub fn type_variants_from_reqwest_response_from_checker(input: proc_macro::Token
                         }
                     }
                     syn::Fields::Unnamed(fields_unnamed) => {
-                        if let false = fields_unnamed.unnamed.len() == 1 {
+                        if fields_unnamed.unnamed.len() != 1 {
                             panic!("{ident} fields_unnamed.unnamed.len() != 1");
                         }
                         quote::quote! {
