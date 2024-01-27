@@ -13,7 +13,7 @@ members = [
   "proc_macros/proc_macro_common",
   "type_variants_from_reqwest_response",
   "svg_component",
-  "proc_macros/user_port_try_from_u16",
+  "user_port_try_from_u16",
   "error_occurence_lib",
   "tufa_common",
   "tufa_postgresql_crud",

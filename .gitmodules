@@ -22,9 +22,6 @@
 [submodule "src/tufa_grpc_client"]
 	path = src/tufa_grpc_client
 	url = git@github.com:kuqmua/tufa_grpc_client.git
-[submodule "src/proc_macros/user_port_try_from_u16"]
-	path = src/proc_macros/user_port_try_from_u16
-	url = git@github.com:kuqmua/user_port_try_from_u16.git
 [submodule "src/proc_macros/init_from_env"]
 	path = src/proc_macros/init_from_env
 	url = git@github.com:kuqmua/init_from_env.git
