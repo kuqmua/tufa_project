@@ -9,7 +9,7 @@ members = [
   "from_str",
   "generate_getter_traits_for_struct_fields",
   "init_from_env",
-  "proc_macros/proc_macro_assistants",
+  "proc_macro_assistants",
   "proc_macros/proc_macro_common",
   "type_variants_from_reqwest_response",
   "svg_component",

@@ -1,0 +1,18 @@
+[package]
+edition = "2021"
+name = "proc_macro_assistants"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = {version = "=1.0.67"}
+quote = {version = "=1.0.33"}
+syn = {version = "=1.0.107"}
+convert_case = {version = "=0.6.0"}
+proc_macro_common = {path = "../proc_macros/proc_macro_common"}
+
+[lints]
+workspace = true
