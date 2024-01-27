@@ -8,7 +8,7 @@ members = [
   "from_sqlx_postgres_error",
   "from_str",
   "generate_getter_traits_for_struct_fields",
-  "proc_macros/init_from_env",
+  "init_from_env",
   "proc_macros/proc_macro_assistants",
   "proc_macros/proc_macro_common",
   "proc_macros/type_variants_from_reqwest_response",
