@@ -85,7 +85,7 @@ cd src/proc_macros/proc_macro_assistants && git checkout main && cd .. && cd .. 
 cd src/proc_macros/user_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
 cd src/client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
-cd src/tufa_postgresql_crud && git checkout main && cd .. &&  cd .. &&
+cd src/postgresql_crudpostgresql_crud && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_telegram_bot && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_grpc_client && git checkout main && cd .. &&  cd .. &&

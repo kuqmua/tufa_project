@@ -76,7 +76,7 @@ enum_extension = {path = "../enum_extension"}
 error_occurence = {path = "../error_occurence"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_for_struct_fields"}
-tufa_postgresql_crud = {path = "../tufa_postgresql_crud"}
+postgresql_crud = {path = "../postgresql_crud"}
 init_from_env = {path = "../init_from_env"}
 user_port_try_from_u16 = {path = "../user_port_try_from_u16"}
 #

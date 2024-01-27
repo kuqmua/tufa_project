@@ -19,7 +19,7 @@
 34. [type_variants_from_reqwest_response](#heading35)
 35. [proc_macro_assistants](#heading35)
 36. [proc_macro_common](#heading35)
-37. [tufa_postgresql_crud](#heading37)
+37. [postgresql_crud](#heading37)
 38. [error_occurence_lib](#heading38)
 39. [config](#heading39)
 
@@ -45,7 +45,7 @@
 
 ## proc_macro_common <a name="heading35"/>
 
-## tufa_postgresql_crud <a name="heading37"/>
+## postgresql_crud <a name="heading37"/>
 
 ## error_occurence_lib <a name="heading38"/>
 

@@ -1,5 +1,5 @@
 [package]
-name = "tufa_postgresql_crud"
+name = "postgresql_crud"
 version = "0.1.0"
 edition = "2021"
 
