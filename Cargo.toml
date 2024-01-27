@@ -8,6 +8,7 @@ members = [
   "from_sqlx_postgres_error",
   "from_str",
   "generate_getter_traits_for_struct_fields",
+  "git_sync_command",
   "init_from_env",
   "proc_macro_assistants",
   "proc_macro_common",
