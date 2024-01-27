@@ -86,7 +86,9 @@ impl StatusCode {
                 quote::quote! {axum::http::StatusCode::NON_AUTHORITATIVE_INFORMATION}
             }
             StatusCode::Tvfrr204NoContent => quote::quote! {axum::http::StatusCode::NO_CONTENT},
-            StatusCode::Tvfrr205ResetContent => quote::quote! {axum::http::StatusCode::RESET_CONTENT},
+            StatusCode::Tvfrr205ResetContent => {
+                quote::quote! {axum::http::StatusCode::RESET_CONTENT}
+            }
             StatusCode::Tvfrr206PartialContent => {
                 quote::quote! {axum::http::StatusCode::PARTIAL_CONTENT}
             }
@@ -112,7 +114,9 @@ impl StatusCode {
                 quote::quote! {axum::http::StatusCode::PERMANENT_REDIRECT}
             }
             StatusCode::Tvfrr400BadRequest => quote::quote! {axum::http::StatusCode::BAD_REQUEST},
-            StatusCode::Tvfrr401Unauthorized => quote::quote! {axum::http::StatusCode::UNAUTHORIZED},
+            StatusCode::Tvfrr401Unauthorized => {
+                quote::quote! {axum::http::StatusCode::UNAUTHORIZED}
+            }
             StatusCode::Tvfrr402PaymentRequired => {
                 quote::quote! {axum::http::StatusCode::PAYMENT_REQUIRED}
             }
@@ -121,7 +125,9 @@ impl StatusCode {
             StatusCode::Tvfrr405MethodNotAllowed => {
                 quote::quote! {axum::http::StatusCode::METHOD_NOT_ALLOWED}
             }
-            StatusCode::Tvfrr406NotAcceptable => quote::quote! {axum::http::StatusCode::NOT_ACCEPTABLE},
+            StatusCode::Tvfrr406NotAcceptable => {
+                quote::quote! {axum::http::StatusCode::NOT_ACCEPTABLE}
+            }
             StatusCode::Tvfrr407ProxyAuthenticationRequired => {
                 quote::quote! {axum::http::StatusCode::PROXY_AUTHENTICATION_REQUIRED}
             }
@@ -197,7 +203,9 @@ impl StatusCode {
             StatusCode::Tvfrr507InsufficientStorage => {
                 quote::quote! {axum::http::StatusCode::INSUFFICIENT_STORAGE}
             }
-            StatusCode::Tvfrr508LoopDetected => quote::quote! {axum::http::StatusCode::LOOP_DETECTED},
+            StatusCode::Tvfrr508LoopDetected => {
+                quote::quote! {axum::http::StatusCode::LOOP_DETECTED}
+            }
             StatusCode::Tvfrr510NotExtended => quote::quote! {axum::http::StatusCode::NOT_EXTENDED},
             StatusCode::Tvfrr511NetworkAuthenticationRequired => {
                 quote::quote! {axum::http::StatusCode::NETWORK_AUTHENTICATION_REQUIRED}
@@ -408,7 +416,9 @@ impl StatusCode {
             StatusCode::Tvfrr200Ok => quote::quote! {"ok"},
             StatusCode::Tvfrr201Created => quote::quote! {"created"},
             StatusCode::Tvfrr202Accepted => quote::quote! {"accepted"},
-            StatusCode::Tvfrr203NonAuthoritativeInformation => quote::quote! {"non authoritative information"},
+            StatusCode::Tvfrr203NonAuthoritativeInformation => {
+                quote::quote! {"non authoritative information"}
+            }
             StatusCode::Tvfrr204NoContent => quote::quote! {"no content"},
             StatusCode::Tvfrr205ResetContent => quote::quote! {"reset content"},
             StatusCode::Tvfrr206PartialContent => quote::quote! {"partial content"},
@@ -430,7 +440,9 @@ impl StatusCode {
             StatusCode::Tvfrr404NotFound => quote::quote! {"not found"},
             StatusCode::Tvfrr405MethodNotAllowed => quote::quote! {"method not allowed"},
             StatusCode::Tvfrr406NotAcceptable => quote::quote! {"not acceptable"},
-            StatusCode::Tvfrr407ProxyAuthenticationRequired => quote::quote! {"proxy authentication required"},
+            StatusCode::Tvfrr407ProxyAuthenticationRequired => {
+                quote::quote! {"proxy authentication required"}
+            }
             StatusCode::Tvfrr408RequestTimeout => quote::quote! {"request timeout"},
             StatusCode::Tvfrr409Conflict => quote::quote! {"conflict"},
             StatusCode::Tvfrr410Gone => quote::quote! {"gone"},
@@ -449,19 +461,27 @@ impl StatusCode {
             StatusCode::Tvfrr426UpgradeRequired => quote::quote! {"upgrade required"},
             StatusCode::Tvfrr428PreconditionRequired => quote::quote! {"precondition required"},
             StatusCode::Tvfrr429TooManyRequests => quote::quote! {"too many requests"},
-            StatusCode::Tvfrr431RequestHeaderFieldsTooLarge => quote::quote! {"request header fields too large"},
-            StatusCode::Tvfrr451UnavailableForLegalReasons => quote::quote! {"unavailable for legal reasons"},
+            StatusCode::Tvfrr431RequestHeaderFieldsTooLarge => {
+                quote::quote! {"request header fields too large"}
+            }
+            StatusCode::Tvfrr451UnavailableForLegalReasons => {
+                quote::quote! {"unavailable for legal reasons"}
+            }
             StatusCode::Tvfrr500InternalServerError => quote::quote! {"internal server error"},
             StatusCode::Tvfrr501NotImplemented => quote::quote! {"not implemented"},
             StatusCode::Tvfrr502BadGateway => quote::quote! {"bad gateway"},
             StatusCode::Tvfrr503ServiceUnavailable => quote::quote! {"service unavailable"},
             StatusCode::Tvfrr504GatewayTimeout => quote::quote! {"gateway timeout"},
-            StatusCode::Tvfrr505HttpVersionNotSupported => quote::quote! {"http version not supported"},
+            StatusCode::Tvfrr505HttpVersionNotSupported => {
+                quote::quote! {"http version not supported"}
+            }
             StatusCode::Tvfrr506VariantAlsoNegotiates => quote::quote! {"variant also negotiates"},
             StatusCode::Tvfrr507InsufficientStorage => quote::quote! {"insufficient storage"},
             StatusCode::Tvfrr508LoopDetected => quote::quote! {"loop detected"},
             StatusCode::Tvfrr510NotExtended => quote::quote! {"not extended"},
-            StatusCode::Tvfrr511NetworkAuthenticationRequired => quote::quote! {"network authentication required"},
+            StatusCode::Tvfrr511NetworkAuthenticationRequired => {
+                quote::quote! {"network authentication required"}
+            }
         }
     }
     pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
@@ -483,15 +503,17 @@ impl TryFrom<&syn::Variant> for StatusCode {
                             match option_self {
                                 Some(value) => {
                                     return Err(format!("duplicated status_code attributes {value} are not supported"));
-                                },
+                                }
                                 None => {
                                     option_self = Some(value);
                                 }
                             }
                         }
-                    },
+                    }
                     None => {
-                        return Err(std::string::String::from("element.path.segments.first() is None"));
+                        return Err(std::string::String::from(
+                            "element.path.segments.first() is None",
+                        ));
                     }
                 }
             }
@@ -515,15 +537,17 @@ impl TryFrom<&&syn::Variant> for StatusCode {
                             match option_self {
                                 Some(value) => {
                                     return Err(format!("duplicated status_code attributes {value} are not supported"));
-                                },
+                                }
                                 None => {
                                     option_self = Some(value);
                                 }
                             }
                         }
-                    },
+                    }
                     None => {
-                        return Err(std::string::String::from("element.path.segments.first() is None"));
+                        return Err(std::string::String::from(
+                            "element.path.segments.first() is None",
+                        ));
                     }
                 }
             }
@@ -666,13 +690,13 @@ impl TryFrom<&std::string::String> for StatusCode {
 
 pub fn get_only_one_status_code(
     variant: &syn::Variant,
-    proc_macro_name_ident_stringified: &std::string::String
+    proc_macro_name_ident_stringified: &std::string::String,
 ) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
-        if let true = attr.path.segments.len() == 1 {
+        if attr.path.segments.len() == 1 {
             if let Ok(named_attribute) = StatusCode::try_from(&attr.path.segments[0].ident.to_string()) {
-                if let true = option_self.is_some() {
+                if option_self.is_some() {
                     panic!("{proc_macro_name_ident_stringified} duplicated status_code attributes are not supported");
                 } else {
                     option_self = Some(named_attribute);

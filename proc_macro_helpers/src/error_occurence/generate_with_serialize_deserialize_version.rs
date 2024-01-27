@@ -1,6 +1,6 @@
 pub fn generate_with_serialize_deserialize_version(
     supported_enum_variant: &crate::error_occurence::supported_enum_variant::SuportedEnumVariant,
-    variants: &Vec<&syn::Variant>, //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
+    variants: &[&syn::Variant], //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
     proc_macro_name_ident_stringified: &str,
     generics_len: usize,
     ident_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
@@ -27,7 +27,8 @@ pub fn generate_with_serialize_deserialize_version(
     let syn_type_path_stringified = crate::naming_conventions::syn_type_path_stringified();
     let token_stream = match supported_enum_variant {
         crate::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
-            let code_occurence_upper_camel_case = crate::naming_conventions::code_occurence_upper_camel_case_stringified();
+            let code_occurence_upper_camel_case =
+                crate::naming_conventions::code_occurence_upper_camel_case_stringified();
             let foreign_type_upper_camel_case = "ForeignType";
             let display_upper_camel_case = "Display";
             let display_foreign_type_upper_camel_case =
@@ -41,7 +42,8 @@ pub fn generate_with_serialize_deserialize_version(
                     &display_upper_camel_case,
                 );
             let attribute_prefix_stringified = "eo_";
-            let with_serialize_deserialize_snake_case = crate::naming_conventions::with_serialize_deserialize_snake_case_stringified();
+            let with_serialize_deserialize_snake_case =
+                crate::naming_conventions::with_serialize_deserialize_snake_case_stringified();
             let attribute_display_with_serialize_deserialize_stringified = format!(
                 "{attribute_prefix_stringified}{display_snake_case}_{with_serialize_deserialize_snake_case}");
             let attribute_vec_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_snake_case}_{with_serialize_deserialize_snake_case}");
@@ -109,7 +111,7 @@ pub fn generate_with_serialize_deserialize_version(
                             let attribute = {
                                 let mut option_attribute = None;
                                 field.attrs.iter().for_each(|attr|{
-                                    if let true = attr.path.segments.len() == 1 {
+                                    if attr.path.segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
                                         let attr_ident = match attr.path.segments.iter().next() {
                                             Some(path_segment) => &path_segment.ident,
@@ -319,19 +321,18 @@ fn inform_use_str_string_in_different_attribute(
     std_string_string_stringified: &str,
     string_string_stringified: &str,
 ) {
-    let wrong_attribute_view = crate::error_occurence::named_attribute::attribute_view(wrong_attribute);
-    let attribute_to_use_view = crate::error_occurence::named_attribute::attribute_view(attribute_to_use);
+    let wrong_attribute_view =
+        crate::error_occurence::named_attribute::attribute_view(wrong_attribute);
+    let attribute_to_use_view =
+        crate::error_occurence::named_attribute::attribute_view(attribute_to_use);
     //maybe additional cases exists
     if path == str_stringified {
         panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {str_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
-    }
-    else if path == std_string_string_stringified {
+    } else if path == std_string_string_stringified {
         panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {std_string_string_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
-    }
-    else if path == string_string_stringified {
+    } else if path == string_string_stringified {
         panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {string_string_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
-    }
-    else if path == crate::naming_conventions::string_upper_camel_case_stringified() {
+    } else if path == crate::naming_conventions::string_upper_camel_case_stringified() {
         panic!(
             "{proc_macro_name_ident_stringified} {wrong_attribute_view} {} {must_be_used_with_stringified} {attribute_to_use_view}",
             crate::naming_conventions::string_upper_camel_case_stringified()
@@ -515,8 +516,10 @@ pub fn generate_field_type_with_serialize_deserialize_version(
     supported_container: crate::error_occurence::supported_container::SupportedContainer,
     proc_macro_name_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
-    let with_serialize_deserialize_upper_camel_case = crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified();
-    let supports_only_supported_container_stringified = crate::naming_conventions::supports_only_supported_container_stringified();
+    let with_serialize_deserialize_upper_camel_case =
+        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified();
+    let supports_only_supported_container_stringified =
+        crate::naming_conventions::supports_only_supported_container_stringified();
     let does_not_support_stringified = "does not support";
     let str_stringified = "str";
     let std_string_string_stringified = format!(
@@ -1687,7 +1690,7 @@ fn modify_lifetimes_for_serialize_deserialize(
 fn modify_should_generate_impl_compile_time_check_error_occurence_members(
     attribute: &crate::error_occurence::named_attribute::NamedAttribute,
     should_generate_impl_compile_time_check_error_occurence_members: &mut bool,
-){
+) {
     match attribute {
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => (),
