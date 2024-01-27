@@ -87,7 +87,7 @@ cd src/client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
 cd src/postgresql_crudpostgresql_crud && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
-cd src/tufa_telegram_bot && git checkout main && cd .. &&  cd .. &&
+cd src/telegram_bot && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_grpc_client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_grpc_server && git checkout main && cd ..  cd ..
 

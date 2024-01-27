@@ -11,7 +11,7 @@
 25. [tufa_grpc_client](#heading25)
 26. [tufa_grpc_server](#heading26)
 27. [tufa_server](#heading27) 
-28. [tufa_telegram_bot](#heading28)
+28. [telegram_bot](#heading28)
 29. [error_occurence](#heading29)
 30. [user_port_try_from_u16](#heading30)
 32. [from_sqlx_postgres_error](#heading32)
@@ -442,7 +442,7 @@ cargo test ci
 cargo run -q | bunyan
 ```
 
-## tufa_telegram_bot <a name="heading28"/>
+## telegram_bot <a name="heading28"/>
 #### run
 ```
 RUST_LOG=info TELOXIDE_TOKEN="" cargo run

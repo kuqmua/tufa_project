@@ -1,5 +1,5 @@
 // pub const GIT_INFO: error_occurence_lib::git_info::GitInfo =
-//     compile_time_git_info::compile_time_git_info!(tufa_telegram_bot);
+//     compile_time_git_info::compile_time_git_info!(telegram_bot);
 
 pub const GIT_INFO: error_occurence_lib::git_info::GitInfo =
     error_occurence_lib::git_info::GitInfo {
