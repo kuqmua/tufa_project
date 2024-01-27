@@ -2027,7 +2027,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let dot_space = ", ";
     // let pg_temp_stringified = "pg_temp";
     let pg_connection_token_stream = quote::quote!{pg_connection};
-    let desirable_token_stream = quote::quote!{Desirable};
+    let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let query_string_name_token_stream = quote::quote!{query_string};
     let binded_query_name_token_stream = quote::quote!{binded_query};
     let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
@@ -2747,7 +2747,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -3002,7 +3001,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                     }
-                    #try_operation_response_variants_token_stream::#desirable_token_stream(vec_values)
+                    #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(vec_values)
                 }
             };
             // println!("{try_operation_token_stream}");
@@ -3256,7 +3255,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -3438,7 +3436,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             use #sqlx_row_token_stream;
                             value.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
                         } {
-                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
+                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
                             Err(e) => {
                                 let error = #try_operation_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream;
                                 #error_log_call_token_stream
@@ -3771,7 +3769,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -4264,7 +4261,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                         vec_values
                     };
-                    #try_operation_response_variants_token_stream::#desirable_token_stream(vec_values)
+                    #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(vec_values)
                 }
             };
             // println!("{try_operation_token_stream}");
@@ -4513,7 +4510,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &struct_options_ident_token_stream,
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -4672,7 +4668,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #acquire_pool_and_connection_token_stream
                     match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
                         Ok(row) => match #select_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
-                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_token_stream(value),
+                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(value),
                             Err(e) => {
                                 #from_log_and_return_error_token_stream
                             },
@@ -5046,7 +5042,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -5306,7 +5301,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &postgres_transaction_token_stream,
                     &commit_token_stream,
                     &try_operation_response_variants_token_stream,
-                    &desirable_token_stream,
+                    &desirable_upper_camel_case_token_stream,
                     &try_operation_upper_camel_case_token_stream,
                     &commit_failed_variant_initialization_token_stream,
                     &error_log_call_token_stream,
@@ -5634,7 +5629,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -5873,7 +5867,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             use #sqlx_row_token_stream;
                             value.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
                         } {
-                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
+                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
                             Err(e) => {
                                 let error = #try_operation_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream;
                                 #error_log_call_token_stream
@@ -6185,7 +6179,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -6422,7 +6415,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &postgres_transaction_token_stream,
                         &commit_token_stream,
                         &try_operation_response_variants_token_stream,
-                        &desirable_token_stream,
+                        &desirable_upper_camel_case_token_stream,
                         &try_operation_upper_camel_case_token_stream,
                         &commit_failed_variant_initialization_token_stream,
                         &error_log_call_token_stream,
@@ -6707,7 +6700,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         }
-                        #try_operation_response_variants_token_stream::#desirable_token_stream(vec_values)
+                        #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(vec_values)
                     }
                 };
                 quote::quote!{
@@ -6957,7 +6950,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &desirable_token_stream,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                 &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
@@ -7114,7 +7106,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             use #sqlx_row_token_stream;
                             value.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
                         } {
-                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
+                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
                             Err(e) => {
                                 let error = #try_operation_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream;
                                 #error_log_call_token_stream

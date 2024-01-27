@@ -1,6 +1,5 @@
 pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
-    desirable_token_stream: &proc_macro2::TokenStream,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream: &proc_macro2::TokenStream,
@@ -16,6 +15,7 @@ pub fn type_variants_from_request_response_generator(
     code_occurence_snake_case_stringified: &str,
     operation: &crate::Operation,
 ) -> proc_macro2::TokenStream {
+    let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
     let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseStringified::try_self_response_variants_upper_camel_case_stringified(operation);
@@ -197,7 +197,7 @@ pub fn type_variants_from_request_response_generator(
         quote::quote! {
             #derive_debug_serialize_deserialize_token_stream
             pub enum #try_operation_response_variants_upper_camel_case_token_stream {
-                #desirable_token_stream(#desirable_type_token_stream),
+                #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
                 #(#enum_with_serialize_deserialize_logic_mapped_token_stream),*
             }
         }
@@ -264,7 +264,7 @@ pub fn type_variants_from_request_response_generator(
             impl std::convert::From<&#try_operation_response_variants_upper_camel_case_token_stream> for #axum_http_status_code_token_stream {
                 fn from(value: &#try_operation_response_variants_upper_camel_case_token_stream) -> Self {
                     match value {
-                        #try_operation_response_variants_upper_camel_case_token_stream::#desirable_token_stream(_) => #axum_http_status_code_quote_token_stream,
+                        #try_operation_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case_token_stream(_) => #axum_http_status_code_quote_token_stream,
                         #(#impl_std_convert_from_ident_response_variants_token_stream_for_http_status_code_logic_token_stream_handle_mapped_token_stream),*//todo maybe something wrong with status codes? check it later (for all variants was axum::http::StatusCode::OK)
                     }
                 }
@@ -449,12 +449,12 @@ pub fn type_variants_from_request_response_generator(
         quote::quote! {
             #derive_debug_serialize_deserialize_to_schema_token_stream
             pub enum #try_operation_response_variants_desirable_status_code_token_stream {
-                #desirable_token_stream(#desirable_type_token_stream),
+                #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
             }
             impl std::convert::From<#try_operation_response_variants_desirable_status_code_token_stream> for #try_operation_response_variants_upper_camel_case_token_stream {
                 fn from(value: #try_operation_response_variants_desirable_status_code_token_stream) -> Self {
                     match value {
-                        #try_operation_response_variants_desirable_status_code_token_stream::#desirable_token_stream(i) => Self::#desirable_token_stream(i),
+                        #try_operation_response_variants_desirable_status_code_token_stream::#desirable_upper_camel_case_token_stream(i) => Self::#desirable_upper_camel_case_token_stream(i),
                     }
                 }
             }
@@ -752,7 +752,7 @@ pub fn type_variants_from_request_response_generator(
                 type Error = #try_operation_with_serialize_deserialize_upper_camel_case_token_stream;
                 fn try_from(value: #try_operation_response_variants_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
                     match value {
-                        #try_operation_response_variants_upper_camel_case_token_stream::#desirable_token_stream(i) => Ok(i),
+                        #try_operation_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case_token_stream(i) => Ok(i),
                         #(#impl_try_from_ident_response_variants_token_stream_for_desirable_logic_handle_mapped_token_stream),*
                     }
                 }
@@ -940,7 +940,7 @@ pub fn type_variants_from_request_response_generator(
             impl axum::response::IntoResponse for #try_operation_response_variants_upper_camel_case_token_stream {
                 fn into_response(self) -> axum::response::Response {
                     match &self {
-                        #try_operation_response_variants_upper_camel_case_token_stream::#desirable_token_stream(_) => {
+                        #try_operation_response_variants_upper_camel_case_token_stream::#desirable_upper_camel_case_token_stream(_) => {
                             let mut res = axum::Json(self).into_response();
                             *res.status_mut() = #axum_http_status_code_quote_token_stream;
                             res
