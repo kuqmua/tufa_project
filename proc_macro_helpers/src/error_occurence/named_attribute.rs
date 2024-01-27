@@ -58,7 +58,7 @@ impl TryFrom<&syn::Field> for NamedAttribute {
     fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
         let mut error_occurence_attribute: Option<Self> = None;
         for element in &value.attrs {
-            if let true = element.path.segments.len() == 1 {
+            if element.path.segments.len() == 1 {
                 match element.path.segments.first() {
                     Some(value) => {
                         if let Ok(value) = {
@@ -67,16 +67,21 @@ impl TryFrom<&syn::Field> for NamedAttribute {
                         } {
                             match error_occurence_attribute {
                                 Some(value) => {
-                                    return Err(format!("duplicated attributes {} are not supported", value.to_string()));
-                                },
+                                    return Err(format!(
+                                        "duplicated attributes {} are not supported",
+                                        value.to_string()
+                                    ));
+                                }
                                 None => {
                                     error_occurence_attribute = Some(value);
                                 }
                             }
                         }
-                    },
+                    }
                     None => {
-                        return Err(std::string::String::from("element.path.segments.first() is None"));
+                        return Err(std::string::String::from(
+                            "element.path.segments.first() is None",
+                        ));
                     }
                 }
             }
@@ -93,7 +98,7 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
     fn try_from(value: &&syn::Field) -> Result<Self, Self::Error> {
         let mut error_occurence_attribute: Option<Self> = None;
         for element in &value.attrs {
-            if let true = element.path.segments.len() == 1 {
+            if element.path.segments.len() == 1 {
                 match element.path.segments.first() {
                     Some(value) => {
                         if let Ok(value) = {
@@ -102,16 +107,21 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
                         } {
                             match error_occurence_attribute {
                                 Some(value) => {
-                                    return Err(format!("duplicated attributes {} are not supported", value.to_string()));
-                                },
+                                    return Err(format!(
+                                        "duplicated attributes {} are not supported",
+                                        value.to_string()
+                                    ));
+                                }
                                 None => {
                                     error_occurence_attribute = Some(value);
                                 }
                             }
                         }
-                    },
+                    }
                     None => {
-                        return Err(std::string::String::from("element.path.segments.first() is None"));
+                        return Err(std::string::String::from(
+                            "element.path.segments.first() is None",
+                        ));
                     }
                 }
             }
