@@ -12,7 +12,7 @@ members = [
   "proc_macros/proc_macro_assistants",
   "proc_macros/proc_macro_common",
   "proc_macros/type_variants_from_reqwest_response",
-  "proc_macros/svg_component",
+  "svg_component",
   "proc_macros/user_port_try_from_u16",
   "error_occurence_lib",
   "tufa_common",
