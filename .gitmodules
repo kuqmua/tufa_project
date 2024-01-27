@@ -25,9 +25,6 @@
 [submodule "src/proc_macros/init_from_env"]
 	path = src/proc_macros/init_from_env
 	url = git@github.com:kuqmua/init_from_env.git
-[submodule "src/proc_macros/proc_macro_common"]
-	path = src/proc_macros/proc_macro_common
-	url = git@github.com:kuqmua/proc_macro_common.git
 [submodule "src/tufa_postgresql_crud"]
 	path = src/tufa_postgresql_crud
 	url = git@github.com:kuqmua/tufa_postgresql_crud.git

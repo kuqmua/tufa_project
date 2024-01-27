@@ -11,7 +11,7 @@ proc-macro = true
 quote = {version = "=1.0.33"}
 syn = {version = "=1.0.107"}
 proc_macro_helpers = {path = "../proc_macros/proc_macro_helpers"}
-proc_macro_common = {path = "../proc_macros/proc_macro_common"}
+proc_macro_common = {path = "../proc_macro_common"}
 
 [lints]
 workspace = true
