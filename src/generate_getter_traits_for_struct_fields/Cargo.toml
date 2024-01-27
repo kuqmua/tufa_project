@@ -1,0 +1,19 @@
+[package]
+edition = "2021"
+name = "generate_getter_traits_for_struct_fields"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+proc-macro = true
+
+[dependencies]
+convert_case = {version = "=0.6.0"}
+proc-macro2 = {version = "=1.0.67"}
+quote = {version = "=1.0.33"}
+syn = {version = "=1.0.107"}
+proc_macro_helpers = {path = "../proc_macros/proc_macro_helpers"}
+proc_macro_common = {path = "../proc_macros/proc_macro_common"}
+
+[lints]
+workspace = true
