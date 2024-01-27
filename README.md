@@ -78,6 +78,7 @@ cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. && cd ..
 cd src/proc_macros/type_variants_from_reqwest_response && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/compile_time_git_info && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/config && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/error_occurence_lib && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/proc_macro_common && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/proc_macro_assistants && git checkout main && cd .. && cd .. cd .. &&
