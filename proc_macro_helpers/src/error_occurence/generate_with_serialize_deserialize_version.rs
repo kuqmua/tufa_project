@@ -1,6 +1,6 @@
 pub fn generate_with_serialize_deserialize_version(
     supported_enum_variant: &crate::error_occurence::supported_enum_variant::SuportedEnumVariant,
-    variants: &Vec<&syn::Variant>, //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
+    variants: &std::vec::Vec<&syn::Variant>, //&syn::punctuated::Punctuated<syn::Variant, syn::token::Comma>
     proc_macro_name_ident_stringified: &str,
     generics_len: usize,
     ident_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
@@ -111,25 +111,22 @@ pub fn generate_with_serialize_deserialize_version(
                             let attribute = {
                                 let mut option_attribute = None;
                                 field.attrs.iter().for_each(|attr|{
-                                    if let true = attr.path.segments.len() == 1 {
+                                    if attr.path.segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
                                         let attr_ident = match attr.path.segments.iter().next() {
                                             Some(path_segment) => &path_segment.ident,
                                             None => panic!("attr.path.segments.iter().next() is None"),
                                         };
-                                        match {
+                                        if let Ok(value) = {
                                             use std::str::FromStr;
                                             crate::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
                                         } {
-                                            Ok(value) => {
-                                                if let true = option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(value);
-                                                }
-                                            },
-                                            Err(_) => ()//other attributes are not for this proc_macro
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(value);
+                                            }
                                         }
                                     }//other attributes are not for this proc_macro
                                 });
@@ -139,8 +136,8 @@ pub fn generate_with_serialize_deserialize_version(
                                 ))
                             };
                             let supported_container = generate_supported_container(
-                                &field,
-                                &proc_macro_name_ident_stringified,
+                                field,
+                                proc_macro_name_ident_stringified,
                             );
                             crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
                                 attribute,
@@ -196,7 +193,7 @@ pub fn generate_with_serialize_deserialize_version(
                             attribute_supported_container_inform_use_str_string_in_different_attribute(
                                 &attribute,
                                 &supported_container,
-                                &proc_macro_name_ident_stringified,
+                                proc_macro_name_ident_stringified,
                                 &attribute_display_with_serialize_deserialize_stringified,
                                 &attribute_vec_display_with_serialize_deserialize_stringified,
                                 &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
@@ -254,7 +251,7 @@ pub fn generate_with_serialize_deserialize_version(
                 let variant_ident = &variant.ident;
                 let field_type = if let syn::Fields::Unnamed(fields_unnamed) = &variant.fields {
                     let unnamed = &fields_unnamed.unnamed;
-                    if let false = unnamed.len() == 1 {
+                    if unnamed.len() != 1 {
                         panic!(
                             "{proc_macro_name_ident_stringified} {}::{} variant fields unnamed len != 1",
                             crate::naming_conventions::SUPPORTED_ENUM_VARIANT_STRINGIFIED,
@@ -364,20 +361,17 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
     );
     match attribute {
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => {
-            match supported_container {
-                crate::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime: _vec_lifetime } => {
-                    inform_use_str_string_in_different_attribute(
-                        path,
-                        &attribute.to_string(),
-                        &attribute_display_with_serialize_deserialize_stringified,
-                        &str_stringified,
-                        &proc_macro_name_ident_stringified,
-                        &must_be_used_with_stringified,
-                        &std_string_string_stringified,
-                        &string_string_stringified,
-                    );
-                }
-                _ => ()
+            if let crate::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime: _vec_lifetime } = supported_container {
+                inform_use_str_string_in_different_attribute(
+                    path,
+                    &attribute.to_string(),
+                    attribute_display_with_serialize_deserialize_stringified,
+                    str_stringified,
+                    proc_macro_name_ident_stringified,
+                    must_be_used_with_stringified,
+                    &std_string_string_stringified,
+                    &string_string_stringified,
+                );
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => (),
@@ -385,26 +379,20 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay => {
-            match supported_container {
-                crate::error_occurence::supported_container::SupportedContainer::Vec {
-                    path: _,
-                    vec_element_type
-                } => match vec_element_type {
-                    crate::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime: _vec_lifetime } => {
-                        inform_use_str_string_in_different_attribute(
-                            element_path,
-                            &attribute.to_string(),
-                            &attribute_vec_display_with_serialize_deserialize_stringified,
-                            &str_stringified,
-                            &proc_macro_name_ident_stringified,
-                            &must_be_used_with_stringified,
-                            &std_string_string_stringified,
-                            &string_string_stringified,
-                        );
-                    },
-                    _ => (),
-                }
-                _ => (),
+            if let crate::error_occurence::supported_container::SupportedContainer::Vec {
+                path: _,
+                vec_element_type: crate::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime: _vec_lifetime }
+            } = supported_container {
+                inform_use_str_string_in_different_attribute(
+                    element_path,
+                    &attribute.to_string(),
+                    attribute_vec_display_with_serialize_deserialize_stringified,
+                    str_stringified,
+                    proc_macro_name_ident_stringified,
+                    must_be_used_with_stringified,
+                    &std_string_string_stringified,
+                    &string_string_stringified,
+                );
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize => (),
@@ -412,12 +400,12 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
-            match supported_container {
-                crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                    path: _,
-                    hashmap_key_type,
-                    hashmap_value_type,
-                } => match (hashmap_key_type, hashmap_value_type) {
+            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+                path: _,
+                hashmap_key_type,
+                hashmap_value_type,
+            } = supported_container {
+                match (hashmap_key_type, hashmap_value_type) {
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
                             key_segments_stringified: _,
@@ -431,10 +419,10 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
                         inform_use_str_string_in_different_attribute(
                             value_segments_stringified,
                             &attribute.to_string(),
-                            &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
-                            &str_stringified,
-                            &proc_macro_name_ident_stringified,
-                            &must_be_used_with_stringified,
+                            attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
+                            str_stringified,
+                            proc_macro_name_ident_stringified,
+                            must_be_used_with_stringified,
                             &std_string_string_stringified,
                             &string_string_stringified,
                         );
@@ -452,17 +440,16 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
                         inform_use_str_string_in_different_attribute(
                             value_segments_stringified,
                             &attribute.to_string(),
-                            &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
-                            &str_stringified,
-                            &proc_macro_name_ident_stringified,
-                            &must_be_used_with_stringified,
+                            attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
+                            str_stringified,
+                            proc_macro_name_ident_stringified,
+                            must_be_used_with_stringified,
                             &std_string_string_stringified,
                             &string_string_stringified,
                         );
                     },
                     _ => (),
                 }
-                _ => (),
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => (),
@@ -470,38 +457,27 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
-            match supported_container {
-                crate::error_occurence::supported_container::SupportedContainer::HashMap {
+            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
                 path: _,
-                hashmap_key_type,
-                hashmap_value_type
-                } => {
-                    match (hashmap_key_type, hashmap_value_type) {
-                        (
-                            crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                                key_segments_stringified: _key_segments_stringified,
-                                key_vec_lifetime: _key_vec_lifetime
-                            },
-                           crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                                value_segments_stringified,
-                                value_vec_lifetime: _value_vec_lifetime
-                            }
-                        ) => {
-                            inform_use_str_string_in_different_attribute(
-                                value_segments_stringified,
-                                &attribute.to_string(),
-                                &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified,
-                                &str_stringified,
-                                &proc_macro_name_ident_stringified,
-                                &must_be_used_with_stringified,
-                                &std_string_string_stringified,
-                                &string_string_stringified,
-                            );
-                        },
-                        _ => (),
-                    }
+                hashmap_key_type: crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                    key_segments_stringified: _key_segments_stringified,
+                    key_vec_lifetime: _key_vec_lifetime
+                },
+                hashmap_value_type: crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                    value_segments_stringified,
+                    value_vec_lifetime: _value_vec_lifetime
                 }
-                _ => (),
+            } = supported_container {
+                inform_use_str_string_in_different_attribute(
+                    value_segments_stringified,
+                    &attribute.to_string(),
+                    attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified,
+                    str_stringified,
+                    proc_macro_name_ident_stringified,
+                    must_be_used_with_stringified,
+                    &std_string_string_stringified,
+                    &string_string_stringified,
+                );
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => (),
@@ -809,7 +785,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
-            let type_token_stream = if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
                 path,
                 hashmap_key_type,
                 hashmap_value_type,
@@ -897,8 +873,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     attribute.attribute_view_stringified(),
                     crate::naming_conventions::hashmap_upper_camel_case_stringified()
                 );
-            };
-            type_token_stream
+            }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => {
             if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
@@ -1307,7 +1282,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
-            let type_token_stream = if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
                 path,
                 hashmap_key_type,
                 hashmap_value_type
@@ -1369,8 +1344,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     attribute.attribute_view_stringified(),
                     crate::naming_conventions::hashmap_upper_camel_case_stringified()
                 );
-            };
-            type_token_stream
+            }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => {
             if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
@@ -1656,14 +1630,11 @@ fn modify_lifetimes_for_serialize_deserialize(
     match attribute {
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => {
-            match supported_container {
-                crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident: _, lifetime_ident } => {
-                    crate::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
-                        lifetime_ident.to_string(),
-                        lifetimes_for_serialize_deserialize
-                    );
-                },
-                _ => (),
+            if let crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident: _, lifetime_ident } = supported_container {
+                crate::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
+                    lifetime_ident.to_string(),
+                    lifetimes_for_serialize_deserialize
+                );
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => (),
@@ -1697,7 +1668,7 @@ fn modify_should_generate_impl_compile_time_check_error_occurence_members(
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => {
-            if let false = should_generate_impl_compile_time_check_error_occurence_members {
+            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
@@ -1706,7 +1677,7 @@ fn modify_should_generate_impl_compile_time_check_error_occurence_members(
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => {
-            if let false = should_generate_impl_compile_time_check_error_occurence_members {
+            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
@@ -1715,7 +1686,7 @@ fn modify_should_generate_impl_compile_time_check_error_occurence_members(
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => {
-            if let false = should_generate_impl_compile_time_check_error_occurence_members {
+            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
@@ -1724,7 +1695,7 @@ fn modify_should_generate_impl_compile_time_check_error_occurence_members(
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
-            if let false = should_generate_impl_compile_time_check_error_occurence_members {
+            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
