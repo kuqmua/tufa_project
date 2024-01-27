@@ -1144,7 +1144,7 @@ pub fn type_variants_from_reqwest_response_from_checker(input: proc_macro::Token
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &macro_name,//todo make name standart
+    //         "TypeVariantsFromReqwestResponseFromChecker",//todo make name standart
     //         &gen,
     //         &"something"
     //     );
