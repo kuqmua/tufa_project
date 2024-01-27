@@ -5,7 +5,7 @@ members = [
   "compile_time_git_info",
   "enum_extension",
   "error_occurence",
-  "proc_macros/from_sqlx_postgres_error",
+  "from_sqlx_postgres_error",
   "proc_macros/from_str",
   "proc_macros/generate_getter_traits_for_struct_fields",
   "proc_macros/init_from_env",
