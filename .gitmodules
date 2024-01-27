@@ -64,6 +64,3 @@
 [submodule "src/error_occurence_lib"]
 	path = src/error_occurence_lib
 	url = git@github.com:kuqmua/error_occurence_lib.git
-[submodule "src/config"]
-	path = src/config
-	url = git@github.com:kuqmua/config.git
