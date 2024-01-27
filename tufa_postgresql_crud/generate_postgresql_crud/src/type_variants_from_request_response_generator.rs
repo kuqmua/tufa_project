@@ -3,7 +3,6 @@ pub fn type_variants_from_request_response_generator(
     desirable_token_stream: &proc_macro2::TokenStream,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     try_operation_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-    operation_snake_case_stringified: &str,
     code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
@@ -18,10 +17,11 @@ pub fn type_variants_from_request_response_generator(
     code_occurence_snake_case_stringified: &str,
     operation: &crate::Operation,
 ) -> proc_macro2::TokenStream {
+    let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
     let try_operation_response_variants_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseStringified::try_self_response_variants_upper_camel_case_stringified(operation);
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let try_operation_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_with_serialize_deserialize_upper_camel_case_token_stream(operation);
-    let try_operation_response_variants_desirable_status_code_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &desirable_status_code);
+    let try_operation_response_variants_desirable_status_code_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, desirable_status_code);
     let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
     let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
     let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
@@ -52,7 +52,7 @@ pub fn type_variants_from_request_response_generator(
                     false => {
                         let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
                         for element in &field.attrs {
-                            if let true = element.path.segments.len() == 1 {
+                            if element.path.segments.len() == 1 {
                                 let segment = element.path.segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path.segments.get(0) is None")});
                                 if let Ok(value) = {
                                     use std::str::FromStr;
@@ -151,25 +151,22 @@ pub fn type_variants_from_request_response_generator(
                         let attribute = {
                             let mut option_attribute = None;
                             field.attrs.iter().for_each(|attr|{
-                                if let true = attr.path.segments.len() == 1 {
+                                if attr.path.segments.len() == 1 {
                                     let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
                                     let attr_ident = match attr.path.segments.iter().next() {
                                         Some(path_segment) => &path_segment.ident,
                                         None => panic!("attr.path.segments.iter().next() is None"),
                                     };
-                                    match {
+                                    if let Ok(value) = {
                                         use std::str::FromStr;
                                         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
                                     } {
-                                        Ok(value) => {
-                                            if let true = option_attribute.is_some() {
-                                                panic!("{error_message}");
-                                            }
-                                            else {
-                                                option_attribute = Some(value);
-                                            }
-                                        },
-                                        Err(_) => ()//other attributes are not for this proc_macro
+                                        if option_attribute.is_some() {
+                                            panic!("{error_message}");
+                                        }
+                                        else {
+                                            option_attribute = Some(value);
+                                        }
                                     }
                                 }//other attributes are not for this proc_macro
                             });
@@ -179,15 +176,14 @@ pub fn type_variants_from_request_response_generator(
                             ))
                         };
                         let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                            &field,
-                            &proc_macro_name_upper_camel_case_ident_stringified,
+                            field,
+                            proc_macro_name_upper_camel_case_ident_stringified,
                         );
-                        let field_type_with_serialize_deserialize = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                        proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
                             attribute,
                             supported_container,
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
-                        field_type_with_serialize_deserialize
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        )
                     },
                 };
                 quote::quote! {#field_ident: #field_type_with_serialize_deserialize}
@@ -337,25 +333,22 @@ pub fn type_variants_from_request_response_generator(
                                 let attribute = {
                                     let mut option_attribute = None;
                                     field.attrs.iter().for_each(|attr|{
-                                        if let true = attr.path.segments.len() == 1 {
+                                        if attr.path.segments.len() == 1 {
                                             let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
                                             let attr_ident = match attr.path.segments.iter().next() {
                                                 Some(path_segment) => &path_segment.ident,
                                                 None => panic!("attr.path.segments.iter().next() is None"),
                                             };
-                                            match {
+                                            if let Ok(value) = {
                                                 use std::str::FromStr;
                                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
                                             } {
-                                                Ok(value) => {
-                                                    if let true = option_attribute.is_some() {
-                                                        panic!("{error_message}");
-                                                    }
-                                                    else {
-                                                        option_attribute = Some(value);
-                                                    }
-                                                },
-                                                Err(_) => ()//other attributes are not for this proc_macro
+                                                if option_attribute.is_some() {
+                                                    panic!("{error_message}");
+                                                }
+                                                else {
+                                                    option_attribute = Some(value);
+                                                }
                                             }
                                         }//other attributes are not for this proc_macro
                                     });
@@ -365,13 +358,13 @@ pub fn type_variants_from_request_response_generator(
                                     ))
                                 };
                                 let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                                    &field,
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    field,
+                                    proc_macro_name_upper_camel_case_ident_stringified,
                                 );
                                 proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
                                     attribute,
                                     supported_container,
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    proc_macro_name_upper_camel_case_ident_stringified,
                                 )
                             },
                         };
@@ -534,25 +527,22 @@ pub fn type_variants_from_request_response_generator(
                                 let attribute = {
                                     let mut option_attribute = None;
                                     field.attrs.iter().for_each(|attr|{
-                                        if let true = attr.path.segments.len() == 1 {
+                                        if attr.path.segments.len() == 1 {
                                             let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
                                             let attr_ident = match attr.path.segments.iter().next() {
                                                 Some(path_segment) => &path_segment.ident,
                                                 None => panic!("attr.path.segments.iter().next() is None"),
                                             };
-                                            match {
+                                            if let Ok(value) = {
                                                 use std::str::FromStr;
                                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
                                             } {
-                                                Ok(value) => {
-                                                    if let true = option_attribute.is_some() {
-                                                        panic!("{error_message}");
-                                                    }
-                                                    else {
-                                                        option_attribute = Some(value);
-                                                    }
-                                                },
-                                                Err(_) => ()//other attributes are not for this proc_macro
+                                                if option_attribute.is_some() {
+                                                    panic!("{error_message}");
+                                                }
+                                                else {
+                                                    option_attribute = Some(value);
+                                                }
                                             }
                                         }//other attributes are not for this proc_macro
                                     });
@@ -562,15 +552,14 @@ pub fn type_variants_from_request_response_generator(
                                     ))
                                 };
                                 let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                                    &field,
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    field,
+                                    proc_macro_name_upper_camel_case_ident_stringified,
                                 );
-                                let field_type_with_serialize_deserialize = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                                proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
                                     attribute,
                                     supported_container,
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                );
-                                field_type_with_serialize_deserialize
+                                    proc_macro_name_upper_camel_case_ident_stringified,
+                                )
                             },
                         };
                         (field_ident, field_type_with_serialize_deserialize)
@@ -595,7 +584,7 @@ pub fn type_variants_from_request_response_generator(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
             }
             let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
-            let unique_status_codes = hashmap_unique_status_codes.into_iter().map(|(key, _)|key).collect::<std::vec::Vec<proc_macro_helpers::status_code::StatusCode>>();
+            let unique_status_codes = hashmap_unique_status_codes.into_keys().collect::<std::vec::Vec<proc_macro_helpers::status_code::StatusCode>>();
             (
                 unique_status_codes,
                 unique_status_codes_len,
@@ -688,7 +677,7 @@ pub fn type_variants_from_request_response_generator(
                         });
                     },
                     false => {
-                        if let false = *desirable_status_code == status_code_attribute {
+                        if *desirable_status_code != status_code_attribute {
                             status_code_enums_try_from_variants.push(quote::quote! {
                                 else if status_code == #http_status_code_token_stream {
                                     match response.text().await {
@@ -716,7 +705,7 @@ pub fn type_variants_from_request_response_generator(
                     },
                 }
             });
-            if let false = is_last_element_found {
+            if !is_last_element_found {
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
             }
             status_code_enums_try_from_variants
@@ -1045,7 +1034,7 @@ pub fn construct_syn_variant(
                                 ],
                                 vis: syn::Visibility::Inherited,
                                 ident: Some(
-                                    syn::Ident::new(&element.1, proc_macro2::Span::call_site())
+                                    syn::Ident::new(element.1, proc_macro2::Span::call_site())
                                 ),
                                 colon_token: Some(
                                     syn::token::Colon {

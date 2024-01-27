@@ -2,18 +2,20 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
     ast: &syn::DeriveInput,
     proc_macro_attribute_name: &str,
     proc_macro_name_snake_case: &str,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::string::String
-) -> std::vec::Vec::<(
-        syn::Ident,
-        proc_macro2::TokenStream,
-        std::vec::Vec::<syn::Variant>
+    proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
+) -> std::vec::Vec<(
+    syn::Ident,
+    proc_macro2::TokenStream,
+    std::vec::Vec<syn::Variant>,
 )> {
-    let additional_http_status_codes_error_variant_path = format!("{proc_macro_name_snake_case}::{proc_macro_attribute_name}");
-    let additional_http_status_codes_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-        &ast.attrs,
-        &additional_http_status_codes_error_variant_path,
-        proc_macro_name_upper_camel_case_ident_stringified
-    );
+    let additional_http_status_codes_error_variant_path =
+        format!("{proc_macro_name_snake_case}::{proc_macro_attribute_name}");
+    let additional_http_status_codes_error_variants_attribute =
+        proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+            &ast.attrs,
+            &additional_http_status_codes_error_variant_path,
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
     match additional_http_status_codes_error_variants_attribute.path.segments.len() == 2 {
         true => {
             let first_ident = &additional_http_status_codes_error_variants_attribute.path.segments.first().unwrap_or_else(|| {
@@ -23,16 +25,22 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path.segments.get(0) is None")
             }).ident;
             let possible_additional_http_status_codes_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
-            if let false = additional_http_status_codes_error_variant_path == possible_additional_http_status_codes_error_variants_attribute_path {
+            if additional_http_status_codes_error_variant_path != possible_additional_http_status_codes_error_variants_attribute_path {
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} {possible_additional_http_status_codes_error_variants_attribute_path} is not {additional_http_status_codes_error_variant_path}")
             }
         },
         false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no {additional_http_status_codes_error_variant_path} path")
     }
-    let mut additional_http_status_codes_error_variants_attribute_tokens_stringified = additional_http_status_codes_error_variants_attribute.tokens.to_string();
-    let additional_http_status_codes_error_variants_attribute_tokens_stringified_len = additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
-    let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified = &additional_http_status_codes_error_variants_attribute_tokens_stringified[1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1)];//todo maybe check
-    additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified.split(";").collect::<Vec<&str>>()
+    let mut additional_http_status_codes_error_variants_attribute_tokens_stringified =
+        additional_http_status_codes_error_variants_attribute
+            .tokens
+            .to_string();
+    let additional_http_status_codes_error_variants_attribute_tokens_stringified_len =
+        additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
+    let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified =
+        &additional_http_status_codes_error_variants_attribute_tokens_stringified
+            [1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1)]; //todo maybe check
+    additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified.split(';').collect::<Vec<&str>>()
         .iter().fold(std::vec::Vec::<(
             syn::Ident,
             proc_macro2::TokenStream,
@@ -84,16 +92,16 @@ pub fn extract_syn_variants_from_method_proc_macro_attribute(
     operation_name_snake_case_stringified: &str,
     additional_http_status_codes_error_variants_snake_case_stringified: &str,
     proc_macro_name_snake_case: &str,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::string::String
-) -> std::vec::Vec::<(
+    proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
+) -> std::vec::Vec<(
     syn::Ident,
     proc_macro2::TokenStream,
-    std::vec::Vec::<syn::Variant>
+    std::vec::Vec<syn::Variant>,
 )> {
     crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_proc_macro_attribute(
-        &ast,
+        ast,
         &format!("{operation_name_snake_case_stringified}_{additional_http_status_codes_error_variants_snake_case_stringified}"),
-        &proc_macro_name_snake_case,
-        &proc_macro_name_upper_camel_case_ident_stringified
+        proc_macro_name_snake_case,
+        proc_macro_name_upper_camel_case_ident_stringified
     )
 }

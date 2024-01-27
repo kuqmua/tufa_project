@@ -1,7 +1,7 @@
 pub fn column_names_factorial(
-    original_input: Vec<(usize, &syn::Field)>,
-    input: Vec<&syn::Field>,
-    output: &mut Vec<Vec<syn::Field>>,
+    original_input: std::vec::Vec<(usize, &syn::Field)>,
+    input: std::vec::Vec<&syn::Field>,
+    output: &mut std::vec::Vec<std::vec::Vec<syn::Field>>,
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
 ) -> Vec<Vec<syn::Field>> {
     let len = input.len();
@@ -101,7 +101,7 @@ pub fn column_names_factorial(
                                 }
                             }
                         }
-                        if let true = is_order_found {
+                        if is_order_found {
                             break;
                         }
                     }
@@ -142,8 +142,10 @@ pub fn column_names_factorial(
         // }
         _ => {
             let mut output_handle = {
-                let first_element = input.get(0).unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} input.get(0) is None")
+                let first_element = input.first().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} input.first() is None"
+                    )
                 });
                 let output_len = output.len();
                 output.iter_mut().fold(std::vec::Vec::with_capacity(output_len * 2), |mut acc, out| {
@@ -175,7 +177,7 @@ pub fn column_names_factorial(
                         });
                         acc.push(out.clone());
                     }
-                    if let false = out.contains(first_element) {
+                    if !out.contains(first_element) {
                         let mut cl = out.clone();
                         cl.push((*first_element).clone());
                         cl.sort_by(|a,b|{
@@ -215,7 +217,7 @@ pub fn column_names_factorial(
                 input.into_iter().enumerate().fold(
                     std::vec::Vec::with_capacity(input_len),
                     |mut acc, (index, value)| {
-                        if let true = index != 0 {
+                        if index != 0 {
                             acc.push(value);
                         }
                         acc
