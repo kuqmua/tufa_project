@@ -1,30 +1,3 @@
 [submodule "scripts/git_sync_command"]
 	path = scripts/git_sync_command
 	url = git@github.com:kuqmua/git_sync_command.git
-[submodule "src/tufa_client"]
-	path = src/tufa_client
-	url = git@github.com:kuqmua/tufa_client.git
-[submodule "src/tufa_common"]
-	path = src/tufa_common
-	url = git@github.com:kuqmua/tufa_common.git
-[submodule "src/tufa_server"]
-	path = src/tufa_server
-	url = git@github.com:kuqmua/tufa_server.git
-[submodule "src/tufa_telegram_bot"]
-	path = src/tufa_telegram_bot
-	url = git@github.com:kuqmua/tufa_telegram_bot.git
-[submodule "src/tufa_grpc_server"]
-	path = src/tufa_grpc_server
-	url = git@github.com:kuqmua/tufa_grpc_server.git
-[submodule "src/tufa_grpc_client"]
-	path = src/tufa_grpc_client
-	url = git@github.com:kuqmua/tufa_grpc_client.git
-[submodule "src/proc_macros/init_from_env"]
-	path = src/proc_macros/init_from_env
-	url = git@github.com:kuqmua/init_from_env.git
-[submodule "src/tufa_postgresql_crud"]
-	path = src/tufa_postgresql_crud
-	url = git@github.com:kuqmua/tufa_postgresql_crud.git
-[submodule "src/error_occurence_lib"]
-	path = src/error_occurence_lib
-	url = git@github.com:kuqmua/error_occurence_lib.git
