@@ -695,7 +695,11 @@ pub fn get_only_one_status_code(
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path.segments.len() == 1 {
-            if let Ok(named_attribute) = StatusCode::try_from(&attr.path.segments[0].ident.to_string()) {
+            let value = match attr.path.segments.first() {
+                Some(value) => value,
+                None => panic!("{proc_macro_name_ident_stringified} attr.path.segments.get(0) is None")
+            };
+            if let Ok(named_attribute) = StatusCode::try_from(&value.ident.to_string()) {
                 if option_self.is_some() {
                     panic!("{proc_macro_name_ident_stringified} duplicated status_code attributes are not supported");
                 } else {
