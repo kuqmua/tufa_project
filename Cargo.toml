@@ -22,7 +22,7 @@ members = [
   "user_port_try_from_u16",
 ]
 exclude = [
-  "tufa_client",
+  "client",
   "svg_component",
 ]
 

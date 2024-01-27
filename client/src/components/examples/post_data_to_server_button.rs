@@ -17,8 +17,8 @@ pub fn post_data_to_server_button() -> Html {
                     .header("content-type", "application/json")
                     .body(
                         json!({
-                            "first": "first_from_tufa_client".to_string(),
-                            "second": "second_from_tufa_client".to_string(),
+                            "first": "first_from_client".to_string(),
+                            "second": "second_from_client".to_string(),
                         })
                         .to_string(),
                     )

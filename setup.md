@@ -6,7 +6,7 @@
 17. [init_from_env](#heading17)
 18. [proc_macro_helpers](#heading18)
 22. [svg_component](#heading22)
-23. [tufa_client](#heading23)
+23. [client](#heading23)
 24. [tufa_common](#heading24) 
 25. [tufa_grpc_client](#heading25)
 26. [tufa_grpc_server](#heading26)
@@ -39,7 +39,7 @@
 
 ## svg_component <a name="heading22"/>
 
-## tufa_client <a name="heading23"/>
+## client <a name="heading23"/>
 
 ## proc_macro_assistants <a name="heading35"/>
 

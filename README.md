@@ -83,7 +83,7 @@ cd src/proc_macros/error_occurence_lib && git checkout main && cd .. && cd .. cd
 cd src/proc_macros/proc_macro_common && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/proc_macro_assistants && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/user_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
-cd src/tufa_client && git checkout main && cd .. &&  cd .. &&
+cd src/client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_postgresql_crud && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
@@ -103,7 +103,7 @@ cargo build
 ```
 ### example git submodule
 ```
-git submodule add https://github.com/kuqmua/tufa_client.git
+git submodule add https://github.com/kuqmua/client.git
 ```
 ```
 git submodule add https://github.com/kuqmua/tufa_server.git
