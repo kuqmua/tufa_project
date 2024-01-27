@@ -1,0 +1,17 @@
+[package]
+edition = "2021"
+name = "compile_time_git_info"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = {version = "=1.0.67"}
+quote = {version = "=1.0.33"}
+proc_macro_helpers = {path = "../proc_macros/proc_macro_helpers"}
+proc_macro_common = {path = "../proc_macros/proc_macro_common"}
+
+[lints]
+workspace = true
