@@ -3,7 +3,7 @@ resolver = "2"
 members = [
   "integration_tests",
   "compile_time_git_info",
-  "proc_macros/enum_extension",
+  "enum_extension",
   "proc_macros/error_occurence",
   "proc_macros/from_sqlx_postgres_error",
   "proc_macros/from_str",

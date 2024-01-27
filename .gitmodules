@@ -16,9 +16,6 @@
 [submodule "src/proc_macros/svg_component"]
 	path = src/proc_macros/svg_component
 	url = git@github.com:kuqmua/svg_component.git
-[submodule "src/proc_macros/enum_extension"]
-	path = src/proc_macros/enum_extension
-	url = git@github.com:kuqmua/enum_extension.git
 [submodule "src/proc_macros/proc_macro_helpers"]
 	path = src/proc_macros/proc_macro_helpers
 	url = git@github.com:kuqmua/proc_macro_helpers.git

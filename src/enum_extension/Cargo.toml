@@ -1,0 +1,17 @@
+[package]
+edition = "2021"
+name = "enum_extension"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = {version = "=1.0.33"}
+syn = {version = "=1.0.107"}
+proc_macro_helpers = {path = "../proc_macros/proc_macro_helpers"}
+proc_macro_common = {path = "../proc_macros/proc_macro_common"}
+
+[lints]
+workspace = true
