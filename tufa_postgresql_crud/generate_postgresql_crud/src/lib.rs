@@ -233,7 +233,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         for field_named in fields_named {
             let attrs = &field_named.attrs;
             if let 1 = attrs.len() {
-                match attrs.get(0) {
+                match attrs.first() {
                     Some(attr) => match proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&attr.path.segments) == primary_key_attr_name {
                         true => match primary_key_field_option {
                             Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one primary_key attribute"),
@@ -260,8 +260,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {sqlx_types_uuid_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     {
-        let primary_key_field_ident_handle = quote::quote!{#primary_key_field_type}.to_string().replace(" ", "");
-        if let false = primary_key_field_ident_handle == sqlx_types_uuid_stringified {
+        let primary_key_field_ident_handle = quote::quote!{#primary_key_field_type}.to_string().replace(' ', "");
+        if primary_key_field_ident_handle != sqlx_types_uuid_stringified {
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key is not type {sqlx_types_uuid_stringified}");
         }
     }
@@ -283,10 +283,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             supported_field_type
         ) = match attrs.iter().fold(None, |mut acc, element| {
             let generated_path = proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&element.path.segments);
-            match {
+            let supported_attribute_type = {
                 use std::str::FromStr;
                 SupportedAttributeType::from_str(&generated_path)
-            } {
+            };
+            match supported_attribute_type {
                 Ok(value) => match acc {
                     Some(acc_value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supported only one attribute per field, detected both: {acc_value} and {value}"),
                     None => {
@@ -299,7 +300,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }) {
             Some(supported_attribute_type) => {
                 let ty = &element.ty;
-                let ty_stringified = quote::quote!{#ty}.to_string().replace(" ", "");
+                let ty_stringified = quote::quote!{#ty}.to_string().replace(' ', "");
                 let supported_field_type = {
                     use std::str::FromStr;
                     SupportedFieldType::from_str(ty_stringified.as_str()).unwrap_or_else(|_| panic!(
@@ -329,7 +330,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     }).collect::<std::vec::Vec<FieldNamedWrapperExcludingPrimaryKey>>();
     let fields_named_len = fields_named.len();
-    if let false = fields_named_len > 1 {
+    if fields_named_len <= 1 {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1" );
     }
     let fields_named_wrappers_excluding_primary_key_len = fields_named_wrappers_excluding_primary_key.len();
@@ -448,7 +449,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_named_enumerated = fields_named
             .iter()
             .enumerate()
-            .map(|(index, field)| (index, field))
             .collect::<std::vec::Vec<(usize, &syn::Field)>>();
         let fields_named_clone_stringified = fields_named.iter().collect::<std::vec::Vec<&syn::Field>>();
         let mut veced_vec = fields_named_clone_stringified
@@ -500,9 +500,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             })
             .collect::<std::vec::Vec<proc_macro2::TokenStream>>()
     };
-    let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
     let code_occurence_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_token_stream();
-    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
     let crate_common_code_occurence_code_occurence_token_stream = quote::quote!{crate::common::#code_occurence_snake_case_token_stream::#code_occurence_upper_camel_case_token_stream};
     let code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream = quote::quote!{
@@ -1554,7 +1552,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let additional_http_status_codes_error_variants_snake_case_stringified = "additional_http_status_codes_error_variants";
     let common_middlewares_error_syn_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_proc_macro_attribute(
         &ast,
-        &additional_http_status_codes_error_variants_snake_case_stringified,
+        additional_http_status_codes_error_variants_snake_case_stringified,
         &proc_macro_name_snake_case,
         &proc_macro_name_upper_camel_case_ident_stringified
     );
@@ -1679,7 +1677,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![(
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
@@ -1774,7 +1772,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -1820,7 +1818,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -1843,7 +1841,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -1956,7 +1954,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -1975,7 +1973,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -1991,7 +1989,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
+            variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -2089,7 +2087,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2106,7 +2104,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2122,7 +2120,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2141,7 +2139,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2157,7 +2155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2173,7 +2171,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr404NotFound,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2189,7 +2187,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2205,7 +2203,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2265,7 +2263,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2281,7 +2279,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr408RequestTimeout,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2297,7 +2295,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2313,7 +2311,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2329,7 +2327,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2367,7 +2365,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2386,7 +2384,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2405,7 +2403,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2421,7 +2419,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
+                    variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2451,7 +2449,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
             crate::type_variants_from_request_response_generator::construct_syn_variant(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                &variant_name_upper_camel_case_stringified,
+                variant_name_upper_camel_case_stringified,
                 &code_occurence_field,
                 vec![
                     (
@@ -2508,7 +2506,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
             &ast,
             &operation_name_snake_case_stringified,
-            &additional_http_status_codes_error_variants_snake_case_stringified,
+            additional_http_status_codes_error_variants_snake_case_stringified,
             &proc_macro_name_snake_case,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
@@ -2559,7 +2557,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_token_stream = {
                 let operation_payload_element_token_stream = {
                     let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| generate_pub_field_ident_field_type_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     quote::quote!{
@@ -2580,7 +2578,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_with_serialize_deserialize_token_stream = {
                 let operation_payload_element_with_serialize_deserialize_token_stream = {
                     let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     quote::quote!{
@@ -2620,7 +2618,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     };
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_try_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
@@ -2686,7 +2684,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
                 let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = {
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
@@ -3096,7 +3094,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
             &ast,
             &operation_name_snake_case_stringified,
-            &additional_http_status_codes_error_variants_snake_case_stringified,
+            additional_http_status_codes_error_variants_snake_case_stringified,
             &proc_macro_name_snake_case,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
@@ -3145,7 +3143,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| generate_pub_field_ident_field_type_token_stream(
-                    &element,
+                    element,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ));
                 quote::quote!{
@@ -3158,7 +3156,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-                    &element,
+                    element,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ));
                 quote::quote!{
@@ -3187,7 +3185,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
                 let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_try_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
@@ -3216,7 +3214,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
                 let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_from_token_stream(
-                    &element,
+                    element,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ));
                 let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
@@ -3547,7 +3545,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
             &ast,
             &operation_name_snake_case_stringified,
-            &additional_http_status_codes_error_variants_snake_case_stringified,
+            additional_http_status_codes_error_variants_snake_case_stringified,
             &proc_macro_name_snake_case,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
@@ -3685,7 +3683,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     };
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_try_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     quote::quote!{
@@ -3725,7 +3723,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_from_token_stream(
-                    &element,
+                    element,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ));
                 quote::quote!{
@@ -3917,12 +3915,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
                         let not_unique_field_vec_snake_case_token_stream = {
-                            let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(&field_ident);
+                            let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
                             not_unique_field_vec_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
                         let not_unique_field_vec_vec_upper_camel_token_stream = {
-                            let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(&field_ident);
+                            let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
                             not_unique_field_vec_upper_camel_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_upper_camel_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
@@ -4779,7 +4777,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let additional_http_status_codes_error_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
             &ast,
             &operation_name_snake_case_stringified,
-            &additional_http_status_codes_error_variants_snake_case_stringified,
+            additional_http_status_codes_error_variants_snake_case_stringified,
             &proc_macro_name_snake_case,
             &proc_macro_name_upper_camel_case_ident_stringified
         );
@@ -4838,7 +4836,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let operation_payload_element_token_stream = {
                     //todo make sure name and color both are not None(make it option<value>, not just a value)
                     let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     quote::quote!{
@@ -4861,7 +4859,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_with_serialize_deserialize_token_stream = {
                 let operation_payload_element_with_serialize_deserialize_token_stream = {
                     let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     quote::quote!{
@@ -4931,7 +4929,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     // println!("{operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream}");
                     let fields_assignments_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_try_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
@@ -4984,7 +4982,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
                 let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = {
                     let fields_assignments_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
