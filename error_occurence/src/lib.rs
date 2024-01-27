@@ -72,7 +72,7 @@ pub fn error_occurence(
             }
         });
         lifetimes_stringified.pop();
-        if let true = lifetimes_stringified.contains(&trait_lifetime_stringified) {
+        if lifetimes_stringified.contains(&trait_lifetime_stringified) {
             panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
         }
         lifetimes_stringified
@@ -295,162 +295,162 @@ pub fn error_occurence(
                                 let attribute = {
                                     let mut option_attribute = None;
                                     field.attrs.iter().for_each(|attr|{
-                                        if let true = attr.path.segments.len() == 1 {
+                                        if attr.path.segments.len() == 1 {
                                             let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                            if let true = attr.path.segments[0].ident == attribute_display_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            if attr.path.segments[0].ident == attribute_display_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_display_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_display_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_display_foreign_type_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_display_foreign_type_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_error_occurence_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_error_occurence_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_vec_display_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_vec_display_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_vec_display_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_vec_display_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_vec_display_foreign_type_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_vec_display_foreign_type_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_vec_error_occurence_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_vec_error_occurence_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if let true = attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
-                                                if let true = option_attribute.is_some() {
+                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
+                                                if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
                                                 else {
@@ -483,7 +483,7 @@ pub fn error_occurence(
                                         ));
                                         if path_segment.ident == proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified() {
                                             let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
-                                                if let true = angle_brackets_generic_arguments.args.len() == 1 {
+                                                if angle_brackets_generic_arguments.args.len() == 1 {
                                                     if let syn::GenericArgument::Type(type_handle) = 
                                                         angle_brackets_generic_arguments.args
                                                         .into_iter().next()
@@ -502,7 +502,7 @@ pub fn error_occurence(
                                                             },
                                                             syn::Type::Reference(type_reference) => {
                                                                 let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                                                    if let true = type_path.path.segments.len() == 1 {
+                                                                    if type_path.path.segments.len() == 1 {
                                                                         type_path.path.segments
                                                                         .into_iter().next()
                                                                         .unwrap_or_else(|| panic!(
@@ -553,7 +553,7 @@ pub fn error_occurence(
                                                 hashmap_key_type,
                                                 hashmap_value_type
                                             ) = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
-                                                if let true = angle_brackets_generic_arguments.args.len() == 2 {
+                                                if angle_brackets_generic_arguments.args.len() == 2 {
                                                     let (
                                                         key_generic_argument,
                                                         value_generic_argument
@@ -601,7 +601,7 @@ pub fn error_occurence(
                                                             },
                                                             syn::Type::Reference(type_reference) => {
                                                                 let key_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                                                    if let true = type_path.path.segments.len() == 1 {
+                                                                    if type_path.path.segments.len() == 1 {
                                                                         type_path.path.segments
                                                                         .into_iter().next()
                                                                         .unwrap_or_else(|| panic!(
@@ -648,7 +648,7 @@ pub fn error_occurence(
                                                             },
                                                             syn::Type::Reference(type_reference) => {
                                                                 let value_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                                                    if let true = type_path.path.segments.len() == 1 {
+                                                                    if type_path.path.segments.len() == 1 {
                                                                         type_path.path.segments
                                                                         .into_iter().next()
                                                                         .unwrap_or_else(|| panic!(
@@ -708,7 +708,7 @@ pub fn error_occurence(
                                     },
                                     syn::Type::Reference(type_reference) => {
                                         let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                            if let true = type_path.path.segments.len() == 1 {
+                                            if type_path.path.segments.len() == 1 {
                                                 type_path.path.segments
                                                 .into_iter().next()
                                                 .unwrap_or_else(|| panic!(
@@ -1393,7 +1393,7 @@ pub fn error_occurence(
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => {
-                                    if let false = should_generate_impl_compile_time_check_error_occurence_members {
+                                    if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime } = supported_container {
@@ -1809,7 +1809,7 @@ pub fn error_occurence(
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => {
-                                    if let false = should_generate_impl_compile_time_check_error_occurence_members {
+                                    if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec { 
@@ -2768,7 +2768,7 @@ pub fn error_occurence(
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => {
-                                    if let false = should_generate_impl_compile_time_check_error_occurence_members {
+                                    if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
                                     let (
@@ -3509,7 +3509,7 @@ pub fn error_occurence(
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
-                                    if let false = should_generate_impl_compile_time_check_error_occurence_members {
+                                    if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
@@ -3979,7 +3979,7 @@ pub fn error_occurence(
                 let variant_ident = &variant.ident;
                 let field_type = if let syn::Fields::Unnamed(fields_unnamed) = &variant.fields {
                     let unnamed = &fields_unnamed.unnamed;
-                    if let false = unnamed.len() == 1 {
+                    if unnamed.len() != 1 {
                         panic!(
                             "{proc_macro_name_ident_stringified} {}::{unnamed_upper_camel_case} variant fields unnamed len != 1",
                             proc_macro_helpers::naming_conventions::SUPPORTED_ENUM_VARIANT_STRINGIFIED
@@ -4151,7 +4151,7 @@ fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_add
     };
     vec_lifetime.into_iter().for_each(|k|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(specified_lifetime) = k {
-            if let true = &specified_lifetime == trait_lifetime_stringified {
+            if &specified_lifetime == trait_lifetime_stringified {
                 panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
             }
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -4181,7 +4181,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     let error_message = "must not contain reserved by macro lifetime name:";
     key_vec_lifetime.into_iter().for_each(|k|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_specified) = k {
-            if let true = &key_lifetime_specified == trait_lifetime_stringified {
+            if &key_lifetime_specified == trait_lifetime_stringified {
                 panic!("{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             }
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -4192,7 +4192,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     });
     value_vec_lifetime.into_iter().for_each(|v|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_specified) = v {
-            if let true = &value_lifetime_specified == trait_lifetime_stringified {
+            if &value_lifetime_specified == trait_lifetime_stringified {
                 panic!("{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             }
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
