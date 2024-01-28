@@ -5,14 +5,14 @@
     // type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
 )]
 // #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
-//     crate::repositories_types::tufa_server::routes::api::cats::TryCreateMany,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryCreateOne,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryReadMany,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryReadOne,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryUpdateMany,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryUpdateOne,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryDeleteMany,
-//     crate::repositories_types::tufa_server::routes::api::cats::TryDeleteOne
+//     crate::repositories_types::server::routes::api::cats::TryCreateMany,
+//     crate::repositories_types::server::routes::api::cats::TryCreateOne,
+//     crate::repositories_types::server::routes::api::cats::TryReadMany,
+//     crate::repositories_types::server::routes::api::cats::TryReadOne,
+//     crate::repositories_types::server::routes::api::cats::TryUpdateMany,
+//     crate::repositories_types::server::routes::api::cats::TryUpdateOne,
+//     crate::repositories_types::server::routes::api::cats::TryDeleteMany,
+//     crate::repositories_types::server::routes::api::cats::TryDeleteOne
 // )]
 pub enum SqlxPostgresErrorErrorNamed {
     // #[tvfrr_500_internal_server_error]
@@ -206,7 +206,7 @@ impl std::convert::From<sqlx::Error> for SqlxPostgresErrorErrorNamed {
 //////////////////////////////////
 
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryCreateManyResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -326,7 +326,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryCreateOneResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -446,7 +446,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryReadManyResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -566,7 +566,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryReadOneResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -686,7 +686,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryUpdateManyResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -806,7 +806,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryUpdateOneResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -926,7 +926,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryDeleteManyResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -1046,7 +1046,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamed>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariants
+    for crate::repositories_types::server::routes::api::cats::TryDeleteOneResponseVariants
 {
     fn from(val: SqlxPostgresErrorErrorNamed) -> Self {
         match val.into_serialize_deserialize_version() {
@@ -1166,7 +1166,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamed>
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryCreateManyWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryCreateManyWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1226,7 +1226,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryCreateManyWithSeri
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryCreateOneWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryCreateOneWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1286,7 +1286,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryCreateOneWithSeria
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryReadManyWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryReadManyWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1346,7 +1346,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryReadManyWithSerial
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryReadOneWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryReadOneWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1406,7 +1406,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryReadOneWithSeriali
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryUpdateManyWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryUpdateManyWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1466,7 +1466,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryUpdateManyWithSeri
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryUpdateOneWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryUpdateOneWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1526,7 +1526,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryUpdateOneWithSeria
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryDeleteManyWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1586,7 +1586,7 @@ crate::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithSeri
     }
 }
 impl std :: convert :: From < SqlxPostgresErrorErrorNamed > for
-crate::repositories_types::tufa_server::routes::api::cats::TryDeleteOneWithSerializeDeserialize
+crate::repositories_types::server::routes::api::cats::TryDeleteOneWithSerializeDeserialize
 {
     fn from(val : SqlxPostgresErrorErrorNamed) -> Self
     {
@@ -1737,7 +1737,7 @@ enum SqlxPostgresErrorErrorNamedStatusCodesChecker {
     UnexpectedCaseTvfrr500InternalServerError,
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryCreateManyStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryCreateManyStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -1794,7 +1794,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryCreateOneStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryCreateOneStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -1851,7 +1851,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryReadManyStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryReadManyStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -1908,7 +1908,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryReadOneStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryReadOneStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -1965,7 +1965,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryUpdateManyStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryUpdateManyStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -2022,7 +2022,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryUpdateOneStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryUpdateOneStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -2079,7 +2079,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryDeleteManyStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryDeleteManyStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val
@@ -2136,7 +2136,7 @@ impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
     }
 }
 impl std::convert::From<SqlxPostgresErrorErrorNamedStatusCodesChecker>
-    for crate::repositories_types::tufa_server::routes::api::cats::TryDeleteOneStatusCodesChecker
+    for crate::repositories_types::server::routes::api::cats::TryDeleteOneStatusCodesChecker
 {
     fn from(val: SqlxPostgresErrorErrorNamedStatusCodesChecker) -> Self {
         match val

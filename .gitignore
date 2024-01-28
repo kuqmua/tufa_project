@@ -15,4 +15,4 @@ Cargo.lock
 **/*.rs.bk
 src/**/*.rs.bk
 
-/tufa_server/.env
+/server/.env

@@ -2,7 +2,7 @@
 * fix proc macro submodules, rename them
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
-* format!("{}, ", e)) for error refactor in format tufa_server/src/preparation/check_availability.rs:91:29 error_string
+* format!("{}, ", e)) for error refactor in format server/src/preparation/check_availability.rs:91:29 error_string
 * proc macreo input parameter crate or common
 * add use trait import in the scope in case of macro like this 
 ```
@@ -58,12 +58,12 @@ and if its a vec or hashmap -  code occurence must not propagate to parents
 
 time [key] error1
  common/src/server/mongo/something1.rs:70:37 
- tufa_server/src/preparation/something1.rs:92:29
+ server/src/preparation/something1.rs:92:29
 time [key] error2
  common/src/server/mongo/something2.rs:70:37 
- tufa_server/src/preparation/something2.rs:92:29
-tufa_server/src/preparation/parent.rs:92:29
-tufa_server/src/preparation/parent.rs:45:29
+ server/src/preparation/something2.rs:92:29
+server/src/preparation/parent.rs:92:29
+server/src/preparation/parent.rs:45:29
 
 ### init submodules 
 ```
@@ -86,7 +86,7 @@ cd src/proc_macros/user_port_try_from_u16 && git checkout main && cd .. && cd ..
 cd src/client && git checkout main && cd .. &&  cd .. &&
 cd src/common && git checkout main && cd .. &&  cd .. &&
 cd src/postgresql_crudpostgresql_crud && git checkout main && cd .. &&  cd .. &&
-cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
+cd src/server && git checkout main && cd .. &&  cd .. &&
 cd src/telegram_bot && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_grpc_client && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_grpc_server && git checkout main && cd ..  cd ..
@@ -106,15 +106,15 @@ cargo build
 git submodule add https://github.com/kuqmua/client.git
 ```
 ```
-git submodule add https://github.com/kuqmua/tufa_server.git
+git submodule add https://github.com/kuqmua/server.git
 ```
 ### up databases
 ```
-cd tufa_server && sudo docker-compose up -d && cd ..
+cd server && sudo docker-compose up -d && cd ..
 ```
 ### run postgres migrations
 ```  
-cd tufa_server && sqlx migrate run && cd ..
+cd server && sqlx migrate run && cd ..
 ```
 ### repo tracker example
 ```

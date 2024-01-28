@@ -5,7 +5,7 @@
 //     type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
 // )]
 // #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
-//     crate::repositories_types::tufa_server::routes::api::cats::TryReadOne
+//     crate::repositories_types::server::routes::api::cats::TryReadOne
 // )]
 // pub enum QueryExtractorErrorNamed {
 //     #[tvfrr_400_bad_request]
@@ -44,7 +44,7 @@
 // pub trait QueryValueResultExtractor<OkGeneric, ErrorGeneric> {
 //     fn try_extract_value(
 //         self,
-//         app_info: &axum::extract::State<crate::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+//         app_info: &axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 //     ) -> Result<OkGeneric, ErrorGeneric>;
 // }
 
@@ -57,7 +57,7 @@
 // {
 //     fn try_extract_value(
 //         self,
-//         app_info: &axum::extract::State<crate::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+//         app_info: &axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 //     ) -> Result<OkGeneric, ErrorGeneric> {
 //         match self {
 //             Ok(axum::extract::Query(payload)) => Ok(payload),
@@ -76,7 +76,7 @@
 
 // ///////////////////
 // impl std::convert::From<QueryExtractorErrorNamed>
-//     for crate::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariants
+//     for crate::repositories_types::server::routes::api::cats::TryReadManyResponseVariants
 // {
 //     fn from(val: QueryExtractorErrorNamed) -> Self {
 //         match val.into_serialize_deserialize_version() {
@@ -98,7 +98,7 @@
 //     }
 // }
 // impl std::convert::From<QueryExtractorErrorNamed>
-//     for crate::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariants
+//     for crate::repositories_types::server::routes::api::cats::TryReadOneResponseVariants
 // {
 //     fn from(val: QueryExtractorErrorNamed) -> Self {
 //         match val.into_serialize_deserialize_version() {
@@ -120,7 +120,7 @@
 //     }
 // }
 // impl std::convert::From<QueryExtractorErrorNamed>
-//     for crate::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariants
+//     for crate::repositories_types::server::routes::api::cats::TryDeleteManyResponseVariants
 // {
 //     fn from(val: QueryExtractorErrorNamed) -> Self {
 //         match val.into_serialize_deserialize_version() {
@@ -142,7 +142,7 @@
 //     }
 // }
 // impl std :: convert :: From < QueryExtractorErrorNamed > for crate ::
-// repositories_types :: tufa_server :: routes :: api :: cats ::
+// repositories_types :: server :: routes :: api :: cats ::
 // TryReadManyWithSerializeDeserialize
 // {
 //     fn from(val : QueryExtractorErrorNamed) -> Self
@@ -161,7 +161,7 @@
 //     }
 // }
 // impl std :: convert :: From < QueryExtractorErrorNamed > for crate ::
-// repositories_types :: tufa_server :: routes :: api :: cats ::
+// repositories_types :: server :: routes :: api :: cats ::
 // TryReadOneWithSerializeDeserialize
 // {
 //     fn from(val : QueryExtractorErrorNamed) -> Self
@@ -180,7 +180,7 @@
 //     }
 // }
 // impl std :: convert :: From < QueryExtractorErrorNamed > for crate ::
-// repositories_types :: tufa_server :: routes :: api :: cats ::
+// repositories_types :: server :: routes :: api :: cats ::
 // TryDeleteManyWithSerializeDeserialize
 // {
 //     fn from(val : QueryExtractorErrorNamed) -> Self
@@ -218,57 +218,57 @@
 //     UnexpectedCaseTvfrr500InternalServerError,
 // }
 // impl std::convert::From<QueryExtractorErrorNamedStatusCodesChecker>
-//     for crate::repositories_types::tufa_server::routes::api::cats::TryReadManyStatusCodesChecker
+//     for crate::repositories_types::server::routes::api::cats::TryReadManyStatusCodesChecker
 // {
 //     fn from(val: QueryExtractorErrorNamedStatusCodesChecker) -> Self {
 //         match val
 //         {
 //             QueryExtractorErrorNamedStatusCodesChecker ::
 //             FailedToDeserializeQueryStringTvfrr400BadRequest => crate ::
-//             repositories_types :: tufa_server :: routes :: api :: cats ::
+//             repositories_types :: server :: routes :: api :: cats ::
 //             TryReadManyStatusCodesChecker ::
 //             FailedToDeserializeQueryStringTvfrr400BadRequest,
 //             QueryExtractorErrorNamedStatusCodesChecker ::
 //             UnexpectedCaseTvfrr500InternalServerError => crate ::
-//             repositories_types :: tufa_server :: routes :: api :: cats ::
+//             repositories_types :: server :: routes :: api :: cats ::
 //             TryReadManyStatusCodesChecker ::
 //             UnexpectedCaseTvfrr500InternalServerError
 //         }
 //     }
 // }
 // impl std::convert::From<QueryExtractorErrorNamedStatusCodesChecker>
-//     for crate::repositories_types::tufa_server::routes::api::cats::TryReadOneStatusCodesChecker
+//     for crate::repositories_types::server::routes::api::cats::TryReadOneStatusCodesChecker
 // {
 //     fn from(val: QueryExtractorErrorNamedStatusCodesChecker) -> Self {
 //         match val
 //         {
 //             QueryExtractorErrorNamedStatusCodesChecker ::
 //             FailedToDeserializeQueryStringTvfrr400BadRequest => crate ::
-//             repositories_types :: tufa_server :: routes :: api :: cats ::
+//             repositories_types :: server :: routes :: api :: cats ::
 //             TryReadOneStatusCodesChecker ::
 //             FailedToDeserializeQueryStringTvfrr400BadRequest,
 //             QueryExtractorErrorNamedStatusCodesChecker ::
 //             UnexpectedCaseTvfrr500InternalServerError => crate ::
-//             repositories_types :: tufa_server :: routes :: api :: cats ::
+//             repositories_types :: server :: routes :: api :: cats ::
 //             TryReadOneStatusCodesChecker ::
 //             UnexpectedCaseTvfrr500InternalServerError
 //         }
 //     }
 // }
 // impl std::convert::From<QueryExtractorErrorNamedStatusCodesChecker>
-//     for crate::repositories_types::tufa_server::routes::api::cats::TryDeleteManyStatusCodesChecker
+//     for crate::repositories_types::server::routes::api::cats::TryDeleteManyStatusCodesChecker
 // {
 //     fn from(val: QueryExtractorErrorNamedStatusCodesChecker) -> Self {
 //         match val
 //         {
 //             QueryExtractorErrorNamedStatusCodesChecker ::
 //             FailedToDeserializeQueryStringTvfrr400BadRequest => crate ::
-//             repositories_types :: tufa_server :: routes :: api :: cats ::
+//             repositories_types :: server :: routes :: api :: cats ::
 //             TryDeleteManyStatusCodesChecker ::
 //             FailedToDeserializeQueryStringTvfrr400BadRequest,
 //             QueryExtractorErrorNamedStatusCodesChecker ::
 //             UnexpectedCaseTvfrr500InternalServerError => crate ::
-//             repositories_types :: tufa_server :: routes :: api :: cats ::
+//             repositories_types :: server :: routes :: api :: cats ::
 //             TryDeleteManyStatusCodesChecker ::
 //             UnexpectedCaseTvfrr500InternalServerError
 //         }

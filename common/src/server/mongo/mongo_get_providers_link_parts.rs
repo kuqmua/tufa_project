@@ -34,7 +34,7 @@
 //     )
 // ) -> Result<
 //         std::collections::HashMap<
-//                 crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind,
+//                 crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
 //                 Vec<String>
 //         >,
 //         crate::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed
@@ -49,8 +49,8 @@
 //             ),
 //             Ok(vec_collection_names) => {
 //                 let no_collection_error_hashmap = {
-//                     use crate::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
-//                     crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec()
+//                     use crate::repositories_types::server::traits::provider_kind_methods::ProviderKindMethods;
+//                     crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec()
 //                     .into_iter()
 //                     .filter_map(|pk| {
 //                         let collection_name = pk.get_mongo_log_collection_name(config);
@@ -71,21 +71,21 @@
 //                 }
 //                 let result_get_documents_hashmap =
 //                     futures::future::join_all({
-//                         use crate::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
-//                         crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
+//                         use crate::repositories_types::server::traits::provider_kind_methods::ProviderKindMethods;
+//                         crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
 //                             (
 //                                 *pk,
 //                                 crate::server::mongo::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector(
 //                                     db.collection::<mongodb::bson::Document>(&pk.get_mongo_log_collection_name(config)),
 //                                     "data",
-//                                     crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_mongo_provider_link_parts_aggregation(pk),
+//                                     crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::get_mongo_provider_link_parts_aggregation(pk),
 //                                 )
 //                                 .await,
 //                             )
 //                         })
 //                     })
 //                     .await;
-//                 let mut success_hashmap: std::collections::HashMap<crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
+//                 let mut success_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
 //                     std::collections::HashMap::with_capacity(result_get_documents_hashmap.len());
 //                 let mut error_hashmap: std::collections::HashMap<
 //                     std::string::String,

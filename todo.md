@@ -662,7 +662,7 @@ Rc::new(<RefCell::new(Data { value: 42}))
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9
 +++++++++++++++++++++++++++
 Finished dev [unoptimized + debuginfo] target(s) in 0.10s
-Running `target/debug/tufa_server`
+Running `target/debug/server`
 We are on a multicore system with 12 CPUs
 ENV: Development
 server can reach https://www.google.com/

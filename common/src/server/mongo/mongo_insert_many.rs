@@ -22,7 +22,7 @@
 // }
 
 // pub async fn mongo_insert_many<'a>(
-//     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+//     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     db: mongodb::Database,
 //     config: &'static (
 // impl crate::common::config::config_fields::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
@@ -38,7 +38,7 @@
 //                         pk.to_string(),
 //                         db
 //                         .collection(&{
-//                             use crate::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
+//                             use crate::repositories_types::server::traits::provider_kind_methods::ProviderKindMethods;
 //                             pk.get_db_tag()
 //                         })
 //                         .insert_many(

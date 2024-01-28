@@ -51,7 +51,7 @@
 // }
 
 // pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length<'a>(
-//     providers_json_local_data_hashmap: &std::collections::HashMap<crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+//     providers_json_local_data_hashmap: &std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     postgres_pool: &sqlx::Pool<sqlx::Postgres>,
 // ) -> Result<
 //     (),
@@ -64,7 +64,7 @@
 //                 let query_string = format!(
 //                     "SELECT count(*) AS exact_count FROM {};",
 //                     {
-//                         use crate::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
+//                         use crate::repositories_types::server::traits::provider_kind_methods::ProviderKindMethods;
 //                         pk.get_postgres_table_name()
 //                     }
 //                 );
@@ -75,7 +75,7 @@
 //                 )
 //             });
 //     let count_provider_links_tables_error_vec: Vec<(
-//         &crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind,
+//         &crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
 //         &Vec<String>,
 //         Result<(i64,), sqlx::Error>,
 //     )> = futures::future::join_all(count_provider_links_tables_tasks_vec).await;

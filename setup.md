@@ -10,7 +10,7 @@
 24. [common](#heading24) 
 25. [tufa_grpc_client](#heading25)
 26. [tufa_grpc_server](#heading26)
-27. [tufa_server](#heading27) 
+27. [server](#heading27) 
 28. [telegram_bot](#heading28)
 29. [error_occurence](#heading29)
 30. [user_port_try_from_u16](#heading30)
@@ -87,8 +87,8 @@ sudo apt install cmake
 sudo apt install cmake
 ```
 
-## tufa_server <a name="heading27"/> 
-#### tufa_server setup content
+## server <a name="heading27"/> 
+#### server setup content
 1. [simple route request](#heading271)
 2. [get_providers_posts route request](#heading272)
 3. [change project config](#heading273)
@@ -172,19 +172,19 @@ rustup target add x86_64-unknown-linux-musl
 cargo +nightly build --release
 ```
 ```
-sudo docker build -t tufa_server-image .
+sudo docker build -t server-image .
 ```
 #### run docker container <a name="heading277"></a>
 ```
-docker run --env-file .env --name tufa_server-container -p 8000:8000 --rm -it tufa_server-image
+docker run --env-file .env --name server-container -p 8000:8000 --rm -it server-image
 ```
 #### stop docker container <a name="heading278"></a>
 ```
-sudo docker stop tufa_server-container
+sudo docker stop server-container
 ```
 #### remove docker container <a name="heading279"></a>
 ```
-sudo docker rm tufa_server-container
+sudo docker rm server-container
 ```
 #### remove all unused right now docker containers and images <a name="heading2710"></a>
 ```
@@ -204,7 +204,7 @@ sudo docker-compose down
 #### pull and run mongodb docker container <a name="heading2714"></a>
 (need to write path to your project directory)
 ```
-sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/tufa_server/mongodb_volume:/data/db -d mongo:latest
+sudo docker run -p 27017:27017 --name mongo-tufa-wsl2 -v ~/projects/server/mongodb_volume:/data/db -d mongo:latest
 ```
 #### start mongodb docker container <a name="heading2715"></a>
 with docker: <br/>
@@ -278,7 +278,7 @@ cargo audit
 ```
 #### fix Error: I/O error: Permission denied (os error 13) error <a name="heading2727"></a>
 ```
-cd .. sudo chmod -R 777 tufa_server && cd tufa_server
+cd .. sudo chmod -R 777 server && cd server
 ```
 #### cargo watch <a name="heading2728"></a>
 ```

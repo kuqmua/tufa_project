@@ -33,7 +33,7 @@
 // }
 
 // pub async fn mongo_check_collections_is_not_empty<'a>(
-//     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+//     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     db: &mongodb::Database,
 // ) -> Result<(), Box<crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorNamed>>{
 //     let error_vec_count_documents =

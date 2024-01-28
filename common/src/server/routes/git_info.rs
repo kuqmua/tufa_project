@@ -10,7 +10,7 @@ pub trait GitInfoRouteParameters:
 pub struct GitInfo {
     #[schema(example = "https://github.com/kuqmua/tufa_project/tree/f7de4c3c218579600cd0737d5a6b6c8362cbd88b")]
     project_commit: std::string::String,
-    #[schema(example = "github.com:kuqmua/tufa_server/tree/d3c188743f23a3b2433399a3725b0a431165ed6d")]
+    #[schema(example = "github.com:kuqmua/server/tree/d3c188743f23a3b2433399a3725b0a431165ed6d")]//todo remove it
     commit: std::string::String,
 }
 
