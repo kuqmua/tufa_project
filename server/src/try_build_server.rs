@@ -215,7 +215,7 @@ pub async fn try_build_server<'a>(
                     .allow_origin(["http://127.0.0.1".parse().unwrap()]),
             )
             .merge(
-                utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", {
+                utoipa_swagger_ui::SwaggerUi::new(common::global_variables::hardcode::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
                     use utoipa::OpenApi;
                     ApiDoc::openapi()
                 }),

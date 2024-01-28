@@ -11,7 +11,7 @@ pub trait NotFoundRouteParameters:
 struct NotFoundHandle {
     message: std::string::String,
     project_commit: std::string::String,
-    open_api_specification: std::string::String,
+    open_api_specification: &'static str,
 }
 
 //todo maybe use swagger instead
@@ -24,7 +24,7 @@ async fn not_found(
         axum::Json(NotFoundHandle {
             message: format!("No route for {uri}"),
             project_commit: app_info.get_project_git_commit_link(),
-            open_api_specification: std::string::String::from("/swagger-ui/"),
+            open_api_specification: crate::global_variables::hardcode::SLASH_SWAGGER_UI,
         }),
     )
 }
