@@ -59,15 +59,25 @@ const PARAMETERS: &str = "parameters";
 pub fn parameters_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PARAMETERS)
 }
-// pub fn parameters_snake_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PARAMETERS)
-// }
+pub fn parameters_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PARAMETERS)
+}
+pub fn parameters_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = parameters_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 const PAYLOAD: &str = "payload";
 pub fn payload_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PAYLOAD)
 }
 pub fn payload_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PAYLOAD)
+}
+pub fn payload_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = payload_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 const ELEMENT: &str = "element";
 pub fn element_upper_camel_case_stringified() -> std::string::String {
