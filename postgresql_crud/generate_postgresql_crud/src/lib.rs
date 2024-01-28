@@ -5544,7 +5544,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
                 let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|generate_let_field_ident_value_field_ident_try_from_token_stream(
-                        &element,
+                        element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
@@ -8490,7 +8490,7 @@ fn generate_type_variants_from_request_response_syn_variants<'a>(
 
 fn generate_unique_status_codes(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
-    type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
+    type_variants_from_request_response_syn_variants: &[&syn::Variant],
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> std::vec::Vec<proc_macro_helpers::status_code::StatusCode> {
     let mut value = std::vec::Vec::with_capacity(type_variants_from_request_response_syn_variants.len());
@@ -8511,17 +8511,17 @@ fn generate_unique_status_codes(
 
 fn generate_swagger_open_api_token_stream(
     table_name_stringified: &str,
-    unique_status_codes: &std::vec::Vec<proc_macro_helpers::status_code::StatusCode>,
+    unique_status_codes: &[proc_macro_helpers::status_code::StatusCode],
     application_json_quotes_token_stream: &proc_macro2::TokenStream,
     table_name_quotes_token_stream: &proc_macro2::TokenStream,
     request_body_option_token_stream: std::option::Option<proc_macro2::TokenStream>,
     operation: &Operation,
 ) -> proc_macro2::TokenStream {
-    let swagger_url_path_quotes_token_stream = proc_macro_helpers::naming_conventions::SwaggerUrlPathSelfQuotesTokenStream::swagger_url_path_self_quotes_token_stream(operation, &table_name_stringified);
+    let swagger_url_path_quotes_token_stream = proc_macro_helpers::naming_conventions::SwaggerUrlPathSelfQuotesTokenStream::swagger_url_path_self_quotes_token_stream(operation, table_name_stringified);
     let responses_token_stream = unique_status_codes.iter().map(|element|{
         let status_token_stream = element.to_status_code_token_stream();
         let description_token_stream = element.to_status_code_description_token_stream();
-        let body_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &element);
+        let body_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, element);
         quote::quote!{
             (status = #status_token_stream, description = #description_token_stream, body = #body_token_stream, content_type = #application_json_quotes_token_stream)
         }
@@ -8659,8 +8659,8 @@ fn generate_std_string_string_error_syn_variant(
     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
     crate::type_variants_from_request_response_generator::construct_syn_variant(
         status_code,
-        &variant_name_upper_camel_case_stringified,
-        &code_occurence_field,
+        variant_name_upper_camel_case_stringified,
+        code_occurence_field,
         vec![
             (
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
