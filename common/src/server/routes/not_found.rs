@@ -2,15 +2,14 @@ pub(crate) type DynArcNotFoundRouteParametersSendSync =
     std::sync::Arc<dyn NotFoundRouteParameters + Send + Sync>;
 
 pub trait NotFoundRouteParameters:
-    crate::common::git::project_git_info::GetProjectGitCommitLink
-    + crate::common::git::get_git_commit_link::GetGitCommitLink
+    crate::common::git::get_git_commit_link::GetGitCommitLink
 {
 }
 
 #[derive(Debug, serde::Serialize)]
 struct NotFoundHandle {
     message: std::string::String,
-    project_commit: std::string::String,
+    commit: std::string::String,
     open_api_specification: &'static str,
 }
 
@@ -23,7 +22,7 @@ async fn not_found(
         axum::http::StatusCode::NOT_FOUND,
         axum::Json(NotFoundHandle {
             message: format!("No route for {uri}"),
-            project_commit: app_info.get_project_git_commit_link(),
+            commit: app_info.get_git_commit_link(),
             open_api_specification: crate::global_variables::hardcode::SLASH_SWAGGER_UI,
         }),
     )

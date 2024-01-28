@@ -33,13 +33,3 @@ impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for ProjectGi
         )
     }
 }
-
-pub trait GetProjectGitCommitLink {
-    fn get_project_git_commit_link(&self) -> std::string::String;
-}
-
-impl<'a> GetProjectGitCommitLink for ProjectGitInfo<'a> {
-    fn get_project_git_commit_link(&self) -> std::string::String {
-        crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(self)
-    }
-}

@@ -2,12 +2,6 @@ pub struct AppInfo<'a> {
     pub postgres_pool: sqlx::PgPool,
     pub config: &'a crate::repositories_types::server::config::config_struct::Config,
     pub project_git_info: &'a crate::common::git::project_git_info::ProjectGitInfo<'a>,
-    pub repository_git_info: &'a error_occurence_lib::git_info::GitInfo<'a>,
-}
-
-impl<'a> crate::repositories_types::server::routes::service_possibilities::ServicePossibilities
-    for AppInfo<'a>
-{
 }
 
 impl<'a> crate::repositories_types::server::routes::api::cats::GetConfigGetPostgresPool
@@ -42,20 +36,8 @@ impl<'a> crate::server::routes::helpers::get_postgres_pool::GetPostgresPool for 
     }
 }
 
-impl<'a> crate::common::git::project_git_info::GetProjectGitCommitLink for AppInfo<'a> {
-    fn get_project_git_commit_link(&self) -> std::string::String {
-        self.project_git_info.get_project_git_commit_link()
-    }
-}
-
-impl<'a> error_occurence_lib::git_fields::GetGitCommitId for AppInfo<'a> {
-    fn get_git_commit_id(&self) -> std::string::String {
-        self.repository_git_info.get_git_commit_id()
-    }
-}
-
 impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for AppInfo<'a> {
     fn get_git_commit_link(&self) -> std::string::String {
-        self.repository_git_info.get_git_commit_link()
+        self.project_git_info.get_git_commit_link()
     }
 }
