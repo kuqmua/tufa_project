@@ -12,10 +12,10 @@ pub fn compile_time_git_info(repo_name: proc_macro::TokenStream) -> proc_macro::
 }
 
 #[proc_macro]
-pub fn compile_time_git_info_tufa_common(
+pub fn compile_time_git_info_common(
     _input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    get_git_info("tufa_common", "error_occurence_lib")
+    get_git_info("common", "error_occurence_lib")
 }
 
 fn get_git_info(repo_name: &str, path_to_git_into_start_source: &str) -> proc_macro::TokenStream {

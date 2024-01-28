@@ -1,7 +1,7 @@
 use crate::components::ant_design::helpers::offset::Offset;
 use colorsys::Hsl;
 use gloo::console::error;
-use tufa_common::common::numeric::Numeric;
+use common::common::numeric::Numeric;
 use yew::{function_component, html, Children, Html, Properties};
 
 #[derive(PartialEq, Eq, Clone)]

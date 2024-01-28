@@ -1,9 +1,9 @@
 // pub async fn get_saved_response<'a>(
 //     pool: &sqlx::PgPool,
-//     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
+//     idempotency_key: &common::repositories_types::tufa_server::idempotency::IdempotencyKey,
 //     user_id: uuid::Uuid,
-// ) -> Result<Option<actix_web::HttpResponse>, tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed>{
-//     use tufa_common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord;
+// ) -> Result<Option<actix_web::HttpResponse>, common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed>{
+//     use common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord;
 //     //todo - sqlx::query! is a macro to check db on compile time. DATABASE_URL must be set in env variables. its not for lib. change it later
 //     let saved_response = match sqlx::query!(
 //         r#"
@@ -23,27 +23,27 @@
 //     .await
 //     {
 //         Err(e) => {
-//             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::PostgresSelect {
+//             return Err(common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::PostgresSelect {
 //                 postgres_select: e,
-//                 code_occurence: tufa_common::code_occurence!(),
+//                 code_occurence: common::code_occurence!(),
 //             });
 //         }
 //         Ok(option_record) => option_record,
 //     };
 //     if let Some(r) = saved_response {
 //         match r.response_status_code.try_into() {
-//             Err(e) => Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::TryFromIntError {
+//             Err(e) => Err(common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::TryFromIntError {
 //                 try_from_int_error: e,
-//                 code_occurence: tufa_common::code_occurence!(),
+//                 code_occurence: common::code_occurence!(),
 //             }),
 //             Ok(status_code_as_u16) => match actix_web::http::StatusCode::from_u16(status_code_as_u16) {
-//                 Err(e) => Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::InvalidStatusCode {
+//                 Err(e) => Err(common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::InvalidStatusCode {
 //                     invalid_status_code: e,
-//                     code_occurence: tufa_common::code_occurence!(),
+//                     code_occurence: common::code_occurence!(),
 //                 }),
 //                 Ok(status_code) => {
 //                     let mut response = actix_web::HttpResponse::build(status_code);
-//                     for tufa_common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord { name, value } in r.response_headers {
+//                     for common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord { name, value } in r.response_headers {
 //                         response.append_header((name, value));
 //                     }
 //                     Ok(Some(response.body(r.response_body)))
@@ -57,12 +57,12 @@
 
 // pub async fn save_response<'a>(
 //     mut transaction: sqlx::Transaction<'static, sqlx::Postgres>,
-//     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
+//     idempotency_key: &common::repositories_types::tufa_server::idempotency::IdempotencyKey,
 //     user_id: uuid::Uuid,
 //     http_response: actix_web::HttpResponse,
 // ) -> Result<
 //     actix_web::HttpResponse,
-//     tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed<
+//     common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed<
 //         'a,
 //     >,
 // > {
@@ -70,9 +70,9 @@
 //     // `MessageBody::Error` is not `Send` + `Sync`,
 //     let body = match actix_web::body::to_bytes(body).await {
 //         Err(e) => {
-//             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::BodyToBytes {
+//             return Err(common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::BodyToBytes {
 //                 body_to_bytes: e.into(),
-//                 code_occurence: tufa_common::code_occurence!(),
+//                 code_occurence: common::code_occurence!(),
 //             });
 //         }
 //         Ok(bytes) => bytes,
@@ -83,7 +83,7 @@
 //         for (name, value) in response_head.headers().iter() {
 //             let name = name.as_str().to_owned();
 //             let value = value.as_bytes().to_owned();
-//             h.push(tufa_common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord { name, value });
+//             h.push(common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord { name, value });
 //         }
 //         h
 //     };
@@ -107,15 +107,15 @@
 //     .execute(&mut transaction)
 //     .await
 //     {
-//         return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::PostgtesUpdate {
+//         return Err(common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::PostgtesUpdate {
 //             postgres_update: e,
-//             code_occurence: tufa_common::code_occurence!(),
+//             code_occurence: common::code_occurence!(),
 //         });
 //     };
 //     if let Err(e) = transaction.commit().await {
-//         return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::PostgtesTransactionCommit {
+//         return Err(common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::PostgtesTransactionCommit {
 //             postgres_transaction_commit: e,
-//             code_occurence: tufa_common::code_occurence!(),
+//             code_occurence: common::code_occurence!(),
 //         });
 //     }
 //     // We need `.map_into_boxed_body` to go from
@@ -126,19 +126,19 @@
 
 // pub async fn try_processing<'a>(
 //     pool: &sqlx::PgPool,
-//     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
+//     idempotency_key: &common::repositories_types::tufa_server::idempotency::IdempotencyKey,
 //     user_id: uuid::Uuid,
 // ) -> Result<
-//     tufa_common::repositories_types::tufa_server::idempotency::NextAction,
-//     tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed<
+//     common::repositories_types::tufa_server::idempotency::NextAction,
+//     common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed<
 //         'a,
 //     >,
 // > {
 //     let mut transaction = match pool.begin().await {
 //         Err(e) => {
-//             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::PostgresPoolBegin {
+//             return Err(common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::PostgresPoolBegin {
 //                 pool_begin_error: e,
-//                 code_occurence: tufa_common::code_occurence!(),
+//                 code_occurence: common::code_occurence!(),
 //             });
 //         }
 //         Ok(transaction) => transaction,
@@ -160,33 +160,33 @@
 //     .await
 //     {
 //         Err(e) => {
-//             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::PostgresInsert {
+//             return Err(common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::PostgresInsert {
 //                 insert: e,
-//                 code_occurence: tufa_common::code_occurence!(),
+//                 code_occurence: common::code_occurence!(),
 //             });
 //         }
 //         Ok(pg_query_result) => pg_query_result.rows_affected(),
 //     };
 //     if n_inserted_rows > 0 {
 //         Ok(
-//             tufa_common::repositories_types::tufa_server::idempotency::NextAction::StartProcessing(
+//             common::repositories_types::tufa_server::idempotency::NextAction::StartProcessing(
 //                 transaction,
 //             ),
 //         )
 //     } else {
 //         match get_saved_response(pool, idempotency_key, user_id).await {
 //             Err(e) => {
-//                 return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::GetSavedResponse {
+//                 return Err(common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::GetSavedResponse {
 //                     get_saved_response: e,
-//                     code_occurence: tufa_common::code_occurence!(),
+//                     code_occurence: common::code_occurence!(),
 //                 });
 //             },
 //             Ok(option_http_response) => match option_http_response {
-//                 None => Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::SavedResponseIsNone {
+//                 None => Err(common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::SavedResponseIsNone {
 //                     message: "We expected a saved response, we didn't find it",
-//                     code_occurence: tufa_common::code_occurence!(),
+//                     code_occurence: common::code_occurence!(),
 //                 }),
-//                 Some(saved_response) => Ok(tufa_common::repositories_types::tufa_server::idempotency::NextAction::ReturnSavedResponse(saved_response)),
+//                 Some(saved_response) => Ok(common::repositories_types::tufa_server::idempotency::NextAction::ReturnSavedResponse(saved_response)),
 //             },
 //         }
 //     }

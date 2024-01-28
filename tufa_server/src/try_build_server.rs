@@ -1,78 +1,78 @@
 #[derive(utoipa::OpenApi)]
 #[openapi(
     paths(
-        tufa_common::server::routes::git_info::git_info,
+        common::server::routes::git_info::git_info,
         
-        tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::create_one,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::read_many,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::read_one,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::update_many,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::update_one,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one
+        common::repositories_types::tufa_server::routes::api::cats::create_many,
+        common::repositories_types::tufa_server::routes::api::cats::create_one,
+        common::repositories_types::tufa_server::routes::api::cats::read_many,
+        common::repositories_types::tufa_server::routes::api::cats::read_one,
+        common::repositories_types::tufa_server::routes::api::cats::update_many,
+        common::repositories_types::tufa_server::routes::api::cats::update_one,
+        common::repositories_types::tufa_server::routes::api::cats::delete_many,
+        common::repositories_types::tufa_server::routes::api::cats::delete_one
     ),
     components(
         schemas(
-            tufa_common::server::routes::git_info::GitInfo,
+            common::server::routes::git_info::GitInfo,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr201Created,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr201Created,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr201Created,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr201Created,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr200Ok,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr200Ok,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr200Ok,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr200Ok,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr200Ok,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr408RequestTimeout,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr200Ok,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr500InternalServerError,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr404NotFound,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr400BadRequest,
+            common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr408RequestTimeout,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayload,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
+            common::repositories_types::tufa_server::routes::api::cats::CreateManyPayload,
+            common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
 
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOnePayload,
+            common::repositories_types::tufa_server::routes::api::cats::CreateOnePayload,
 
-            tufa_common::common::utoipa::std::time::StdTimeDuration,
+            common::common::utoipa::std::time::StdTimeDuration,
             error_occurence_lib::git_info::GitInfoWithoutLifetime,
-            tufa_common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
-            tufa_common::common::code_occurence::CodeOccurence,
+            common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
+            common::common::code_occurence::CodeOccurence,
         )
     ),
     modifiers(&SecurityAddon),
@@ -141,7 +141,7 @@ async fn read_middleware_custom_header(
 // ) -> Result<axum::response::Response, axum::http::StatusCode> {
 //     let request_project_commit = req
 //         .headers()
-//         .get(tufa_common::common::git::project_git_info::PROJECT_COMMIT)
+//         .get(common::common::git::project_git_info::PROJECT_COMMIT)
 //         .ok_or_else(|| axum::http::StatusCode::BAD_REQUEST)?;
 //     let project_commit_checker_header = request_project_commit
 //         .to_str()
@@ -155,30 +155,30 @@ async fn read_middleware_custom_header(
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_server<'a>(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
-    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::try_build_server::TryBuildServer>>
+    config: &'static common::repositories_types::tufa_server::config::config_struct::Config,
+) -> Result<(), Box<common::repositories_types::tufa_server::try_build_server::TryBuildServer>>
 {
     println!(
         "server running on {}",
-        tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(
+        common::common::config::get_server_address::GetServerAddress::get_server_address(
             &config
         )
     );
     let app_info = std::sync::Arc::new(
-        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo {
+        common::repositories_types::tufa_server::routes::app_info::AppInfo {
             postgres_pool,
             config,
             project_git_info:
-                &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
+                &common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
             repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
         },
-    ); //: std::sync::Arc<dyn tufa_common::repositories_types::tufa_server::routes::service_possibilities::ServicePossibilities + Send + Sync>
+    ); //: std::sync::Arc<dyn common::repositories_types::tufa_server::routes::service_possibilities::ServicePossibilities + Send + Sync>
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
     axum::serve(
-         tokio::net::TcpListener::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config)).await.unwrap(),
-        // tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
+         tokio::net::TcpListener::bind(common::common::config::config_fields::GetSocketAddr::get_socket_addr(config)).await.unwrap(),
+        // common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
         axum::Router::new()
             .route(
                 "/read_middleware_custom_header",
@@ -198,9 +198,9 @@ pub async fn try_build_server<'a>(
                 axum::routing::get(middleware_message_example),
             )
             .layer(axum::Extension(shared_data))
-            .merge(tufa_common::server::routes::routes(app_info.clone()))
+            .merge(common::server::routes::routes(app_info.clone()))
             .merge(crate::routes::api::routes(app_info.clone()))
-            .merge(tufa_common::server::routes::not_found::not_found_route(
+            .merge(common::server::routes::not_found::not_found_route(
                 app_info.clone(),
             ))
             // .fallback_service(routes_static())

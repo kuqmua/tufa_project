@@ -27,8 +27,7 @@ yewdux-functional = {version = "=0.1.0"}
 #prod
 # svg_component = {path = "https://github.com/kuqmua/svg_component"}
 #dev
-tufa_common = {path = "../tufa_common"}# local dev test without commits version
-# tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version           
+common = {path = "../common"}# local dev test without commits version
 compile_time_git_info = {path = "../compile_time_git_info"}
 user_port_try_from_u16 = {path = "../user_port_try_from_u16"}
 svg_component = {path = "../svg_component"}

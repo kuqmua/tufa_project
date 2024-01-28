@@ -66,8 +66,7 @@ valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive",
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
 #
-# tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
-tufa_common = {path = "../tufa_common"}# local dev test without commits version
+common = {path = "../common"}# local dev test without commits version
 #prod
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
 #dev

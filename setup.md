@@ -7,7 +7,7 @@
 18. [proc_macro_helpers](#heading18)
 22. [svg_component](#heading22)
 23. [client](#heading23)
-24. [tufa_common](#heading24) 
+24. [common](#heading24) 
 25. [tufa_grpc_client](#heading25)
 26. [tufa_grpc_server](#heading26)
 27. [tufa_server](#heading27) 
@@ -73,7 +73,7 @@ https://github.com/Alexandre-Borghi/yew-highlighting
 
 ## type_variants_from_reqwest_response <a name="heading35"/> 
 
-## tufa_common <a name="heading24"/> 
+## common <a name="heading24"/> 
 
 ## tufa_grpc_client <a name="heading25"/> 
 #### install dependencies

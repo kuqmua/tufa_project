@@ -3,7 +3,7 @@ use gloo::console::log;
 use reqwasm::http::Request;
 use serde_json::from_str;
 use std::ops::Deref;
-use tufa_common::json_example::JsonExample;
+use common::json_example::JsonExample;
 use yew::prelude::*;
 use yewdux::prelude::{Dispatcher, PersistentStore};
 use yewdux_functional::use_store;

@@ -3,18 +3,18 @@
 * make refactoring for module-like implementation (no external dependencies from different modules)
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
 * format!("{}, ", e)) for error refactor in format tufa_server/src/preparation/check_availability.rs:91:29 error_string
-* proc macreo input parameter crate or tufa_common
+* proc macreo input parameter crate or common
 * add use trait import in the scope in case of macro like this 
 ```
 let f: u32 = {
-    use tufa_common::traits::something::Something;
+    use common::traits::something::Something;
     0
 };
 ```
 * some logic around location() file!() line!() column!() - maybe generate all other functions -github link and others on compiletime instead of runtime?
 * for all function with git_info input parameters - use get_git_info instead 
 * clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
-* remove CONFIG usage from tufa_common
+* remove CONFIG usage from common
 * must use vec of parallel execution vectors vec;
 * rust can compile resursive function and get stackoverflow
 * todos with github links on place to do
@@ -57,10 +57,10 @@ but what need to do if inside hashmap - another hashmap? add some space incremen
 and if its a vec or hashmap -  code occurence must not propagate to parents
 
 time [key] error1
- tufa_common/src/server/mongo/something1.rs:70:37 
+ common/src/server/mongo/something1.rs:70:37 
  tufa_server/src/preparation/something1.rs:92:29
 time [key] error2
- tufa_common/src/server/mongo/something2.rs:70:37 
+ common/src/server/mongo/something2.rs:70:37 
  tufa_server/src/preparation/something2.rs:92:29
 tufa_server/src/preparation/parent.rs:92:29
 tufa_server/src/preparation/parent.rs:45:29
@@ -84,7 +84,7 @@ cd src/proc_macros/proc_macro_common && git checkout main && cd .. && cd .. cd .
 cd src/proc_macros/proc_macro_assistants && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/user_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
 cd src/client && git checkout main && cd .. &&  cd .. &&
-cd src/tufa_common && git checkout main && cd .. &&  cd .. &&
+cd src/common && git checkout main && cd .. &&  cd .. &&
 cd src/postgresql_crudpostgresql_crud && git checkout main && cd .. &&  cd .. &&
 cd src/tufa_server && git checkout main && cd .. &&  cd .. &&
 cd src/telegram_bot && git checkout main && cd .. &&  cd .. &&

@@ -13,7 +13,7 @@
 
 // use colorsys::Hsl;
 // use gloo::console::error;
-// use tufa_common::helpers::numeric::Numeric;
+// use common::helpers::numeric::Numeric;
 use yew::{function_component, html, Properties};
 // export interface BackTopProps {
 //   visibilityHeight?: number;

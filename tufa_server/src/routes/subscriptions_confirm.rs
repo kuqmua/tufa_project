@@ -1,10 +1,10 @@
 // #[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, app_info))]
 // pub async fn confirm<'a>(
 //     parameters: actix_web::web::Query<
-//         tufa_common::repositories_types::tufa_server::routes::Parameters,
+//         common::repositories_types::tufa_server::routes::Parameters,
 //     >,
 //     app_info: actix_web::web::Data<
-//         tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
+//         common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
 //     >,
 // ) -> actix_web::HttpResponse {
 //     let id =

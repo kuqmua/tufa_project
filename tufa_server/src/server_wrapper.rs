@@ -1,31 +1,31 @@
 pub async fn server_wrapper<'a>(
-    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
+    config: &'static common::repositories_types::tufa_server::config::config_struct::Config,
 ) -> Result<
     (),
-    Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed>,
+    Box<common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed>,
 > {
-    let postgres_pool = match tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
+    let postgres_pool = match common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
         Ok(postgres_pool) => postgres_pool,
         Err(e) => {
             return Err(Box::new(
-                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetPostgresPool {
+                common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetPostgresPool {
                     try_get_postgres_pool: e,
-                    code_occurence: tufa_common::code_occurence!(),
+                    code_occurence: common::code_occurence!(),
                 }
             ))
         },
     };
     // println!("trying to create redis session storage...");
     // let redis_session_storage = match {
-    //     use tufa_common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
+    //     use common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
     //     config.try_get_redis_session_storage().await
     // } {
     //     Ok(redis_session_storage) => redis_session_storage,
     //     Err(e) => {
     //         return Err(Box::new(
-    //             tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
+    //             common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
     //                 try_get_redis_session_storage: e,
-    //                 code_occurence: tufa_common::code_occurence!(),
+    //                 code_occurence: common::code_occurence!(),
     //             }
     //         ))
     //     },
@@ -36,9 +36,9 @@ pub async fn server_wrapper<'a>(
         // redis_session_storage,
         config
     ).await {
-        Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::BuildServer {
+        Err(e) => return Err(Box::new(common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::BuildServer {
             build_server: *e,
-            code_occurence: tufa_common::code_occurence!(),
+            code_occurence: common::code_occurence!(),
         })),
         Ok(_) => (),
     }

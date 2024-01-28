@@ -1,16 +1,16 @@
 // pub async fn admin_dashboard<'a>(
-//     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
+//     session: common::repositories_types::tufa_server::session_state::TypedSession,
 //     app_info: actix_web::web::Data<
-//         tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
+//         common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
 //     >,
 // ) -> Result<actix_web::HttpResponse, actix_web::Error> {
 //     let username = if let Some(user_id) = session
 //         .get_user_id()
-//         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
+//         .map_err(common::repositories_types::tufa_server::utils::status_codes::e500)?
 //     {
 //         get_username(user_id, &app_info.postgres_pool)
 //             .await
-//             .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
+//             .map_err(common::repositories_types::tufa_server::utils::status_codes::e500)?
 //     } else {
 //         return Ok(actix_web::HttpResponse::SeeOther()
 //             .insert_header((actix_web::http::header::LOCATION, "/login"))
@@ -46,7 +46,7 @@
 //     pool: &sqlx::PgPool,
 // ) -> Result<
 //     std::string::String,
-//     tufa_common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed<
+//     common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed<
 //         'a,
 //     >,
 // > {
@@ -62,9 +62,9 @@
 //     .await {
 //         Ok(row) => Ok(row.username),
 //         Err(e) => Err(
-//             tufa_common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed::PostgresQuery {
+//             common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed::PostgresQuery {
 //                 get_username: e,
-//                 code_occurence: tufa_common::code_occurence!()
+//                 code_occurence: common::code_occurence!()
 //             }
 //         ),
 //     }

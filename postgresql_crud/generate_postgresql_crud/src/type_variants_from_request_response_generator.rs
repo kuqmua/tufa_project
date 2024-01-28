@@ -2,7 +2,7 @@ pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream: &proc_macro2::TokenStream,
+    code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
     eo_display_token_stream: &proc_macro2::TokenStream,
     eo_display_foreign_type_token_stream: &proc_macro2::TokenStream,
@@ -824,7 +824,7 @@ pub fn type_variants_from_request_response_generator(
                 Ok(value) => Ok(value),
                 Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
                     expected_type: e,
-                    #code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
+                    #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 }),
             }
         };
@@ -847,7 +847,7 @@ pub fn type_variants_from_request_response_generator(
                                 status_code,
                                 headers,
                                 response_text_result,
-                                #code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream
+                                #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream
                             }),
                             #crate_common_api_request_unexpected_error_api_request_unexpected_error_token_stream::FailedToGetResponseText {
                                 reqwest,
@@ -857,7 +857,7 @@ pub fn type_variants_from_request_response_generator(
                                 reqwest,
                                 status_code,
                                 headers,
-                                #code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream
+                                #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream
                             }),
                             #crate_common_api_request_unexpected_error_api_request_unexpected_error_token_stream::DeserializeBody {
                                 serde,
@@ -869,13 +869,13 @@ pub fn type_variants_from_request_response_generator(
                                 status_code,
                                 headers,
                                 response_text,
-                                #code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream
+                                #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream
                             }),
                         },
                     },
                     Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream::Reqwest {
                         reqwest: e,
-                        #code_occurence_snake_case_crate_code_occurence_tufa_common_macro_call_token_stream,
+                        #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                     }),
                 }
             }
