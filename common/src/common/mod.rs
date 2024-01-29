@@ -10,5 +10,4 @@ pub mod postgres_credentials;
 pub mod serde_urlencoded;
 pub mod source_place_type;
 pub mod to_default_stringified_json;
-pub mod user_port;
 pub mod utoipa;

@@ -29,7 +29,7 @@ pub struct ConfigUnchecked {
     generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields, //todo - add 2 attributes - for reference\borrow(&) and for value(move)
 )]
 pub struct Config {
-    server_port: crate::common::user_port::UserPort,
+    server_port: config_lib::user_port::UserPort,
     socket_addr: std::string::String,
     hmac_secret: secrecy::Secret<std::string::String>,
     base_url: std::string::String,
@@ -57,7 +57,7 @@ pub struct Config {
 impl std::convert::TryFrom<ConfigUnchecked> for Config {
     type Error = ConfigCheckErrorNamed;
     fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
-        let server_port = match crate::common::user_port::UserPort::try_from(value.server_port) {
+        let server_port = match config_lib::user_port::UserPort::try_from(value.server_port) {
             Ok(user_port) => user_port,
             Err(e) => {
                 return Err(Self::Error::ServerPort {
