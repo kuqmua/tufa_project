@@ -201,73 +201,73 @@ pub enum ConfigCheckErrorNamed {
     ServerPort {
         #[eo_display_with_serialize_deserialize]
         server_port: u16,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     HmacSecret {
         #[eo_display_with_serialize_deserialize]
         hmac_secret: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     BaseUrl {
         #[eo_display_with_serialize_deserialize]
         base_url: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //
     RequireSsl {
         #[eo_display_with_serialize_deserialize]
         require_ssl: bool,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     AccessControlAllowOrigin {
         #[eo_display_with_serialize_deserialize]
         access_control_allow_origin: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     GithubName {
         #[eo_display_with_serialize_deserialize]
         github_name: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     GithubToken {
         #[eo_display_with_serialize_deserialize]
         github_token: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Timezone {
         #[eo_display_with_serialize_deserialize]
         timezone: i32,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     RedisUrl {
         #[eo_display_with_serialize_deserialize]
         redis_url: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     MongoUrl {
         #[eo_display_with_serialize_deserialize]
         mongo_url: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     DatabaseUrl {
         #[eo_display_with_serialize_deserialize]
         database_url: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     StartingCheckLink {
         #[eo_display_with_serialize_deserialize]
         starting_check_link: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     TracingType {
         #[eo_display_with_serialize_deserialize]
         tracing_type: config_lib::tracing_type::TracingType,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     SourcePlaceType {
         #[eo_display_with_serialize_deserialize]
         source_place_type: config_lib::source_place_type::SourcePlaceType,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

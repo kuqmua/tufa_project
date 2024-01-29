@@ -4,7 +4,7 @@
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         inner_errors:
 //             std::collections::HashMap<std::string::String, MongoCheckCollectionIsNotEmptyErrorUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -19,7 +19,7 @@
 //     CountDocuments {
 //         #[eo_display]
 //         error: mongodb::error::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -28,7 +28,7 @@
 //     IsNotEmptyOrigin {
 //         #[eo_display_with_serialize_deserialize]
 //         error: u64,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

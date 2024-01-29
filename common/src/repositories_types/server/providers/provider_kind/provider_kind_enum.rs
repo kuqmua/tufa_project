@@ -26,12 +26,12 @@
 //     // AsyncFetchLinks {
 //     //     #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //     //     fetch_links: std::collections::HashMap<std::string::String, crate::server::http_request::http_request_error::HttpRequestErrorNamed>, //link, error
-//     //     code_occurence: crate::common::code_occurence::CodeOccurence,
+//     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 //     NoItems {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         no_items: std::collections::HashMap<std::string::String, FetchAndParseProviderDataErrorUnnamed<'a>>, //link, error
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -209,17 +209,17 @@
 //     TokioFsFileOpen {
 //         #[eo_display]
 //         tokio_fs_file_open: std::io::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     TokioIoAsyncReadExtReadToEnd {
 //         #[eo_display]
 //         tokio_io_async_read_ext_read_to_end: std::io::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     SerdeJsonFromSlice {
 //         #[eo_display]
 //         serde_json_from_slice: serde_json::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -313,17 +313,17 @@
 //     ClientOptionsParse {
 //         #[eo_display]
 //         mongo: mongodb::error::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     ClientWithOptions {
 //         #[eo_display]
 //         mongo: mongodb::error::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     // MongoGetDocumentsAsStringVector {
 //     //    #[eo_error_occurence]
 //     //     source: Box<MongoGetDocumentsAsStringVectorErrorEnum>,
-//     //     code_occurence: crate::common::code_occurence::CodeOccurence,
+//     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 // }
 

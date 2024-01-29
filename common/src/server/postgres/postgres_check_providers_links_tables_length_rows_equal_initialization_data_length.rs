@@ -3,12 +3,12 @@
 //     SelectCountOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         inner_errors: std::collections::HashMap<std::string::String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     ProviderLinksTablesRowsLengthNotEqualOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         inner_errors: std::collections::HashMap<std::string::String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -26,7 +26,7 @@
 //     Postgres {
 //         #[eo_display]
 //         error: sqlx::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -46,7 +46,7 @@
 //         table_rows_length: i64,
 //         #[eo_display_with_serialize_deserialize]
 //         initialization_data_length: usize,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

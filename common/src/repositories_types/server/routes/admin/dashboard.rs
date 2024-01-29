@@ -3,6 +3,6 @@ pub enum GetUsernameErrorNamed {
     PostgresQuery {
         #[eo_display]
         get_username: sqlx::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

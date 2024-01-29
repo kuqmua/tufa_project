@@ -3,12 +3,12 @@ pub enum MongoInsertDocsInEmptyCollectionErrorNamed {
     MongoDB {
         #[eo_display]
         mongodb: mongodb::error::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     CollectionIsNotEmpty {
         #[eo_display_with_serialize_deserialize]
         collection_is_not_empty: u64,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

@@ -3,12 +3,12 @@ pub enum WriteJsonIntoFileSyncErrorNamed {
     SerdeJson{
         #[eo_display]
         serde_json: serde_json::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
         write_bytes_into_file: crate::server::file_system::write_bytes_into_file::write_bytes_into_file_sync::WriteBytesIntoFileSyncErrorNamed,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

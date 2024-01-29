@@ -12,20 +12,20 @@
 //     FailedToDeserializePathParams {
 //         #[eo_display_with_serialize_deserialize]
 //         failed_to_deserialize_path_params: std::string::String,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_400_bad_request]
 //     MissingPathParams {
 //         #[eo_display_with_serialize_deserialize]
 //         missing_path_params: std::string::String,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     //#[non_exhaustive] case
 //     #[tvfrr_500_internal_server_error]
 //     UnexpectedCase {
 //         #[eo_display_with_serialize_deserialize]
 //         unexpected_case: std::string::String,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

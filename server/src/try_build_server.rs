@@ -72,7 +72,7 @@
             common::common::utoipa::std::time::StdTimeDuration,
             error_occurence_lib::git_info::GitInfoWithoutLifetime,
             common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
-            common::common::code_occurence::CodeOccurence,
+            error_occurence_lib::code_occurence::CodeOccurence,
         )
     ),
     modifiers(&SecurityAddon),

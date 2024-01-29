@@ -3,7 +3,7 @@
 //     InsertMany {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         insert_many: std::collections::HashMap<std::string::String, MongoInsertManyErrorUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -17,7 +17,7 @@
 //     InsertMany {
 //         #[eo_display]
 //         insert_many: mongodb::error::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

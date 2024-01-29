@@ -3,7 +3,7 @@ pub enum WriteBytesIntoFileAsyncTokioErrorNamed {
     StdIoError {
         #[eo_display]
         std_io_error: std::io::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

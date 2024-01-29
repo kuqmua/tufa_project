@@ -1,3 +1,3 @@
 pub trait GetCodeOccurence {
-    fn get_code_occurence(&self) -> &crate::common::code_occurence::CodeOccurence;
+    fn get_code_occurence(&self) -> &error_occurence_lib::code_occurence::CodeOccurence;
 }

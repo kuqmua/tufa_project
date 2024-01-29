@@ -47,17 +47,17 @@
 //     // GetLocalProvidersLinkParts {
 //     //     #[eo_error_occurence]
 //     //     get_providers_link_parts: crate::repositories_types::server::providers::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorNamed,
-//     //     code_occurence: crate::common::code_occurence::CodeOccurence,
+//     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 //     // CheckProvidersLinkPartsEmpty {
 //     //     #[eo_error_occurence]
 //     //     check_providers_link_parts_empty: crate::repositories_types::server::providers::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyErrorNamed,
-//     //     code_occurence: crate::common::code_occurence::CodeOccurence,
+//     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 //     GetNewProvidersPosts {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         hashmap_provider_kind_rss_part: std::collections::HashMap<std::string::String, GetProviderPostsErrorUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

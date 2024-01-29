@@ -3,16 +3,16 @@
 //     CheckLinkStatusCodeError {
 //         #[eo_display_foreign_type]
 //         reqwest_error: reqwest::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     StatusCode {
 //         #[eo_display_foreign_type]
 //         status_code: reqwest::StatusCode,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     // FetchAndParseProviderData {
 //     //     source: crate::repositories_types::server::providers::provider_kind::provider_kind_enum::FetchAndParseProviderDataErrorEnum,
-//     //     code_occurence: crate::common::code_occurence::CodeOccurence,
+//     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 // }
 

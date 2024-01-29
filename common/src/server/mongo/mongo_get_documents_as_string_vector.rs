@@ -3,17 +3,17 @@ pub enum MongoGetDocumentsAsStringVectorErrorNamed {
     MongoDB {
         #[eo_display]
         mongodb: mongodb::error::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     WrongBsonType {
         #[eo_display_with_serialize_deserialize]
         bson: mongodb::bson::Bson,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NoKeyInDocument {
         #[eo_display_with_serialize_deserialize]
         key: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

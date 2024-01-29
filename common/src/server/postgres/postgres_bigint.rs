@@ -55,7 +55,7 @@ pub enum PostgresBigintFromStrErrorNamed {
     NotCorrectValue {
         #[eo_display_with_serialize_deserialize]
         not_correct_value: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

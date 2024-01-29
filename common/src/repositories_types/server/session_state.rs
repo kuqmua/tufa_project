@@ -5,7 +5,7 @@
 //     SessionInsert {
 //         #[eo_display]
 //         session_insert: actix_session::SessionInsertError,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

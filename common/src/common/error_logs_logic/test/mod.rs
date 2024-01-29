@@ -383,7 +383,7 @@
 //         #[eo_display_with_serialize_deserialize]
 //         display_with_serialize_deserialize_struct_lifetime:
 //             DisplayWithSerializeDeserializeStructLifetime,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -551,6 +551,6 @@
 //         #[eo_hashmap_key_display_foreign_type_value_error_occurence]
 //         eo_hashmap_key_display_foreign_type_lifetime_value_error_occurence: std::collections::HashMap<crate::common::error_logs_logic::test::DisplayForeignTypeStructLifetime, crate::common::error_logs_logic::test::ErrorUnnamed>,
 
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }

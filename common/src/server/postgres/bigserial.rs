@@ -61,7 +61,7 @@ pub enum BigserialTryFromI64ErrorNamed {
     NotPositive {
         #[eo_display_with_serialize_deserialize]
         not_positive: i64,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 
@@ -85,12 +85,12 @@ pub enum BigserialTryFromStrErrorNamed {
         parse_int_error: std::num::ParseIntError,
         #[eo_display_with_serialize_deserialize]
         str_value: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotPositive {
         #[eo_error_occurence]
         not_positive: BigserialTryFromI64ErrorNamed,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

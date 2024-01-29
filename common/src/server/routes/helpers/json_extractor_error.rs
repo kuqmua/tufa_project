@@ -19,32 +19,32 @@ pub enum JsonExtractorErrorNamed {
     JsonDataError {
         #[eo_display_with_serialize_deserialize]
         json_data_error: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     // #[tvfrr_400_bad_request]
     JsonSyntaxError {
         #[eo_display_with_serialize_deserialize]
         json_syntax_error: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     // #[tvfrr_400_bad_request]
     MissingJsonContentType {
         #[eo_display_with_serialize_deserialize]
         missing_json_content_type: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     // #[tvfrr_500_internal_server_error]
     BytesRejection {
         #[eo_display_with_serialize_deserialize]
         bytes_rejection: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //#[non_exhaustive] case
     // #[tvfrr_500_internal_server_error]
     UnexpectedCase {
         #[eo_display_with_serialize_deserialize]
         unexpected_case: std::string::String,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

@@ -3,7 +3,7 @@
 //     GetLinkPartsFromLocalJsonFile {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         get_link_parts_from_local_json_file: std::collections::HashMap<std::string::String, GetLocalProvidersLinkPartsErrorUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

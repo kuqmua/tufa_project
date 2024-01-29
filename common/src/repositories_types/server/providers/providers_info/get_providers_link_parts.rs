@@ -3,16 +3,16 @@
 //     GetLocalProvidersLinkParts {
 //         #[eo_error_occurence]
 //         get_local_providers_link_parts: crate::repositories_types::server::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsErrorNamed,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     MongoGetProvidersLinkParts {
 //          #[eo_error_occurence]
 //         mongo_get_providers_link_parts: crate::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     // PostgreSql {
 //     //     // source: PostgresGetProviderLinksError,
-//     //     // code_occurence: crate::common::code_occurence::CodeOccurence,
+//     //     // code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 // }
 

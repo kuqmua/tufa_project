@@ -3,12 +3,12 @@ pub enum NetCheckAvailabilityErrorNamed {
     ReqwestGet {
         #[eo_display_foreign_type]
         reqwest_get: reqwest::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ResponseStatus {
         #[eo_display_foreign_type]
         status: reqwest::StatusCode,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

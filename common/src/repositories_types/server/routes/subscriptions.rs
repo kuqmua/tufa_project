@@ -22,32 +22,32 @@
 //     TryIntoNewSubscriber {
 //         #[eo_display_with_serialize_deserialize]
 //         try_into_new_subscriber: std::string::String,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     PostgresPoolBegin {
 //         #[eo_display]
 //         postgres_pool_begin: sqlx::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     InsertSubscriber {
 //         #[eo_display]
 //         insert_subscriber: sqlx::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     StoreToken {
 //         #[eo_display]
 //         store_token: StoreTokenError,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     PostgresTransactionCommit {
 //         #[eo_display]
 //         postgres_transaction_commit: sqlx::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     SendConfirmationEmail {
 //         #[eo_display]
 //         send_confirmation_email: reqwest::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

@@ -3,12 +3,12 @@
 //     Full {
 //         #[eo_display_with_serialize_deserialize]
 //         message: &'a str,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     Partially {
 //         #[eo_vec_display_with_serialize_deserialize]
 //         provider_kind_vec: Vec<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

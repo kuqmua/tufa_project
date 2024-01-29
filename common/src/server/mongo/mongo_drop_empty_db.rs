@@ -3,14 +3,14 @@ pub enum MongoDropEmptyDbErrorNamed {
     MongoDB {
         #[eo_display]
         mongodb: mongodb::error::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     CollectionNamesListIsNotEmpty {
         #[eo_display_with_serialize_deserialize]
         database: std::string::String, //todo conversion to_string() for with_serialize_deserialize
         #[eo_display_with_serialize_deserialize]
         list_collection_names_len: usize,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

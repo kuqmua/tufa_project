@@ -3,12 +3,12 @@ pub enum MongoCheckDbIsEmptyErrorNamed {
     MongoDB {
         #[eo_display]
         mongodb: mongodb::error::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ListCollectionNamesIsNotEmpty {
         #[eo_display_with_serialize_deserialize]
         list_collection_names_len: usize,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

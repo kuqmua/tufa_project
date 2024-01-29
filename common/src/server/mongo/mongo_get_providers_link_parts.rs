@@ -3,17 +3,17 @@
 //     MongoDB {
 //         #[eo_display]
 //         mongodb: mongodb::error::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     NoSuchCollections {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize]
 //         no_such_collections: std::collections::HashMap<std::string::String, std::string::String>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     GetDocuments {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         get_documents: std::collections::HashMap<std::string::String, MongoGetDocumentsAsStringVectorErrorUnnamed<'a>>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 

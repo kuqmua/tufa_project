@@ -3,12 +3,12 @@
 //     SelectCountOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display]
 //         hashmap_provider_kind_sqlx_error: std::collections::HashMap<std::string::String, sqlx::Error>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     NotEmptyOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize]
 //         hashmap_provider_kind_len: std::collections::HashMap<std::string::String, i64>,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     }
 // }
 

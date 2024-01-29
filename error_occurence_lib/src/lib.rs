@@ -37,17 +37,15 @@ pub mod source_to_string_without_config;
 // pub mod vec_to_string_without_config_to_string;
 
 pub mod code_occurence_prepare_for_log;
-
 pub mod get_code_path_without_config;
 pub mod get_column;
 pub mod get_duration;
 pub mod get_file;
 pub mod get_line;
-
 pub mod form_error_path;
 pub mod get_git_source_file_link;
 pub mod git_fields;
 pub mod git_info;
-
 pub mod display_foreign_type;
 pub mod get_code_path;
+pub mod code_occurence;

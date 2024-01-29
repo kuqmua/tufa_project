@@ -502,9 +502,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let code_occurence_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_token_stream();
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
-    let crate_common_code_occurence_code_occurence_token_stream = quote::quote!{crate::common::#code_occurence_snake_case_token_stream::#code_occurence_upper_camel_case_token_stream};
-    let code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream = quote::quote!{
-        #code_occurence_snake_case_token_stream: #crate_common_code_occurence_code_occurence_token_stream
+    let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote!{error_occurence_lib::#code_occurence_snake_case_token_stream::#code_occurence_upper_camel_case_token_stream};
+    let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote!{
+        #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream
     };
     let crate_code_occurence_common_macro_call_token_stream = quote::quote!{crate::code_occurence_common!()};
     let code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream = quote::quote!{
@@ -569,7 +569,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_token_stream {
                                         #eo_error_occurence_attribute_token_stream
                                         #uuid_wrapper_try_from_possible_uuid_wrapper_snake_case_token_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                        #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                                     },
                                 },
                                 false => proc_macro2::TokenStream::new()
@@ -599,7 +599,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #field_ident_is_none_title_case_token_stream {
                                 #eo_display_with_serialize_deserialize_token_stream
                                 #field_ident_is_none_snake_case_token_stream: #std_string_string_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             }
                         }   
                     });
@@ -911,7 +911,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #not_correct_value_token_stream: #std_string_string_token_stream,
                         #eo_display_with_serialize_deserialize_token_stream
                         #supported_values_token_stream: #std_string_string_token_stream,
-                        #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                     },
                 }
             }
@@ -1364,7 +1364,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #name_upper_camel_case_token_stream {
                         #eo_display_with_serialize_deserialize_token_stream
                         #name_snake_case_token_stream: #std_string_string_token_stream,
-                        #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                     }
                 }
             }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -1622,7 +1622,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #serde_json_to_string_upper_camel_case_token_stream {
             #eo_display_token_stream
             #serde_json_to_string_snake_case_token_stream: serde_json::Error,
-            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
     let std_string_string_syn_punctuated_punctuated = generate_simple_syn_punctuated_punctuated(
@@ -1658,7 +1658,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 path: syn::Path {
                     leading_colon: None,
                     segments: generate_simple_syn_punctuated_punctuated(
-                        &["crate","common","code_occurence","CodeOccurence"],
+                        &["error_occurence_lib","code_occurence","CodeOccurence"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 },
@@ -1898,7 +1898,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
             #eo_vec_error_occurence_token_stream
             #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream: std::vec::Vec<#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream>,
-            #code_occurence_snake_case_token_stream: #crate_common_code_occurence_code_occurence_token_stream,
+            #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream = quote::quote!{
@@ -1912,7 +1912,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
             #eo_error_occurence_attribute_token_stream
             #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = quote::quote!{
@@ -2606,7 +2606,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #not_uuid_token_upper_camel_case_stream {
                                     #eo_error_occurence_attribute_token_stream
                                     #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                    #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                                 },
                             }
                         }
@@ -2644,7 +2644,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #not_uuid_token_upper_camel_case_stream {
                                     #eo_error_occurence_attribute_token_stream
                                     #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                    #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                                 },
                             }
                         }
@@ -2740,7 +2740,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -2767,7 +2767,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
@@ -3170,7 +3170,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         } 
                     }
@@ -3245,7 +3245,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -3272,7 +3272,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
@@ -3645,7 +3645,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         }
                     }
@@ -3756,7 +3756,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -3783,7 +3783,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                     }
@@ -4427,7 +4427,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         } 
                     }
@@ -4494,7 +4494,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &struct_options_ident_token_stream,
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -4523,7 +4523,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                     }
                 }
@@ -4883,7 +4883,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_display_token_stream
                                 #not_uuid_token_snake_case_stream: sqlx::types::uuid::Error,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         }
                         //todo generate it
@@ -4912,7 +4912,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #not_uuid_token_upper_camel_case_stream {
                                     #eo_display_token_stream
                                     #not_uuid_token_snake_case_stream: sqlx::types::uuid::Error,
-                                    #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                                 },
                             }
                         }
@@ -5023,7 +5023,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -5050,7 +5050,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
@@ -5519,7 +5519,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         } 
                     }
@@ -5607,7 +5607,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -5634,7 +5634,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
@@ -6064,7 +6064,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         }
                     }
@@ -6154,7 +6154,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -6181,7 +6181,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
@@ -6864,7 +6864,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                         }
                     }
@@ -6922,7 +6922,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -6949,7 +6949,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #request_error_upper_camel_case_token_stream {
                             #eo_error_occurence_attribute_token_stream
                             #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_crate_common_code_occurence_code_occurence_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                         },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
@@ -7250,11 +7250,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #delete_one_token_stream
     };
     // if ident == "" {
-        // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //     &proc_macro_name_upper_camel_case,
-        //     &gen,
-        //     &proc_macro_name_upper_camel_case_ident_stringified
-        // );
+    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         &proc_macro_name_upper_camel_case,
+    //         &gen,
+    //         &proc_macro_name_upper_camel_case_ident_stringified
+    //     );
     // }
     gen.into()
 }

@@ -3,7 +3,7 @@ pub enum MongoDropDbErrorNamed {
     MongoDB {
         #[eo_display]
         mongodb: mongodb::error::Error,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 

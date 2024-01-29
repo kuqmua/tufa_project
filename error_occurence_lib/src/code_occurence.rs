@@ -4,7 +4,7 @@ pub struct CodeOccurence {
     line: u32,
     column: u32,
     #[schema(value_type = GitInfoWithoutLifetime)]
-    git_info: error_occurence_lib::git_info::GitInfoWithoutLifetime,
+    git_info: crate::git_info::GitInfoWithoutLifetime,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
 }
@@ -12,7 +12,7 @@ pub struct CodeOccurence {
 impl CodeOccurence {
     #[must_use]
     pub fn new(
-        git_info: error_occurence_lib::git_info::GitInfoWithoutLifetime,
+        git_info: crate::git_info::GitInfoWithoutLifetime,
         file: std::string::String,
         line: u32,
         column: u32,
@@ -29,43 +29,41 @@ impl CodeOccurence {
     }
 }
 
-impl error_occurence_lib::get_file::GetFile for CodeOccurence {
+impl crate::get_file::GetFile for CodeOccurence {
     fn get_file(&self) -> &str {
         &self.file
     }
 }
 
-impl error_occurence_lib::get_line::GetLine for CodeOccurence {
+impl crate::get_line::GetLine for CodeOccurence {
     fn get_line(&self) -> &u32 {
         &self.line
     }
 }
 
-impl error_occurence_lib::get_column::GetColumn for CodeOccurence {
+impl crate::get_column::GetColumn for CodeOccurence {
     fn get_column(&self) -> &u32 {
         &self.column
     }
 }
 
-impl error_occurence_lib::get_duration::GetDuration for CodeOccurence {
+impl crate::get_duration::GetDuration for CodeOccurence {
     fn get_duration(&self) -> std::time::Duration {
         self.duration
     }
 }
 
-impl std::fmt::Display for crate::common::code_occurence::CodeOccurence {
+impl std::fmt::Display for CodeOccurence {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(
             f,
             "{}",
-            error_occurence_lib::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self)
+            crate::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self)
         )
     }
 }
 
-impl<'a> error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a>
-    for crate::common::code_occurence::CodeOccurence
-{
+impl<'a> crate::get_git_source_file_link::GetGitSourceFileLink<'a> for CodeOccurence {
     fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
         self.git_info.get_git_source_file_link(file, line)
     }
@@ -146,7 +144,7 @@ impl<'a> error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a>
 //         write!(
 //             f,
 //             "{}",
-//             error_occurence_lib::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize::code_occurence_prepare_for_log_without_config_with_serialize_deserialize(self)
+//             crate::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize::code_occurence_prepare_for_log_without_config_with_serialize_deserialize(self)
 //         )
 //     }
 // }

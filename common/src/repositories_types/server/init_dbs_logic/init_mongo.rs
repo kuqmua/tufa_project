@@ -3,22 +3,22 @@
 //     ClientOptionsParse {
 //         #[eo_error_occurence]
 //         client_options_parse: crate::server::mongo::mongo_client_options_parse::MongoClientOptionsParseOriginErrorNamed,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     ClientWithOptions {
 //         #[eo_error_occurence]
 //         client_with_options: crate::server::mongo::mongo_client_with_options::MongoClientWithOptionsOriginErrorNamed,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     CollectionIsNotEmpty {
 //         #[eo_error_occurence]
 //         collection_is_not_empty: crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorNamed,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     InsertMany {
 //         #[eo_error_occurence]
 //         insert_many: crate::server::mongo::mongo_insert_many::MongoInsertManyErrorNamed,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     }
 // }
 

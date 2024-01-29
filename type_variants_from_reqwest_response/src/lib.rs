@@ -651,7 +651,7 @@ fn generate_from_logic(
 //             ExpectedType {
 //                 #[eo_display_with_serialize_deserialize]
 //                 expected_type: #try_error_ident_token_stream,
-//                 code_occurence: crate::common::code_occurence::CodeOccurence,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //             },
 //             UnexpectedStatusCode {
 //                 #[eo_display]
@@ -660,7 +660,7 @@ fn generate_from_logic(
 //                 headers: reqwest::header::HeaderMap,
 //                 #[eo_display_foreign_type]
 //                 response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult,
-//                 code_occurence: crate::common::code_occurence::CodeOccurence,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //             },
 //             FailedToGetResponseText {
 //                 #[eo_display_foreign_type]
@@ -669,7 +669,7 @@ fn generate_from_logic(
 //                 status_code: http::StatusCode,
 //                 #[eo_display_foreign_type]
 //                 headers: reqwest::header::HeaderMap,
-//                 code_occurence: crate::common::code_occurence::CodeOccurence,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //             },
 //             DeserializeResponse {
 //                 #[eo_display]
@@ -680,12 +680,12 @@ fn generate_from_logic(
 //                 headers: reqwest::header::HeaderMap,
 //                 #[eo_display_with_serialize_deserialize]
 //                 response_text: std::string::String,
-//                 code_occurence: crate::common::code_occurence::CodeOccurence,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //             },
 //             Reqwest {
 //                 #[eo_display_foreign_type]
 //                 reqwest: reqwest::Error,
-//                 code_occurence: crate::common::code_occurence::CodeOccurence,
+//                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //             },
 //         }
 //     };

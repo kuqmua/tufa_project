@@ -6,7 +6,7 @@
 //             std::string::String,
 //             PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'a>,
 //         >,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
@@ -20,7 +20,7 @@
 //     Postgres {
 //         #[eo_display]
 //         error: sqlx::Error,
-//         code_occurence: crate::common::code_occurence::CodeOccurence,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
