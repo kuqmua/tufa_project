@@ -5,7 +5,7 @@ pub trait GetEmailClient {
 
 impl<SelfGeneric> GetEmailClient for SelfGeneric
 where
-    Self: crate::common::config::config_fields::GetBaseUrl,
+    Self: config_lib::config_fields::GetBaseUrl,
 {
     fn get_email_client(
         &self,

@@ -3,8 +3,8 @@
 pub trait GetConfigGetPostgresPool:
     crate::repositories_types::server::config::config_struct::GetConfig
     + crate::server::routes::helpers::get_postgres_pool::GetPostgresPool
-    + crate::common::config::config_fields::GetSourcePlaceType
-    + crate::common::config::config_fields::GetTimezone
+    + config_lib::config_fields::GetSourcePlaceType
+    + config_lib::config_fields::GetTimezone
 {
 }
 

@@ -1,7 +1,7 @@
 pub trait CodeOccurencePrepareForLogWithConfig {
     fn code_occurence_prepare_for_log_with_config<
-        ConfigGeneric: crate::common::config::config_fields::GetTimezone
-            + crate::common::config::config_fields::GetSourcePlaceType
+        ConfigGeneric: config_lib::config_fields::GetTimezone
+            + config_lib::config_fields::GetSourcePlaceType
             + ?Sized,
     >(
         &self,
@@ -18,8 +18,8 @@ where
         + error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a>,
 {
     fn code_occurence_prepare_for_log_with_config<
-        ConfigGeneric: crate::common::config::config_fields::GetTimezone
-            + crate::common::config::config_fields::GetSourcePlaceType
+        ConfigGeneric: config_lib::config_fields::GetTimezone
+            + config_lib::config_fields::GetSourcePlaceType
             + ?Sized,
     >(
         &self,

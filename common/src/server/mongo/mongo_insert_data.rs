@@ -17,8 +17,8 @@
 //     vec_of_link_parts_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,//todo impl Display instead of ProviderKind
 //     mongodb_options_client_options: mongodb::options::ClientOptions,
 //     config: &'static (
-//         impl crate::common::config::config_fields::GetMongoProvidersLogsDbCollectionHandleSecondPart
-//         + crate::common::config::config_fields::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
+//         impl config_lib::config_fields::GetMongoProvidersLogsDbCollectionHandleSecondPart
+//         + config_lib::config_fields::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
 // + std::marker::Send
 // + std::marker::Sync
 //     )

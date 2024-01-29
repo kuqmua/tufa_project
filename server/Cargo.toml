@@ -78,6 +78,7 @@ generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_fo
 postgresql_crud = {path = "../postgresql_crud"}
 init_from_env = {path = "../init_from_env"}
 user_port_try_from_u16 = {path = "../user_port_try_from_u16"}
+config_lib = {path = "../config_lib"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"

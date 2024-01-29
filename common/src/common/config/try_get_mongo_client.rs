@@ -8,7 +8,7 @@ pub trait TryGetMongoClient {
 
 impl<SelfGeneric> TryGetMongoClient for SelfGeneric
 where
-    Self: crate::common::config::config_fields::GetMongoUrl,
+    Self: config_lib::config_fields::GetMongoUrl,
 {
     async fn try_get_mongo_client(&self) -> Result<mongodb::Client, TryGetMongoClientError> {
         match mongodb::options::ClientOptions::parse(secrecy::ExposeSecret::expose_secret(

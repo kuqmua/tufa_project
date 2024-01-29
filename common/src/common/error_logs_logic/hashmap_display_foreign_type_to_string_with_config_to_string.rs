@@ -12,8 +12,8 @@ where
     HashMapKeyGeneric: error_occurence_lib::display_foreign_type::DisplayForeignType,
     HashMapValueGeneric:
         crate::common::error_logs_logic::to_string_with_config::ToStringWithConfig<'a>,
-    ConfigGeneric: crate::common::config::config_fields::GetSourcePlaceType
-        + crate::common::config::config_fields::GetTimezone,
+    ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
+        + config_lib::config_fields::GetTimezone,
 {
     fn hashmap_display_foreign_type_to_string_with_config_to_string(
         &self,

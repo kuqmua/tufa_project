@@ -1,5 +1,5 @@
 pub trait GetServerPort {
-    fn get_server_port(&self) -> &config_lib::user_port::UserPort;
+    fn get_server_port(&self) -> &crate::user_port::UserPort;
 }
 pub trait GetSocketAddr {
     fn get_socket_addr(&self) -> &std::string::String;
@@ -38,10 +38,10 @@ pub trait GetStartingCheckLink {
     fn get_starting_check_link(&self) -> &std::string::String;
 }
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &config_lib::tracing_type::TracingType;
+    fn get_tracing_type(&self) -> &crate::tracing_type::TracingType;
 }
 pub trait GetSourcePlaceType {
-    fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType;
+    fn get_source_place_type(&self) -> &crate::source_place_type::SourcePlaceType;
 }
 pub trait GetEnableApiGitCommitCheck {
     fn get_enable_api_git_commit_check(&self) -> &bool;

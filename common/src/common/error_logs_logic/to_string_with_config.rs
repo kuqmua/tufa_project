@@ -1,7 +1,7 @@
 pub trait ToStringWithConfig<'a> {
     fn to_string_with_config<
-        ConfigGeneric: crate::common::config::config_fields::GetSourcePlaceType
-            + crate::common::config::config_fields::GetTimezone
+        ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
+            + config_lib::config_fields::GetTimezone
             + ?Sized,
     >(
         &self,
@@ -17,8 +17,8 @@ where
             > + crate::common::error_logs_logic::get_code_occurence::GetCodeOccurence,
 {
     fn to_string_with_config<
-        ConfigGeneric: crate::common::config::config_fields::GetSourcePlaceType
-            + crate::common::config::config_fields::GetTimezone
+        ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
+            + config_lib::config_fields::GetTimezone
             + ?Sized,
     >(
         &self,

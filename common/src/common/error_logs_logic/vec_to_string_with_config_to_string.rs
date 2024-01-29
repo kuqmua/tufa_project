@@ -7,8 +7,8 @@ impl<'a, VecElementGeneric, ConfigGeneric> VecToStringWithConfigToString<'a, Con
 where
     VecElementGeneric:
         crate::common::error_logs_logic::to_string_with_config::ToStringWithConfig<'a>,
-    ConfigGeneric: crate::common::config::config_fields::GetSourcePlaceType
-        + crate::common::config::config_fields::GetTimezone
+    ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
+        + config_lib::config_fields::GetTimezone
         + ?Sized
 {
     fn vec_to_string_with_config_to_string(&self, config: &ConfigGeneric) -> std::string::String {

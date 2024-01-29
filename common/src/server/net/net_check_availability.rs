@@ -13,7 +13,7 @@ pub enum NetCheckAvailabilityErrorNamed {
 }
 
 pub async fn net_check_availability<'a>(
-    config: &'static (impl crate::common::config::config_fields::GetStartingCheckLink
+    config: &'static (impl config_lib::config_fields::GetStartingCheckLink
                   + std::marker::Send
                   + std::marker::Sync),
 ) -> Result<(), Box<NetCheckAvailabilityErrorNamed>> {

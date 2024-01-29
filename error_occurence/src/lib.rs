@@ -145,7 +145,7 @@ pub fn error_occurence(
     .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logic_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let config_fields_stringified = "config_fields";
-    let crate_common_config_stringified = "crate::common::config";
+    let crate_common_config_stringified = "config_lib";//crate::common::config
     let crate_common_config_config_fields_stringified = format!("{crate_common_config_stringified}::{config_fields_stringified}::");
     let get_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::get_upper_camel_case_stringified();
     let crate_common_config_config_fields_get_source_place_type_stringified = format!("{crate_common_config_config_fields_stringified}{get_upper_camel_case_stringified}{source_upper_camel_case_stringified}PlaceType");

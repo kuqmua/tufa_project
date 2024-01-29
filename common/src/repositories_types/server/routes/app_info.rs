@@ -14,13 +14,13 @@ impl<'a> crate::repositories_types::server::config::config_struct::GetConfig for
         self.config
     }
 }
-impl<'a> crate::common::config::config_fields::GetSourcePlaceType for AppInfo<'a> {
+impl<'a> config_lib::config_fields::GetSourcePlaceType for AppInfo<'a> {
     fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType {
         crate::repositories_types::server::config::config_struct::GetConfig::get_config(self)
             .get_source_place_type()
     }
 }
-impl<'a> crate::common::config::config_fields::GetTimezone for AppInfo<'a> {
+impl<'a> config_lib::config_fields::GetTimezone for AppInfo<'a> {
     fn get_timezone(&self) -> &chrono::FixedOffset {
         crate::repositories_types::server::config::config_struct::GetConfig::get_config(self)
             .get_timezone()

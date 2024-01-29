@@ -18,15 +18,15 @@
 
 // pub async fn get_providers_link_parts<'a>(
 //     config: &'static (
-//         impl crate::common::config::config_fields::GetProvidersLinkPartsSource
+//         impl config_lib::config_fields::GetProvidersLinkPartsSource
 
-//         + crate::common::config::config_fields::GetPathToProviderLinkPartsFolder
-//         + crate::common::config::config_fields::GetLogFileExtension
+//         + config_lib::config_fields::GetPathToProviderLinkPartsFolder
+//         + config_lib::config_fields::GetLogFileExtension
 
-//         + crate::common::config::config_fields::GetMongoUrl
-//         + crate::common::config::config_fields::GetMongoProvidersLinkPartsDbName
-//         + crate::common::config::config_fields::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-//         + crate::common::config::config_fields::GetMongoProvidersLogsDbCollectionHandleSecondPart
+//         + config_lib::config_fields::GetMongoUrl
+//         + config_lib::config_fields::GetMongoProvidersLinkPartsDbName
+//         + config_lib::config_fields::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
+//         + config_lib::config_fields::GetMongoProvidersLogsDbCollectionHandleSecondPart
 // + std::marker::Send
 // + std::marker::Sync
 //     )
