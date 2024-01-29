@@ -199,8 +199,8 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
 #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
 pub enum ConfigCheckErrorNamed {
     ServerPort {
-        #[eo_error_occurence]
-        server_port: crate::common::user_port::UserPortTryFromU16ErrorNamed,
+        #[eo_display_with_serialize_deserialize]
+        server_port: u16,
         code_occurence: crate::common::code_occurence::CodeOccurence,
     },
     HmacSecret {

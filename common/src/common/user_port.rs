@@ -10,35 +10,15 @@ impl std::fmt::Display for UserPort {
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
-pub enum UserPortTryFromU16ErrorNamed {
-    SystemPort {
-        #[eo_display_with_serialize_deserialize]
-        port: u16,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
-    },
-    EphemeralPort {
-        #[eo_display_with_serialize_deserialize]
-        port: u16,
-        code_occurence: crate::common::code_occurence::CodeOccurence,
-    },
-}
-
 impl std::convert::TryFrom<u16> for UserPort {
-    type Error = UserPortTryFromU16ErrorNamed;
+    type Error = u16;
     fn try_from(value: u16) -> Result<Self, Self::Error> {
         if value < 1024 {
-            Err(Self::Error::SystemPort {
-                port: value,
-                code_occurence: crate::code_occurence_common!(),
-            })
+            Err(value)
         } else if value < 49152 {
             Ok(Self { port: value })
         } else {
-            Err(Self::Error::EphemeralPort {
-                port: value,
-                code_occurence: crate::code_occurence_common!(),
-            })
+            Err(value)
         }
     }
 }
