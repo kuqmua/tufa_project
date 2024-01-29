@@ -137,7 +137,7 @@ where
             Ok(axum::Json(payload)) => Ok(payload),
             Err(err) => {
                 let error = crate::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
-                crate::common::error_logs_logic::error_log::ErrorLog::error_log(
+                error_occurence_lib::error_log::ErrorLog::error_log(
                     &error,
                     app_info.as_ref(),
                 );

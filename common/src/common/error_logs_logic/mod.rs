@@ -1,4 +1,3 @@
-pub mod error_log;
 pub mod hashmap_display_display_foreign_type_into_hashmap_display_string;
 pub mod hashmap_display_display_foreign_type_into_hashmap_string_string;
 pub mod hashmap_display_display_foreign_type_to_string;
