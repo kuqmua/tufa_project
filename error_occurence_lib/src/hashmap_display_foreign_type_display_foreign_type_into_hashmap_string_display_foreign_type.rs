@@ -12,10 +12,10 @@ impl<HashMapKeyGeneric, HashMapValueGeneric>
         HashMapValueGeneric,
     > for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: error_occurence_lib::display_foreign_type::DisplayForeignType
+    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType
         + std::cmp::Eq
         + std::hash::Hash,
-    HashMapValueGeneric: error_occurence_lib::display_foreign_type::DisplayForeignType,
+    HashMapValueGeneric: crate::display_foreign_type::DisplayForeignType,
 {
     fn hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type(
         self,

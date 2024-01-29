@@ -8,17 +8,17 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
     HashMapDisplayForeignTypeToStringWithoutConfigToString<'a>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: error_occurence_lib::display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType,
     HashMapValueGeneric:
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'a>,
+        crate::to_string_without_config::ToStringWithoutConfig<'a>,
 {
     fn hashmap_display_foreign_type_to_string_without_config_to_string(
         &self,
     ) -> std::string::String {
-        error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+        crate::helpers::error_occurence_hashmap_formatter(
             self.iter().fold(String::from(""), |mut acc, (key, value)| {
                 acc.push_str(
-                    &error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                    &crate::helpers::stringified_lines_error_hashmap_element(
                         key.display_foreign_type(),
                         value.to_string_without_config(),
                     ),
@@ -39,15 +39,15 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
     HashMapToStringDisplayForeignTypeToStringWithoutConfigWithSerializeDeserialize<'a>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: error_occurence_lib::display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType,
     HashMapValueGeneric:
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'a>,
+        crate::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'a>,
 {
     fn hashmap_to_string_display_foreign_type_to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
-        error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+        crate::helpers::error_occurence_hashmap_formatter(
             self.iter().fold(String::from(""), |mut acc, (key, value)| {
                 acc.push_str(
-                    &error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                    &crate::helpers::stringified_lines_error_hashmap_element(
                         key.display_foreign_type(),
                         value.to_string_without_config_with_serialize_deserialize(),
                     ),

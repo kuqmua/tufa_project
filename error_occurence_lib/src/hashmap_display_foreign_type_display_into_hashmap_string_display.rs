@@ -8,7 +8,7 @@ impl<HashMapKeyGeneric, HashMapValueGeneric>
     HashMapDisplayForeignTypeDisplayIntoHashMapStringDisplay<HashMapValueGeneric>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: error_occurence_lib::display_foreign_type::DisplayForeignType
+    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType
         + std::cmp::Eq
         + std::hash::Hash,
     HashMapValueGeneric: std::fmt::Display,
