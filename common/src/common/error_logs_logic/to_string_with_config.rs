@@ -26,7 +26,7 @@ where
     ) -> std::string::String {
         crate::common::error_logs_logic::helpers::source_and_code_occurence_formatter(
             self.source_to_string_with_config(config),
-            crate::common::error_logs_logic::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithConfig::code_occurence_prepare_for_log_with_config(
+            error_occurence_lib::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithConfig::code_occurence_prepare_for_log_with_config(
                 self.get_code_occurence(),
                 config
             )

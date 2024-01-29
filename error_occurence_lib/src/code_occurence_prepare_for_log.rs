@@ -11,11 +11,11 @@ pub trait CodeOccurencePrepareForLogWithConfig {
 
 impl<'a, SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::get_file::GetFile
-        + error_occurence_lib::get_line::GetLine
-        + error_occurence_lib::get_column::GetColumn
-        + error_occurence_lib::get_duration::GetDuration
-        + error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a>,
+    SelfGeneric: crate::get_file::GetFile
+        + crate::get_line::GetLine
+        + crate::get_column::GetColumn
+        + crate::get_duration::GetDuration
+        + crate::get_git_source_file_link::GetGitSourceFileLink<'a>,
 {
     fn code_occurence_prepare_for_log_with_config<
         ConfigGeneric: config_lib::config_fields::GetTimezone
@@ -26,7 +26,7 @@ where
         config: &ConfigGeneric,
     ) -> std::string::String {
         prepare_for_log(
-            error_occurence_lib::get_code_path::get_code_path(&config.get_source_place_type(), self),
+            crate::get_code_path::get_code_path(&config.get_source_place_type(), self),
             chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
                 .with_timezone(config.get_timezone())
                 .format("%Y-%m-%d %H:%M:%S")
@@ -41,8 +41,8 @@ pub trait CodeOccurencePrepareForLogWithoutConfig {
 
 impl<SelfGeneric> CodeOccurencePrepareForLogWithoutConfig for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::form_error_path::FormErrorPathGithub
-        + error_occurence_lib::get_duration::GetDuration,
+    SelfGeneric: crate::form_error_path::FormErrorPathGithub
+        + crate::get_duration::GetDuration,
 {
     fn code_occurence_prepare_for_log_without_config(&self) -> std::string::String {
         prepare_for_log(
@@ -64,8 +64,8 @@ pub trait CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize {
 impl<'a, SelfGeneric> CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize
     for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::form_error_path::FormErrorPathGithub
-        + error_occurence_lib::get_duration::GetDuration,
+    SelfGeneric: crate::form_error_path::FormErrorPathGithub
+        + crate::get_duration::GetDuration,
 {
     fn code_occurence_prepare_for_log_without_config_with_serialize_deserialize(
         &self,

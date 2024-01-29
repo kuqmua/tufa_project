@@ -58,7 +58,7 @@ impl std::fmt::Display for crate::common::code_occurence::CodeOccurence {
         write!(
             f,
             "{}",
-            crate::common::error_logs_logic::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self)
+            error_occurence_lib::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self)
         )
     }
 }
@@ -146,7 +146,7 @@ impl<'a> error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a>
 //         write!(
 //             f,
 //             "{}",
-//             crate::common::error_logs_logic::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize::code_occurence_prepare_for_log_without_config_with_serialize_deserialize(self)
+//             error_occurence_lib::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize::code_occurence_prepare_for_log_without_config_with_serialize_deserialize(self)
 //         )
 //     }
 // }
