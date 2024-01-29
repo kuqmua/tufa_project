@@ -19,10 +19,10 @@ where
         &self,
         config: &ConfigGeneric,
     ) -> std::string::String {
-        crate::common::error_logs_logic::helpers::error_occurence_hashmap_formatter(
+        error_occurence_lib::helpers::error_occurence_hashmap_formatter(
             self.iter().fold(String::from(""), |mut acc, (key, value)| {
                 acc.push_str(
-                    &crate::common::error_logs_logic::helpers::stringified_lines_error_hashmap_element(
+                    &error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                         key.display_foreign_type(),
                         value.to_string_with_config(config),
                     ),

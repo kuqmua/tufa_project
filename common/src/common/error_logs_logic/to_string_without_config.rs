@@ -8,7 +8,7 @@ where
         + error_occurence_lib::get_code_occurence::GetCodeOccurence,
 {
     fn to_string_without_config(&self) -> std::string::String {
-        crate::common::error_logs_logic::helpers::source_and_code_occurence_formatter(
+        error_occurence_lib::helpers::source_and_code_occurence_formatter(
             self.source_to_string_without_config(),
             self.get_code_occurence(),
         )
@@ -25,7 +25,7 @@ where
         + error_occurence_lib::get_code_occurence::GetCodeOccurence,
 {
     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
-        crate::common::error_logs_logic::helpers::source_and_code_occurence_formatter(
+        error_occurence_lib::helpers::source_and_code_occurence_formatter(
             self.source_to_string_without_config(),
             self.get_code_occurence(),
         )

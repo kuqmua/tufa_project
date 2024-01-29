@@ -8,11 +8,11 @@ where
         crate::common::error_logs_logic::to_string_without_config::ToStringWithoutConfig<'a>,
 {
     fn vec_to_string_without_config_to_string(&self) -> std::string::String {
-        crate::common::error_logs_logic::helpers::stringified_lines_error_vec(self.iter().fold(
+        error_occurence_lib::helpers::stringified_lines_error_vec(self.iter().fold(
             std::string::String::from(""),
             |mut acc, vec_element| {
                 acc.push_str(
-                    &crate::common::error_logs_logic::helpers::lines_space_backslash_addition(
+                    &error_occurence_lib::helpers::lines_space_backslash_addition(
                         vec_element.to_string_without_config(),
                     ),
                 );
@@ -34,11 +34,11 @@ where
         >,
 {
     fn vec_to_string_without_config_to_string_with_serialize_deserialize(&self) -> std::string::String {
-        crate::common::error_logs_logic::helpers::stringified_lines_error_vec(self.iter().fold(
+        error_occurence_lib::helpers::stringified_lines_error_vec(self.iter().fold(
             std::string::String::from(""),
             |mut acc, vec_element| {
                 acc.push_str(
-                    &crate::common::error_logs_logic::helpers::lines_space_backslash_addition(
+                    &error_occurence_lib::helpers::lines_space_backslash_addition(
                         vec_element.to_string_without_config_with_serialize_deserialize(),
                     ),
                 );
