@@ -26,7 +26,7 @@ where
         config: &ConfigGeneric,
     ) -> std::string::String {
         prepare_for_log(
-            crate::common::source_place_type::get_code_path(&config.get_source_place_type(), self),
+            error_occurence_lib::get_code_path::get_code_path(&config.get_source_place_type(), self),
             chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
                 .with_timezone(config.get_timezone())
                 .format("%Y-%m-%d %H:%M:%S")
