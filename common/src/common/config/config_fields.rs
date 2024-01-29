@@ -41,7 +41,7 @@ pub trait GetTracingType {
     fn get_tracing_type(&self) -> &crate::server::tracing_type::TracingType;
 }
 pub trait GetSourcePlaceType {
-    fn get_source_place_type(&self) -> &crate::common::source_place_type::SourcePlaceType;
+    fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType;
 }
 pub trait GetEnableApiGitCommitCheck {
     fn get_enable_api_git_commit_check(&self) -> &bool;

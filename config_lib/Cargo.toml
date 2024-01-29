@@ -8,6 +8,9 @@ edition = "2021"
 [dependencies]
 secrecy = {version = "=0.8", features = ["serde"]}
 chrono = {version = "=0.4"}
+from_str = {path = "../from_str"}
+serde = {version = "=1.0", features = ["derive"]}
+strum_macros = {version = "=0.24.3"}
 
 [lints]
 workspace = true
