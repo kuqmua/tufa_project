@@ -9,7 +9,7 @@ pub trait ErrorLog {
     );
 }
 
-impl<'a, SelfGeneric> crate::common::error_logs_logic::error_log::ErrorLog for SelfGeneric
+impl<'a, SelfGeneric> ErrorLog for SelfGeneric
 where
     SelfGeneric: crate::common::error_logs_logic::to_string_with_config::ToStringWithConfig<'a>,
 {

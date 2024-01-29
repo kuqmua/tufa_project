@@ -3847,10 +3847,10 @@ pub fn error_occurence(
             let logic_for_compile_time_check_error_occurence_members_iter = logic_for_compile_time_check_error_occurence_members.iter();
             let get_code_occurence_upper_camel_case = format!("{get_upper_camel_case_stringified}{code_occurence_upper_camel_case_stringified}");
             let get_code_occurence_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_code_occurence_upper_camel_case);
-            let crate_common_error_logs_logic_get_code_occurence_get_code_occurence_stringified = format!("{crate_common_error_logs_logic_stringified}{get_code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
-            let crate_common_error_logs_logic_get_code_occurence_get_code_occurence_token_stream = 
-            crate_common_error_logs_logic_get_code_occurence_get_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logic_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{get_code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
+            let error_occurence_lib_get_code_occurence_get_code_occurence_token_stream = 
+            error_occurence_lib_get_code_occurence_get_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let error_occurence_lib_code_occurence_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{code_occurence_upper_camel_case_stringified}");
             let error_occurence_lib_code_occurence_code_occurence_token_stream = 
             error_occurence_lib_code_occurence_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
@@ -3906,7 +3906,7 @@ pub fn error_occurence(
                         }
                     }
                 }
-                impl #crate_common_error_logs_logic_get_code_occurence_get_code_occurence_token_stream for #ident {
+                impl #error_occurence_lib_get_code_occurence_get_code_occurence_token_stream for #ident {
                     fn #get_code_occurence_token_stream(&self) -> &#error_occurence_lib_code_occurence_code_occurence_token_stream
                     {
                         match self {
@@ -3922,7 +3922,7 @@ pub fn error_occurence(
                         }
                     }
                 }
-                impl #crate_common_error_logs_logic_get_code_occurence_get_code_occurence_token_stream 
+                impl #error_occurence_lib_get_code_occurence_get_code_occurence_token_stream 
                     for #ident_with_serialize_deserialize_token_stream
                 {
                     fn #get_code_occurence_token_stream(

@@ -14,7 +14,7 @@ where
     SelfGeneric:
         crate::common::error_logs_logic::source_to_string_with_config::SourceToStringWithConfig<
                 'a,
-            > + crate::common::error_logs_logic::get_code_occurence::GetCodeOccurence,
+            > + error_occurence_lib::get_code_occurence::GetCodeOccurence,
 {
     fn to_string_with_config<
         ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
