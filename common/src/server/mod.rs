@@ -6,4 +6,3 @@ pub mod net;
 pub mod postgres;
 pub mod resource;
 pub mod routes;
-pub mod tracing_type;

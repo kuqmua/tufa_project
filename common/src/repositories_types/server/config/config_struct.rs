@@ -19,7 +19,7 @@ pub struct ConfigUnchecked {
 
     starting_check_link: std::string::String, //todo add browser url limit check
 
-    tracing_type: crate::server::tracing_type::TracingType,
+    tracing_type: config_lib::tracing_type::TracingType,
     source_place_type: config_lib::source_place_type::SourcePlaceType,
     enable_api_git_commit_check: bool,
 }
@@ -49,7 +49,7 @@ pub struct Config {
 
     starting_check_link: std::string::String, //todo add browser url limit check
 
-    tracing_type: crate::server::tracing_type::TracingType,
+    tracing_type: config_lib::tracing_type::TracingType,
     source_place_type: config_lib::source_place_type::SourcePlaceType,
     enable_api_git_commit_check: bool,
 }
@@ -261,7 +261,7 @@ pub enum ConfigCheckErrorNamed {
     },
     TracingType {
         #[eo_display_with_serialize_deserialize]
-        tracing_type: crate::server::tracing_type::TracingType,
+        tracing_type: config_lib::tracing_type::TracingType,
         code_occurence: crate::common::code_occurence::CodeOccurence,
     },
     SourcePlaceType {

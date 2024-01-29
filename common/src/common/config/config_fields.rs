@@ -38,7 +38,7 @@ pub trait GetStartingCheckLink {
     fn get_starting_check_link(&self) -> &String;
 }
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &crate::server::tracing_type::TracingType;
+    fn get_tracing_type(&self) -> &config_lib::tracing_type::TracingType;
 }
 pub trait GetSourcePlaceType {
     fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType;
