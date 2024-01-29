@@ -36,6 +36,7 @@ pub mod source_to_string_without_config;
 // pub mod vec_to_string_with_config_to_string;
 // pub mod vec_to_string_without_config_to_string;
 
+pub mod source_to_string_with_config;
 pub mod get_code_occurence;
 pub mod code_occurence_prepare_for_log;
 pub mod get_code_path_without_config;

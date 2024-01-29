@@ -776,7 +776,7 @@ pub fn error_occurence(
             error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             //
-            let crate_common_error_logs_logic_source_to_string_with_config_source_to_string_with_config_stringified = format!("{crate_common_error_logs_logic_stringified}{source_to_string_with_config_stringified}::{source_to_string_with_config_upper_camel_case}");
+            let crate_common_error_logs_logic_source_to_string_with_config_source_to_string_with_config_stringified = format!("{error_occurence_lib_stringified}::{source_to_string_with_config_stringified}::{source_to_string_with_config_upper_camel_case}");
             let crate_common_error_logs_logic_source_to_string_with_config_source_to_string_with_config_token_stream = 
             crate_common_error_logs_logic_source_to_string_with_config_source_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logic_source_to_string_with_config_source_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));

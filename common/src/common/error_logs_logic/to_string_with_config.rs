@@ -12,7 +12,7 @@ pub trait ToStringWithConfig<'a> {
 impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
 where
     SelfGeneric:
-        crate::common::error_logs_logic::source_to_string_with_config::SourceToStringWithConfig<
+        error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<
                 'a,
             > + error_occurence_lib::get_code_occurence::GetCodeOccurence,
 {
