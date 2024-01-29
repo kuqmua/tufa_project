@@ -4,11 +4,11 @@ pub trait ToStringWithoutConfig<'a> {
 
 impl<'a, SelfGeneric> ToStringWithoutConfig<'a> for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'a>
-        + error_occurence_lib::get_code_occurence::GetCodeOccurence,
+    SelfGeneric: crate::source_to_string_without_config::SourceToStringWithoutConfig<'a>
+        + crate::get_code_occurence::GetCodeOccurence,
 {
     fn to_string_without_config(&self) -> std::string::String {
-        error_occurence_lib::helpers::source_and_code_occurence_formatter(
+        crate::helpers::source_and_code_occurence_formatter(
             self.source_to_string_without_config(),
             self.get_code_occurence(),
         )
@@ -21,11 +21,11 @@ pub trait ToStringWithoutConfigWithSerializeDeserialize<'a> {
 
 impl<'a, SelfGeneric> ToStringWithoutConfigWithSerializeDeserialize<'a> for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'a>
-        + error_occurence_lib::get_code_occurence::GetCodeOccurence,
+    SelfGeneric: crate::source_to_string_without_config::SourceToStringWithoutConfig<'a>
+        + crate::get_code_occurence::GetCodeOccurence,
 {
     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
-        error_occurence_lib::helpers::source_and_code_occurence_formatter(
+        crate::helpers::source_and_code_occurence_formatter(
             self.source_to_string_without_config(),
             self.get_code_occurence(),
         )

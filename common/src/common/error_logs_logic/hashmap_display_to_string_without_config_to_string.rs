@@ -7,7 +7,7 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric> HashMapDisplayToStringWithoutCo
 where
     HashMapKeyGeneric: std::fmt::Display,
     HashMapValueGeneric:
-        crate::common::error_logs_logic::to_string_without_config::ToStringWithoutConfig<'a>,
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'a>,
 {
     fn hashmap_display_to_string_without_config_to_string(&self) -> std::string::String {
         error_occurence_lib::helpers::error_occurence_hashmap_formatter(
@@ -35,7 +35,7 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric> HashMapDisplayToStringWithoutCo
 where
     HashMapKeyGeneric: std::fmt::Display,
     HashMapValueGeneric:
-        crate::common::error_logs_logic::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<
             'a,
         >,
 {

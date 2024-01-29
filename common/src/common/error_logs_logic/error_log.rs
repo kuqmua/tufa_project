@@ -11,7 +11,7 @@ pub trait ErrorLog {
 
 impl<'a, SelfGeneric> ErrorLog for SelfGeneric
 where
-    SelfGeneric: crate::common::error_logs_logic::to_string_with_config::ToStringWithConfig<'a>,
+    SelfGeneric: error_occurence_lib::to_string_with_config::ToStringWithConfig<'a>,
 {
     fn error_log<
         ConfigGeneric: config_lib::config_fields::GetSourcePlaceType

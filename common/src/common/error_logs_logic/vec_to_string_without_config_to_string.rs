@@ -5,7 +5,7 @@ pub trait VecToStringWithoutConfigToString<'a> {
 impl<'a, VecElementGeneric> VecToStringWithoutConfigToString<'a> for Vec<VecElementGeneric>
 where
     VecElementGeneric:
-        crate::common::error_logs_logic::to_string_without_config::ToStringWithoutConfig<'a>,
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'a>,
 {
     fn vec_to_string_without_config_to_string(&self) -> std::string::String {
         error_occurence_lib::helpers::stringified_lines_error_vec(self.iter().fold(
@@ -29,7 +29,7 @@ pub trait VecToStringWithoutConfigToStringWithSerializeDeserialize<'a> {
 impl<'a, VecElementGeneric> VecToStringWithoutConfigToStringWithSerializeDeserialize<'a> for Vec<VecElementGeneric>
 where
     VecElementGeneric:
-        crate::common::error_logs_logic::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<
             'a,
         >,
 {

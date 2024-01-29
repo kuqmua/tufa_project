@@ -18,8 +18,6 @@ pub mod hashmap_display_to_string_with_config_to_string;
 pub mod hashmap_display_to_string_without_config_to_string;
 #[cfg(test)]
 pub mod test;
-pub mod to_string_with_config;
-pub mod to_string_without_config;
 pub mod vec_display_foreign_type_into_vec_string;
 pub mod vec_display_foreign_type_to_string;
 pub mod vec_display_into_vec_string;

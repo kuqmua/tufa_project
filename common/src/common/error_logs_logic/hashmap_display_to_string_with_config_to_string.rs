@@ -8,7 +8,7 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric, ConfigGeneric>
 where
     HashMapKeyGeneric: std::fmt::Display,
     HashMapValueGeneric:
-        crate::common::error_logs_logic::to_string_with_config::ToStringWithConfig<'a>,
+        error_occurence_lib::to_string_with_config::ToStringWithConfig<'a>,
     ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
         + config_lib::config_fields::GetTimezone,
 {
