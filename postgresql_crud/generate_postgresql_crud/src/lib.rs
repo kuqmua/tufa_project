@@ -2999,13 +2999,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 pub async fn #operation_snake_case_token_stream(
                     #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
-                        #axum_json_token_stream<#operation_payload_upper_camel_case_token_stream>,
+                        #axum_json_token_stream<#operation_payload_upper_camel_case_token_stream>,//todo this must be #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
                 ) -> #impl_axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
-                            #operation_payload_upper_camel_case_token_stream,
+                            #operation_payload_upper_camel_case_token_stream,//todo this must be #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream
                             #try_operation_response_variants_token_stream,
                         >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
                         {
@@ -4647,7 +4647,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 pub async fn #operation_snake_case_token_stream(
                     #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
-                        #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,//todo - this must be with_serialize_deserialize
+                        #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
                 ) -> #impl_axum_response_into_response_token_stream {
