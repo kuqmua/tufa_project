@@ -2989,13 +2989,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -3430,13 +3424,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -4243,13 +4231,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -4655,13 +4637,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -5307,13 +5283,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -5850,13 +5820,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -6682,13 +6646,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -7083,13 +7041,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &unique_status_codes,
                 &application_json_quotes_token_stream,
                 &table_name_quotes_token_stream,
-                Some(quote::quote!{
-                    request_body(
-                        content = #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream, 
-                        description = "todo", 
-                        content_type = #application_json_quotes_token_stream
-                    ),
-                }),
+                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
             quote::quote!{
@@ -8482,7 +8434,7 @@ fn generate_swagger_open_api_token_stream(
     unique_status_codes: &[proc_macro_helpers::status_code::StatusCode],
     application_json_quotes_token_stream: &proc_macro2::TokenStream,
     table_name_quotes_token_stream: &proc_macro2::TokenStream,
-    request_body_option_token_stream: std::option::Option<proc_macro2::TokenStream>,
+    content_type_token_stream: &proc_macro2::TokenStream,
     operation: &Operation,
 ) -> proc_macro2::TokenStream {
     let swagger_url_path_quotes_token_stream = proc_macro_helpers::naming_conventions::SwaggerUrlPathSelfQuotesTokenStream::swagger_url_path_self_quotes_token_stream(operation, table_name_stringified);
@@ -8495,9 +8447,23 @@ fn generate_swagger_open_api_token_stream(
         }
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
-    let request_body_token_stream = match request_body_option_token_stream {
-        Some(value) => value,
-        None => proc_macro2::TokenStream::new()
+    let request_body_token_stream = {
+        let request_body_description_token_stream = {
+            let value_stringified = proc_macro_common::generate_quotes::generate_quotes_stringified(&format!(
+                "{table_name_stringified} {} {}",
+                proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation),
+                proc_macro_helpers::naming_conventions::payload_snake_case_stringified()
+            ));
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        quote::quote!{
+            request_body(
+                content = #content_type_token_stream, 
+                description = #request_body_description_token_stream, 
+                content_type = #application_json_quotes_token_stream
+            )
+        }
     };
     quote::quote!{
         #[utoipa::path(
@@ -8505,7 +8471,7 @@ fn generate_swagger_open_api_token_stream(
             path = #swagger_url_path_quotes_token_stream,
             operation_id = #swagger_url_path_quotes_token_stream,
             tag = #table_name_quotes_token_stream,
-            #request_body_token_stream
+            #request_body_token_stream,
             responses(
                 #(#responses_token_stream),*
             ),
