@@ -545,6 +545,13 @@ pub fn column_not_found_upper_camel_case_stringified() -> std::string::String {
         found_upper_camel_case_stringified(),
     )
 }
+pub fn request_error_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        request_upper_camel_case_stringified(), 
+        error_upper_camel_case_stringified()
+    )
+}
 
 
 

@@ -1572,7 +1572,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let use_futures_try_stream_ext_token_stream = quote::quote!{use futures::TryStreamExt};
     let serde_json_to_string_token_stream = quote::quote!{serde_json::to_string};
     let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
-    let request_error_upper_camel_case_stringified = "RequestError";
+    let request_error_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::request_error_upper_camel_case_stringified();
     let returning_stringified = "returning";
     let returning_primary_key_stringified = format!(" {returning_stringified} {primary_key_field_ident}");
     let primary_key_vec_name_token_stream = quote::quote!{primary_key_vec};
