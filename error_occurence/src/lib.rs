@@ -109,7 +109,6 @@ pub fn error_occurence(
     );
     let source_to_string_with_config_upper_camel_case = format!("{source_upper_camel_case_stringified}{to_string_with_config_upper_camel_case}");
     let unnamed_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&unnamed_upper_camel_case);
-    let error_logs_logic_stringified = "error_logs_logic";
     let error_occurence_named_upper_camel_case = format!("{proc_macro_name}{}", proc_macro_helpers::naming_conventions::named_upper_camel_case_stringified());
     let error_occurence_named_snake_case = format!("{error_occurence_snake_case}_{named_snake_case}");
     let error_occurence_named_token_stream = error_occurence_named_snake_case
@@ -120,7 +119,6 @@ pub fn error_occurence(
     let error_occurence_unnamed_token_stream = error_occurence_unnamed_snake_case
     .parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_unnamed_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let crate_common_stringified = "crate::common";
     let error_occurence_lib_stringified = "error_occurence_lib";
     let error_occurence_lib_error_occurence_named_error_occurence_named_stringified = format!("{error_occurence_lib_stringified}::{error_occurence_named_snake_case}::{error_occurence_named_upper_camel_case}");
     let error_occurence_lib_error_occurence_named_error_occurence_named_token_stream = error_occurence_lib_error_occurence_named_error_occurence_named_stringified
@@ -843,7 +841,6 @@ pub fn error_occurence(
                             error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let crate_common_stringified = "crate::common"; 
                             let error_occurence_lib_display_foreign_type_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_snake_case_stringified}::{display_foreign_type_upper_camel_case}");
                             let error_occurence_lib_display_foreign_type_display_foreign_type_token_stream = 
                             error_occurence_lib_display_foreign_type_display_foreign_type_stringified

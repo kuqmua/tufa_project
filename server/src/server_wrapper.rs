@@ -1,9 +1,6 @@
 pub async fn server_wrapper<'a>(
     config: &'static common::repositories_types::server::config::config_struct::Config,
-) -> Result<
-    (),
-    Box<common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed>,
-> {
+) -> Result<(), Box<common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed>> {
     let postgres_pool = match common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
         Ok(postgres_pool) => postgres_pool,
         Err(e) => {
@@ -31,16 +28,17 @@ pub async fn server_wrapper<'a>(
     //     },
     // };
     println!("trying to build server...");
-    match crate::try_build_server::try_build_server(
+    if let Err(e) = crate::try_build_server::try_build_server(
         postgres_pool,
         // redis_session_storage,
-        config
-    ).await {
-        Err(e) => return Err(Box::new(common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::BuildServer {
+        config,
+    )
+    .await
+    {
+        return Err(Box::new(common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::BuildServer {
             build_server: *e,
             code_occurence: common::code_occurence!(),
-        })),
-        Ok(_) => (),
+        }));
     }
     println!("server running!");
     Ok(())

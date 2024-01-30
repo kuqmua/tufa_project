@@ -1,3 +1,4 @@
+#[allow(clippy::too_many_arguments)]
 pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
