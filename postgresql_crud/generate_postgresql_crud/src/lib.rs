@@ -1149,11 +1149,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let crate_server_postgres_order_by_order_by_token_stream = quote::quote!{crate::server::postgres::#order_by_snake_case_token_stream::#order_by_upper_camel_case_token_stream};
     let crate_server_postgres_order_order_token_stream = quote::quote!{crate::server::postgres::order::Order};
-    let select_snake_case_token_stream = quote::quote!{select};
-    let limit_snake_case_token_stream = quote::quote!{limit};
-    let offset_snake_case_token_stream = quote::quote!{offset};
-    let order_snake_case_token_stream = quote::quote!{order};
-    let column_snake_case_token_stream = quote::quote!{column};
+    let limit_snake_case_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
+    let offset_snake_case_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
+    let order_snake_case_token_stream = proc_macro_helpers::naming_conventions::order_snake_case_token_stream();
+    let column_snake_case_token_stream = proc_macro_helpers::naming_conventions::column_snake_case_token_stream();
     let ident_order_by_wrapper_stringified = format!("{ident}{order_by_upper_camel_case_stringified}Wrapper");
     let ident_order_by_wrapper_name_token_stream = {
         ident_order_by_wrapper_stringified.parse::<proc_macro2::TokenStream>()
@@ -2023,14 +2022,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let binded_query_name_token_stream = quote::quote!{binded_query};
     let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
     let order_by_token_stream = quote::quote!{order_by};
-    let select_token_stream = quote::quote!{select};
+    let select_snake_case_token_stream = proc_macro_helpers::naming_conventions::select_snake_case_token_stream();
     let limit_token_stream = quote::quote!{limit};
     let offset_token_stream = quote::quote!{offset};
     let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
     let axum_json_token_stream = quote::quote!{axum::Json};
-    let rollback_token_stream = quote::quote!{rollback};
+    let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
     let commit_token_stream = quote::quote!{commit};
     let begin_token_stream = quote::quote!{begin};
     let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
@@ -3605,7 +3604,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     pub struct #operation_payload_upper_camel_case_token_stream {
                         pub #primary_key_field_ident: std::option::Option<#std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream>,
                         #(#fields_with_excluded_primary_key_token_stream)*
-                        pub #select_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                        pub #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         pub #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         pub #limit_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
                         pub #offset_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
@@ -3628,7 +3627,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         #primary_key_field_ident: std::option::Option<std::vec::Vec<#std_string_string_token_stream>>,//todo maybe possible uuid wrapper
                         #(#fields_with_excluded_primary_key_token_stream)*
-                        #select_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                        #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         #limit_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
                         #offset_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
@@ -4087,7 +4086,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         format!(
                             #handle_token_stream,
                             crate::server::postgres::generate_query::GenerateQuery::generate_query(
-                                &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_token_stream
+                                &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream
                             ),
                             {
                                 #increment_initialization_token_stream
@@ -4232,7 +4231,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         } {
-                            match #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
+                            match #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
                                 Ok(value) => {
                                     vec_values.push(value);
                                 }
@@ -4403,7 +4402,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_to_schema_token_stream
                     pub struct #operation_payload_upper_camel_case_token_stream {
                         pub #primary_key_field_ident: #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
-                        pub #select_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                        pub #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                     }
                 }
             };
@@ -4413,7 +4412,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_serialize_deserialize_token_stream
                     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         #primary_key_field_ident: #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                        #select_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                        #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                     }    
                 }
             };
@@ -4447,10 +4446,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         });
                                     }
                                 };
-                                let #select_token_stream = value.#select_token_stream;
+                                let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                                 Ok(Self {
                                     #primary_key_field_ident,
-                                    #select_token_stream
+                                    #select_snake_case_token_stream
                                 })
                             }
                         }
@@ -4467,10 +4466,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
                             let #primary_key_field_ident = #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value.#primary_key_field_ident);
-                            let #select_token_stream = value.#select_token_stream;
+                            let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                             Self {
                                 #primary_key_field_ident,
-                                #select_token_stream,
+                                #select_snake_case_token_stream,
                             }
                         }
                     }
@@ -4612,7 +4611,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote!{
                         format!(
                             #query_token_stream,
-                            crate::server::postgres::generate_query::GenerateQuery::generate_query(&#select_token_stream),
+                            crate::server::postgres::generate_query::GenerateQuery::generate_query(&#select_snake_case_token_stream),
                         )
                     }
                 };
@@ -4636,7 +4635,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &pg_connection_token_stream
                 );
                 quote::quote!{
-                    let #select_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_token_stream;
+                    let #select_snake_case_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream;
                     let #query_string_name_token_stream = {
                         #query_string_token_stream
                     };
@@ -4646,7 +4645,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     #acquire_pool_and_connection_token_stream
                     match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
-                        Ok(row) => match #select_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
+                        Ok(row) => match #select_snake_case_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(value),
                             Err(e) => {
                                 #from_log_and_return_error_token_stream
@@ -5271,7 +5270,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &non_existing_primary_keys_name_token_stream,
                     &expected_updated_primary_keys_name_token_stream,
                     &primary_key_vec_name_token_stream,
-                    &rollback_token_stream,
+                    &rollback_snake_case_token_stream,
                     &non_existing_primary_keys_variant_initialization_token_stream,
                     &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
                     &postgres_transaction_token_stream,
@@ -6379,7 +6378,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &non_existing_primary_keys_name_token_stream,
                         &expected_updated_primary_keys_name_token_stream,
                         &primary_key_vec_name_token_stream,
-                        &rollback_token_stream,
+                        &rollback_snake_case_token_stream,
                         &non_existing_primary_keys_variant_initialization_token_stream,
                         &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
                         &postgres_transaction_token_stream,
