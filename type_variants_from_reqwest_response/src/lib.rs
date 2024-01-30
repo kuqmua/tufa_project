@@ -646,7 +646,7 @@ fn generate_from_logic(
 //         },
 //     };
 //     let ident_request_error_logic_token_stream = quote::quote! {
-//         #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+//         #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 //         pub enum #ident_request_error_upper_camel_case_token_stream {
 //             ExpectedType {
 //                 #[eo_display_with_serialize_deserialize]

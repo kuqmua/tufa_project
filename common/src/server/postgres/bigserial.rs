@@ -56,7 +56,7 @@ impl std::fmt::Display for Bigserial {
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum BigserialTryFromI64ErrorNamed {
     NotPositive {
         #[eo_display_with_serialize_deserialize]
@@ -78,7 +78,7 @@ impl std::convert::TryFrom<i64> for Bigserial {
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum BigserialTryFromStrErrorNamed {
     ParseIntError {
         #[eo_display]

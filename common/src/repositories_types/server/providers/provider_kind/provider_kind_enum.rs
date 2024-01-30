@@ -21,7 +21,7 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum FetchAndParseProviderDataErrorNamed {
 //     // AsyncFetchLinks {
 //     //     #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -35,7 +35,7 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum FetchAndParseProviderDataErrorUnnamed<'a> {
 //     NoItems(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed),
 // }
@@ -204,7 +204,7 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum GetLinkPartsFromLocalJsonFileErrorNamed {
 //     TokioFsFileOpen {
 //         #[eo_display]
@@ -308,7 +308,7 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum MongoGetProviderLinkPartsErrorNamed {
 //     ClientOptionsParse {
 //         #[eo_display]

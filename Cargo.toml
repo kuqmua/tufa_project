@@ -5,7 +5,6 @@ members = [
   "compile_time_git_info",
   "config_lib",
   "enum_extension",
-  "error_occurence",
   "error_occurence_lib",
   "from_sqlx_postgres_error",
   "from_str",

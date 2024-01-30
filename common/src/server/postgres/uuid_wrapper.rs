@@ -39,7 +39,7 @@ impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for Vec<UuidWrapp
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum UuidWrapperTryFromPossibleUuidWrapperErrorNamed {
     NotUuid {
         #[eo_display]

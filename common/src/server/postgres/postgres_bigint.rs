@@ -50,7 +50,7 @@ impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for PostgresBigin
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresBigintFromStrErrorNamed {
     NotCorrectValue {
         #[eo_display_with_serialize_deserialize]

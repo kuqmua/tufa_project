@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginErrorNamed {
 //     Postgres {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -10,12 +10,12 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'a> {
 //     PostgresInsertLinkPartsIntoProvidersTablesOriginHandle(PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed),
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed {
 //     Postgres {
 //         #[eo_display]

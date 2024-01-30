@@ -1,3 +1,5 @@
+pub use error_occurence::ErrorOccurence;
+
 pub mod error_log;
 pub mod error_occurence_named;
 pub mod error_occurence_unnamed;

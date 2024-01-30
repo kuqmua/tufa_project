@@ -72,7 +72,6 @@ common = {path = "../common"}# local dev test without commits version
 #dev
 compile_time_git_info = {path = "../compile_time_git_info"}
 enum_extension = {path = "../enum_extension"}
-error_occurence = {path = "../error_occurence"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_for_struct_fields"}
 postgresql_crud = {path = "../postgresql_crud"}

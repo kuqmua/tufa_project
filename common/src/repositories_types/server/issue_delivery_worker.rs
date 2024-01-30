@@ -3,7 +3,7 @@ pub enum ExecutionOutcome {
     EmptyQueue,
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryExecuteTaskErrorNamed {
     DequeueTask {
         #[eo_error_occurence]
@@ -22,7 +22,7 @@ pub enum TryExecuteTaskErrorNamed {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum DequeueTaskErrorNamed {
     PostgresPoolBegin {
         #[eo_display]
@@ -36,7 +36,7 @@ pub enum DequeueTaskErrorNamed {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum DeleteTaskErrorNamed {
     PostgresDeleteTask {
         #[eo_display]
@@ -56,7 +56,7 @@ pub struct NewsletterIssue {
     pub html_content: std::string::String,
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum GetIssueErrorNamed {
     PostgresSelectNewsletterIssues {
         #[eo_display]

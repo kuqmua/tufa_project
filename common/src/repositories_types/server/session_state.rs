@@ -1,6 +1,6 @@
 // pub struct TypedSession(actix_session::Session);
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum InsertUserIdErrorNamed {
 //     SessionInsert {
 //         #[eo_display]

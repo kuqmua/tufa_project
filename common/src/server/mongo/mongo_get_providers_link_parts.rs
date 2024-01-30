@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum MongoGetProvidersLinkPartsErrorNamed {
 //     MongoDB {
 //         #[eo_display]
@@ -17,7 +17,7 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum MongoGetDocumentsAsStringVectorErrorUnnamed<'a> {
 //     MongoGetDocumentsAsStringVector(crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed),
 // }

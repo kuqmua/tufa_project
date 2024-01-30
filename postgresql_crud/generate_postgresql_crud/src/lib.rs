@@ -339,7 +339,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let debug_token_stream = quote::quote!{Debug};
     let thiserror_error_token_stream = quote::quote!{thiserror::Error};
-    let error_occurence_error_occurence_token_stream = quote::quote!{error_occurence::ErrorOccurence};
+    let error_occurence_error_occurence_token_stream = quote::quote!{error_occurence_lib::ErrorOccurence};
     let utoipa_to_schema_token_stream = quote::quote!{utoipa::ToSchema};
     let serde_serialize_token_stream = quote::quote!{serde::Serialize};
     let serde_deserialize_token_stream = quote::quote!{serde::Deserialize};

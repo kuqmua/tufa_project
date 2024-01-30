@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum RssPartErrorNamed {
 //     CheckLinkStatusCodeError {
 //         #[eo_display_foreign_type]

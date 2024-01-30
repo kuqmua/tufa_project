@@ -375,7 +375,7 @@
 //     }
 // }
 
-// #[derive(thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum InnerErrorNamed {
 //     Something {
 //         #[eo_display_with_serialize_deserialize]
@@ -387,13 +387,13 @@
 //     },
 // }
 
-// #[derive(thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum ErrorUnnamed {
 //     #[eo_error_occurence]
 //     Something(crate::common::error_logs_logic::test::InnerErrorNamed),
 // }
 
-// #[derive(thiserror::Error, error_occurence::ErrorOccurence)]
+// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum ErrorNamed {
 //     Something {
 //         #[eo_display]

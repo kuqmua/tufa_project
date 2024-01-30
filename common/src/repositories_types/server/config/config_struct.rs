@@ -196,7 +196,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ConfigCheckErrorNamed {
     ServerPort {
         #[eo_display_with_serialize_deserialize]
