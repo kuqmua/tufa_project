@@ -8438,12 +8438,19 @@ fn generate_swagger_open_api_token_stream(
     operation: &Operation,
 ) -> proc_macro2::TokenStream {
     let swagger_url_path_quotes_token_stream = proc_macro_helpers::naming_conventions::SwaggerUrlPathSelfQuotesTokenStream::swagger_url_path_self_quotes_token_stream(operation, table_name_stringified);
+    let content_type_snake_case_token_stream = quote::quote!{content_type};
+    let description_snake_case_token_stream = quote::quote!{description};
     let responses_token_stream = unique_status_codes.iter().map(|element|{
         let status_token_stream = element.to_status_code_token_stream();
         let description_token_stream = element.to_status_code_description_token_stream();
         let body_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, element);
         quote::quote!{
-            (status = #status_token_stream, description = #description_token_stream, body = #body_token_stream, content_type = #application_json_quotes_token_stream)
+            (
+                status = #status_token_stream, 
+                #description_snake_case_token_stream = #description_token_stream, 
+                body = #body_token_stream, 
+                #content_type_snake_case_token_stream = #application_json_quotes_token_stream
+            )
         }
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
@@ -8460,15 +8467,16 @@ fn generate_swagger_open_api_token_stream(
         quote::quote!{
             request_body(
                 content = #content_type_token_stream, 
-                description = #request_body_description_token_stream, 
-                content_type = #application_json_quotes_token_stream
+                #description_snake_case_token_stream = #request_body_description_token_stream, 
+                #content_type_snake_case_token_stream = #application_json_quotes_token_stream
             )
         }
     };
+    let path_snake_case_token_stream = proc_macro_helpers::naming_conventions::path_snake_case_token_stream();
     quote::quote!{
         #[utoipa::path(
             #method_snake_case_token_stream,
-            path = #swagger_url_path_quotes_token_stream,
+            #path_snake_case_token_stream = #swagger_url_path_quotes_token_stream,
             operation_id = #swagger_url_path_quotes_token_stream,
             tag = #table_name_quotes_token_stream,
             #request_body_token_stream,

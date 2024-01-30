@@ -114,6 +114,11 @@ pub fn path_upper_camel_case_stringified() -> std::string::String {
 pub fn path_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PATH)
 }
+pub fn path_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = path_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 const KEY: &str = "key";
 pub fn key_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&KEY)
