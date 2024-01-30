@@ -57,12 +57,14 @@ pub fn generate_with_serialize_deserialize_version(
                     panic!("{proc_macro_name_ident_stringified} expected fields would be named");
                 };
                 let variant_fields_vec = fields_named.named.iter().map(|field|{
-                    let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                        "{proc_macro_name_ident_stringified} field.ident {}",
-                        crate::naming_conventions::IS_NONE_STRINGIFIED
-                    ));
+                    let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                        panic!(
+                            "{proc_macro_name_ident_stringified} {}",
+                            crate::naming_conventions::FIELD_IDENT_IS_NONE
+                        )
+                    });
                     let code_occurence_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&code_occurence_upper_camel_case);
-                    let error_or_code_occurence = match field_ident == code_occurence_snake_case {
+                    let error_or_code_occurence = match *field_ident == *code_occurence_snake_case {
                         true => {
                             let (code_occurence_type_stringified, code_occurence_lifetime) = {
                                 if let syn::Type::Path(type_path) = &field.ty {
@@ -146,7 +148,7 @@ pub fn generate_with_serialize_deserialize_version(
                         },
                     };
                     (
-                        field_ident,
+                        field_ident.clone(),
                         error_or_code_occurence,
                     )
                 })

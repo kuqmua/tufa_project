@@ -17,10 +17,12 @@ pub fn check_for_none(
                 std::string::String::default(),
                 std::string::String::default()
             ), |mut acc, (index, field)| {
-                let field_ident = field.ident.clone()
-                    .unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
-                    });
+                let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                    )
+                });
                 let possible_dot_space = match (index + 1) == fields_named_handle_len {
                     true => "",
                     false => dot_space,

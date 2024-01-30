@@ -1920,10 +1920,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len - 1), |mut acc, element| {
-        let field_ident = element.ident.clone()
-            .unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.ident is None")
-            });
+        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+            panic!(
+                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+            )
+        });
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(&field_ident);
         let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(&field_ident);
         acc.push(crate::type_variants_from_request_response_generator::construct_syn_variant(
@@ -8182,7 +8184,7 @@ fn generate_self_fields_token_stream<'a>(
     fields: &std::vec::Vec<&'a syn::Field>,
     proc_macro_name_upper_camel_case_ident_stringified: &'a str,
 ) -> std::vec::Vec<&'a syn::Ident> {
-    fields.iter().map(|field|{//todo remove all option ident.clone with this pattern
+    fields.iter().map(|field|{
         field.ident.as_ref().unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",

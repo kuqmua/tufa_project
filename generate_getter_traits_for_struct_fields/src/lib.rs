@@ -16,10 +16,15 @@ pub fn generate_getter_traits_for_struct_fields(
     let ident = &ast.ident;
     let generated_traits_implementations = match ast.data {
         syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
-            let (field_ident, upper_camel_case_field_ident) = match field.ident {
-                None => panic!("field.ident is None"),
-                Some(field_ident) => (
-                    field_ident.clone(),
+            let (field_ident, upper_camel_case_field_ident) = {
+                let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{ident} {}",
+                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                    )
+                });
+                (
+                    field_ident,
                     syn::Ident::new(
                         &convert_case::Casing::to_case(
                             &format!("{field_ident}"),
@@ -27,7 +32,7 @@ pub fn generate_getter_traits_for_struct_fields(
                         ),
                         ident.span(),
                     ),
-                ),
+                )
             };
             let type_ident = field.ty;
             let path_trait_ident =

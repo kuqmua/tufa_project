@@ -54,8 +54,11 @@ fn generate_from_logic(
             match &variant.fields {
                 syn::Fields::Named(fields_named) => {
                     let fields_generated = fields_named.named.iter().map(|field|{
-                        field.ident.clone().unwrap_or_else(|| {
-                            panic!("{ident} {ident_response_variants_stringified} field ident is None")
+                        field.ident.as_ref().unwrap_or_else(|| {
+                            panic!(
+                                "{ident} {}",
+                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            )
                         })
                     });
                     let fields_generated_cloned = fields_generated.clone();
@@ -289,9 +292,12 @@ fn generate_from_logic(
 //                                 Vec::with_capacity(fields_named_named_len),
 //                             ),
 //                             |mut acc, field| {
-//                                 let field_ident = field.ident.clone().unwrap_or_else(|| {
-//                                     panic!("{ident} named field ident is None");
-//                                 });
+//                                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                                    //     panic!(
+                                    //         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                    //         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                                    //     )
+                                    // });
 //                                 acc.0.push(quote::quote! { #field_ident: _ });
 //                                 acc.1.push(field_ident);
 //                                 acc
@@ -455,7 +461,13 @@ fn generate_from_logic(
 //                     let variants = vec_variants.iter().map(|variant|{
 //                         let fields = if let syn::Fields::Named(fields_named) = &variant.fields {
 //                             fields_named.named.iter().map(|field| {
-//                                 let field_ident = &field.ident.clone().unwrap_or_else(|| panic!("{ident} field_ident is None {}",     proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+//                                 let field_ident = &field.ident
+                                    // .as_ref().unwrap_or_else(|| {
+                                    //     panic!(
+                                    //         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                    //         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                                    //     )
+                                    // });
 //                                 quote::quote! { #field_ident }
 //                             })
 //                         }
@@ -796,10 +808,13 @@ fn generate_from_logic(
 //             |variant| match &variant.fields {
 //                 syn::Fields::Named(fields_named) => {
 //                     let fields = fields_named.named.iter().map(|field|{
-//                         let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-//                         "{ident} field.ident {}",
-//                         proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-//                     ));
+//                         let field_ident = field.ident
+                            // .as_ref().unwrap_or_else(|| {
+                            //     panic!(
+                            //         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                            //         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            //     )
+                            // });
 //                         quote::quote! { #field_ident: _ }
 //                     });
 //                     let status_code_token_stream = proc_macro_helpers::status_code::get_only_one_status_code(

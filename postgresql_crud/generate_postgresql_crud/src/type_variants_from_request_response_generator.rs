@@ -44,11 +44,13 @@ pub fn type_variants_from_request_response_generator(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
             };
             let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                    proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                ));
-                let error_occurence_attribute = match field_ident == code_occurence_snake_case_stringified {
+                let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                    )
+                });
+                let error_occurence_attribute = match *field_ident == *code_occurence_snake_case_stringified {
                     true => quote::quote! {},
                     false => {
                         let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
@@ -108,11 +110,13 @@ pub fn type_variants_from_request_response_generator(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
             };
             let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                    proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                ));
-                let field_type_with_serialize_deserialize = match field_ident == code_occurence_snake_case_stringified {
+                let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                    )
+                });
+                let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
                     true => {
                         let code_occurence_type_token_stream = {
                             if let syn::Type::Path(type_path) = &field.ty {
@@ -213,10 +217,12 @@ pub fn type_variants_from_request_response_generator(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
             };
             let fields_name_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                    "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                    proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                ));
+                let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                    panic!(
+                        "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                    )
+                });
                 quote::quote! {#field_ident}
             }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
             quote::quote! {
@@ -249,10 +255,12 @@ pub fn type_variants_from_request_response_generator(
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                 };
                 let fields_anonymous_types_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                    let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                        "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                    ));
+                    let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                            proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        )
+                    });
                     quote::quote! {#field_ident: _}
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {
@@ -290,11 +298,13 @@ pub fn type_variants_from_request_response_generator(
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                     };
                     let error_variant_fields = fields_named.named.iter().map(|field|{
-                        let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                            "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                        ));
-                        let field_type_with_serialize_deserialize = match field_ident == code_occurence_snake_case_stringified {
+                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                            panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            )
+                        });
+                        let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
                             true => {
                                 let code_occurence_type_token_stream = {
                                     if let syn::Type::Path(type_path) = &field.ty {
@@ -484,11 +494,13 @@ pub fn type_variants_from_request_response_generator(
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                     };
                     let error_variant_fields = fields_named.named.iter().map(|field|{
-                        let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                            "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                        ));
-                        let field_type_with_serialize_deserialize = match field_ident == code_occurence_snake_case_stringified {
+                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                            panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            )
+                        });
+                        let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
                             true => {
                                 let code_occurence_type_token_stream = {
                                     if let syn::Type::Path(type_path) = &field.ty {
@@ -563,7 +575,7 @@ pub fn type_variants_from_request_response_generator(
                                 )
                             },
                         };
-                        (field_ident, field_type_with_serialize_deserialize)
+                        (field_ident.clone(), field_type_with_serialize_deserialize)
                     }).collect::<Vec<(syn::Ident, proc_macro2::TokenStream)>>();
                     let error_variant = (
                         variant_ident,
@@ -732,10 +744,12 @@ pub fn type_variants_from_request_response_generator(
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                     };
                     let fields_name_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                        let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                            "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                        ));
+                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                            panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            )
+                        });
                         quote::quote! {#field_ident}
                     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                     quote::quote! {
@@ -921,10 +935,12 @@ pub fn type_variants_from_request_response_generator(
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                 };
                 let fields_anonymous_types_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                    let field_ident = field.ident.clone().unwrap_or_else(|| panic!(
-                        "{proc_macro_name_upper_camel_case_ident_stringified} field.ident {}",
-                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
-                    ));
+                    let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                            proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        )
+                    });
                     quote::quote! {#field_ident: _}
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {
