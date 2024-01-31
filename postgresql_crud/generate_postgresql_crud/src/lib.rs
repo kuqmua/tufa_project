@@ -2491,6 +2491,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_payload_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
         let operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseStringified::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified(&operation);
+        let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+        let operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_token_stream(&operation);
         let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(&operation);
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
@@ -2999,17 +3001,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 pub async fn #operation_snake_case_token_stream(
                     #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
-                        #axum_json_token_stream<#operation_payload_upper_camel_case_token_stream>,//todo this must be #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream
+                        #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
                 ) -> #impl_axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
-                            #operation_payload_upper_camel_case_token_stream,//todo this must be #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream
+                            #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
                         >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
                         {
-                            Ok(value) => value,
+                            Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
+                                Ok(value) => value, 
+                                Err(e) => {
+                                    let error = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+                                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: e, 
+                                        #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
+                                    };
+                                    #error_log_call_token_stream
+                                    return #try_operation_response_variants_token_stream::from(error);
+                                }
+                            },
                             Err(err) => {
                                 return err;
                             }
@@ -3434,7 +3446,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 pub async fn #operation_snake_case_token_stream(
                     #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
-                        #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,//todo - this must be with_serialize_deserialize
+                        #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
                 ) -> #impl_axum_response_into_response_token_stream {
