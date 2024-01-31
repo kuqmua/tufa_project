@@ -2087,14 +2087,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let insert_name_stringified = proc_macro_helpers::naming_conventions::insert_snake_case_stringified();
     let into_name_stringified = proc_macro_helpers::naming_conventions::into_snake_case_stringified();
     let values_name_stringified = proc_macro_helpers::naming_conventions::values_snake_case_stringified();
-    let delete_name_stringified = "delete";
-    let where_name_stringified = "where";
+    let delete_name_stringified = proc_macro_helpers::naming_conventions::delete_snake_case_stringified();
+    let where_name_stringified = proc_macro_helpers::naming_conventions::where_snake_case_stringified();
     let where_name_qoutes_token_stream = {
         let where_name_qoutes_stringified = format!("\"{where_name_stringified}\"");
         where_name_qoutes_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {where_name_qoutes_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let and_name_stringified = "and";
+    let and_name_stringified = proc_macro_helpers::naming_conventions::and_snake_case_stringified();
     // let any_name_stringified = "any";
     // let array_name_stringified = "array";
     let select_name_stringified = "select";

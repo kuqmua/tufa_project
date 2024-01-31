@@ -534,8 +534,27 @@ const VALUES: &str = "values";
 pub fn values_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&VALUES)
 }
-
-
+const DELETE: &str = "delete";
+// pub fn delete_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DELETE)
+// }
+pub fn delete_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&DELETE)
+}
+const WHERE: &str = "where";
+// pub fn where_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&WHERE)
+// }
+pub fn where_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&WHERE)
+}
+const AND: &str = "and";
+// pub fn and_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&AND)
+// }
+pub fn and_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&AND)
+}
 
 
 
