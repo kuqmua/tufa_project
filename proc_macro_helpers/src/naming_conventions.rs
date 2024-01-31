@@ -419,6 +419,15 @@ pub fn offset_snake_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+const IN: &str = "in";
+pub fn in_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&IN)
+}
+const CLIENT: &str = "client";
+pub fn client_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CLIENT)
+}
+
 
 
 
