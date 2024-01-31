@@ -2080,7 +2080,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let underscore_vec_name_stringified = "_vec";
-    let update_name_stringified = "update";
+    let update_name_stringified = proc_macro_helpers::naming_conventions::update_snake_case_stringified();
     let as_name_stringified = "as";
     let set_name_stringified = "set";
     let from_name_stringified = "from";
