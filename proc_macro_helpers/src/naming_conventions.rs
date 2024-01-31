@@ -34,6 +34,13 @@ pub fn named_upper_camel_case_stringified() -> std::string::String {
 pub fn named_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&NAMED)
 }
+const UNNAMED: &str = "unnamed";
+pub fn unnamed_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UNNAMED)
+}
+pub fn unnamed_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UNNAMED)
+}
 const ERROR: &str = "error";
 pub fn error_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ERROR)
@@ -470,9 +477,6 @@ pub fn with_serialize_deserialize_snake_case_stringified() -> std::string::Strin
         serialize_snake_case_stringified(),
         deserialize_snake_case_stringified()
     )
-}
-pub fn unnamed_upper_camel_case_stringified() -> std::string::String {
-    format!("Un{}", named_snake_case_stringified())
 }
 pub fn error_occurence_upper_camel_case_stringified() -> std::string::String {
     format!(

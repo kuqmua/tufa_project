@@ -1874,7 +1874,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream = {
-        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = format!("{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified}ErrorUnnamed");
+        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = format!(
+            "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified}{}{}",
+            proc_macro_helpers::naming_conventions::error_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::unnamed_upper_camel_case_stringified()
+        );
         operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
