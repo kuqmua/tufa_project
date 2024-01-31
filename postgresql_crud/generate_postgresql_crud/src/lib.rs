@@ -2037,18 +2037,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_extract_rejection_json_rejection_token_stream = quote::quote!{axum::extract::rejection::JsonRejection};
     let try_extract_value_token_stream = quote::quote!{try_extract_value};
     let server_location_name_token_stream = quote::quote!{server_location};
-    let server_location_type_token_stream = quote::quote!{&str};
-    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};
-    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
-    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
     let dot_space = ", ";
     // let pg_temp_stringified = "pg_temp";
     let pg_connection_token_stream = quote::quote!{pg_connection};
-    let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let query_string_name_token_stream = quote::quote!{query_string};
     let binded_query_name_token_stream = quote::quote!{binded_query};
     let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
     let order_by_token_stream = quote::quote!{order_by};
+    let server_location_type_token_stream = quote::quote!{&str};
+    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};
+    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
+    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
+    let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let select_snake_case_token_stream = proc_macro_helpers::naming_conventions::select_snake_case_token_stream();
     let limit_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
     let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
@@ -2058,13 +2058,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_json_token_stream = quote::quote!{axum::Json};
     let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
     let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
-    let begin_token_stream = quote::quote!{begin};
+    let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
     let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
     let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
     let current_vec_len_name_token_stream = quote::quote!{current_vec_len};
-    let element_name_token_stream = quote::quote!{element};
-    let acc_name_token_stream = quote::quote!{acc};
-    let query_name_token_stream = quote::quote!{query};
+    let element_name_token_stream = proc_macro_helpers::naming_conventions::element_snake_case_token_stream();
+    let acc_name_token_stream = proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
+    let query_name_token_stream = proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
     let not_uuid_upper_camel_case_stringified = format!(
         "{}{}",
         proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),

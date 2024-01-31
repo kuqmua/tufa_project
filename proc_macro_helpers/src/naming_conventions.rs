@@ -93,6 +93,11 @@ pub fn element_upper_camel_case_stringified() -> std::string::String {
 pub fn element_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ELEMENT)
 }
+pub fn element_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = element_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 const TRY: &str = "try";
 pub fn try_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TRY)
@@ -458,6 +463,50 @@ pub fn commit_snake_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+const BEGIN: &str = "begin";
+// pub fn begin_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BEGIN)
+// }
+pub fn begin_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&BEGIN)
+}
+pub fn begin_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = begin_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+const ACC: &str = "acc";
+// pub fn acc_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ACC)
+// }
+pub fn acc_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ACC)
+}
+pub fn acc_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = acc_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+const QUERY: &str = "query";
+// pub fn query_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&QUERY)
+// }
+pub fn query_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&QUERY)
+}
+pub fn query_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = query_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+
+
+
+
+
+
+
+
 
 
 
