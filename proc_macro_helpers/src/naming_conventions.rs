@@ -427,7 +427,10 @@ const CLIENT: &str = "client";
 pub fn client_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CLIENT)
 }
-
+const SERVER: &str = "server";
+pub fn server_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SERVER)
+}
 
 
 
