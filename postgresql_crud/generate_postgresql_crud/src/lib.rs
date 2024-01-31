@@ -2050,14 +2050,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
     let order_by_token_stream = quote::quote!{order_by};
     let select_snake_case_token_stream = proc_macro_helpers::naming_conventions::select_snake_case_token_stream();
-    let limit_token_stream = quote::quote!{limit};
-    let offset_token_stream = quote::quote!{offset};
+    let limit_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
+    let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
     let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
     let axum_json_token_stream = quote::quote!{axum::Json};
     let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
-    let commit_token_stream = quote::quote!{commit};
+    let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
     let begin_token_stream = quote::quote!{begin};
     let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
     let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
@@ -2065,7 +2065,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let element_name_token_stream = quote::quote!{element};
     let acc_name_token_stream = quote::quote!{acc};
     let query_name_token_stream = quote::quote!{query};
-    let not_uuid_upper_camel_case_stringified = "NotUuid";
+    let not_uuid_upper_camel_case_stringified = format!(
+        "{}{}",
+        proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
+    );
     let not_uuid_token_upper_camel_case_stream = {
         not_uuid_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))

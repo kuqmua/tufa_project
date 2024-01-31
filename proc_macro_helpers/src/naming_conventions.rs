@@ -446,6 +446,21 @@ const FIELDS: &str = "fields";
 pub fn fields_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&FIELDS)
 }
+const COMMIT: &str = "commit";
+// pub fn commit_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&COMMIT)
+// }
+pub fn commit_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&COMMIT)
+}
+pub fn commit_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = commit_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+
+
+
 
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
