@@ -1978,11 +1978,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let no_payload_fields_syn_variant = {
-        let variant_name_upper_camel_case_stringified = "NoPayloadFields";
+        let variant_name_upper_camel_case_stringified = format!(
+            "{}{}{}",
+            proc_macro_helpers::naming_conventions::no_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::payload_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::fields_upper_camel_case_stringified()
+        );
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
@@ -1994,11 +1999,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let no_payload_parameters_syn_variant = {
-        let variant_name_upper_camel_case_stringified = "NoPayloadParameters";
+        let variant_name_upper_camel_case_stringified = format!(
+            "{}{}{}",
+            proc_macro_helpers::naming_conventions::no_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::payload_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::parameters_upper_camel_case_stringified()
+        );
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (

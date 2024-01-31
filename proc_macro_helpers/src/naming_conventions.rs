@@ -438,9 +438,14 @@ const SERVER: &str = "server";
 pub fn server_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SERVER)
 }
-
-
-
+const NO: &str = "no";
+pub fn no_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&NO)
+}
+const FIELDS: &str = "fields";
+pub fn fields_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&FIELDS)
+}
 
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
