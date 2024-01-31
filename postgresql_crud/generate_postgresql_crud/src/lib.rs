@@ -2081,12 +2081,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let underscore_vec_name_stringified = "_vec";
     let update_name_stringified = proc_macro_helpers::naming_conventions::update_snake_case_stringified();
-    let as_name_stringified = "as";
-    let set_name_stringified = "set";
-    let from_name_stringified = "from";
-    let insert_name_stringified = "insert";
-    let into_name_stringified = "into";
-    let values_name_stringified = "values";
+    let as_name_stringified = proc_macro_helpers::naming_conventions::as_snake_case_stringified();
+    let set_name_stringified = proc_macro_helpers::naming_conventions::set_snake_case_stringified();
+    let from_name_stringified = proc_macro_helpers::naming_conventions::from_snake_case_stringified();
+    let insert_name_stringified = proc_macro_helpers::naming_conventions::insert_snake_case_stringified();
+    let into_name_stringified = proc_macro_helpers::naming_conventions::into_snake_case_stringified();
+    let values_name_stringified = proc_macro_helpers::naming_conventions::values_snake_case_stringified();
     let delete_name_stringified = "delete";
     let where_name_stringified = "where";
     let where_name_qoutes_token_stream = {

@@ -506,9 +506,34 @@ const UPDATE: &str = "update";
 pub fn update_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UPDATE)
 }
-
-
-
+const AS: &str = "as";
+// pub fn as_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&AS)
+// }
+pub fn as_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&AS)
+}
+const SET: &str = "set";
+// pub fn set_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SET)
+// }
+pub fn set_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&SET)
+}
+const INSERT: &str = "insert";
+// pub fn insert_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&INSERT)
+// }
+pub fn insert_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&INSERT)
+}
+const VALUES: &str = "values";
+// pub fn values_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&VALUES)
+// }
+pub fn values_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&VALUES)
+}
 
 
 
