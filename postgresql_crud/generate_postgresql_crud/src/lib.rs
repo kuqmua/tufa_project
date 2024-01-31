@@ -2089,20 +2089,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let values_name_stringified = proc_macro_helpers::naming_conventions::values_snake_case_stringified();
     let delete_name_stringified = proc_macro_helpers::naming_conventions::delete_snake_case_stringified();
     let where_name_stringified = proc_macro_helpers::naming_conventions::where_snake_case_stringified();
-    let where_name_qoutes_token_stream = {
-        let where_name_qoutes_stringified = format!("\"{where_name_stringified}\"");
-        where_name_qoutes_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {where_name_qoutes_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let where_name_qoutes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        &where_name_stringified,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
     let and_name_stringified = proc_macro_helpers::naming_conventions::and_snake_case_stringified();
     // let any_name_stringified = "any";
     // let array_name_stringified = "array";
-    let select_name_stringified = "select";
+    let select_name_stringified = proc_macro_helpers::naming_conventions::select_snake_case_stringified();
     let order_by_name_stringified = "order by";
-    let limit_name_stringified = "limit";
-    let offset_name_stringified = "offset";
-    let in_name_stringified = "in";
-    let unnest_name_stringified = "unnest";
+    let limit_name_stringified = proc_macro_helpers::naming_conventions::limit_snake_case_stringified();
+    let offset_name_stringified = proc_macro_helpers::naming_conventions::offset_snake_case_stringified();
+    let in_name_stringified = proc_macro_helpers::naming_conventions::in_snake_case_stringified();
+    let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
     let common_error_syn_variants = {
         let postgres_error_syn_variants = {
             let configuration_error_syn_variant = {

@@ -435,6 +435,9 @@ const IN: &str = "in";
 pub fn in_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&IN)
 }
+pub fn in_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&IN)
+}
 const CLIENT: &str = "client";
 pub fn client_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CLIENT)
@@ -554,6 +557,13 @@ const AND: &str = "and";
 // }
 pub fn and_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&AND)
+}
+const UNNEST: &str = "unnest";
+// pub fn unnest_upper_camel_case_stringified() -> std::string::String {
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UNNEST)
+// }
+pub fn unnest_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UNNEST)
 }
 
 
