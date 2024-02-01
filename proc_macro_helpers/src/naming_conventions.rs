@@ -661,6 +661,18 @@ const REJECTION: &str = "rejection";
 pub fn rejection_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&REJECTION)
 }
+const UNEXPECTED: &str = "unexpected";
+pub fn unexpected_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UNEXPECTED)
+}
+const CASE: &str = "case";
+pub fn case_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CASE)
+}
+
+
+
+
 
 
 
@@ -886,7 +898,13 @@ pub fn bytes_rejection_upper_camel_case_stringified() -> std::string::String {
         rejection_upper_camel_case_stringified()
     )
 }
-
+pub fn unexpected_case_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        unexpected_upper_camel_case_stringified(), 
+        case_upper_camel_case_stringified()
+    )
+}
 
 
 

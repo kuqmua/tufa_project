@@ -2035,6 +2035,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let impl_axum_response_into_response_token_stream = quote::quote!{impl axum::response::IntoResponse};
     let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote!{crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
     let axum_extract_rejection_json_rejection_token_stream = quote::quote!{axum::extract::rejection::JsonRejection};
+    let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
+    let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
+    let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
+    let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
+    let axum_json_token_stream = quote::quote!{axum::Json};
+    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};
+    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
+    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
+    let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
+    let server_location_type_token_stream = quote::quote!{&str};
     let try_extract_value_token_stream = quote::quote!{try_extract_value};
     let server_location_name_token_stream = quote::quote!{server_location};
     let dot_space = ", ";
@@ -2044,24 +2054,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let binded_query_name_token_stream = quote::quote!{binded_query};
     let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
     let order_by_token_stream = quote::quote!{order_by};
-    let server_location_type_token_stream = quote::quote!{&str};
-    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};
-    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
-    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
+    let current_vec_len_name_token_stream = quote::quote!{current_vec_len};
     let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let select_snake_case_token_stream = proc_macro_helpers::naming_conventions::select_snake_case_token_stream();
     let limit_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
     let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
-    let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
-    let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
-    let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
-    let axum_json_token_stream = quote::quote!{axum::Json};
     let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
     let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
     let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
-    let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
-    let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
-    let current_vec_len_name_token_stream = quote::quote!{current_vec_len};
     let element_name_token_stream = proc_macro_helpers::naming_conventions::element_snake_case_token_stream();
     let acc_name_token_stream = proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
     let query_name_token_stream = proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
@@ -2467,11 +2467,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             common_error_variants_vec.push(element);
         }
         let unexpected_case_syn_variant = {
-            let variant_name_upper_camel_case_stringified = "UnexpectedCase";
+            let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::unexpected_case_upper_camel_case_stringified();
             let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
             crate::type_variants_from_request_response_generator::construct_syn_variant(
                 proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                variant_name_upper_camel_case_stringified,
+                &variant_name_upper_camel_case_stringified,
                 &code_occurence_field,
                 vec![
                     (
