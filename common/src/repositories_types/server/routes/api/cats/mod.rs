@@ -1,15 +1,9 @@
 //todo openapi
 //todo test if create\update\delete empty array
-pub trait GetConfigGetPostgresPool:
-    config_lib::config_fields::GetEnableApiGitCommitCheck
-    + app_state::get_postgres_pool::GetPostgresPool
-    + config_lib::config_fields::GetSourcePlaceType
-    + config_lib::config_fields::GetTimezone
-{
-}
+
 
 pub type DynArcGetConfigGetPostgresPoolSendSync = std::sync::Arc<
-    dyn crate::repositories_types::server::routes::api::cats::GetConfigGetPostgresPool
+    dyn postgresql_crud::dyn_arc_get_config_get_postgres_pool_send_sync::GetConfigGetPostgresPool
         + Send
         + Sync,
 >;

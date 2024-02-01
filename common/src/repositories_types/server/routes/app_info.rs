@@ -4,7 +4,7 @@ pub struct AppInfo<'a> {
     pub project_git_info: &'a crate::common::git::project_git_info::ProjectGitInfo<'a>,
 }
 
-impl<'a> crate::repositories_types::server::routes::api::cats::GetConfigGetPostgresPool
+impl<'a> postgresql_crud::dyn_arc_get_config_get_postgres_pool_send_sync::GetConfigGetPostgresPool
     for AppInfo<'a>
 {
 }
