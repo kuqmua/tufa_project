@@ -24,8 +24,11 @@ impl PostgresqlOrder for std::primitive::i8 {}//CHAR
 impl PostgresqlOrder for std::primitive::str {}//VARCHAR,CHAR(N),TEXT,NAME,CITEXT
 impl PostgresqlOrder for std::string::String {}//VARCHAR,CHAR(N),TEXT,NAME,CITEXT
 impl PostgresqlOrder for chrono::NaiveDate {}//DATE
+impl PostgresqlOrder for sqlx::types::time::Date {}//DATE
 impl PostgresqlOrder for chrono::NaiveTime {}//TIME
+impl PostgresqlOrder for sqlx::types::time::Time {}//TIME
 impl PostgresqlOrder for chrono::NaiveDateTime {}//TIMESTAMP
+impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {}//TIMESTAMP
 impl PostgresqlOrder for sqlx::postgres::types::PgInterval {}//INTERVAL
 ////////
 
