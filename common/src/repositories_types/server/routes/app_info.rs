@@ -9,11 +9,6 @@ impl<'a> crate::repositories_types::server::routes::api::cats::GetConfigGetPostg
 {
 }
 
-impl<'a> crate::repositories_types::server::config::config_struct::GetConfig for AppInfo<'a> {
-    fn get_config(&self) -> &crate::repositories_types::server::config::config_struct::Config {
-        self.config
-    }
-}
 impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppInfo<'a> {
     fn get_enable_api_git_commit_check(&self) -> &bool {
         self.config.get_enable_api_git_commit_check()
@@ -21,14 +16,12 @@ impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppInfo<'a> {
 }
 impl<'a> config_lib::config_fields::GetSourcePlaceType for AppInfo<'a> {
     fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType {
-        crate::repositories_types::server::config::config_struct::GetConfig::get_config(self)
-            .get_source_place_type()
+        self.config.get_source_place_type()
     }
 }
 impl<'a> config_lib::config_fields::GetTimezone for AppInfo<'a> {
     fn get_timezone(&self) -> &chrono::FixedOffset {
-        crate::repositories_types::server::config::config_struct::GetConfig::get_config(self)
-            .get_timezone()
+        self.config.get_timezone()
     }
 }
 

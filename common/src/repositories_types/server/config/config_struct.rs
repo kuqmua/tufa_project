@@ -270,7 +270,3 @@ pub enum ConfigCheckErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-
-pub trait GetConfig {
-    fn get_config(&self) -> &Config;
-}
