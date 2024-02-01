@@ -653,9 +653,14 @@ const CONTENT: &str = "content";
 pub fn content_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CONTENT)
 }
-
-
-
+const BYTES: &str = "bytes";
+pub fn bytes_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BYTES)
+}
+const REJECTION: &str = "rejection";
+pub fn rejection_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&REJECTION)
+}
 
 
 
@@ -874,6 +879,21 @@ pub fn missing_json_content_type_upper_camel_case_stringified() -> std::string::
         type_upper_camel_case_stringified()
     )
 }
+pub fn bytes_rejection_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        bytes_upper_camel_case_stringified(), 
+        rejection_upper_camel_case_stringified()
+    )
+}
+
+
+
+
+
+
+
+
 
 
 
