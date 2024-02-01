@@ -16,7 +16,9 @@ pub trait PostgresqlFilter{}
 // impl PostgresqlFilter for sqlx::types:: {}
 
 pub trait PostgresqlOrder{}
+impl PostgresqlOrder for std::primitive::bool {}//BOOL
 impl PostgresqlOrder for std::primitive::i32 {}//INT,SERIAL,INT4
+impl PostgresqlOrder for std::primitive::i64 {}//BIGINT,BIGSERIAL,INT8
 impl PostgresqlOrder for sqlx::types::BigDecimal {}//NUMERIC
 impl PostgresqlOrder for std::primitive::f32 {}//REAL,FLOAT4
 impl PostgresqlOrder for std::primitive::f64 {}//DOUBLE PRECISION,FLOAT8
@@ -30,6 +32,11 @@ impl PostgresqlOrder for sqlx::types::time::Time {}//TIME
 impl PostgresqlOrder for chrono::NaiveDateTime {}//TIMESTAMP
 impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {}//TIMESTAMP
 impl PostgresqlOrder for sqlx::postgres::types::PgInterval {}//INTERVAL
+impl PostgresqlOrder for sqlx::types::BitVec {}//BIT,VARBIT
+//
+
+//
+//todo arrays and json
 ////////
 
 
