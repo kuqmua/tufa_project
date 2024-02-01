@@ -609,11 +609,30 @@ const DECODE: &str = "decode";
 pub fn decode_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DECODE)
 }
-
-
-
-
-
+const POOL: &str = "pool";
+pub fn pool_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&POOL)
+}
+const TIMED: &str = "timed";
+pub fn timed_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TIMED)
+}
+const CLOSED: &str = "closed";
+pub fn closed_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CLOSED)
+}
+const WORKER: &str = "worker";
+pub fn worker_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&WORKER)
+}
+const CRASHED: &str = "crashed";
+pub fn crashed_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CRASHED)
+}
+const MIGRATE: &str = "migrate";
+pub fn migrate_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&MIGRATE)
+}
 
 
 
@@ -785,9 +804,28 @@ pub fn column_decode_upper_camel_case_stringified() -> std::string::String {
         decode_upper_camel_case_stringified(),
     )
 }
-
-
-
+pub fn pool_timed_out_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}", 
+        pool_upper_camel_case_stringified(), 
+        timed_upper_camel_case_stringified(),
+        out_upper_camel_case_stringified(),
+    )
+}
+pub fn pool_closed_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        pool_upper_camel_case_stringified(), 
+        closed_upper_camel_case_stringified(),
+    )
+}
+pub fn worker_crashed_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        worker_upper_camel_case_stringified(), 
+        crashed_upper_camel_case_stringified(),
+    )
+}
 
 
 
