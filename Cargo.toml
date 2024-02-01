@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
-members = [
+members = [ 
+  "app_state",
   "common",
   "compile_time_git_info",
   "config_lib",

@@ -11,6 +11,7 @@ sqlx = {version = "=0.7.1", features = ["postgres", "uuid", "bigdecimal", "time"
 chrono = {version = "=0.4"}
 axum = {version = "=0.7.2", features = ["macros"]}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
+app_state = {path = "../app_state"}
 
 [lints]
 workspace = true
