@@ -633,6 +633,29 @@ const MIGRATE: &str = "migrate";
 pub fn migrate_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&MIGRATE)
 }
+const JSON: &str = "json";
+pub fn json_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&JSON)
+}
+const DATA: &str = "data";
+pub fn data_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DATA)
+}
+const SYNTAX: &str = "syntax";
+pub fn syntax_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SYNTAX)
+}
+const MISSING: &str = "missing";
+pub fn missing_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&MISSING)
+}
+const CONTENT: &str = "content";
+pub fn content_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CONTENT)
+}
+
+
+
 
 
 
@@ -826,8 +849,31 @@ pub fn worker_crashed_upper_camel_case_stringified() -> std::string::String {
         crashed_upper_camel_case_stringified(),
     )
 }
-
-
+pub fn json_data_error_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}", 
+        json_upper_camel_case_stringified(), 
+        data_upper_camel_case_stringified(),
+        error_upper_camel_case_stringified()
+    )
+}
+pub fn json_syntax_error_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}", 
+        json_upper_camel_case_stringified(), 
+        syntax_upper_camel_case_stringified(),
+        error_upper_camel_case_stringified()
+    )
+}
+pub fn missing_json_content_type_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}{}", 
+        missing_upper_camel_case_stringified(), 
+        json_upper_camel_case_stringified(),
+        content_upper_camel_case_stringified(),
+        type_upper_camel_case_stringified()
+    )
+}
 
 
 

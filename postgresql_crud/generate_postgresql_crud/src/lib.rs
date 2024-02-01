@@ -2383,11 +2383,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let json_body_error_syn_variants = {
             let json_data_error_syn_variant = {
-                let variant_name_upper_camel_case_stringified = "JsonDataError";
+                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::json_data_error_upper_camel_case_stringified();
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    variant_name_upper_camel_case_stringified,
+                    &variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2402,11 +2402,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             };
             let json_syntax_error_syn_variant = {
-                let variant_name_upper_camel_case_stringified = "JsonSyntaxError";
+                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::json_syntax_error_upper_camel_case_stringified();
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    variant_name_upper_camel_case_stringified,
+                    &variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
@@ -2421,11 +2421,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             };
             let missing_json_content_type_syn_variant = {
-                let variant_name_upper_camel_case_stringified = "MissingJsonContentType";
+                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::missing_json_content_type_upper_camel_case_stringified();
                 let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
                 crate::type_variants_from_request_response_generator::construct_syn_variant(
                     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    variant_name_upper_camel_case_stringified,
+                    &variant_name_upper_camel_case_stringified,
                     &code_occurence_field,
                     vec![
                         (
