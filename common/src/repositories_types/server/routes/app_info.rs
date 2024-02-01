@@ -14,6 +14,11 @@ impl<'a> crate::repositories_types::server::config::config_struct::GetConfig for
         self.config
     }
 }
+impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppInfo<'a> {
+    fn get_enable_api_git_commit_check(&self) -> &bool {
+        self.config.get_enable_api_git_commit_check()
+    }
+}
 impl<'a> config_lib::config_fields::GetSourcePlaceType for AppInfo<'a> {
     fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType {
         crate::repositories_types::server::config::config_struct::GetConfig::get_config(self)

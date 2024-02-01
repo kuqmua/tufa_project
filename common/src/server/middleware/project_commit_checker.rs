@@ -3,7 +3,7 @@ pub async fn project_commit_checker(//todo maybe check not wrapper repo commit i
     req: axum::http::Request<axum::body::Body>,
     next: axum::middleware::Next,
 ) -> Result<axum::response::Response, axum::response::Response> {
-    match config_lib::config_fields::GetEnableApiGitCommitCheck::get_enable_api_git_commit_check(app_info.get_config())  {
+    match app_info.get_enable_api_git_commit_check() {
         true => match req
             .headers()
             .get(crate::common::git::project_git_info::PROJECT_COMMIT)
