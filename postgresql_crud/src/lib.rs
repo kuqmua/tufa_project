@@ -17,7 +17,11 @@ impl PostgresqlFilter for sqlx::types:: {}
 
 pub trait PostgresqlOrder{}
 
+impl PostresqlOrder for sqlx::types:: {}
+
 pub trait PostgresqlLimit{}
+
+impl trait PostgresqlLimit for sqlx::types:: {}
 
 pub trait PostgersqlColumn<'a>:
     std::fmt::Debug
