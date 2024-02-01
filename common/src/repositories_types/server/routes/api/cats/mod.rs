@@ -2,7 +2,7 @@
 //todo test if create\update\delete empty array
 pub trait GetConfigGetPostgresPool:
     crate::repositories_types::server::config::config_struct::GetConfig
-    + crate::server::routes::helpers::get_postgres_pool::GetPostgresPool
+    + app_state::get_postgres_pool::GetPostgresPool
     + config_lib::config_fields::GetSourcePlaceType
     + config_lib::config_fields::GetTimezone
 {

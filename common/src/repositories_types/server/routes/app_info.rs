@@ -30,7 +30,7 @@ impl<'a> config_lib::config_fields::GetTimezone for AppInfo<'a> {
 impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppInfo<'a> {}
 impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppInfo<'a> {}
 
-impl<'a> crate::server::routes::helpers::get_postgres_pool::GetPostgresPool for AppInfo<'a> {
+impl<'a> app_state::get_postgres_pool::GetPostgresPool for AppInfo<'a> {
     fn get_postgres_pool(&self) -> &sqlx::PgPool {
         &self.postgres_pool
     }
