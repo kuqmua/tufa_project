@@ -13,6 +13,8 @@ pub trait IntoSerdeSerializeDeserialize{}
 
 pub trait PostgresqlFilter{}
 
+impl PostgresqlFilter for sqlx::types:: {}
+
 pub trait PostgresqlOrder{}
 
 pub trait PostgresqlLimit{}
