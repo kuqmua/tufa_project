@@ -16,6 +16,10 @@ pub trait PostgresqlFilter{}
 // impl PostgresqlFilter for sqlx::types:: {}
 
 pub trait PostgresqlOrder{}
+impl PostgresqlOrder for i32 {}//integer
+impl PostgresqlOrder for sqlx::types::BigDecimal {}//numeric
+////////
+
 
 // impl PostresqlOrder for sqlx::types:: {}
 
