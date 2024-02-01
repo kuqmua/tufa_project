@@ -565,6 +565,55 @@ const UNNEST: &str = "unnest";
 pub fn unnest_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UNNEST)
 }
+const CONFIGURATION: &str = "configuration";
+pub fn configuration_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CONFIGURATION)
+}
+const DATABASE: &str = "database";
+pub fn database_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DATABASE)
+}
+const IO: &str = "io";
+pub fn io_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&IO)
+}
+const TLS: &str = "tls";
+pub fn tls_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TLS)
+}
+const PROTOCOL: &str = "protocol";
+pub fn protocol_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PROTOCOL)
+}
+const ROW: &str = "row";
+pub fn row_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ROW)
+}
+const INDEX: &str = "index";
+pub fn index_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&INDEX)
+}
+const OUT: &str = "out";
+pub fn out_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OUT)
+}
+const OF: &str = "of";
+pub fn of_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OF)
+}
+const BOUNDS: &str = "bounds";
+pub fn bounds_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BOUNDS)
+}
+const DECODE: &str = "decode";
+pub fn decode_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DECODE)
+}
+
+
+
+
+
 
 
 
@@ -703,6 +752,43 @@ pub fn request_error_upper_camel_case_stringified() -> std::string::String {
         error_upper_camel_case_stringified()
     )
 }
+pub fn row_not_found_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}", 
+        row_upper_camel_case_stringified(), 
+        not_upper_camel_case_stringified(),
+        found_upper_camel_case_stringified(),
+    )
+}
+pub fn type_not_found_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}", 
+        type_upper_camel_case_stringified(), 
+        not_upper_camel_case_stringified(),
+        found_upper_camel_case_stringified(),
+    )
+}
+pub fn column_index_out_of_bounds_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}{}{}", 
+        column_upper_camel_case_stringified(), 
+        index_upper_camel_case_stringified(),
+        out_upper_camel_case_stringified(),
+        of_upper_camel_case_stringified(),
+        bounds_upper_camel_case_stringified(),
+    )
+}
+pub fn column_decode_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        column_upper_camel_case_stringified(), 
+        decode_upper_camel_case_stringified(),
+    )
+}
+
+
+
+
 
 
 
