@@ -16,8 +16,13 @@ pub trait PostgresqlFilter{}
 // impl PostgresqlFilter for sqlx::types:: {}
 
 pub trait PostgresqlOrder{}
-impl PostgresqlOrder for i32 {}//integer
-impl PostgresqlOrder for sqlx::types::BigDecimal {}//numeric
+impl PostgresqlOrder for std::primitive::i32 {}//INT,SERIAL,INT4
+impl PostgresqlOrder for sqlx::types::BigDecimal {}//NUMERIC
+impl PostgresqlOrder for std::primitive::f32 {}//REAL,FLOAT4
+impl PostgresqlOrder for std::primitive::f64 {}//DOUBLE PRECISION,FLOAT8
+impl PostgresqlOrder for std::primitive::i8 {}//CHAR
+impl PostgresqlOrder for std::primitive::str {}//VARCHAR,CHAR(N),TEXT,NAME,CITEXT
+impl PostgresqlOrder for std::string::String {}//VARCHAR,CHAR(N),TEXT,NAME,CITEXT
 ////////
 
 
@@ -26,6 +31,8 @@ impl PostgresqlOrder for sqlx::types::BigDecimal {}//numeric
 pub trait PostgresqlLimit{}
 
 // impl trait PostgresqlLimit for sqlx::types:: {}
+
+//todo swagger type\schema
 
 pub trait PostgersqlColumn<'a>:
     std::fmt::Debug
