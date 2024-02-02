@@ -3,7 +3,7 @@ pub struct CodeOccurence {
     file: std::string::String,
     line: u32,
     column: u32,
-    git_info: std::string::String,
+    commit: std::string::String,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
 }
@@ -11,7 +11,7 @@ pub struct CodeOccurence {
 impl CodeOccurence {
     #[must_use]
     pub fn new(
-        git_info: std::string::String,
+        commit: std::string::String,
         file: std::string::String,
         line: u32,
         column: u32,
@@ -20,7 +20,7 @@ impl CodeOccurence {
             file,
             line,
             column,
-            git_info,
+            commit,
             duration: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .expect("cannot convert time to unix_epoch"),
@@ -66,7 +66,7 @@ impl<'a> crate::get_git_source_file_link::GetGitSourceFileLink<'a> for CodeOccur
     fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
         format!(
             "https://github.com/kuqmua/tufa_project/blob/{}/{}/{file}#L{line}",
-            self.git_info,
+            self.commit,
             "common"
         )
     }
