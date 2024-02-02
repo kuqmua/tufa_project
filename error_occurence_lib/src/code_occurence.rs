@@ -11,7 +11,7 @@ pub struct CodeOccurence {
 impl CodeOccurence {
     #[must_use]
     pub fn new(
-        git_info: std::string::String,//crate::git_info::GitInfoWithoutLifetime
+        git_info: std::string::String,
         file: std::string::String,
         line: u32,
         column: u32,
@@ -64,6 +64,10 @@ impl std::fmt::Display for CodeOccurence {
 
 impl<'a> crate::get_git_source_file_link::GetGitSourceFileLink<'a> for CodeOccurence {
     fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
-        format!("todo")
+        format!(
+            "https://github.com/kuqmua/tufa_project/blob/{}/{}/{file}#L{line}",
+            self.git_info,
+            "common"
+        )
     }
 }

@@ -15,14 +15,7 @@ impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for ProjectGi
     fn get_git_commit_link(&self) -> std::string::String {
         format!(
             "https://github.com/kuqmua/tufa_project/tree/{}", //todo get git_name from .git directory
-            self.commit
+            self.commit,
         )
-    }
-}
-
-//todo remove it 
-impl<'a> error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a> for ProjectGitInfo<'a> {
-    fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
-        format!("todo")
     }
 }
