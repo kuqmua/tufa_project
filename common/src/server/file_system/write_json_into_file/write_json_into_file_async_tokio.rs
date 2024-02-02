@@ -21,7 +21,7 @@ pub async fn write_json_into_file_async_tokio(
             Err(Box::new(
                 WriteJsonIntoFileAsyncTokioErrorNamed::SerdeJson {
                     serde_json_error: e, 
-                    code_occurence: crate::code_occurence_common!() 
+                    code_occurence: crate::code_occurence!() 
                 },
             ))
         }
@@ -35,7 +35,7 @@ pub async fn write_json_into_file_async_tokio(
                     Err(Box::new(
                         WriteJsonIntoFileAsyncTokioErrorNamed::WriteBytesIntoFile {
                             write_bytes_into_file: *e, 
-                            code_occurence: crate::code_occurence_common!() 
+                            code_occurence: crate::code_occurence!() 
                         },
                     ))
                 },

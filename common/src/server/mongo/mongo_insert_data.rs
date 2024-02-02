@@ -59,7 +59,7 @@
 //         return Err(Box::new(
 //             crate::server::mongo::mongo_insert_data::MongoInsertDataErrorNamed::Errors {
 //                 errors_hashmap: error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

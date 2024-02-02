@@ -26,7 +26,7 @@ pub async fn mongo_insert_docs_in_empty_collection<'a>(
         Err(e) => Err(Box::new(
             MongoInsertDocsInEmptyCollectionErrorNamed::MongoDB {
                 mongodb: e,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
         )),
         Ok(documents_number) => {
@@ -34,7 +34,7 @@ pub async fn mongo_insert_docs_in_empty_collection<'a>(
                 Err(Box::new(
                     MongoInsertDocsInEmptyCollectionErrorNamed::CollectionIsNotEmpty {
                         collection_is_not_empty: documents_number,
-                        code_occurence: crate::code_occurence_common!(),
+                        code_occurence: crate::code_occurence!(),
                     },
                 ))
             } else {
@@ -51,7 +51,7 @@ pub async fn mongo_insert_docs_in_empty_collection<'a>(
                     return Err(Box::new(
                         MongoInsertDocsInEmptyCollectionErrorNamed::MongoDB {
                             mongodb: e,
-                            code_occurence: crate::code_occurence_common!(),
+                            code_occurence: crate::code_occurence!(),
                         },
                     ));
                 }

@@ -32,7 +32,7 @@
 //         return Err(Box::new(
 //             crate::server::postgres::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesErrorNamed::DeleteTables {
 //                 error_hashmap: delete_from_tables_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

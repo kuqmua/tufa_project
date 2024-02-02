@@ -55,20 +55,20 @@ impl std::convert::From<axum::extract::rejection::JsonRejection> for JsonExtract
             axum::extract::rejection::JsonRejection::JsonSyntaxError(json_syntax_error) => JsonExtractorErrorNamed::serde_json_error_response(json_syntax_error),
             axum::extract::rejection::JsonRejection::MissingJsonContentType(_) => Self::MissingJsonContentType {
                 missing_json_content_type: crate::server::routes::helpers::hardcode::MISSING_CONTENT_TYPE_APPLICATION_JSON_HEADER.to_string(),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             axum::extract::rejection::JsonRejection::BytesRejection(_) => {
                 Self::BytesRejection {
                     bytes_rejection:
                         crate::server::routes::helpers::hardcode::FAILED_TO_BUFFER_REQUEST_BODY
                             .to_string(),
-                    code_occurence: crate::code_occurence_common!(),
+                    code_occurence: crate::code_occurence!(),
                 }
             }
             _ => Self::UnexpectedCase {
                 unexpected_case: crate::server::routes::helpers::hardcode::UNKNOWN_ERROR
                     .to_string(),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
         }
     }
@@ -88,13 +88,13 @@ impl JsonExtractorErrorNamed {
         {
             JsonExtractorErrorNamed::JsonDataError {
                 json_data_error: format!("{err}: {}", find_error_source_err.inner()),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             }
         } else {
             JsonExtractorErrorNamed::UnexpectedCase {
                 unexpected_case: crate::server::routes::helpers::hardcode::UNKNOWN_ERROR
                     .to_string(),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             }
         }
     }

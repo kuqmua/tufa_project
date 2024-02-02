@@ -49,7 +49,7 @@
 //         return Err(Box::new(
 //             crate::server::postgres::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyErrorNamed::SelectCountOrigin {
 //                 hashmap_provider_kind_sqlx_error: count_provider_links_tables_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }
@@ -57,7 +57,7 @@
 //         return Err(Box::new(
 //             crate::server::postgres::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyErrorNamed::NotEmptyOrigin {
 //                 hashmap_provider_kind_len: provider_links_tables_not_empty_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

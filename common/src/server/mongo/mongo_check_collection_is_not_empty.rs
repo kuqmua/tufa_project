@@ -53,7 +53,7 @@
 //                 crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorUnnamed::CountDocumentsOrigin(
 //                     crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorCountDocumentsErrorNamed::CountDocuments {
 //                         error: e,
-//                         code_occurence: crate::code_occurence_common!(),
+//                         code_occurence: crate::code_occurence!(),
 //                     }
 //                 ),
 //             )),
@@ -64,7 +64,7 @@
 //                         crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorUnnamed::IsNotEmptyOrigin(
 //                             crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorIsNotEmptyOriginErrorNamed::IsNotEmptyOrigin {
 //                                 error: documents_number,
-//                                 code_occurence: crate::code_occurence_common!()
+//                                 code_occurence: crate::code_occurence!()
 //                             }
 //                         )
 //                     ));
@@ -77,7 +77,7 @@
 //         return Err(Box::new(
 //             crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorNamed::Mongo {
 //                 inner_errors: error_vec_count_documents,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

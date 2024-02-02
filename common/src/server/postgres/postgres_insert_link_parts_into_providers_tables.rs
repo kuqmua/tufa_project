@@ -56,7 +56,7 @@
 //                 crate::server::postgres::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed::PostgresInsertLinkPartsIntoProvidersTablesOriginHandle(
 //                     crate::server::postgres::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed::Postgres {
 //                         error: e,
-//                         code_occurence: crate::code_occurence_common!()
+//                         code_occurence: crate::code_occurence!()
 //                     }
 //                 )
 //             ));
@@ -70,7 +70,7 @@
 //         return Err(Box::new(
 //             crate::server::postgres::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorNamed::Postgres {
 //                 inner_errors: insertion_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

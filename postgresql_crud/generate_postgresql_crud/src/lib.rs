@@ -505,7 +505,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote!{
         #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream
     };
-    let crate_code_occurence_common_macro_call_token_stream = quote::quote!{crate::code_occurence_common!()};
+    let crate_code_occurence_common_macro_call_token_stream = quote::quote!{crate::code_occurence!()};
     let code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream = quote::quote!{
         #code_occurence_snake_case_token_stream: #crate_code_occurence_common_macro_call_token_stream
     };

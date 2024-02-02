@@ -62,7 +62,7 @@
 //                 crate::server::mongo::mongo_insert_many::MongoInsertManyErrorUnnamed::InsertMany(
 //                     crate::server::mongo::mongo_insert_many::MongoInsertManyHandleErrorNamed::InsertMany {
 //                         insert_many: e,
-//                         code_occurence: crate::code_occurence_common!()
+//                         code_occurence: crate::code_occurence!()
 //                     }
 //                 )
 //             ));
@@ -75,7 +75,7 @@
 //         false => Err(Box::new(
 //             crate::server::mongo::mongo_insert_many::MongoInsertManyErrorNamed::InsertMany {
 //                 insert_many: error_vec_insert_many,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             },
 //         ))
 //     }

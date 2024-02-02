@@ -55,7 +55,7 @@ impl std::convert::TryFrom<PossibleUuidWrapper> for UuidWrapper {
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(Self::Error::NotUuid {
                 not_uuid: e,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             }),
         }
     }
@@ -73,7 +73,7 @@ impl crate::server::postgres::bind_query::BindQuery for UuidWrapper {
             }
             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
                 checked_add: std::string::String::from("checked_add is None"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             })
         }
     }
@@ -85,7 +85,7 @@ impl crate::server::postgres::bind_query::BindQuery for UuidWrapper {
             },
             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                 checked_add: std::string::String::from("checked_add is None"), 
-                code_occurence: crate::code_occurence_common!(), 
+                code_occurence: crate::code_occurence!(), 
             }),
         }
     }

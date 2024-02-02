@@ -26,7 +26,7 @@ pub async fn mongo_get_documents_as_string_vector(
         Err(e) => Err(Box::new(
             crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed::MongoDB {
                 mongodb: e,
-                code_occurence: crate::code_occurence_common!()
+                code_occurence: crate::code_occurence!()
             }
         )),
         Ok(mut cursor) => {
@@ -37,7 +37,7 @@ pub async fn mongo_get_documents_as_string_vector(
                         return Err(Box::new(
                             crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed::MongoDB {
                                 mongodb: e,
-                                code_occurence: crate::code_occurence_common!()
+                                code_occurence: crate::code_occurence!()
                             }
                         ));
                     }
@@ -50,7 +50,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                 None => return Err(Box::new(
                                     crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed::NoKeyInDocument {
                                         key: db_collection_document_field_name_handle.to_string(),
-                                        code_occurence: crate::code_occurence_common!()
+                                        code_occurence: crate::code_occurence!()
                                     }
                                 )),
                                 Some(bson_handle) => match bson_handle {
@@ -61,7 +61,7 @@ pub async fn mongo_get_documents_as_string_vector(
                                         return Err(Box::new(
                                             crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed::WrongBsonType {
                                                 bson: other_bson_type.clone(),
-                                                code_occurence: crate::code_occurence_common!()
+                                                code_occurence: crate::code_occurence!()
                                             }
                                     ));
                                     }

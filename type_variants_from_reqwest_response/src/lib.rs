@@ -712,7 +712,7 @@ fn generate_from_logic(
 //                     Ok(value) => Ok(value),
 //                     Err(e) => Err(#ident_request_error_upper_camel_case_token_stream::ExpectedType {
 //                         expected_type: e,
-//                         code_occurence: crate::code_occurence_common!(),
+//                         code_occurence: crate::code_occurence!(),
 //                     }),
 //                 }
 //             },
@@ -738,7 +738,7 @@ fn generate_from_logic(
 //                                     status_code,
 //                                     headers,
 //                                     response_text_result,
-//                                     code_occurence: crate::code_occurence_common!()
+//                                     code_occurence: crate::code_occurence!()
 //                                 }
 //                             ),
 //                             #api_request_unexpected_error_path_token_stream::FailedToGetResponseText {
@@ -750,7 +750,7 @@ fn generate_from_logic(
 //                                     reqwest,
 //                                     status_code,
 //                                     headers,
-//                                     code_occurence: crate::code_occurence_common!()
+//                                     code_occurence: crate::code_occurence!()
 //                                 }
 //                             ),
 //                             #api_request_unexpected_error_path_token_stream::DeserializeBody {
@@ -764,14 +764,14 @@ fn generate_from_logic(
 //                                     status_code,
 //                                     headers,
 //                                     response_text,
-//                                     code_occurence: crate::code_occurence_common!()
+//                                     code_occurence: crate::code_occurence!()
 //                                 }
 //                             ),
 //                         },
 //                     },
 //                     Err(e) => Err(#ident_request_error_upper_camel_case_token_stream::Reqwest {
 //                         reqwest: e,
-//                         code_occurence: crate::code_occurence_common!(),
+//                         code_occurence: crate::code_occurence!(),
 //                     }),
 //                 }
 //             }

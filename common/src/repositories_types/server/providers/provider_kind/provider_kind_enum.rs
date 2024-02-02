@@ -156,7 +156,7 @@
 //             return Err(
 //                 FetchAndParseProviderDataErrorNamed::AsyncFetchLinks {
 //                     fetch_links: async_fetch_links_error_vec,
-//                     code_occurence: crate::code_occurence_common!()
+//                     code_occurence: crate::code_occurence!()
 //                 },
 //             );
 //         }
@@ -173,7 +173,7 @@
 //         if !no_items_error_vec.is_empty() {
 //             return Err(Box::new(FetchAndParseProviderDataErrorNamed::NoItems {
 //                 no_items: no_items_error_vec,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }));
 //         }
 //         Ok(success_vec)
@@ -247,7 +247,7 @@
 //             Err(e) => Err(Box::new(
 //                 GetLinkPartsFromLocalJsonFileErrorNamed::TokioFsFileOpen {
 //                     tokio_fs_file_open: e,
-//                     code_occurence: crate::code_occurence_common!(),
+//                     code_occurence: crate::code_occurence!(),
 //                 }
 //             )),
 //             Ok(mut file) => {
@@ -257,7 +257,7 @@
 //                     return Err(Box::new(
 //                         GetLinkPartsFromLocalJsonFileErrorNamed::TokioIoAsyncReadExtReadToEnd {
 //                             tokio_io_async_read_ext_read_to_end: e,
-//                             code_occurence: crate::code_occurence_common!()
+//                             code_occurence: crate::code_occurence!()
 //                         }
 //                     ));
 //                 }
@@ -265,7 +265,7 @@
 //                     Err(e) => Err(Box::new(
 //                         GetLinkPartsFromLocalJsonFileErrorNamed::SerdeJsonFromSlice {
 //                             serde_json_from_slice: e,
-//                             code_occurence: crate::code_occurence_common!()
+//                             code_occurence: crate::code_occurence!()
 //                         }
 //                     )),
 //                     Ok(file_content_as_struct) => {
@@ -336,12 +336,12 @@
 //         // match mongodb::options::ClientOptions::parse(crate::global_variables::runtime::config::CONFIG.get_mongo_url()).await {
 //         //     Err(e) => Err(Box::new(MongoGetProviderLinkPartsErrorNamed::ClientOptionsParse {
 //         //         mongo: e,
-//         //         code_occurence: crate::code_occurence_common!()
+//         //         code_occurence: crate::code_occurence!()
 //         //     })),
 //         //     Ok(client_options) => match mongodb::Client::with_options(client_options) {
 //         //         Err(e) => Err(Box::new(MongoGetProviderLinkPartsErrorNamed::ClientWithOptions {
 //         //             mongo: e,
-//         //             code_occurence: crate::code_occurence_common!()
+//         //             code_occurence: crate::code_occurence!()
 //         //         })),
 //         //         Ok(client) => Ok({
 //         //             match mongo_get_documents_as_string_vector(

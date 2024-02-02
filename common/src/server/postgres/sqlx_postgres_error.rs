@@ -126,78 +126,78 @@ impl std::convert::From<sqlx::Error> for SqlxPostgresErrorErrorNamed {
             sqlx::Error::Configuration(value) => {
                 SqlxPostgresErrorErrorNamed::Configuration {
                     configuration: value.to_string(),
-                    code_occurence: crate::code_occurence_common!(),
+                    code_occurence: crate::code_occurence!(),
                 }
             }
             sqlx::Error::Database(database) => {
                 SqlxPostgresErrorErrorNamed::Database {
                     database: database.message().to_string(),
-                    code_occurence: crate::code_occurence_common!(),
+                    code_occurence: crate::code_occurence!(),
                 }
             }
             sqlx::Error::Io(io) => SqlxPostgresErrorErrorNamed::Io {
                 io,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::Tls(value) => SqlxPostgresErrorErrorNamed::Tls {
                 tls: value.to_string(),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::Protocol(string) => SqlxPostgresErrorErrorNamed::Protocol {
                 protocol: string,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::RowNotFound => SqlxPostgresErrorErrorNamed::RowNotFound {
                 row_not_found: std::string::String::from("row_not_found"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::TypeNotFound { type_name } => SqlxPostgresErrorErrorNamed::TypeNotFound {
                 type_not_found: type_name,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::ColumnIndexOutOfBounds { index, len } => {
                 SqlxPostgresErrorErrorNamed::ColumnIndexOutOfBounds {
                     column_index_out_of_bounds: index,
                     len,
-                    code_occurence: crate::code_occurence_common!(),
+                    code_occurence: crate::code_occurence!(),
                 }
             }
             sqlx::Error::ColumnNotFound(column_not_found) => {
                 SqlxPostgresErrorErrorNamed::ColumnNotFound {
                     column_not_found,
-                    code_occurence: crate::code_occurence_common!(),
+                    code_occurence: crate::code_occurence!(),
                 }
             }
             sqlx::Error::ColumnDecode { index, source } => {
                 SqlxPostgresErrorErrorNamed::ColumnDecode {
                     column_decode_index: index,
                     source_handle: source.to_string(),
-                    code_occurence: crate::code_occurence_common!(),
+                    code_occurence: crate::code_occurence!(),
                 }
             }
             sqlx::Error::Decode(value) => SqlxPostgresErrorErrorNamed::Decode {
                 decode: value.to_string(),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::PoolTimedOut => SqlxPostgresErrorErrorNamed::PoolTimedOut {
                 pool_timed_out: std::string::String::from("pool timed out"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::PoolClosed => SqlxPostgresErrorErrorNamed::PoolClosed {
                 pool_closed: std::string::String::from("pool closed"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::WorkerCrashed => SqlxPostgresErrorErrorNamed::WorkerCrashed {
                 worker_crashed: std::string::String::from("worker crashed"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             sqlx::Error::Migrate(migrate_error) => SqlxPostgresErrorErrorNamed::Migrate {
                 migrate: *migrate_error,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
             _ => SqlxPostgresErrorErrorNamed::UnexpectedCase {
                 unexpected_case: std::string::String::from("unexpected_case"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
         }
     }

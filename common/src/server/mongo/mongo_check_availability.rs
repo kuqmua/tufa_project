@@ -19,7 +19,7 @@ pub async fn mongo_check_availability<'a>(
         return Err(Box::new(
             MongoCheckAvailabilityErrorNamed::ListCollectionNames {
                 list_collection_names: e,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
         ));
     }

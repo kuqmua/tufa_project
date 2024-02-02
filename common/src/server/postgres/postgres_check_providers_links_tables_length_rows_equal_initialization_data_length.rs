@@ -93,7 +93,7 @@
 //                  PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed::Postgres(
 //                         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxNamed::Postgres {
 //                             error: e,
-//                             code_occurence: crate::code_occurence_common!()
+//                             code_occurence: crate::code_occurence!()
 //                         }
 //                     )
 //                 );
@@ -106,7 +106,7 @@
 //                             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorNamed::Postgres {
 //                                 table_rows_length: count,
 //                                 initialization_data_length: string_vec.len(),
-//                                 code_occurence: crate::code_occurence_common!()
+//                                 code_occurence: crate::code_occurence!()
 //                             }
 //                         )
 //                     );
@@ -118,7 +118,7 @@
 //         return Err(Box::new(
 //             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorNamed::SelectCountOrigin {
 //                 inner_errors: count_provider_links_tables_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }
@@ -126,7 +126,7 @@
 //         return Err(Box::new(
 //             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorNamed::ProviderLinksTablesRowsLengthNotEqualOrigin {
 //                 inner_errors: provider_links_tables_rows_length_not_equal_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

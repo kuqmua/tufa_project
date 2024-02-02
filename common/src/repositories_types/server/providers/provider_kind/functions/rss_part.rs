@@ -27,20 +27,20 @@
 //     }).await {
 //         Err(e) => Err(Box::new(RssPartErrorNamed::CheckLinkStatusCodeError {
 //             reqwest_error: e,
-//             code_occurence: crate::code_occurence_common!()
+//             code_occurence: crate::code_occurence!()
 //         })),
 //         Ok(res) => {
 //             let status_code = res.status();
 //             if !reqwest::StatusCode::is_success(&status_code) {
 //                 return Err(Box::new(RssPartErrorNamed::StatusCode {
 //                     status_code,
-//                     code_occurence: crate::code_occurence_common!()
+//                     code_occurence: crate::code_occurence!()
 //                 }));
 //             }
 //             // match crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
 //             //     Err(e) => Err(Box::new(RssPartErrorNamed::FetchAndParseProviderData {
 //             //         source: *e,
-//             //         code_occurence: crate::code_occurence_common!()
+//             //         code_occurence: crate::code_occurence!()
 //             //     })),
 //             //     Ok(vec) => Ok(vec),
 //             // }

@@ -19,7 +19,7 @@ impl crate::server::postgres::bind_query::BindQuery for PostgresBigint {
             },
             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                 checked_add: std::string::String::from("checked_add is None"), 
-                code_occurence: crate::code_occurence_common!(), 
+                code_occurence: crate::code_occurence!(), 
             }),
         }
     }
@@ -31,7 +31,7 @@ impl crate::server::postgres::bind_query::BindQuery for PostgresBigint {
             },
             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                 checked_add: std::string::String::from("checked_add is None"), 
-                code_occurence: crate::code_occurence_common!(), 
+                code_occurence: crate::code_occurence!(), 
             }),
         }
     }
@@ -66,7 +66,7 @@ impl std::str::FromStr for PostgresBigint {
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(Self::Err::NotCorrectValue {
                 not_correct_value: format!("wrong rust i64 value: {value}, error: {e}"),
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             })
         }
     }

@@ -25,14 +25,14 @@ pub async fn mongo_check_collection_is_empty<'a>(
     {
         Err(e) => Err(Box::new(MongoCheckCollectionIsEmptyErrorNamed::MongoDB {
             mongodb: e,
-            code_occurence: crate::code_occurence_common!(),
+            code_occurence: crate::code_occurence!(),
         })),
         Ok(documents_number) => {
             if documents_number > 0 {
                 return Err(Box::new(
                     MongoCheckCollectionIsEmptyErrorNamed::CollectionIsNotEmpty {
                         collection_documents: documents_number,
-                        code_occurence: crate::code_occurence_common!(),
+                        code_occurence: crate::code_occurence!(),
                     },
                 ));
             }

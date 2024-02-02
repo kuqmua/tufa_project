@@ -34,7 +34,7 @@
 //         return Err(Box::new(
 //             crate::server::postgres::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsErrorNamed::Postgres {
 //                 sqlx_error_hashmap: table_creation_error_hashmap,
-//                 code_occurence: crate::code_occurence_common!()
+//                 code_occurence: crate::code_occurence!()
 //             }
 //         ));
 //     }

@@ -39,7 +39,7 @@ pub fn check_for_none(
     let response_variant_token_stream = quote::quote!{
         NoPayloadFields {
             no_payload_fields: std::string::String::from("no payload fields"), 
-            code_occurence: crate::code_occurence_common!()
+            code_occurence: crate::code_occurence!()
         }
     };
     quote::quote!{

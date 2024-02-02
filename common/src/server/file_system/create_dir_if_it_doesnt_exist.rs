@@ -16,7 +16,7 @@ pub fn create_dir_if_it_doesnt_exist(
     if let Err(e) = std::fs::create_dir_all(path) {
         return Err(Box::new(CreateDirIfItDoesntExistErrorNamed::CreateDirAll {
             error: e,
-            code_occurence: crate::code_occurence_common!(),
+            code_occurence: crate::code_occurence!(),
         }));
     }
     Ok(())

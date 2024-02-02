@@ -19,7 +19,7 @@ pub async fn mongo_drop_collection<'a>(
         return Err(Box::new(
             crate::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed::MongoDB {
                 mongodb: e,
-                code_occurence: crate::code_occurence_common!(),
+                code_occurence: crate::code_occurence!(),
             },
         ));
     }
