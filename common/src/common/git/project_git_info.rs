@@ -25,7 +25,7 @@ impl<'a> ProjectGitInfo<'a> {
     pub fn to_git_info_without_lifetime(&self) -> error_occurence_lib::git_info::GitInfoWithoutLifetime {
         error_occurence_lib::git_info::GitInfoWithoutLifetime {
             git_commit_id: self.commit.to_string(),
-            git_repo_link: std::string::String::from(""),
+            git_repo_link: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(self),
         }
     }
 }
