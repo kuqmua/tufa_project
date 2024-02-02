@@ -141,7 +141,7 @@ async fn read_middleware_custom_header(
 // ) -> Result<axum::response::Response, axum::http::StatusCode> {
 //     let request_project_commit = req
 //         .headers()
-//         .get(common::common::git::project_git_info::PROJECT_COMMIT)
+//         .get("commit")//todo maybe reuse global variable
 //         .ok_or_else(|| axum::http::StatusCode::BAD_REQUEST)?;
 //     let project_commit_checker_header = request_project_commit
 //         .to_str()

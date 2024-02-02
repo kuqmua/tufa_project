@@ -12,7 +12,7 @@ pub async fn project_commit_checker(//todo maybe check not wrapper repo commit i
     match app_state.get_enable_api_git_commit_check() {
         true => match req
             .headers()
-            .get(crate::common::git::project_git_info::PROJECT_COMMIT)
+            .get(app_state::PROJECT_COMMIT)
             .and_then(|header| header.to_str().ok()) 
         {
             Some(project_commit_checker_header) => match project_commit_checker_header
