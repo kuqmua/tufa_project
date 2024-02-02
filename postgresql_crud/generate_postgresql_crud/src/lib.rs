@@ -2019,7 +2019,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ]
         )
     };
-    let project_commit_header_addition_token_stream = quote::quote!{
+    let commit_header_addition_token_stream = quote::quote!{
         .header(
             postgresql_crud::COMMIT,
             crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit,
@@ -2806,7 +2806,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
@@ -3321,7 +3321,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                 },
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &quote::quote!{
                     match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
@@ -3827,7 +3827,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                 },
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &quote::quote!{
                     Ok(value)
@@ -4558,7 +4558,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                 },
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &quote::quote!{
                     Ok(value)
@@ -5074,7 +5074,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
@@ -5652,7 +5652,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                 },
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &quote::quote!{
                     match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
@@ -6187,7 +6187,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
@@ -6955,7 +6955,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                 },
                 &reqwest_client_new_token_stream,
-                &project_commit_header_addition_token_stream,
+                &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &quote::quote!{
                     match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
@@ -8302,7 +8302,7 @@ fn generate_http_request_many_token_stream(
     serde_json_to_string_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
-    project_commit_header_addition_token_stream: &proc_macro2::TokenStream,
+    commit_header_addition_token_stream: &proc_macro2::TokenStream,
     content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
     crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream: &proc_macro2::TokenStream,
@@ -8342,7 +8342,7 @@ fn generate_http_request_many_token_stream(
             match #tvfrr_extraction_logic_token_stream(
                 #reqwest_client_new_token_stream
                 .#operation_http_method_snake_case_token_stream(&url)
-                #project_commit_header_addition_token_stream
+                #commit_header_addition_token_stream
                 #content_type_application_json_header_addition_token_stream
                 .body(#payload_snake_case_token_stream)
                 .send(),
@@ -8381,7 +8381,7 @@ fn generate_try_operation_token_stream(
     return_result_ok_type_token_stream: &proc_macro2::TokenStream,
     payload_variable_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
-    project_commit_header_addition_token_stream: &proc_macro2::TokenStream,
+    commit_header_addition_token_stream: &proc_macro2::TokenStream,
     content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
     ok_value_handle_token_stream: &proc_macro2::TokenStream,
     request_error_variant_initialization_token_stream: &proc_macro2::TokenStream,
@@ -8410,7 +8410,7 @@ fn generate_try_operation_token_stream(
             match #tvfrr_extraction_logic_token_stream(
                 #reqwest_client_new_token_stream
                 .#operation_http_method_snake_case_token_stream(&url)
-                #project_commit_header_addition_token_stream
+                #commit_header_addition_token_stream
                 #content_type_application_json_header_addition_token_stream
                 .body(#payload_snake_case_token_stream)
                 .send()
