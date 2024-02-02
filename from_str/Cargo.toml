@@ -14,6 +14,7 @@ syn = {version = "=1.0.107"}
 convert_case = {version = "=0.6.0"}
 proc_macro_helpers = {path = "../proc_macro_helpers"}
 proc_macro_common = {path = "../proc_macro_common"}
+naming_constants = {path = "../naming_constants"}
 
 [lints]
 workspace = true

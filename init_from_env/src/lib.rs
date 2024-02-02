@@ -40,7 +40,7 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 ) = match &field.ident {
                     None => panic!(
                         "InitFromEnvWithPanicIfFailed {}",
-                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        naming_constants::FIELD_IDENT_IS_NONE
                     ),
                     Some(field_ident) => {
                         generated_init_struct_fields.push(quote::quote! {

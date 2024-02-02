@@ -14,6 +14,7 @@ tracing = {version = "=0.1", features = ["log", "valuable"]}
 reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
 config_lib = {path = "../config_lib"}
 error_occurence = {path = "./error_occurence"}
+naming_constants = {path = "../naming_constants"}
 
 [lints]
 workspace = true

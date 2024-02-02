@@ -47,7 +47,7 @@ pub fn type_variants_from_request_response_generator(
                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
                 let error_occurence_attribute = match *field_ident == *code_occurence_snake_case_stringified {
@@ -113,7 +113,7 @@ pub fn type_variants_from_request_response_generator(
                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
                 let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
@@ -146,7 +146,7 @@ pub fn type_variants_from_request_response_generator(
                                 let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
                                 panic!(
                                     "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
                                 );
                             }
                         };
@@ -177,7 +177,7 @@ pub fn type_variants_from_request_response_generator(
                             });
                             option_attribute.unwrap_or_else(|| panic!(
                                 "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                naming_constants::IS_NONE_STRINGIFIED
                             ))
                         };
                         let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
@@ -220,7 +220,7 @@ pub fn type_variants_from_request_response_generator(
                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
                 quote::quote! {#field_ident}
@@ -258,7 +258,7 @@ pub fn type_variants_from_request_response_generator(
                     let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                         panic!(
                             "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                            proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            naming_constants::FIELD_IDENT_IS_NONE
                         )
                     });
                     quote::quote! {#field_ident: _}
@@ -301,7 +301,7 @@ pub fn type_variants_from_request_response_generator(
                         let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                             panic!(
                                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                                naming_constants::FIELD_IDENT_IS_NONE
                             )
                         });
                         let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
@@ -334,7 +334,7 @@ pub fn type_variants_from_request_response_generator(
                                         let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
                                         panic!(
                                             "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                            proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED
+                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
                                         );
                                     }
                                 };
@@ -365,7 +365,7 @@ pub fn type_variants_from_request_response_generator(
                                     });
                                     option_attribute.unwrap_or_else(|| panic!(
                                         "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                        naming_constants::IS_NONE_STRINGIFIED
                                     ))
                                 };
                                 let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
@@ -497,7 +497,7 @@ pub fn type_variants_from_request_response_generator(
                         let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                             panic!(
                                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                                naming_constants::FIELD_IDENT_IS_NONE
                             )
                         });
                         let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
@@ -530,7 +530,7 @@ pub fn type_variants_from_request_response_generator(
                                         let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
                                         panic!(
                                             "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                            proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED
+                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
                                         );
                                     }
                                 };
@@ -561,7 +561,7 @@ pub fn type_variants_from_request_response_generator(
                                     });
                                     option_attribute.unwrap_or_else(|| panic!(
                                         "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                        naming_constants::IS_NONE_STRINGIFIED
                                     ))
                                 };
                                 let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
@@ -747,7 +747,7 @@ pub fn type_variants_from_request_response_generator(
                         let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                             panic!(
                                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                                naming_constants::FIELD_IDENT_IS_NONE
                             )
                         });
                         quote::quote! {#field_ident}
@@ -938,7 +938,7 @@ pub fn type_variants_from_request_response_generator(
                     let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                         panic!(
                             "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                            proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                            naming_constants::FIELD_IDENT_IS_NONE
                         )
                     });
                     quote::quote! {#field_ident: _}

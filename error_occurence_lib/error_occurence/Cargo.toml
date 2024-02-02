@@ -17,6 +17,7 @@ convert_case = {version = "=0.6.0"}
 proc_macro_helpers = {path = "../../proc_macro_helpers"}
 proc_macro_common = {path = "../../proc_macro_common"}
 enum_extension = {path = "../../enum_extension"}
+naming_constants = {path = "../../naming_constants"}
 
 [lints]
 workspace = true

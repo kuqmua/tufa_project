@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = [ 
+members = [
   "app_state",
   "common",
   "compile_time_git_info",
@@ -13,6 +13,7 @@ members = [
   "git_sync_command",
   "init_from_env",
   "integration_tests",
+  "naming_constants",
   "postgresql_crud",
   "proc_macro_assistants",
   "proc_macro_common",

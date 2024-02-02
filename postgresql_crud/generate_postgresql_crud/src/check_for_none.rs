@@ -20,7 +20,7 @@ pub fn check_for_none(
                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
                 let possible_dot_space = match (index + 1) == fields_named_handle_len {

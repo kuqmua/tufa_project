@@ -253,7 +253,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let primary_key_field_type = &primary_key_field.ty;
     // println!("{primary_key_field:#?}");
-    let sqlx_types_uuid_stringified = proc_macro_helpers::naming_conventions::SQLX_TYPES_UUID_STRINGIFIED;
+    let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {sqlx_types_uuid_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -269,7 +269,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key_field.ident is None")
         });
     let std_string_string_token_stream = quote::quote!{std::string::String};
-    let field_ident_is_none_stringified = proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE;
+    let field_ident_is_none_stringified = naming_constants::FIELD_IDENT_IS_NONE;
     let fields_named_wrappers_excluding_primary_key = fields_named.clone().into_iter().filter(|field|*field != primary_key_field).map(|element|{
         let field_ident = element.ident
             .as_ref()
@@ -1935,7 +1935,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                naming_constants::FIELD_IDENT_IS_NONE
             )
         });
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(&field_ident);
@@ -8222,7 +8222,7 @@ fn generate_self_fields_token_stream<'a>(
         field.ident.as_ref().unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                naming_constants::FIELD_IDENT_IS_NONE
             )
         })
     }).collect()   
@@ -8236,7 +8236,7 @@ fn generate_pub_field_ident_field_type_token_stream(
         .unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                naming_constants::FIELD_IDENT_IS_NONE
             )
         });
     let field_type = &element.field.ty;
@@ -8253,7 +8253,7 @@ fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(
         .unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                naming_constants::FIELD_IDENT_IS_NONE
             )
         });
     let field_type = &element.field.ty;
@@ -8270,7 +8270,7 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
         .unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                naming_constants::FIELD_IDENT_IS_NONE
             )
         });
     quote::quote!{
@@ -8286,7 +8286,7 @@ fn generate_let_field_ident_value_field_ident_from_token_stream(
         .unwrap_or_else(|| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                naming_constants::FIELD_IDENT_IS_NONE
             )
         });
     quote::quote!{

@@ -15,375 +15,317 @@
 //         convert_case::Casing::to_case(&Self::inner_value(), convert_case::Case::UpperCamel)
 //     }
 // }
-pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
-pub const SYN_FIELDS: &str = "syn::Fields";
-pub const SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT: &str =
-    "proc_macro_helpers::error_occurence::supported_container::SupportedContainer::";
-pub const SUPPORTED_ENUM_VARIANT_STRINGIFIED: &str =
-    "proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant";
-pub const SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED: &str = "syn::GenericArgument::Type";
-pub const IS_NONE_STRINGIFIED: &str = "is None";
-pub const STD_STRINGIFIED: &str = "std";
-pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
-pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
-
-const NAMED: &str = "named";
 pub fn named_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&NAMED)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::NAMED)
 }
 pub fn named_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&NAMED)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::NAMED)
 }
-const UNNAMED: &str = "unnamed";
 pub fn unnamed_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UNNAMED)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UNNAMED)
 }
 pub fn unnamed_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UNNAMED)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::UNNAMED)
 }
-const ERROR: &str = "error";
 pub fn error_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ERROR)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::ERROR)
 }
 pub fn error_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ERROR)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::ERROR)
 }
-const OCCURENCE: &str = "occurence";
 pub fn occurence_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OCCURENCE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OCCURENCE)
 }
 pub fn occurence_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&OCCURENCE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::OCCURENCE)
 }
-const STRING: &str = "string";
 pub fn string_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&STRING)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::STRING)
 }
 pub fn string_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&STRING)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::STRING)
 }
-const PARAMETERS: &str = "parameters";
 pub fn parameters_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PARAMETERS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PARAMETERS)
 }
 pub fn parameters_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PARAMETERS)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::PARAMETERS)
 }
 pub fn parameters_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = parameters_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const PAYLOAD: &str = "payload";
 pub fn payload_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PAYLOAD)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PAYLOAD)
 }
 pub fn payload_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PAYLOAD)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::PAYLOAD)
 }
 pub fn payload_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = payload_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const ELEMENT: &str = "element";
 pub fn element_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ELEMENT)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::ELEMENT)
 }
 pub fn element_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ELEMENT)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::ELEMENT)
 }
 pub fn element_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = element_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const TRY: &str = "try";
 pub fn try_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TRY)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TRY)
 }
 pub fn try_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&TRY)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::TRY)
 }
-const FROM: &str = "from";
 pub fn from_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&FROM)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FROM)
 }
 pub fn from_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&FROM)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::FROM)
 }
-const RESPONSE_VARIANTS: &str = "response_variants";
 pub fn response_variants_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&RESPONSE_VARIANTS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::RESPONSE_VARIANTS)
 }
 // pub fn response_variants_snake_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&RESPONSE_VARIANTS)
+//     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::RESPONSE_VARIANTS)
 // }
-const PATH: &str = "path";
 pub fn path_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PATH)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PATH)
 }
 pub fn path_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&PATH)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::PATH)
 }
 pub fn path_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = path_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const KEY: &str = "key";
 pub fn key_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&KEY)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::KEY)
 }
 pub fn key_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&KEY)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::KEY)
 }
-const VALUE: &str = "value";
 pub fn value_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&VALUE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::VALUE)
 }
 pub fn value_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&VALUE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::VALUE)
 }
-const VEC: &str = "vec";
 pub fn vec_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&VEC)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::VEC)
 }
 pub fn vec_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&VEC)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::VEC)
 }
-const HASHMAP: &str = "HashMap";
 pub fn hashmap_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&HASHMAP)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::HASHMAP)
 }
 pub fn hashmap_snake_case_stringified() -> std::string::String {
     //naming exception - 
     std::string::String::from("hashmap")
 }
-const REFERENCE: &str = "reference";
 pub fn reference_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&REFERENCE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::REFERENCE)
 }
 pub fn reference_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&REFERENCE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::REFERENCE)
 }
-const WITH: &str = "with";
 pub fn with_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&WITH)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::WITH)
 }
 pub fn with_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&WITH)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::WITH)
 }
-const SERIALIZE: &str = "serialize";
 pub fn serialize_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SERIALIZE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SERIALIZE)
 }
 pub fn serialize_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&SERIALIZE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::SERIALIZE)
 }
-const DESERIALIZE: &str = "deserialize";
 pub fn deserialize_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DESERIALIZE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DESERIALIZE)
 }
 pub fn deserialize_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&DESERIALIZE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::DESERIALIZE)
 }
-const REQUEST: &str = "request";
 pub fn request_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&REQUEST)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::REQUEST)
 }
 pub fn request_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&REQUEST)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::REQUEST)
 }
-const RESPONSE: &str = "response";
 pub fn response_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&RESPONSE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::RESPONSE)
 }
 pub fn response_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&RESPONSE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::RESPONSE)
 }
-const VARIANTS: &str = "variants";
 pub fn variants_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&VARIANTS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::VARIANTS)
 }
 pub fn variants_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&VARIANTS)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::VARIANTS)
 }
-const TVFRR_EXTRACTION_LOGIC: &str = "tvfrr_extraction_logic";
 // pub fn tvfrr_extraction_logic_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TVFRR_EXTRACTION_LOGIC)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TVFRR_EXTRACTION_LOGIC)
 // }
 pub fn tvfrr_extraction_logic_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&TVFRR_EXTRACTION_LOGIC)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::TVFRR_EXTRACTION_LOGIC)
 }
-const OPTIONS: &str = "options";
 pub fn options_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OPTIONS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OPTIONS)
 }
 // pub fn options_snake_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&OPTIONS)
+//     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::OPTIONS)
 // }
-const CODE: &str = "code";
 pub fn code_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CODE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CODE)
 }
 pub fn code_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&CODE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::CODE)
 }
-const CONFIG: &str = "config";
 pub fn config_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CONFIG)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CONFIG)
 }
 pub fn config_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&CONFIG)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::CONFIG)
 }
-const IS: &str = "is";
 pub fn is_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&IS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::IS)
 }
 pub fn is_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&IS)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::IS)
 }
-const NONE: &str = "none";
 pub fn none_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&NONE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::NONE)
 }
 pub fn none_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&NONE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::NONE)
 }
-const STR: &str = "str";
 pub fn str_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&STR)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::STR)
 }
 pub fn str_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&STR)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::STR)
 }
-const UUID: &str = "uuid";
 pub fn uuid_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UUID)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UUID)
 }
 pub fn uuid_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UUID)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::UUID)
 }
-const WRAPPER: &str = "wrapper";
 pub fn wrapper_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&WRAPPER)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::WRAPPER)
 }
 pub fn wrapper_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&WRAPPER)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::WRAPPER)
 }
-const POSSIBLE: &str = "possible";
 pub fn possible_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&POSSIBLE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::POSSIBLE)
 }
 pub fn possible_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&POSSIBLE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::POSSIBLE)
 }
-const SOURCE: &str = "source";
 pub fn source_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SOURCE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SOURCE)
 }
 pub fn source_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&SOURCE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::SOURCE)
 }
-const DISPLAY: &str = "display";
 pub fn display_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DISPLAY)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DISPLAY)
 }
 pub fn display_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&DISPLAY)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::DISPLAY)
 }
-const FOREIGN: &str = "foreign";
 pub fn foreign_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&FOREIGN)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FOREIGN)
 }
 pub fn foreign_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&FOREIGN)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::FOREIGN)
 }
-const TYPE: &str = "type";
 pub fn type_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TYPE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TYPE)
 }
 pub fn type_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&TYPE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::TYPE)
 }
-const INTO: &str = "into";
 pub fn into_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&INTO)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::INTO)
 }
 pub fn into_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&INTO)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::INTO)
 }
-const GET: &str = "get";
 pub fn get_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&GET)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::GET)
 }
 pub fn get_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&GET)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::GET)
 }
-const COLUMN: &str = "column";
 pub fn column_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&COLUMN)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::COLUMN)
 }
 pub fn column_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&COLUMN)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::COLUMN)
 }
 pub fn column_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = column_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const SELECT: &str = "select";
 pub fn select_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SELECT)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SELECT)
 }
 pub fn select_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&SELECT)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::SELECT)
 }
 pub fn select_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = select_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const ORDER: &str = "order";
 pub fn order_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ORDER)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::ORDER)
 }
 pub fn order_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ORDER)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::ORDER)
 }
 pub fn order_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = order_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const BY: &str = "by";
 pub fn by_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BY)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::BY)
 }
 pub fn by_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&BY)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::BY)
 }
-const NOT: &str = "not";
 pub fn not_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&NOT)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::NOT)
 }
 pub fn not_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&NOT)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::NOT)
 }
-const FOUND: &str = "found";
 pub fn found_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&FOUND)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FOUND)
 }
 pub fn found_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&FOUND)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::FOUND)
 }
-const DESIRABLE: &str = "desirable";
 pub fn desirable_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DESIRABLE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DESIRABLE)
 }
 pub fn desirable_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&DESIRABLE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::DESIRABLE)
 }
 pub fn desirable_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
     let value = desirable_upper_camel_case_stringified();
@@ -395,279 +337,232 @@ pub fn desirable_snake_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const ROLLBACK: &str = "rollback";
 // pub fn rollback_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ROLLBACK)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::ROLLBACK)
 // }
 pub fn rollback_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ROLLBACK)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::ROLLBACK)
 }
 pub fn rollback_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = rollback_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const LIMIT: &str = "limit";
 // pub fn limit_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&LIMIT)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::LIMIT)
 // }
 pub fn limit_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&LIMIT)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::LIMIT)
 }
 pub fn limit_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = limit_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const OFFSET: &str = "offset";
 // pub fn offset_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OFFSET)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OFFSET)
 // }
 pub fn offset_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&OFFSET)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::OFFSET)
 }
 pub fn offset_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = offset_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const IN: &str = "in";
 pub fn in_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&IN)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::IN)
 }
 pub fn in_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&IN)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::IN)
 }
-const CLIENT: &str = "client";
 pub fn client_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CLIENT)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CLIENT)
 }
-const SERVER: &str = "server";
 pub fn server_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SERVER)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SERVER)
 }
-const NO: &str = "no";
 pub fn no_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&NO)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::NO)
 }
-const FIELDS: &str = "fields";
 pub fn fields_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&FIELDS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FIELDS)
 }
-const COMMIT: &str = "commit";
 // pub fn commit_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&COMMIT)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::COMMIT)
 // }
 pub fn commit_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&COMMIT)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::COMMIT)
 }
 pub fn commit_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = commit_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const BEGIN: &str = "begin";
 // pub fn begin_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BEGIN)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::BEGIN)
 // }
 pub fn begin_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&BEGIN)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::BEGIN)
 }
 pub fn begin_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = begin_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const ACC: &str = "acc";
 // pub fn acc_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ACC)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::ACC)
 // }
 pub fn acc_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ACC)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::ACC)
 }
 pub fn acc_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = acc_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const QUERY: &str = "query";
 // pub fn query_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&QUERY)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::QUERY)
 // }
 pub fn query_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&QUERY)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::QUERY)
 }
 pub fn query_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = query_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-const UPDATE: &str = "update";
 // pub fn update_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UPDATE)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UPDATE)
 // }
 pub fn update_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UPDATE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::UPDATE)
 }
-const AS: &str = "as";
 // pub fn as_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&AS)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::AS)
 // }
 pub fn as_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&AS)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::AS)
 }
-const SET: &str = "set";
 // pub fn set_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SET)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SET)
 // }
 pub fn set_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&SET)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::SET)
 }
-const INSERT: &str = "insert";
 // pub fn insert_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&INSERT)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::INSERT)
 // }
 pub fn insert_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&INSERT)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::INSERT)
 }
-const VALUES: &str = "values";
 // pub fn values_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&VALUES)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::VALUES)
 // }
 pub fn values_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&VALUES)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::VALUES)
 }
-const DELETE: &str = "delete";
 // pub fn delete_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DELETE)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DELETE)
 // }
 pub fn delete_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&DELETE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::DELETE)
 }
-const WHERE: &str = "where";
 // pub fn where_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&WHERE)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::WHERE)
 // }
 pub fn where_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&WHERE)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::WHERE)
 }
-const AND: &str = "and";
 // pub fn and_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&AND)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::AND)
 // }
 pub fn and_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&AND)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::AND)
 }
-const UNNEST: &str = "unnest";
 // pub fn unnest_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UNNEST)
+//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UNNEST)
 // }
 pub fn unnest_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&UNNEST)
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::UNNEST)
 }
-const CONFIGURATION: &str = "configuration";
 pub fn configuration_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CONFIGURATION)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CONFIGURATION)
 }
-const DATABASE: &str = "database";
 pub fn database_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DATABASE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DATABASE)
 }
-const IO: &str = "io";
 pub fn io_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&IO)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::IO)
 }
-const TLS: &str = "tls";
 pub fn tls_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TLS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TLS)
 }
-const PROTOCOL: &str = "protocol";
 pub fn protocol_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&PROTOCOL)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PROTOCOL)
 }
-const ROW: &str = "row";
 pub fn row_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ROW)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::ROW)
 }
-const INDEX: &str = "index";
 pub fn index_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&INDEX)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::INDEX)
 }
-const OUT: &str = "out";
 pub fn out_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OUT)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OUT)
 }
-const OF: &str = "of";
 pub fn of_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&OF)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OF)
 }
-const BOUNDS: &str = "bounds";
 pub fn bounds_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BOUNDS)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::BOUNDS)
 }
-const DECODE: &str = "decode";
 pub fn decode_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DECODE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DECODE)
 }
-const POOL: &str = "pool";
 pub fn pool_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&POOL)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::POOL)
 }
-const TIMED: &str = "timed";
 pub fn timed_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&TIMED)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TIMED)
 }
-const CLOSED: &str = "closed";
 pub fn closed_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CLOSED)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CLOSED)
 }
-const WORKER: &str = "worker";
 pub fn worker_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&WORKER)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::WORKER)
 }
-const CRASHED: &str = "crashed";
 pub fn crashed_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CRASHED)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CRASHED)
 }
-const MIGRATE: &str = "migrate";
 pub fn migrate_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&MIGRATE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::MIGRATE)
 }
-const JSON: &str = "json";
 pub fn json_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&JSON)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::JSON)
 }
-const DATA: &str = "data";
 pub fn data_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&DATA)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::DATA)
 }
-const SYNTAX: &str = "syntax";
 pub fn syntax_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&SYNTAX)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SYNTAX)
 }
-const MISSING: &str = "missing";
 pub fn missing_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&MISSING)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::MISSING)
 }
-const CONTENT: &str = "content";
 pub fn content_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CONTENT)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CONTENT)
 }
-const BYTES: &str = "bytes";
 pub fn bytes_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&BYTES)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::BYTES)
 }
-const REJECTION: &str = "rejection";
 pub fn rejection_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&REJECTION)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::REJECTION)
 }
-const UNEXPECTED: &str = "unexpected";
 pub fn unexpected_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&UNEXPECTED)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UNEXPECTED)
 }
-const CASE: &str = "case";
 pub fn case_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&CASE)
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CASE)
 }
 
 
@@ -734,7 +629,7 @@ pub fn syn_type_path_stringified() -> std::string::String {
 pub fn supports_only_supported_container_stringified() -> std::string::String {
     format!(
         "{} {}",
-        SUPPORTS_ONLY_STRINGIFIED, SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT
+        naming_constants::SUPPORTS_ONLY_STRINGIFIED, naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT
     )
 }
 pub fn code_occurence_upper_camel_case_stringified() -> std::string::String {

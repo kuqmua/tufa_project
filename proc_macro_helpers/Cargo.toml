@@ -13,6 +13,7 @@ strum_macros = {version = "=0.24.3"}
 convert_case = {version = "=0.6.0"}
 proc_macro_assistants = {path = "../proc_macro_assistants"}
 proc_macro_common = {path = "../proc_macro_common"}
+naming_constants = {path = "../naming_constants"}
 
 [lints]
 workspace = true

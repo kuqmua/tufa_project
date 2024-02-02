@@ -57,7 +57,7 @@ fn generate_from_logic(
                         field.ident.as_ref().unwrap_or_else(|| {
                             panic!(
                                 "{ident} {}",
-                                proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                                naming_constants::FIELD_IDENT_IS_NONE
                             )
                         })
                     });

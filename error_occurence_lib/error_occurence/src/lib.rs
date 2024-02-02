@@ -56,7 +56,7 @@ pub fn error_occurence(
         data_enum
     }
     else {
-        panic!("{proc_macro_name_ident_stringified} {} syn::Data::Enum", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("{proc_macro_name_ident_stringified} {} syn::Data::Enum", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
     };
     //todo ident lifetimes removed. maybe some other logic must be removed too
     let generics_len = ast.generics.params.len();
@@ -68,7 +68,7 @@ pub fn error_occurence(
                 acc
             }
             else {
-                panic!("{proc_macro_name_ident_stringified} {} syn::GenericParam::Lifetime", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                panic!("{proc_macro_name_ident_stringified} {} syn::GenericParam::Lifetime", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
             }
         });
         lifetimes_stringified.pop();
@@ -244,7 +244,7 @@ pub fn error_occurence(
                     fields_named.named.into_iter().map(|field|{
                         let field_ident = field.ident.unwrap_or_else(|| panic!(
                             "{proc_macro_name_ident_stringified} field.ident {}",
-                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                            naming_constants::IS_NONE_STRINGIFIED
                         ));
                         let error_or_code_occurence = match field_ident == *code_occurence_snake_case_stringified {
                             true => {
@@ -280,7 +280,7 @@ pub fn error_occurence(
                                         )
                                       }
                                     else {
-                                        panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                        panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                     }
                                 };
                                 proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
@@ -458,14 +458,14 @@ pub fn error_occurence(
                                     });
                                     option_attribute.unwrap_or_else(|| panic!(
                                         "{proc_macro_name_ident_stringified} option attribute {}",
-                                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                        naming_constants::IS_NONE_STRINGIFIED
                                     ))
                                 };
                                 let syn_type_reference = format!(
                                     "syn::Type::{}",
                                     proc_macro_helpers::naming_conventions::reference_upper_camel_case_stringified()
                                 );
-                                let error_message = format!("{} {syn_type_path_stringified} and {syn_type_reference}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                let error_message = format!("{} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                 let supported_container = match field.ty {
                                     syn::Type::Path(type_path) => {
                                         let path = proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments);
@@ -476,7 +476,7 @@ pub fn error_occurence(
                                         let path_segment = type_path.path.segments.into_iter().last()
                                         .unwrap_or_else(|| panic!(
                                             "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().last() {}",
-                                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                            naming_constants::IS_NONE_STRINGIFIED
                                         ));
                                         if path_segment.ident == proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified() {
                                             let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
@@ -486,7 +486,7 @@ pub fn error_occurence(
                                                         .into_iter().next()
                                                         .unwrap_or_else(|| panic!(
                                                             "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.into_iter().nth(0) {}",
-                                                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                            naming_constants::IS_NONE_STRINGIFIED
                                                         ))
                                                     {
                                                         match type_handle {
@@ -504,7 +504,7 @@ pub fn error_occurence(
                                                                         .into_iter().next()
                                                                         .unwrap_or_else(|| panic!(
                                                                             "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                            naming_constants::IS_NONE_STRINGIFIED
                                                                         ))
                                                                         .ident
                                                                     }
@@ -513,23 +513,23 @@ pub fn error_occurence(
                                                                     }
                                                                 }
                                                                 else {
-                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                                                 };
                                                                 proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Reference {
                                                                     reference_ident,
                                                                     lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
                                                                         "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                        naming_constants::IS_NONE_STRINGIFIED
                                                                     )).ident
                                                                 }
                                                             },
-                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED),
+                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                         }
                                                     }
                                                     else {
                                                         panic!(
-                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
-                                                            proc_macro_helpers::naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
                                                         );
                                                     }
                                                 }
@@ -538,7 +538,7 @@ pub fn error_occurence(
                                                 }
                                             }
                                             else {
-                                                panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                                panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                             };
                                             proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec{
                                                 path,
@@ -574,11 +574,11 @@ pub fn error_occurence(
                                                         (
                                                             key_generic_argument_option.unwrap_or_else(|| panic!(
                                                                 "{proc_macro_name_ident_stringified} key_generic_argument_option {}",
-                                                                proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                naming_constants::IS_NONE_STRINGIFIED
                                                             )),
                                                             value_generic_argument_option.unwrap_or_else(|| panic!(
                                                                 "{proc_macro_name_ident_stringified} value_generic_argument_option {}",
-                                                                proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                naming_constants::IS_NONE_STRINGIFIED
                                                             ))
                                                         )
                                                     };
@@ -603,7 +603,7 @@ pub fn error_occurence(
                                                                         .into_iter().next()
                                                                         .unwrap_or_else(|| panic!(
                                                                             "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                            naming_constants::IS_NONE_STRINGIFIED
                                                                         ))
                                                                         .ident
                                                                     }
@@ -612,24 +612,24 @@ pub fn error_occurence(
                                                                     }
                                                                 }
                                                                 else {
-                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                                                 };
                                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                                                                     key_reference_ident,
                                                                     key_lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
                                                                         "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                        naming_constants::IS_NONE_STRINGIFIED
                                                                     )).ident
                                                                 }
                                                             },
-                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED),
+                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                         }
                                                     }
                                                     else {
                                                         panic!(
                                                             "{proc_macro_name_ident_stringified} key_generic_argument {} {}", 
-                                                            proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
-                                                            proc_macro_helpers::naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
                                                         );
                                                     };
                                                     let hashmap_value_type = if let syn::GenericArgument::Type(type_handle) = value_generic_argument {
@@ -650,7 +650,7 @@ pub fn error_occurence(
                                                                         .into_iter().next()
                                                                         .unwrap_or_else(|| panic!(
                                                                             "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                                            proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                            naming_constants::IS_NONE_STRINGIFIED
                                                                         ))
                                                                         .ident
                                                                     }
@@ -659,23 +659,23 @@ pub fn error_occurence(
                                                                     }
                                                                 }
                                                                 else {
-                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                                                 };
                                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                                                                     value_reference_ident,
                                                                     value_lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
                                                                         "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                                        proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                                        naming_constants::IS_NONE_STRINGIFIED
                                                                     )).ident
                                                                 }
                                                             },
-                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED),
+                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                         }
                                                     }
                                                     else {
                                                         panic!(
-                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
-                                                            proc_macro_helpers::naming_conventions::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
                                                         );
                                                     };
                                                     (
@@ -688,7 +688,7 @@ pub fn error_occurence(
                                                 }
                                             }
                                             else {
-                                                panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                                panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                             };
                                             proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap{
                                                 path,
@@ -710,7 +710,7 @@ pub fn error_occurence(
                                                 .into_iter().next()
                                                 .unwrap_or_else(|| panic!(
                                                     "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                    proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                    naming_constants::IS_NONE_STRINGIFIED
                                                 ))
                                                 .ident
                                             }
@@ -719,13 +719,13 @@ pub fn error_occurence(
                                             }
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         };
                                         proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Reference{
                                             reference_ident,
                                             lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
                                                 "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                proc_macro_helpers::naming_conventions::IS_NONE_STRINGIFIED
+                                                naming_constants::IS_NONE_STRINGIFIED
                                             )).ident,
                                         }
                                     },
@@ -1156,8 +1156,8 @@ pub fn error_occurence(
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {} {}{}", 
                                             attribute.attribute_view_stringified(), 
-                                            proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
-                                            proc_macro_helpers::naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
+                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                            naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                                             proc_macro_helpers::naming_conventions::path_upper_camel_case_stringified()
                                         )
                                     }
@@ -1222,7 +1222,7 @@ pub fn error_occurence(
                                                 &reference_ident,
                                                 str_stringified,
                                                 &proc_macro_name_ident_stringified,
-                                                proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                 &attribute
                                             );
                                             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -1270,9 +1270,9 @@ pub fn error_occurence(
                                         _ => panic!(
                                             "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
                                             attribute.attribute_view_stringified(),
-                                            proc_macro_helpers::naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
+                                            naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                                             proc_macro_helpers::naming_conventions::path_upper_camel_case_stringified(),
-                                            proc_macro_helpers::naming_conventions::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
+                                            naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                                             proc_macro_helpers::naming_conventions::reference_upper_camel_case_stringified()
                                         ),
                                     }
@@ -1489,7 +1489,7 @@ pub fn error_occurence(
                                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
@@ -1581,7 +1581,7 @@ pub fn error_occurence(
                                                     &reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_into_vec_string_snake_case_stringified}::{vec_display_into_vec_string_upper_camel_case}");
@@ -1666,7 +1666,7 @@ pub fn error_occurence(
                                     } = supported_container {
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path: _element_path, vec_lifetime: _vec_lifetime } = vec_element_type {}
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
@@ -1760,7 +1760,7 @@ pub fn error_occurence(
                                             )
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
@@ -1837,7 +1837,7 @@ pub fn error_occurence(
                                             )
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }                                        
                                     }
                                     else {
@@ -1963,7 +1963,7 @@ pub fn error_occurence(
                                                 &key_segments_stringified,
                                                 &std_string_string_stringified,
                                                 &proc_macro_name_ident_stringified,
-                                                proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                 &as_std_collections_hashmap_key_type_stringified,
                                                 &attribute
                                             );
@@ -2169,7 +2169,7 @@ pub fn error_occurence(
                                                     &key_segments_stringified,
                                                     &std_string_string_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &as_std_collections_hashmap_key_type_stringified,
                                                     &attribute
                                                 );
@@ -2212,7 +2212,7 @@ pub fn error_occurence(
                                                     &key_segments_stringified,
                                                     &std_string_string_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &as_std_collections_hashmap_key_type_stringified,
                                                     &attribute
                                                 );
@@ -2220,7 +2220,7 @@ pub fn error_occurence(
                                                     &value_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 (
@@ -2261,7 +2261,7 @@ pub fn error_occurence(
                                                     &key_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 (
@@ -2321,14 +2321,14 @@ pub fn error_occurence(
                                                     &key_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &value_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 (
@@ -2628,7 +2628,7 @@ pub fn error_occurence(
                                                     &key_segments_stringified,
                                                     &std_string_string_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &as_std_collections_hashmap_key_type_stringified,
                                                     &attribute
                                                 );
@@ -2679,7 +2679,7 @@ pub fn error_occurence(
                                                     &key_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 (
@@ -2799,7 +2799,7 @@ pub fn error_occurence(
                                                     &key_segments_stringified,
                                                     &std_string_string_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &as_std_collections_hashmap_key_type_stringified,
                                                     &attribute
                                                 );
@@ -2854,7 +2854,7 @@ pub fn error_occurence(
                                                     &key_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 (
@@ -3161,7 +3161,7 @@ pub fn error_occurence(
                                                     &value_reference_ident,
                                                     str_stringified,
                                                     &proc_macro_name_ident_stringified,
-                                                    proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED,
+                                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 (
@@ -3986,13 +3986,13 @@ pub fn error_occurence(
                     if unnamed.len() != 1 {
                         panic!(
                             "{proc_macro_name_ident_stringified} {}::{unnamed_upper_camel_case} variant fields unnamed len != 1",
-                            proc_macro_helpers::naming_conventions::SUPPORTED_ENUM_VARIANT_STRINGIFIED
+                            naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED
                         );
                     }
                     &unnamed[0].ty
                 }
                 else {
-                    panic!("{proc_macro_name_ident_stringified} {} {}::{unnamed_upper_camel_case}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED, proc_macro_helpers::naming_conventions::SYN_FIELDS);
+                    panic!("{proc_macro_name_ident_stringified} {} {}::{unnamed_upper_camel_case}", naming_constants::SUPPORTS_ONLY_STRINGIFIED, naming_constants::SYN_FIELDS);
                 };
                 let type_token_stream = if let syn::Type::Path(type_path) = field_type {
                     let type_stringified = format!(
@@ -4004,7 +4004,7 @@ pub fn error_occurence(
                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 }
                 else {
-                    panic!("{proc_macro_name_ident_stringified} {} {syn_type_path_stringified}", proc_macro_helpers::naming_conventions::SUPPORTS_ONLY_STRINGIFIED)
+                    panic!("{proc_macro_name_ident_stringified} {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED)
                 };
                 logic_for_to_string_with_config.push(quote::quote!{
                     #ident::#variant_ident(i) => {

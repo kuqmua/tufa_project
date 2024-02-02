@@ -20,7 +20,7 @@ pub fn generate_getter_traits_for_struct_fields(
                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                     panic!(
                         "{ident} {}",
-                        proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+                        naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
                 (
