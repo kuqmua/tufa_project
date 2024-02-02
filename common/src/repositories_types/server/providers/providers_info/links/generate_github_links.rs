@@ -4,7 +4,6 @@ pub fn generate_github_links(
                   + std::marker::Send
                   + std::marker::Sync),
 ) -> Vec<String> {
-    //https://github.com/kuqmua.private.atom?token=EXAMPLE_FROM_CONFIG
     github_names
         .iter()
         .map(|name| {
