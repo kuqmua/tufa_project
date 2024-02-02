@@ -2,8 +2,8 @@
 //     form: actix_web::web::Form<
 //         common::common::change_password_form_data::ChangePasswordFormData,
 //     >,
-//     app_info: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_info::AppInfo<'a>,
+//     app_state: actix_web::web::Data<
+//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
 //     >,
 //     user_id: actix_web::web::ReqData<
 //         common::repositories_types::server::authentication::UserId,
@@ -21,7 +21,7 @@
 //             ),
 //         );
 //     }
-//     let username = crate::routes::dashboard::get_username(*user_id, &app_info.postgres_pool)
+//     let username = crate::routes::dashboard::get_username(*user_id, &app_state.postgres_pool)
 //         .await
 //         .map_err(common::repositories_types::server::utils::status_codes::e500)?;
 //     let credentials = common::common::postgres_credentials::PostgresCredentials {
@@ -29,7 +29,7 @@
 //         password: form.0.current_password,
 //     };
 //     if let Err(e) =
-//         crate::authentication::validate_credentials(credentials, &app_info.postgres_pool).await
+//         crate::authentication::validate_credentials(credentials, &app_state.postgres_pool).await
 //     {
 //         //todo - add to body deserialized version?
 //         return match &e {
@@ -71,7 +71,7 @@
 //             }
 //         };
 //     }
-//     crate::authentication::change_password(*user_id, form.0.new_password, &app_info.postgres_pool)
+//     crate::authentication::change_password(*user_id, form.0.new_password, &app_state.postgres_pool)
 //         .await
 //         .map_err(common::repositories_types::server::utils::status_codes::e500)?;
 //     actix_web_flash_messages::FlashMessage::error("Your password has been changed.").send();

@@ -1588,12 +1588,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {request_error_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     // let path_to_crud = "crate::repositories_types::server::routes::api::cats::";
-    let app_info_state_path = quote::quote!{postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync};//todo path
-    let app_info_state_name_token_stream = quote::quote!{app_info_state};
+    let app_state_path = quote::quote!{postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync};//todo path
+    let app_state_name_token_stream = quote::quote!{app_state};
     let error_log_call_token_stream = quote::quote!{
         error_occurence_lib::error_log::ErrorLog::error_log(
             &error,
-            #app_info_state_name_token_stream.as_ref(),
+            #app_state_name_token_stream.as_ref(),
         );
     };
     let request_error_variant_initialization_token_stream = quote::quote!{
@@ -3028,7 +3028,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -3038,7 +3038,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value, 
@@ -3473,7 +3473,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -3483,7 +3483,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value, 
@@ -4280,7 +4280,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -4290,7 +4290,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value,
@@ -4686,7 +4686,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -4696,7 +4696,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value, 
@@ -5331,7 +5331,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -5341,7 +5341,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value,
@@ -5862,7 +5862,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -5872,7 +5872,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value,
@@ -6688,7 +6688,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -6698,7 +6698,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value,
@@ -7083,7 +7083,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
-                    #app_info_state_name_token_stream: #axum_extract_state_token_stream<#app_info_state_path>,
+                    #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
@@ -7093,7 +7093,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
-                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_info_state_name_token_stream)
+                        >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
                             Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
                                 Ok(value) => value,

@@ -10,8 +10,8 @@
 //     user_id: actix_web::web::ReqData<
 //         common::repositories_types::server::authentication::UserId,
 //     >,
-//     app_info: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_info::AppInfo<'a>,
+//     app_state: actix_web::web::Data<
+//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
 //     >,
 // ) -> Result<actix_web::HttpResponse, actix_web::Error> {
 //     let user_id = user_id.into_inner();
@@ -25,7 +25,7 @@
 //         idempotency_key
 //             .try_into()
 //             .map_err(common::repositories_types::server::utils::status_codes::e400)?;
-//     let mut transaction = match crate::idempotency::try_processing(&app_info.postgres_pool, &idempotency_key, *user_id)
+//     let mut transaction = match crate::idempotency::try_processing(&app_state.postgres_pool, &idempotency_key, *user_id)
 //         .await
 //         .map_err(common::repositories_types::server::utils::status_codes::e500)?
 //     {

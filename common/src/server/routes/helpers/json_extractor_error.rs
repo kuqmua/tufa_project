@@ -118,7 +118,7 @@ where
 pub trait JsonValueResultExtractor<OkGeneric, ErrorGeneric> {
     fn try_extract_value(
         self,
-        app_info: &axum::extract::State<postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync>,
+        app_state: &axum::extract::State<postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync>,
     ) -> Result<OkGeneric, ErrorGeneric>;
 }
 
@@ -131,7 +131,7 @@ where
 {
     fn try_extract_value(
         self,
-        app_info: &axum::extract::State<postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync>,
+        app_state: &axum::extract::State<postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync>,
     ) -> Result<OkGeneric, ErrorGeneric> {
         match self {
             Ok(axum::Json(payload)) => Ok(payload),
@@ -139,7 +139,7 @@ where
                 let error = crate::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
                 error_occurence_lib::error_log::ErrorLog::error_log(
                     &error,
-                    app_info.as_ref(),
+                    app_state.as_ref(),
                 );
                 Err(ErrorGeneric::from(error))
             }

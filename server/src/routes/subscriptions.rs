@@ -1,7 +1,7 @@
 // pub async fn subscribe<'a>(
 //     form: actix_web::web::Form<common::repositories_types::server::routes::FormData>,
-//     app_info: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_info::AppInfo<'a>,
+//     app_state: actix_web::web::Data<
+//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
 //     >,
 //     email_client: actix_web::web::Data<
 //         common::repositories_types::server::email_client::EmailClient,
@@ -22,7 +22,7 @@
 //             Ok(new_subscriber) => new_subscriber,
 //         };
 //     //"Failed to acquire a Postgres connection from the pool"
-//     let mut transaction = match app_info.postgres_pool.begin().await {
+//     let mut transaction = match app_state.postgres_pool.begin().await {
 //         Err(e) => {
 //             return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::PostgresPoolBegin {
 //                 postgres_pool_begin: e,

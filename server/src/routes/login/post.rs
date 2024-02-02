@@ -2,8 +2,8 @@
 //     form: actix_web::web::Form<
 //         common::repositories_types::server::routes::login::post::FormData,
 //     >,
-//     app_info: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_info::AppInfo<'a>,
+//     app_state: actix_web::web::Data<
+//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
 //     >,
 //     session: common::repositories_types::server::session_state::TypedSession,
 // ) -> Result<
@@ -17,7 +17,7 @@
 //         password: form.0.password,
 //     };
 //     tracing::Span::current().record("username", &tracing::field::display(&credentials.username));
-//     match crate::authentication::validate_credentials(credentials, &app_info.postgres_pool).await {
+//     match crate::authentication::validate_credentials(credentials, &app_state.postgres_pool).await {
 //         Ok(user_id) => {
 //             tracing::Span::current().record("user_id", &tracing::field::display(&user_id));
 //             session.renew();

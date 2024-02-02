@@ -5,11 +5,11 @@ pub type ProjectCommitCheckerAppState = std::sync::Arc<(
 )>;
 
 pub async fn project_commit_checker(//todo maybe check not wrapper repo commit id but instead create array with git modules repos ids what actually synced with current wrapper repo commit id
-    axum::extract::State(app_info): axum::extract::State<ProjectCommitCheckerAppState>,
+    axum::extract::State(app_state): axum::extract::State<ProjectCommitCheckerAppState>,
     req: axum::http::Request<axum::body::Body>,
     next: axum::middleware::Next,
 ) -> Result<axum::response::Response, axum::response::Response> {
-    match app_info.get_enable_api_git_commit_check() {
+    match app_state.get_enable_api_git_commit_check() {
         true => match req
             .headers()
             .get(crate::common::git::project_git_info::PROJECT_COMMIT)

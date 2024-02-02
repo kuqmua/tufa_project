@@ -5,21 +5,21 @@
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic(post or put)
 
 pub fn routes(
-    app_info: postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync,
+    app_state: postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
     axum::Router::new().nest(
         &format!(
             "/{}",
             common::repositories_types::server::routes::api::cats::TABLE_NAME
         ),
-        axum::Router::new().merge(crud(app_info)),
+        axum::Router::new().merge(crud(app_state)),
     )
 }
 
 // async fn get_root() {}
 
 fn crud(
-    app_info: postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync,
+    app_state: postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
     axum::Router::new()
         //todo - remove it its just a mock route
@@ -65,8 +65,8 @@ fn crud(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
         // ))
         .route_layer(axum::middleware::from_fn_with_state(
-            app_info.clone() as common::server::middleware::project_commit_checker::ProjectCommitCheckerAppState,
+            app_state.clone() as common::server::middleware::project_commit_checker::ProjectCommitCheckerAppState,
             common::server::middleware::project_commit_checker::project_commit_checker,
         ))
-        .with_state(app_info)
+        .with_state(app_state)
 }

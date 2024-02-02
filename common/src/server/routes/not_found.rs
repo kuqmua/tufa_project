@@ -16,18 +16,18 @@ struct NotFoundHandle {
 //todo maybe use swagger instead
 async fn not_found(
     uri: axum::http::Uri,
-    axum::extract::State(app_info): axum::extract::State<DynArcNotFoundRouteParametersSendSync>,
+    axum::extract::State(app_state): axum::extract::State<DynArcNotFoundRouteParametersSendSync>,
 ) -> impl axum::response::IntoResponse {
     (
         axum::http::StatusCode::NOT_FOUND,
         axum::Json(NotFoundHandle {
             message: format!("No route for {uri}"),
-            commit: app_info.get_git_commit_link(),
+            commit: app_state.get_git_commit_link(),
             open_api_specification: crate::global_variables::hardcode::SLASH_SWAGGER_UI,
         }),
     )
 }
 
-pub fn not_found_route(app_info: DynArcNotFoundRouteParametersSendSync) -> axum::Router {
-    axum::Router::new().fallback(not_found).with_state(app_info)
+pub fn not_found_route(app_state: DynArcNotFoundRouteParametersSendSync) -> axum::Router {
+    axum::Router::new().fallback(not_found).with_state(app_state)
 }

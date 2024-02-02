@@ -1,14 +1,14 @@
-// #[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, app_info))]
+// #[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, app_state))]
 // pub async fn confirm<'a>(
 //     parameters: actix_web::web::Query<
 //         common::repositories_types::server::routes::Parameters,
 //     >,
-//     app_info: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_info::AppInfo<'a>,
+//     app_state: actix_web::web::Data<
+//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
 //     >,
 // ) -> actix_web::HttpResponse {
 //     let id =
-//         match get_subscriber_id_from_token(&app_info.postgres_pool, &parameters.subscription_token)
+//         match get_subscriber_id_from_token(&app_state.postgres_pool, &parameters.subscription_token)
 //             .await
 //         {
 //             Ok(id) => id,
@@ -17,7 +17,7 @@
 //     match id {
 //         None => actix_web::HttpResponse::Unauthorized().finish(),
 //         Some(subscriber_id) => {
-//             if confirm_subscriber(&app_info.postgres_pool, subscriber_id)
+//             if confirm_subscriber(&app_state.postgres_pool, subscriber_id)
 //                 .await
 //                 .is_err()
 //             {

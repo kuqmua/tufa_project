@@ -1,7 +1,7 @@
 mod cats;
 
 pub fn routes(
-    app_info: postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync,
+    app_state: postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
-    axum::Router::new().merge(crate::routes::api::cats::routes(app_info))
+    axum::Router::new().merge(crate::routes::api::cats::routes(app_state))
 }

@@ -164,8 +164,8 @@ pub async fn try_build_server<'a>(
             &config
         )
     );
-    let app_info = std::sync::Arc::new(
-        common::repositories_types::server::routes::app_info::AppInfo {
+    let app_state = std::sync::Arc::new(
+        common::repositories_types::server::routes::app_state::AppState {
             postgres_pool,
             config,
             project_git_info:
@@ -197,10 +197,10 @@ pub async fn try_build_server<'a>(
                 axum::routing::get(middleware_message_example),
             )
             .layer(axum::Extension(shared_data))
-            .merge(common::server::routes::routes(app_info.clone()))
-            .merge(crate::routes::api::routes(app_info.clone()))
+            .merge(common::server::routes::routes(app_state.clone()))
+            .merge(crate::routes::api::routes(app_state.clone()))
             .merge(common::server::routes::not_found::not_found_route(
-                app_info.clone(),
+                app_state.clone(),
             ))
             // .fallback_service(routes_static())
             .layer(
@@ -260,10 +260,10 @@ pub async fn try_build_server<'a>(
 //     }
 // }
 // pub async fn something(
-//     app_info_state: axum::extract::State<std::sync::Arc<dyn GetOneGetTwo + Send + Sync>>,
+//     app_state: axum::extract::State<std::sync::Arc<dyn GetOneGetTwo + Send + Sync>>,
 // ) {
 //     let example = Example {};
-//     example.do_something(app_info_state.as_ref());
+//     example.do_something(app_state.as_ref());
 // }
 // #[tokio::main]
 // async fn main() {
@@ -276,13 +276,13 @@ pub async fn try_build_server<'a>(
 //     //     ))))
 //     //     .into_make_service();
 //     //case2
-//     let app_info: std::sync::Arc<dyn GetOneGetTwo + Send + Sync> =
+//     let app_state: std::sync::Arc<dyn GetOneGetTwo + Send + Sync> =
 //         std::sync::Arc::new(AppInfo(One(String::from("one")), Two(String::from("two"))));
 //     let router = axum::Router::new()
 //         .route("/", axum::routing::get(something))
 //         // expected struct `std::boxed::Box<std::sync::Arc<(dyn GetOneGetTwo + std::marker::Send + std::marker::Sync + 'static)>>`
 //         // found struct `std::boxed::Box<std::sync::Arc<AppInfo>>`
-//         .with_state(app_info)
+//         .with_state(app_state)
 //         .into_make_service();
 //     //
 //     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())

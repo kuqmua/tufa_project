@@ -1,14 +1,14 @@
 // pub async fn admin_dashboard<'a>(
 //     session: common::repositories_types::server::session_state::TypedSession,
-//     app_info: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_info::AppInfo<'a>,
+//     app_state: actix_web::web::Data<
+//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
 //     >,
 // ) -> Result<actix_web::HttpResponse, actix_web::Error> {
 //     let username = if let Some(user_id) = session
 //         .get_user_id()
 //         .map_err(common::repositories_types::server::utils::status_codes::e500)?
 //     {
-//         get_username(user_id, &app_info.postgres_pool)
+//         get_username(user_id, &app_state.postgres_pool)
 //             .await
 //             .map_err(common::repositories_types::server::utils::status_codes::e500)?
 //     } else {

@@ -7,5 +7,5 @@ pub use login::*;
 // pub use subscriptions::*;
 pub use subscriptions_confirm::*;
 pub mod api;
-pub mod app_info;
+pub mod app_state;
 pub mod service_possibilities;

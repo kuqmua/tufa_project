@@ -44,7 +44,7 @@
 // pub trait QueryValueResultExtractor<OkGeneric, ErrorGeneric> {
 //     fn try_extract_value(
 //         self,
-//         app_info: &axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+//         app_state: &axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 //     ) -> Result<OkGeneric, ErrorGeneric>;
 // }
 
@@ -57,7 +57,7 @@
 // {
 //     fn try_extract_value(
 //         self,
-//         app_info: &axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+//         app_state: &axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 //     ) -> Result<OkGeneric, ErrorGeneric> {
 //         match self {
 //             Ok(axum::extract::Query(payload)) => Ok(payload),
@@ -65,7 +65,7 @@
 //                 let error = crate::server::routes::helpers::query_extractor_error::QueryExtractorErrorNamed::from(err);
 //                 crate::common::error_logs_logic::error_log::ErrorLog::error_log(
 //                     &error,
-//                     app_info.as_ref(),
+//                     app_state.as_ref(),
 //                 );
 //                 Err(ErrorGeneric::from(error))
 //             }
