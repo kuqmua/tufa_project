@@ -178,7 +178,7 @@ pub fn compile_time_project_git_info(
         .expect("commit_id parse failed");
     let gen = quote::quote! {
         crate::common::git::project_git_info::ProjectGitInfo {
-            project_commit: #commit_id_token_stream,
+            commit: #commit_id_token_stream,
         }
     };
     gen.into()

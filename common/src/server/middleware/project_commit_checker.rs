@@ -17,7 +17,7 @@ pub async fn project_commit_checker(//todo maybe check not wrapper repo commit i
         {
             Some(project_commit_checker_header) => match project_commit_checker_header
                 == crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
-                    .project_commit
+                    .commit
             {
                 true => Ok(next.run(req).await),
                 false => Err(axum::response::IntoResponse::into_response((

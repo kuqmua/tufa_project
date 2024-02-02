@@ -2,7 +2,7 @@
     Debug, serde_derive::Serialize, serde_derive::Deserialize, Clone, Eq, Hash, PartialEq, Default,
 )]
 pub struct ProjectGitInfo<'a> {
-    pub project_commit: &'a str,
+    pub commit: &'a str,
 }
 
 impl ProjectGitInfo<'_> {
@@ -13,13 +13,13 @@ impl ProjectGitInfo<'_> {
         "cannot convert project commit to str, please check request headers"
     }
     pub fn no_project_commit_header_message(&self) -> &'static str {
-        "no project_commit header provided, please add project_commit to request headers"
+        "no commit header provided, please add commit to request headers"
     }
 }
 
 impl<'a> error_occurence_lib::git_fields::GetGitCommitId for ProjectGitInfo<'a> {
     fn get_git_commit_id(&self) -> std::string::String {
-        self.project_commit.to_string()
+        self.commit.to_string()
     }
 }
 
@@ -27,7 +27,7 @@ impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for ProjectGi
     fn get_git_commit_link(&self) -> std::string::String {
         format!(
             "https://github.com/kuqmua/tufa_project/tree/{}", //todo get git_author and git_name from .git directory
-            self.project_commit
+            self.commit
         )
     }
 }

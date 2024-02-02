@@ -2022,7 +2022,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let project_commit_header_addition_token_stream = quote::quote!{
         .header(
             postgresql_crud::COMMIT,
-            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit,
+            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit,
         )
     };
     let application_json_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
