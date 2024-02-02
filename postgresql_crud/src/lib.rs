@@ -10,7 +10,7 @@ pub use generate_postgresql_crud::update_one_additional_http_status_codes_error_
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub mod json_value_extractor;
-pub mod dyn_arc_get_config_get_postgres_pool_send_sync;
+pub mod app_info_state;
 
 pub trait IntoSerdeSerializeDeserialize{}
 

@@ -1,13 +1,6 @@
 //todo openapi
 //todo test if create\update\delete empty array
 
-
-pub type DynArcGetConfigGetPostgresPoolSendSync = std::sync::Arc<
-    dyn postgresql_crud::dyn_arc_get_config_get_postgres_pool_send_sync::GetConfigGetPostgresPool
-        + Send
-        + Sync,
->;
-
 #[derive(
     Debug,
     postgresql_crud::GeneratePostgresqlCrud,

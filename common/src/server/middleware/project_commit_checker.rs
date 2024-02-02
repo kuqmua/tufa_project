@@ -1,5 +1,5 @@
 pub async fn project_commit_checker(//todo maybe check not wrapper repo commit id but instead create array with git modules repos ids what actually synced with current wrapper repo commit id
-    axum::extract::State(app_info): axum::extract::State<crate::repositories_types::server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+    axum::extract::State(app_info): axum::extract::State<postgresql_crud::app_info_state::DynArcGetConfigGetPostgresPoolSendSync>,
     req: axum::http::Request<axum::body::Body>,
     next: axum::middleware::Next,
 ) -> Result<axum::response::Response, axum::response::Response> {

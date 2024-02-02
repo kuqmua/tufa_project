@@ -5,3 +5,9 @@ pub trait GetConfigGetPostgresPool:
     + app_state::get_postgres_pool::GetPostgresPool
 {
 }
+
+pub type DynArcGetConfigGetPostgresPoolSendSync = std::sync::Arc<
+    dyn GetConfigGetPostgresPool
+        + Send
+        + Sync,
+>;
