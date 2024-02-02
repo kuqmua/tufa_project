@@ -14,3 +14,5 @@ pub mod server;
 pub mod proc_macros;
 
 pub mod dev;
+
+const PROJECT_PART_NAME: &str = "common";

@@ -4,6 +4,7 @@ pub struct CodeOccurence {
     line: u32,
     column: u32,
     commit: std::string::String,
+    project_part: std::string::String,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
 }
@@ -12,6 +13,7 @@ impl CodeOccurence {
     #[must_use]
     pub fn new(
         commit: std::string::String,
+        project_part: std::string::String,
         file: std::string::String,
         line: u32,
         column: u32,
@@ -21,6 +23,7 @@ impl CodeOccurence {
             line,
             column,
             commit,
+            project_part,
             duration: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .expect("cannot convert time to unix_epoch"),
@@ -67,7 +70,7 @@ impl<'a> crate::get_git_source_file_link::GetGitSourceFileLink<'a> for CodeOccur
         format!(
             "https://github.com/kuqmua/tufa_project/blob/{}/{}/{file}#L{line}",
             self.commit,
-            "common"
+            self.project_part
         )
     }
 }
