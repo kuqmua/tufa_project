@@ -14,7 +14,7 @@
 #[postgresql_crud::delete_one_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::delete_many_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::additional_http_status_codes_error_variants{
-    #[path(crate::server::extractors::project_commit_extractor::)]
+    #[path(crate::server::extractors::commit_extractor::)]
     enum ProjectCommitExtractorCheckErrorNamed {
         #[tvfrr_400_bad_request]
         ProjectCommitExtractorNotEqual {

@@ -1,1 +1,1 @@
-pub mod project_commit_extractor;
+pub mod commit_extractor;
