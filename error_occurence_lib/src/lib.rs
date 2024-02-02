@@ -74,3 +74,8 @@ pub mod vec_display_into_vec_string;
 pub mod vec_display_to_string;
 pub mod vec_to_string_with_config_to_string;
 pub mod vec_to_string_without_config_to_string;
+
+
+pub trait IntoSerializeDeserialize {
+    fn into_serialize_deserialize(self) -> impl serde::Serialize + serde::Deserialize<'static>;
+}
