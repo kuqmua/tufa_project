@@ -70,7 +70,6 @@
             common::repositories_types::server::routes::api::cats::CreateOnePayload,
 
             common::common::utoipa::std::time::StdTimeDuration,
-            error_occurence_lib::git_info::GitInfoWithoutLifetime,
             common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
             error_occurence_lib::code_occurence::CodeOccurence,
         )

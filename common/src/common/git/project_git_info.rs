@@ -21,16 +21,6 @@ impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for ProjectGi
 }
 
 //todo remove it 
-impl<'a> ProjectGitInfo<'a> {
-    pub fn to_git_info_without_lifetime(&self) -> error_occurence_lib::git_info::GitInfoWithoutLifetime {
-        error_occurence_lib::git_info::GitInfoWithoutLifetime {
-            git_commit_id: self.commit.to_string(),
-            git_repo_link: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(self),
-        }
-    }
-}
-
-//todo remove it 
 impl<'a> error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a> for ProjectGitInfo<'a> {
     fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
         format!("todo")
