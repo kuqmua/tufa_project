@@ -15,9 +15,9 @@
 #[postgresql_crud::delete_many_additional_http_status_codes_error_variants{}]
 #[postgresql_crud::additional_http_status_codes_error_variants{
     #[path(crate::server::extractors::commit_extractor::)]
-    enum ProjectCommitExtractorCheckErrorNamed {
+    enum CommitExtractorCheckErrorNamed {
         #[tvfrr_400_bad_request]
-        ProjectCommitExtractorNotEqual {
+        CommitExtractorNotEqual {
             #[eo_display_with_serialize_deserialize]
             commit_not_equal: std::string::String,
             #[eo_display_with_serialize_deserialize]
@@ -25,13 +25,13 @@
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         },
         #[tvfrr_400_bad_request]
-        ProjectCommitExtractorToStrConversion {
+        CommitExtractorToStrConversion {
             #[eo_display]
             commit_to_str_conversion: http::header::ToStrError,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         },
         #[tvfrr_400_bad_request]
-        NoProjectCommitExtractorHeader {
+        NoCommitExtractorHeader {
             #[eo_display_with_serialize_deserialize]
             no_commit_header: std::string::String,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,

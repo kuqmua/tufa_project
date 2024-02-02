@@ -23,7 +23,7 @@ pub async fn commit_checker(//todo maybe check not wrapper repo commit id but in
                 false => Err(axum::response::IntoResponse::into_response((
                     axum::http::StatusCode::BAD_REQUEST,
                     axum::Json(
-                        crate::server::extractors::commit_extractor::ProjectCommitExtractorCheckErrorNamed::ProjectCommitExtractorNotEqual {
+                        crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed::CommitExtractorNotEqual {
                             commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
                             commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO),
                             code_occurence: crate::code_occurence!(),
@@ -34,7 +34,7 @@ pub async fn commit_checker(//todo maybe check not wrapper repo commit id but in
             None => Err(axum::response::IntoResponse::into_response((
                 axum::http::StatusCode::BAD_REQUEST,
                 axum::Json(
-                    crate::server::extractors::commit_extractor::ProjectCommitExtractorCheckErrorNamed::NoProjectCommitExtractorHeader {
+                    crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed::NoCommitExtractorHeader {
                         no_commit_header: std::string::String::from("commit header is not provided"),
                         code_occurence: crate::code_occurence!(),
                     }.into_serialize_deserialize_version()
