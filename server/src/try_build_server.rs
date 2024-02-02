@@ -171,7 +171,7 @@ pub async fn try_build_server<'a>(
             project_git_info:
                 &common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
         },
-    ); //: std::sync::Arc<dyn common::repositories_types::server::routes::service_possibilities::ServicePossibilities + Send + Sync>
+    );
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };

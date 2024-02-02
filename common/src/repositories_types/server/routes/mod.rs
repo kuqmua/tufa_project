@@ -8,4 +8,3 @@ pub use login::*;
 pub use subscriptions_confirm::*;
 pub mod api;
 pub mod app_state;
-pub mod service_possibilities;

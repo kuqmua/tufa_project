@@ -4,6 +4,13 @@ pub struct AppState<'a> {
     pub project_git_info: &'a crate::common::git::project_git_info::ProjectGitInfo<'a>,
 }
 
+pub trait AppStatePossibilities:
+    crate::server::routes::git_info::GitInfoRouteParameters
+    + crate::server::routes::not_found::NotFoundRouteParameters
+    + postgresql_crud::app_state::GetConfigGetPostgresPool
+{
+}
+
 impl<'a> postgresql_crud::app_state::GetConfigGetPostgresPool
     for AppState<'a>
 {
