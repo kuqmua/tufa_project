@@ -65,8 +65,8 @@ fn crud(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
         // ))
         .route_layer(axum::middleware::from_fn_with_state(
-            app_state.clone() as common::server::middleware::commit_checker::ProjectCommitCheckerAppState,
-            common::server::middleware::commit_checker::project_commit_checker,
+            app_state.clone() as common::server::middleware::commit_checker::CommitCheckerAppState,
+            common::server::middleware::commit_checker::commit_checker,
         ))
         .with_state(app_state)
 }

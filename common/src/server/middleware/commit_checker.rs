@@ -1,11 +1,11 @@
-pub type ProjectCommitCheckerAppState = std::sync::Arc<(
+pub type CommitCheckerAppState = std::sync::Arc<(
     dyn config_lib::config_fields::GetEnableApiGitCommitCheck
         + Send
         + Sync
 )>;
 
-pub async fn project_commit_checker(//todo maybe check not wrapper repo commit id but instead create array with git modules repos ids what actually synced with current wrapper repo commit id
-    axum::extract::State(app_state): axum::extract::State<ProjectCommitCheckerAppState>,
+pub async fn commit_checker(//todo maybe check not wrapper repo commit id but instead create array with git modules repos ids what actually synced with current wrapper repo commit id
+    axum::extract::State(app_state): axum::extract::State<CommitCheckerAppState>,
     req: axum::http::Request<axum::body::Body>,
     next: axum::middleware::Next,
 ) -> Result<axum::response::Response, axum::response::Response> {
