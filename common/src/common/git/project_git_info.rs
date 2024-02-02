@@ -29,3 +29,10 @@ impl<'a> ProjectGitInfo<'a> {
         }
     }
 }
+
+//todo remove it 
+impl<'a> error_occurence_lib::get_git_source_file_link::GetGitSourceFileLink<'a> for ProjectGitInfo<'a> {
+    fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
+        format!("todo")
+    }
+}

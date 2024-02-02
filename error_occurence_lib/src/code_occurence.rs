@@ -3,8 +3,7 @@ pub struct CodeOccurence {
     file: std::string::String,
     line: u32,
     column: u32,
-    #[schema(value_type = GitInfoWithoutLifetime)]
-    git_info: crate::git_info::GitInfoWithoutLifetime,
+    git_info: std::string::String,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
 }
@@ -12,7 +11,7 @@ pub struct CodeOccurence {
 impl CodeOccurence {
     #[must_use]
     pub fn new(
-        git_info: crate::git_info::GitInfoWithoutLifetime,
+        git_info: std::string::String,//crate::git_info::GitInfoWithoutLifetime
         file: std::string::String,
         line: u32,
         column: u32,
@@ -65,6 +64,6 @@ impl std::fmt::Display for CodeOccurence {
 
 impl<'a> crate::get_git_source_file_link::GetGitSourceFileLink<'a> for CodeOccurence {
     fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
-        self.git_info.get_git_source_file_link(file, line)
+        format!("todo")
     }
 }

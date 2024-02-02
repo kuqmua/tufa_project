@@ -19,9 +19,3 @@ impl crate::git_fields::GetGitCommitId for GitInfoWithoutLifetime {
         self.git_commit_id.to_string()
     }
 }
-
-impl crate::git_fields::GetGitRepoLink for GitInfoWithoutLifetime {
-    fn get_git_repo_link(&self) -> std::string::String {
-        self.git_repo_link.to_string()
-    }
-}
