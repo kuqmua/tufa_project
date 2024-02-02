@@ -3,5 +3,5 @@ pub const PROJECT_GIT_INFO: crate::common::git::project_git_info::ProjectGitInfo
 
 // pub const PROJECT_GIT_INFO: crate::common::git::project_git_info::ProjectGitInfo =
 //     crate::common::git::project_git_info::ProjectGitInfo {
-//         project_commit: "moch",
+//         commit: "moch",
 //     };

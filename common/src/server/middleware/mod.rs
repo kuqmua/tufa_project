@@ -1,1 +1,1 @@
-pub mod project_commit_checker;
+pub mod commit_checker;
