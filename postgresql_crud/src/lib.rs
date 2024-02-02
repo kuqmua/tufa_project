@@ -38,7 +38,20 @@ impl PostgresqlOrder for sqlx::types::BitVec {}//BIT,VARBIT
 
 pub trait PostgresqlLimit{}
 
+// integer, bigint
+// real, double precision
+// varchar
+// text
+// jsonb
+// tsvector
+// int4range
+// daterange
+
+
+
 // impl trait PostgresqlLimit for sqlx::types:: {}
+
+
 
 //todo swagger type\schema
 
