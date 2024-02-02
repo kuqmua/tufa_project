@@ -35,7 +35,7 @@ pub async fn project_commit_checker(//todo maybe check not wrapper repo commit i
                 axum::http::StatusCode::BAD_REQUEST,
                 axum::Json(
                     crate::server::extractors::project_commit_extractor::ProjectCommitExtractorCheckErrorNamed::NoProjectCommitExtractorHeader {
-                        no_project_commit_header: std::string::String::from("project_commit header is not provided"),
+                        no_project_commit_header: std::string::String::from("commit header is not provided"),
                         code_occurence: crate::code_occurence!(),
                     }.into_serialize_deserialize_version()
                 ),
