@@ -106,7 +106,7 @@ impl utoipa::Modify for SecurityAddon {
 // }
 
 // async fn extract_custom_header_example(headers: http::header::HeaderMap) {
-//     let pc = headers.get("project_commit");
+//     let pc = headers.get("commit");
 //     println!("pc{pc:#?}")
 // }
 
@@ -139,16 +139,16 @@ async fn read_middleware_custom_header(
 //     mut req: axum::http::Request<B>,
 //     next: axum::middleware::Next<B>,
 // ) -> Result<axum::response::Response, axum::http::StatusCode> {
-//     let request_project_commit = req
+//     let request_commit = req
 //         .headers()
 //         .get("commit")//todo maybe reuse global variable
 //         .ok_or_else(|| axum::http::StatusCode::BAD_REQUEST)?;
-//     let project_commit_checker_header = request_project_commit
+//     let commit_checker_header = request_commit
 //         .to_str()
 //         .map_err(|_error| axum::http::StatusCode::BAD_REQUEST)?
 //         .to_owned();
 //     let extensions = req.extensions_mut();
-//     extensions.insert(HeaderMessage(project_commit_checker_header.to_owned()));
+//     extensions.insert(HeaderMessage(commit_checker_header.to_owned()));
 //     Ok(next.run(req).await)
 // }
 
