@@ -8,7 +8,7 @@ pub use generate_postgresql_crud::read_one_additional_http_status_codes_error_va
 pub use generate_postgresql_crud::update_many_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::update_one_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
-pub use ::app_state::COMMIT;
+pub use ::naming_constants::COMMIT;
 
 pub mod json_value_extractor;
 pub mod app_state;

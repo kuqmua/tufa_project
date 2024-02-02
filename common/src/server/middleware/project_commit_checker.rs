@@ -12,7 +12,7 @@ pub async fn project_commit_checker(//todo maybe check not wrapper repo commit i
     match app_state.get_enable_api_git_commit_check() {
         true => match req
             .headers()
-            .get(app_state::COMMIT)
+            .get(postgresql_crud::COMMIT)
             .and_then(|header| header.to_str().ok()) 
         {
             Some(project_commit_checker_header) => match project_commit_checker_header
