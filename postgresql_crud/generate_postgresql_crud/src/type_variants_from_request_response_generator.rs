@@ -3,7 +3,6 @@ pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
     eo_display_token_stream: &proc_macro2::TokenStream,
     eo_display_foreign_type_token_stream: &proc_macro2::TokenStream,
@@ -834,15 +833,47 @@ pub fn type_variants_from_request_response_generator(
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {try_from_response_try_operation_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let try_from_response_try_operation_snake_case_token_stream_result_ok_token_stream = quote::quote!{
-            match #desirable_type_token_stream::try_from(variants){
-                Ok(value) => Ok(value),
-                Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
-                    expected_type: e,
-                    #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
-                }),
+        let try_from_response_try_operation_snake_case_token_stream_result_ok_token_stream = {
+            let field_code_occurence_new_406e0f46_509c_40b3_9777_17d2048f9600_token_stream = crate::generate_field_code_occurence_new_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            quote::quote!{
+                match #desirable_type_token_stream::try_from(variants){
+                    Ok(value) => Ok(value),
+                    Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
+                        expected_type: e,
+                        #field_code_occurence_new_406e0f46_509c_40b3_9777_17d2048f9600_token_stream,
+                    }),
+                }
             }
         };
+        let field_code_occurence_new_8ead050d_0de1_4fe2_93a1_acb17298a674_token_stream = crate::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_756d79dd_03ef_4087_a5f7_a075512b96ab_token_stream = crate::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_a4f983b6_7b74_4580_8732_d721b29256b4_token_stream = crate::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream = crate::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         quote::quote! {
             async fn #tvfrr_extraction_logic_try_operation_snake_case_token_stream<'a>(
                 future: impl std::future::Future<Output = Result<reqwest::Response, #reqwest_error_token_stream>>,
@@ -862,7 +893,7 @@ pub fn type_variants_from_request_response_generator(
                                 status_code,
                                 headers,
                                 response_text_result,
-                                #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream
+                                #field_code_occurence_new_8ead050d_0de1_4fe2_93a1_acb17298a674_token_stream
                             }),
                             #crate_common_api_request_unexpected_error_api_request_unexpected_error_token_stream::FailedToGetResponseText {
                                 reqwest,
@@ -872,7 +903,7 @@ pub fn type_variants_from_request_response_generator(
                                 reqwest,
                                 status_code,
                                 headers,
-                                #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream
+                                #field_code_occurence_new_756d79dd_03ef_4087_a5f7_a075512b96ab_token_stream
                             }),
                             #crate_common_api_request_unexpected_error_api_request_unexpected_error_token_stream::DeserializeBody {
                                 serde,
@@ -884,13 +915,13 @@ pub fn type_variants_from_request_response_generator(
                                 status_code,
                                 headers,
                                 response_text,
-                                #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream
+                                #field_code_occurence_new_a4f983b6_7b74_4580_8732_d721b29256b4_token_stream
                             }),
                         },
                     },
                     Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream::Reqwest {
                         reqwest: e,
-                        #code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
+                        #field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream,
                     }),
                 }
             }

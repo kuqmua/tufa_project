@@ -2967,7 +2967,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -3482,7 +3481,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -3999,7 +3997,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -4749,7 +4746,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &struct_options_ident_token_stream,
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -5283,7 +5279,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -5867,7 +5862,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -6420,7 +6414,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -7200,7 +7193,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                &code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
                 &eo_display_foreign_type_token_stream,
@@ -8978,19 +8970,16 @@ fn generate_field_code_occurence_new_token_stream(
             &file,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        println!("file_token_stream {file_token_stream}");
         let line_token_stream = {
             let line_stringified = line.to_string();
             line_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {line_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        println!("line_token_stream {line_token_stream}");
         let column_token_stream = {
             let column_stringified = column.to_string();
             column_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {column_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        println!("column_token_stream {column_token_stream}");
         quote::quote!{
             error_occurence_lib::code_occurence::CodeOccurence::new(
                 crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
