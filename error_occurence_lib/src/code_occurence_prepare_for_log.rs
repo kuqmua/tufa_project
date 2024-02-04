@@ -9,13 +9,11 @@ pub trait CodeOccurencePrepareForLogWithConfig {
     ) -> std::string::String;
 }
 
-impl<'a, SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
+impl<SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
 where
-    SelfGeneric: crate::get_file::GetFile
-        + crate::get_line::GetLine
-        + crate::get_column::GetColumn
-        + crate::get_duration::GetDuration
-        + crate::get_git_source_file_link::GetGitSourceFileLink<'a>,
+    SelfGeneric: crate::form_error_path::FormErrorPathDirectory
+        + crate::form_error_path::FormErrorPathGithub
+        + crate::get_duration::GetDuration,
 {
     fn code_occurence_prepare_for_log_with_config<
         ConfigGeneric: config_lib::config_fields::GetTimezone

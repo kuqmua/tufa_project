@@ -31,6 +31,24 @@ impl CodeOccurence {
     }
 }
 
+impl crate::form_error_path::FormErrorPathDirectory for CodeOccurence {
+    fn form_error_path_directory(&self) -> std::string::String {
+        format!(
+            "src/{}:{}:{}", //todo "src" - hardcode, for some reason vscode stops following just {}:{}:{} path(without prefix "src")
+            self.file, self.line, self.column
+        )
+    }
+}
+
+impl crate::form_error_path::FormErrorPathGithub for CodeOccurence {
+    fn form_error_path_github(&self) -> std::string::String {
+        format!(
+            "https://github.com/kuqmua/tufa_project/blob/{}/{}#L{}",
+            self.commit, self.file, self.line
+        )
+    }
+}
+
 impl crate::get_file::GetFile for CodeOccurence {
     fn get_file(&self) -> &str {
         &self.file
@@ -65,12 +83,11 @@ impl std::fmt::Display for CodeOccurence {
     }
 }
 
-impl<'a> crate::get_git_source_file_link::GetGitSourceFileLink<'a> for CodeOccurence {
+impl crate::get_git_source_file_link::GetGitSourceFileLink for CodeOccurence {
     fn get_git_source_file_link(&self, file: &str, line: u32) -> std::string::String {
         format!(
             "https://github.com/kuqmua/tufa_project/blob/{}/{}/{file}#L{line}",
-            self.commit,
-            self.project_part
+            self.commit, self.project_part
         )
     }
 }
