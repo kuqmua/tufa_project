@@ -1,4 +1,9 @@
-
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
+pub struct MacroOccurence {
+    file: std::string::String,
+    line: u32,
+    column: u32,
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
 pub struct CodeOccurence {
@@ -8,7 +13,7 @@ pub struct CodeOccurence {
     commit: std::string::String,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
-    additional_string: std::option::Option<std::string::String>
+    macro_occurence: std::option::Option<MacroOccurence>
 }
 
 impl CodeOccurence {
@@ -18,7 +23,7 @@ impl CodeOccurence {
         file: std::string::String,
         line: u32,
         column: u32,
-        additional_string: std::option::Option<std::string::String>
+        macro_occurence: std::option::Option<MacroOccurence>
     ) -> Self {
         Self {
             file,
@@ -28,7 +33,7 @@ impl CodeOccurence {
             duration: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap_or(std::time::Duration::default()),
-            additional_string,
+            macro_occurence,
         }
     }
 }
@@ -83,13 +88,13 @@ impl GetDuration for CodeOccurence {
     }
 }
 
-pub trait GetAdditionalString {
-    fn get_additional_string(&self) -> &std::option::Option<std::string::String>;
+pub trait GetMacroOccurence {
+    fn get_macro_occurence(&self) -> &std::option::Option<MacroOccurence>;
 }
 
-impl GetAdditionalString for CodeOccurence {
-    fn get_additional_string(&self) -> &std::option::Option<std::string::String> {
-        &self.additional_string
+impl GetMacroOccurence for CodeOccurence {
+    fn get_macro_occurence(&self) -> &std::option::Option<MacroOccurence> {
+        &self.macro_occurence
     }
 }
 
