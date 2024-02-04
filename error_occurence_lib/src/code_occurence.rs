@@ -102,3 +102,33 @@ impl std::fmt::Display for CodeOccurence {
         )
     }
 }
+
+pub trait FormErrorPathDirectory {
+    fn form_error_path_directory(&self) -> std::string::String;
+}
+
+impl<T> FormErrorPathDirectory for T 
+where T: GetFile + GetLine + GetColumn
+{
+    fn form_error_path_directory(&self) -> std::string::String {
+        format!(
+            "{}:{}:{}",
+            self.get_file(), self.get_line(), self.get_column()
+        )
+    }
+}
+
+pub trait FormErrorPathGithub {
+    fn form_error_path_github(&self) -> std::string::String;
+}
+
+impl<T> FormErrorPathGithub for T 
+where T: GetCommit + GetFile + GetLine 
+{
+    fn form_error_path_github(&self) -> std::string::String {
+        format!(
+            "{}/blob/{}/{}#L{}",
+            naming_constants::GITHUB_URL, self.get_commit(), self.get_file(), self.get_line()
+        )
+    }
+}
