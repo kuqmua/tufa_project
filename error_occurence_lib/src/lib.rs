@@ -9,6 +9,7 @@ pub mod form_error_path;
 pub mod get_code_occurence;
 pub mod get_code_path;
 pub mod get_code_path_without_config;
+pub mod get_additional_string;
 pub mod get_commit;
 pub mod get_column;
 pub mod get_duration;

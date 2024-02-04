@@ -1,4 +1,4 @@
-pub trait GetGitCommitId {
+pub trait GetGitCommitId {//todo remove
     fn get_git_commit_id(&self) -> std::string::String;
 }
 

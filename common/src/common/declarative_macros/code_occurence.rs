@@ -6,6 +6,7 @@ macro_rules! code_occurence {
             file!().to_string(),
             line!(),
             column!(),
+            None,
         )
     }};
 }
