@@ -95,11 +95,7 @@ impl GetAdditionalString for CodeOccurence {
 
 impl std::fmt::Display for CodeOccurence {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            crate::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self)
-        )
+        write!(f, "{}", CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self))
     }
 }
 
@@ -152,12 +148,82 @@ where T: FormErrorPathDirectory + FormErrorPathGithub
     }
 }
 
-// pub fn get_code_path(
-//     source_place_type: &config_lib::source_place_type::SourcePlaceType,
-//     code_occurence: &(impl FormErrorPathDirectory + FormErrorPathGithub),
-// ) -> std::string::String {
-//     match source_place_type {
-//         config_lib::source_place_type::SourcePlaceType::Source => FormErrorPathDirectory::form_error_path_directory(code_occurence),
-//         config_lib::source_place_type::SourcePlaceType::Github => FormErrorPathGithub::form_error_path_github(code_occurence),
-//     }
-// }
+pub trait CodeOccurencePrepareForLogWithConfig {
+    fn code_occurence_prepare_for_log_with_config<
+        ConfigGeneric: config_lib::config_fields::GetTimezone
+            + config_lib::config_fields::GetSourcePlaceType
+            + ?Sized,
+    >(
+        &self,
+        config: &ConfigGeneric,
+    ) -> std::string::String;
+}
+
+impl<SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
+where
+    SelfGeneric: GetCodePath
+        + GetDuration,
+{
+    fn code_occurence_prepare_for_log_with_config<
+        ConfigGeneric: config_lib::config_fields::GetTimezone
+            + config_lib::config_fields::GetSourcePlaceType
+            + ?Sized,
+    >(
+        &self,
+        config: &ConfigGeneric,
+    ) -> std::string::String {
+        prepare_for_log(
+            self.get_code_path(config.get_source_place_type()),
+            chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+                .with_timezone(config.get_timezone())
+                .format("%Y-%m-%d %H:%M:%S")
+                .to_string(),
+        )
+    }
+}
+
+pub trait CodeOccurencePrepareForLogWithoutConfig {
+    fn code_occurence_prepare_for_log_without_config(&self) -> std::string::String;
+}
+
+impl<SelfGeneric> CodeOccurencePrepareForLogWithoutConfig for SelfGeneric
+where
+    SelfGeneric: FormErrorPathGithub + GetDuration,
+{
+    fn code_occurence_prepare_for_log_without_config(&self) -> std::string::String {
+        prepare_for_log(
+            self.form_error_path_github(),
+            chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+                .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
+                .format("%Y-%m-%d %H:%M:%S")
+                .to_string(),
+        )
+    }
+}
+
+pub trait CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize {
+    fn code_occurence_prepare_for_log_without_config_with_serialize_deserialize(
+        &self,
+    ) -> std::string::String;
+}
+
+impl<SelfGeneric> CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize for SelfGeneric
+where
+    SelfGeneric: FormErrorPathGithub + GetDuration,
+{
+    fn code_occurence_prepare_for_log_without_config_with_serialize_deserialize(
+        &self,
+    ) -> std::string::String {
+        prepare_for_log(
+            self.form_error_path_github(),
+            chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+                .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
+                .format("%Y-%m-%d %H:%M:%S")
+                .to_string(),
+        )
+    }
+}
+
+fn prepare_for_log(path: std::string::String, time: std::string::String) -> std::string::String {
+    format!("{path} {time}")
+}

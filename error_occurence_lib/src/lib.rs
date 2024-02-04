@@ -1,6 +1,5 @@
 pub use error_occurence::ErrorOccurence;
 pub mod code_occurence;
-pub mod code_occurence_prepare_for_log;
 pub mod display_foreign_type;
 pub mod error_log;
 pub mod error_occurence_named;
