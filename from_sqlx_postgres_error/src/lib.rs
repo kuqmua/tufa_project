@@ -1,6 +1,7 @@
 #[proc_macro_derive(FromSqlxPostgresError)]
 pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "FromSqlxPostgresError";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
         panic!(
             "{}",
@@ -8,6 +9,13 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
         )
     });
     let ident = &ast.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let gen = quote::quote! {
         impl From<sqlx::Error> for #ident {
             fn from(val: sqlx::Error) -> Self {
@@ -15,7 +23,7 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
                     sqlx::Error::Configuration(value) => {
                         Self::Configuration {
                             configuration: value.to_string(),
-                            code_occurence: crate::code_occurence!(),
+                            #field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_token_stream
                         }
                     }
                     sqlx::Error::Database(database) => {
