@@ -5,7 +5,6 @@ pub mod display_foreign_type;
 pub mod error_log;
 pub mod error_occurence_named;
 pub mod error_occurence_unnamed;
-pub mod get_code_occurence;
 pub mod get_code_path;
 pub mod get_code_path_without_config;
 pub mod git_fields;

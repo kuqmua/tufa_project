@@ -3851,7 +3851,7 @@ pub fn error_occurence(
             let logic_for_compile_time_check_error_occurence_members_iter = logic_for_compile_time_check_error_occurence_members.iter();
             let get_code_occurence_upper_camel_case = format!("{get_upper_camel_case_stringified}{code_occurence_upper_camel_case_stringified}");
             let get_code_occurence_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_code_occurence_upper_camel_case);
-            let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{get_code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
+            let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
             let error_occurence_lib_get_code_occurence_get_code_occurence_token_stream = 
             error_occurence_lib_get_code_occurence_get_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));

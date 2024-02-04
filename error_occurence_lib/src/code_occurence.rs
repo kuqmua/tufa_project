@@ -132,3 +132,7 @@ where T: GetCommit + GetFile + GetLine
         )
     }
 }
+
+pub trait GetCodeOccurence {
+    fn get_code_occurence(&self) -> &CodeOccurence;
+}
