@@ -61,6 +61,7 @@ init_from_env = {path = "../init_from_env"}
 user_port_try_from_u16 = {path = "../user_port_try_from_u16"}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
+naming_constants = {path = "../naming_constants"}
 
 [lints]
 workspace = true

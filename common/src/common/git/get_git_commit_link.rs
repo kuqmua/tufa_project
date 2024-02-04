@@ -8,8 +8,8 @@ where
 {
     fn get_git_commit_link(&self) -> std::string::String {
         format!(
-            "https://github.com/kuqmua/tufa_project/tree/{}",
-            self.get_git_commit_id()
+            "{}/tree/{}",
+            naming_constants::GITHUB_URL, self.get_git_commit_id()
         )
     }
 }

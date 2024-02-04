@@ -74,8 +74,8 @@ impl crate::form_error_path::FormErrorPathDirectory for CodeOccurence {
 impl crate::form_error_path::FormErrorPathGithub for CodeOccurence {
     fn form_error_path_github(&self) -> std::string::String {
         format!(
-            "https://github.com/kuqmua/tufa_project/blob/{}/{}#L{}",
-            self.commit, self.file, self.line
+            "{}/blob/{}/{}#L{}",
+            naming_constants::GITHUB_URL, self.commit, self.file, self.line
         )
     }
 }

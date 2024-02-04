@@ -1,3 +1,4 @@
+pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
 pub const SYN_FIELDS: &str = "syn::Fields";
 pub const SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT: &str =
