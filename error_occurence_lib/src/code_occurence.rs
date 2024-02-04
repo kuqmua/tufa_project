@@ -28,6 +28,12 @@ impl CodeOccurence {
     }
 }
 
+impl crate::get_commit::GetCommit for CodeOccurence {
+    fn get_commit(&self) -> &str {
+        &self.commit
+    }
+}
+
 impl crate::get_file::GetFile for CodeOccurence {
     fn get_file(&self) -> &str {
         &self.file
@@ -58,24 +64,6 @@ impl std::fmt::Display for CodeOccurence {
             f,
             "{}",
             crate::code_occurence_prepare_for_log::CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self)
-        )
-    }
-}
-
-impl crate::form_error_path::FormErrorPathDirectory for CodeOccurence {
-    fn form_error_path_directory(&self) -> std::string::String {
-        format!(
-            "{}:{}:{}",
-            self.file, self.line, self.column
-        )
-    }
-}
-
-impl crate::form_error_path::FormErrorPathGithub for CodeOccurence {
-    fn form_error_path_github(&self) -> std::string::String {
-        format!(
-            "{}/blob/{}/{}#L{}",
-            naming_constants::GITHUB_URL, self.commit, self.file, self.line
         )
     }
 }
