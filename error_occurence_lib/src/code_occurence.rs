@@ -109,13 +109,19 @@ pub trait FormErrorPathDirectory {
 }
 
 impl<T> FormErrorPathDirectory for T 
-where T: GetFile + GetLine + GetColumn
+where T: GetFile + GetLine + GetColumn + GetMacroOccurence
 {
     fn form_error_path_directory(&self) -> std::string::String {
-        format!(
-            "{}:{}:{}",
-            self.get_file(), self.get_line(), self.get_column()
-        )
+        match self.get_macro_occurence() {
+            Some(value) => format!(
+                "{}:{}:{} ({}:{}:{})",
+                self.get_file(), self.get_line(), self.get_column(), value.file, value.line, value.column
+            ),
+            None => format!(
+                "{}:{}:{}",
+                self.get_file(), self.get_line(), self.get_column()
+            )
+        }
     }
 }
 
@@ -124,13 +130,20 @@ pub trait FormErrorPathGithub {
 }
 
 impl<T> FormErrorPathGithub for T 
-where T: GetCommit + GetFile + GetLine 
+where T: GetCommit + GetFile + GetLine + GetMacroOccurence
 {
     fn form_error_path_github(&self) -> std::string::String {
-        format!(
-            "{}/blob/{}/{}#L{}",
-            naming_constants::GITHUB_URL, self.get_commit(), self.get_file(), self.get_line()
-        )
+        match self.get_macro_occurence() {
+            Some(value) => format!(
+                "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
+                naming_constants::GITHUB_URL, self.get_commit(), self.get_file(), self.get_line(),
+                naming_constants::GITHUB_URL, self.get_commit(), value.file, value.line
+            ),
+            None => format!(
+                "{}/blob/{}/{}#L{}",
+                naming_constants::GITHUB_URL, self.get_commit(), self.get_file(), self.get_line()
+            )
+        }
     }
 }
 
