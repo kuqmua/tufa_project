@@ -37,7 +37,7 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
                         code_occurence: crate::code_occurence!(),
                     },
                     sqlx::Error::RowNotFound => Self::RowNotFound {
-                        row_not_found: std::string::String::from("row_not_found"),
+                        row_not_found: std::string::String::from("row_not_foundcrrrr"),
                         code_occurence: crate::code_occurence!(),
                     },
                     sqlx::Error::TypeNotFound { type_name } => Self::TypeNotFound {

@@ -834,7 +834,7 @@ pub fn type_variants_from_request_response_generator(
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {try_from_response_try_operation_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let try_from_response_try_operation_snake_case_token_stream_result_ok_token_stream = {
-            let field_code_occurence_new_406e0f46_509c_40b3_9777_17d2048f9600_token_stream = crate::generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_406e0f46_509c_40b3_9777_17d2048f9600_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -850,25 +850,25 @@ pub fn type_variants_from_request_response_generator(
                 }
             }
         };
-        let field_code_occurence_new_8ead050d_0de1_4fe2_93a1_acb17298a674_token_stream = crate::generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_8ead050d_0de1_4fe2_93a1_acb17298a674_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let field_code_occurence_new_756d79dd_03ef_4087_a5f7_a075512b96ab_token_stream = crate::generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_756d79dd_03ef_4087_a5f7_a075512b96ab_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let field_code_occurence_new_a4f983b6_7b74_4580_8732_d721b29256b4_token_stream = crate::generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_a4f983b6_7b74_4580_8732_d721b29256b4_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream = crate::generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),

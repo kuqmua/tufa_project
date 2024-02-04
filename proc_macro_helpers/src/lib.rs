@@ -7,6 +7,7 @@
 #![allow(clippy::too_many_arguments)]
 
 pub mod error_occurence;
+pub mod generate_field_code_occurence_new_token_stream;
 pub mod status_code;
 pub mod type_variants_from_request_response;
 pub mod write_token_stream_into_file;

@@ -621,13 +621,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             });
                             match column_variant_ident_stringified == primary_key_field_ident {
                                 true => {
-                                    let field_code_occurence_new_ea56ed9e_86e6_4b3e_b116_106eb0bca826_token_stream = generate_field_code_occurence_new_token_stream(
+                                    let field_code_occurence_new_ea56ed9e_86e6_4b3e_b116_106eb0bca826_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                                         file!(),
                                         line!(),
                                         column!(),
                                         &proc_macro_name_upper_camel_case_ident_stringified,
                                     );
-                                    let field_code_occurence_new_fb6f51c7_7907_4872_9b50_852f40a91c0f_token_stream = generate_field_code_occurence_new_token_stream(
+                                    let field_code_occurence_new_fb6f51c7_7907_4872_9b50_852f40a91c0f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                                         file!(),
                                         line!(),
                                         column!(),
@@ -686,7 +686,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             field_ident_is_none_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let field_code_occurence_new_dea6a52d_6fb9_49c7_9220_6f185e417faf_token_stream = generate_field_code_occurence_new_token_stream(
+                        let field_code_occurence_new_dea6a52d_6fb9_49c7_9220_6f185e417faf_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                             file!(),
                             line!(),
                             column!(),
@@ -979,7 +979,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 supported_values_handle_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {supported_values_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_code_occurence_new_6da5ddda_4191_47d7_9ea2_4c0d6fb9d99d_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_6da5ddda_4191_47d7_9ea2_4c0d6fb9d99d_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -1401,79 +1401,79 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 default_message_handle_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {default_message_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_code_occurence_new_07dace83_c1c0_48ff_b40d_1914497705af_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_07dace83_c1c0_48ff_b40d_1914497705af_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_be62d02f_f4c0_42be_84e3_974adf6e4302_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_be62d02f_f4c0_42be_84e3_974adf6e4302_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_25bfb433_fb47_45cb_ad97_ff72d9910d72_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_25bfb433_fb47_45cb_ad97_ff72d9910d72_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_e997a363_0b00_4109_b597_76e4a920bff5_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_e997a363_0b00_4109_b597_76e4a920bff5_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_41dfa4e8_c896_424f_83cf_e1094542055d_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_41dfa4e8_c896_424f_83cf_e1094542055d_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_14672eb7_19d9_4093_a51b_f4acdff8c7e4_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_14672eb7_19d9_4093_a51b_f4acdff8c7e4_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_4e8641ae_f8b8_4025_8a55_103e95b26219_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_4e8641ae_f8b8_4025_8a55_103e95b26219_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_2d490278_ca68_4b25_9326_e302c619ebc2_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_2d490278_ca68_4b25_9326_e302c619ebc2_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_ad63af88_549a_4e2a_908f_11f83048fcb6_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_ad63af88_549a_4e2a_908f_11f83048fcb6_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_907076fc_90b7_43dc_852d_9089ba3aa1ef_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_907076fc_90b7_43dc_852d_9089ba3aa1ef_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_9bfcc646_717f_45ba_849f_67d825bd64a5_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_9bfcc646_717f_45ba_849f_67d825bd64a5_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_4dac2eb7_ae2f_42c5_9ec0_b28911f485dc_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_4dac2eb7_ae2f_42c5_9ec0_b28911f485dc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
-            let field_code_occurence_new_ed1f65d5_05d6_4d43_9f0d_41767ec0c089_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_ed1f65d5_05d6_4d43_9f0d_41767ec0c089_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -1697,7 +1697,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
     };
     let request_error_variant_initialization_token_stream = {
-        let field_code_occurence_new_9758f49b_3415_42fe_b2c7_7439c2c4f586_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_9758f49b_3415_42fe_b2c7_7439c2c4f586_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1719,7 +1719,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {serde_json_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let serde_json_to_string_variant_initialization_token_stream = {
-        let field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_27b49c75_24b2_4480_ac4d_62a1f75f5646_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1797,7 +1797,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let bind_query_variant_initialization_token_stream = {
-        let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1827,7 +1827,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             checked_add_snake_case_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1858,7 +1858,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]
     );
     let query_and_rollback_failed_variant_initialization_token_stream = {
-        let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1890,7 +1890,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]
     );
     let primary_key_from_row_and_failed_rollback_variant_initialization_token_stream = {
-        let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1921,7 +1921,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let non_existing_primary_keys_variant_initialization_token_stream = {
-        let field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1952,7 +1952,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]
     );
     let non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream = {
-        let field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -1983,7 +1983,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let commit_failed_variant_initialization_token_stream = {
-        let field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -2014,7 +2014,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let not_unique_primary_key_variant_initialization_token_stream = {
-        let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -2077,7 +2077,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream = {
-        let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -2098,7 +2098,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream = {
-        let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -2120,7 +2120,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = {
-        let field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream = generate_field_code_occurence_new_token_stream(
+        let field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
@@ -3226,7 +3226,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_91c61a45_6c97_47cc_ac96_65bdcfec0494_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_91c61a45_6c97_47cc_ac96_65bdcfec0494_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -3676,7 +3676,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_db0d95a8_8dcc_4228_80ec_e5dce2003333_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_db0d95a8_8dcc_4228_80ec_e5dce2003333_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -3887,7 +3887,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
                 let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                     let primary_key_field_assignment_token_stream = {
-                        let field_code_occurence_new_ed55593d_d353_440c_8145_c1c712bc5ace_token_stream = generate_field_code_occurence_new_token_stream(
+                        let field_code_occurence_new_ed55593d_d353_440c_8145_c1c712bc5ace_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                             file!(),
                             line!(),
                             column!(),
@@ -4153,7 +4153,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             not_unique_field_vec_upper_camel_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_upper_camel_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream = generate_field_code_occurence_new_token_stream(
+                        let field_code_occurence_new_eb1a9553_449e_4767_9e5c_c1856b77bd4e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                             file!(),
                             line!(),
                             column!(),
@@ -4500,7 +4500,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_1d57484c_3c67_4f5f_81a6_ec8efc9c6896_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_1d57484c_3c67_4f5f_81a6_ec8efc9c6896_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -4679,7 +4679,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
                 let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
-                    let field_code_occurence_new_3b778bbe_aec5_4ebe_af05_11074800c690_token_stream = generate_field_code_occurence_new_token_stream(
+                    let field_code_occurence_new_3b778bbe_aec5_4ebe_af05_11074800c690_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                         file!(),
                         line!(),
                         column!(),
@@ -4917,7 +4917,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_cd714ff2_3a40_4e0d_8930_e43d2f69ffc0_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_cd714ff2_3a40_4e0d_8930_e43d2f69ffc0_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -5175,7 +5175,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &fields_named.iter().collect(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
-                    let field_code_occurence_new_814b41f8_3219_4b62_bc0b_02a26d23b262_token_stream = generate_field_code_occurence_new_token_stream(
+                    let field_code_occurence_new_814b41f8_3219_4b62_bc0b_02a26d23b262_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                         file!(),
                         line!(),
                         column!(),
@@ -5573,7 +5573,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_04274f8d_c9a4_41d1_9bdc_39432371c33f_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_04274f8d_c9a4_41d1_9bdc_39432371c33f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -5784,7 +5784,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
                             })
                     });
-                    let field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream = generate_field_code_occurence_new_token_stream(
+                    let field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                         file!(),
                         line!(),
                         column!(),
@@ -6115,7 +6115,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_112d570b_90ed_44d6_a8bf_d855372006cb_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_112d570b_90ed_44d6_a8bf_d855372006cb_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -6332,7 +6332,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &fields_named.iter().collect(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
-                    let field_code_occurence_new_9a8f5b56_b6d4_4539_8f07_a13997efd268_token_stream = generate_field_code_occurence_new_token_stream(
+                    let field_code_occurence_new_9a8f5b56_b6d4_4539_8f07_a13997efd268_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                         file!(),
                         line!(),
                         column!(),
@@ -6701,7 +6701,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 not_unique_field_vec_upper_camel_stringified.parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_unique_field_vec_upper_camel_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
-                            let field_code_occurence_new_a4cd6c7d_3d82_4ee7_84f0_ca63ddb894e1_token_stream = generate_field_code_occurence_new_token_stream(
+                            let field_code_occurence_new_a4cd6c7d_3d82_4ee7_84f0_ca63ddb894e1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                                 file!(),
                                 line!(),
                                 column!(),
@@ -6958,7 +6958,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_39b5c2be_b5d4_4d33_b3e9_152543c33dca_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_39b5c2be_b5d4_4d33_b3e9_152543c33dca_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -7134,7 +7134,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream}");
-                let field_code_occurence_new_66343753_b4dc_4b64_b7a6_3f206033a0b1_token_stream = generate_field_code_occurence_new_token_stream(
+                let field_code_occurence_new_66343753_b4dc_4b64_b7a6_3f206033a0b1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                     file!(),
                     line!(),
                     column!(),
@@ -7364,7 +7364,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                 &operation,
             );
-            let field_code_occurence_new_32b2a167_ab66_4ee6_8e59_3839fa83d830_token_stream = generate_field_code_occurence_new_token_stream(
+            let field_code_occurence_new_32b2a167_ab66_4ee6_8e59_3839fa83d830_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
                 column!(),
@@ -8951,57 +8951,5 @@ impl Order {
             Self::Asc => quote::quote!{Asc},
             Self::Desc => quote::quote!{Desc},
         }
-    }
-}
-
-fn generate_field_code_occurence_new_token_stream(
-    file_handle: &'static str,
-    line_handle: std::primitive::u32,
-    column_handle: std::primitive::u32,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    fn generate_code_occurence_new_token_stream(
-        file: &'static str,
-        line: std::primitive::u32,
-        column: std::primitive::u32,
-        proc_macro_name_upper_camel_case_ident_stringified: &str,
-    ) -> proc_macro2::TokenStream {
-        let file_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
-            &file,
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        let line_token_stream = {
-            let line_stringified = line.to_string();
-            line_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {line_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let column_token_stream = {
-            let column_stringified = column.to_string();
-            column_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {column_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        quote::quote!{
-            error_occurence_lib::code_occurence::CodeOccurence::new(
-                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                file!().to_string(),
-                line!(),
-                column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from(#file_token_stream),
-                    line: #line_token_stream,
-                    column: #column_token_stream,
-                })
-            )
-        }
-    }
-    let code_occurence_new_token_stream = generate_code_occurence_new_token_stream(
-        file_handle,
-        line_handle,
-        column_handle,
-        proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
-    quote::quote!{
-        #code_occurence_snake_case_token_stream: #code_occurence_new_token_stream
     }
 }
