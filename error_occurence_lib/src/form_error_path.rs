@@ -3,9 +3,9 @@ pub trait FormErrorPathDirectory {
 }
 
 impl<T> FormErrorPathDirectory for T 
-where T: crate::get_file::GetFile 
-    + crate::get_line::GetLine 
-    + crate::get_column::GetColumn
+where T: crate::code_occurence::GetFile 
+    + crate::code_occurence::GetLine 
+    + crate::code_occurence::GetColumn
 {
     fn form_error_path_directory(&self) -> std::string::String {
         format!(
@@ -20,9 +20,9 @@ pub trait FormErrorPathGithub {
 }
 
 impl<T> crate::form_error_path::FormErrorPathGithub for T 
-where T: crate::get_commit::GetCommit
-    + crate::get_file::GetFile 
-    + crate::get_line::GetLine 
+where T: crate::code_occurence::GetCommit
+    + crate::code_occurence::GetFile 
+    + crate::code_occurence::GetLine 
 {
     fn form_error_path_github(&self) -> std::string::String {
         format!(

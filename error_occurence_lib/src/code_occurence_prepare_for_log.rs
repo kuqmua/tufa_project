@@ -13,7 +13,7 @@ impl<SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
 where
     SelfGeneric: crate::form_error_path::FormErrorPathDirectory
         + crate::form_error_path::FormErrorPathGithub
-        + crate::get_duration::GetDuration,
+        + crate::code_occurence::GetDuration,
 {
     fn code_occurence_prepare_for_log_with_config<
         ConfigGeneric: config_lib::config_fields::GetTimezone
@@ -39,7 +39,7 @@ pub trait CodeOccurencePrepareForLogWithoutConfig {
 
 impl<SelfGeneric> CodeOccurencePrepareForLogWithoutConfig for SelfGeneric
 where
-    SelfGeneric: crate::form_error_path::FormErrorPathGithub + crate::get_duration::GetDuration,
+    SelfGeneric: crate::form_error_path::FormErrorPathGithub + crate::code_occurence::GetDuration,
 {
     fn code_occurence_prepare_for_log_without_config(&self) -> std::string::String {
         prepare_for_log(
@@ -60,7 +60,7 @@ pub trait CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize {
 
 impl<SelfGeneric> CodeOccurencePrepareForLogWithoutConfigWithSerializeDeserialize for SelfGeneric
 where
-    SelfGeneric: crate::form_error_path::FormErrorPathGithub + crate::get_duration::GetDuration,
+    SelfGeneric: crate::form_error_path::FormErrorPathGithub + crate::code_occurence::GetDuration,
 {
     fn code_occurence_prepare_for_log_without_config_with_serialize_deserialize(
         &self,

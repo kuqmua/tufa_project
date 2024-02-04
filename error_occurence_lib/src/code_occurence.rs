@@ -1,3 +1,5 @@
+
+
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
 pub struct CodeOccurence {
     file: std::string::String,
@@ -31,37 +33,61 @@ impl CodeOccurence {
     }
 }
 
-impl crate::get_commit::GetCommit for CodeOccurence {
+pub trait GetCommit {
+    fn get_commit(&self) -> &str;
+}
+
+impl GetCommit for CodeOccurence {
     fn get_commit(&self) -> &str {
         &self.commit
     }
 }
 
-impl crate::get_file::GetFile for CodeOccurence {
+pub trait GetFile {
+    fn get_file(&self) -> &str;
+}
+
+impl GetFile for CodeOccurence {
     fn get_file(&self) -> &str {
         &self.file
     }
 }
 
-impl crate::get_line::GetLine for CodeOccurence {
+pub trait GetLine {
+    fn get_line(&self) -> &u32;
+}
+
+impl GetLine for CodeOccurence {
     fn get_line(&self) -> &u32 {
         &self.line
     }
 }
 
-impl crate::get_column::GetColumn for CodeOccurence {
+pub trait GetColumn {
+    fn get_column(&self) -> &u32;
+}
+
+impl GetColumn for CodeOccurence {
     fn get_column(&self) -> &u32 {
         &self.column
     }
 }
 
-impl crate::get_duration::GetDuration for CodeOccurence {
+pub trait GetDuration {
+    fn get_duration(&self) -> std::time::Duration;
+}
+
+impl GetDuration for CodeOccurence {
     fn get_duration(&self) -> std::time::Duration {
         self.duration
     }
 }
 
-impl crate::get_additional_string::GetAdditionalString for CodeOccurence {
+pub trait GetAdditionalString {
+    fn get_additional_string(&self) -> &std::option::Option<std::string::String>;
+}
+
+impl GetAdditionalString for CodeOccurence {
     fn get_additional_string(&self) -> &std::option::Option<std::string::String> {
         &self.additional_string
     }
