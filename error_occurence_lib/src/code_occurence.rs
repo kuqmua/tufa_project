@@ -136,3 +136,13 @@ where T: GetCommit + GetFile + GetLine
 pub trait GetCodeOccurence {
     fn get_code_occurence(&self) -> &CodeOccurence;
 }
+
+pub fn get_code_path(
+    source_place_type: &config_lib::source_place_type::SourcePlaceType,
+    code_occurence: &(impl FormErrorPathDirectory + FormErrorPathGithub),
+) -> std::string::String {
+    match source_place_type {
+        config_lib::source_place_type::SourcePlaceType::Source => FormErrorPathDirectory::form_error_path_directory(code_occurence),
+        config_lib::source_place_type::SourcePlaceType::Github => FormErrorPathGithub::form_error_path_github(code_occurence),
+    }
+}
