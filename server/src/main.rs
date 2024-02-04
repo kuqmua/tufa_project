@@ -21,8 +21,6 @@ pub mod try_build_server;
 
 pub mod dev;
 
-const PROJECT_PART_NAME: &str = "server";
-
 fn main() {
     println!(
         "commit {}",
