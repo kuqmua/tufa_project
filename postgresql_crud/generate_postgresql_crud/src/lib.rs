@@ -505,7 +505,42 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote!{
         #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream
     };
-    let crate_code_occurence_common_macro_call_token_stream = quote::quote!{crate::code_occurence!()};
+    // let crate_code_occurence_common_macro_call_token_stream = quote::quote!{crate::code_occurence!()};
+    //
+    let crate_code_occurence_common_macro_call_token_stream = {
+        let file_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+            &file!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        println!("file_token_stream {file_token_stream}");
+        let line_token_stream = {
+            let line_stringified = line!().to_string();
+            line_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {line_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        println!("line_token_stream {line_token_stream}");
+        let column_token_stream = {
+            let column_stringified = column!().to_string();
+            column_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {column_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        println!("column_token_stream {column_token_stream}");
+
+        quote::quote!{
+            error_occurence_lib::code_occurence::CodeOccurence::new(
+                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),//todo maybe put struct, but dont want to deal with lifetimes
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(#file_token_stream),
+                    line: #line_token_stream,
+                    column: #column_token_stream,
+                })
+            )
+        }
+    };
+    //
     let code_occurence_snake_case_crate_code_occurence_common_macro_call_token_stream = quote::quote!{
         #code_occurence_snake_case_token_stream: #crate_code_occurence_common_macro_call_token_stream
     };

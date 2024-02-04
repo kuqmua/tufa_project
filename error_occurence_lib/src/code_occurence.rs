@@ -1,8 +1,8 @@
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
 pub struct MacroOccurence {
-    file: std::string::String,
-    line: u32,
-    column: u32,
+    pub file: std::string::String,
+    pub line: u32,
+    pub column: u32,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
