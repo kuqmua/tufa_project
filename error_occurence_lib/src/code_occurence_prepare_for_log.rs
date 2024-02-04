@@ -11,8 +11,7 @@ pub trait CodeOccurencePrepareForLogWithConfig {
 
 impl<SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
 where
-    SelfGeneric: crate::code_occurence::FormErrorPathDirectory
-        + crate::code_occurence::FormErrorPathGithub
+    SelfGeneric: crate::code_occurence::GetCodePath
         + crate::code_occurence::GetDuration,
 {
     fn code_occurence_prepare_for_log_with_config<
@@ -24,7 +23,7 @@ where
         config: &ConfigGeneric,
     ) -> std::string::String {
         prepare_for_log(
-            crate::code_occurence::get_code_path(config.get_source_place_type(), self),
+            self.get_code_path(config.get_source_place_type()),
             chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
                 .with_timezone(config.get_timezone())
                 .format("%Y-%m-%d %H:%M:%S")

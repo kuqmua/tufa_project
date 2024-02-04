@@ -137,12 +137,27 @@ pub trait GetCodeOccurence {
     fn get_code_occurence(&self) -> &CodeOccurence;
 }
 
-pub fn get_code_path(
-    source_place_type: &config_lib::source_place_type::SourcePlaceType,
-    code_occurence: &(impl FormErrorPathDirectory + FormErrorPathGithub),
-) -> std::string::String {
-    match source_place_type {
-        config_lib::source_place_type::SourcePlaceType::Source => FormErrorPathDirectory::form_error_path_directory(code_occurence),
-        config_lib::source_place_type::SourcePlaceType::Github => FormErrorPathGithub::form_error_path_github(code_occurence),
+pub trait GetCodePath {
+    fn get_code_path(&self, source_place_type: &config_lib::source_place_type::SourcePlaceType) -> std::string::String;
+}
+
+impl<T> GetCodePath for T 
+where T: FormErrorPathDirectory + FormErrorPathGithub
+{
+    fn get_code_path(&self, source_place_type: &config_lib::source_place_type::SourcePlaceType) -> std::string::String {
+        match source_place_type {
+            config_lib::source_place_type::SourcePlaceType::Source => self.form_error_path_directory(),
+            config_lib::source_place_type::SourcePlaceType::Github => self.form_error_path_github(),
+        }
     }
 }
+
+// pub fn get_code_path(
+//     source_place_type: &config_lib::source_place_type::SourcePlaceType,
+//     code_occurence: &(impl FormErrorPathDirectory + FormErrorPathGithub),
+// ) -> std::string::String {
+//     match source_place_type {
+//         config_lib::source_place_type::SourcePlaceType::Source => FormErrorPathDirectory::form_error_path_directory(code_occurence),
+//         config_lib::source_place_type::SourcePlaceType::Github => FormErrorPathGithub::form_error_path_github(code_occurence),
+//     }
+// }
