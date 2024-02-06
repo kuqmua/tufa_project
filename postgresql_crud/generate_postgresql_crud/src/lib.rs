@@ -1739,11 +1739,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
-    let std_string_string_syn_punctuated_punctuated = generate_simple_syn_punctuated_punctuated(
+    let std_string_string_syn_punctuated_punctuated = proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
         &["std","string","String"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    let sqlx_error_syn_punctuated_punctuated = generate_simple_syn_punctuated_punctuated(
+    let sqlx_error_syn_punctuated_punctuated = proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
         &["sqlx","Error"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
@@ -1771,7 +1771,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 qself: None,
                 path: syn::Path {
                     leading_colon: None,
-                    segments: generate_simple_syn_punctuated_punctuated(
+                    segments: proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["error_occurence_lib","code_occurence","CodeOccurence"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
@@ -1789,7 +1789,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             vec![(
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
                 &variant_name_snake_case_stringified, 
-                generate_simple_syn_punctuated_punctuated(
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["crate","server","postgres","bind_query","TryGenerateBindIncrementsErrorNamed"],
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ),
@@ -2171,7 +2171,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                     &variant_name_snake_case_stringified, 
-                    generate_simple_syn_punctuated_punctuated(
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["sqlx","types","uuid","Error"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
@@ -2350,7 +2350,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         (
                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                             &variant_name_snake_case_stringified,
-                            generate_simple_syn_punctuated_punctuated(
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                                 &["std","io","Error"],
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             ),
@@ -2433,7 +2433,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         (
                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
                             &variant_name_snake_case_stringified,
-                            generate_simple_syn_punctuated_punctuated(
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                                 &["usize"],
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             ),
@@ -2441,7 +2441,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         (
                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
                             "len",
-                            generate_simple_syn_punctuated_punctuated(
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                                 &["usize"],
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             ),
@@ -2557,7 +2557,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         (
                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                             &variant_name_snake_case_stringified,
-                            generate_simple_syn_punctuated_punctuated(
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                                 &["sqlx","migrate","MigrateError"],
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             ),
@@ -2595,7 +2595,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         (
                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                             &variant_name_snake_case_stringified,
-                            generate_simple_syn_punctuated_punctuated(
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                                 &["axum","extract","rejection","JsonDataError"],
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             ),
@@ -2614,7 +2614,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         (
                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                             &variant_name_snake_case_stringified,
-                            generate_simple_syn_punctuated_punctuated(
+                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                                 &["axum","extract","rejection","JsonSyntaxError"],
                                 &proc_macro_name_upper_camel_case_ident_stringified
                             ),
@@ -7526,37 +7526,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     );
     // }
     gen.into()
-}
-
-fn generate_simple_syn_punctuated_punctuated(
-    parts_vec: &[&str],
-    proc_macro_name_upper_camel_case_ident_stringified: &str
-) -> syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2> {
-    let parts_vec_len = parts_vec.len();
-    match parts_vec_len >= 1 {
-        true => {
-            let parts_vec_len_minus_one = parts_vec_len - 1;
-            let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>::new();
-            for (index, element) in parts_vec.iter().enumerate() {
-                handle.push_value(
-                    syn::PathSegment {
-                        ident: proc_macro2::Ident::new(element, proc_macro2::Span::call_site()),
-                        arguments: syn::PathArguments::None,
-                    }
-                );
-                match index < parts_vec_len_minus_one {
-                    true => {
-                        handle.push_punct(syn::token::Colon2{
-                            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-                        });
-                    }
-                    false => ()
-                }
-            }
-            handle
-        },
-        false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
-    }
 }
 
 fn generate_std_vec_vec_syn_punctuated_punctuated(

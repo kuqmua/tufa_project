@@ -1,38 +1,11 @@
-pub fn code_occurence_syn_field(proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::Field {
-    syn::Field {
-        attrs: vec![],
-        vis: syn::Visibility::Inherited,
-        ident: Some(
-            syn::Ident::new("code_occurence", proc_macro2::Span::call_site())
-        ),
-        colon_token: Some(
-            syn::token::Colon {
-                spans: [proc_macro2::Span::call_site()],
-            },
-        ),
-        ty: syn::Type::Path(
-            syn::TypePath {
-                qself: None,
-                path: syn::Path {
-                    leading_colon: None,
-                    segments: generate_simple_syn_punctuated_punctuated(
-                        &["error_occurence_lib","code_occurence","CodeOccurence"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
-                },
-            },
-        ),
-    }
-}
-
 pub fn postgres_error_syn_variants(
     proc_macro_name_upper_camel_case_ident_stringified: &str
 ) -> [syn::Variant;15] {
-    let std_string_string_syn_punctuated_punctuated = generate_simple_syn_punctuated_punctuated(
+    let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
         &["std","string","String"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    let code_occurence_field = code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
+    let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
     let configuration_error_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::configuration_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
@@ -77,7 +50,7 @@ pub fn postgres_error_syn_variants(
                 (
                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                     &variant_name_snake_case_stringified,
-                    generate_simple_syn_punctuated_punctuated(
+                    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["std","io","Error"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
@@ -160,7 +133,7 @@ pub fn postgres_error_syn_variants(
                 (
                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
                     &variant_name_snake_case_stringified,
-                    generate_simple_syn_punctuated_punctuated(
+                    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
@@ -168,7 +141,7 @@ pub fn postgres_error_syn_variants(
                 (
                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
                     "len",
-                    generate_simple_syn_punctuated_punctuated(
+                    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
@@ -284,7 +257,7 @@ pub fn postgres_error_syn_variants(
                 (
                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
                     &variant_name_snake_case_stringified,
-                    generate_simple_syn_punctuated_punctuated(
+                    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["sqlx","migrate","MigrateError"],
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ),
@@ -309,37 +282,6 @@ pub fn postgres_error_syn_variants(
         worker_crashed_syn_variant,
         migrate_syn_variant
     ]
-}
-
-fn generate_simple_syn_punctuated_punctuated(
-    parts_vec: &[&str],
-    proc_macro_name_upper_camel_case_ident_stringified: &str
-) -> syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2> {
-    let parts_vec_len = parts_vec.len();
-    match parts_vec_len >= 1 {
-        true => {
-            let parts_vec_len_minus_one = parts_vec_len - 1;
-            let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>::new();
-            for (index, element) in parts_vec.iter().enumerate() {
-                handle.push_value(
-                    syn::PathSegment {
-                        ident: proc_macro2::Ident::new(element, proc_macro2::Span::call_site()),
-                        arguments: syn::PathArguments::None,
-                    }
-                );
-                match index < parts_vec_len_minus_one {
-                    true => {
-                        handle.push_punct(syn::token::Colon2{
-                            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-                        });
-                    }
-                    false => ()
-                }
-            }
-            handle
-        },
-        false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
-    }
 }
 
 pub fn construct_syn_variant(
