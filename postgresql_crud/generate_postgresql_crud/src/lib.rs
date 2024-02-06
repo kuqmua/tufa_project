@@ -398,8 +398,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_options_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let struct_options_token_stream = {
+        let serde_skip_serializing_if_value_attribute_token_stream = quote::quote!{#[serde(skip_serializing_if = "Option::is_none")]};
         let field_option_primary_key_token_stream = quote::quote!{
-            #[serde(skip_serializing_if = "Option::is_none")]
+            #serde_skip_serializing_if_value_attribute_token_stream
             pub #primary_key_field_ident: std::option::Option<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>
         };
         let fields_options_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
@@ -407,7 +408,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident = &element.field.ident;
             let field_type_path = &element.field.ty;
             quote::quote!{
-                #[serde(skip_serializing_if = "Option::is_none")]
+                #serde_skip_serializing_if_value_attribute_token_stream
                 #field_vis #field_ident: std::option::Option<#field_type_path>
             }
         });
