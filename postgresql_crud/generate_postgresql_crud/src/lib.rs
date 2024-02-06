@@ -2306,89 +2306,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
     let common_error_syn_variants = {
         let sqlx_postgres_error_named_syn_variants = proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
-        let json_body_error_syn_variants = {
-            let json_data_error_syn_variant = {
-                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::json_data_error_upper_camel_case_stringified();
-                let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-                crate::type_variants_from_request_response_generator::construct_syn_variant(
-                    proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-                            &variant_name_snake_case_stringified,
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["axum","extract","rejection","JsonDataError"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                )
-            };
-            let json_syntax_error_syn_variant = {
-                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::json_syntax_error_upper_camel_case_stringified();
-                let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-                crate::type_variants_from_request_response_generator::construct_syn_variant(
-                    proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-                            &variant_name_snake_case_stringified,
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["axum","extract","rejection","JsonSyntaxError"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                )
-            };
-            let missing_json_content_type_syn_variant = {
-                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::missing_json_content_type_upper_camel_case_stringified();
-                let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-                crate::type_variants_from_request_response_generator::construct_syn_variant(
-                    proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-                    &variant_name_upper_camel_case_stringified,
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-                            &variant_name_snake_case_stringified, 
-                            std_string_string_syn_punctuated_punctuated.clone()
-                        )
-                    ]
-                )
-            };
-            let bytes_rejection_syn_variant = {
-                let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::bytes_rejection_upper_camel_case_stringified();
-                let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-                crate::type_variants_from_request_response_generator::construct_syn_variant(
-                    proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-                    &variant_name_upper_camel_case_stringified,
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-                            &variant_name_snake_case_stringified, 
-                            std_string_string_syn_punctuated_punctuated.clone()
-                        )
-                    ]
-                )
-            };
-            [
-                json_data_error_syn_variant,
-                json_syntax_error_syn_variant,
-                missing_json_content_type_syn_variant,
-                bytes_rejection_syn_variant
-            ]
-        };
+        let json_extractor_error_named_syn_variants = proc_macro_helpers::enum_variants::json_extractor_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
         let mut common_error_variants_vec = std::vec::Vec::with_capacity(common_middlewares_error_syn_variants_len + sqlx_postgres_error_named_syn_variants.len() + 1);
         for element in sqlx_postgres_error_named_syn_variants {
             common_error_variants_vec.push(element);
         }
-        for element in json_body_error_syn_variants {
+        for element in json_extractor_error_named_syn_variants {
             common_error_variants_vec.push(element);
         }
         let unexpected_case_syn_variant = {
