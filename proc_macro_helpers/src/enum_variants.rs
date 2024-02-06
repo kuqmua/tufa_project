@@ -9,7 +9,7 @@ pub fn postgres_error_syn_variants(
     let configuration_error_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::configuration_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -26,7 +26,7 @@ pub fn postgres_error_syn_variants(
     let database_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::database_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -42,7 +42,7 @@ pub fn postgres_error_syn_variants(
     let io_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::io_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -61,7 +61,7 @@ pub fn postgres_error_syn_variants(
     let tls_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::tls_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -77,7 +77,7 @@ pub fn postgres_error_syn_variants(
     let protocol_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::protocol_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -93,7 +93,7 @@ pub fn postgres_error_syn_variants(
     let row_not_found_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::row_not_found_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr404NotFound,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -109,7 +109,7 @@ pub fn postgres_error_syn_variants(
     let type_not_found_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::type_not_found_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr400BadRequest,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -125,7 +125,7 @@ pub fn postgres_error_syn_variants(
     let column_index_out_of_bounds_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::column_index_out_of_bounds_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -152,7 +152,7 @@ pub fn postgres_error_syn_variants(
     let column_not_found_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::column_not_found_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr400BadRequest,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -165,7 +165,7 @@ pub fn postgres_error_syn_variants(
             ]
         )
     };
-    let column_decode_syn_variant = construct_syn_variant(
+    let column_decode_syn_variant = crate::construct_syn_variant::construct_syn_variant(
         crate::status_code::StatusCode::Tvfrr500InternalServerError,
         &crate::naming_conventions::column_decode_upper_camel_case_stringified(),
         &code_occurence_field,
@@ -185,7 +185,7 @@ pub fn postgres_error_syn_variants(
     let decode_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::decode_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -201,7 +201,7 @@ pub fn postgres_error_syn_variants(
     let pool_timed_out_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::pool_timed_out_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr408RequestTimeout,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -217,7 +217,7 @@ pub fn postgres_error_syn_variants(
     let pool_closed_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::pool_closed_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -233,7 +233,7 @@ pub fn postgres_error_syn_variants(
     let worker_crashed_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::worker_crashed_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -249,7 +249,7 @@ pub fn postgres_error_syn_variants(
     let migrate_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::migrate_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        construct_syn_variant(
+        crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
             &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
@@ -282,105 +282,4 @@ pub fn postgres_error_syn_variants(
         worker_crashed_syn_variant,
         migrate_syn_variant
     ]
-}
-
-pub fn construct_syn_variant(
-    tvfrr_status_code: crate::status_code::StatusCode,
-    variant_name: &str,
-    code_occurence_field: &syn::Field,
-    fields: std::vec::Vec<(crate::error_occurence::named_attribute::NamedAttribute, &str, syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>)>
-) -> syn::Variant {
-    syn::Variant {
-        attrs: vec![
-            syn::Attribute {
-                pound_token: syn::token::Pound {
-                    spans: [proc_macro2::Span::call_site()],
-                },
-                style: syn::AttrStyle::Outer,
-                bracket_token: syn::token::Bracket {
-                    span: proc_macro2::Span::call_site(),
-                },
-                path: syn::Path {
-                    leading_colon: None,
-                    segments: {
-                        let mut handle = syn::punctuated::Punctuated::new();
-                        handle.push(syn::PathSegment {
-                            ident: proc_macro2::Ident::new(&proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&tvfrr_status_code), proc_macro2::Span::call_site()),
-                            arguments: syn::PathArguments::None,
-                        });
-                       handle
-                    },
-                },
-                tokens: proc_macro2::TokenStream::new(),
-            },
-        ],
-        ident: syn::Ident::new(variant_name, proc_macro2::Span::call_site()),
-        fields: syn::Fields::Named(
-            syn::FieldsNamed {
-                brace_token: syn::token::Brace {
-                    span: proc_macro2::Span::call_site(),
-                },
-                named: {
-                    let mut handle = fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc, element| {
-                        acc.push_value(
-                            syn::Field {
-                                attrs: vec![
-                                    syn::Attribute {
-                                        pound_token: syn::token::Pound {
-                                            spans: [proc_macro2::Span::call_site()],
-                                        },
-                                        style: syn::AttrStyle::Outer,
-                                        bracket_token: syn::token::Bracket {
-                                            span: proc_macro2::Span::call_site(),
-                                        },
-                                        path: syn::Path {
-                                            leading_colon: None,
-                                            segments: {
-                                                let mut handle = syn::punctuated::Punctuated::new();
-                                                handle.push(
-                                                    syn::PathSegment {
-                                                        ident: proc_macro2::Ident::new(&element.0.to_string(), proc_macro2::Span::call_site()),
-                                                        arguments: syn::PathArguments::None,
-                                                    }
-                                                );
-                                                handle
-                                            },
-                                        },
-                                        tokens: proc_macro2::TokenStream::new(),
-                                    },
-                                ],
-                                vis: syn::Visibility::Inherited,
-                                ident: Some(
-                                    syn::Ident::new(element.1, proc_macro2::Span::call_site())
-                                ),
-                                colon_token: Some(
-                                    syn::token::Colon {
-                                        spans: [proc_macro2::Span::call_site()],
-                                    },
-                                ),
-                                ty: syn::Type::Path(
-                                    syn::TypePath {
-                                        qself: None,
-                                        path: syn::Path {
-                                            leading_colon: None,
-                                            segments: element.2
-                                        },
-                                    },
-                                ),
-                            }
-                        );
-                        acc.push_punct(
-                            syn::token::Comma {
-                                spans: [proc_macro2::Span::call_site()],
-                            }
-                        );
-                        acc
-                    });
-                    handle.push_value(code_occurence_field.clone());
-                    handle
-                },
-            },
-        ),
-        discriminant: None,
-    }
 }
