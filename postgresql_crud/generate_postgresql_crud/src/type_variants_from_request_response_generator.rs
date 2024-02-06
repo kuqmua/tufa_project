@@ -920,7 +920,7 @@ pub fn type_variants_from_request_response_generator(
                 file!(),
                 line!(),
                 column!(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
+                proc_macro_name_upper_camel_case_ident_stringified,
             );
             quote::quote!{
                 match #desirable_type_token_stream::try_from(variants){
@@ -936,25 +936,25 @@ pub fn type_variants_from_request_response_generator(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         let field_code_occurence_new_756d79dd_03ef_4087_a5f7_a075512b96ab_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         let field_code_occurence_new_a4f983b6_7b74_4580_8732_d721b29256b4_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         let field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             async fn #tvfrr_extraction_logic_try_operation_snake_case_token_stream<'a>(
