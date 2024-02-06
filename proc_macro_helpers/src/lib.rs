@@ -6,6 +6,7 @@
 )]
 #![allow(clippy::too_many_arguments)]
 
+pub mod enum_variants;
 pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
 pub mod status_code;
