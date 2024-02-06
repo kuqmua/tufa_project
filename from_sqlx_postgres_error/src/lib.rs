@@ -10,6 +10,14 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
     });
     let ident = &ast.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+
+    // let sqlx_postgres_error_named_syn_variants = proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
+    // sqlx_postgres_error_named_syn_variants.iter().map(|element|{
+    //     let field_ident = field.ident;
+    //     let field_ty = 
+    //     quote::quote! {}
+    // }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+    
     let field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
