@@ -215,7 +215,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &table_name_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: &str = #table_name_quotes_token_stream;};
+    let server_location_type_token_stream = quote::quote!{&str};
+    let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #server_location_type_token_stream = #table_name_quotes_token_stream;};
     let data_struct = if let syn::Data::Struct(data_struct) = &ast.data {
         data_struct
     } else {
@@ -988,7 +989,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 impl #std_str_from_str_token_stream for #ident_column_select_upper_camel_case_token_stream {
                     type Err = #ident_column_select_from_str_error_named_upper_camel_case_token_stream;
-                    fn from_str(value: &str) -> Result<Self, Self::Err> {
+                    fn from_str(value: #server_location_type_token_stream) -> Result<Self, Self::Err> {
                         match value {
                             #(#match_acceptable_variants_token_stream),*,
                             _ => Err(Self::Err::#not_correct_upper_camel_case_token_stream {
@@ -1482,7 +1483,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 impl #std_str_from_str_token_stream for #ident_order_by_wrapper_name_token_stream {
                     type Err = #ident_order_by_wrapper_from_str_error_named_name_token_stream;
-                    fn from_str(value: &str) -> Result<Self, Self::Err> {
+                    fn from_str(value: #server_location_type_token_stream) -> Result<Self, Self::Err> {
                         let string_deserialized = value.to_string();
                         let split_inner_url_parameters_symbol = ',';
                         let default_message = format!(#default_message_handle_token_stream);
@@ -2246,7 +2247,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
     let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
-    let server_location_type_token_stream = quote::quote!{&str};
     let try_extract_value_token_stream = quote::quote!{try_extract_value};
     let server_location_name_token_stream = quote::quote!{server_location};
     let dot_space = ", ";
@@ -2846,7 +2846,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     } {
                         match {
                             use #sqlx_row_token_stream;
-                            row.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
+                            row.try_get::<#sqlx_types_uuid_token_stream, #server_location_type_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => {
                                 vec_values.push(
@@ -3299,7 +3299,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
                         Ok(value) => match {
                             use #sqlx_row_token_stream;
-                            value.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
+                            value.try_get::<#sqlx_types_uuid_token_stream, #server_location_type_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
                             Err(e) => {
@@ -5737,7 +5737,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     {
                         Ok(value) => match {
                             use #sqlx_row_token_stream;
-                            value.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
+                            value.try_get::<#sqlx_types_uuid_token_stream, #server_location_type_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
                             Err(e) => {
@@ -6566,7 +6566,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         } {
                             match {
                                 use #sqlx_row_token_stream;
-                                row.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
+                                row.try_get::<#sqlx_types_uuid_token_stream, #server_location_type_token_stream>(#primary_key_field_ident_quotes_token_stream)
                             } {
                                 Ok(value) => {
                                     vec_values.push(
@@ -6986,7 +6986,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     {
                         Ok(value) => match {
                             use #sqlx_row_token_stream;
-                            value.try_get::<#sqlx_types_uuid_token_stream, &str>(#primary_key_field_ident_quotes_token_stream)
+                            value.try_get::<#sqlx_types_uuid_token_stream, #server_location_type_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
                             Err(e) => {
