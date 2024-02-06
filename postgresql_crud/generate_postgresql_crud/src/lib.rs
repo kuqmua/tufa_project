@@ -530,7 +530,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let self_fields_token_stream = generate_self_fields_token_stream(
-                    &variant_columns.iter().collect(),
+                    &variant_columns.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let ident_try_from_ident_options_error_named_upper_camel_case_token_stream = {
@@ -1076,7 +1076,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             let option_fields_initiation_token_stream = generate_self_fields_token_stream(
-                &fields_named.iter().collect(),
+                &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             let sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream = quote::quote!{
@@ -2334,7 +2334,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &proc_macro_name_upper_camel_case_ident_stringified,
     // ).iter().map(|element|quote::quote!{#element,}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(
-        &fields_named.iter().collect(),
+        &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
         &proc_macro_name_upper_camel_case_ident_stringified,
     ).iter().map(|element|quote::quote!{#element,}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let select_full_variant_token_stream = {
@@ -4813,7 +4813,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().collect(),
+                        &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let field_code_occurence_new_814b41f8_3219_4b62_bc0b_02a26d23b262_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
@@ -4872,7 +4872,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().collect(),
+                        &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote!{
@@ -5970,7 +5970,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().collect(),
+                        &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let field_code_occurence_new_9a8f5b56_b6d4_4539_8f07_a13997efd268_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
@@ -6017,7 +6017,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ));
                 let self_init_fields_token_stream = generate_self_fields_token_stream(
-                    &fields_named.iter().collect(),
+                    &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 quote::quote!{
@@ -8077,7 +8077,7 @@ fn generate_common_middlewares_error_syn_variants_from_impls(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {element_ident} supports only syn::Fields::Named");
             };
             let fields_token_stream = generate_self_fields_token_stream(
-                &fields_named.iter().collect(),
+                &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                 proc_macro_name_upper_camel_case_ident_stringified,
             );
             quote::quote! {
@@ -8115,7 +8115,7 @@ fn generate_not_unique_field_vec_snake_case_stringified(field_ident: &syn::Ident
 }
 
 fn generate_self_fields_token_stream<'a>(
-    fields: &std::vec::Vec<&'a syn::Field>,
+    fields: &[&'a syn::Field],
     proc_macro_name_upper_camel_case_ident_stringified: &'a str,
 ) -> std::vec::Vec<&'a syn::Ident> {
     fields.iter().map(|field|{
