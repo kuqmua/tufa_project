@@ -1,4 +1,6 @@
-pub fn code_occurence_syn_field(proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::Field {
+pub fn code_occurence_syn_field(
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> syn::Field {
     syn::Field {
         attrs: vec![],
         vis: syn::Visibility::Inherited,
@@ -17,7 +19,7 @@ pub fn code_occurence_syn_field(proc_macro_name_upper_camel_case_ident_stringifi
                     leading_colon: None,
                     segments: crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["error_occurence_lib","code_occurence","CodeOccurence"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 },
             },

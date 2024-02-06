@@ -1,7 +1,7 @@
 pub fn generate_simple_syn_punctuated_punctuated(
     parts_vec: &[&str],
-    proc_macro_name_upper_camel_case_ident_stringified: &str
-) -> syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2> {
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2> {
     let parts_vec_len = parts_vec.len();
     match parts_vec_len >= 1 {
         true => {
@@ -29,9 +29,11 @@ pub fn generate_simple_syn_punctuated_punctuated(
     }
 }
 
-pub fn std_string_string_syn_punctuated_punctuated(proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>  {
+pub fn std_string_string_syn_punctuated_punctuated(
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2> {
     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-        &["std","string","String"],
-        &proc_macro_name_upper_camel_case_ident_stringified
+        &["std", "string", "String"],
+        proc_macro_name_upper_camel_case_ident_stringified,
     )
 }

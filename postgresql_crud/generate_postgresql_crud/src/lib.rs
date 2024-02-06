@@ -205,11 +205,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident = &ast.ident;
     let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    // let ident_response_variants_stringified = format!("{ident}{response_variants_upper_camel_case_stringified}");
-    // let ident_response_variants_token_stream = {
-    //     ident_response_variants_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_response_variants_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
     let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
     let table_name_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
         &table_name_stringified,
@@ -217,15 +212,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let server_location_type_token_stream = quote::quote!{&str};
     let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #server_location_type_token_stream = #table_name_quotes_token_stream;};
-    let data_struct = if let syn::Data::Struct(data_struct) = &ast.data {
-        data_struct
+    let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
+        if let syn::Fields::Named(fields_named) = &data_struct.fields {
+            &fields_named.named
+        } else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
+        }
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
-    };
-    let fields_named = if let syn::Fields::Named(fields_named) = &data_struct.fields {
-        &fields_named.named
-    } else {
-        panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
     };
     let primary_key_field = {
         let primary_key_attr_name = "generate_postgresql_crud_primary_key";

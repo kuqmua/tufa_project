@@ -1,9 +1,9 @@
 pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_ident_stringified: &str) -> [syn::Variant;15] {
     let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
         &["std","string","String"],
-        &proc_macro_name_upper_camel_case_ident_stringified
+        proc_macro_name_upper_camel_case_ident_stringified
     );
-    let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
+    let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(proc_macro_name_upper_camel_case_ident_stringified);
     let configuration_error_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::configuration_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
@@ -50,7 +50,7 @@ pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_i
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["std","io","Error"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 )
             ]
@@ -133,7 +133,7 @@ pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_i
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 ),
                 (
@@ -141,7 +141,7 @@ pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_i
                     "len",
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 )
             ]
@@ -257,7 +257,7 @@ pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_i
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["sqlx","migrate","MigrateError"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 )
             ]
@@ -283,8 +283,8 @@ pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_i
 }
 
 pub fn json_extractor_error_named_syn_variants(proc_macro_name_upper_camel_case_ident_stringified: &str) -> [syn::Variant;4] {
-    let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::std_string_string_syn_punctuated_punctuated(&proc_macro_name_upper_camel_case_ident_stringified);
-    let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
+    let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::std_string_string_syn_punctuated_punctuated(proc_macro_name_upper_camel_case_ident_stringified);
+    let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(proc_macro_name_upper_camel_case_ident_stringified);
     let json_data_error_syn_variant = {
         let variant_name_upper_camel_case_stringified = crate::naming_conventions::json_data_error_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
@@ -298,7 +298,7 @@ pub fn json_extractor_error_named_syn_variants(proc_macro_name_upper_camel_case_
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["axum","extract","rejection","JsonDataError"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 )
             ]
@@ -317,7 +317,7 @@ pub fn json_extractor_error_named_syn_variants(proc_macro_name_upper_camel_case_
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["axum","extract","rejection","JsonSyntaxError"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
+                        proc_macro_name_upper_camel_case_ident_stringified
                     ),
                 )
             ]
