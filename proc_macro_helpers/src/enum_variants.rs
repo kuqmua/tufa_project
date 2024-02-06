@@ -1,4 +1,4 @@
-pub fn postgres_error_syn_variants(
+pub fn sqlx_postgres_error_named_syn_variants(
     proc_macro_name_upper_camel_case_ident_stringified: &str
 ) -> [syn::Variant;15] {
     let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(

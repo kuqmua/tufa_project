@@ -2305,7 +2305,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let in_name_stringified = proc_macro_helpers::naming_conventions::in_snake_case_stringified();
     let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
     let common_error_syn_variants = {
-        let postgres_error_syn_variants = proc_macro_helpers::enum_variants::postgres_error_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
+        let sqlx_postgres_error_named_syn_variants = proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
         let json_body_error_syn_variants = {
             let json_data_error_syn_variant = {
                 let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::json_data_error_upper_camel_case_stringified();
@@ -2384,8 +2384,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 bytes_rejection_syn_variant
             ]
         };
-        let mut common_error_variants_vec = std::vec::Vec::with_capacity(common_middlewares_error_syn_variants_len + postgres_error_syn_variants.len() + 1);
-        for element in postgres_error_syn_variants {
+        let mut common_error_variants_vec = std::vec::Vec::with_capacity(common_middlewares_error_syn_variants_len + sqlx_postgres_error_named_syn_variants.len() + 1);
+        for element in sqlx_postgres_error_named_syn_variants {
             common_error_variants_vec.push(element);
         }
         for element in json_body_error_syn_variants {
