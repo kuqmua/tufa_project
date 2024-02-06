@@ -283,3 +283,8 @@ pub fn postgres_error_syn_variants(
         migrate_syn_variant
     ]
 }
+
+// pub fn json_extractor_error_named_syn_variants
+
+
+// JsonExtractorErrorNamed
