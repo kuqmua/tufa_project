@@ -1,6 +1,4 @@
-pub fn sqlx_postgres_error_named_syn_variants(
-    proc_macro_name_upper_camel_case_ident_stringified: &str
-) -> [syn::Variant;15] {
+pub fn sqlx_postgres_error_named_syn_variants(proc_macro_name_upper_camel_case_ident_stringified: &str) -> [syn::Variant;15] {
     let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
         &["std","string","String"],
         &proc_macro_name_upper_camel_case_ident_stringified
@@ -284,7 +282,83 @@ pub fn sqlx_postgres_error_named_syn_variants(
     ]
 }
 
-// pub fn json_extractor_error_named_syn_variants
-
-
-// JsonExtractorErrorNamed
+pub fn json_extractor_error_named_syn_variants(proc_macro_name_upper_camel_case_ident_stringified: &str) -> [syn::Variant;4] {
+    let std_string_string_syn_punctuated_punctuated = crate::generate_simple_syn_punctuated_punctuated::std_string_string_syn_punctuated_punctuated(&proc_macro_name_upper_camel_case_ident_stringified);
+    let code_occurence_field = crate::code_occurence_syn_field::code_occurence_syn_field(&proc_macro_name_upper_camel_case_ident_stringified);
+    let json_data_error_syn_variant = {
+        let variant_name_upper_camel_case_stringified = crate::naming_conventions::json_data_error_upper_camel_case_stringified();
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::construct_syn_variant::construct_syn_variant(
+            crate::status_code::StatusCode::Tvfrr400BadRequest,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    crate::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                    &variant_name_snake_case_stringified,
+                    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["axum","extract","rejection","JsonDataError"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        )
+    };
+    let json_syntax_error_syn_variant = {
+        let variant_name_upper_camel_case_stringified = crate::naming_conventions::json_syntax_error_upper_camel_case_stringified();
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::construct_syn_variant::construct_syn_variant(
+            crate::status_code::StatusCode::Tvfrr400BadRequest,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    crate::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                    &variant_name_snake_case_stringified,
+                    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["axum","extract","rejection","JsonSyntaxError"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        )
+    };
+    let missing_json_content_type_syn_variant = {
+        let variant_name_upper_camel_case_stringified = crate::naming_conventions::missing_json_content_type_upper_camel_case_stringified();
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::construct_syn_variant::construct_syn_variant(
+            crate::status_code::StatusCode::Tvfrr400BadRequest,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
+                    &variant_name_snake_case_stringified, 
+                    std_string_string_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    let bytes_rejection_syn_variant = {
+        let variant_name_upper_camel_case_stringified = crate::naming_conventions::bytes_rejection_upper_camel_case_stringified();
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::construct_syn_variant::construct_syn_variant(
+            crate::status_code::StatusCode::Tvfrr500InternalServerError,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
+                    &variant_name_snake_case_stringified, 
+                    std_string_string_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    [
+        json_data_error_syn_variant,
+        json_syntax_error_syn_variant,
+        missing_json_content_type_syn_variant,
+        bytes_rejection_syn_variant
+    ]
+}
