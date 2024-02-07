@@ -702,24 +702,14 @@ pub fn type_variants_from_request_response_generator(
         let status_code_enums_try_from = {
             let mut is_last_element_found = false;
             let desirable_status_code_case_token_stream = quote::quote! {
-                match response.text().await {
-                    Ok(response_text) => match serde_json::from_str::<#desirable_enum_name>(&response_text){
-                        Ok(value) => Ok(#try_operation_response_variants_upper_camel_case_token_stream::from(value)), 
-                        Err(e) => Err(
-                            #api_request_unexpected_error_path_token_stream::DeserializeBody{ 
-                                serde: e,
-                                status_code,
-                                headers,response_text
-                            }
-                        ),
-                    },
-                    Err(e) => Err(
-                        #api_request_unexpected_error_path_token_stream::FailedToGetResponseText {
-                            reqwest: e,
-                            status_code,
-                            headers,
-                        }
-                    ),
+                match serde_json::from_str::<#desirable_enum_name>(&response_text){
+                    Ok(value) => Ok(#try_operation_response_variants_upper_camel_case_token_stream::from(value)),
+                    Err(e) => Err(#api_request_unexpected_error_path_token_stream::DeserializeBody{ 
+                        serde: e, 
+                        status_code, 
+                        headers, 
+                        response_text 
+                    }),
                 }
             };
             let mut status_code_enums_try_from_variants = std::vec::Vec::with_capacity(unique_status_codes_len + 1);
@@ -732,41 +722,18 @@ pub fn type_variants_from_request_response_generator(
             .into_iter()
             .enumerate()
             .for_each(|(index, status_code_attribute)|{
-                // let status_code_enum_name_stringified = format!("{try_operation_response_variants_upper_camel_case_token_stream}{status_code_attribute}");
-                // let status_code_enum_name_token_stream = status_code_enum_name_stringified
-                //     .parse::<proc_macro2::TokenStream>()
-                //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {status_code_enum_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let try_operation_response_variants_desirable_attribute_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &status_code_attribute);
-                
-                // crate::generate_try_operation_response_variants_desirable_attribute_token_stream(
-                //     &try_upper_camel_case_stringified,
-                //     &operation_name_upper_camel_case_stringified,
-                //     &response_variants_upper_camel_case_stringified,
-                //     &status_code_attribute,
-                //     &proc_macro_name_upper_camel_case_ident_stringified
-                // );
                 let http_status_code_token_stream = status_code_attribute.to_http_status_code_token_stream();
                 match index == unique_status_codes_len_minus_one{
                     true => {
                         is_last_element_found = true;
                         status_code_enums_try_from_variants.push(quote::quote! {
                             else {
-                                match response.text().await {
-                                    Ok(response_text) => Err(
-                                        #api_request_unexpected_error_path_token_stream::StatusCode {
-                                            status_code,
-                                            headers,
-                                            response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text)
-                                        },
-                                    ),
-                                    Err(e) => Err(
-                                        #api_request_unexpected_error_path_token_stream::StatusCode {
-                                            status_code,
-                                            headers,
-                                            response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ReqwestError(e),
-                                        },
-                                    ),
-                                }
+                                Err(#api_request_unexpected_error_path_token_stream::StatusCode {
+                                    status_code, 
+                                    headers, 
+                                    response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text)
+                                })
                             }
                         });
                     },
@@ -774,24 +741,9 @@ pub fn type_variants_from_request_response_generator(
                         if *desirable_status_code != status_code_attribute {
                             status_code_enums_try_from_variants.push(quote::quote! {
                                 else if status_code == #http_status_code_token_stream {
-                                    match response.text().await {
-                                        Ok(response_text) => match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text){
-                                            Ok(value) => Ok(#try_operation_response_variants_upper_camel_case_token_stream::from(value)), 
-                                            Err(e) => Err(
-                                                #api_request_unexpected_error_path_token_stream::DeserializeBody{ 
-                                                    serde: e,
-                                                    status_code,
-                                                    headers,response_text
-                                                }
-                                            ),
-                                        },
-                                        Err(e) => Err(
-                                            #api_request_unexpected_error_path_token_stream::FailedToGetResponseText {
-                                                reqwest: e,
-                                                status_code,
-                                                headers,
-                                            }
-                                        ),
+                                    match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                                        Ok(value) => Ok(#try_operation_response_variants_upper_camel_case_token_stream::from(value)),
+                                        Err(e) => Err(#api_request_unexpected_error_path_token_stream::DeserializeBody{ serde: e, status_code, headers, response_text }),
                                     }
                                 }
                             });
@@ -808,7 +760,16 @@ pub fn type_variants_from_request_response_generator(
             async fn #try_from_response_operation_snake_case_token_stream(response: reqwest::Response) -> Result<#try_operation_response_variants_upper_camel_case_token_stream, #api_request_unexpected_error_path_token_stream> {
                 let status_code = response.status();
                 let headers = response.headers().clone();
-                #(#status_code_enums_try_from)*
+                match response.text().await {
+                    Ok(response_text) => {
+                        #(#status_code_enums_try_from)*
+                    }, 
+                    Err(e) => Err(#api_request_unexpected_error_path_token_stream::FailedToGetResponseText{ 
+                        reqwest: e, 
+                        status_code, 
+                        headers, 
+                    }),
+                }
             }
         }
     };
