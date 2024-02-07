@@ -1,7 +1,7 @@
 pub fn column_names_factorial(
     original_input: std::vec::Vec<(usize, &syn::Field)>,
     input: std::vec::Vec<&syn::Field>,
-    output: &mut std::vec::Vec<std::vec::Vec<syn::Field>>,
+    output: &mut [std::vec::Vec<syn::Field>],
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
 ) -> Vec<Vec<syn::Field>> {
     let len = input.len();
@@ -227,7 +227,7 @@ pub fn column_names_factorial(
             column_names_factorial(
                 original_input,
                 new_input_vec,
-                &mut output_handle,
+                &mut output_handle as &mut [std::vec::Vec<syn::Field>],
                 proc_macro_name_upper_camel_case_ident_stringified,
             )
         }

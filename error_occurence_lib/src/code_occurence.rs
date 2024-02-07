@@ -13,7 +13,7 @@ pub struct CodeOccurence {
     commit: std::string::String,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
-    macro_occurence: std::option::Option<MacroOccurence>
+    macro_occurence: std::option::Option<MacroOccurence>,
 }
 
 impl CodeOccurence {
@@ -23,7 +23,7 @@ impl CodeOccurence {
         file: std::string::String,
         line: u32,
         column: u32,
-        macro_occurence: std::option::Option<MacroOccurence>
+        macro_occurence: std::option::Option<MacroOccurence>,
     ) -> Self {
         Self {
             file,
@@ -32,7 +32,7 @@ impl CodeOccurence {
             commit,
             duration: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
-                .unwrap_or(std::time::Duration::default()),
+                .unwrap_or_default(),
             macro_occurence,
         }
     }
@@ -100,7 +100,13 @@ impl GetMacroOccurence for CodeOccurence {
 
 impl std::fmt::Display for CodeOccurence {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(self))
+        write!(
+            f,
+            "{}",
+            CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(
+                self
+            )
+        )
     }
 }
 
@@ -108,19 +114,27 @@ pub trait FormErrorPathDirectory {
     fn form_error_path_directory(&self) -> std::string::String;
 }
 
-impl<T> FormErrorPathDirectory for T 
-where T: GetFile + GetLine + GetColumn + GetMacroOccurence
+impl<T> FormErrorPathDirectory for T
+where
+    T: GetFile + GetLine + GetColumn + GetMacroOccurence,
 {
     fn form_error_path_directory(&self) -> std::string::String {
         match self.get_macro_occurence() {
             Some(value) => format!(
                 "{}:{}:{} ({}:{}:{})",
-                self.get_file(), self.get_line(), self.get_column(), value.file, value.line, value.column
+                self.get_file(),
+                self.get_line(),
+                self.get_column(),
+                value.file,
+                value.line,
+                value.column
             ),
             None => format!(
                 "{}:{}:{}",
-                self.get_file(), self.get_line(), self.get_column()
-            )
+                self.get_file(),
+                self.get_line(),
+                self.get_column()
+            ),
         }
     }
 }
@@ -129,20 +143,30 @@ pub trait FormErrorPathGithub {
     fn form_error_path_github(&self) -> std::string::String;
 }
 
-impl<T> FormErrorPathGithub for T 
-where T: GetCommit + GetFile + GetLine + GetMacroOccurence
+impl<T> FormErrorPathGithub for T
+where
+    T: GetCommit + GetFile + GetLine + GetMacroOccurence,
 {
     fn form_error_path_github(&self) -> std::string::String {
         match self.get_macro_occurence() {
             Some(value) => format!(
                 "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
-                naming_constants::GITHUB_URL, self.get_commit(), self.get_file(), self.get_line(),
-                naming_constants::GITHUB_URL, self.get_commit(), value.file, value.line
+                naming_constants::GITHUB_URL,
+                self.get_commit(),
+                self.get_file(),
+                self.get_line(),
+                naming_constants::GITHUB_URL,
+                self.get_commit(),
+                value.file,
+                value.line
             ),
             None => format!(
                 "{}/blob/{}/{}#L{}",
-                naming_constants::GITHUB_URL, self.get_commit(), self.get_file(), self.get_line()
-            )
+                naming_constants::GITHUB_URL,
+                self.get_commit(),
+                self.get_file(),
+                self.get_line()
+            ),
         }
     }
 }
@@ -152,15 +176,24 @@ pub trait GetCodeOccurence {
 }
 
 pub trait GetCodePath {
-    fn get_code_path(&self, source_place_type: &config_lib::source_place_type::SourcePlaceType) -> std::string::String;
+    fn get_code_path(
+        &self,
+        source_place_type: &config_lib::source_place_type::SourcePlaceType,
+    ) -> std::string::String;
 }
 
-impl<T> GetCodePath for T 
-where T: FormErrorPathDirectory + FormErrorPathGithub
+impl<T> GetCodePath for T
+where
+    T: FormErrorPathDirectory + FormErrorPathGithub,
 {
-    fn get_code_path(&self, source_place_type: &config_lib::source_place_type::SourcePlaceType) -> std::string::String {
+    fn get_code_path(
+        &self,
+        source_place_type: &config_lib::source_place_type::SourcePlaceType,
+    ) -> std::string::String {
         match source_place_type {
-            config_lib::source_place_type::SourcePlaceType::Source => self.form_error_path_directory(),
+            config_lib::source_place_type::SourcePlaceType::Source => {
+                self.form_error_path_directory()
+            }
             config_lib::source_place_type::SourcePlaceType::Github => self.form_error_path_github(),
         }
     }
@@ -179,8 +212,7 @@ pub trait CodeOccurencePrepareForLogWithConfig {
 
 impl<SelfGeneric> CodeOccurencePrepareForLogWithConfig for SelfGeneric
 where
-    SelfGeneric: GetCodePath
-        + GetDuration,
+    SelfGeneric: GetCodePath + GetDuration,
 {
     fn code_occurence_prepare_for_log_with_config<
         ConfigGeneric: config_lib::config_fields::GetTimezone

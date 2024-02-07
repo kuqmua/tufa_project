@@ -449,11 +449,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let mut veced_vec = fields_named_clone_stringified
             .iter()
             .map(|field| vec![(*field).clone()])
-            .collect();
+            .collect::<std::vec::Vec<std::vec::Vec<syn::Field>>>();
         crate::column_names_factorial::column_names_factorial(
             fields_named_enumerated,
             fields_named_clone_stringified,
-            &mut veced_vec,
+            &mut veced_vec as &mut [std::vec::Vec<syn::Field>],
             &proc_macro_name_upper_camel_case_ident_stringified
         )
     };
