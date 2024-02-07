@@ -984,7 +984,9 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
 ) -> Result<crate::server::postgres::uuid_wrapper::PossibleUuidWrapper, TryDeleteOneRequestError> {
     match future.await
     {
-        Ok(response) => match {
+        Ok(response) => {
+            //
+            let match_value = {
             // try_from_response_try_delete_one(response).await
             //
             let status_code = response.status();
@@ -995,14 +997,34 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                         match serde_json :: from_str :: <
                         TryDeleteOneResponseVariantsTvfrr200Ok > (& response_text)
                         {
-                            Ok(value) => 
+                            Ok(value) => {
                                 Ok(TryDeleteOneResponseVariants :: from(value))
                                 as 
                                 Result<
                                     TryDeleteOneResponseVariants,
                                     crate::common::api_request_unexpected_error::ApiRequestUnexpectedError,
                                 >
-                            , 
+                                //
+                                // match crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::try_from(variants)
+                                // {
+                                //     Ok(value) => Ok(value), 
+                                //     Err(e) => Err(TryDeleteOneRequestError :: ExpectedType
+                                //     {
+                                //         expected_type : e, code_occurence : error_occurence_lib ::
+                                //         code_occurence :: CodeOccurence ::
+                                //         new(crate :: global_variables :: compile_time ::
+                                //         project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                //         file! ().to_string(), line! (), column! (),
+                                //         Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                //         {
+                                //             file : std :: string :: String ::
+                                //             from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                                //             line : 882, column : 17,
+                                //         })),
+                                //     }),
+                                // }
+                                //
+                            }, 
                             Err(e) => Err(
                                 crate :: common :: api_request_unexpected_error ::ApiRequestUnexpectedError :: DeserializeBody{ serde : e, status_code, headers, response_text }
                             )
@@ -1114,8 +1136,8 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                 },
             }
             //
-        }
-        {
+        };
+        match match_value {
             Ok(variants) => match crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::try_from(variants)
             {
                 Ok(value) => Ok(value), 
@@ -1185,6 +1207,8 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                     }))
                 }),
             },
+        }
+            //
         }, 
         Err(e) => Err(TryDeleteOneRequestError :: Reqwest {
             reqwest : e, 
