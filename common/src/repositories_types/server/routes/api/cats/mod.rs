@@ -1023,7 +1023,7 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                 )
             });
         },
-     };
+    };
     let variants = if status_code == http::StatusCode::OK {
         match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
             Ok(value) => TryDeleteOneResponseVariants::from(value), 
@@ -1135,7 +1135,7 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                 )
             }
         );
-     };
+    };
     match crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::try_from(variants) {
         Ok(value) => Ok(value), 
         Err(e) => Err(TryDeleteOneRequestError :: ExpectedType {
@@ -1152,7 +1152,7 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                 })
             ),
         }),
-      }
+    }
 }
 pub enum TryDeleteOneStatusCodesChecker {
     ConfigurationTvfrr500InternalServerError,

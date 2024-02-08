@@ -7075,7 +7075,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote!{
                 #parameters_token_stream
-                // #try_operation_error_with_middleware_error_variants_token_stream
+                #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
                 #common_middlewares_error_syn_variants_from_impls
