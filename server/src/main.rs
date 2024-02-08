@@ -29,10 +29,10 @@ fn main() {
     crate::entry::entry(
         crate::global_variables::runtime::config::CONFIG.get_or_init(|| {
             common::repositories_types::server::config::config_struct::Config::try_from(
-        common::repositories_types::server::config::config_struct::ConfigUnchecked::new()
-        .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
-    ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))
+                common::repositories_types::server::config::config_struct::ConfigUnchecked::new()
+                    .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}")),
+            )
+            .unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))
         }),
     );
 }
-

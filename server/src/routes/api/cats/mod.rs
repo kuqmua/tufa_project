@@ -27,7 +27,6 @@ fn crud(
         //     "/",
         //     axum::routing::get(get_root),
         // )
-
         //todo generate axum::Router and make it pub instead of create_many -like router handlers
         .route(
             "/create_many",
@@ -47,7 +46,9 @@ fn crud(
         )
         .route(
             "/update_many",
-            axum::routing::patch(common::repositories_types::server::routes::api::cats::update_many),
+            axum::routing::patch(
+                common::repositories_types::server::routes::api::cats::update_many,
+            ),
         )
         .route(
             "/update_one",
@@ -55,11 +56,15 @@ fn crud(
         )
         .route(
             "/delete_many",
-            axum::routing::delete(common::repositories_types::server::routes::api::cats::delete_many),
+            axum::routing::delete(
+                common::repositories_types::server::routes::api::cats::delete_many,
+            ),
         )
         .route(
             "/delete_one",
-            axum::routing::delete(common::repositories_types::server::routes::api::cats::delete_one),
+            axum::routing::delete(
+                common::repositories_types::server::routes::api::cats::delete_one,
+            ),
         )
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,

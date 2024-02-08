@@ -2,7 +2,6 @@
 #[openapi(
     paths(
         common::server::routes::git_info::git_info,
-        
         common::repositories_types::server::routes::api::cats::create_many,
         common::repositories_types::server::routes::api::cats::create_one,
         common::repositories_types::server::routes::api::cats::read_many,
@@ -78,7 +77,7 @@
     tags(
         (name = "server", description = "server api")
     )
-)]//todo - this thing actually using builder pattern. maybe generate builder in GeneratePostgresqlCrud then merge it together?
+)] //todo - this thing actually using builder pattern. maybe generate builder in GeneratePostgresqlCrud then merge it together?
 struct ApiDoc;
 struct SecurityAddon;
 impl utoipa::Modify for SecurityAddon {
@@ -155,13 +154,10 @@ async fn read_middleware_custom_header(
 pub async fn try_build_server<'a>(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     config: &'static common::repositories_types::server::config::config_struct::Config,
-) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>>
-{
+) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
     println!(
         "server running on {}",
-        common::common::config::get_server_address::GetServerAddress::get_server_address(
-            &config
-        )
+        common::common::config::get_server_address::GetServerAddress::get_server_address(&config)
     );
     let app_state = std::sync::Arc::new(
         common::repositories_types::server::routes::app_state::AppState {
@@ -175,7 +171,11 @@ pub async fn try_build_server<'a>(
         message: std::string::String::from("shared_message"),
     };
     axum::serve(
-         tokio::net::TcpListener::bind(config_lib::config_fields::GetSocketAddr::get_socket_addr(config)).await.unwrap(),
+        tokio::net::TcpListener::bind(config_lib::config_fields::GetSocketAddr::get_socket_addr(
+            config,
+        ))
+        .await
+        .unwrap(),
         // common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
         axum::Router::new()
             .route(
@@ -213,7 +213,10 @@ pub async fn try_build_server<'a>(
                     .allow_origin(["http://127.0.0.1".parse().unwrap()]),
             )
             .merge(
-                utoipa_swagger_ui::SwaggerUi::new(common::global_variables::hardcode::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
+                utoipa_swagger_ui::SwaggerUi::new(
+                    common::global_variables::hardcode::SLASH_SWAGGER_UI,
+                )
+                .url("/api-docs/openapi.json", {
                     use utoipa::OpenApi;
                     ApiDoc::openapi()
                 }),
