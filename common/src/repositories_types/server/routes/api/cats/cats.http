@@ -88,7 +88,7 @@ commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
 
 PATCH http://127.0.0.1:8080/dogs/update_many HTTP/1.1 
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: fcacc76d1575a823d974d8c91c2ba3a307a55eb2
 
 [
     {
@@ -107,10 +107,10 @@ commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
 
 DELETE http://127.0.0.1:8080/dogs/delete_one HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: fcacc76d1575a823d974d8c91c2ba3a307a55eb2
 
 {
-    "id": "65c5f4f3-f604-467d-bdc9-cbe64b53dbe1"
+    "id": "eb939a89-f715-4561-84b7-0aa850ad2537"
 }
 
 ####"^first_test_name_create$"  
