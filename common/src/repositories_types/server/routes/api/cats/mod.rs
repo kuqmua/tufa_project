@@ -1074,25 +1074,22 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
                                         TryDeleteOneResponseVariants,
                                         crate::common::api_request_unexpected_error::ApiRequestUnexpectedError,
                                     >,
+                            }
+                        } else {
+                            Err(crate::common::api_request_unexpected_error::ApiRequestUnexpectedError::StatusCode {
+                                status_code, 
+                                headers, 
+                                response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(response_text)
+                            })
+                            as 
+                            Result<
+                                TryDeleteOneResponseVariants,
+                                crate::common::api_request_unexpected_error::ApiRequestUnexpectedError,
+                            >
                         }
-                    } else
-                    {
-                        Err(crate :: common :: api_request_unexpected_error ::
-                        ApiRequestUnexpectedError :: StatusCode
-                        {
-                            status_code, headers, response_text_result : crate :: common
-                            :: api_request_unexpected_error :: ResponseTextResult ::
-                            ResponseText(response_text)
-                        })
-                                                        as 
-                                Result<
-                                    TryDeleteOneResponseVariants,
-                                    crate::common::api_request_unexpected_error::ApiRequestUnexpectedError,
-                                >
-                    }
-                }, 
-                Err(e) => {
-                    Err(crate::common :: api_request_unexpected_error ::ApiRequestUnexpectedError :: FailedToGetResponseText{ reqwest : e, status_code, headers, })
+                    }, 
+                    Err(e) => {
+                        Err(crate::common :: api_request_unexpected_error ::ApiRequestUnexpectedError :: FailedToGetResponseText{ reqwest : e, status_code, headers, })
                     //
                     as 
                     Result<
