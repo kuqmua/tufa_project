@@ -1335,9 +1335,7 @@ pub async fn try_delete_one<'a>(
             return Err(TryDeleteOneErrorNamed::SerdeJsonToString {
                 serde_json_to_string: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
-                        .commit
-                        .to_string(),
+                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
                     file!().to_string(),
                     line!(),
                     column!(),
@@ -1438,20 +1436,22 @@ pub async fn try_delete_one<'a>(
         match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
-                let request_error = TryDeleteOneRequestError :: DeserializeResponse
-                {
-                    serde : e, status_code, headers, response_text,
-                    code_occurence : error_occurence_lib :: code_occurence ::
-                    CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                    file! ().to_string(), line! (), column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    {
-                        file : std :: string :: String ::
-                        from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                        line : 793, column : 17,
-                    }))
+                let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                    serde: e, 
+                    status_code, 
+                    headers, 
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line: 793, 
+                            column: 17,
+                        })
+                    )
                 };
                 return Err(TryDeleteOneErrorNamed::RequestError {
                     request_error, 
@@ -1473,20 +1473,22 @@ pub async fn try_delete_one<'a>(
         match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
-                let request_error = TryDeleteOneRequestError :: DeserializeResponse
-                {
-                    serde : e, status_code, headers, response_text,
-                    code_occurence : error_occurence_lib :: code_occurence ::
-                    CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                    file! ().to_string(), line! (), column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    {
-                        file : std :: string :: String ::
-                        from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                        line : 825, column : 17,
-                    }))
+                let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                    serde: e, 
+                    status_code, 
+                    headers, 
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line: 825,
+                            column: 17,
+                        })
+                    )
                 };
                 return Err(TryDeleteOneErrorNamed::RequestError {
                     request_error, 
@@ -1508,20 +1510,22 @@ pub async fn try_delete_one<'a>(
         match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(&response_text) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
-                let request_error = TryDeleteOneRequestError :: DeserializeResponse
-                {
-                    serde : e, status_code, headers, response_text,
-                    code_occurence : error_occurence_lib :: code_occurence ::
-                    CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                    file! ().to_string(), line! (), column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    {
-                        file : std :: string :: String ::
-                        from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                        line : 825, column : 17,
-                    }))
+                let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line: 825,
+                            column: 17,
+                        })
+                    )
                 };
                 return Err(TryDeleteOneErrorNamed::RequestError {
                     request_error, 
@@ -1545,20 +1549,22 @@ pub async fn try_delete_one<'a>(
         ) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
-                let request_error = TryDeleteOneRequestError :: DeserializeResponse
-                {
-                    serde : e, status_code, headers, response_text,
-                    code_occurence : error_occurence_lib :: code_occurence ::
-                    CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                    file! ().to_string(), line! (), column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    {
-                        file : std :: string :: String ::
-                        from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                        line : 825, column : 17,
-                    }))
+                let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                    serde: e, 
+                    status_code, 
+                    headers, 
+                    response_text,
+                    code_occurence: error_occurence_lib :: code_occurence ::CodeOccurence ::new(
+                        crate :: global_variables :: compile_time ::project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        file! ().to_string(), 
+                        line! (), 
+                        column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence {
+                            file : std :: string :: String :: from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line : 825, 
+                            column : 17,
+                        })
+                    )
                 };
                 return Err(TryDeleteOneErrorNamed::RequestError {
                     request_error, 
@@ -1632,16 +1638,17 @@ pub async fn try_delete_one<'a>(
             }
         }, 
         Err(e) => {
-            let request_error = TryDeleteOneRequestError :: ExpectedType {
-                expected_type : e, 
-                code_occurence : error_occurence_lib ::code_occurence :: CodeOccurence ::new(
-                    crate :: global_variables :: compile_time :: project_git_info:: PROJECT_GIT_INFO.commit.to_string(), file! ().to_string(),
-                    line! (), 
-                    column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence {
-                        file : std :: string :: String ::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                        line : 892, 
-                        column : 13,
+            let request_error = TryDeleteOneRequestError::ExpectedType {
+                expected_type: e, 
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(), 
+                    file!().to_string(),
+                    line!(), 
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                        line: 892, 
+                        column: 13,
                     })
                 )
             };
