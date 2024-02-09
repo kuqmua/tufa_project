@@ -1094,6 +1094,21 @@ pub fn type_variants_from_request_response_generator(
                 }
                 //
             });
+            //
+            let field_code_occurence_new_d3a22bcc_9490_4bf7_a9cb_6c9fb2903eb1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            //
+            let field_code_occurence_new_f864c70c_7901_4d99_805b_7f1cc0a42d68_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            //
             unique_status_codes
             .into_iter()
             .enumerate()
@@ -1104,27 +1119,51 @@ pub fn type_variants_from_request_response_generator(
                     true => {
                         is_last_element_found = true;
                         status_code_enums_try_from_variants.push(quote::quote! {
-
+                            // else {
+                            //     Err(#api_request_unexpected_error_path_token_stream::StatusCode {
+                            //         status_code, 
+                            //         headers, 
+                            //         response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text)
+                            //     })
+                            // }
                             else {
-                                Err(#api_request_unexpected_error_path_token_stream::StatusCode {
-                                    status_code, 
-                                    headers, 
-                                    response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text)
-                                })
+                                return Err(
+                                    #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
+                                        status_code, 
+                                        headers, 
+                                        response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
+                                        #field_code_occurence_new_d3a22bcc_9490_4bf7_a9cb_6c9fb2903eb1_token_stream
+                                    }
+                                );
                             }
-
                         });
                     },
                     false => {
                         if *desirable_status_code != status_code_attribute {
                             status_code_enums_try_from_variants.push(quote::quote! {
 
+                                // else if status_code == #http_status_code_token_stream {
+                                //     match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                                //         Ok(value) => Ok(#try_operation_response_variants_upper_camel_case_token_stream::from(value)),
+                                //         Err(e) => Err(#api_request_unexpected_error_path_token_stream::DeserializeBody{ serde: e, status_code, headers, response_text }),
+                                //     }
+                                // }
+                                //
                                 else if status_code == #http_status_code_token_stream {
                                     match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
-                                        Ok(value) => Ok(#try_operation_response_variants_upper_camel_case_token_stream::from(value)),
-                                        Err(e) => Err(#api_request_unexpected_error_path_token_stream::DeserializeBody{ serde: e, status_code, headers, response_text }),
+                                        Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value), 
+                                        Err(e) => {
+                                            return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
+                                                serde: e, 
+                                                status_code, 
+                                                headers, 
+                                                response_text, 
+                                                #field_code_occurence_new_f864c70c_7901_4d99_805b_7f1cc0a42d68_token_stream
+                                            });
+                                        },
                                     }
                                 }
+                                //
 
                             });
                         }
@@ -1228,118 +1267,121 @@ pub fn type_variants_from_request_response_generator(
                         });
                     },
                 };
-                let variants = if status_code == http::StatusCode::OK {
-                    match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
-                        Ok(value) => TryDeleteOneResponseVariants::from(value), 
-                        Err(e) => {
-                            return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
-                                serde: e, 
-                                status_code, 
-                                headers, 
-                                response_text, 
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                                    file!().to_string(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence{
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                        line: 910, 
-                                        column: 13,
-                                    })
-                                )
-                            });
-                        },
-                    }
-                } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-                    match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(&response_text) {
-                        Ok(value) => TryDeleteOneResponseVariants::from(value), 
-                        Err(e) => {
-                            return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
-                                serde: e, 
-                                status_code, 
-                                headers, 
-                                response_text, 
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                                    file!().to_string(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence{
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                        line: 910, 
-                                        column: 13,
-                                    })
-                                )
-                            });
-                        },
-                    }
-                } else if status_code == http::StatusCode::BAD_REQUEST {
-                    match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr400BadRequest>(&response_text) {
-                        Ok(value) => TryDeleteOneResponseVariants::from(value), 
-                        Err(e) => {
-                            return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
-                                serde: e, 
-                                status_code, 
-                                headers, 
-                                response_text, 
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                                    file!().to_string(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence{
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                        line: 910, 
-                                        column: 13,
-                                    })
-                                )
-                            });
-                        },
-                    }
-                } else if status_code == http::StatusCode::NOT_FOUND {
-                    match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
-                        Ok(value) => TryDeleteOneResponseVariants::from(value), 
-                        Err(e) => {
-                            return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
-                                serde: e, 
-                                status_code, 
-                                headers, 
-                                response_text, 
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                                    file!().to_string(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence{
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                        line: 910, 
-                                        column: 13,
-                                    })
-                                )
-                            });
-                        },
-                    }
-                } else {
-                    return Err(
-                        #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
-                            status_code, 
-                            headers, 
-                            response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(response_text), 
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                                file!().to_string(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence{
-                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                    line: 898, 
-                                    column: 13,
-                                })
-                            )
-                        }
-                    );
-                };
+                let variants = 
+                #(#status_code_enums_try_from)*;
+                
+                // if status_code == http::StatusCode::OK {
+                //     match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
+                //         Ok(value) => TryDeleteOneResponseVariants::from(value), 
+                //         Err(e) => {
+                //             return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
+                //                 serde: e, 
+                //                 status_code, 
+                //                 headers, 
+                //                 response_text, 
+                //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //                     crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                //                     file!().to_string(),
+                //                     line!(),
+                //                     column!(),
+                //                     Some(error_occurence_lib::code_occurence::MacroOccurence{
+                //                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                //                         line: 910, 
+                //                         column: 13,
+                //                     })
+                //                 )
+                //             });
+                //         },
+                //     }
+                // } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+                //     match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(&response_text) {
+                //         Ok(value) => TryDeleteOneResponseVariants::from(value), 
+                //         Err(e) => {
+                //             return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
+                //                 serde: e, 
+                //                 status_code, 
+                //                 headers, 
+                //                 response_text, 
+                //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //                     crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                //                     file!().to_string(),
+                //                     line!(),
+                //                     column!(),
+                //                     Some(error_occurence_lib::code_occurence::MacroOccurence{
+                //                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                //                         line: 910, 
+                //                         column: 13,
+                //                     })
+                //                 )
+                //             });
+                //         },
+                //     }
+                // } else if status_code == http::StatusCode::BAD_REQUEST {
+                //     match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr400BadRequest>(&response_text) {
+                //         Ok(value) => TryDeleteOneResponseVariants::from(value), 
+                //         Err(e) => {
+                //             return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
+                //                 serde: e, 
+                //                 status_code, 
+                //                 headers, 
+                //                 response_text, 
+                //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //                     crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                //                     file!().to_string(),
+                //                     line!(),
+                //                     column!(),
+                //                     Some(error_occurence_lib::code_occurence::MacroOccurence{
+                //                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                //                         line: 910, 
+                //                         column: 13,
+                //                     })
+                //                 )
+                //             });
+                //         },
+                //     }
+                // } else if status_code == http::StatusCode::NOT_FOUND {
+                //     match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
+                //         Ok(value) => TryDeleteOneResponseVariants::from(value), 
+                //         Err(e) => {
+                //             return Err(#try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse{
+                //                 serde: e, 
+                //                 status_code, 
+                //                 headers, 
+                //                 response_text, 
+                //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //                     crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                //                     file!().to_string(),
+                //                     line!(),
+                //                     column!(),
+                //                     Some(error_occurence_lib::code_occurence::MacroOccurence{
+                //                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                //                         line: 910, 
+                //                         column: 13,
+                //                     })
+                //                 )
+                //             });
+                //         },
+                //     }
+                // } else {
+                //     return Err(
+                //         #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
+                //             status_code, 
+                //             headers, 
+                //             response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(response_text), 
+                //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //                 crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                //                 file!().to_string(),
+                //                 line!(),
+                //                 column!(),
+                //                 Some(error_occurence_lib::code_occurence::MacroOccurence{
+                //                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                //                     line: 898, 
+                //                     column: 13,
+                //                 })
+                //             )
+                //         }
+                //     );
+                // };
                 match crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::try_from(variants) {
                     Ok(value) => Ok(value), 
                     Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream :: ExpectedType {
