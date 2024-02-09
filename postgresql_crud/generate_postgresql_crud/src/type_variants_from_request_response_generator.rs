@@ -31,7 +31,6 @@ pub fn type_variants_from_request_response_generator(
     let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
     let reqwest_error_token_stream = quote::quote!{reqwest::Error};
     let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
-    let crate_common_api_request_unexpected_error_api_request_unexpected_error_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ApiRequestUnexpectedError};
     let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
     let try_operation_token_stream = {
         let try_operation_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
@@ -649,30 +648,6 @@ pub fn type_variants_from_request_response_generator(
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {tvfrr_extraction_logic_try_operation_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let try_from_response_try_operation_snake_case_token_stream = {
-            let try_from_response_try_operation_snake_case_stringified =
-                format!("try_from_response_try_{operation_snake_case_stringified}");
-            try_from_response_try_operation_snake_case_stringified
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {try_from_response_try_operation_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let try_from_response_try_operation_snake_case_token_stream_result_ok_token_stream = {
-            let field_code_occurence_new_406e0f46_509c_40b3_9777_17d2048f9600_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            quote::quote!{
-                match #desirable_type_token_stream::try_from(variants){
-                    Ok(value) => Ok(value),
-                    Err(e) => Err(#try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
-                        expected_type: e,
-                        #field_code_occurence_new_406e0f46_509c_40b3_9777_17d2048f9600_token_stream,
-                    }),
-                }
-            }
-        };
         let (
             unique_status_codes,
             unique_status_codes_len,
@@ -811,13 +786,6 @@ pub fn type_variants_from_request_response_generator(
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {status_code_enum_name_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
-        let api_request_unexpected_error_path_token_stream = quote::quote! { #api_request_unexpected_error_module_path_token_stream::ApiRequestUnexpectedError };
-        let try_from_response_operation_snake_case_token_stream = {
-            let ident_response_variants_attribute_stingified = format!("try_from_response_try_{operation_snake_case_stringified}");
-            ident_response_variants_attribute_stingified
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_response_variants_attribute_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
         let status_code_enums_try_from = {
             let mut is_last_element_found = false;
             let field_code_occurence_new_c569e9f4_52da_4947_a34c_6d4bfd8f43f4_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
