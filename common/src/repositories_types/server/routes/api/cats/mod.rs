@@ -1627,26 +1627,9 @@ pub async fn try_delete_one<'a>(
         };
         match crate :: server :: postgres :: uuid_wrapper ::PossibleUuidWrapper :: try_from(variants) {
             Ok(value) => {
-                // Ok(value)
-                //
                 match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
                     Ok(value) => Ok(value), 
                     Err(e) => {
-                        
-        //                 let request_error = TryDeleteOneRequestError :: ExpectedType
-        // {
-        //     expected_type : e, code_occurence : error_occurence_lib ::
-        //     code_occurence :: CodeOccurence ::
-        //     new(crate :: global_variables :: compile_time :: project_git_info
-        //     :: PROJECT_GIT_INFO.commit.to_string(), file! ().to_string(),
-        //     line! (), column! (),
-        //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
-        //     {
-        //         file : std :: string :: String ::
-        //         from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-        //         line : 892, column : 13,
-        //     }))
-        // };
                         
                 return Err(
                     TryDeleteOneErrorNamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
