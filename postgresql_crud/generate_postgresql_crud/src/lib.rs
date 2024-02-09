@@ -6846,13 +6846,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
-    //     //
-    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
-    //     &try_operation_error_with_middleware_error_variants_token_stream,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
-        //
         let (
             http_request_token_stream,
             http_request_test_token_stream
