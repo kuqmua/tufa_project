@@ -1353,8 +1353,7 @@ pub async fn try_delete_one<'a>(
         }
     };
     let url = format!("{}/dogs/delete_one", server_location);
-    match tvfrr_extraction_logic_try_delete_one(
-        reqwest::Client::new()
+    let future = reqwest::Client::new()
         .delete(&url)
         .header(
             postgresql_crud::COMMIT, 
@@ -1364,8 +1363,8 @@ pub async fn try_delete_one<'a>(
             reqwest:: header :: CONTENT_TYPE,"application/json"
         )
         .body(payload)
-        .send()
-    ).await {
+        .send();
+    match tvfrr_extraction_logic_try_delete_one(future).await {
         Ok(value) => match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
             Ok(value) => Ok(value), 
             Err(e) => Err(TryDeleteOneErrorNamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
