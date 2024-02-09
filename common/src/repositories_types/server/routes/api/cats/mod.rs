@@ -1114,8 +1114,8 @@ async fn tvfrr_extraction_logic_try_delete_one<'a>(
     match crate :: server :: postgres :: uuid_wrapper ::
     PossibleUuidWrapper :: try_from(variants)
     {
-        Ok(value) => Ok(value), Err(e) =>
-        Err(TryDeleteOneRequestError :: ExpectedType
+        Ok(value) => Ok(value), 
+        Err(e) => Err(TryDeleteOneRequestError :: ExpectedType
         {
             expected_type : e, code_occurence : error_occurence_lib ::
             code_occurence :: CodeOccurence ::
@@ -1364,11 +1364,253 @@ pub async fn try_delete_one<'a>(
         )
         .body(payload)
         .send();
-    match tvfrr_extraction_logic_try_delete_one(future).await {
-        Ok(value) => match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
-            Ok(value) => Ok(value), 
-            Err(e) => Err(TryDeleteOneErrorNamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
-                uuid_wrapper_try_from_possible_uuid_wrapper_in_client: e,
+    // match {
+        //
+        let response = match future.await {
+            Ok(response) => response,
+            Err(e) => {
+                let request_error = TryDeleteOneRequestError :: Reqwest
+                {
+                    reqwest : e, code_occurence : error_occurence_lib ::
+                    code_occurence :: CodeOccurence ::
+                    new(crate :: global_variables :: compile_time ::
+                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(), file!
+                    ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                        line : 880, column : 13,
+                    })),
+                };
+                //
+                return Err(TryDeleteOneErrorNamed::RequestError {
+                    request_error, 
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1698,
+                            column: 13,
+                        })
+                    ),
+                });
+                //
+            }
+        };
+        let status_code = response.status();
+        let headers = response.headers().clone();
+        let response_text = match response.text().await {
+            Ok(response_text) => response_text,
+            Err(e) => {
+                let request_error = TryDeleteOneRequestError :: FailedToGetResponseText
+                {
+                    reqwest : e, status_code, headers, code_occurence :
+                    error_occurence_lib :: code_occurence :: CodeOccurence ::
+                    new(crate :: global_variables :: compile_time ::
+                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(), file!
+                    ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                        line : 886, column : 13,
+                    }))
+                };
+                //
+                return Err(TryDeleteOneErrorNamed::RequestError {
+                    request_error, 
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1698,
+                            column: 13,
+                        })
+                    ),
+                });
+                //
+           }
+        };
+        let variants = if status_code == http::StatusCode::OK {
+            match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
+                Ok(value) => TryDeleteOneResponseVariants::from(value),
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError :: DeserializeResponse
+                    {
+                        serde : e, status_code, headers, response_text,
+                        code_occurence : error_occurence_lib :: code_occurence ::
+                        CodeOccurence ::
+                        new(crate :: global_variables :: compile_time ::
+                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        file! ().to_string(), line! (), column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        {
+                            file : std :: string :: String ::
+                            from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line : 793, column : 17,
+                        }))
+                    };
+                    //
+                    return Err(TryDeleteOneErrorNamed::RequestError {
+                        request_error, 
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 1698,
+                                column: 13,
+                            })
+                        ),
+                    });
+                    //
+                }
+           }
+        } else if status_code == http::StatusCode::NOT_FOUND {
+            match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
+                Ok(value) => TryDeleteOneResponseVariants::from(value),
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError :: DeserializeResponse
+                    {
+                        serde : e, status_code, headers, response_text,
+                        code_occurence : error_occurence_lib :: code_occurence ::
+                        CodeOccurence ::
+                        new(crate :: global_variables :: compile_time ::
+                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        file! ().to_string(), line! (), column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        {
+                            file : std :: string :: String ::
+                            from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line : 825, column : 17,
+                        }))
+                    };
+                    //
+                    return Err(TryDeleteOneErrorNamed::RequestError {
+                        request_error, 
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 1698,
+                                column: 13,
+                            })
+                        ),
+                    });
+                    //
+                }
+           }
+        } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+            match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(
+                &response_text,
+         ) {
+                Ok(value) => TryDeleteOneResponseVariants::from(value),
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError :: DeserializeResponse
+                    {
+                        serde : e, status_code, headers, response_text,
+                        code_occurence : error_occurence_lib :: code_occurence ::
+                        CodeOccurence ::
+                        new(crate :: global_variables :: compile_time ::
+                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        file! ().to_string(), line! (), column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        {
+                            file : std :: string :: String ::
+                            from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line : 825, column : 17,
+                        }))
+                    };
+                    //
+                    return Err(TryDeleteOneErrorNamed::RequestError {
+                        request_error, 
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 1698,
+                                column: 13,
+                            })
+                        ),
+                    });
+                    //
+                }
+           }
+        } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+            match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
+                &response_text,
+         ) {
+                Ok(value) => TryDeleteOneResponseVariants::from(value),
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError :: DeserializeResponse
+                    {
+                        serde : e, status_code, headers, response_text,
+                        code_occurence : error_occurence_lib :: code_occurence ::
+                        CodeOccurence ::
+                        new(crate :: global_variables :: compile_time ::
+                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        file! ().to_string(), line! (), column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        {
+                            file : std :: string :: String ::
+                            from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line : 825, column : 17,
+                        }))
+                    };
+                    //
+                    return Err(TryDeleteOneErrorNamed::RequestError {
+                        request_error, 
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 1698,
+                                column: 13,
+                            })
+                        ),
+                    });
+                    //
+                }
+           }
+        } else {
+            let request_error = TryDeleteOneRequestError :: UnexpectedStatusCode
+           {
+                status_code, headers, response_text_result : crate :: common ::
+                api_request_unexpected_error :: ResponseTextResult ::
+                ResponseText(response_text), code_occurence : error_occurence_lib
+                :: code_occurence :: CodeOccurence ::
+                new(crate :: global_variables :: compile_time :: project_git_info
+                :: PROJECT_GIT_INFO.commit.to_string(), file! ().to_string(),
+                line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                    line : 819, column : 17,
+                }))
+            };
+
+            //
+            return Err(TryDeleteOneErrorNamed::RequestError {
+                request_error, 
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
                     file!().to_string(),
@@ -1376,27 +1618,124 @@ pub async fn try_delete_one<'a>(
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2121,
+                        line: 1698,
                         column: 13,
                     })
                 ),
-            })
-        },
-        Err(e) => Err(TryDeleteOneErrorNamed::RequestError {
-            request_error: e, 
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                file!().to_string(),
-                line!(),
-                column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line: 1698,
-                    column: 13,
-                })
-            ),
-        }),
-    }
+            });
+            //
+        };
+        match crate :: server :: postgres :: uuid_wrapper ::PossibleUuidWrapper :: try_from(variants) {
+            Ok(value) => {
+                // Ok(value)
+                //
+                match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+                    Ok(value) => Ok(value), 
+                    Err(e) => {
+                        
+        //                 let request_error = TryDeleteOneRequestError :: ExpectedType
+        // {
+        //     expected_type : e, code_occurence : error_occurence_lib ::
+        //     code_occurence :: CodeOccurence ::
+        //     new(crate :: global_variables :: compile_time :: project_git_info
+        //     :: PROJECT_GIT_INFO.commit.to_string(), file! ().to_string(),
+        //     line! (), column! (),
+        //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
+        //     {
+        //         file : std :: string :: String ::
+        //         from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+        //         line : 892, column : 13,
+        //     }))
+        // };
+                        
+                return Err(
+                    TryDeleteOneErrorNamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
+                        uuid_wrapper_try_from_possible_uuid_wrapper_in_client: e,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2121,
+                                column: 13,
+                            })
+                        ),
+                    }
+                );
+                //
+                    }
+                }
+                //
+            }, 
+            Err(e) => {
+                let request_error = TryDeleteOneRequestError :: ExpectedType {
+                    expected_type : e, 
+                    code_occurence : error_occurence_lib ::code_occurence :: CodeOccurence ::new(
+                        crate :: global_variables :: compile_time :: project_git_info:: PROJECT_GIT_INFO.commit.to_string(), file! ().to_string(),
+                        line! (), 
+                        column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence {
+                            file : std :: string :: String ::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line : 892, 
+                            column : 13,
+                        })
+                    )
+                };
+                //
+                return Err(TryDeleteOneErrorNamed::RequestError {
+                    request_error, 
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1698,
+                            column: 13,
+                        })
+                    ),
+                });
+
+                //
+            },
+        }
+        //
+    // }.await {
+    //     Ok(value) => match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+    //         Ok(value) => Ok(value), 
+    //         Err(e) => Err(TryDeleteOneErrorNamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
+    //             uuid_wrapper_try_from_possible_uuid_wrapper_in_client: e,
+    //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+    //                 crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+    //                 file!().to_string(),
+    //                 line!(),
+    //                 column!(),
+    //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+    //                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+    //                     line: 2121,
+    //                     column: 13,
+    //                 })
+    //             ),
+    //         })
+    //     },
+    //     Err(e) => Err(TryDeleteOneErrorNamed::RequestError {
+    //         request_error: e, 
+    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+    //             crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+    //             file!().to_string(),
+    //             line!(),
+    //             column!(),
+    //             Some(error_occurence_lib::code_occurence::MacroOccurence {
+    //                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+    //                 line: 1698,
+    //                 column: 13,
+    //             })
+    //         ),
+    //     }),
+    // }
 }
 #[utoipa ::
 path(delete, path = "/dogs/delete_one", operation_id = "/dogs/delete_one", tag
