@@ -8497,15 +8497,24 @@ fn generate_try_operation_token_stream_new(
     //     proc_macro_name_upper_camel_case_ident_stringified,
     // );
     ///////////////////////////////////
+    let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
+    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
+    let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
+    let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
+    let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
+    let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
+    let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
+    let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
+
+
+    let desirable_enum_name = {
+        let status_code_enum_name_stingified = format!("{try_operation_response_variants_upper_camel_case_token_stream}{desirable_status_code}");
+        status_code_enum_name_stingified
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {status_code_enum_name_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let extraction_logic_token_stream_handle_token_stream = {
-        let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
-        let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
-        let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
-        let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
-        let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
-        let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
-        let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
-        let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
+
         let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
         let tvfrr_extraction_logic_try_operation_snake_case_token_stream = {
             let tvfrr_extraction_logic_try_operation_snake_case_stringified = format!("tvfrr_extraction_logic_try_{operation_snake_case_stringified}");
@@ -8644,12 +8653,7 @@ fn generate_try_operation_token_stream_new(
                 unique_status_codes_len_minus_one
             )
         };
-        let desirable_enum_name = {
-            let status_code_enum_name_stingified = format!("{try_operation_response_variants_upper_camel_case_token_stream}{desirable_status_code}");
-            status_code_enum_name_stingified
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {status_code_enum_name_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+
         let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
         let status_code_enums_try_from = {
             let mut is_last_element_found = false;
@@ -8843,7 +8847,7 @@ fn generate_try_operation_token_stream_new(
             let response = match future.await {
                 Ok(response) => response,
                 Err(e) => {
-                    let request_error = TryDeleteOneRequestError::Reqwest {
+                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::Reqwest {
                         reqwest: e, 
                         #field_code_occurence_new_bb5cfe29_9fb8_4b44_ab37_fa1788741b94_token_stream,
                     };
@@ -8858,7 +8862,7 @@ fn generate_try_operation_token_stream_new(
             let response_text = match response.text().await {
                 Ok(response_text) => response_text,
                 Err(e) => {
-                    let request_error = TryDeleteOneRequestError::FailedToGetResponseText {
+                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::FailedToGetResponseText {
                         reqwest: e, 
                         status_code, 
                         headers, 
@@ -8871,10 +8875,10 @@ fn generate_try_operation_token_stream_new(
                 }
             };
             let variants = if status_code == http::StatusCode::OK {
-                match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
-                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                match serde_json::from_str::<#desirable_enum_name>(&response_text) {
+                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                     Err(e) => {
-                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                             serde: e, 
                             status_code, 
                             headers, 
@@ -8909,9 +8913,9 @@ fn generate_try_operation_token_stream_new(
                 }
             } else if status_code == http::StatusCode::NOT_FOUND {
                 match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
-                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                     Err(e) => {
-                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                             serde: e, 
                             status_code, 
                             headers, 
@@ -8946,9 +8950,9 @@ fn generate_try_operation_token_stream_new(
                    }
             } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
                 match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(&response_text) {
-                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                     Err(e) => {
-                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                             serde: e,
                             status_code,
                             headers,
@@ -8985,9 +8989,9 @@ fn generate_try_operation_token_stream_new(
                 match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
                     &response_text,
                 ) {
-                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                     Err(e) => {
-                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                             serde: e, 
                             status_code, 
                             headers, 
@@ -9021,7 +9025,7 @@ fn generate_try_operation_token_stream_new(
                     }
                 }
             } else {
-                let request_error = TryDeleteOneRequestError::UnexpectedStatusCode {
+                let request_error = #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
                     status_code, 
                     headers, 
                     response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(response_text), 
@@ -9076,7 +9080,7 @@ fn generate_try_operation_token_stream_new(
                     }
                 }, 
                 Err(e) => {
-                    let request_error = TryDeleteOneRequestError::ExpectedType {
+                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
                         expected_type: e, 
                         #field_code_occurence_new_9135de27_94c6_4f8d_a3b6_2d617411ce7f_token_stream
                     };
