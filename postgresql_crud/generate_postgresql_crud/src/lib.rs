@@ -8848,17 +8848,14 @@ fn generate_try_operation_token_stream_new(
             match serde_json::from_str::<#desirable_enum_name>(&response_text) {
                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                 Err(e) => {
-                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
+                    let e = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                         serde: e, 
                         status_code, 
                         headers, 
                         response_text,
                         #field_code_occurence_new_c0b27ae4_b521_4d30_bc4e_7a142e105150_token_stream
                     };
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                        request_error, 
-                        #field_code_occurence_new_45a6d1a7_60da_4839_9669_9c259bbb0ca0_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                 }
             }
         };
@@ -8903,16 +8900,13 @@ fn generate_try_operation_token_stream_new(
                     is_last_element_found = true;
                     status_code_enums_try_from_variants.push(quote::quote! {
                         else {
-                            let request_error = #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
+                            let e = #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
                                 status_code, 
                                 headers, 
                                 response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
                                 #field_code_occurence_new_94dc9e5f_2847_4a75_9f6a_dd59051e2176_token_stream
                             };
-                            return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                                request_error, 
-                                #field_code_occurence_new_59e3ec45_4f7b_47af_bf9a_304ca0bce1fb_token_stream
-                            });
+                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                         }
                     });
                 },
