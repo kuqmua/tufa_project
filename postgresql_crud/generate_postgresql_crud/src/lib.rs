@@ -9028,14 +9028,11 @@ fn generate_try_operation_token_stream_new(
             match #desirable_type_token_stream::try_from(variants) {
                 Ok(value) => #ok_value_handle_token_stream, 
                 Err(e) => {
-                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
+                    let e = #try_operation_request_error_upper_camel_case_token_stream::ExpectedType {
                         expected_type: e, 
                         #field_code_occurence_new_9135de27_94c6_4f8d_a3b6_2d617411ce7f_token_stream
                     };
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                        request_error, 
-                        #field_code_occurence_new_fe7c33e3_9d55_434a_9253_e17442ff0b59_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                 },
             }
         }
