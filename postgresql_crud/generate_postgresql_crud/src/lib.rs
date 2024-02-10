@@ -3128,7 +3128,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants,
+                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -3155,7 +3155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream(
+            let http_request_token_stream = generate_try_operation_token_stream_new(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
@@ -3179,6 +3179,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                type_variants_from_request_response_syn_variants,
+                &desirable_status_code,
+                &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,//todo reuse it
             );
             let http_request_test_token_stream = {
                 let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -3636,7 +3640,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},
+                &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},//todo reuse it
                 &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &eo_display_token_stream,
@@ -3644,7 +3648,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants,
+                type_variants_from_request_response_syn_variants.clone(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -3670,7 +3674,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream(
+            let http_request_token_stream = generate_try_operation_token_stream_new(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &quote::quote!{std::vec::Vec<#struct_options_ident_token_stream>},
@@ -3693,6 +3697,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                type_variants_from_request_response_syn_variants,
+                &desirable_status_code,
+                &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},//todo reuse it
             );
             let http_request_test_token_stream = {
                 let order_initialization_token_stream = Order::Desc.to_token_stream();
@@ -4393,7 +4401,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants,
+                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -4420,7 +4428,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream(
+            let http_request_token_stream = generate_try_operation_token_stream_new(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &struct_options_ident_token_stream,
@@ -4441,6 +4449,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
+                //
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                type_variants_from_request_response_syn_variants,
+                &desirable_status_code,
+                &struct_options_ident_token_stream,
             );
             let http_request_test_expect_success_token_stream = {
                 let test_content_token_stream = quote::quote!{
@@ -5509,7 +5522,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants,
+                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -5536,7 +5549,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream(
+            let http_request_token_stream = generate_try_operation_token_stream_new(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
@@ -5560,6 +5573,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
+                //
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                type_variants_from_request_response_syn_variants,
+                &desirable_status_code,
+                &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
