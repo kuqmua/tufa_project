@@ -8935,17 +8935,14 @@ fn generate_try_operation_token_stream_new(
                                 match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
                                     Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                                     Err(e) => {
-                                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
+                                        let e = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                                             serde: e, 
                                             status_code, 
                                             headers, 
                                             response_text,
                                             #field_code_occurence_new_a7ef266e_859d_419e_8bd8_51d2d98ede01_token_stream
                                         };
-                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                                            request_error, 
-                                            #field_code_occurence_new_6e6b0f6d_00fb_4301_89e2_1d720c440a02_token_stream
-                                        });
+                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                                     }
                                 }
                             }
