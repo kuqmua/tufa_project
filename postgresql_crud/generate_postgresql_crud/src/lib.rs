@@ -9012,16 +9012,13 @@ fn generate_try_operation_token_stream_new(
             let response_text = match response.text().await {
                 Ok(response_text) => response_text,
                 Err(e) => {
-                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::FailedToGetResponseText {
+                    let e = #try_operation_request_error_upper_camel_case_token_stream::FailedToGetResponseText {
                         reqwest: e, 
                         status_code, 
                         headers, 
                         #field_code_occurence_new_50089027_fdac_495d_b3c4_07daf290f498_token_stream
                     };
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                        request_error, 
-                        #field_code_occurence_new_e1b395e2_6a5a_4231_9bd8_2ff16a8fd405_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                 }
             };
             let variants = #(#status_code_enums_try_from)*;
