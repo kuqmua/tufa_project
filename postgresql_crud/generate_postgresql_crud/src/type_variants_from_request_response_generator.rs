@@ -16,7 +16,6 @@ pub fn type_variants_from_request_response_generator(
     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
     let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
-    let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
     let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseStringified::try_self_response_variants_upper_camel_case_stringified(operation);
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
@@ -25,7 +24,6 @@ pub fn type_variants_from_request_response_generator(
     let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
     let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
     let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
-    let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
     let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
     let http_status_code_token_stream = quote::quote!{http::StatusCode};
     let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
