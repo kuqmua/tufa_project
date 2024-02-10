@@ -8997,14 +8997,11 @@ fn generate_try_operation_token_stream_new(
             let response = match future.await {
                 Ok(response) => response,
                 Err(e) => {
-                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::Reqwest {
+                    let e = #try_operation_request_error_upper_camel_case_token_stream::Reqwest {
                         reqwest: e, 
                         #field_code_occurence_new_bb5cfe29_9fb8_4b44_ab37_fa1788741b94_token_stream,
                     };
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                        request_error, 
-                        #field_code_occurence_new_881ec246_9f27_4f0f_a43e_8b8f34990bf6_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                 }
             };
             let status_code = response.status();
