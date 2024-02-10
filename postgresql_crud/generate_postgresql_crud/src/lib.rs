@@ -8298,56 +8298,6 @@ fn generate_http_request_many_token_stream(
     }
 }
 
-fn generate_try_operation_token_stream(
-    server_location_name_token_stream: &proc_macro2::TokenStream,
-    server_location_type_token_stream: &proc_macro2::TokenStream,
-    return_result_ok_type_token_stream: &proc_macro2::TokenStream,
-    payload_variable_initialization_token_stream: &proc_macro2::TokenStream,
-    reqwest_client_new_token_stream: &proc_macro2::TokenStream,
-    commit_header_addition_token_stream: &proc_macro2::TokenStream,
-    content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
-    ok_value_handle_token_stream: &proc_macro2::TokenStream,
-    request_error_variant_initialization_token_stream: &proc_macro2::TokenStream,
-    table_name_stringified: &str,
-    operation: &Operation,
-) -> proc_macro2::TokenStream {
-    let parameters_snake_case_token_stream = proc_macro_helpers::naming_conventions::parameters_snake_case_token_stream();
-    let payload_snake_case_token_stream = proc_macro_helpers::naming_conventions::payload_snake_case_token_stream();
-    let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
-    let operation_parameters_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
-    let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
-    let tvfrr_extraction_logic_token_stream = proc_macro_helpers::naming_conventions::TvfrrExtractionLogicTrySelfSnakeCaseTokenStream::tvfrr_extraction_logic_try_self_snake_case_token_stream(operation);
-    let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
-    let url_handle_token_stream = proc_macro_helpers::naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
-    quote::quote!{
-        pub async fn #try_operation_snake_case_token_stream<'a>(
-            #server_location_name_token_stream: #server_location_type_token_stream,
-            #parameters_snake_case_token_stream: #operation_parameters_upper_camel_case_token_stream,
-        ) -> Result<#return_result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
-            #payload_variable_initialization_token_stream
-            let url = format!(
-                #url_handle_token_stream,
-                #server_location_name_token_stream
-            );
-            // println!("{}", url);
-            match #tvfrr_extraction_logic_token_stream(
-                #reqwest_client_new_token_stream
-                .#operation_http_method_snake_case_token_stream(&url)
-                #commit_header_addition_token_stream
-                #content_type_application_json_header_addition_token_stream
-                .body(#payload_snake_case_token_stream)
-                .send()
-            )
-            .await
-            {
-                Ok(value) => #ok_value_handle_token_stream,
-                Err(e) => Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream),
-            }
-        }
-    }
-}
-
-//
 fn generate_try_operation_token_stream_new(
     server_location_name_token_stream: &proc_macro2::TokenStream,
     server_location_type_token_stream: &proc_macro2::TokenStream,
@@ -8373,152 +8323,42 @@ fn generate_try_operation_token_stream_new(
     let tvfrr_extraction_logic_token_stream = proc_macro_helpers::naming_conventions::TvfrrExtractionLogicTrySelfSnakeCaseTokenStream::tvfrr_extraction_logic_try_self_snake_case_token_stream(operation);
     let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
     let url_handle_token_stream = proc_macro_helpers::naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
-    //
     let field_code_occurence_new_bb5cfe29_9fb8_4b44_ab37_fa1788741b94_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
         column!(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
     let field_code_occurence_new_881ec246_9f27_4f0f_a43e_8b8f34990bf6_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
         column!(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
     let field_code_occurence_new_50089027_fdac_495d_b3c4_07daf290f498_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
         column!(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
     let field_code_occurence_new_e1b395e2_6a5a_4231_9bd8_2ff16a8fd405_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
         column!(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
     let field_code_occurence_new_9135de27_94c6_4f8d_a3b6_2d617411ce7f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
         column!(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
     let field_code_occurence_new_fe7c33e3_9d55_434a_9253_e17442ff0b59_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
         file!(),
         line!(),
         column!(),
         proc_macro_name_upper_camel_case_ident_stringified,
     );
-    //
-    // let field_code_occurence_new_830a6848_235f_4d5b_bebf_e449543fc628_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_0787b529_ab0b_4043_bd19_ac5325c04f57_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_da87799b_10fe_436d_b7f3_8c8efba062bc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_f2ac7378_3bad_44df_a99f_8c7e199c116d_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_3e64d15a_5264_47ad_a5d9_9582f88ba7fb_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_0905f89f_4511_481f_a509_42ee7b946424_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_b1460a80_0425_4b7b_8715_5ddb8fd0f4b0_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_df5d53bd_b2cd_4460_b390_e6861bac3294_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_fecf97ff_7f26_4b8c_8fb6_52f6fe97e727_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_3f61fdbc_0a46_4e13_bf70_f6c52650b17d_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_a57cf039_47ae_46f2_a606_24179b10c725_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_3cd51074_a6ae_4238_bfdc_a225faea0d4f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_02ea3d15_53ba_4e86_ab56_dba5bf4d7724_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_d0f89de6_4f78_4ff1_a0e5_1f92fb3c5e62_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_016f536c_ba89_4cc2_8ffe_ecd084724a27_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_80362171_c352_4b20_b22a_8562bcb33d8f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let field_code_occurence_new_6d228e3e_60b4_45b3_a76f_46ea08f00572_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //     file!(),
-    //     line!(),
-    //     column!(),
-    //     proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    ///////////////////////////////////
     let operation_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation);
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
     let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
@@ -8527,302 +8367,298 @@ fn generate_try_operation_token_stream_new(
     let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
     let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
-
-
     let desirable_enum_name = {
         let status_code_enum_name_stingified = format!("{try_operation_response_variants_upper_camel_case_token_stream}{desirable_status_code}");
         status_code_enum_name_stingified
         .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {status_code_enum_name_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    // let extraction_logic_token_stream_handle_token_stream = {
-
-        let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
-        let tvfrr_extraction_logic_try_operation_snake_case_token_stream = {
-            let tvfrr_extraction_logic_try_operation_snake_case_stringified = format!("tvfrr_extraction_logic_try_{operation_snake_case_stringified}");
-            tvfrr_extraction_logic_try_operation_snake_case_stringified
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {tvfrr_extraction_logic_try_operation_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let (
+    let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
+    let tvfrr_extraction_logic_try_operation_snake_case_token_stream = {
+        let tvfrr_extraction_logic_try_operation_snake_case_stringified = format!("tvfrr_extraction_logic_try_{operation_snake_case_stringified}");
+        tvfrr_extraction_logic_try_operation_snake_case_stringified
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {tvfrr_extraction_logic_try_operation_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let (
+        unique_status_codes,
+        unique_status_codes_len,
+        unique_status_codes_len_minus_one
+     ) = {
+        let hashmap_unique_status_codes = type_variants_from_request_response_syn_variants.iter().fold(//todo maybe not need hashmap here? maybe just unique vec?
+            std::collections::HashMap::<proc_macro_helpers::status_code::StatusCode, std::vec::Vec<(
+                &syn::Ident,
+                std::vec::Vec<(syn::Ident, proc_macro2::TokenStream)>,
+            )>>::with_capacity(type_variants_from_request_response_syn_variants_len),
+            |mut acc, element| {
+                let variant_ident = &element.ident;
+                let error_variant_attribute = proc_macro_helpers::status_code::StatusCode::try_from(element)
+                .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
+                let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
+                    fields_named
+                }
+                else {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+                };
+                let error_variant_fields = fields_named.named.iter().map(|field|{
+                    let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                            naming_constants::FIELD_IDENT_IS_NONE
+                        )
+                    });
+                    let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
+                        true => {
+                            let code_occurence_type_token_stream = {
+                                if let syn::Type::Path(type_path) = &field.ty {
+                                    let mut code_occurence_type_repeat_checker = false;
+                                    let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                    .fold(String::from(""), |mut acc, path_segment| {
+                                        let path_segment_ident = &path_segment.ident;
+                                        match *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                            true => {
+                                                if code_occurence_type_repeat_checker {
+                                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                                }
+                                                acc.push_str(&path_segment_ident.to_string());
+                                                code_occurence_type_repeat_checker = true;
+                                            },
+                                            false => acc.push_str(&format!("{path_segment_ident}::")),
+                                        }
+                                        acc
+                                    });
+                                    if !code_occurence_type_repeat_checker {
+                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
+                                    }
+                                    code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                }
+                                else {
+                                    let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
+                                    panic!(
+                                        "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
+                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                    );
+                                }
+                            };
+                            code_occurence_type_token_stream
+                        },
+                        false => {
+                            let attribute = {
+                                let mut option_attribute = None;
+                                field.attrs.iter().for_each(|attr|{
+                                    if attr.path.segments.len() == 1 {
+                                        let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
+                                        let attr_ident = match attr.path.segments.iter().next() {
+                                            Some(path_segment) => &path_segment.ident,
+                                            None => panic!("attr.path.segments.iter().next() is None"),
+                                        };
+                                        if let Ok(value) = {
+                                            use std::str::FromStr;
+                                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
+                                        } {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(value);
+                                            }
+                                        }
+                                    }//other attributes are not for this proc_macro
+                                });
+                                option_attribute.unwrap_or_else(|| panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
+                                    naming_constants::IS_NONE_STRINGIFIED
+                                ))
+                            };
+                            let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
+                                field,
+                                proc_macro_name_upper_camel_case_ident_stringified,
+                            );
+                            proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                                attribute,
+                                supported_container,
+                                proc_macro_name_upper_camel_case_ident_stringified,
+                            )
+                        },
+                    };
+                    (field_ident.clone(), field_type_with_serialize_deserialize)
+                }).collect::<Vec<(syn::Ident, proc_macro2::TokenStream)>>();
+                let error_variant = (
+                    variant_ident,
+                    error_variant_fields,
+                );
+                match acc.get_mut(&error_variant_attribute) {
+                    Some(value) => {
+                        value.push(error_variant);
+                    },
+                    None => {
+                        acc.insert(error_variant_attribute, vec![error_variant]);
+                    }
+                }
+                acc
+            },
+        );
+        let unique_status_codes_len = hashmap_unique_status_codes.len();
+        if unique_status_codes_len < 1 {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
+        }
+        let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
+        let unique_status_codes = hashmap_unique_status_codes.into_keys().collect::<std::vec::Vec<proc_macro_helpers::status_code::StatusCode>>();
+        (
             unique_status_codes,
             unique_status_codes_len,
             unique_status_codes_len_minus_one
-         ) = {
-            let hashmap_unique_status_codes = type_variants_from_request_response_syn_variants.iter().fold(//todo maybe not need hashmap here? maybe just unique vec?
-                std::collections::HashMap::<proc_macro_helpers::status_code::StatusCode, std::vec::Vec<(
-                    &syn::Ident,
-                    std::vec::Vec<(syn::Ident, proc_macro2::TokenStream)>,
-                )>>::with_capacity(type_variants_from_request_response_syn_variants_len),
-                |mut acc, element| {
-                    let variant_ident = &element.ident;
-                    let error_variant_attribute = proc_macro_helpers::status_code::StatusCode::try_from(element)
-                    .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
-                    let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
-                        fields_named
-                    }
-                    else {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+        )
+    };
+    let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
+    let status_code_enums_try_from = {
+        let mut is_last_element_found = false;
+        let field_code_occurence_new_c0b27ae4_b521_4d30_bc4e_7a142e105150_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_45a6d1a7_60da_4839_9669_9c259bbb0ca0_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let desirable_status_code_case_token_stream = quote::quote! {
+            match serde_json::from_str::<#desirable_enum_name>(&response_text) {
+                Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
+                Err(e) => {
+                    let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
+                        serde: e, 
+                        status_code, 
+                        headers, 
+                        response_text,
+                        #field_code_occurence_new_c0b27ae4_b521_4d30_bc4e_7a142e105150_token_stream
                     };
-                    let error_variant_fields = fields_named.named.iter().map(|field|{
-                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-                            panic!(
-                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                naming_constants::FIELD_IDENT_IS_NONE
-                            )
-                        });
-                        let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
-                            true => {
-                                let code_occurence_type_token_stream = {
-                                    if let syn::Type::Path(type_path) = &field.ty {
-                                        let mut code_occurence_type_repeat_checker = false;
-                                        let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                        .fold(String::from(""), |mut acc, path_segment| {
-                                            let path_segment_ident = &path_segment.ident;
-                                            match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                                true => {
-                                                    if code_occurence_type_repeat_checker {
-                                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                    }
-                                                    acc.push_str(&path_segment_ident.to_string());
-                                                    code_occurence_type_repeat_checker = true;
-                                                },
-                                                false => acc.push_str(&format!("{path_segment_ident}::")),
-                                            }
-                                            acc
-                                        });
-                                        if !code_occurence_type_repeat_checker {
-                                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                        }
-                                        code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                    }
-                                    else {
-                                        let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
-                                        panic!(
-                                            "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
-                                        );
-                                    }
-                                };
-                                code_occurence_type_token_stream
-                            },
-                            false => {
-                                let attribute = {
-                                    let mut option_attribute = None;
-                                    field.attrs.iter().for_each(|attr|{
-                                        if attr.path.segments.len() == 1 {
-                                            let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                            let attr_ident = match attr.path.segments.iter().next() {
-                                                Some(path_segment) => &path_segment.ident,
-                                                None => panic!("attr.path.segments.iter().next() is None"),
-                                            };
-                                            if let Ok(value) = {
-                                                use std::str::FromStr;
-                                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
-                                            } {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(value);
-                                                }
-                                            }
-                                        }//other attributes are not for this proc_macro
-                                    });
-                                    option_attribute.unwrap_or_else(|| panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                        naming_constants::IS_NONE_STRINGIFIED
-                                    ))
-                                };
-                                let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                                    field,
-                                    proc_macro_name_upper_camel_case_ident_stringified,
-                                );
-                                proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
-                                    attribute,
-                                    supported_container,
-                                    proc_macro_name_upper_camel_case_ident_stringified,
-                                )
-                            },
-                        };
-                        (field_ident.clone(), field_type_with_serialize_deserialize)
-                    }).collect::<Vec<(syn::Ident, proc_macro2::TokenStream)>>();
-                    let error_variant = (
-                        variant_ident,
-                        error_variant_fields,
-                    );
-                    match acc.get_mut(&error_variant_attribute) {
-                        Some(value) => {
-                            value.push(error_variant);
-                        },
-                        None => {
-                            acc.insert(error_variant_attribute, vec![error_variant]);
-                        }
-                    }
-                    acc
-                },
-            );
-            let unique_status_codes_len = hashmap_unique_status_codes.len();
-            if unique_status_codes_len < 1 {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                        request_error, 
+                        #field_code_occurence_new_45a6d1a7_60da_4839_9669_9c259bbb0ca0_token_stream
+                    });
+                }
             }
-            let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
-            let unique_status_codes = hashmap_unique_status_codes.into_keys().collect::<std::vec::Vec<proc_macro_helpers::status_code::StatusCode>>();
-            (
-                unique_status_codes,
-                unique_status_codes_len,
-                unique_status_codes_len_minus_one
-            )
         };
-        let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
-        let status_code_enums_try_from = {
-            let mut is_last_element_found = false;
-            let field_code_occurence_new_c0b27ae4_b521_4d30_bc4e_7a142e105150_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let field_code_occurence_new_45a6d1a7_60da_4839_9669_9c259bbb0ca0_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let desirable_status_code_case_token_stream = quote::quote! {
-                match serde_json::from_str::<#desirable_enum_name>(&response_text) {
-                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
-                    Err(e) => {
-                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
-                            serde: e, 
-                            status_code, 
-                            headers, 
-                            response_text,
-                            #field_code_occurence_new_c0b27ae4_b521_4d30_bc4e_7a142e105150_token_stream
-                        };
-                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                            request_error, 
-                            #field_code_occurence_new_45a6d1a7_60da_4839_9669_9c259bbb0ca0_token_stream
-                        });
-                    }
-                }
-            };
-            let mut status_code_enums_try_from_variants = std::vec::Vec::with_capacity(unique_status_codes_len + 1);
-            status_code_enums_try_from_variants.push(quote::quote! {
-                if status_code == #http_status_code_quote_token_stream {
-                    #desirable_status_code_case_token_stream
-                }
-            });
-            let field_code_occurence_new_d3a22bcc_9490_4bf7_a9cb_6c9fb2903eb1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let field_code_occurence_new_f864c70c_7901_4d99_805b_7f1cc0a42d68_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let field_code_occurence_new_94dc9e5f_2847_4a75_9f6a_dd59051e2176_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let field_code_occurence_new_59e3ec45_4f7b_47af_bf9a_304ca0bce1fb_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            unique_status_codes
-            .into_iter()
-            .enumerate()
-            .for_each(|(index, status_code_attribute)|{
-                let try_operation_response_variants_desirable_attribute_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &status_code_attribute);
-                let http_status_code_token_stream = status_code_attribute.to_http_status_code_token_stream();
-                match index == unique_status_codes_len_minus_one{
-                    true => {
-                        is_last_element_found = true;
-                        status_code_enums_try_from_variants.push(quote::quote! {
-                            else {
-                                let request_error = #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
-                                    status_code, 
-                                    headers, 
-                                    response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
-                                    #field_code_occurence_new_94dc9e5f_2847_4a75_9f6a_dd59051e2176_token_stream
-                                };
-                                return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                                    request_error, 
-                                    #field_code_occurence_new_59e3ec45_4f7b_47af_bf9a_304ca0bce1fb_token_stream
-                                });
-                            }
-                        });
-                    },
-                    false => {
-                        if *desirable_status_code != status_code_attribute {
-                            let field_code_occurence_new_a7ef266e_859d_419e_8bd8_51d2d98ede01_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                file!(),
-                                line!(),
-                                column!(),
-                                proc_macro_name_upper_camel_case_ident_stringified,
-                            );
-                            let field_code_occurence_new_6e6b0f6d_00fb_4301_89e2_1d720c440a02_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                file!(),
-                                line!(),
-                                column!(),
-                                proc_macro_name_upper_camel_case_ident_stringified,
-                            );
-                            status_code_enums_try_from_variants.push(quote::quote! {
-                                else if status_code == #http_status_code_token_stream {
-                                    match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
-                                        Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
-                                        Err(e) => {
-                                            let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
-                                                serde: e, 
-                                                status_code, 
-                                                headers, 
-                                                response_text,
-                                                #field_code_occurence_new_a7ef266e_859d_419e_8bd8_51d2d98ede01_token_stream
-                                            };
-                                            return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                                                request_error, 
-                                                #field_code_occurence_new_6e6b0f6d_00fb_4301_89e2_1d720c440a02_token_stream
-                                            });
-                                        }
-                                    }
-                                }
+        let mut status_code_enums_try_from_variants = std::vec::Vec::with_capacity(unique_status_codes_len + 1);
+        status_code_enums_try_from_variants.push(quote::quote! {
+            if status_code == #http_status_code_quote_token_stream {
+                #desirable_status_code_case_token_stream
+            }
+        });
+        let field_code_occurence_new_d3a22bcc_9490_4bf7_a9cb_6c9fb2903eb1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_f864c70c_7901_4d99_805b_7f1cc0a42d68_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_94dc9e5f_2847_4a75_9f6a_dd59051e2176_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        let field_code_occurence_new_59e3ec45_4f7b_47af_bf9a_304ca0bce1fb_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        unique_status_codes
+        .into_iter()
+        .enumerate()
+        .for_each(|(index, status_code_attribute)|{
+            let try_operation_response_variants_desirable_attribute_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &status_code_attribute);
+            let http_status_code_token_stream = status_code_attribute.to_http_status_code_token_stream();
+            match index == unique_status_codes_len_minus_one{
+                true => {
+                    is_last_element_found = true;
+                    status_code_enums_try_from_variants.push(quote::quote! {
+                        else {
+                            let request_error = #try_operation_request_error_upper_camel_case_token_stream::UnexpectedStatusCode {
+                                status_code, 
+                                headers, 
+                                response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
+                                #field_code_occurence_new_94dc9e5f_2847_4a75_9f6a_dd59051e2176_token_stream
+                            };
+                            return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                                request_error, 
+                                #field_code_occurence_new_59e3ec45_4f7b_47af_bf9a_304ca0bce1fb_token_stream
                             });
                         }
-                    },
-                }
-            });
-            if !is_last_element_found {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
+                    });
+                },
+                false => {
+                    if *desirable_status_code != status_code_attribute {
+                        let field_code_occurence_new_a7ef266e_859d_419e_8bd8_51d2d98ede01_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        let field_code_occurence_new_6e6b0f6d_00fb_4301_89e2_1d720c440a02_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        status_code_enums_try_from_variants.push(quote::quote! {
+                            else if status_code == #http_status_code_token_stream {
+                                match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
+                                    Err(e) => {
+                                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
+                                            serde: e, 
+                                            status_code, 
+                                            headers, 
+                                            response_text,
+                                            #field_code_occurence_new_a7ef266e_859d_419e_8bd8_51d2d98ede01_token_stream
+                                        };
+                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                                            request_error, 
+                                            #field_code_occurence_new_6e6b0f6d_00fb_4301_89e2_1d720c440a02_token_stream
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                },
             }
-            status_code_enums_try_from_variants
-        };
-        let field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        let field_code_occurence_new_ceba18fc_5452_4c63_8db6_b60723c5b344_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        let field_code_occurence_new_c8f5e68_4b48_4ea3_8a75_6f7fc99be861_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            proc_macro_name_upper_camel_case_ident_stringified,
-        );
+        });
+        if !is_last_element_found {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
+        }
+        status_code_enums_try_from_variants
+    };
+    let field_code_occurence_new_22184e52_6750_4972_b86d_eb906e576cda_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_ceba18fc_5452_4c63_8db6_b60723c5b344_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_c8f5e68_4b48_4ea3_8a75_6f7fc99be861_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
     quote::quote!{
         pub async fn #try_operation_snake_case_token_stream<'a>(
             #server_location_name_token_stream: #server_location_type_token_stream,
@@ -8885,10 +8721,8 @@ fn generate_try_operation_token_stream_new(
                 },
             }
         }
-        //
     }
 }
-//
 
 fn generate_type_variants_from_request_response_syn_variants<'a>(
     type_variants_from_request_response_syn_variants_partial: std::vec::Vec<&'a syn::Variant>,
