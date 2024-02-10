@@ -1,8 +1,8 @@
 #need to enable vscode rest client  extension https://marketplace.visualstudio.com/items?itemName=humao.rest-client to send requests
-
+ 
 POST http://127.0.0.1:8080/dogs/create_many HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 [
     {
@@ -19,7 +19,7 @@ commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
 
 POST http://127.0.0.1:8080/dogs/create_one HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 {
     "name": "first_test_name_create",
@@ -32,7 +32,7 @@ commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
 
 POST http://127.0.0.1:8080/dogs/read_one HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 {
     "id": "75ef376b-0f75-4a2b-aff2-f61e9f44099a",
@@ -43,7 +43,7 @@ commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
 
 POST http://127.0.0.1:8080/dogs/read_many HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 {
     "select": "IdNameColor",
@@ -76,7 +76,7 @@ commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
 
 PATCH http://127.0.0.1:8080/dogs/update_one HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 {
     "id": "b5d3c50e-b99f-4ada-a89d-8a8af63f9a0c",
@@ -117,7 +117,7 @@ commit: fcacc76d1575a823d974d8c91c2ba3a307a55eb2
 
 DELETE http://127.0.0.1:8080/dogs/delete_many HTTP/1.1
 content-type: application/json
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 {
     "id": [
@@ -150,17 +150,17 @@ GET http://127.0.0.1:8080/git_info HTTP/1.1
 ###
 
 GET http://127.0.0.1:8080/src/main.rs HTTP/1.1
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 ###
 
 GET http://127.0.0.1:8080/header_extractor_example HTTP/1.1
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 ###
 
 GET http://127.0.0.1:8080/extract_custom_header_example HTTP/1.1
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 ###
 
@@ -169,4 +169,4 @@ GET http://127.0.0.1:8080/middleware_message_example HTTP/1.1
 ###
 
 GET http://127.0.0.1:8080/read_middleware_custom_header HTTP/1.1
-commit: 5907961111d396a5e49df6b4681ccb1f623bfa2a
+commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
