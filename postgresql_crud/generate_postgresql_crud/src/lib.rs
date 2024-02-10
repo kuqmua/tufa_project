@@ -8503,7 +8503,7 @@ fn generate_http_request_many_token_stream(
                                 match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
                                     Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                                     Err(e) => {
-                                        let request_error = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
+                                        let e = #try_operation_request_error_upper_camel_case_token_stream::DeserializeResponse {
                                             serde: e, 
                                             status_code, 
                                             headers, 
@@ -8520,22 +8520,7 @@ fn generate_http_request_many_token_stream(
                                                 })
                                             )
                                         };
-                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
-                                            request_error,
-                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
-                                                    .commit
-                                                    .to_string(),
-                                                file!().to_string(),
-                                                line!(),
-                                                column!(),
-                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 1698,
-                                                    column: 13,
-                                                }),
-                                            ),
-                                        });
+                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream);
                                     }
                                 }
                             }
