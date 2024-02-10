@@ -6872,6 +6872,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &server_location_type_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
                 &quote::quote!{
+                    //todo maybe for all cases use this? = remove this parameter and write it inside generate_try_operation_token_stream
                     let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::from(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)) {
                         Ok(value) => value,
                         Err(e) => {
@@ -7157,7 +7158,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #update_many_token_stream
         #update_one_token_stream
         #delete_many_token_stream
-        #delete_one_token_stream
+        // #delete_one_token_stream
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -8323,6 +8324,468 @@ fn generate_try_operation_token_stream(
         }
     }
 }
+
+//
+fn generate_try_operation_token_stream_new(
+    server_location_name_token_stream: &proc_macro2::TokenStream,
+    server_location_type_token_stream: &proc_macro2::TokenStream,
+    return_result_ok_type_token_stream: &proc_macro2::TokenStream,
+    payload_variable_initialization_token_stream: &proc_macro2::TokenStream,
+    reqwest_client_new_token_stream: &proc_macro2::TokenStream,
+    commit_header_addition_token_stream: &proc_macro2::TokenStream,
+    content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
+    ok_value_handle_token_stream: &proc_macro2::TokenStream,
+    request_error_variant_initialization_token_stream: &proc_macro2::TokenStream,
+    table_name_stringified: &str,
+    operation: &Operation,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let parameters_snake_case_token_stream = proc_macro_helpers::naming_conventions::parameters_snake_case_token_stream();
+    let payload_snake_case_token_stream = proc_macro_helpers::naming_conventions::payload_snake_case_token_stream();
+    let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(operation);
+    let operation_parameters_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(operation);
+    let try_operation_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfSnakeCaseTokenStream::try_self_snake_case_token_stream(operation);
+    let tvfrr_extraction_logic_token_stream = proc_macro_helpers::naming_conventions::TvfrrExtractionLogicTrySelfSnakeCaseTokenStream::tvfrr_extraction_logic_try_self_snake_case_token_stream(operation);
+    let operation_http_method_snake_case_token_stream = proc_macro_common::naming_conventions::ToSnakeCaseTokenStream::to_snake_case_token_stream(&operation.http_method());
+    let url_handle_token_stream = proc_macro_helpers::naming_conventions::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, table_name_stringified);
+    //
+    let field_code_occurence_new_bb5cfe29_9fb8_4b44_ab37_fa1788741b94_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
+    let field_code_occurence_new_881ec246_9f27_4f0f_a43e_8b8f34990bf6_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
+    let field_code_occurence_new_50089027_fdac_495d_b3c4_07daf290f498_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
+    let field_code_occurence_new_e1b395e2_6a5a_4231_9bd8_2ff16a8fd405_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
+    let field_code_occurence_new_9135de27_94c6_4f8d_a3b6_2d617411ce7f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
+    let field_code_occurence_new_fe7c33e3_9d55_434a_9253_e17442ff0b59_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    //
+    // let field_code_occurence_new_830a6848_235f_4d5b_bebf_e449543fc628_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_0787b529_ab0b_4043_bd19_ac5325c04f57_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_da87799b_10fe_436d_b7f3_8c8efba062bc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_f2ac7378_3bad_44df_a99f_8c7e199c116d_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_3e64d15a_5264_47ad_a5d9_9582f88ba7fb_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_0905f89f_4511_481f_a509_42ee7b946424_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_b1460a80_0425_4b7b_8715_5ddb8fd0f4b0_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_df5d53bd_b2cd_4460_b390_e6861bac3294_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_fecf97ff_7f26_4b8c_8fb6_52f6fe97e727_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_3f61fdbc_0a46_4e13_bf70_f6c52650b17d_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_a57cf039_47ae_46f2_a606_24179b10c725_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_3cd51074_a6ae_4238_bfdc_a225faea0d4f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_02ea3d15_53ba_4e86_ab56_dba5bf4d7724_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_d0f89de6_4f78_4ff1_a0e5_1f92fb3c5e62_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_016f536c_ba89_4cc2_8ffe_ecd084724a27_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_80362171_c352_4b20_b22a_8562bcb33d8f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    // let field_code_occurence_new_6d228e3e_60b4_45b3_a76f_46ea08f00572_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+    //     file!(),
+    //     line!(),
+    //     column!(),
+    //     proc_macro_name_upper_camel_case_ident_stringified,
+    // );
+    //
+    quote::quote!{
+        // pub async fn #try_operation_snake_case_token_stream<'a>(
+        //     #server_location_name_token_stream: #server_location_type_token_stream,
+        //     #parameters_snake_case_token_stream: #operation_parameters_upper_camel_case_token_stream,
+        // ) -> Result<#return_result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
+        //     #payload_variable_initialization_token_stream
+        //     let url = format!(
+        //         #url_handle_token_stream,
+        //         #server_location_name_token_stream
+        //     );
+        //     // println!("{}", url);
+        //     match #tvfrr_extraction_logic_token_stream(
+        //         #reqwest_client_new_token_stream
+        //         .#operation_http_method_snake_case_token_stream(&url)
+        //         #commit_header_addition_token_stream
+        //         #content_type_application_json_header_addition_token_stream
+        //         .body(#payload_snake_case_token_stream)
+        //         .send()
+        //     )
+        //     .await
+        //     {
+        //         Ok(value) => #ok_value_handle_token_stream,
+        //         Err(e) => Err(#try_operation_error_named_upper_camel_case_token_stream::#request_error_variant_initialization_token_stream),
+        //     }
+        // }
+        pub async fn #try_operation_snake_case_token_stream<'a>(
+            #server_location_name_token_stream: #server_location_type_token_stream,
+            #parameters_snake_case_token_stream: #operation_parameters_upper_camel_case_token_stream,
+        ) -> Result<#return_result_ok_type_token_stream, #try_operation_error_named_upper_camel_case_token_stream> {
+            #payload_variable_initialization_token_stream
+            let url = format!(
+                #url_handle_token_stream,
+                #server_location_name_token_stream
+            );
+            // println!("{}", url);
+            let future = #reqwest_client_new_token_stream
+                .#operation_http_method_snake_case_token_stream(&url)
+                #commit_header_addition_token_stream
+                #content_type_application_json_header_addition_token_stream
+                .body(#payload_snake_case_token_stream)
+                .send();
+            let response = match future.await {
+                Ok(response) => response,
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError::Reqwest {
+                        reqwest: e, 
+                        #field_code_occurence_new_bb5cfe29_9fb8_4b44_ab37_fa1788741b94_token_stream,
+                    };
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                        request_error, 
+                        #field_code_occurence_new_881ec246_9f27_4f0f_a43e_8b8f34990bf6_token_stream
+                    });
+                }
+            };
+            let status_code = response.status();
+            let headers = response.headers().clone();
+            let response_text = match response.text().await {
+                Ok(response_text) => response_text,
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError::FailedToGetResponseText {
+                        reqwest: e, 
+                        status_code, 
+                        headers, 
+                        #field_code_occurence_new_50089027_fdac_495d_b3c4_07daf290f498_token_stream
+                    };
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                        request_error, 
+                        #field_code_occurence_new_e1b395e2_6a5a_4231_9bd8_2ff16a8fd405_token_stream
+                    });
+                }
+            };
+            let variants = if status_code == http::StatusCode::OK {
+                match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr200Ok>(&response_text) {
+                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Err(e) => {
+                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                            serde: e, 
+                            status_code, 
+                            headers, 
+                            response_text,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib :: code_occurence :: MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                                    line: 793, 
+                                    column: 17,
+                                })
+                            )
+                        };
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                            request_error, 
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 1698,
+                                    column: 13,
+                                })
+                            ),
+                        });
+                    }
+                }
+            } else if status_code == http::StatusCode::NOT_FOUND {
+                match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
+                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Err(e) => {
+                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                            serde: e, 
+                            status_code, 
+                            headers, 
+                            response_text,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                                    line: 825,
+                                    column: 17,
+                                })
+                            )
+                        };
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                            request_error, 
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 1698,
+                                    column: 13,
+                                })
+                            ),
+                        });
+                    }
+                   }
+            } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+                match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(&response_text) {
+                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Err(e) => {
+                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                            serde: e,
+                            status_code,
+                            headers,
+                            response_text,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                                    line: 825,
+                                    column: 17,
+                                })
+                            )
+                        };
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                            request_error, 
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 1698,
+                                    column: 13,
+                                })
+                            ),
+                        });
+                    }
+                }
+            } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+                match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
+                    &response_text,
+                ) {
+                    Ok(value) => TryDeleteOneResponseVariants::from(value),
+                    Err(e) => {
+                        let request_error = TryDeleteOneRequestError::DeserializeResponse {
+                            serde: e, 
+                            status_code, 
+                            headers, 
+                            response_text,
+                            code_occurence: error_occurence_lib :: code_occurence ::CodeOccurence ::new(
+                                crate :: global_variables :: compile_time ::project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                file! ().to_string(), 
+                                line! (), 
+                                column! (),
+                                Some(error_occurence_lib :: code_occurence :: MacroOccurence {
+                                    file : std :: string :: String :: from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                                    line : 825, 
+                                    column : 17,
+                                })
+                            )
+                        };
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                            request_error, 
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 1698,
+                                    column: 13,
+                                })
+                            ),
+                        });
+                    }
+                }
+            } else {
+                let request_error = TryDeleteOneRequestError::UnexpectedStatusCode {
+                    status_code, 
+                    headers, 
+                    response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(response_text), 
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(), 
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
+                            line: 819, 
+                            column: 17,
+                    }))
+                };
+                return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                    request_error, 
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1698,
+                            column: 13,
+                        })
+                    ),
+                });
+            };
+            match crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::try_from(variants) {
+                Ok(value) => {
+                    match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+                        Ok(value) => Ok(value), 
+                        Err(e) => {
+                            return Err(
+                                #try_operation_error_named_upper_camel_case_token_stream::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
+                                    uuid_wrapper_try_from_possible_uuid_wrapper_in_client: e,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
+                                        file!().to_string(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 2121,
+                                            column: 13,
+                                        })
+                                    ),
+                                }
+                            );
+                        }
+                    }
+                }, 
+                Err(e) => {
+                    let request_error = TryDeleteOneRequestError::ExpectedType {
+                        expected_type: e, 
+                        #field_code_occurence_new_9135de27_94c6_4f8d_a3b6_2d617411ce7f_token_stream
+                    };
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::RequestError {
+                        request_error, 
+                        #field_code_occurence_new_fe7c33e3_9d55_434a_9253_e17442ff0b59_token_stream
+                    });
+                },
+            }
+        }
+        //
+    }
+}
+//
 
 fn generate_type_variants_from_request_response_syn_variants<'a>(
     type_variants_from_request_response_syn_variants_partial: std::vec::Vec<&'a syn::Variant>,
