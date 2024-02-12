@@ -3185,7 +3185,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
          ) = {
             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
             let try_operation_error_named_token_stream = {
-                let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(&operation);
                 let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(&operation);
                 let http_status_code_token_stream = quote::quote!{http::StatusCode};
                 let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
@@ -3194,11 +3193,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote!{
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
-                        #request_error_upper_camel_case_token_stream {
-                            #eo_error_occurence_attribute_token_stream
-                            #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                        },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
                         ExpectedType {
@@ -8816,7 +8810,6 @@ fn generate_try_operation_token_stream_new(
     let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
-    let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
     let http_status_code_quote_token_stream = desirable_status_code.to_http_status_code_token_stream();
     let desirable_enum_name = {
         let status_code_enum_name_stingified = format!("{try_operation_response_variants_upper_camel_case_token_stream}{desirable_status_code}");
