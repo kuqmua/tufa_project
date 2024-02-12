@@ -3200,7 +3200,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream_new(
+            let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
@@ -3719,7 +3719,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream_new(
+            let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &quote::quote!{std::vec::Vec<#struct_options_ident_token_stream>},
@@ -4473,7 +4473,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream_new(
+            let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &struct_options_ident_token_stream,
@@ -5637,7 +5637,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream_new(
+            let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
@@ -7016,7 +7016,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_try_operation_token_stream_new(
+            let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
@@ -8727,7 +8727,7 @@ fn generate_http_request_many_token_stream(
     }
 }
 
-fn generate_try_operation_token_stream_new(
+fn generate_try_operation_token_stream(
     server_location_name_token_stream: &proc_macro2::TokenStream,
     server_location_type_token_stream: &proc_macro2::TokenStream,
     return_result_ok_type_token_stream: &proc_macro2::TokenStream,
