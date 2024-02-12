@@ -2242,6 +2242,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
     let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
+    let http_status_code_token_stream = quote::quote!{http::StatusCode};
+    let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
+    let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
+    let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
     let try_extract_value_token_stream = quote::quote!{try_extract_value};
     let server_location_name_token_stream = quote::quote!{server_location};
     let dot_space = ", ";
@@ -2624,15 +2628,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             http_request_token_stream,
             http_request_test_token_stream
         ) = {
-            let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-            //todo additional types
             let try_operation_error_named_token_stream = {
-                let http_status_code_token_stream = quote::quote!{http::StatusCode};
-                let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
-                let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
-                let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
+                let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
                 let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(&operation);
-                // let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(&operation);
                 quote::quote!{
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
