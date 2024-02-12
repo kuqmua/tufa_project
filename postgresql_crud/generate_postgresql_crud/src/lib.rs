@@ -4996,22 +4996,62 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
          ) = {
             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
             let try_operation_error_named_token_stream = {
+                //todo reusage
                 let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(&operation);
+                let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(&operation);
+                let http_status_code_token_stream = quote::quote!{http::StatusCode};
+                let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
+                let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
+                let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
                 quote::quote!{
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
-                        #request_error_upper_camel_case_token_stream {
-                            #eo_error_occurence_attribute_token_stream
-                            #request_error_snake_case_token_stream: #try_operation_request_error_upper_camel_case_token_stream,
-                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                        },
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
                         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
+                        ExpectedType {
+                            #eo_display_with_serialize_deserialize_token_stream
+                            expected_type: #try_operation_with_serialize_deserialize_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                        },
+                        UnexpectedStatusCode {
+                            #eo_display_token_stream
+                            status_code: #http_status_code_token_stream,
+                            #eo_display_foreign_type_token_stream
+                            headers: #reqwest_header_header_map_token_stream,
+                            #eo_display_foreign_type_token_stream
+                            response_text_result: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                        },
+                        FailedToGetResponseText {
+                            #eo_display_foreign_type_token_stream
+                            reqwest: #reqwest_error_token_stream,
+                            #eo_display_token_stream
+                            status_code: #http_status_code_token_stream,
+                            #eo_display_foreign_type_token_stream
+                            headers: #reqwest_header_header_map_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                        },
+                        DeserializeResponse {
+                            #eo_display_token_stream
+                            serde: serde_json::Error,
+                            #eo_display_token_stream
+                            status_code: #http_status_code_token_stream,
+                            #eo_display_foreign_type_token_stream
+                            headers: #reqwest_header_header_map_token_stream,
+                            #eo_display_with_serialize_deserialize_token_stream
+                            response_text: std::string::String,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                        },
+                        Reqwest {
+                            #eo_display_foreign_type_token_stream
+                            reqwest: #reqwest_error_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                        },
                     }
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_http_request_many_token_stream(
+            let http_request_token_stream = generate_http_request_many_token_stream_new(
                 &server_location_name_token_stream,
                 &server_location_type_token_stream,
                 &std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
