@@ -1667,7 +1667,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let use_futures_try_stream_ext_token_stream = quote::quote!{use futures::TryStreamExt};
     let serde_json_to_string_token_stream = quote::quote!{serde_json::to_string};
     // let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
-    let request_error_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::request_error_upper_camel_case_stringified();
     let returning_stringified = "returning";
     let returning_primary_key_stringified = format!(" {returning_stringified} {primary_key_field_ident}");
     let primary_key_vec_name_token_stream = quote::quote!{primary_key_vec};
@@ -1676,13 +1675,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &returning_primary_key_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let request_error_upper_camel_case_token_stream = request_error_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {request_error_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let request_error_snake_case_token_stream = {
-        let request_error_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&request_error_upper_camel_case_stringified);
-        request_error_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {request_error_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     // let path_to_crud = "crate::repositories_types::server::routes::api::cats::";
     let app_state_path = quote::quote!{postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync};//todo path
     let app_state_name_token_stream = quote::quote!{app_state};
@@ -1692,20 +1684,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #app_state_name_token_stream.as_ref(),
         );
     };
-    let request_error_variant_initialization_token_stream = {
-        let field_code_occurence_new_9758f49b_3415_42fe_b2c7_7439c2c4f586_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{
-            #request_error_upper_camel_case_token_stream {
-                #request_error_snake_case_token_stream: e,
-                #field_code_occurence_new_9758f49b_3415_42fe_b2c7_7439c2c4f586_token_stream,
-            }
-        }
-    };//todo remove request_error_variant_initialization_token_stream
     let serde_json_to_string_upper_camel_case_stringified = "SerdeJsonToString";
     let serde_json_to_string_upper_camel_case_token_stream = serde_json_to_string_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {serde_json_to_string_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -2693,7 +2671,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream,
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3253,7 +3230,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         Err(e) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream )
                     }
                 },
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3805,7 +3781,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &quote::quote!{
                     Ok(value)
                 },
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -4591,7 +4566,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &quote::quote!{
                     Ok(value)
                 },
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 //
@@ -5158,7 +5132,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream,
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -5787,7 +5760,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         Err(e) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream )
                     }
                 },
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 //
@@ -6370,7 +6342,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream,
                 &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream,
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -7196,7 +7167,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         Err(e) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream )
                     }
                 },
-                &request_error_variant_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -8519,7 +8489,6 @@ fn generate_http_request_many_token_stream(
     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream: &proc_macro2::TokenStream,
-    request_error_variant_initialization_token_stream: &proc_macro2::TokenStream,
     table_name_stringified: &str,
     operation: &Operation,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -8894,7 +8863,6 @@ fn generate_try_operation_token_stream(
     commit_header_addition_token_stream: &proc_macro2::TokenStream,
     content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
     ok_value_handle_token_stream: &proc_macro2::TokenStream,
-    request_error_variant_initialization_token_stream: &proc_macro2::TokenStream,
     table_name_stringified: &str,
     operation: &Operation,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
