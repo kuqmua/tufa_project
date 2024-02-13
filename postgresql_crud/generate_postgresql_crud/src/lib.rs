@@ -3295,6 +3295,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,//todo reuse it
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -3812,6 +3817,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},//todo reuse it
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let order_initialization_token_stream = Order::Desc.to_token_stream();
@@ -4564,6 +4574,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &struct_options_ident_token_stream,
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_expect_success_token_stream = {
                 let test_content_token_stream = quote::quote!{
@@ -5695,6 +5710,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -7038,6 +7058,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let test_content_token_stream = quote::quote!{
@@ -8651,6 +8676,11 @@ fn generate_try_operation_token_stream(
     type_variants_from_request_response_syn_variants: std::vec::Vec<&syn::Variant>,
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
+    deserialize_response_initialization_token_stream: &proc_macro2::TokenStream,
+    unexpected_status_code_initialization_token_stream: &proc_macro2::TokenStream,
+    reqwest_initialization_token_stream: &proc_macro2::TokenStream,
+    failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
+    expected_type_initialization_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let parameters_snake_case_token_stream = proc_macro_helpers::naming_conventions::parameters_snake_case_token_stream();
     let payload_snake_case_token_stream = proc_macro_helpers::naming_conventions::payload_snake_case_token_stream();
@@ -8832,13 +8862,7 @@ fn generate_try_operation_token_stream(
             match serde_json::from_str::<#desirable_enum_name>(&response_text) {
                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::DeserializeResponse {
-                        serde: e, 
-                        status_code, 
-                        headers, 
-                        response_text,
-                        #field_code_occurence_new_c0b27ae4_b521_4d30_bc4e_7a142e105150_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
                 }
             }
         };
@@ -8865,12 +8889,7 @@ fn generate_try_operation_token_stream(
                     is_last_element_found = true;
                     status_code_enums_try_from_variants.push(quote::quote! {
                         else {
-                            return Err(#try_operation_error_named_upper_camel_case_token_stream::UnexpectedStatusCode {
-                                status_code, 
-                                headers, 
-                                response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
-                                #field_code_occurence_new_94dc9e5f_2847_4a75_9f6a_dd59051e2176_token_stream
-                            });
+                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#unexpected_status_code_initialization_token_stream);
                         }
                     });
                 },
@@ -8887,13 +8906,7 @@ fn generate_try_operation_token_stream(
                                 match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
                                     Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                                     Err(e) => {
-                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::DeserializeResponse {
-                                            serde: e, 
-                                            status_code, 
-                                            headers, 
-                                            response_text,
-                                            #field_code_occurence_new_a7ef266e_859d_419e_8bd8_51d2d98ede01_token_stream
-                                        });
+                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
                                     }
                                 }
                             }
@@ -8927,10 +8940,7 @@ fn generate_try_operation_token_stream(
             let response = match future.await {
                 Ok(response) => response,
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::Reqwest {
-                        reqwest: e, 
-                        #field_code_occurence_new_bb5cfe29_9fb8_4b44_ab37_fa1788741b94_token_stream,
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
                 }
             };
             let status_code = response.status();
@@ -8938,22 +8948,14 @@ fn generate_try_operation_token_stream(
             let response_text = match response.text().await {
                 Ok(response_text) => response_text,
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::FailedToGetResponseText {
-                        reqwest: e, 
-                        status_code, 
-                        headers, 
-                        #field_code_occurence_new_50089027_fdac_495d_b3c4_07daf290f498_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
                 }
             };
             let variants = #(#status_code_enums_try_from)*;
             match #desirable_type_token_stream::try_from(variants) {
                 Ok(value) => #ok_value_handle_token_stream, 
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::ExpectedType {
-                        expected_type: e, 
-                        #field_code_occurence_new_9135de27_94c6_4f8d_a3b6_2d617411ce7f_token_stream
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#expected_type_initialization_token_stream);
                 },
             }
         }
