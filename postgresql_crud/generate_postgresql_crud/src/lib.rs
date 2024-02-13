@@ -2765,6 +2765,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -5090,6 +5095,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -6232,6 +6242,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -8345,6 +8360,11 @@ fn generate_http_request_many_token_stream(
     type_variants_from_request_response_syn_variants: std::vec::Vec<&syn::Variant>,
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
+    deserialize_response_initialization_token_stream: &proc_macro2::TokenStream,
+    unexpected_status_code_initialization_token_stream: &proc_macro2::TokenStream,
+    reqwest_initialization_token_stream: &proc_macro2::TokenStream,
+    failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
+    expected_type_initialization_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let parameters_snake_case_token_stream = proc_macro_helpers::naming_conventions::parameters_snake_case_token_stream();
     let payload_snake_case_token_stream = proc_macro_helpers::naming_conventions::payload_snake_case_token_stream();
@@ -8502,23 +8522,7 @@ fn generate_http_request_many_token_stream(
             match serde_json::from_str::<#desirable_enum_name>(&response_text) {
                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::DeserializeResponse {
-                        serde: e, 
-                        status_code, 
-                        headers, 
-                        response_text,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                line: 793, 
-                                column: 17,
-                            })
-                        )
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
                 }
             }
         };
@@ -8539,22 +8543,7 @@ fn generate_http_request_many_token_stream(
                     is_last_element_found = true;
                     status_code_enums_try_from_variants.push(quote::quote! {
                         else {
-                            return Err(#try_operation_error_named_upper_camel_case_token_stream::UnexpectedStatusCode {
-                                status_code, 
-                                headers, 
-                                response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(response_text), 
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(), 
-                                    file!().to_string(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                        line: 819,
-                                        column: 17,
-                                    })
-                                )
-                            });
+                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#unexpected_status_code_initialization_token_stream);
                         }
                     });
                 },
@@ -8565,23 +8554,7 @@ fn generate_http_request_many_token_stream(
                                 match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
                                     Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::from(value),
                                     Err(e) => {
-                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::DeserializeResponse {
-                                            serde: e, 
-                                            status_code, 
-                                            headers, 
-                                            response_text,
-                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(),
-                                                file!().to_string(),
-                                                line!(), 
-                                                column!(),
-                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                                    line: 825, 
-                                                    column: 17,
-                                                })
-                                            )
-                                        });
+                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
                                     }
                                 }
                             }
@@ -8622,20 +8595,7 @@ fn generate_http_request_many_token_stream(
             let response = match future.await {
                 Ok(response) => response,
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::Reqwest {
-                        reqwest: e, 
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(), 
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                line: 880,
-                                column: 13,
-                            })
-                        ),
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#reqwest_initialization_token_stream);
                 }
             };
             let status_code = response.status();
@@ -8643,22 +8603,7 @@ fn generate_http_request_many_token_stream(
             let response_text = match response.text().await {
                 Ok(response_text) => response_text,
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::FailedToGetResponseText {//todo reuse initialization token stream
-                        reqwest: e, 
-                        status_code, 
-                        headers, 
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(), 
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                line: 886,
-                                column: 13,
-                            })
-                        )
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#failed_to_get_response_text_initialization_token_stream);
                 }
             };
             let variants = #(#status_code_enums_try_from)*;
@@ -8684,20 +8629,7 @@ fn generate_http_request_many_token_stream(
                     Ok(vec_values)
                 },
                 Err(e) => {
-                    return Err(#try_operation_error_named_upper_camel_case_token_stream::ExpectedType {
-                        expected_type: e, 
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit.to_string(), 
-                            file!().to_string(),
-                            line!(), 
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/type_variants_from_request_response_generator.rs"),
-                                line: 892, 
-                                column: 13,
-                            })
-                        )
-                    });
+                    return Err(#try_operation_error_named_upper_camel_case_token_stream::#expected_type_initialization_token_stream);
                 }
             }
         }
