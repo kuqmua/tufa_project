@@ -2718,7 +2718,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -3241,7 +3241,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -3765,7 +3765,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -4522,7 +4522,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -5064,7 +5064,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -5655,7 +5655,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -6216,7 +6216,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),//todo remove .clone()
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
@@ -7003,7 +7003,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
-                type_variants_from_request_response_syn_variants.clone(),//todo remove clone
+                &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
             )
