@@ -573,6 +573,9 @@ pub fn expected_snake_case_stringified() -> std::string::String {
 pub fn status_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::STATUS)
 }
+pub fn status_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::STATUS)
+}
 pub fn failed_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FAILED)
 }
@@ -581,6 +584,9 @@ pub fn to_upper_camel_case_stringified() -> std::string::String {
 }
 pub fn text_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TEXT)
+}
+pub fn text_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::TEXT)
 }
 pub fn reqwest_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::REQWEST)
@@ -597,6 +603,17 @@ pub fn reqwest_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = reqwest_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn headers_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::HEADERS)
+}
+pub fn headers_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = headers_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn result_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::RESULT)
 }
 
 
@@ -897,7 +914,31 @@ pub fn deserialize_response_upper_camel_case_token_stream() -> proc_macro2::Toke
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-
+pub fn status_code_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}", 
+        status_snake_case_stringified(), 
+        code_snake_case_stringified()
+    )
+}
+pub fn status_code_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = status_code_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn response_text_result_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}_{}", 
+        response_snake_case_stringified(), 
+        text_snake_case_stringified(),
+        result_snake_case_stringified(),
+    )
+}
+pub fn response_text_result_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = response_text_result_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 
 
 

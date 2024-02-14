@@ -2312,6 +2312,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let unexpected_status_code_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::unexpected_status_code_upper_camel_case_token_stream();
+    let status_code_snake_case_token_stream = proc_macro_helpers::naming_conventions::status_code_snake_case_token_stream();
+    let headers_snake_case_token_stream = proc_macro_helpers::naming_conventions::headers_snake_case_token_stream();
+    let response_text_result_snake_case_token_stream = proc_macro_helpers::naming_conventions::response_text_result_snake_case_token_stream();
     let (unexpected_status_code_declaration_token_stream, unexpected_status_code_initialization_token_stream) = {
         let field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -2323,25 +2326,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #unexpected_status_code_upper_camel_case_token_stream {
                     #eo_display_token_stream
-                    status_code: #http_status_code_token_stream,
+                    #status_code_snake_case_token_stream: #http_status_code_token_stream,
                     #eo_display_foreign_type_token_stream
-                    headers: #reqwest_header_header_map_token_stream,
+                    #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
                     #eo_display_foreign_type_token_stream
-                    response_text_result: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
+                    #response_text_result_snake_case_token_stream: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }
             },
             quote::quote!{
                 #unexpected_status_code_upper_camel_case_token_stream {
-                    status_code, 
-                    headers, 
-                    response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
+                    #status_code_snake_case_token_stream, 
+                    #headers_snake_case_token_stream, 
+                    #response_text_result_snake_case_token_stream: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
                     #field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream
                 }
             }
         )
     };
     let failed_to_get_response_text_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_token_stream();
+    let reqwest_snake_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_snake_case_token_stream();
     let (failed_to_get_response_text_declaration_token_stream, failed_to_get_response_text_initialization_token_stream) = {
         let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -2353,19 +2357,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{
                 #failed_to_get_response_text_upper_camel_case_token_stream {
                     #eo_display_foreign_type_token_stream
-                    reqwest: #reqwest_error_token_stream,
+                    #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
                     #eo_display_token_stream
                     status_code: #http_status_code_token_stream,
                     #eo_display_foreign_type_token_stream
-                    headers: #reqwest_header_header_map_token_stream,
+                    #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }
             },
             quote::quote!{
                 #failed_to_get_response_text_upper_camel_case_token_stream {
-                    reqwest: e, 
+                    #reqwest_snake_case_token_stream: e, 
                     status_code, 
-                    headers, 
+                    #headers_snake_case_token_stream, 
                     #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
                 }
             }
@@ -2405,7 +2409,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let reqwest_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_upper_camel_case_token_stream();
-    let reqwest_snake_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_snake_case_token_stream();
     let (reqwest_declaration_token_stream, reqwest_initialization_token_stream) = {
         let field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),

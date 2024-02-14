@@ -109,4 +109,6 @@ pub const CASE: &str = "case";
 pub const STATUS: &str = "status";
 pub const FAILED: &str = "failed";
 pub const TEXT: &str = "text";
-pub const REQWEST: &str = "Reqwest";
+pub const REQWEST: &str = "reqwest";
+pub const HEADERS: &str = "headers";
+pub const RESULT: &str = "RESULT";
