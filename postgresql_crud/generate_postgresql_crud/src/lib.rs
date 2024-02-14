@@ -210,7 +210,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &table_name_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let server_location_type_token_stream = quote::quote!{&str};
+    // let server_location_type_token_stream = quote::quote!{&str};//todo move it into naming convention
     let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #server_location_type_token_stream = #table_name_quotes_token_stream;};
     let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
