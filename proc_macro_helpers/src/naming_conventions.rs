@@ -819,8 +819,38 @@ pub fn unexpected_case_upper_camel_case_stringified() -> std::string::String {
         case_upper_camel_case_stringified()
     )
 }
-
-
+pub fn expected_type_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        expected_upper_camel_case_stringified(), 
+        type_upper_camel_case_stringified()
+    )
+}
+pub fn unexpected_status_code_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}", 
+        unexpected_upper_camel_case_stringified(), 
+        status_upper_camel_case_stringified(),
+        code_upper_camel_case_stringified(),
+    )
+}
+pub fn failed_to_get_response_text_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}{}{}", 
+        failed_upper_camel_case_stringified(), 
+        to_upper_camel_case_stringified(),
+        get_upper_camel_case_stringified(),
+        response_upper_camel_case_stringified(),
+        text_upper_camel_case_stringified(),
+    )
+}
+pub fn deserialize_response_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}", 
+        deserialize_upper_camel_case_stringified(), 
+        response_upper_camel_case_stringified()
+    )
+}
 
 
 
