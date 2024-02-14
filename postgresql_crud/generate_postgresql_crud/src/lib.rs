@@ -2283,6 +2283,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
     let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
     let expected_type_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_upper_camel_case_token_stream();
+    let expected_type_snake_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_snake_case_token_stream();
     //todo make crate::type_variants_from_request_response_generator::construct_syn_variant(
     let (generate_expected_type_declaration_token_stream, expected_type_initialization_token_stream) = {
         let field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
@@ -2297,14 +2298,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote!{
                     #expected_type_upper_camel_case_token_stream {
                         #eo_display_with_serialize_deserialize_token_stream
-                        expected_type: #try_operation_with_serialize_deserialize_token_stream,
+                        #expected_type_snake_case_token_stream: #try_operation_with_serialize_deserialize_token_stream,
                         #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                     }
                 }
             },
             quote::quote!{
                 #expected_type_upper_camel_case_token_stream {
-                    expected_type: e, 
+                    #expected_type_snake_case_token_stream: e, 
                     #field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream 
                 }
             }
