@@ -1201,7 +1201,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             {
                 let string_deserialized = {
                     use #serde_deserialize_token_stream;
-                    std::string::String::deserialize(deserializer)?
+                    #std_string_string_token_stream::deserialize(deserializer)?
                 };
                 let split_inner_url_parameters_symbol = ',';
                 let default_message = format!(#ivalid_ident_order_by_handle_token_stream);
@@ -2389,7 +2389,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #eo_display_foreign_type_token_stream
                     headers: #reqwest_header_header_map_token_stream,
                     #eo_display_with_serialize_deserialize_token_stream
-                    response_text: std::string::String,
+                    response_text: #std_string_string_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }
             },
@@ -4073,7 +4073,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     false => #prefix_false_handle_token_stream,
                                 };
                                 let bind_increments = {
-                                    let mut bind_increments = std::string::String::default();
+                                    let mut bind_increments = #std_string_string_token_stream::default();
                                     for (index, element) in value.iter().enumerate() {
                                         match #crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream(
                                             element,
@@ -6304,7 +6304,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #field_ident: None
                         //or and support
                         // Some(vec![crate::server::postgres::regex_filter::RegexFilter {
-                        //     regex: std::string::String::from("test"),
+                        //     regex: #std_string_string_token_stream::from("test"),
                         //     conjuctive_operator: crate::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
                         // }])
                     }
@@ -7289,7 +7289,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #[test]
             fn #ident_emulate_crud_api_usage_test_snake_case_token_stream() {
                 async fn find_out_if_it_works() {
-                    let api_location = std::string::String::from("http://127.0.0.1:8080");
+                    let api_location = #std_string_string_token_stream::from("http://127.0.0.1:8080");
                     let limit = 1000;
                     let offset = 0;
                     #create_many_http_request_test_token_stream
