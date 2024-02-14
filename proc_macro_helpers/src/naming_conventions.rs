@@ -582,6 +582,11 @@ pub fn text_upper_camel_case_stringified() -> std::string::String {
 pub fn reqwest_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::REQWEST)
 }
+pub fn reqwest_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = reqwest_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 
 
 
@@ -826,6 +831,11 @@ pub fn expected_type_upper_camel_case_stringified() -> std::string::String {
         type_upper_camel_case_stringified()
     )
 }
+pub fn expected_type_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = expected_type_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 pub fn unexpected_status_code_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}{}", 
@@ -833,6 +843,11 @@ pub fn unexpected_status_code_upper_camel_case_stringified() -> std::string::Str
         status_upper_camel_case_stringified(),
         code_upper_camel_case_stringified(),
     )
+}
+pub fn unexpected_status_code_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = unexpected_status_code_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 pub fn failed_to_get_response_text_upper_camel_case_stringified() -> std::string::String {
     format!(
@@ -844,6 +859,11 @@ pub fn failed_to_get_response_text_upper_camel_case_stringified() -> std::string
         text_upper_camel_case_stringified(),
     )
 }
+pub fn failed_to_get_response_text_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = failed_to_get_response_text_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 pub fn deserialize_response_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}", 
@@ -851,7 +871,11 @@ pub fn deserialize_response_upper_camel_case_stringified() -> std::string::Strin
         response_upper_camel_case_stringified()
     )
 }
-
+pub fn deserialize_response_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = deserialize_response_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 
 
 

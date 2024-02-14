@@ -2282,127 +2282,151 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let in_name_stringified = proc_macro_helpers::naming_conventions::in_snake_case_stringified();
     let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
     let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
+    let expected_type_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_upper_camel_case_token_stream();
     //todo make crate::type_variants_from_request_response_generator::construct_syn_variant(
-    let generate_expected_type_declaration_token_stream = |operation: &crate::Operation| -> proc_macro2::TokenStream {
-        let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
-        quote::quote!{
-            ExpectedType {
-                #eo_display_with_serialize_deserialize_token_stream
-                expected_type: #try_operation_with_serialize_deserialize_token_stream,
-                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+    let (generate_expected_type_declaration_token_stream, expected_type_initialization_token_stream) = {
+        let field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            |operation: &crate::Operation| -> proc_macro2::TokenStream {
+                let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
+                quote::quote!{
+                    #expected_type_upper_camel_case_token_stream {
+                        #eo_display_with_serialize_deserialize_token_stream
+                        expected_type: #try_operation_with_serialize_deserialize_token_stream,
+                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                    }
+                }
+            },
+            quote::quote!{
+                #expected_type_upper_camel_case_token_stream {
+                    expected_type: e, 
+                    #field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream 
+                }
             }
-        }
+        )
     };
-    let field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-        file!(),
-        line!(),
-        column!(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let expected_type_initialization_token_stream = quote::quote!{
-        ExpectedType {
-            expected_type: e, 
-            #field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream 
-        }
+    let unexpected_status_code_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::unexpected_status_code_upper_camel_case_token_stream();
+    let (unexpected_status_code_declaration_token_stream, unexpected_status_code_initialization_token_stream) = {
+        let field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #unexpected_status_code_upper_camel_case_token_stream {
+                    #eo_display_token_stream
+                    status_code: #http_status_code_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    headers: #reqwest_header_header_map_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    response_text_result: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #unexpected_status_code_upper_camel_case_token_stream {
+                    status_code, 
+                    headers, 
+                    response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
+                    #field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream
+                }
+            }
+        )
     };
-    let unexpected_status_code_declaration_token_stream = quote::quote!{
-        UnexpectedStatusCode {
-            #eo_display_token_stream
-            status_code: #http_status_code_token_stream,
-            #eo_display_foreign_type_token_stream
-            headers: #reqwest_header_header_map_token_stream,
-            #eo_display_foreign_type_token_stream
-            response_text_result: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
-            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-        }
+    let failed_to_get_response_text_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_token_stream();
+    let (failed_to_get_response_text_declaration_token_stream, failed_to_get_response_text_initialization_token_stream) = {
+        let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #failed_to_get_response_text_upper_camel_case_token_stream {
+                    #eo_display_foreign_type_token_stream
+                    reqwest: #reqwest_error_token_stream,
+                    #eo_display_token_stream
+                    status_code: #http_status_code_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    headers: #reqwest_header_header_map_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #failed_to_get_response_text_upper_camel_case_token_stream {
+                    reqwest: e, 
+                    status_code, 
+                    headers, 
+                    #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
+                }
+            }
+        )
     };
-    let field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-        file!(),
-        line!(),
-        column!(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let unexpected_status_code_initialization_token_stream = quote::quote!{
-        UnexpectedStatusCode {
-            status_code, 
-            headers, 
-            response_text_result: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
-            #field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream
-        }
+    let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::deserialize_response_upper_camel_case_token_stream();
+    let (deserialize_response_declaration_token_stream, deserialize_response_initialization_token_stream) = {
+        let field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #deserialize_response_upper_camel_case_token_stream {
+                    #eo_display_token_stream
+                    serde: serde_json::Error,
+                    #eo_display_token_stream
+                    status_code: #http_status_code_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    headers: #reqwest_header_header_map_token_stream,
+                    #eo_display_with_serialize_deserialize_token_stream
+                    response_text: std::string::String,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #deserialize_response_upper_camel_case_token_stream {
+                    serde: e, 
+                    status_code, 
+                    headers, 
+                    response_text,
+                    #field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream
+                }
+            }
+        )
     };
-    let failed_to_get_response_text_declaration_token_stream = quote::quote!{
-        FailedToGetResponseText {
-            #eo_display_foreign_type_token_stream
-            reqwest: #reqwest_error_token_stream,
-            #eo_display_token_stream
-            status_code: #http_status_code_token_stream,
-            #eo_display_foreign_type_token_stream
-            headers: #reqwest_header_header_map_token_stream,
-            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-        }
+    let reqwest_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_upper_camel_case_token_stream();
+    let (reqwest_declaration_token_stream, reqwest_initialization_token_stream) = {
+        let field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #reqwest_upper_camel_case_token_stream {
+                    #eo_display_foreign_type_token_stream
+                    reqwest: #reqwest_error_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #reqwest_upper_camel_case_token_stream {
+                    reqwest: e, 
+                    #field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream,
+                }
+            }
+        )
     };
-    let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-        file!(),
-        line!(),
-        column!(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let failed_to_get_response_text_initialization_token_stream = quote::quote!{
-        FailedToGetResponseText {
-            reqwest: e, 
-            status_code, 
-            headers, 
-            #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
-        }
-    };
-    let deserialize_response_declaration_token_stream = quote::quote!{
-        DeserializeResponse {
-            #eo_display_token_stream
-            serde: serde_json::Error,
-            #eo_display_token_stream
-            status_code: #http_status_code_token_stream,
-            #eo_display_foreign_type_token_stream
-            headers: #reqwest_header_header_map_token_stream,
-            #eo_display_with_serialize_deserialize_token_stream
-            response_text: std::string::String,
-            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-        }
-    };
-    let field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-        file!(),
-        line!(),
-        column!(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let deserialize_response_initialization_token_stream = quote::quote!{
-        DeserializeResponse {
-            serde: e, 
-            status_code, 
-            headers, 
-            response_text,
-            #field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream
-        }
-    };
-    let reqwest_declaration_token_stream = quote::quote!{
-        Reqwest {
-            #eo_display_foreign_type_token_stream
-            reqwest: #reqwest_error_token_stream,
-            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-        }
-    };
-    let field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-        file!(),
-        line!(),
-        column!(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let reqwest_initialization_token_stream = quote::quote!{
-        Reqwest {
-            reqwest: e, 
-            #field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream,
-        }
-    };
-    //
     let common_error_syn_variants = {
         let sqlx_postgres_error_named_syn_variants = proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
         let json_extractor_error_named_syn_variants = proc_macro_helpers::enum_variants::json_extractor_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
