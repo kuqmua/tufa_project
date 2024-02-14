@@ -30,6 +30,7 @@ pub fn generate_postgres_transaction(
     error_log_call_token_stream: &proc_macro2::TokenStream,
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
+    let error_value_snake_case_token_stream = proc_macro_helpers::naming_conventions::error_value_snake_case_token_stream();
     quote::quote! {
         let #expected_updated_primary_keys_name_token_stream = {
             #expected_updated_primary_keys_token_stream
@@ -49,7 +50,7 @@ pub fn generate_postgres_transaction(
         .await
         {
             Ok(value) => value,
-            Err(e) => {
+            Err(#error_value_snake_case_token_stream) => {
                 #from_log_and_return_error_token_stream
             }
         };
@@ -66,8 +67,8 @@ pub fn generate_postgres_transaction(
                     .await
                     {
                         Ok(value) => Some(value),
-                        Err(e) => {
-                            option_error = Some(e);
+                        Err(#error_value_snake_case_token_stream) => {
+                            option_error = Some(#error_value_snake_case_token_stream);
                             None
                         }
                     },
@@ -83,9 +84,9 @@ pub fn generate_postgres_transaction(
                     }
                     Err(#rollback_error_name_token_stream) => {
                         //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
-                        let error = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_token_stream;
+                        let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_token_stream;
                         #error_log_call_token_stream
-                        return #response_variants_token_stream::from(error);
+                        return #response_variants_token_stream::from(#error_value_snake_case_token_stream);
                     }
                 }
             }
@@ -98,14 +99,14 @@ pub fn generate_postgres_transaction(
                     Ok(primary_key) => {
                         #primary_key_vec_name_token_stream.push(primary_key);
                     }
-                    Err(e) => match #postgres_transaction_token_stream.#rollback_token_stream().await {
+                    Err(#error_value_snake_case_token_stream) => match #postgres_transaction_token_stream.#rollback_token_stream().await {
                         Ok(_) => {
                             #from_log_and_return_error_token_stream;
                         }
                         Err(#rollback_error_name_token_stream) => {
-                            let error = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_token_stream;
+                            let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_token_stream;
                             #error_log_call_token_stream
-                            return #response_variants_token_stream::from(error);
+                            return #response_variants_token_stream::from(#error_value_snake_case_token_stream);
                         }
                     },
                 }
@@ -125,14 +126,14 @@ pub fn generate_postgres_transaction(
             if let false = #non_existing_primary_keys_name_token_stream.is_empty() {
                 match #postgres_transaction_token_stream.#rollback_token_stream().await {
                     Ok(_) => {
-                        let error = #try_ident_upper_camel_case_token_stream::#non_existing_primary_keys_token_stream;
+                        let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#non_existing_primary_keys_token_stream;
                         #error_log_call_token_stream
-                        return #response_variants_token_stream::from(error);
+                        return #response_variants_token_stream::from(#error_value_snake_case_token_stream);
                     }
-                    Err(e) => {
-                        let error = #try_ident_upper_camel_case_token_stream::#non_existing_primary_keys_and_failed_rollback_token_stream;
+                    Err(#error_value_snake_case_token_stream) => {
+                        let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#non_existing_primary_keys_and_failed_rollback_token_stream;
                         #error_log_call_token_stream
-                        return #response_variants_token_stream::from(error);
+                        return #response_variants_token_stream::from(#error_value_snake_case_token_stream);
                     }
                 }
             }
@@ -141,10 +142,10 @@ pub fn generate_postgres_transaction(
             Ok(_) => #response_variants_token_stream::#desirable_token_stream(#primary_key_vec_name_token_stream.into_iter().map(
                 |element|#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(element)
             ).collect()),
-            Err(e) => {
-                let error = #try_ident_upper_camel_case_token_stream::#commit_failed_token_stream;
+            Err(#error_value_snake_case_token_stream) => {
+                let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#commit_failed_token_stream;
                 #error_log_call_token_stream
-                #response_variants_token_stream::from(error)
+                #response_variants_token_stream::from(#error_value_snake_case_token_stream)
             }
         }
     }
