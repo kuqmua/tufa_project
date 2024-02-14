@@ -112,3 +112,4 @@ pub const TEXT: &str = "text";
 pub const REQWEST: &str = "reqwest";
 pub const HEADERS: &str = "headers";
 pub const RESULT: &str = "RESULT";
+pub const SERDE: &str = "serde";

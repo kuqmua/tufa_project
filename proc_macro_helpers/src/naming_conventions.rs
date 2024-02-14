@@ -615,7 +615,14 @@ pub fn headers_snake_case_token_stream() -> proc_macro2::TokenStream {
 pub fn result_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::RESULT)
 }
-
+pub fn serde_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::SERDE)
+}
+pub fn serde_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = serde_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 
 
 
@@ -923,6 +930,18 @@ pub fn status_code_snake_case_stringified() -> std::string::String {
 }
 pub fn status_code_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = status_code_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn response_text_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}", 
+        response_snake_case_stringified(), 
+        text_snake_case_stringified(),
+    )
+}
+pub fn response_text_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = response_text_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
