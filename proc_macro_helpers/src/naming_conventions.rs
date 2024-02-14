@@ -564,6 +564,25 @@ pub fn unexpected_upper_camel_case_stringified() -> std::string::String {
 pub fn case_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CASE)
 }
+pub fn expected_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::EXPECTED)
+}
+pub fn status_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::STATUS)
+}
+pub fn failed_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FAILED)
+}
+pub fn to_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TO)
+}
+pub fn text_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TEXT)
+}
+pub fn reqwest_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::REQWEST)
+}
+
 
 
 
