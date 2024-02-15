@@ -17,6 +17,7 @@ pub mod write_token_stream_into_file;
 pub mod get_macro_attribute;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod naming_conventions;
+pub mod wrap_derive;
 
 // impl OperationHttpMethod {
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {

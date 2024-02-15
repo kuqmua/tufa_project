@@ -338,11 +338,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
-    let derive_debug_token_stream = quote::quote!{#[derive(#debug_token_stream)]};
-    let derive_debug_thiserror_error_occurence_token_stream = quote::quote!{#[derive(#debug_token_stream, #thiserror_error_token_stream, #error_occurence_error_occurence_token_stream)]};
-    let derive_debug_to_schema_token_stream = quote::quote!{#[derive(#debug_token_stream, #utoipa_to_schema_token_stream)]};
-    let derive_debug_serialize_deserialize_token_stream = quote::quote!{#[derive(#debug_token_stream, #serde_serialize_token_stream, #serde_deserialize_token_stream)]};
-    let derive_debug_serialize_deserialize_to_schema_token_stream = quote::quote!{#[derive(#debug_token_stream, #serde_serialize_token_stream, #serde_deserialize_token_stream, #utoipa_to_schema_token_stream)]};
+    let derive_debug_token_stream = proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream]);
+    let derive_debug_thiserror_error_occurence_token_stream = proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream, &thiserror_error_token_stream, &error_occurence_error_occurence_token_stream]);
+    let derive_debug_to_schema_token_stream = proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream, &utoipa_to_schema_token_stream]);
+    let derive_debug_serialize_deserialize_token_stream = proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream, &serde_serialize_token_stream, &serde_deserialize_token_stream]);
+    let derive_debug_serialize_deserialize_to_schema_token_stream = proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream, &serde_serialize_token_stream, &serde_deserialize_token_stream, &utoipa_to_schema_token_stream]);
     let try_from_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::try_from_upper_camel_case_stringified();
     let from_str_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::from_str_upper_camel_case_stringified();
     let from_str_upper_camel_case_token_stream = {
