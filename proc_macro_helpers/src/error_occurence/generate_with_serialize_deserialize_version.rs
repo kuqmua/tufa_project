@@ -506,9 +506,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
         crate::naming_conventions::string_snake_case_stringified(),
         crate::naming_conventions::string_upper_camel_case_stringified()
     );
-    let std_string_string_token_stream = std_string_string_stringified
-    .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {std_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let as_std_collections_hashmap_key_type_stringified = format!(
         "as {}::collections::{} key type",
         naming_constants::STD_STRINGIFIED,

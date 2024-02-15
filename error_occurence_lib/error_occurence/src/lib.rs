@@ -893,16 +893,8 @@ pub fn error_occurence(
                             let string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified());
                             let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
                             
-                            
-                            //
                             let std_stringified = "std";
-                            let std_string_string_stringified = format!(
-                                "{std_stringified}::{string_snake_case_stringified}::{}",
-                                proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
-                            );
-                            let std_string_string_token_stream = std_string_string_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {std_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
                             let hashmap_display_display_foreign_type_to_string_snake_case_token_stream = 
                             hashmap_display_display_foreign_type_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()

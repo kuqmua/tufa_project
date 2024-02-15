@@ -263,7 +263,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|| {
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key_field.ident is None")
         });
-    let std_string_string_token_stream = quote::quote!{std::string::String};
+    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let field_ident_is_none_stringified = naming_constants::FIELD_IDENT_IS_NONE;
     let fields_named_wrappers_excluding_primary_key = fields_named.clone().into_iter().filter(|field|*field != primary_key_field).map(|element|{
         let field_ident = element.ident
@@ -7310,7 +7310,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #[test]
             fn #ident_emulate_crud_api_usage_test_snake_case_token_stream() {
                 async fn find_out_if_it_works() {
-                    let api_location = #std_string_string_token_stream::from("http://127.0.0.1:8080");
+                    let api_location = #std_string_string_token_stream::from("http://127.0.0.1:8080");//todo port from env or config maybe?
                     let limit = 1000;
                     let offset = 0;
                     #create_many_http_request_test_token_stream
