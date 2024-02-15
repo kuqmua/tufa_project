@@ -12,7 +12,6 @@ pub fn generate_postgres_transaction(
     from_log_and_return_error_token_stream: &proc_macro2::TokenStream,
     rollback_error_name_token_stream: &proc_macro2::TokenStream,
     non_existing_primary_keys_name_token_stream: &proc_macro2::TokenStream,
-    primary_key_vec_name_token_stream: &proc_macro2::TokenStream,
     rollback_token_stream: &proc_macro2::TokenStream,
     non_existing_primary_keys_token_stream: &proc_macro2::TokenStream,
     non_existing_primary_keys_and_failed_rollback_token_stream: &proc_macro2::TokenStream,
@@ -30,6 +29,7 @@ pub fn generate_postgres_transaction(
     let sqlx_acquire_token_stream = proc_macro_common::sqlx_acquire_token_stream();
     let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
     let expected_updated_primary_keys_name_token_stream = quote::quote!{expected_updated_primary_keys};
+    let primary_key_vec_name_token_stream = quote::quote!{primary_key_vec};
     let query_and_rollback_failed_variant_initialization_token_stream = {
         let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),

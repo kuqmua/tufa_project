@@ -1673,7 +1673,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
     let returning_stringified = "returning";
     let returning_primary_key_stringified = format!(" {returning_stringified} {primary_key_field_ident}");
-    let primary_key_vec_name_token_stream = quote::quote!{primary_key_vec};
     let rollback_error_name_token_stream = quote::quote!{rollback_error};
     let returning_primary_key_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
         &returning_primary_key_stringified,
@@ -5325,7 +5324,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &from_log_and_return_error_token_stream,
                     &rollback_error_name_token_stream,
                     &non_existing_primary_keys_name_token_stream,
-                    &primary_key_vec_name_token_stream,
                     &rollback_snake_case_token_stream,
                     &non_existing_primary_keys_variant_initialization_token_stream,
                     &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
@@ -6452,7 +6450,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &from_log_and_return_error_token_stream,
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
-                        &primary_key_vec_name_token_stream,
                         &rollback_snake_case_token_stream,
                         &non_existing_primary_keys_variant_initialization_token_stream,
                         &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
