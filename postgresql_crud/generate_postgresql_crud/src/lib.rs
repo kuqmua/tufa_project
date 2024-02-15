@@ -2174,7 +2174,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let pg_connection_token_stream = quote::quote!{pg_connection};
     let query_string_name_token_stream = quote::quote!{query_string};
     let binded_query_name_token_stream = quote::quote!{binded_query};
-    let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
     let order_by_token_stream = quote::quote!{order_by};
     let current_vec_len_name_token_stream = quote::quote!{current_vec_len};
     let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
@@ -5295,7 +5294,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &rollback_error_name_token_stream,
                     &non_existing_primary_keys_name_token_stream,
                     &rollback_snake_case_token_stream,
-                    &postgres_transaction_token_stream,
                     &try_operation_response_variants_token_stream,
                     &desirable_upper_camel_case_token_stream,
                     &try_operation_upper_camel_case_token_stream,
@@ -6418,7 +6416,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
                         &rollback_snake_case_token_stream,
-                        &postgres_transaction_token_stream,
                         &try_operation_response_variants_token_stream,
                         &desirable_upper_camel_case_token_stream,
                         &try_operation_upper_camel_case_token_stream,

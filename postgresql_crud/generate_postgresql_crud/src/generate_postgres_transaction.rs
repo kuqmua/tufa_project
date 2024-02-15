@@ -13,7 +13,6 @@ pub fn generate_postgres_transaction(
     rollback_error_name_token_stream: &proc_macro2::TokenStream,
     non_existing_primary_keys_name_token_stream: &proc_macro2::TokenStream,
     rollback_token_stream: &proc_macro2::TokenStream,
-    postgres_transaction_token_stream: &proc_macro2::TokenStream,
     response_variants_token_stream: &proc_macro2::TokenStream,
     desirable_token_stream: &proc_macro2::TokenStream,
     try_ident_upper_camel_case_token_stream: &proc_macro2::TokenStream,
@@ -28,6 +27,7 @@ pub fn generate_postgres_transaction(
     let expected_updated_primary_keys_name_token_stream = quote::quote!{expected_updated_primary_keys};
     let primary_key_vec_name_token_stream = quote::quote!{primary_key_vec};
     let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
+    let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
     let query_and_rollback_failed_variant_initialization_token_stream = {
         let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
