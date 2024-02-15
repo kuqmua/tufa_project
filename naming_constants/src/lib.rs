@@ -113,3 +113,4 @@ pub const REQWEST: &str = "reqwest";
 pub const HEADERS: &str = "headers";
 pub const RESULT: &str = "RESULT";
 pub const SERDE: &str = "serde";
+pub const DEBUG: &str = "debug";

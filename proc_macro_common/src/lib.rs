@@ -31,3 +31,18 @@ pub fn error_value_snake_case_token_stream() -> proc_macro2::TokenStream {
 pub fn str_ref_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{&str}
 }
+pub fn thiserror_error_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{thiserror::Error}
+}
+pub fn error_occurence_lib_error_occurence_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{error_occurence_lib::ErrorOccurence}
+}
+pub fn utoipa_to_schema_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{utoipa::ToSchema}
+}
+pub fn serde_serialize_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{serde::Serialize}
+}
+pub fn serde_deserialize_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{serde::Deserialize}
+}

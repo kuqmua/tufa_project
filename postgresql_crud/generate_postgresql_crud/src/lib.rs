@@ -332,12 +332,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &primary_key_field_ident.to_string(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let debug_token_stream = quote::quote!{Debug};
-    let thiserror_error_token_stream = quote::quote!{thiserror::Error};
-    let error_occurence_error_occurence_token_stream = quote::quote!{error_occurence_lib::ErrorOccurence};
-    let utoipa_to_schema_token_stream = quote::quote!{utoipa::ToSchema};
-    let serde_serialize_token_stream = quote::quote!{serde::Serialize};
-    let serde_deserialize_token_stream = quote::quote!{serde::Deserialize};
+    let debug_token_stream = proc_macro_helpers::naming_conventions::debug_upper_camel_case_token_stream();
+    let thiserror_error_token_stream = proc_macro_common::thiserror_error_token_stream();
+    let error_occurence_error_occurence_token_stream = proc_macro_common::error_occurence_lib_error_occurence_token_stream();
+    let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
+    let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
+    let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
     let derive_debug_token_stream = quote::quote!{#[derive(#debug_token_stream)]};
     let derive_debug_thiserror_error_occurence_token_stream = quote::quote!{#[derive(#debug_token_stream, #thiserror_error_token_stream, #error_occurence_error_occurence_token_stream)]};
     let derive_debug_to_schema_token_stream = quote::quote!{#[derive(#debug_token_stream, #utoipa_to_schema_token_stream)]};
