@@ -1,6 +1,9 @@
 pub fn error_value_snake_case_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{e}
 }
+pub fn str_ref_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{&str}
+}
 // todo maybe use struct like struct Parameters<'a>(&'a str) and impl ToUpperCamelCaseString for it ?
 // todo maybe reqwrite it this way
 // trait InnerValue<'a> {
