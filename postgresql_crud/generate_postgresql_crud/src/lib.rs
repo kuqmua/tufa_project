@@ -1853,21 +1853,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         ]
     );
-    let primary_key_from_row_and_failed_rollback_variant_initialization_token_stream = {
-        let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{
-            PrimaryKeyFromRowAndFailedRollback {
-                primary_key_from_row: #error_value_snake_case_token_stream,
-                #rollback_error_name_token_stream,
-                #field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream,
-            }
-        }
-    };
     let non_existing_primary_keys_syn_variant = {
         let variant_name_upper_camel_case_stringified = "NonExistingPrimaryKeys";
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
@@ -5340,7 +5325,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
                     &from_log_and_return_error_token_stream,
                     &rollback_error_name_token_stream,
-                    &primary_key_from_row_and_failed_rollback_variant_initialization_token_stream,
                     &non_existing_primary_keys_name_token_stream,
                     &expected_updated_primary_keys_name_token_stream,
                     &primary_key_vec_name_token_stream,
@@ -6469,7 +6453,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
                         &from_log_and_return_error_token_stream,
                         &rollback_error_name_token_stream,
-                        &primary_key_from_row_and_failed_rollback_variant_initialization_token_stream,
                         &non_existing_primary_keys_name_token_stream,
                         &expected_updated_primary_keys_name_token_stream,
                         &primary_key_vec_name_token_stream,

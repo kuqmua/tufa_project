@@ -11,7 +11,6 @@ pub fn generate_postgres_transaction(
     primary_key_try_from_sqlx_row_name_token_stream: &proc_macro2::TokenStream,
     from_log_and_return_error_token_stream: &proc_macro2::TokenStream,
     rollback_error_name_token_stream: &proc_macro2::TokenStream,
-    primary_key_from_row_and_failed_rollback_token_stream: &proc_macro2::TokenStream,
     non_existing_primary_keys_name_token_stream: &proc_macro2::TokenStream,
     expected_updated_primary_keys_name_token_stream: &proc_macro2::TokenStream,
     primary_key_vec_name_token_stream: &proc_macro2::TokenStream,
@@ -43,6 +42,21 @@ pub fn generate_postgres_transaction(
                 query_error: #error_value_snake_case_token_stream,
                 #rollback_error_name_token_stream,
                 #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
+            }
+        }
+    };
+    let primary_key_from_row_and_failed_rollback_variant_initialization_token_stream = {
+        let field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            PrimaryKeyFromRowAndFailedRollback {
+                primary_key_from_row: #error_value_snake_case_token_stream,
+                #rollback_error_name_token_stream,
+                #field_code_occurence_new_494adabc_50aa_4d57_acc8_4a0444df7d28_token_stream,
             }
         }
     };
@@ -119,7 +133,7 @@ pub fn generate_postgres_transaction(
                             #from_log_and_return_error_token_stream;
                         }
                         Err(#rollback_error_name_token_stream) => {
-                            let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_token_stream;
+                            let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#primary_key_from_row_and_failed_rollback_variant_initialization_token_stream;
                             #error_log_call_token_stream
                             return #response_variants_token_stream::from(#error_value_snake_case_token_stream);
                         }
