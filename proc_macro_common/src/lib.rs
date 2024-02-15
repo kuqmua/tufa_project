@@ -46,3 +46,6 @@ pub fn serde_serialize_token_stream() -> proc_macro2::TokenStream {
 pub fn serde_deserialize_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{serde::Deserialize}
 }
+pub fn sqlx_row_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{sqlx::Row}
+}
