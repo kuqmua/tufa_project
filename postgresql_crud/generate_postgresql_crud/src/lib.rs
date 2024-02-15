@@ -429,8 +429,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         });
         quote::quote! {
-            impl std::convert::From<#ident> for #struct_options_ident_token_stream {
-                fn from(value: #ident) -> Self {
+            impl std::convert::From<super::#ident> for #struct_options_ident_token_stream {
+                fn from(value: super::#ident) -> Self {
                     Self {                        
                         #ident_option_variant_primary_key_token_stream
                         #(#ident_option_variants_excluding_primary_key_token_stream),*
@@ -7365,18 +7365,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &common_token_stream,
     //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
+    let mod_name_snake_case_token_stream = {
+        let value_stringified = format!("{proc_macro_name_snake_case}_{table_name_stringified}");
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     //todo pub and private impl quote group
     let gen = quote::quote! {
-        #common_token_stream
+        pub mod #mod_name_snake_case_token_stream {
+            #common_token_stream
 
-        #create_many_token_stream
-        #create_one_token_stream
-        #read_many_token_stream
-        #read_one_token_stream
-        #update_many_token_stream
-        #update_one_token_stream
-        #delete_many_token_stream
-        #delete_one_token_stream
+            #create_many_token_stream
+            #create_one_token_stream
+            #read_many_token_stream
+            #read_one_token_stream
+            #update_many_token_stream
+            #update_one_token_stream
+            #delete_many_token_stream
+            #delete_one_token_stream
+        }
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
