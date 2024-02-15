@@ -25,3 +25,9 @@ pub fn trait_path_token_stream() -> proc_macro2::TokenStream {
 pub fn std_string_string_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{std::string::String}
 }
+pub fn error_value_snake_case_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{e}
+}
+pub fn str_ref_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{&str}
+}

@@ -30,7 +30,7 @@ pub fn generate_postgres_transaction(
     error_log_call_token_stream: &proc_macro2::TokenStream,
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    let error_value_snake_case_token_stream = proc_macro_helpers::naming_conventions::error_value_snake_case_token_stream();
+    let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
     quote::quote! {
         let #expected_updated_primary_keys_name_token_stream = {
             #expected_updated_primary_keys_token_stream

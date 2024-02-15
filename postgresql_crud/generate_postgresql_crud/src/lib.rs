@@ -210,7 +210,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &table_name_stringified,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
-    let str_ref_token_stream = proc_macro_helpers::naming_conventions::str_ref_token_stream();
+    let str_ref_token_stream = proc_macro_common::str_ref_token_stream();
     let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #str_ref_token_stream = #table_name_quotes_token_stream;};
     let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
@@ -506,7 +506,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let eo_display_with_serialize_deserialize_token_stream = proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize.to_attribute_view_token_stream();
     let eo_display_foreign_type_token_stream = proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType.to_attribute_view_token_stream();
     let eo_vec_error_occurence_token_stream = proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence.to_attribute_view_token_stream();
-    let error_value_snake_case_token_stream = proc_macro_helpers::naming_conventions::error_value_snake_case_token_stream();
+    let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
     // let value_token_stream = quote::quote! {value};
     let impl_std_convert_try_from_ident_options_for_struct_variants_token_stream = {
         column_variants
@@ -8603,7 +8603,7 @@ fn generate_http_request_many_token_stream(
         .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {status_code_enum_name_stingified} {}",proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let error_value_snake_case_token_stream = proc_macro_helpers::naming_conventions::error_value_snake_case_token_stream();
+    let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
     let status_code_enums_try_from = {
         let mut is_last_element_found = false;
         let desirable_status_code_case_token_stream = quote::quote! {
@@ -8894,7 +8894,7 @@ fn generate_try_operation_token_stream(
             unique_status_codes_len_minus_one
         )
     };
-    let error_value_snake_case_token_stream = proc_macro_helpers::naming_conventions::error_value_snake_case_token_stream();
+    let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
     let status_code_enums_try_from = {
         let mut is_last_element_found = false;
         let desirable_status_code_case_token_stream = quote::quote! {
