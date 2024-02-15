@@ -1884,21 +1884,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         ]
     );
-    let non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream = {
-        let field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{
-            NonExistingPrimaryKeysAndFailedRollback {
-                #non_existing_primary_keys_name_token_stream,
-                #rollback_error_name_token_stream: #error_value_snake_case_token_stream,
-                #field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream,
-            }
-        }
-    };
     let commit_failed_syn_variant = {
         let variant_name_upper_camel_case_stringified = "CommitFailed";
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
@@ -5311,7 +5296,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &rollback_error_name_token_stream,
                     &non_existing_primary_keys_name_token_stream,
                     &rollback_snake_case_token_stream,
-                    &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
                     &postgres_transaction_token_stream,
                     &commit_token_stream,
                     &try_operation_response_variants_token_stream,
@@ -6436,7 +6420,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
                         &rollback_snake_case_token_stream,
-                        &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
                         &postgres_transaction_token_stream,
                         &commit_token_stream,
                         &try_operation_response_variants_token_stream,
