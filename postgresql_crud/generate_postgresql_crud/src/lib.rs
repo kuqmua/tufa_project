@@ -2747,11 +2747,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -3278,11 +3274,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -3812,11 +3804,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>},//todo reuse it
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -4577,11 +4565,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &struct_options_ident_token_stream,
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -5124,11 +5108,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -5720,11 +5700,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -6286,11 +6262,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -7078,11 +7050,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
                 &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
-                &eo_display_token_stream,
-                &eo_display_foreign_type_token_stream,
-                &eo_display_with_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
                 &type_variants_from_request_response_syn_variants,

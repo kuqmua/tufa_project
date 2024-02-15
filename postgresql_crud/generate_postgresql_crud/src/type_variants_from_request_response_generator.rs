@@ -2,11 +2,11 @@
 pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
+    // code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
-    eo_display_token_stream: &proc_macro2::TokenStream,
-    eo_display_foreign_type_token_stream: &proc_macro2::TokenStream,
-    eo_display_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
+    // eo_display_token_stream: &proc_macro2::TokenStream,
+    // eo_display_foreign_type_token_stream: &proc_macro2::TokenStream,
+    // eo_display_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     derive_debug_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     derive_debug_serialize_deserialize_to_schema_token_stream: &proc_macro2::TokenStream,
     type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
@@ -27,14 +27,9 @@ pub fn type_variants_from_request_response_generator(
     let try_operation_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_desirable_status_code_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, desirable_status_code);
     let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
-    let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
     let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
     let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
-    let http_status_code_token_stream = quote::quote!{http::StatusCode};
-    let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
-    let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
     let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
-    let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
     let try_operation_token_stream = {
         let try_operation_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
             let variant_ident = &error_variant.ident;
@@ -599,48 +594,15 @@ pub fn type_variants_from_request_response_generator(
         }
     };
     let ident_request_error_logic_token_stream_handle_token_stream = {
+        let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
         quote::quote! {
             #error_named_derive_token_stream
             pub enum #try_operation_request_error_upper_camel_case_token_stream {
-                ExpectedType {
-                    #eo_display_with_serialize_deserialize_token_stream
-                    expected_type: #try_operation_with_serialize_deserialize_token_stream,
-                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                },
-                UnexpectedStatusCode {
-                    #eo_display_token_stream
-                    status_code: #http_status_code_token_stream,
-                    #eo_display_foreign_type_token_stream
-                    headers: #reqwest_header_header_map_token_stream,
-                    #eo_display_foreign_type_token_stream
-                    response_text_result: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
-                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                },
-                FailedToGetResponseText {
-                    #eo_display_foreign_type_token_stream
-                    reqwest: #reqwest_error_token_stream,
-                    #eo_display_token_stream
-                    status_code: #http_status_code_token_stream,
-                    #eo_display_foreign_type_token_stream
-                    headers: #reqwest_header_header_map_token_stream,
-                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                },
-                DeserializeResponse {
-                    #eo_display_token_stream
-                    serde: serde_json::Error,
-                    #eo_display_token_stream
-                    status_code: #http_status_code_token_stream,
-                    #eo_display_foreign_type_token_stream
-                    headers: #reqwest_header_header_map_token_stream,
-                    #eo_display_with_serialize_deserialize_token_stream
-                    response_text: std::string::String,
-                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                },
-                Reqwest {
-                    #eo_display_foreign_type_token_stream
-                    reqwest: #reqwest_error_token_stream,
-                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                },
+                #expected_type_declaration_token_stream,
+                #unexpected_status_code_declaration_token_stream,
+                #failed_to_get_response_text_declaration_token_stream,
+                #deserialize_response_declaration_token_stream,
+                #reqwest_declaration_token_stream,
             }
         }
     };
