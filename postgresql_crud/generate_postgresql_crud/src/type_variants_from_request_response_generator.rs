@@ -12,6 +12,11 @@ pub fn type_variants_from_request_response_generator(
     type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     operation: &crate::Operation,
+    generate_expected_type_declaration_token_stream: &dyn Fn(&crate::Operation) -> proc_macro2::TokenStream,
+    unexpected_status_code_declaration_token_stream: &proc_macro2::TokenStream,
+    failed_to_get_response_text_declaration_token_stream: &proc_macro2::TokenStream,
+    deserialize_response_declaration_token_stream: &proc_macro2::TokenStream,
+    reqwest_declaration_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();

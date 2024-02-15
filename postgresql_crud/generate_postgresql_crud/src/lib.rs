@@ -2757,6 +2757,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -3283,6 +3288,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -3812,6 +3822,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -4572,6 +4587,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -5114,6 +5134,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -5705,6 +5730,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -6266,6 +6296,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
@@ -7053,6 +7088,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &type_variants_from_request_response_syn_variants,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &operation,
+                &generate_expected_type_declaration_token_stream,
+                &unexpected_status_code_declaration_token_stream,
+                &failed_to_get_response_text_declaration_token_stream,
+                &deserialize_response_declaration_token_stream,
+                &reqwest_declaration_token_stream,
             )
         };
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
