@@ -1668,7 +1668,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {payload_extraction_result_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let non_existing_primary_keys_name_token_stream = quote::quote!{non_existing_primary_keys};
-    let expected_updated_primary_keys_name_token_stream = quote::quote!{expected_updated_primary_keys};
     let use_futures_try_stream_ext_token_stream = quote::quote!{use futures::TryStreamExt};
     let serde_json_to_string_token_stream = quote::quote!{serde_json::to_string};
     // let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
@@ -5326,7 +5325,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &from_log_and_return_error_token_stream,
                     &rollback_error_name_token_stream,
                     &non_existing_primary_keys_name_token_stream,
-                    &expected_updated_primary_keys_name_token_stream,
                     &primary_key_vec_name_token_stream,
                     &rollback_snake_case_token_stream,
                     &non_existing_primary_keys_variant_initialization_token_stream,
@@ -6454,7 +6452,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &from_log_and_return_error_token_stream,
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
-                        &expected_updated_primary_keys_name_token_stream,
                         &primary_key_vec_name_token_stream,
                         &rollback_snake_case_token_stream,
                         &non_existing_primary_keys_variant_initialization_token_stream,
