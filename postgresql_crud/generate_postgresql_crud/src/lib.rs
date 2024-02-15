@@ -193,7 +193,7 @@ pub fn additional_http_status_codes_error_variants(
 )]//todo check on postgresql max length value of type
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {//todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "PostgresqlCrud";
+    let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
     let proc_macro_name_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&proc_macro_name_upper_camel_case);
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
         panic!(
@@ -1652,7 +1652,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_middlewares_error_syn_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_proc_macro_attribute(
         &ast,
         additional_http_status_codes_error_variants_snake_case_stringified,
-        &proc_macro_name_snake_case,
+        "postgresql_crud",//todo - its main crate name. maybe reuse it later?
         &proc_macro_name_upper_camel_case_ident_stringified
     );
     let common_middlewares_error_syn_variants_len = common_middlewares_error_syn_variants.len();

@@ -5,14 +5,14 @@
     type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
 )]
 #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryCreateMany,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryCreateOne,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryReadMany,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryReadOne,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryUpdateMany,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryUpdateOne,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryDeleteMany,
-    crate::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TryDeleteOne
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryCreateMany,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryCreateOne,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryReadMany,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryReadOne,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryUpdateMany,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryUpdateOne,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryDeleteMany,
+    crate::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TryDeleteOne
 )]
 pub enum SqlxPostgresErrorNamed {
     #[tvfrr_500_internal_server_error]

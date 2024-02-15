@@ -10,7 +10,7 @@ pub fn routes(
     axum::Router::new().nest(
         &format!(
             "/{}",
-            common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::TABLE_NAME
+            common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::TABLE_NAME
         ),
         axum::Router::new().merge(crud(app_state)),
     )
@@ -30,44 +30,44 @@ fn crud(
         //todo generate axum::Router and make it pub instead of create_many -like router handlers
         .route(
             "/create_many",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::create_many),
+            axum::routing::post(common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::create_many),
         )
         .route(
             "/create_one",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::create_one),
+            axum::routing::post(common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::create_one),
         )
         .route(
             "/read_many",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::read_many),
+            axum::routing::post(common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::read_many),
         )
         .route(
             "/read_one",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::read_one),
+            axum::routing::post(common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::read_one),
         )
         .route(
             "/update_many",
             axum::routing::patch(
-                common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::update_many,
+                common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::update_many,
             ),
         )
         .route(
             "/update_one",
-            axum::routing::patch(common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::update_one),
+            axum::routing::patch(common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::update_one),
         )
         .route(
             "/delete_many",
             axum::routing::delete(
-                common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::delete_many,
+                common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::delete_many,
             ),
         )
         .route(
             "/delete_one",
             axum::routing::delete(
-                common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::delete_one,
+                common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::delete_one,
             ),
         )
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
-        //     common::repositories_types::server::routes::api::cats::postgresql_crud_dogs::ALLOW_METHODS,
+        //     common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ALLOW_METHODS,
         // ))
         .route_layer(axum::middleware::from_fn_with_state(
             app_state.clone() as common::server::middleware::commit_checker::CommitCheckerAppState,
