@@ -1867,20 +1867,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ]
         )
     };
-    let non_existing_primary_keys_variant_initialization_token_stream = {
-        let field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{
-            NonExistingPrimaryKeys {
-                #non_existing_primary_keys_name_token_stream,
-                #field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream,
-            }
-        }
-    };
     let non_existing_primary_keys_and_failed_rollback_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
         "NonExistingPrimaryKeysAndFailedRollback",
@@ -5325,7 +5311,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &rollback_error_name_token_stream,
                     &non_existing_primary_keys_name_token_stream,
                     &rollback_snake_case_token_stream,
-                    &non_existing_primary_keys_variant_initialization_token_stream,
                     &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
                     &postgres_transaction_token_stream,
                     &commit_token_stream,
@@ -6451,7 +6436,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
                         &rollback_snake_case_token_stream,
-                        &non_existing_primary_keys_variant_initialization_token_stream,
                         &non_existing_primary_keys_and_failed_rollback_variant_initialization_token_stream,
                         &postgres_transaction_token_stream,
                         &commit_token_stream,
