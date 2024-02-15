@@ -2182,7 +2182,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let limit_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
     let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
     let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
-    let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
     let element_name_token_stream = proc_macro_helpers::naming_conventions::element_snake_case_token_stream();
     let acc_name_token_stream = proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
     let query_name_token_stream = proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
@@ -5297,7 +5296,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &non_existing_primary_keys_name_token_stream,
                     &rollback_snake_case_token_stream,
                     &postgres_transaction_token_stream,
-                    &commit_token_stream,
                     &try_operation_response_variants_token_stream,
                     &desirable_upper_camel_case_token_stream,
                     &try_operation_upper_camel_case_token_stream,
@@ -6421,7 +6419,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &non_existing_primary_keys_name_token_stream,
                         &rollback_snake_case_token_stream,
                         &postgres_transaction_token_stream,
-                        &commit_token_stream,
                         &try_operation_response_variants_token_stream,
                         &desirable_upper_camel_case_token_stream,
                         &try_operation_upper_camel_case_token_stream,
