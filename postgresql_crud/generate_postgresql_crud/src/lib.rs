@@ -67,6 +67,7 @@ mod extract_syn_variants_from_proc_macro_attribute;
 //todo remove useless derives like useless serde::Serialize and Deserialize
 //todo maybe add private generated code in specific mod in case of some compilation error - to show info like "no struct BlaBla found in mod ..." ?
 //todo add ident prefix to public functions structs and other
+//todo maybe generate compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
 
 #[proc_macro_attribute]
 pub fn create_many_additional_http_status_codes_error_variants(
