@@ -362,9 +362,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let crate_server_postgres_uuid_wrapper_token_stream = quote::quote!{crate::server::postgres::uuid_wrapper};
     let error_named_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified();
     let uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_stringified = format!(
-        "{}Wrapper{try_from_upper_camel_case_stringified}Possible{}Wrapper",
+        "{}{}{try_from_upper_camel_case_stringified}{}{}{}",
         proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::wrapper_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::possible_upper_camel_case_stringified(),
         proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::wrapper_upper_camel_case_stringified(),
     );
     let uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_token_stream = {
         uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
