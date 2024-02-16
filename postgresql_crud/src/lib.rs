@@ -74,7 +74,7 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
 
 #[derive(Debug)]//, serde::Serialize, serde::Deserialize
 struct Test {
-    type_1: bool,//BOOL
+    type_1: std::primitive::bool,//BOOL
     type_2: std::primitive::i8,//“CHAR”
     type_3: std::primitive::i16,//SMALLINT, SMALLSERIAL, INT2
     type_4: std::primitive::i32,//INT, SERIAL, INT4
