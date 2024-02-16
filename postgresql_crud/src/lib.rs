@@ -223,32 +223,32 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
         sqlx::encode::IsNull::No
     }
 }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct StdPrimitiveI32(std::primitive::i32);
-// impl StdPrimitiveI32 {
-//     pub fn into_inner(self) -> std::primitive::i32 {
-//         self.0
-//     }
-// }
-// impl std::convert::From<StdPrimitiveI32> for std::primitive::i32 {
-//     fn from(value: StdPrimitiveI32) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI32 {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct StdPrimitiveI32(std::primitive::i32);
+impl StdPrimitiveI32 {
+    pub fn into_inner(self) -> std::primitive::i32 {
+        self.0
+    }
+}
+impl std::convert::From<StdPrimitiveI32> for std::primitive::i32 {
+    fn from(value: StdPrimitiveI32) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI32 {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        buf.extend(&self.0.to_be_bytes());
+        sqlx::encode::IsNull::No
+    }
+}
 // #[derive(serde::Serialize, serde::Deserialize)]
 // pub struct StdPrimitiveI64(std::primitive::i64);
 // impl StdPrimitiveI64 {
