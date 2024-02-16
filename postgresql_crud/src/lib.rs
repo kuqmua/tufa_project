@@ -120,7 +120,7 @@ struct Test {
     type_37: sqlx::types::uuid::Uuid,//UUID
     type_38: sqlx::types::ipnetwork::IpNetwork,//INET, CIDR
     type_39: std::net::IpAddr,//INET, CIDR
-    // type_40: ,
+    type_40: sqlx::types::mac_address::MacAddress,//MACADDR
     // type_41: ,
     // type_42: ,
     // type_43: ,
