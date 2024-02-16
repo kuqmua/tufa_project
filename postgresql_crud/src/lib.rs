@@ -132,6 +132,18 @@ struct Test<T> {
     //maybe Composite types
     //maybe Enumerations
 }
+
+
+// pub trait Type<DB>
+// where
+//     DB: Database,
+// {
+//     // Required method
+//     fn type_info() -> <DB as Database>::TypeInfo;
+
+//     // Provided method
+//     fn compatible(ty: &<DB as Database>::TypeInfo) -> bool { ... }
+// }
 //new type pattern
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveBool(pub std::primitive::bool);
@@ -143,6 +155,20 @@ impl StdPrimitiveBool {
 impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
     fn from(value: StdPrimitiveBool) -> Self {
         value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        buf.push(self.0 as u8);
+        sqlx::encode::IsNull::No
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -648,4 +674,5 @@ pub async fn something() {
     let mut query = sqlx::query::<sqlx::Postgres>("test");
     query = query.bind(Into::<bool>::into(StdPrimitiveBool(false)));
     query = query.bind(StdPrimitiveBool(false).into_inner());
+    query = query.bind(StdPrimitiveBool(false));
 }
