@@ -76,15 +76,15 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
 struct Test {
     type_1: bool,//BOOL
     type_2: std::primitive::i8,//“CHAR”
-    // type_3: ,
-    // type_4: ,
-    // type_5: ,
-    // type_6: ,
-    // type_7: ,
-    // type_8: ,
-    // type_9: ,
-    // type_10: ,
-    // type_11: ,
+    type_3: std::primitive::i16,//SMALLINT, SMALLSERIAL, INT2
+    type_4: std::primitive::i32,//INT, SERIAL, INT4
+    type_5: std::primitive::i64,//BIGINT, BIGSERIAL, INT8
+    type_6: std::primitive::f32,//REAL, FLOAT4
+    type_7: std::primitive::f64,//DOUBLE PRECISION, FLOAT8
+    // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    type_9: std::string::String,//VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    type_10: [std::primitive::u8;1],//определенное количество в массиве нужно//BYTEA
+    type_11: std::vec::Vec<std::primitive::u8>,//BYTEA
     // type_12: ,
     // type_13: ,
     // type_14: ,
