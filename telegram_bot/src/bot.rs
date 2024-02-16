@@ -8,15 +8,15 @@ pub async fn start_bot() {
     let offset = 0;
     //
     println!("--------------try_create_many-----------------");//todo add try_create_many
-    let primary_keys = match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_create_many(
+    let primary_keys = match common::repositories_types::server::routes::api::cats::try_create_many(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::CreateManyParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::CreateManyPayload(vec![
-                common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::CreateManyPayloadElement{
+        common::repositories_types::server::routes::api::cats::CreateManyParameters { 
+            payload: common::repositories_types::server::routes::api::cats::CreateManyPayload(vec![
+                common::repositories_types::server::routes::api::cats::CreateManyPayloadElement{
                     name: std::string::String::from("try_create_many_name1"),
                     color: std::string::String::from("try_create_many_color1"),
                 },
-                common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::CreateManyPayloadElement{
+                common::repositories_types::server::routes::api::cats::CreateManyPayloadElement{
                     name: std::string::String::from("try_create_many_name2"),
                     color: std::string::String::from("try_create_many_color2"),
                 },
@@ -34,12 +34,12 @@ pub async fn start_bot() {
         }
     };
     println!("--------------try_read_many-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_read_many(
+    match common::repositories_types::server::routes::api::cats::try_read_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadManyPayload { 
-                select: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumnSelect::IdNameColor,
+        common::repositories_types::server::routes::api::cats::ReadManyParameters{ 
+            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload { 
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
                 id: Some(
                     primary_keys.clone()
                     // vec![
@@ -61,7 +61,7 @@ pub async fn start_bot() {
                 // }])
                 ,
                 order_by: common::server::postgres::order_by::OrderBy {
-                    column: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumn::Name,
+                    column: common::repositories_types::server::routes::api::cats::DogColumn::Name,
                     order: Some(common::server::postgres::order::Order::Desc),
                 },
                 limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
@@ -74,12 +74,12 @@ pub async fn start_bot() {
         Ok(value) => {
             println!("{value:#?}");
             // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId,
+            //     common::repositories_types::server::routes::api::cats::DogId,
             // > = value
             //     .into_iter()
             //     .filter_map(|value| match value.id {
             //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId {
+            //             common::repositories_types::server::routes::api::cats::DogId {
             //                 id,
             //             },
             //         ),
@@ -93,12 +93,12 @@ pub async fn start_bot() {
         }
     }
     println!("--------------try_update_many------------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_update_many(
+    match common::repositories_types::server::routes::api::cats::try_update_many(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::UpdateManyParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::UpdateManyPayload(
+        common::repositories_types::server::routes::api::cats::UpdateManyParameters { 
+            payload: common::repositories_types::server::routes::api::cats::UpdateManyPayload(
                 primary_keys.clone().into_iter().map(|element| {
-                    common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::UpdateManyPayloadElement {
+                    common::repositories_types::server::routes::api::cats::UpdateManyPayloadElement {
                         id: element,  
                         name: std::string::String::from("name"), //todo make sure name and color both are not None(make it option<value>, not just a value)
                         color: std::string::String::from("color"), 
@@ -115,12 +115,12 @@ pub async fn start_bot() {
         },
     }
     println!("--------------try_read_many-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_read_many(
+    match common::repositories_types::server::routes::api::cats::try_read_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadManyPayload { 
-                select: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumnSelect::IdNameColor,
+        common::repositories_types::server::routes::api::cats::ReadManyParameters{ 
+            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload { 
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
                 id: Some(
                     primary_keys.clone()
                     // vec![
@@ -142,7 +142,7 @@ pub async fn start_bot() {
                 // }])
                 ,
                 order_by: common::server::postgres::order_by::OrderBy {
-                    column: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumn::Name,
+                    column: common::repositories_types::server::routes::api::cats::DogColumn::Name,
                     order: Some(common::server::postgres::order::Order::Desc),
                 },
                 limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
@@ -155,12 +155,12 @@ pub async fn start_bot() {
         Ok(value) => {
             println!("{value:#?}");
             // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId,
+            //     common::repositories_types::server::routes::api::cats::DogId,
             // > = value
             //     .into_iter()
             //     .filter_map(|value| match value.id {
             //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId {
+            //             common::repositories_types::server::routes::api::cats::DogId {
             //                 id,
             //             },
             //         ),
@@ -174,11 +174,11 @@ pub async fn start_bot() {
         }
     }
     println!("--------------try_delete_many-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_delete_many(
+    match common::repositories_types::server::routes::api::cats::try_delete_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DeleteManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DeleteManyPayload { 
+        common::repositories_types::server::routes::api::cats::DeleteManyParameters{ 
+            payload: common::repositories_types::server::routes::api::cats::DeleteManyPayload { 
                 id: Some(
                     primary_keys.clone()
                     // vec![
@@ -207,12 +207,12 @@ pub async fn start_bot() {
         Ok(value) => {
             println!("{value:#?}");
             // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId,
+            //     common::repositories_types::server::routes::api::cats::DogId,
             // > = value
             //     .into_iter()
             //     .filter_map(|value| match value.id {
             //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId {
+            //             common::repositories_types::server::routes::api::cats::DogId {
             //                 id,
             //             },
             //         ),
@@ -226,12 +226,12 @@ pub async fn start_bot() {
         }
     }
     println!("--------------try_read_many-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_read_many(
+    match common::repositories_types::server::routes::api::cats::try_read_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadManyPayload { 
-                select: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumnSelect::IdNameColor,
+        common::repositories_types::server::routes::api::cats::ReadManyParameters{ 
+            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload { 
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
                 id: Some(
                     primary_keys.clone()
                     // vec![
@@ -253,7 +253,7 @@ pub async fn start_bot() {
                 // }])
                 ,
                 order_by: common::server::postgres::order_by::OrderBy {
-                    column: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumn::Name,
+                    column: common::repositories_types::server::routes::api::cats::DogColumn::Name,
                     order: Some(common::server::postgres::order::Order::Desc),
                 },
                 limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
@@ -266,12 +266,12 @@ pub async fn start_bot() {
         Ok(value) => {
             println!("{value:#?}");
             // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId,
+            //     common::repositories_types::server::routes::api::cats::DogId,
             // > = value
             //     .into_iter()
             //     .filter_map(|value| match value.id {
             //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogId {
+            //             common::repositories_types::server::routes::api::cats::DogId {
             //                 id,
             //             },
             //         ),
@@ -286,10 +286,10 @@ pub async fn start_bot() {
     }    
     //
     println!("--------------try_create_one-----------------");//todo add try_create_many
-    let primary_key = match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_create_one(
+    let primary_key = match common::repositories_types::server::routes::api::cats::try_create_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::CreateOneParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::CreateOnePayload {
+        common::repositories_types::server::routes::api::cats::CreateOneParameters { 
+            payload: common::repositories_types::server::routes::api::cats::CreateOnePayload {
                 name: std::string::String::from("try_create_one_name"),
                 color: std::string::String::from("try_create_one_color"),
             }
@@ -306,12 +306,12 @@ pub async fn start_bot() {
         }
     };
     println!("--------------try_read_one-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_read_one(
+    match common::repositories_types::server::routes::api::cats::try_read_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadOneParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadOnePayload {
+        common::repositories_types::server::routes::api::cats::ReadOneParameters { 
+            payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
                 id: primary_key.clone(),
-                select: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumnSelect::IdNameColor
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
             }
         },
     )
@@ -323,10 +323,10 @@ pub async fn start_bot() {
         }
     }
     println!("--------------try_update_one------------------");//todo try_update_many
-    let primary_key = match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_update_one(
+    let primary_key = match common::repositories_types::server::routes::api::cats::try_update_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::UpdateOneParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::UpdateOnePayload {
+        common::repositories_types::server::routes::api::cats::UpdateOneParameters { 
+            payload: common::repositories_types::server::routes::api::cats::UpdateOnePayload {
                 id: primary_key.clone(),
                 name: Some(std::string::String::from("name")), 
                 color: Some(std::string::String::from("color")), 
@@ -342,12 +342,12 @@ pub async fn start_bot() {
         Err(e) => panic!("{e}"),
     };
     println!("--------------try_read_one-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_read_one(
+    match common::repositories_types::server::routes::api::cats::try_read_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadOneParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadOnePayload {
+        common::repositories_types::server::routes::api::cats::ReadOneParameters { 
+            payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
                 id: primary_key.clone(),
-                select: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumnSelect::IdNameColor
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
             }
         },
     )
@@ -359,10 +359,10 @@ pub async fn start_bot() {
         }
     }
     println!("--------------try_delete_one------------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_delete_one(
+    match common::repositories_types::server::routes::api::cats::try_delete_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DeleteOneParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DeleteOnePayload {
+        common::repositories_types::server::routes::api::cats::DeleteOneParameters { 
+            payload: common::repositories_types::server::routes::api::cats::DeleteOnePayload {
                 id: primary_key.clone()
             }
         },
@@ -373,12 +373,12 @@ pub async fn start_bot() {
         Err(e) => panic!("{e}"),
     }
     println!("--------------try_read_one-----------------");
-    match common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::try_read_one(
+    match common::repositories_types::server::routes::api::cats::try_read_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadOneParameters { 
-            payload: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::ReadOnePayload {
+        common::repositories_types::server::routes::api::cats::ReadOneParameters { 
+            payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
                 id: primary_key,
-                select: common::repositories_types::server::routes::api::cats::generate_postgresql_crud_dogs::DogColumnSelect::IdNameColor 
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor 
             }
         },
     )

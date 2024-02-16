@@ -415,6 +415,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let super_path_token_stream = quote::quote!{};//super::
     let from_ident_for_ident_options_token_stream = {
         let ident_option_variant_primary_key_token_stream = quote::quote!{
             #primary_key_field_ident: Some(value.#primary_key_field_ident.into()),
@@ -430,8 +431,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         });
         quote::quote! {
-            impl std::convert::From<super::#ident> for #struct_options_ident_token_stream {
-                fn from(value: super::#ident) -> Self {
+            impl std::convert::From<#super_path_token_stream #ident> for #struct_options_ident_token_stream {
+                fn from(value: #super_path_token_stream #ident) -> Self {
                     Self {                        
                         #ident_option_variant_primary_key_token_stream
                         #(#ident_option_variants_excluding_primary_key_token_stream),*
@@ -508,7 +509,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let eo_display_foreign_type_token_stream = proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType.to_attribute_view_token_stream();
     let eo_vec_error_occurence_token_stream = proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence.to_attribute_view_token_stream();
     let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
-    // let value_token_stream = quote::quote! {value};
     let impl_std_convert_try_from_ident_options_for_struct_variants_token_stream = {
         column_variants
             .iter()
@@ -7275,14 +7275,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &common_token_stream,
     //     &proc_macro_name_upper_camel_case_ident_stringified
     // );
-    let mod_name_snake_case_token_stream = {
-        let value_stringified = format!("{proc_macro_name_snake_case}_{table_name_stringified}");
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    //comment out coz its impossible to correctly generate tokens for debug purposes
+    // let _mod_name_snake_case_token_stream = {
+    //     let value_stringified = format!("{proc_macro_name_snake_case}_{table_name_stringified}");
+    //     value_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
     //todo pub and private impl quote group
     let gen = quote::quote! {
-        pub mod #mod_name_snake_case_token_stream {
+        //comment out coz its impossible to correctly generate tokens
+        // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
             #create_many_token_stream
@@ -7293,7 +7295,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_one_token_stream
             #delete_many_token_stream
             #delete_one_token_stream
-        }
+        // }
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
