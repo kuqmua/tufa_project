@@ -118,8 +118,8 @@ struct Test {
     type_35: sqlx::types::time::Time,//TIME
     type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
     type_37: sqlx::types::uuid::Uuid,//UUID
-    // type_38: ,
-    // type_39: ,
+    type_38: sqlx::types::ipnetwork::IpNetwork,//INET, CIDR
+    type_39: std::net::IpAddr,//INET, CIDR
     // type_40: ,
     // type_41: ,
     // type_42: ,
