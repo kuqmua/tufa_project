@@ -67,3 +67,77 @@ pub trait PostgersqlColumn<'a>:
     + PostgresqlOrder
     + PostgresqlLimit
 {}
+
+pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
+    fn serde_serialize() -> T;
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+struct Test {
+    a: std::primitive::i16,
+    // b: &std::primitive::str,
+    c: std::primitive::i64,
+    d: std::primitive::i32,
+    e: std::primitive::f64,
+    f: std::primitive::f32,
+    g: std::string::String,
+    h: std::primitive::i8,
+    i: std::primitive::bool,
+    j: std::vec::Vec<std::primitive::u8>,
+    k: (),
+    // l: sqlx::types::Decimal,
+    // m: sqlx::types::BigDecimal,
+    
+//             Self::StdPrimitiveI16 => write!(f, "std::primitive::i16"),
+//             Self::StdPrimitiveStr => write!(f, "std::primitive::str"),//todo borrow?
+//             Self::StdPrimitiveI64 => write!(f, "std::primitive::i64"),
+//             Self::StdPrimitiveI32 => write!(f, "std::primitive::i32"),
+//             Self::StdPrimitiveF64 => write!(f, "std::primitive::f64"),
+//             Self::StdPrimitiveF32 => write!(f, "std::primitive::f32"),
+//             Self::StdStringString => write!(f, "std::string::String"),
+//             Self::StdPrimitiveI8 => write!(f, "std::primitive::i8"),
+//             Self::StdPrimitiveBool => write!(f, "std::primitive::bool"),
+//             Self::StdVecVecStdPrimitiveU8 => write!(f, "std::vec::Vec<std::primitive::u8>"),
+//             Self::StdPrimitiveArrayStdPrimitiveU8 => write!(f, "[std::primitive::u8]"),//ignoring constant size 
+//             Self::StdPrimitiveUnit => write!(f, "()"),
+
+//             Self::SqlxTypesDecimal => write!(f, "sqlx::types::Decimal"),
+//             Self::SqlxTypesBigDecimal => write!(f, "sqlx::types::BigDecimal"),
+//             Self::SqlxTypesTimeTime => write!(f, "sqlx::types::time::Time"),
+//             Self::SqlxTypesTimeDate => write!(f, "sqlx::types::time::Date"),
+//             Self::SqlxTypesChronoNaiveDate => write!(f, "sqlx::types::chrono::NaiveDate"),
+//             Self::SqlxTypesChronoNaiveDateTime => write!(f, "sqlx::types::chrono::NaiveDateTime"),
+//             Self::SqlxTypesChronoNaiveTime => write!(f, "sqlx::types::chrono::NaiveTime"),
+//             Self::SqlxTypesTimeOffsetDateTime => write!(f, "sqlx::types::time::OffsetDateTime"),
+//             Self::SqlxTypesTimePrimitiveDateTime => write!(f, "sqlx::types::time::PrimitiveDateTime"),
+//             Self::CoreTimeDuration => write!(f, "core::time::Duration"),//todo maybe its std::time::Duration or core::time::Duration or both?
+//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset => write!(f, "sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>"),
+//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => write!(f, "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>"),
+//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => write!(f, "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>"),
+//             Self::SqlxTypesUuid => write!(f, "sqlx::types::Uuid"),
+//             Self::SqlxTypesIpnetworkIpNetwork => write!(f, "sqlx::types::ipnetwork::IpNetwork"),
+//             Self::SqlxTypesMacAddressMacAddress => write!(f, "sqlx::types::mac_address::MacAddress"),
+//             Self::SqlxPostgresTypesPgInterval => write!(f, "sqlx_postgres::types::PgInterval"),
+//             Self::SqlxPostgresTypesPgMoney => write!(f, "sqlx_postgres::types::PgMoney"),
+//             Self::SqlxPostgresTypesPgLQuery => write!(f, "sqlx_postgres::types::PgLQuery"),
+//             Self::SqlxPostgresTypesPgLTree => write!(f, "sqlx_postgres::types::PgLTree"),
+//             Self::SqlxPostgresTypesOid => write!(f, "sqlx_postgres::types::Oid"),
+//             Self::SqlxTypesBitVecStdPrimitiveU32 => write!(f, "sqlx::types::BitVec<std::primitive::u32>"),
+//             Self::SqlxPostgresTypesTimeTzPgTimeTzSqlxTypesTimeTimeSqlxTypesTimeUtcOffset => write!(f, "sqlx_postgres::types::time_tz::PgTimeTz<sqlx::types::time::Time,sqlx::types::time::UtcOffset>"),
+//             Self::SqlxPostgresTypesTimeTzPgTimeTzSqlxTypesChronoNaiveTimeSqlxTypesChronoFixedOffset => write!(f, "sqlx_postgres::types::time_tz::PgTimeTz<sqlx::types::chrono::NaiveTime,sqlx::types::chrono::FixedOffset>"),
+//             Self::StdBoxedBoxBorrowStdPrimitiveStr => write!(f, "std::boxed::Box<&std::primitive::str>"),
+//             Self::StdBorrowCowAnonymousLifetimeStdPrimitiveStr => write!(f, "std::borrow::Cow<'_, std::primitive::str>"),
+
+//             Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => write!(f, "sqlx_postgres::types::PgRange<std::primitive::i32>"),
+//             Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => write!(f, "sqlx_postgres::types::PgRange<std::primitive::i64>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::Decimal>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::BigDecimal>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::TimeDate>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::NaiveDate>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::DateTime,sqlx::types::chrono::FixedOffset>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::DateTime,sqlx::types::ChronoLocal>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::DateTime,sqlx::types::chrono::Utc>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>"),
+//             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::time::OffsetDateTime>"),
+}
