@@ -106,18 +106,18 @@ struct Test {
     type_23: sqlx::postgres::types::PgCiText,//CITEXT
     type_24: sqlx::types::BigDecimal,//NUMERIC
     type_25: sqlx::types::Decimal,//NUMERIC
-    // type_26: ,
-    // type_27: ,
-    // type_28: ,
-    // type_29: ,
-    // type_30: ,
-    // type_31: ,
-    // type_32: ,
-    // type_33: ,
-    // type_34: ,
-    // type_35: ,
-    // type_36: ,
-    // type_37: ,
+    type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,//TIMESTAMPTZ
+    type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,//TIMESTAMPTZ
+    type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,//TIMESTAMP
+    type_29: sqlx::types::chrono::NaiveDate,//DATE
+    type_30: sqlx::types::chrono::NaiveTime,//TIME
+    type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
+    type_32: sqlx::types::time::PrimitiveDateTime,//TIMESTAMP
+    type_33: sqlx::types::time::OffsetDateTime,//TIMESTAMPTZ
+    type_34: sqlx::types::time::Date,//DATE
+    type_35: sqlx::types::time::Time,//TIME
+    type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
+    type_37: sqlx::types::uuid::Uuid,//UUID
     // type_38: ,
     // type_39: ,
     // type_40: ,
