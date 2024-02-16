@@ -121,7 +121,7 @@ struct Test {
     type_38: sqlx::types::ipnetwork::IpNetwork,//INET, CIDR
     type_39: std::net::IpAddr,//INET, CIDR
     type_40: sqlx::types::mac_address::MacAddress,//MACADDR
-    // type_41: ,
+    type_41: sqlx::types::BitVec,//BIT, VARBIT
     // type_42: ,
     // type_43: ,
     // type_44: ,
