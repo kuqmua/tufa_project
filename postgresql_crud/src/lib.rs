@@ -72,7 +72,6 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
     fn serde_serialize() -> T;
 }
 
-#[derive(Debug)]//, serde::Serialize, serde::Deserialize
 struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: std::primitive::bool,//BOOL
@@ -84,7 +83,7 @@ struct Test<T> {
     type_7: std::primitive::f64,//DOUBLE PRECISION, FLOAT8
     // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
     type_9: std::string::String,//VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-    type_10: [std::primitive::u8;1],//определенное количество в массиве нужно//BYTEA
+    // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
     type_11: std::vec::Vec<std::primitive::u8>,//BYTEA
     type_12: (),//BYTEA
     type_13: sqlx::postgres::types::PgInterval,//INTERVAL
@@ -134,16 +133,25 @@ struct Test<T> {
     //maybe Enumerations
 }
 //new type pattern
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveBool(std::primitive::bool);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI8(std::primitive::i8);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI16(std::primitive::i16);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI32(std::primitive::i32);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI64(std::primitive::i64);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveF32(std::primitive::f32);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveF64(std::primitive::f64);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdStringString(std::string::String);
-pub struct StdPrimitiveU8Array([std::primitive::u8]);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdVecVecStdPrimitiveU8(std::vec::Vec<std::primitive::u8>);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct Unit(());
 pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange<std::primitive::i64>);
