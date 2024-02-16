@@ -2213,7 +2213,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let content_type_application_json_header_addition_token_stream = quote::quote!{
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
-    let impl_axum_response_into_response_token_stream = proc_macro_common::impl_axum_response_into_response_token_stream();
+    let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
     let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
     let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
     let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
@@ -3034,7 +3034,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -3498,7 +3498,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -4334,7 +4334,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -4761,7 +4761,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -5426,7 +5426,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -5978,7 +5978,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -6830,7 +6830,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -7246,7 +7246,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> #impl_axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
