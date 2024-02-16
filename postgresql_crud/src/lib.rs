@@ -352,32 +352,31 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdStringString {
         <&str as sqlx::Encode<sqlx::Postgres>>::encode(&*self.0, buf)
     }
 }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct StdVecVecStdPrimitiveU8(std::vec::Vec<std::primitive::u8>);
-// impl StdVecVecStdPrimitiveU8 {
-//     pub fn into_inner(self) -> std::vec::Vec<std::primitive::u8> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<StdVecVecStdPrimitiveU8> for std::vec::Vec<std::primitive::u8> {
-//     fn from(value: StdVecVecStdPrimitiveU8) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct StdVecVecStdPrimitiveU8(std::vec::Vec<std::primitive::u8>);
+impl StdVecVecStdPrimitiveU8 {
+    pub fn into_inner(self) -> std::vec::Vec<std::primitive::u8> {
+        self.0
+    }
+}
+impl std::convert::From<StdVecVecStdPrimitiveU8> for std::vec::Vec<std::primitive::u8> {
+    fn from(value: StdVecVecStdPrimitiveU8) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        <&[std::primitive::u8] as sqlx::Encode<sqlx::Postgres>>::encode(&self.0, buf)
+    }
+}
 // #[derive(serde::Serialize, serde::Deserialize)]
 // pub struct Unit(());
 // impl Unit {
