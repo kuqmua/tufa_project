@@ -170,6 +170,7 @@ pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
 pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
 pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
 pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesDecimal(sqlx::types::Decimal);
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>);
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
@@ -182,10 +183,14 @@ pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
 pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
 pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdNetIpAddr(std::net::IpAddr);
 pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
 pub struct SqlxTypesBitVec(sqlx::types::BitVec);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct SerdeJsonValue(serde_json::Value);
-pub struct SerdeJsonValueRawValue();
+pub struct SerdeJsonValueRawValue(serde_json::value::RawValue);
