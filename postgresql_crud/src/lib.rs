@@ -115,12 +115,13 @@ struct Test<T> {
     type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,//TIMESTAMP
     type_29: sqlx::types::chrono::NaiveDate,//DATE
     type_30: sqlx::types::chrono::NaiveTime,//TIME
-    type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
+    type_31: sqlx::postgres::types::PgTimeTz,//just present chrono or time flag
+    // type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
     type_32: sqlx::types::time::PrimitiveDateTime,//TIMESTAMP
     type_33: sqlx::types::time::OffsetDateTime,//TIMESTAMPTZ
     type_34: sqlx::types::time::Date,//DATE
     type_35: sqlx::types::time::Time,//TIME
-    type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
+    // type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
     type_37: sqlx::types::uuid::Uuid,//UUID
     type_38: sqlx::types::ipnetwork::IpNetwork,//INET, CIDR
     type_39: std::net::IpAddr,//INET, CIDR
@@ -132,3 +133,51 @@ struct Test<T> {
     //maybe Composite types
     //maybe Enumerations
 }
+//new type pattern
+pub struct StdPrimitiveBool(std::primitive::bool);
+pub struct StdPrimitiveI8(std::primitive::i8);
+pub struct StdPrimitiveI16(std::primitive::i16);
+pub struct StdPrimitiveI32(std::primitive::i32);
+pub struct StdPrimitiveI64(std::primitive::i64);
+pub struct StdPrimitiveF32(std::primitive::f32);
+pub struct StdPrimitiveF64(std::primitive::f64);
+pub struct StdStringString(std::string::String);
+pub struct StdPrimitiveU8Array([std::primitive::u8]);
+pub struct StdVecVecStdPrimitiveU8(std::vec::Vec<std::primitive::u8>);
+pub struct Unit(());
+pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange<std::primitive::i64>);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange<sqlx::types::time::Date>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange<sqlx::types::Decimal>);
+pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
+pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
+pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
+pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
+pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
+pub struct SqlxTypesDecimal(sqlx::types::Decimal);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
+pub struct SqlxTypesChronoNaiveDate(sqlx::types::chrono::NaiveDate);
+pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
+pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
+pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
+pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
+pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
+pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
+pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
+pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
+pub struct StdNetIpAddr(std::net::IpAddr);
+pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
+pub struct SqlxTypesBitVec(sqlx::types::BitVec);
+pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
+pub struct SerdeJsonValue(serde_json::Value);
+pub struct SerdeJsonValueRawValue();
