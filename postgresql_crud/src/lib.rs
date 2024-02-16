@@ -74,6 +74,7 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
 
 #[derive(Debug)]//, serde::Serialize, serde::Deserialize
 struct Test<T> {
+    //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: std::primitive::bool,//BOOL
     type_2: std::primitive::i8,//“CHAR”
     type_3: std::primitive::i16,//SMALLINT, SMALLSERIAL, INT2
@@ -88,18 +89,21 @@ struct Test<T> {
     type_12: (),//BYTEA
     type_13: sqlx::postgres::types::PgInterval,//INTERVAL
     //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-    //INT8RANGE
-    // type_14: sqlx::postgres::types::PgRange<std::primitive::i64>,
-    //INT4RANGE
-    // type_15: sqlx::postgres::types::PgRange<std::primitive::i32>,
-    //TSRANGE
-    // type_16: sqlx::postgres::types::PgRange<todo>,
-    //TSTZRANGE
-    // type_17: sqlx::postgres::types::PgRange<todo>,
-    // DATERANGE
-    // type_18: sqlx::postgres::types::PgRange<todo>,
-    // NUMRANGE
-    // type_19: sqlx::postgres::types::PgRange<todo>,
+    type_14: sqlx::postgres::types::PgRange<std::primitive::i64>,//INT8RANGE
+    type_15: sqlx::postgres::types::PgRange<std::primitive::i32>,//INT4RANGE
+    // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
+    type_161: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,//maybe not correct//TSRANGE
+    type_162: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,//maybe not correct//TSRANGE
+    // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
+    type_171: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>,//maybe not correct//TSTZRANGE
+    type_172: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,//maybe not correct//TSTZRANGE
+    type_173: sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,//maybe not correct//TSTZRANGE
+    // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
+    type_181: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,//maybe not correct//DATERANGE
+    type_182: sqlx::postgres::types::PgRange<sqlx::types::time::Date>,//maybe not correct//DATERANGE
+    // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
+    type_191: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,//maybe not correct//NUMRANGE
+    type_192: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,//maybe not correct//NUMRANGE
     type_20: sqlx::postgres::types::PgMoney,//MONEY
     type_21: sqlx::postgres::types::PgLTree,//LTREE
     type_22: sqlx::postgres::types::PgLQuery,//LQUERY
@@ -125,99 +129,6 @@ struct Test<T> {
     type_42: sqlx::types::Json<T>,//JSON, JSONB
     type_43: serde_json::Value,//JSON, JSONB
     type_44: serde_json::value::RawValue,//JSON, JSONB
-    // type_45: ,
-    // type_46: ,
-    // type_47: ,
-    // type_48: ,
-    // type_49: ,
-    // type_50: ,
-    // type_51: ,
-    // type_52: ,
-    // type_53: ,
-    // type_54: ,
-    // type_55: ,
-    // type_56: ,
-
-
-
-
-    // a: std::primitive::i16,
-    // // b: &std::primitive::str,
-    // c: std::primitive::i64,
-    // d: std::primitive::i32,
-    // e: std::primitive::f64,
-    // f: std::primitive::f32,
-    // g: std::string::String,
-    // h: std::primitive::i8,
-    // i: std::primitive::bool,
-    // j: std::vec::Vec<std::primitive::u8>,
-    // k: (),
-    // // l: sqlx::types::Decimal,
-    // // m: sqlx::types::BigDecimal,
-    // // n: sqlx::types::time::Time,
-    // o: sqlx::types::time::Date,
-    // p: sqlx::types::chrono::NaiveDate,
-    // q: sqlx::types::chrono::NaiveDateTime,
-    // r: sqlx::types::chrono::NaiveTime,
-    // s: sqlx::types::time::OffsetDateTime,
-    // t: sqlx::types::time::PrimitiveDateTime,
-    // u: core::time::Duration,
-    // v: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-    // w: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-    // x: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-    // y: sqlx::types::Uuid,
-    // z: sqlx::types::ipnetwork::IpNetwork,
-    
-//             Self::StdPrimitiveI16 => write!(f, "std::primitive::i16"),
-//             Self::StdPrimitiveStr => write!(f, "std::primitive::str"),//todo borrow?
-//             Self::StdPrimitiveI64 => write!(f, "std::primitive::i64"),
-//             Self::StdPrimitiveI32 => write!(f, "std::primitive::i32"),
-//             Self::StdPrimitiveF64 => write!(f, "std::primitive::f64"),
-//             Self::StdPrimitiveF32 => write!(f, "std::primitive::f32"),
-//             Self::StdStringString => write!(f, "std::string::String"),
-//             Self::StdPrimitiveI8 => write!(f, "std::primitive::i8"),
-//             Self::StdPrimitiveBool => write!(f, "std::primitive::bool"),
-//             Self::StdVecVecStdPrimitiveU8 => write!(f, "std::vec::Vec<std::primitive::u8>"),
-//             Self::StdPrimitiveArrayStdPrimitiveU8 => write!(f, "[std::primitive::u8]"),//ignoring constant size 
-//             Self::StdPrimitiveUnit => write!(f, "()"),
-
-//             Self::SqlxTypesDecimal => write!(f, "sqlx::types::Decimal"),
-//             Self::SqlxTypesBigDecimal => write!(f, "sqlx::types::BigDecimal"),
-//             Self::SqlxTypesTimeTime => write!(f, "sqlx::types::time::Time"),
-//             Self::SqlxTypesTimeDate => write!(f, "sqlx::types::time::Date"),
-//             Self::SqlxTypesChronoNaiveDate => write!(f, "sqlx::types::chrono::NaiveDate"),
-//             Self::SqlxTypesChronoNaiveDateTime => write!(f, "sqlx::types::chrono::NaiveDateTime"),
-//             Self::SqlxTypesChronoNaiveTime => write!(f, "sqlx::types::chrono::NaiveTime"),
-//             Self::SqlxTypesTimeOffsetDateTime => write!(f, "sqlx::types::time::OffsetDateTime"),
-//             Self::SqlxTypesTimePrimitiveDateTime => write!(f, "sqlx::types::time::PrimitiveDateTime"),
-//             Self::CoreTimeDuration => write!(f, "core::time::Duration"),//todo maybe its std::time::Duration or core::time::Duration or both?
-//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset => write!(f, "sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>"),
-//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => write!(f, "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>"),
-//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => write!(f, "sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>"),
-//             Self::SqlxTypesUuid => write!(f, "sqlx::types::Uuid"),
-//             Self::SqlxTypesIpnetworkIpNetwork => write!(f, "sqlx::types::ipnetwork::IpNetwork"),
-//             Self::SqlxTypesMacAddressMacAddress => write!(f, "sqlx::types::mac_address::MacAddress"),
-//             Self::SqlxPostgresTypesPgInterval => write!(f, "sqlx_postgres::types::PgInterval"),
-//             Self::SqlxPostgresTypesPgMoney => write!(f, "sqlx_postgres::types::PgMoney"),
-//             Self::SqlxPostgresTypesPgLQuery => write!(f, "sqlx_postgres::types::PgLQuery"),
-//             Self::SqlxPostgresTypesPgLTree => write!(f, "sqlx_postgres::types::PgLTree"),
-//             Self::SqlxPostgresTypesOid => write!(f, "sqlx_postgres::types::Oid"),
-//             Self::SqlxTypesBitVecStdPrimitiveU32 => write!(f, "sqlx::types::BitVec<std::primitive::u32>"),
-//             Self::SqlxPostgresTypesTimeTzPgTimeTzSqlxTypesTimeTimeSqlxTypesTimeUtcOffset => write!(f, "sqlx_postgres::types::time_tz::PgTimeTz<sqlx::types::time::Time,sqlx::types::time::UtcOffset>"),
-//             Self::SqlxPostgresTypesTimeTzPgTimeTzSqlxTypesChronoNaiveTimeSqlxTypesChronoFixedOffset => write!(f, "sqlx_postgres::types::time_tz::PgTimeTz<sqlx::types::chrono::NaiveTime,sqlx::types::chrono::FixedOffset>"),
-//             Self::StdBoxedBoxBorrowStdPrimitiveStr => write!(f, "std::boxed::Box<&std::primitive::str>"),
-//             Self::StdBorrowCowAnonymousLifetimeStdPrimitiveStr => write!(f, "std::borrow::Cow<'_, std::primitive::str>"),
-
-//             Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => write!(f, "sqlx_postgres::types::PgRange<std::primitive::i32>"),
-//             Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => write!(f, "sqlx_postgres::types::PgRange<std::primitive::i64>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::Decimal>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::BigDecimal>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::TimeDate>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::NaiveDate>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::DateTime,sqlx::types::chrono::FixedOffset>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::DateTime,sqlx::types::ChronoLocal>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::DateTime,sqlx::types::chrono::Utc>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>"),
-//             Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => write!(f, "sqlx_postgres::types::PgRange<sqlx::types::time::OffsetDateTime>"),
+    //maybe Composite types
+    //maybe Enumerations
 }
