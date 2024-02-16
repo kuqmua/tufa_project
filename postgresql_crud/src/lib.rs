@@ -73,7 +73,7 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
 }
 
 #[derive(Debug)]//, serde::Serialize, serde::Deserialize
-struct Test {
+struct Test<T> {
     type_1: std::primitive::bool,//BOOL
     type_2: std::primitive::i8,//“CHAR”
     type_3: std::primitive::i16,//SMALLINT, SMALLSERIAL, INT2
@@ -122,9 +122,9 @@ struct Test {
     type_39: std::net::IpAddr,//INET, CIDR
     type_40: sqlx::types::mac_address::MacAddress,//MACADDR
     type_41: sqlx::types::BitVec,//BIT, VARBIT
-    // type_42: ,
-    // type_43: ,
-    // type_44: ,
+    type_42: sqlx::types::Json<T>,//JSON, JSONB
+    type_43: serde_json::Value,//JSON, JSONB
+    type_44: serde_json::value::RawValue,//JSON, JSONB
     // type_45: ,
     // type_46: ,
     // type_47: ,

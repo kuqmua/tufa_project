@@ -7,10 +7,11 @@ edition = "2021"
 
 [dependencies]
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
-sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec"]}
+sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
 chrono = {version = "=0.4"}
 axum = {version = "=0.7.2", features = ["macros"]}
 serde = {version = "=1.0", features = ["derive"]}
+serde_json = {version = "=1.0"}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
