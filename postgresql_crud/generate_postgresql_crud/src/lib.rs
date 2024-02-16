@@ -2214,7 +2214,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
     let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
-    let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
     let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
     let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
@@ -5351,7 +5350,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &acquire_pool_and_connection_token_stream,
-                    &use_sqlx_acquire_token_stream,
                     &pg_connection_token_stream,
                     &begin_token_stream,
                     &binded_query_name_token_stream,
@@ -6482,7 +6480,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &query_string_primary_key_some_other_none_token_stream,
                         &binded_query_primary_key_some_other_none_token_stream,
                         &acquire_pool_and_connection_token_stream,
-                        &use_sqlx_acquire_token_stream,
                         &pg_connection_token_stream,
                         &begin_token_stream,
                         &binded_query_name_token_stream,

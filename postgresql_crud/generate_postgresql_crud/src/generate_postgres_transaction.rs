@@ -5,7 +5,6 @@ pub fn generate_postgres_transaction(
     query_string_token_stream: &proc_macro2::TokenStream,
     binded_query_token_stream: &proc_macro2::TokenStream,
     acquire_pool_and_connection_token_stream: &proc_macro2::TokenStream,
-    use_sqlx_acquire_token_stream: &proc_macro2::TokenStream,
     pg_connection_token_stream: &proc_macro2::TokenStream,
     begin_token_stream: &proc_macro2::TokenStream,
     binded_query_name_token_stream: &proc_macro2::TokenStream,
@@ -31,6 +30,7 @@ pub fn generate_postgres_transaction(
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
+    let sqlx_acquire_token_stream = quote::quote!{sqlx::Acquire};
     quote::quote! {
         let #expected_updated_primary_keys_name_token_stream = {
             #expected_updated_primary_keys_token_stream
@@ -44,7 +44,7 @@ pub fn generate_postgres_transaction(
         };
         #acquire_pool_and_connection_token_stream
         let mut #postgres_transaction_token_stream = match {
-            #use_sqlx_acquire_token_stream;
+            use #sqlx_acquire_token_stream;
             #pg_connection_token_stream.#begin_token_stream()
         }
         .await
