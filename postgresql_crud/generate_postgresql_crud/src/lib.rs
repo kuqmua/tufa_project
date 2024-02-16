@@ -2213,21 +2213,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let content_type_application_json_header_addition_token_stream = quote::quote!{
         .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
     };
-    let impl_axum_response_into_response_token_stream = quote::quote!{impl axum::response::IntoResponse};
-    let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote!{crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
-    let axum_extract_rejection_json_rejection_token_stream = quote::quote!{axum::extract::rejection::JsonRejection};
+    let impl_axum_response_into_response_token_stream = proc_macro_common::impl_axum_response_into_response_token_stream();
     let use_sqlx_acquire_token_stream = quote::quote!{use sqlx::Acquire};
+    let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
     let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
     let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
     let axum_json_token_stream = quote::quote!{axum::Json};
-    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};
+    let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote!{crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
+    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};//todo move trait to own crate to reuse in postgresql_crud and common
     let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
     let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
-    let http_status_code_token_stream = quote::quote!{http::StatusCode};
-    let reqwest_header_header_map_token_stream = quote::quote!{reqwest::header::HeaderMap};
-    let reqwest_error_token_stream = quote::quote!{reqwest::Error};//todo reuse
+    let http_status_code_token_stream = proc_macro_common::http_status_code_token_stream();
+    let reqwest_header_header_map_token_stream = proc_macro_common::reqwest_header_header_map_token_stream();
+    let reqwest_error_token_stream = proc_macro_common::reqwest_error_token_stream();
     let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
     let try_extract_value_token_stream = quote::quote!{try_extract_value};
     let server_location_name_token_stream = quote::quote!{server_location};

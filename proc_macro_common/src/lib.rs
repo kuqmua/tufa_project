@@ -49,3 +49,18 @@ pub fn serde_deserialize_token_stream() -> proc_macro2::TokenStream {
 pub fn sqlx_row_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{sqlx::Row}
 }
+pub fn http_status_code_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{http::StatusCode}
+}
+pub fn reqwest_header_header_map_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{reqwest::header::HeaderMap}
+}
+pub fn reqwest_error_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{reqwest::Error}
+}
+pub fn impl_axum_response_into_response_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{impl axum::response::IntoResponse}//todo maybe remove impl
+}
+pub fn axum_extract_rejection_json_rejection_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{axum::extract::rejection::JsonRejection}
+}
