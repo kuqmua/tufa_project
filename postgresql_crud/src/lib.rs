@@ -672,31 +672,30 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecim
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-// pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
-// impl SqlxPostgresTypesPgMoney {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgMoney> for sqlx::postgres::types::PgMoney {
-//     fn from(value: SqlxPostgresTypesPgMoney) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
+impl SqlxPostgresTypesPgMoney {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgMoney> for sqlx::postgres::types::PgMoney {
+    fn from(value: SqlxPostgresTypesPgMoney) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgMoney {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
 // pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
 // impl SqlxPostgresTypesPgLTree {
 //     pub fn into_inner(self) -> sqlx::postgres::types::PgLTree {
