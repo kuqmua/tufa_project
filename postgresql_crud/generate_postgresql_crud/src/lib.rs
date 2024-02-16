@@ -361,7 +361,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream = quote::quote!{primary_key_uuid_wrapper_try_from_sqlx_row};
     let crate_server_postgres_uuid_wrapper_token_stream = quote::quote!{crate::server::postgres::uuid_wrapper};
     let error_named_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified();
-    let uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_stringified = format!("UuidWrapper{try_from_upper_camel_case_stringified}PossibleUuidWrapper");
+    let uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_stringified = format!(
+        "{}Wrapper{try_from_upper_camel_case_stringified}Possible{}Wrapper",
+        proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified(),
+    );
     let uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_token_stream = {
         uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))

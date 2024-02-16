@@ -2,11 +2,7 @@
 pub fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
-    // code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
-    // eo_display_token_stream: &proc_macro2::TokenStream,
-    // eo_display_foreign_type_token_stream: &proc_macro2::TokenStream,
-    // eo_display_with_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     derive_debug_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     derive_debug_serialize_deserialize_to_schema_token_stream: &proc_macro2::TokenStream,
     type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,

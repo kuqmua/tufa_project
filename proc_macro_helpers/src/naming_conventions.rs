@@ -635,7 +635,6 @@ pub fn debug_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
 
 
 
-
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}",
