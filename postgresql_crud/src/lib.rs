@@ -145,6 +145,7 @@ struct Test<T> {
 //     fn compatible(ty: &<DB as Database>::TypeInfo) -> bool { ... }
 // }
 //new type pattern
+// sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveBool(pub std::primitive::bool);
 impl StdPrimitiveBool {
