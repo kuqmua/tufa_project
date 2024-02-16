@@ -1900,20 +1900,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ]
         )
     };
-    let commit_failed_variant_initialization_token_stream = {
-        let field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{
-            CommitFailed {
-                commit_failed: #error_value_snake_case_token_stream,
-                #field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream,
-            }
-        }
-    };
     let not_unique_primary_keys_name_token_stream = quote::quote!{not_unique_primary_keys};
     let not_unique_primary_keys_syn_variant = {
         let variant_name_upper_camel_case_stringified = "NotUniquePrimaryKeys";
@@ -5297,7 +5283,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &try_operation_response_variants_token_stream,
                     &desirable_upper_camel_case_token_stream,
                     &try_operation_upper_camel_case_token_stream,
-                    &commit_failed_variant_initialization_token_stream,
                     &error_log_call_token_stream,
                     &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                     &proc_macro_name_upper_camel_case_ident_stringified,
@@ -6419,7 +6404,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &try_operation_response_variants_token_stream,
                         &desirable_upper_camel_case_token_stream,
                         &try_operation_upper_camel_case_token_stream,
-                        &commit_failed_variant_initialization_token_stream,
                         &error_log_call_token_stream,
                         &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                         &proc_macro_name_upper_camel_case_ident_stringified,

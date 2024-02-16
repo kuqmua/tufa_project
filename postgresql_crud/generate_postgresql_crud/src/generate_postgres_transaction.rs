@@ -16,7 +16,6 @@ pub fn generate_postgres_transaction(
     response_variants_token_stream: &proc_macro2::TokenStream,
     desirable_token_stream: &proc_macro2::TokenStream,
     try_ident_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-    commit_failed_token_stream: &proc_macro2::TokenStream,
     error_log_call_token_stream: &proc_macro2::TokenStream,
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -84,6 +83,20 @@ pub fn generate_postgres_transaction(
                 #non_existing_primary_keys_name_token_stream,
                 #rollback_error_name_token_stream: #error_value_snake_case_token_stream,
                 #field_code_occurence_new_5e07939c_0aa6_4f48_9f1f_5d3866c651ab_token_stream,
+            }
+        }
+    };
+    let commit_failed_variant_initialization_token_stream = {
+        let field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            CommitFailed {
+                commit_failed: #error_value_snake_case_token_stream,
+                #field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream,
             }
         }
     };
@@ -199,7 +212,7 @@ pub fn generate_postgres_transaction(
                 |element|#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(element)
             ).collect()),
             Err(#error_value_snake_case_token_stream) => {
-                let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#commit_failed_token_stream;
+                let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#commit_failed_variant_initialization_token_stream;
                 #error_log_call_token_stream
                 #response_variants_token_stream::from(#error_value_snake_case_token_stream)
             }
