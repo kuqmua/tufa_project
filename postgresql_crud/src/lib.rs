@@ -85,7 +85,7 @@ struct Test<T> {
     type_9: std::string::String,//VARCHAR, CHAR(N), TEXT, NAME, CITEXT
     // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
     type_11: std::vec::Vec<std::primitive::u8>,//BYTEA
-    type_12: (),//BYTEA
+    // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
     type_13: sqlx::postgres::types::PgInterval,//INTERVAL
     //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
     type_14: sqlx::postgres::types::PgRange<std::primitive::i64>,//INT8RANGE
@@ -377,57 +377,36 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
         <&[std::primitive::u8] as sqlx::Encode<sqlx::Postgres>>::encode(&self.0, buf)
     }
 }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct Unit(());
-// impl Unit {
-//     pub fn into_inner(self) -> () {
-//         self.0
-//     }
-// }
-// impl std::convert::From<Unit> for () {
-//     fn from(value: Unit) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for Unit {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <() as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <() as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for Unit {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
-// impl SqlxPostgresTypesPgInterval {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgInterval {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgInterval> for sqlx::postgres::types::PgInterval {
-//     fn from(value: SqlxPostgresTypesPgInterval) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgInterval {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
+impl SqlxPostgresTypesPgInterval {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgInterval {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgInterval> for sqlx::postgres::types::PgInterval {
+    fn from(value: SqlxPostgresTypesPgInterval) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgInterval {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        buf.extend(&self.0.microseconds.to_be_bytes());
+        buf.extend(&self.0.days.to_be_bytes());
+        buf.extend(&self.0.months.to_be_bytes());
+        sqlx::encode::IsNull::No
+    }
+    fn size_hint(&self) -> std::primitive::usize {
+        2 * std::mem::size_of::<std::primitive::i64>()
+    }
+}
 // pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange<std::primitive::i64>);
 // impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 //     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i64> {
