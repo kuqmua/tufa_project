@@ -72,7 +72,7 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
     fn serde_serialize() -> T;
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug)]//, serde::Serialize, serde::Deserialize
 struct Test {
     type_1: bool,//BOOL
     type_2: std::primitive::i8,//“CHAR”
@@ -86,19 +86,26 @@ struct Test {
     type_10: [std::primitive::u8;1],//определенное количество в массиве нужно//BYTEA
     type_11: std::vec::Vec<std::primitive::u8>,//BYTEA
     type_12: (),//BYTEA
-    // type_13: sqlx::postgres::types::PgInterval,//INTERVAL
-    type_14: ,//INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-    // type_15: ,
-    // type_16: ,
-    // type_17: ,
-    // type_18: ,
-    // type_19: ,
-    // type_20: ,
-    // type_21: ,
-    // type_22: ,
-    // type_23: ,
-    // type_24: ,
-    // type_25: ,
+    type_13: sqlx::postgres::types::PgInterval,//INTERVAL
+    //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
+    //INT8RANGE
+    // type_14: sqlx::postgres::types::PgRange<std::primitive::i64>,
+    //INT4RANGE
+    // type_15: sqlx::postgres::types::PgRange<std::primitive::i32>,
+    //TSRANGE
+    // type_16: sqlx::postgres::types::PgRange<todo>,
+    //TSTZRANGE
+    // type_17: sqlx::postgres::types::PgRange<todo>,
+    // DATERANGE
+    // type_18: sqlx::postgres::types::PgRange<todo>,
+    // NUMRANGE
+    // type_19: sqlx::postgres::types::PgRange<todo>,
+    type_20: sqlx::postgres::types::PgMoney,//MONEY
+    type_21: sqlx::postgres::types::PgLTree,//LTREE
+    type_22: sqlx::postgres::types::PgLQuery,//LQUERY
+    type_23: sqlx::postgres::types::PgCiText,//CITEXT
+    type_24: sqlx::types::BigDecimal,//NUMERIC
+    type_25: sqlx::types::Decimal,//NUMERIC
     // type_26: ,
     // type_27: ,
     // type_28: ,
