@@ -85,9 +85,9 @@ struct Test {
     type_9: std::string::String,//VARCHAR, CHAR(N), TEXT, NAME, CITEXT
     type_10: [std::primitive::u8;1],//определенное количество в массиве нужно//BYTEA
     type_11: std::vec::Vec<std::primitive::u8>,//BYTEA
-    // type_12: ,
-    // type_13: ,
-    // type_14: ,
+    type_12: (),//BYTEA
+    // type_13: sqlx::postgres::types::PgInterval,//INTERVAL
+    type_14: ,//INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
     // type_15: ,
     // type_16: ,
     // type_17: ,
