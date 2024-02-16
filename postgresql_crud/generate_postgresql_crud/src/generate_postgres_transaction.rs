@@ -8,7 +8,6 @@ pub fn generate_postgres_transaction(
     pg_connection_token_stream: &proc_macro2::TokenStream,
     binded_query_name_token_stream: &proc_macro2::TokenStream,
     use_futures_try_stream_ext_token_stream: &proc_macro2::TokenStream,
-    query_and_rollback_failed_token_stream: &proc_macro2::TokenStream,
     primary_key_try_from_sqlx_row_name_token_stream: &proc_macro2::TokenStream,
     from_log_and_return_error_token_stream: &proc_macro2::TokenStream,
     rollback_error_name_token_stream: &proc_macro2::TokenStream,
@@ -27,10 +26,26 @@ pub fn generate_postgres_transaction(
     commit_failed_token_stream: &proc_macro2::TokenStream,
     error_log_call_token_stream: &proc_macro2::TokenStream,
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
     let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
     let sqlx_acquire_token_stream = proc_macro_common::sqlx_acquire_token_stream();
     let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
+    let query_and_rollback_failed_variant_initialization_token_stream = {
+        let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            QueryAndRollbackFailed {
+                query_error: #error_value_snake_case_token_stream,
+                #rollback_error_name_token_stream,
+                #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
+            }
+        }
+    };
     quote::quote! {
         let #expected_updated_primary_keys_name_token_stream = {
             #expected_updated_primary_keys_token_stream
@@ -84,7 +99,7 @@ pub fn generate_postgres_transaction(
                     }
                     Err(#rollback_error_name_token_stream) => {
                         //todo  BIG QUESTION - WHAT TO DO IF ROLLBACK FAILED? INFINITE LOOP TRYING TO ROLLBACK?
-                        let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_token_stream;
+                        let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#query_and_rollback_failed_variant_initialization_token_stream;
                         #error_log_call_token_stream
                         return #response_variants_token_stream::from(#error_value_snake_case_token_stream);
                     }

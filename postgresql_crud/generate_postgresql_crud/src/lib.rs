@@ -1836,21 +1836,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )   
         ]
     );
-    let query_and_rollback_failed_variant_initialization_token_stream = {
-        let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-            file!(),
-            line!(),
-            column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-        quote::quote!{
-            QueryAndRollbackFailed {
-                query_error: #error_value_snake_case_token_stream,
-                #rollback_error_name_token_stream,
-                #field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream,
-            }
-        }
-    };
     let primary_key_from_row_and_failed_rollback_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
         proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
         "PrimaryKeyFromRowAndFailedRollback",
@@ -5352,7 +5337,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &pg_connection_token_stream,
                     &binded_query_name_token_stream,
                     &use_futures_try_stream_ext_token_stream,
-                    &query_and_rollback_failed_variant_initialization_token_stream,
                     &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
                     &from_log_and_return_error_token_stream,
                     &rollback_error_name_token_stream,
@@ -5371,6 +5355,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &commit_failed_variant_initialization_token_stream,
                     &error_log_call_token_stream,
                     &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 quote::quote!{
                     {
@@ -6481,7 +6466,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &pg_connection_token_stream,
                         &binded_query_name_token_stream,
                         &use_futures_try_stream_ext_token_stream,
-                        &query_and_rollback_failed_variant_initialization_token_stream,
                         &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
                         &from_log_and_return_error_token_stream,
                         &rollback_error_name_token_stream,
@@ -6500,6 +6484,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &commit_failed_variant_initialization_token_stream,
                         &error_log_call_token_stream,
                         &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote!{
                         #filter_unique_parameters_token_stream
