@@ -432,31 +432,30 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI6
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-// pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
-// impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for sqlx::postgres::types::PgRange<std::primitive::i32> {
-//     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
+impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for sqlx::postgres::types::PgRange<std::primitive::i32> {
+    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+         sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
 // impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
