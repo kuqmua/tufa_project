@@ -752,6 +752,23 @@ pub fn from_str_upper_camel_case_stringified() -> std::string::String {
         str_upper_camel_case_stringified()
     )
 }
+pub fn from_str_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = from_str_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn from_str_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}", 
+        from_snake_case_stringified(), 
+        str_snake_case_stringified()
+    )
+}
+pub fn from_str_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = from_str_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 pub fn column_not_found_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}{}", 

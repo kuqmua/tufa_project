@@ -345,15 +345,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let derive_debug_serialize_deserialize_to_schema_token_stream = proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream, &serde_serialize_token_stream, &serde_deserialize_token_stream, &utoipa_to_schema_token_stream]);
     let try_from_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::try_from_upper_camel_case_stringified();
     let from_str_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::from_str_upper_camel_case_stringified();
-    let from_str_upper_camel_case_token_stream = {
-        from_str_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {from_str_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let from_str_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&from_str_upper_camel_case_stringified.to_string());
-    let from_str_snake_case_token_stream = {
-        from_str_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {from_str_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let from_str_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::from_str_upper_camel_case_token_stream();
+    let from_str_snake_case_stringified = proc_macro_helpers::naming_conventions::from_str_snake_case_stringified();
+    let from_str_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_str_snake_case_token_stream();
     let sqlx_row_token_stream = proc_macro_common::sqlx_row_token_stream();
     let std_primitive_str_sqlx_column_index_token_stream = quote::quote!{&'a std::primitive::str: sqlx::ColumnIndex<R>,};
     let sqlx_decode_decode_database_token_stream = quote::quote!{sqlx::decode::Decode<'a, R::Database>};
