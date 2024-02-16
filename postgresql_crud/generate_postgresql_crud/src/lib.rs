@@ -2244,7 +2244,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
     let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
     let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
-    let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
     let element_name_token_stream = proc_macro_helpers::naming_conventions::element_snake_case_token_stream();
     let acc_name_token_stream = proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
     let query_name_token_stream = proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
@@ -5351,7 +5350,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &binded_query_token_stream,
                     &acquire_pool_and_connection_token_stream,
                     &pg_connection_token_stream,
-                    &begin_token_stream,
                     &binded_query_name_token_stream,
                     &use_futures_try_stream_ext_token_stream,
                     &query_and_rollback_failed_variant_initialization_token_stream,
@@ -6481,7 +6479,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &binded_query_primary_key_some_other_none_token_stream,
                         &acquire_pool_and_connection_token_stream,
                         &pg_connection_token_stream,
-                        &begin_token_stream,
                         &binded_query_name_token_stream,
                         &use_futures_try_stream_ext_token_stream,
                         &query_and_rollback_failed_variant_initialization_token_stream,

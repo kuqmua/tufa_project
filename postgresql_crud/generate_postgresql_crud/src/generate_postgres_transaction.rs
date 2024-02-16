@@ -6,7 +6,6 @@ pub fn generate_postgres_transaction(
     binded_query_token_stream: &proc_macro2::TokenStream,
     acquire_pool_and_connection_token_stream: &proc_macro2::TokenStream,
     pg_connection_token_stream: &proc_macro2::TokenStream,
-    begin_token_stream: &proc_macro2::TokenStream,
     binded_query_name_token_stream: &proc_macro2::TokenStream,
     use_futures_try_stream_ext_token_stream: &proc_macro2::TokenStream,
     query_and_rollback_failed_token_stream: &proc_macro2::TokenStream,
@@ -31,6 +30,7 @@ pub fn generate_postgres_transaction(
 ) -> proc_macro2::TokenStream {
     let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
     let sqlx_acquire_token_stream = proc_macro_common::sqlx_acquire_token_stream();
+    let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
     quote::quote! {
         let #expected_updated_primary_keys_name_token_stream = {
             #expected_updated_primary_keys_token_stream
