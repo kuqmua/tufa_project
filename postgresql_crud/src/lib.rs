@@ -744,31 +744,30 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
         sqlx::Encode::encode_by_ref(&self.0, buf)//todo inside lib Encode impl there is panic possibility. maybe create an issue
     }
 }
-// pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
-// impl SqlxPostgresTypesPgCiText {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgCiText {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgCiText> for sqlx::postgres::types::PgCiText {
-//     fn from(value: SqlxPostgresTypesPgCiText) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
+impl SqlxPostgresTypesPgCiText {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgCiText {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgCiText> for sqlx::postgres::types::PgCiText {
+    fn from(value: SqlxPostgresTypesPgCiText) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgCiText {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
 // pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
 // impl SqlxTypesBigDecimal {
 //     pub fn into_inner(self) -> sqlx::types::BigDecimal {
