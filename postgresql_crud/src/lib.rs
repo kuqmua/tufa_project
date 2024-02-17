@@ -1,3 +1,4 @@
+pub use ::naming_constants::COMMIT;
 pub use generate_postgresql_crud::additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::create_many_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::create_one_additional_http_status_codes_error_variants;
@@ -8,39 +9,38 @@ pub use generate_postgresql_crud::read_one_additional_http_status_codes_error_va
 pub use generate_postgresql_crud::update_many_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::update_one_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
-pub use ::naming_constants::COMMIT;
 
-pub mod json_value_extractor;
 pub mod app_state;
+pub mod json_value_extractor;
 
-pub trait IntoSerdeSerializeDeserialize{}
+pub trait IntoSerdeSerializeDeserialize {}
 
-pub trait PostgresqlFilter{}
+pub trait PostgresqlFilter {}
 
 // impl PostgresqlFilter for sqlx::types:: {}
 
-pub trait PostgresqlOrder{}
-impl PostgresqlOrder for std::primitive::bool {}//BOOL
-impl PostgresqlOrder for std::primitive::i16 {}//SMALLINT,SMALLSERIAL,INT2
-impl PostgresqlOrder for std::primitive::i32 {}//INT,SERIAL,INT4
-impl PostgresqlOrder for std::primitive::i64 {}//BIGINT,BIGSERIAL,INT8
-impl PostgresqlOrder for sqlx::types::BigDecimal {}//NUMERIC
-impl PostgresqlOrder for std::primitive::f32 {}//REAL,FLOAT4
-impl PostgresqlOrder for std::primitive::f64 {}//DOUBLE PRECISION,FLOAT8
-impl PostgresqlOrder for std::primitive::i8 {}//CHAR
-impl PostgresqlOrder for std::primitive::str {}//VARCHAR,CHAR(N),TEXT,NAME,CITEXT
-impl PostgresqlOrder for std::string::String {}//VARCHAR,CHAR(N),TEXT,NAME,CITEXT
-impl PostgresqlOrder for chrono::NaiveDate {}//DATE
-impl PostgresqlOrder for sqlx::types::time::Date {}//DATE
-impl PostgresqlOrder for chrono::NaiveTime {}//TIME
-impl PostgresqlOrder for sqlx::types::time::Time {}//TIME
-impl PostgresqlOrder for chrono::NaiveDateTime {}//TIMESTAMP
-impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {}//TIMESTAMP
-impl PostgresqlOrder for sqlx::postgres::types::PgInterval {}//INTERVAL
-impl PostgresqlOrder for sqlx::types::BitVec {}//BIT,VARBIT
-//todo arrays, json and maybe something else...
+pub trait PostgresqlOrder {}
+impl PostgresqlOrder for std::primitive::bool {} //BOOL
+impl PostgresqlOrder for std::primitive::i16 {} //SMALLINT,SMALLSERIAL,INT2
+impl PostgresqlOrder for std::primitive::i32 {} //INT,SERIAL,INT4
+impl PostgresqlOrder for std::primitive::i64 {} //BIGINT,BIGSERIAL,INT8
+impl PostgresqlOrder for sqlx::types::BigDecimal {} //NUMERIC
+impl PostgresqlOrder for std::primitive::f32 {} //REAL,FLOAT4
+impl PostgresqlOrder for std::primitive::f64 {} //DOUBLE PRECISION,FLOAT8
+impl PostgresqlOrder for std::primitive::i8 {} //CHAR
+impl PostgresqlOrder for std::primitive::str {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
+impl PostgresqlOrder for std::string::String {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
+impl PostgresqlOrder for chrono::NaiveDate {} //DATE
+impl PostgresqlOrder for sqlx::types::time::Date {} //DATE
+impl PostgresqlOrder for chrono::NaiveTime {} //TIME
+impl PostgresqlOrder for sqlx::types::time::Time {} //TIME
+impl PostgresqlOrder for chrono::NaiveDateTime {} //TIMESTAMP
+impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {} //TIMESTAMP
+impl PostgresqlOrder for sqlx::postgres::types::PgInterval {} //INTERVAL
+impl PostgresqlOrder for sqlx::types::BitVec {} //BIT,VARBIT
+                                                //todo arrays, json and maybe something else...
 
-pub trait PostgresqlLimit{}
+pub trait PostgresqlLimit {}
 
 // integer, bigint
 // real, double precision
@@ -51,11 +51,7 @@ pub trait PostgresqlLimit{}
 // int4range
 // daterange
 
-
-
 // impl trait PostgresqlLimit for sqlx::types:: {}
-
-
 
 //todo swagger type\schema
 
@@ -66,7 +62,8 @@ pub trait PostgersqlColumn<'a>:
     + PostgresqlFilter
     + PostgresqlOrder
     + PostgresqlLimit
-{}
+{
+}
 
 pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
     fn serde_serialize() -> T;
@@ -74,65 +71,64 @@ pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
 
 struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
-    type_1: std::primitive::bool,//BOOL
-    type_2: std::primitive::i8,//“CHAR”
-    type_3: std::primitive::i16,//SMALLINT, SMALLSERIAL, INT2
-    type_4: std::primitive::i32,//INT, SERIAL, INT4
-    type_5: std::primitive::i64,//BIGINT, BIGSERIAL, INT8
-    type_6: std::primitive::f32,//REAL, FLOAT4
-    type_7: std::primitive::f64,//DOUBLE PRECISION, FLOAT8
+    type_1: std::primitive::bool, //BOOL
+    type_2: std::primitive::i8,   //“CHAR”
+    type_3: std::primitive::i16,  //SMALLINT, SMALLSERIAL, INT2
+    type_4: std::primitive::i32,  //INT, SERIAL, INT4
+    type_5: std::primitive::i64,  //BIGINT, BIGSERIAL, INT8
+    type_6: std::primitive::f32,  //REAL, FLOAT4
+    type_7: std::primitive::f64,  //DOUBLE PRECISION, FLOAT8
     // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-    type_9: std::string::String,//VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    type_9: std::string::String, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
     // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
-    type_11: std::vec::Vec<std::primitive::u8>,//BYTEA
+    type_11: std::vec::Vec<std::primitive::u8>, //BYTEA
     // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
-    type_13: sqlx::postgres::types::PgInterval,//INTERVAL
+    type_13: sqlx::postgres::types::PgInterval, //INTERVAL
     //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-    type_14: sqlx::postgres::types::PgRange<std::primitive::i64>,//INT8RANGE
-    type_15: sqlx::postgres::types::PgRange<std::primitive::i32>,//INT4RANGE
+    type_14: sqlx::postgres::types::PgRange<std::primitive::i64>, //INT8RANGE
+    type_15: sqlx::postgres::types::PgRange<std::primitive::i32>, //INT4RANGE
     // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
-    type_161: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,//maybe not correct//TSRANGE
-    type_162: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,//maybe not correct//TSRANGE
+    // type_161: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,//not found Encode impl for DateTime//TSRANGE
+    type_162: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>, //maybe not correct//TSRANGE
     // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
-    type_171: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>,//maybe not correct//TSTZRANGE
-    type_172: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,//maybe not correct//TSTZRANGE
-    type_173: sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,//maybe not correct//TSTZRANGE
+    // type_171: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>,//not found Encode impl for DateTime//TSTZRANGE
+    // type_172: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,//not found Encode impl for DateTime//TSTZRANGE
+    type_173: sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>, //maybe not correct//TSTZRANGE
     // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
-    type_181: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,//maybe not correct//DATERANGE
-    type_182: sqlx::postgres::types::PgRange<sqlx::types::time::Date>,//maybe not correct//DATERANGE
+    type_181: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>, //maybe not correct//DATERANGE
+    type_182: sqlx::postgres::types::PgRange<sqlx::types::time::Date>, //maybe not correct//DATERANGE
     // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
-    type_191: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,//maybe not correct//NUMRANGE
-    type_192: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,//maybe not correct//NUMRANGE
-    type_20: sqlx::postgres::types::PgMoney,//MONEY
-    type_21: sqlx::postgres::types::PgLTree,//LTREE
-    type_22: sqlx::postgres::types::PgLQuery,//LQUERY
-    type_23: sqlx::postgres::types::PgCiText,//CITEXT
-    type_24: sqlx::types::BigDecimal,//NUMERIC
-    type_25: sqlx::types::Decimal,//NUMERIC
-    type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,//TIMESTAMPTZ
-    type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,//TIMESTAMPTZ
-    type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,//TIMESTAMP
-    type_29: sqlx::types::chrono::NaiveDate,//DATE
-    type_30: sqlx::types::chrono::NaiveTime,//TIME
-    type_31: sqlx::postgres::types::PgTimeTz,//just present chrono or time flag
+    // type_191: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,//not found Encode impl for BigDecimal//NUMRANGE
+    // type_192: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,//not found Encode impl for Decimal//NUMRANGE
+    type_20: sqlx::postgres::types::PgMoney,  //MONEY
+    type_21: sqlx::postgres::types::PgLTree,  //LTREE
+    type_22: sqlx::postgres::types::PgLQuery, //LQUERY
+    type_23: sqlx::postgres::types::PgCiText, //CITEXT
+    // type_24: sqlx::types::BigDecimal,//not found Encode impl for BigDecima//NUMERIC
+    // type_25: sqlx::types::Decimal,//not found Encode impl for Decimal//NUMERIC
+    // type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,//not found Encode impl for DateTime//TIMESTAMPTZ
+    // type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,//not found Encode impl for DateTime//TIMESTAMPTZ
+    // type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,//not found Encode impl for DateTime//TIMESTAMP
+    type_29: sqlx::types::chrono::NaiveDate,  //DATE
+    type_30: sqlx::types::chrono::NaiveTime,  //TIME
+    type_31: sqlx::postgres::types::PgTimeTz, //just present chrono or time flag
     // type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
-    type_32: sqlx::types::time::PrimitiveDateTime,//TIMESTAMP
-    type_33: sqlx::types::time::OffsetDateTime,//TIMESTAMPTZ
-    type_34: sqlx::types::time::Date,//DATE
-    type_35: sqlx::types::time::Time,//TIME
+    type_32: sqlx::types::time::PrimitiveDateTime, //TIMESTAMP
+    type_33: sqlx::types::time::OffsetDateTime,    //TIMESTAMPTZ
+    type_34: sqlx::types::time::Date,              //DATE
+    type_35: sqlx::types::time::Time,              //TIME
     // type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
-    type_37: sqlx::types::uuid::Uuid,//UUID
-    type_38: sqlx::types::ipnetwork::IpNetwork,//INET, CIDR
-    type_39: std::net::IpAddr,//INET, CIDR
-    type_40: sqlx::types::mac_address::MacAddress,//MACADDR
-    type_41: sqlx::types::BitVec,//BIT, VARBIT
-    type_42: sqlx::types::Json<T>,//JSON, JSONB
-    type_43: serde_json::Value,//JSON, JSONB
-    // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
-    //maybe Composite types
-    //maybe Enumerations
+    type_37: sqlx::types::uuid::Uuid,              //UUID
+    type_38: sqlx::types::ipnetwork::IpNetwork,    //INET, CIDR
+    type_39: std::net::IpAddr,                     //INET, CIDR
+    type_40: sqlx::types::mac_address::MacAddress, //MACADDR
+    type_41: sqlx::types::BitVec,                  //BIT, VARBIT
+    type_42: sqlx::types::Json<T>,                 //JSON, JSONB
+    type_43: serde_json::Value,                    //JSON, JSONB
+                                                   // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
+                                                   //maybe Composite types
+                                                   //maybe Enumerations
 }
-
 
 // pub trait Type<DB>
 // where
@@ -408,13 +404,17 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
         2 * std::mem::size_of::<std::primitive::i64>()
     }
 }
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange<std::primitive::i64>);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
+    sqlx::postgres::types::PgRange<std::primitive::i64>,
+);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i64> {
         self.0
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for sqlx::postgres::types::PgRange<std::primitive::i64> {
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64>
+    for sqlx::postgres::types::PgRange<std::primitive::i64>
+{
     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI64) -> Self {
         value.0
     }
@@ -432,13 +432,17 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI6
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
+    sqlx::postgres::types::PgRange<std::primitive::i32>,
+);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
         self.0
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for sqlx::postgres::types::PgRange<std::primitive::i32> {
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
+    for sqlx::postgres::types::PgRange<std::primitive::i32>
+{
     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
         value.0
     }
@@ -453,50 +457,60 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-         sqlx::Encode::encode_by_ref(&self.0, buf)
-    }
-}
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>);
+// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
+// impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+//         self.0
+//     }
+// }
+// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//     }
+// }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+    sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> {
+    pub fn into_inner(
+        self,
+    ) -> sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> {
         self.0
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
+    for sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
         value.0
     }
 }
 impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<sqlx::Postgres>>::type_info()
+        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
@@ -504,71 +518,79 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>);
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
-    }
-}
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
-    }
-}
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>);
+// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>);
+// impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
+//         self.0
+//     }
+// }
+// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
+//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//     }
+// }
+// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
+// impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+//         self.0
+//     }
+// }
+// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//     }
+// }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
+    sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> {
         self.0
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
+    for sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
         value.0
     }
 }
 impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> as sqlx::Type<sqlx::Postgres>>::type_info()
+        <sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
@@ -576,23 +598,31 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeO
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
+    sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> {
         self.0
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
+    for sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate) -> Self {
         value.0
     }
 }
 impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> as sqlx::Type<sqlx::Postgres>>::type_info()
+        <sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
@@ -600,13 +630,17 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChron
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange<sqlx::types::time::Date>);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
+    sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::time::Date> {
         self.0
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for sqlx::postgres::types::PgRange<sqlx::types::time::Date> {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
+    for sqlx::postgres::types::PgRange<sqlx::types::time::Date>
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate) -> Self {
         value.0
     }
@@ -624,54 +658,54 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
         sqlx::Encode::encode_by_ref(&self.0, buf)
     }
 }
-pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>);
-impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
-    }
-}
-pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange<sqlx::types::Decimal>);
-impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
-    }
-}
+// pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>);
+// impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
+//         self.0
+//     }
+// }
+// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
+//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//     }
+// }
+// pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange<sqlx::types::Decimal>);
+// impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
+//         self.0
+//     }
+// }
+// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
+//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//     }
+// }
 pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
 impl SqlxPostgresTypesPgMoney {
     pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
@@ -717,7 +751,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLTree {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)//todo inside lib Encode impl there is panic possibility. maybe create an issue
+        sqlx::Encode::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
     }
 }
 pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
@@ -741,7 +775,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)//todo inside lib Encode impl there is panic possibility. maybe create an issue
+        sqlx::Encode::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
     }
 }
 pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
@@ -894,308 +928,296 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
 //         sqlx::encode::IsNull::No
 //     }
 // }
-// pub struct SqlxTypesChronoNaiveDate(sqlx::types::chrono::NaiveDate);
-// impl SqlxTypesChronoNaiveDate {
-//     pub fn into_inner(self) -> sqlx::types::chrono::NaiveDate {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesChronoNaiveDate> for sqlx::types::chrono::NaiveDate {
-//     fn from(value: SqlxTypesChronoNaiveDate) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDate {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
-// impl SqlxTypesChronoNaiveTime {
-//     pub fn into_inner(self) -> sqlx::types::chrono::NaiveTime {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesChronoNaiveTime> for sqlx::types::chrono::NaiveTime {
-//     fn from(value: SqlxTypesChronoNaiveTime) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
-// impl SqlxPostgresTypesPgTimeTz {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgTimeTz {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgTimeTz> for sqlx::postgres::types::PgTimeTz {
-//     fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
-// impl SqlxTypesTimePrimitiveDateTime {
-//     pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for sqlx::types::time::PrimitiveDateTime {
-//     fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
-// impl SqlxTypesTimeOffsetDateTime {
-//     pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesTimeOffsetDateTime> for sqlx::types::time::OffsetDateTime {
-//     fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
-// impl SqlxTypesTimeDate {
-//     pub fn into_inner(self) -> sqlx::types::time::Date {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesTimeDate> for sqlx::types::time::Date {
-//     fn from(value: SqlxTypesTimeDate) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeDate {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
-// impl SqlxTypesTimeTime {
-//     pub fn into_inner(self) -> sqlx::types::time::Time {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesTimeTime> for sqlx::types::time::Time {
-//     fn from(value: SqlxTypesTimeTime) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeTime {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
-// impl SqlxTypesUuidUuid {
-//     pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesUuidUuid> for sqlx::types::uuid::Uuid {
-//     fn from(value: SqlxTypesUuidUuid) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
-// impl SqlxTypesIpnetworkIpNetwork {
-//     pub fn into_inner(self) -> sqlx::types::ipnetwork::IpNetwork {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for sqlx::types::ipnetwork::IpNetwork {
-//     fn from(value: SqlxTypesIpnetworkIpNetwork) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct StdNetIpAddr(std::net::IpAddr);
-// impl StdNetIpAddr {
-//     pub fn into_inner(self) -> std::net::IpAddr {
-//         self.0
-//     }
-// }
-// impl std::convert::From<StdNetIpAddr> for std::net::IpAddr {
-//     fn from(value: StdNetIpAddr) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for StdNetIpAddr {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
-// impl SqlxTypesMacAddressMacAddress {
-//     pub fn into_inner(self) -> sqlx::types::mac_address::MacAddress {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesMacAddressMacAddress> for sqlx::types::mac_address::MacAddress {
-//     fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesBitVec(sqlx::types::BitVec);
-// impl SqlxTypesBitVec {
-//     pub fn into_inner(self) -> sqlx::types::BitVec {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesBitVec> for sqlx::types::BitVec {
-//     fn from(value: SqlxTypesBitVec) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesBitVec {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+pub struct SqlxTypesChronoNaiveDate(sqlx::types::chrono::NaiveDate);
+impl SqlxTypesChronoNaiveDate {
+    pub fn into_inner(self) -> sqlx::types::chrono::NaiveDate {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveDate> for sqlx::types::chrono::NaiveDate {
+    fn from(value: SqlxTypesChronoNaiveDate) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDate {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
+impl SqlxTypesChronoNaiveTime {
+    pub fn into_inner(self) -> sqlx::types::chrono::NaiveTime {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveTime> for sqlx::types::chrono::NaiveTime {
+    fn from(value: SqlxTypesChronoNaiveTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
+impl SqlxPostgresTypesPgTimeTz {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgTimeTz {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgTimeTz> for sqlx::postgres::types::PgTimeTz {
+    fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
+impl SqlxTypesTimePrimitiveDateTime {
+    pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for sqlx::types::time::PrimitiveDateTime {
+    fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
+impl SqlxTypesTimeOffsetDateTime {
+    pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesTimeOffsetDateTime> for sqlx::types::time::OffsetDateTime {
+    fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
+impl SqlxTypesTimeDate {
+    pub fn into_inner(self) -> sqlx::types::time::Date {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesTimeDate> for sqlx::types::time::Date {
+    fn from(value: SqlxTypesTimeDate) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeDate {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
+impl SqlxTypesTimeTime {
+    pub fn into_inner(self) -> sqlx::types::time::Time {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesTimeTime> for sqlx::types::time::Time {
+    fn from(value: SqlxTypesTimeTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
+impl SqlxTypesUuidUuid {
+    pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesUuidUuid> for sqlx::types::uuid::Uuid {
+    fn from(value: SqlxTypesUuidUuid) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
+impl SqlxTypesIpnetworkIpNetwork {
+    pub fn into_inner(self) -> sqlx::types::ipnetwork::IpNetwork {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for sqlx::types::ipnetwork::IpNetwork {
+    fn from(value: SqlxTypesIpnetworkIpNetwork) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct StdNetIpAddr(std::net::IpAddr);
+impl StdNetIpAddr {
+    pub fn into_inner(self) -> std::net::IpAddr {
+        self.0
+    }
+}
+impl std::convert::From<StdNetIpAddr> for std::net::IpAddr {
+    fn from(value: StdNetIpAddr) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for StdNetIpAddr {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
+impl SqlxTypesMacAddressMacAddress {
+    pub fn into_inner(self) -> sqlx::types::mac_address::MacAddress {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesMacAddressMacAddress> for sqlx::types::mac_address::MacAddress {
+    fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
+pub struct SqlxTypesBitVec(sqlx::types::BitVec);
+impl SqlxTypesBitVec {
+    pub fn into_inner(self) -> sqlx::types::BitVec {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesBitVec> for sqlx::types::BitVec {
+    fn from(value: SqlxTypesBitVec) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesBitVec {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
 // #[derive(serde::Serialize, serde::Deserialize)]
 // pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
 // impl<T> SqlxTypesJson<T> {
@@ -1218,39 +1240,34 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
 // }
 // impl<T> sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesJson<T> {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
+//         sqlx::Encode::encode_by_ref(&self.0, buf)
 //     }
 // }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SerdeJsonValue(serde_json::Value);
-// impl SerdeJsonValue {
-//     pub fn into_inner(self) -> serde_json::Value {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SerdeJsonValue> for serde_json::Value {
-//     fn from(value: SerdeJsonValue) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SerdeJsonValue {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <serde_json::Value as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <serde_json::Value as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-
-
-
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SerdeJsonValue(serde_json::Value);
+impl SerdeJsonValue {
+    pub fn into_inner(self) -> serde_json::Value {
+        self.0
+    }
+}
+impl std::convert::From<SerdeJsonValue> for serde_json::Value {
+    fn from(value: SerdeJsonValue) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SerdeJsonValue {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <serde_json::Value as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <serde_json::Value as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::encode_by_ref(&self.0, buf)
+    }
+}
 
 pub async fn something() {
     let mut query = sqlx::query::<sqlx::Postgres>("test");
