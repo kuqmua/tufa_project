@@ -166,6 +166,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI8(std::primitive::i8);
