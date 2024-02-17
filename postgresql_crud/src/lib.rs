@@ -1916,26 +1916,40 @@ impl<T> sqlx::Type<sqlx::Postgres> for SqlxTypesJson<T> {
         <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-// impl<T> sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesJson<T> {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
+impl<'a, T> sqlx::Encode<'a, sqlx::Postgres> for SqlxTypesJson<T>
+where
+    T: sqlx::Encode<'a, sqlx::Postgres>
+        + Copy
+        + Clone
+        + std::fmt::Debug
+        + PartialEq
+        + Eq
+        + PartialOrd
+        + Ord
+        + std::hash::Hash
+        + Default
+        + serde::Serialize
+        + serde::Deserialize<'a>,
+{
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SerdeJsonValue(serde_json::Value);
 impl SerdeJsonValue {
