@@ -428,7 +428,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
@@ -456,7 +456,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
@@ -480,7 +480,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI3
 // }
 // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
 //     }
 // }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
@@ -514,7 +514,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimiti
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>);
@@ -538,7 +538,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
 // }
 // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
 //     }
 // }
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
@@ -562,7 +562,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
 // }
 // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
 //     }
 // }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
@@ -594,7 +594,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetD
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
@@ -626,7 +626,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaive
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
@@ -654,7 +654,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>);
@@ -678,7 +678,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
 // }
 // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
 //     }
 // }
 // pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange<sqlx::types::Decimal>);
@@ -702,7 +702,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
 // }
 // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
 //     }
 // }
 pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
@@ -726,7 +726,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgMoney {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
@@ -750,7 +750,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLTree {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
     }
 }
 pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
@@ -774,7 +774,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
     }
 }
 pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
@@ -798,7 +798,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgCiText {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 // pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
@@ -948,7 +948,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDate {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
@@ -972,7 +972,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
@@ -996,7 +996,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
@@ -1020,7 +1020,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
@@ -1044,7 +1044,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
@@ -1068,7 +1068,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeDate {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
@@ -1092,7 +1092,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeTime {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
@@ -1116,7 +1116,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1141,7 +1141,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1166,7 +1166,7 @@ impl sqlx::Type<sqlx::Postgres> for StdNetIpAddr {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
@@ -1190,7 +1190,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 pub struct SqlxTypesBitVec(sqlx::types::BitVec);
@@ -1214,7 +1214,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesBitVec {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 // #[derive(serde::Serialize, serde::Deserialize)]
@@ -1239,7 +1239,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
 // }
 // impl<T> sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesJson<T> {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::encode_by_ref(&self.0, buf)
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
 //     }
 // }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1264,7 +1264,7 @@ impl sqlx::Type<sqlx::Postgres> for SerdeJsonValue {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::encode_by_ref(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 
