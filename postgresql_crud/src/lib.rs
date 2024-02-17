@@ -204,8 +204,22 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI8 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI8 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -230,8 +244,22 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -256,8 +284,22 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI32 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -282,8 +324,22 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -308,8 +364,22 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveF32 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF32 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -334,8 +404,22 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveF64 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF64 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -360,7 +444,22 @@ impl sqlx::Type<sqlx::Postgres> for StdStringString {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdStringString {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        <&str as sqlx::Encode<sqlx::Postgres>>::encode(&*self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -385,7 +484,22 @@ impl sqlx::Type<sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        <&[std::primitive::u8] as sqlx::Encode<sqlx::Postgres>>::encode(&self.0, buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
@@ -409,13 +523,22 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgInterval {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.extend(&self.0.microseconds.to_be_bytes());
-        buf.extend(&self.0.days.to_be_bytes());
-        buf.extend(&self.0.months.to_be_bytes());
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
-    fn size_hint(&self) -> std::primitive::usize {
-        2 * std::mem::size_of::<std::primitive::i64>()
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
@@ -445,6 +568,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI6
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     sqlx::postgres::types::PgRange<std::primitive::i32>,
@@ -473,31 +611,72 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI3
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
-// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>);
-// impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+    sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+);
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    pub fn into_inner(
+        self,
+    ) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>
+    {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc>
+    for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>
+{
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+{
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+{
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
@@ -531,55 +710,131 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
-// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>);
-// impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
-//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
-// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>);
-// impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+    sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>,
+);
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    pub fn into_inner(
+        self,
+    ) -> sqlx::postgres::types::PgRange<
+        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    > {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset>
+    for sqlx::postgres::types::PgRange<
+        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    >
+{
+    fn from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset,
+    ) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+{
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<
+            sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+        > as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgRange<
+            sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+        > as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+{
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+    sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
+);
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    pub fn into_inner(
+        self,
+    ) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>
+    {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal>
+    for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>
+{
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+{
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+{
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
@@ -610,6 +865,21 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetD
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
@@ -643,6 +913,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChron
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
@@ -671,55 +956,108 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
-// pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>);
-// impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
-//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
-// pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange<sqlx::types::Decimal>);
-// impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-//     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
-//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
+    sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
+);
+impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
+    for sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>
+{
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
+    sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
+);
+impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
+    for sqlx::postgres::types::PgRange<sqlx::types::Decimal>
+{
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
 pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
 impl SqlxPostgresTypesPgMoney {
     pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
@@ -743,6 +1081,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
 impl SqlxPostgresTypesPgLTree {
@@ -765,7 +1118,22 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLTree {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
@@ -789,7 +1157,22 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf) //todo inside lib Encode impl there is panic possibility. maybe create an issue
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
@@ -815,133 +1198,234 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
-// pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
-// impl SqlxTypesBigDecimal {
-//     pub fn into_inner(self) -> sqlx::types::BigDecimal {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesBigDecimal> for sqlx::types::BigDecimal {
-//     fn from(value: SqlxTypesBigDecimal) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesBigDecimal {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SqlxTypesDecimal(sqlx::types::Decimal);
-// impl SqlxTypesDecimal {
-//     pub fn into_inner(self) -> sqlx::types::Decimal {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesDecimal> for sqlx::types::Decimal {
-//     fn from(value: SqlxTypesDecimal) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesDecimal {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesDecimal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>);
-// impl SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-//     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> {
-//     fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>);
-// impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> {
-//     fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
-// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
-// impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-//     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
-//         self.0
-//     }
-// }
-// impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
-//     fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         buf.push(self.0 as u8);
-//         sqlx::encode::IsNull::No
-//     }
-// }
+pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
+impl SqlxTypesBigDecimal {
+    pub fn into_inner(self) -> sqlx::types::BigDecimal {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesBigDecimal> for sqlx::types::BigDecimal {
+    fn from(value: SqlxTypesBigDecimal) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesBigDecimal {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesDecimal(sqlx::types::Decimal);
+impl SqlxTypesDecimal {
+    pub fn into_inner(self) -> sqlx::types::Decimal {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesDecimal> for sqlx::types::Decimal {
+    fn from(value: SqlxTypesDecimal) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesDecimal {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesDecimal {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+);
+impl SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset>
+    for sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>
+{
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+    sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+);
+impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal>
+    for sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>
+{
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+    sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+);
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc>
+    for sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>
+{
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
 pub struct SqlxTypesChronoNaiveDate(sqlx::types::chrono::NaiveDate);
 impl SqlxTypesChronoNaiveDate {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveDate {
@@ -964,6 +1448,21 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDate {
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
@@ -989,6 +1488,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
 impl SqlxPostgresTypesPgTimeTz {
@@ -1012,6 +1526,21 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
@@ -1037,6 +1566,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
 impl SqlxTypesTimeOffsetDateTime {
@@ -1060,6 +1604,21 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
@@ -1085,6 +1644,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
 impl SqlxTypesTimeTime {
@@ -1109,6 +1683,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
 impl SqlxTypesUuidUuid {
@@ -1132,6 +1721,21 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1158,6 +1762,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdNetIpAddr(std::net::IpAddr);
@@ -1183,6 +1802,21 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
 pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
 impl SqlxTypesMacAddressMacAddress {
@@ -1206,6 +1840,21 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
 impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 pub struct SqlxTypesBitVec(sqlx::types::BitVec);
@@ -1231,30 +1880,60 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
 }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
-// impl<T> SqlxTypesJson<T> {
-//     pub fn into_inner(self) -> sqlx::types::Json<T> {
-//         self.0
-//     }
-// }
-// impl<T> std::convert::From<SqlxTypesJson<T>> for sqlx::types::Json<T> {
-//     fn from(value: SqlxTypesJson<T>) -> Self {
-//         value.0
-//     }
-// }
-// impl<T> sqlx::Type<sqlx::Postgres> for SqlxTypesJson<T> {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
+impl<T> SqlxTypesJson<T> {
+    pub fn into_inner(self) -> sqlx::types::Json<T> {
+        self.0
+    }
+}
+impl<T> std::convert::From<SqlxTypesJson<T>> for sqlx::types::Json<T> {
+    fn from(value: SqlxTypesJson<T>) -> Self {
+        value.0
+    }
+}
+impl<T> sqlx::Type<sqlx::Postgres> for SqlxTypesJson<T> {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
 // impl<T> sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesJson<T> {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
 //         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
 //     }
 // }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1280,6 +1959,21 @@ impl sqlx::Type<sqlx::Postgres> for SerdeJsonValue {
 impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
 
