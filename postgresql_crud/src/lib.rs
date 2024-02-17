@@ -164,8 +164,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        buf.push(self.0 as u8);
-        sqlx::encode::IsNull::No
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
