@@ -2538,9 +2538,27 @@ pub fn test_check_supported_postgresql_column_type() {
             start: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
             end: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
         });
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+        sqlx::postgres::types::PgRange::<
+            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+        > {
+            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_utc(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::Utc
+            )),
+            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_utc(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::Utc
+            )),
+        }
+        // pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+    );
     // let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
     // );
