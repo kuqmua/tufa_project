@@ -2524,9 +2524,13 @@ pub fn test_check_supported_postgresql_column_type() {
             days: std::primitive::i32::default(),
             microseconds: std::primitive::i64::default(),
         });
-    // let sqlx_postgres_types_pg_range_std_primitive_i64 = SqlxPostgresTypesPgRangeStdPrimitiveI64(
-    //     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
-    // );
+    let sqlx_postgres_types_pg_range_std_primitive_i64 =
+        SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
+            std::primitive::i64,
+        > {
+            start: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
+            end: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
+        });
     // let sqlx_postgres_types_pg_range_std_primitive_i32 = SqlxPostgresTypesPgRangeStdPrimitiveI32(
     //     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
     // );
