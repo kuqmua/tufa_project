@@ -2509,82 +2509,82 @@ pub async fn something() {
 
 pub fn test_check_supported_postgresql_column_type() {
     //
-    // StdPrimitiveBool(std::primitive::bool);
-    // StdPrimitiveI8(pub std::primitive::i8);
-    // StdPrimitiveI16(pub std::primitive::i16);
-    // StdPrimitiveI32(pub std::primitive::i32);
-    // StdPrimitiveI64(pub std::primitive::i64);
-    // StdPrimitiveF32(pub std::primitive::f32);
-    // StdPrimitiveF64(pub std::primitive::f64);
-    // StdStringString(pub std::string::String);
-    // StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-    // SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
-    // SqlxPostgresTypesPgRangeStdPrimitiveI64(
+    let std_primitive_bool = StdPrimitiveBool(true);
+    let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
+    let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
+    let std_primitive_i32 = StdPrimitiveI32(std::primitive::i32::default());
+    let std_primitive_i64 = StdPrimitiveI64(std::primitive::i64::default());
+    let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
+    let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
+    let std_string_string = StdStringString(std::string::String::default());
+    // let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+    // let sqlx_postgres_types_pg_interval = SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
+    // let sqlx_postgres_types_pg_range_std_primitive_i64 = SqlxPostgresTypesPgRangeStdPrimitiveI64(
     //     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
     // );
-    // SqlxPostgresTypesPgRangeStdPrimitiveI32(
+    // let sqlx_postgres_types_pg_range_std_primitive_i32 = SqlxPostgresTypesPgRangeStdPrimitiveI32(
     //     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+    // let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     //     pub  sqlx::postgres::types::PgRange<
     //         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
     //     >,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     //     pub  sqlx::postgres::types::PgRange<
     //         sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
     //     >,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
+    // let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
+    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
+    // let sqlx_postgres_types_pg_range_sqlx_types_time_date = SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
+    // let sqlx_postgres_types_pg_range_sqlx_types_big_decimal = SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
     // );
-    // SqlxPostgresTypesPgRangeSqlxTypesDecimal(
+    // let sqlx_postgres_types_pg_range_sqlx_types_decimal = SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
     // );
-    // SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
-    // SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
-    // SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
-    // SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
-    // SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
-    // SqlxTypesDecimal(pub sqlx::types::Decimal);
-    // SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+    // let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
+    // let sqlx_postgres_types_pg_l_tree = SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
+    // let sqlx_postgres_types_pg_l_query = SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
+    // let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
+    // let sqlx_types_big_decimal = SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
+    // let sqlx_types_decimal = SqlxTypesDecimal(pub sqlx::types::Decimal);
+    // let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
     // );
-    // SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+    // let sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
     // );
-    // SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+    // let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
     // );
-    // SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
-    // SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
-    // SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
-    // SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-    // SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
-    // SqlxTypesTimeDate(pub sqlx::types::time::Date);
-    // SqlxTypesTimeTime(pub sqlx::types::time::Time);
-    // SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
-    // SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
-    // StdNetIpAddr(pub std::net::IpAddr);
-    // SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
-    // SqlxTypesBitVec(pub sqlx::types::BitVec);
-    // SqlxTypesJson<T>(pub sqlx::types::Json<T>);
-    // SerdeJsonValue(pub serde_json::Value);
+    // let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
+    // let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
+    // let sqlx_postgres_types_pg_time_tz = SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
+    // let sqlx_types_time_primitive_date_time = SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
+    // let sqlx_types_time_offset_date_time = SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
+    // let sqlx_types_time_date = SqlxTypesTimeDate(pub sqlx::types::time::Date);
+    // let sqlx_types_time_time = SqlxTypesTimeTime(pub sqlx::types::time::Time);
+    // let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
+    // let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
+    // let std_net_ip_addr = StdNetIpAddr(pub std::net::IpAddr);
+    // let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
+    // let sqlx_types_bit_vec = SqlxTypesBitVec(pub sqlx::types::BitVec);
+    // let sqlx_types_json = SqlxTypesJson<T>(pub sqlx::types::Json<T>);
+    // let serde_json_value = SerdeJsonValue(pub serde_json::Value);
     //
     //
     StdPrimitiveBool::check_supported_postgresql_column_type();
