@@ -2542,14 +2542,14 @@ pub fn test_check_supported_postgresql_column_type() {
         sqlx::postgres::types::PgRange::<
             sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
         > {
-            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_utc(
+            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                 sqlx::types::chrono::NaiveDateTime::new(
                     sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
                     sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
                 ),
                 sqlx::types::chrono::Utc
             )),
-            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_utc(
+            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                 sqlx::types::chrono::NaiveDateTime::new(
                     sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
                     sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
