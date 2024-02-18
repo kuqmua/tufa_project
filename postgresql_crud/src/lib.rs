@@ -230,6 +230,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI8 {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI8 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI16(std::primitive::i16);
 impl StdPrimitiveI16 {
@@ -268,6 +276,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -310,6 +326,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI32 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI64(std::primitive::i64);
 impl StdPrimitiveI64 {
@@ -348,6 +372,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64 {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -390,6 +422,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF32 {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF32 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveF64(std::primitive::f64);
 impl StdPrimitiveF64 {
@@ -428,6 +468,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF64 {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF64 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -470,6 +518,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdStringString {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdStringString {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdVecVecStdPrimitiveU8(std::vec::Vec<std::primitive::u8>);
 impl StdVecVecStdPrimitiveU8 {
@@ -510,6 +566,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
 impl SqlxPostgresTypesPgInterval {
     pub fn into_inner(self) -> sqlx::postgres::types::PgInterval {
@@ -547,6 +611,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
@@ -592,6 +664,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI6
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
@@ -633,6 +713,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI3
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
@@ -685,6 +773,16 @@ impl sqlx::Encode<'_, sqlx::Postgres>
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+{
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
@@ -732,6 +830,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
@@ -793,6 +899,16 @@ impl sqlx::Encode<'_, sqlx::Postgres>
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+{
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
@@ -843,6 +959,16 @@ impl sqlx::Encode<'_, sqlx::Postgres>
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+{
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
@@ -888,6 +1014,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeO
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
@@ -937,6 +1071,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChron
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
@@ -978,6 +1120,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
@@ -1023,6 +1173,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDe
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
@@ -1066,6 +1224,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecim
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
 impl SqlxPostgresTypesPgMoney {
     pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
@@ -1103,6 +1269,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
@@ -1144,6 +1318,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
 impl SqlxPostgresTypesPgLQuery {
     pub fn into_inner(self) -> sqlx::postgres::types::PgLQuery {
@@ -1181,6 +1363,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
@@ -1222,6 +1412,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
 impl SqlxTypesBigDecimal {
     pub fn into_inner(self) -> sqlx::types::BigDecimal {
@@ -1259,6 +1457,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1299,6 +1505,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesDecimal {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesDecimal {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
@@ -1348,6 +1562,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
@@ -1389,6 +1611,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
@@ -1434,6 +1664,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesChronoNaiveDate(sqlx::types::chrono::NaiveDate);
 impl SqlxTypesChronoNaiveDate {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveDate {
@@ -1471,6 +1709,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
@@ -1512,6 +1758,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
 impl SqlxPostgresTypesPgTimeTz {
     pub fn into_inner(self) -> sqlx::postgres::types::PgTimeTz {
@@ -1549,6 +1803,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
@@ -1590,6 +1852,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
 impl SqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
@@ -1627,6 +1897,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
@@ -1668,6 +1946,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
 impl SqlxTypesTimeTime {
     pub fn into_inner(self) -> sqlx::types::time::Time {
@@ -1707,6 +1993,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
 impl SqlxTypesUuidUuid {
     pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
@@ -1744,6 +2038,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1786,6 +2088,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdNetIpAddr(std::net::IpAddr);
 impl StdNetIpAddr {
@@ -1824,6 +2134,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for StdNetIpAddr {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
@@ -1865,6 +2183,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 pub struct SqlxTypesBitVec(sqlx::types::BitVec);
 impl SqlxTypesBitVec {
     pub fn into_inner(self) -> sqlx::types::BitVec {
@@ -1902,6 +2228,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBitVec {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1958,6 +2292,28 @@ where
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl<'a, T: 'a> sqlx::Decode<'a, sqlx::Postgres> for SqlxTypesJson<T>
+where
+    T: sqlx::Decode<'a, sqlx::Postgres>
+        + Copy
+        + Clone
+        + std::fmt::Debug
+        + PartialEq
+        + Eq
+        + PartialOrd
+        + Ord
+        + std::hash::Hash
+        + Default
+        + serde::Serialize
+        + serde::Deserialize<'a>, //todo maybe add another traits impls
+{
+    fn decode(value: sqlx::postgres::PgValueRef<'a>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SerdeJsonValue(serde_json::Value);
 impl SerdeJsonValue {
@@ -1996,6 +2352,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
     }
     fn size_hint(&self) -> usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SerdeJsonValue {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
     }
 }
 
