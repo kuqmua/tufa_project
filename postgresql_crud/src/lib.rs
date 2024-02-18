@@ -2517,8 +2517,13 @@ pub fn test_check_supported_postgresql_column_type() {
     let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
     let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
     let std_string_string = StdStringString(std::string::String::default());
-    // let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-    // let sqlx_postgres_types_pg_interval = SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
+    let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std::primitive::u8::default()]);
+    let sqlx_postgres_types_pg_interval =
+        SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
+            months: std::primitive::i32::default(),
+            days: std::primitive::i32::default(),
+            microseconds: std::primitive::i64::default(),
+        });
     // let sqlx_postgres_types_pg_range_std_primitive_i64 = SqlxPostgresTypesPgRangeStdPrimitiveI64(
     //     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
     // );
