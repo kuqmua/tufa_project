@@ -134,6 +134,67 @@ struct Test<T> {
                                                    //maybe Enumerations
 }
 
+struct TestWrapper<T> {
+    //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
+    type_1: StdPrimitiveBool, //BOOL
+    type_2: StdPrimitiveI8,   //“CHAR”
+    type_3: StdPrimitiveI16,  //SMALLINT, SMALLSERIAL, INT2
+    type_4: StdPrimitiveI32,  //INT, SERIAL, INT4
+    type_5: StdPrimitiveI64,  //BIGINT, BIGSERIAL, INT8
+    type_6: StdPrimitiveF32,  //REAL, FLOAT4
+    type_7: StdPrimitiveF64,  //DOUBLE PRECISION, FLOAT8
+    // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    type_9: StdStringString, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
+    type_11: StdVecVecStdPrimitiveU8, //BYTEA
+    // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
+    type_13: SqlxPostgresTypesPgInterval, //INTERVAL
+    //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
+    type_14: SqlxPostgresTypesPgRangeStdPrimitiveI64, //INT8RANGE
+    type_15: SqlxPostgresTypesPgRangeStdPrimitiveI32, //INT4RANGE
+    // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
+    type_161: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc, //TSRANGE
+    type_162: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime, //maybe not correct//TSRANGE
+    // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
+    type_171: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TSTZRANGE
+    type_172: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,       //TSTZRANGE
+    type_173: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime, //maybe not correct//TSTZRANGE
+    // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
+    type_181: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate, //maybe not correct//DATERANGE
+    type_182: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,        //maybe not correct//DATERANGE
+    // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
+    type_191: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal, //NUMRANGE
+    type_192: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
+    type_20: SqlxPostgresTypesPgMoney,                     //MONEY
+    type_21: SqlxPostgresTypesPgLTree,                     //LTREE
+    type_22: SqlxPostgresTypesPgLQuery,                    //LQUERY
+    type_23: SqlxPostgresTypesPgCiText,                    //CITEXT
+    type_24: SqlxTypesBigDecimal,                          //NUMERIC
+    type_25: SqlxTypesDecimal,                             //NUMERIC
+    type_26: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
+    type_27: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
+    type_28: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
+    type_29: SqlxTypesChronoNaiveDate,                     //DATE
+    type_30: SqlxTypesChronoNaiveTime,                     //TIME
+    type_31: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
+    // type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
+    type_32: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
+    type_33: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
+    type_34: SqlxTypesTimeDate,              //DATE
+    type_35: SqlxTypesTimeTime,              //TIME
+    // type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
+    type_37: SqlxTypesUuidUuid,             //UUID
+    type_38: SqlxTypesIpnetworkIpNetwork,   //INET, CIDR
+    type_39: StdNetIpAddr,                  //INET, CIDR
+    type_40: SqlxTypesMacAddressMacAddress, //MACADDR
+    type_41: SqlxTypesBitVec,               //BIT, VARBIT
+    type_42: SqlxTypesJson<T>,              //JSON, JSONB
+    type_43: SerdeJsonValue,                //JSON, JSONB
+                                            // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
+                                            //maybe Composite types
+                                            //maybe Enumerations
+}
+
 pub trait CheckSupportedPostgresqlColumnType {
     fn check_supported_postgresql_column_type();
 }
