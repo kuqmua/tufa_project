@@ -187,8 +187,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBool {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdPrimitiveI8(std::primitive::i8);
+pub struct StdPrimitiveI8(pub std::primitive::i8);
 impl StdPrimitiveI8 {
     pub fn into_inner(self) -> std::primitive::i8 {
         self.0
@@ -235,8 +238,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI8 {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveI8 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdPrimitiveI16(std::primitive::i16);
+pub struct StdPrimitiveI16(pub std::primitive::i16);
 impl StdPrimitiveI16 {
     pub fn into_inner(self) -> std::primitive::i16 {
         self.0
@@ -283,8 +289,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16 {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveI16 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdPrimitiveI32(std::primitive::i32);
+pub struct StdPrimitiveI32(pub std::primitive::i32);
 impl StdPrimitiveI32 {
     pub fn into_inner(self) -> std::primitive::i32 {
         self.0
@@ -331,8 +340,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI32 {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveI32 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdPrimitiveI64(std::primitive::i64);
+pub struct StdPrimitiveI64(pub std::primitive::i64);
 impl StdPrimitiveI64 {
     pub fn into_inner(self) -> std::primitive::i64 {
         self.0
@@ -379,8 +391,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64 {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveI64 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdPrimitiveF32(std::primitive::f32);
+pub struct StdPrimitiveF32(pub std::primitive::f32);
 impl StdPrimitiveF32 {
     pub fn into_inner(self) -> std::primitive::f32 {
         self.0
@@ -427,8 +442,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF32 {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveF32 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdPrimitiveF64(std::primitive::f64);
+pub struct StdPrimitiveF64(pub std::primitive::f64);
 impl StdPrimitiveF64 {
     pub fn into_inner(self) -> std::primitive::f64 {
         self.0
@@ -475,8 +493,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF64 {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdPrimitiveF64 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdStringString(std::string::String);
+pub struct StdStringString(pub std::string::String);
 impl StdStringString {
     pub fn into_inner(self) -> std::string::String {
         self.0
@@ -523,8 +544,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdStringString {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for StdStringString {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdVecVecStdPrimitiveU8(std::vec::Vec<std::primitive::u8>);
+pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 impl StdVecVecStdPrimitiveU8 {
     pub fn into_inner(self) -> std::vec::Vec<std::primitive::u8> {
         self.0
@@ -571,7 +595,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
         }
     }
 }
-pub struct SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval);
+impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 impl SqlxPostgresTypesPgInterval {
     pub fn into_inner(self) -> sqlx::postgres::types::PgInterval {
         self.0
@@ -618,8 +645,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgInterval {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
-    sqlx::postgres::types::PgRange<std::primitive::i64>,
+    pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i64> {
@@ -669,8 +699,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI6
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
-    sqlx::postgres::types::PgRange<std::primitive::i32>,
+    pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
@@ -720,8 +753,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI3
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
-    sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub fn into_inner(
@@ -780,8 +816,13 @@ impl sqlx::Decode<'_, sqlx::Postgres>
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+{
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
-    sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     pub fn into_inner(
@@ -837,8 +878,13 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-    sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>,
+    pub  sqlx::postgres::types::PgRange<
+        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    >,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
     pub fn into_inner(
@@ -906,8 +952,13 @@ impl sqlx::Decode<'_, sqlx::Postgres>
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+{
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
-    sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub fn into_inner(
@@ -966,8 +1017,13 @@ impl sqlx::Decode<'_, sqlx::Postgres>
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+{
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
-    sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> {
@@ -1021,8 +1077,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeO
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
-    sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> {
@@ -1076,8 +1135,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChron
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
-    sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::time::Date> {
@@ -1127,8 +1189,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
-    sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
@@ -1178,8 +1243,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDe
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
-    sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
+    pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
@@ -1229,7 +1297,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecim
         }
     }
 }
-pub struct SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney);
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 impl SqlxPostgresTypesPgMoney {
     pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
         self.0
@@ -1276,7 +1347,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
         }
     }
 }
-pub struct SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree);
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
 impl SqlxPostgresTypesPgLTree {
     pub fn into_inner(self) -> sqlx::postgres::types::PgLTree {
         self.0
@@ -1323,7 +1397,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
         }
     }
 }
-pub struct SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery);
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgLTree {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
 impl SqlxPostgresTypesPgLQuery {
     pub fn into_inner(self) -> sqlx::postgres::types::PgLQuery {
         self.0
@@ -1370,7 +1447,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
         }
     }
 }
-pub struct SqlxPostgresTypesPgCiText(sqlx::postgres::types::PgCiText);
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgLQuery {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 impl SqlxPostgresTypesPgCiText {
     pub fn into_inner(self) -> sqlx::postgres::types::PgCiText {
         self.0
@@ -1417,7 +1497,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
         }
     }
 }
-pub struct SqlxTypesBigDecimal(sqlx::types::BigDecimal);
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 impl SqlxTypesBigDecimal {
     pub fn into_inner(self) -> sqlx::types::BigDecimal {
         self.0
@@ -1464,8 +1547,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesBigDecimal {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct SqlxTypesDecimal(sqlx::types::Decimal);
+pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
 impl SqlxTypesDecimal {
     pub fn into_inner(self) -> sqlx::types::Decimal {
         self.0
@@ -1512,8 +1598,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesDecimal {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesDecimal {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
 );
 impl SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> {
@@ -1567,8 +1656,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
-    sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+    pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> {
@@ -1618,8 +1710,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
-    sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+    pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
@@ -1669,7 +1764,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
         }
     }
 }
-pub struct SqlxTypesChronoNaiveDate(sqlx::types::chrono::NaiveDate);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 impl SqlxTypesChronoNaiveDate {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveDate {
         self.0
@@ -1716,7 +1814,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
         }
     }
 }
-pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDate {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl SqlxTypesChronoNaiveTime {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveTime {
         self.0
@@ -1763,7 +1864,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
         }
     }
 }
-pub struct SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveTime {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 impl SqlxPostgresTypesPgTimeTz {
     pub fn into_inner(self) -> sqlx::postgres::types::PgTimeTz {
         self.0
@@ -1810,7 +1914,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
         }
     }
 }
-pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTime {
     pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
         self.0
@@ -1857,7 +1964,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
         }
     }
 }
-pub struct SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesTimePrimitiveDateTime {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 impl SqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
         self.0
@@ -1904,7 +2014,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
         }
     }
 }
-pub struct SqlxTypesTimeDate(sqlx::types::time::Date);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeOffsetDateTime {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 impl SqlxTypesTimeDate {
     pub fn into_inner(self) -> sqlx::types::time::Date {
         self.0
@@ -1951,7 +2064,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
         }
     }
 }
-pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeDate {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 impl SqlxTypesTimeTime {
     pub fn into_inner(self) -> sqlx::types::time::Time {
         self.0
@@ -1998,7 +2114,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
         }
     }
 }
-pub struct SqlxTypesUuidUuid(sqlx::types::uuid::Uuid);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeTime {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 impl SqlxTypesUuidUuid {
     pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
         self.0
@@ -2045,8 +2164,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesUuidUuid {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
+pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 impl SqlxTypesIpnetworkIpNetwork {
     pub fn into_inner(self) -> sqlx::types::ipnetwork::IpNetwork {
         self.0
@@ -2093,8 +2215,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesIpnetworkIpNetwork {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct StdNetIpAddr(std::net::IpAddr);
+pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl StdNetIpAddr {
     pub fn into_inner(self) -> std::net::IpAddr {
         self.0
@@ -2141,7 +2266,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for StdNetIpAddr {
         }
     }
 }
-pub struct SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress);
+impl CheckSupportedPostgresqlColumnType for StdNetIpAddr {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 impl SqlxTypesMacAddressMacAddress {
     pub fn into_inner(self) -> sqlx::types::mac_address::MacAddress {
         self.0
@@ -2188,7 +2316,10 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
         }
     }
 }
-pub struct SqlxTypesBitVec(sqlx::types::BitVec);
+impl CheckSupportedPostgresqlColumnType for SqlxTypesMacAddressMacAddress {
+    fn check_supported_postgresql_column_type(&self) {}
+}
+pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 impl SqlxTypesBitVec {
     pub fn into_inner(self) -> sqlx::types::BitVec {
         self.0
@@ -2235,8 +2366,11 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBitVec {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SqlxTypesBitVec {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
+pub struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner(self) -> sqlx::types::Json<T> {
         self.0
@@ -2311,8 +2445,11 @@ where
         }
     }
 }
+impl<T> CheckSupportedPostgresqlColumnType for SqlxTypesJson<T> {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct SerdeJsonValue(serde_json::Value);
+pub struct SerdeJsonValue(pub serde_json::Value);
 impl SerdeJsonValue {
     pub fn into_inner(self) -> serde_json::Value {
         self.0
@@ -2359,10 +2496,17 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SerdeJsonValue {
         }
     }
 }
+impl CheckSupportedPostgresqlColumnType for SerdeJsonValue {
+    fn check_supported_postgresql_column_type(&self) {}
+}
 
 pub async fn something() {
     let mut query = sqlx::query::<sqlx::Postgres>("test");
     query = query.bind(Into::<bool>::into(StdPrimitiveBool(false)));
     query = query.bind(StdPrimitiveBool(false).into_inner());
     query = query.bind(StdPrimitiveBool(false));
+}
+
+pub fn test_check_supported_postgresql_column_type() {
+    //
 }
