@@ -88,29 +88,33 @@ struct Test<T> {
     type_14: sqlx::postgres::types::PgRange<std::primitive::i64>, //INT8RANGE
     type_15: sqlx::postgres::types::PgRange<std::primitive::i32>, //INT4RANGE
     // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
-    // type_161: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,//not found Encode impl for DateTime//TSRANGE
+    type_161:
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>, //TSRANGE
     type_162: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>, //maybe not correct//TSRANGE
     // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
-    // type_171: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>,//not found Encode impl for DateTime//TSTZRANGE
-    // type_172: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,//not found Encode impl for DateTime//TSTZRANGE
+    type_171: sqlx::postgres::types::PgRange<
+        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    >, //TSTZRANGE
+    type_172:
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>, //TSTZRANGE
     type_173: sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>, //maybe not correct//TSTZRANGE
     // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
     type_181: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>, //maybe not correct//DATERANGE
     type_182: sqlx::postgres::types::PgRange<sqlx::types::time::Date>, //maybe not correct//DATERANGE
     // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
-    // type_191: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,//not found Encode impl for BigDecimal//NUMRANGE
-    // type_192: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,//not found Encode impl for Decimal//NUMRANGE
-    type_20: sqlx::postgres::types::PgMoney,  //MONEY
-    type_21: sqlx::postgres::types::PgLTree,  //LTREE
-    type_22: sqlx::postgres::types::PgLQuery, //LQUERY
-    type_23: sqlx::postgres::types::PgCiText, //CITEXT
-    // type_24: sqlx::types::BigDecimal,//not found Encode impl for BigDecima//NUMERIC
-    // type_25: sqlx::types::Decimal,//not found Encode impl for Decimal//NUMERIC
-    // type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,//not found Encode impl for DateTime//TIMESTAMPTZ
-    // type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,//not found Encode impl for DateTime//TIMESTAMPTZ
-    // type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,//not found Encode impl for DateTime//TIMESTAMP
-    type_29: sqlx::types::chrono::NaiveDate,  //DATE
-    type_30: sqlx::types::chrono::NaiveTime,  //TIME
+    type_191: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>, //NUMRANGE
+    type_192: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,    //NUMRANGE
+    type_20: sqlx::postgres::types::PgMoney,                           //MONEY
+    type_21: sqlx::postgres::types::PgLTree,                           //LTREE
+    type_22: sqlx::postgres::types::PgLQuery,                          //LQUERY
+    type_23: sqlx::postgres::types::PgCiText,                          //CITEXT
+    type_24: sqlx::types::BigDecimal,                                  //NUMERIC
+    type_25: sqlx::types::Decimal,                                     //NUMERIC
+    type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>, //TIMESTAMPTZ
+    type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>, //TIMESTAMPTZ
+    type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,  //TIMESTAMP
+    type_29: sqlx::types::chrono::NaiveDate,                           //DATE
+    type_30: sqlx::types::chrono::NaiveTime,                           //TIME
     type_31: sqlx::postgres::types::PgTimeTz, //just present chrono or time flag
     // type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
     type_32: sqlx::types::time::PrimitiveDateTime, //TIMESTAMP
@@ -130,16 +134,9 @@ struct Test<T> {
                                                    //maybe Enumerations
 }
 
-// pub trait Type<DB>
-// where
-//     DB: Database,
-// {
-//     // Required method
-//     fn type_info() -> <DB as Database>::TypeInfo;
-
-//     // Provided method
-//     fn compatible(ty: &<DB as Database>::TypeInfo) -> bool { ... }
-// }
+pub trait CheckSupportedPostgresqlColumnType {
+    fn check_supported_postgresql_column_type(&self);
+}
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
 #[derive(serde::Serialize, serde::Deserialize)]
