@@ -182,6 +182,14 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
+impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBool {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI8(std::primitive::i8);
 impl StdPrimitiveI8 {
@@ -1929,7 +1937,7 @@ where
         + std::hash::Hash
         + Default
         + serde::Serialize
-        + serde::Deserialize<'a>,
+        + serde::Deserialize<'a>, //todo maybe add another traits impls
 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
