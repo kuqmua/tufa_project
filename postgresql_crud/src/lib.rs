@@ -2509,4 +2509,128 @@ pub async fn something() {
 
 pub fn test_check_supported_postgresql_column_type() {
     //
+    // StdPrimitiveBool(std::primitive::bool);
+    // StdPrimitiveI8(pub std::primitive::i8);
+    // StdPrimitiveI16(pub std::primitive::i16);
+    // StdPrimitiveI32(pub std::primitive::i32);
+    // StdPrimitiveI64(pub std::primitive::i64);
+    // StdPrimitiveF32(pub std::primitive::f32);
+    // StdPrimitiveF64(pub std::primitive::f64);
+    // StdStringString(pub std::string::String);
+    // StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+    // SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
+    // SqlxPostgresTypesPgRangeStdPrimitiveI64(
+    //     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
+    // );
+    // SqlxPostgresTypesPgRangeStdPrimitiveI32(
+    //     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+    //     pub  sqlx::postgres::types::PgRange<
+    //         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    //     >,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+    //     pub  sqlx::postgres::types::PgRange<
+    //         sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+    //     >,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
+    // );
+    // SqlxPostgresTypesPgRangeSqlxTypesDecimal(
+    //     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
+    // );
+    // SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
+    // SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
+    // SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
+    // SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
+    // SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
+    // SqlxTypesDecimal(pub sqlx::types::Decimal);
+    // SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+    //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+    // );
+    // SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+    //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+    // );
+    // SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+    //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+    // );
+    // SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
+    // SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
+    // SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
+    // SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
+    // SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
+    // SqlxTypesTimeDate(pub sqlx::types::time::Date);
+    // SqlxTypesTimeTime(pub sqlx::types::time::Time);
+    // SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
+    // SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
+    // StdNetIpAddr(pub std::net::IpAddr);
+    // SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
+    // SqlxTypesBitVec(pub sqlx::types::BitVec);
+    // SqlxTypesJson<T>(pub sqlx::types::Json<T>);
+    // SerdeJsonValue(pub serde_json::Value);
+    //
+    //
+    StdPrimitiveBool::check_supported_postgresql_column_type();
+    StdPrimitiveI8::check_supported_postgresql_column_type();
+    StdPrimitiveI16::check_supported_postgresql_column_type();
+    StdPrimitiveI32::check_supported_postgresql_column_type();
+    StdPrimitiveI64::check_supported_postgresql_column_type();
+    StdPrimitiveF32::check_supported_postgresql_column_type();
+    StdPrimitiveF64::check_supported_postgresql_column_type();
+    StdStringString::check_supported_postgresql_column_type();
+    StdVecVecStdPrimitiveU8::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgInterval::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeStdPrimitiveI64::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeStdPrimitiveI32::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::check_supported_postgresql_column_type(
+    );
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesTimeDate::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesDecimal::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgMoney::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgLTree::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgLQuery::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgCiText::check_supported_postgresql_column_type();
+    SqlxTypesBigDecimal::check_supported_postgresql_column_type();
+    SqlxTypesDecimal::check_supported_postgresql_column_type();
+    SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset::check_supported_postgresql_column_type();
+    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::check_supported_postgresql_column_type();
+    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::check_supported_postgresql_column_type();
+    SqlxTypesChronoNaiveDate::check_supported_postgresql_column_type();
+    SqlxTypesChronoNaiveTime::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgTimeTz::check_supported_postgresql_column_type();
+    SqlxTypesTimePrimitiveDateTime::check_supported_postgresql_column_type();
+    SqlxTypesTimeOffsetDateTime::check_supported_postgresql_column_type();
+    SqlxTypesTimeDate::check_supported_postgresql_column_type();
+    SqlxTypesTimeTime::check_supported_postgresql_column_type();
+    SqlxTypesUuidUuid::check_supported_postgresql_column_type();
+    SqlxTypesIpnetworkIpNetwork::check_supported_postgresql_column_type();
+    StdNetIpAddr::check_supported_postgresql_column_type();
+    SqlxTypesMacAddressMacAddress::check_supported_postgresql_column_type();
+    SqlxTypesBitVec::check_supported_postgresql_column_type();
+    SqlxTypesJson::<bool>::check_supported_postgresql_column_type();
+    SerdeJsonValue::check_supported_postgresql_column_type();
+    //
 }
