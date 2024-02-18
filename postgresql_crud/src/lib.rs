@@ -2531,9 +2531,13 @@ pub fn test_check_supported_postgresql_column_type() {
             start: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
             end: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
         });
-    // let sqlx_postgres_types_pg_range_std_primitive_i32 = SqlxPostgresTypesPgRangeStdPrimitiveI32(
-    //     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
-    // );
+    let sqlx_postgres_types_pg_range_std_primitive_i32 =
+        SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
+            std::primitive::i32,
+        > {
+            start: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
+            end: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
+        });
     // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
     // );
