@@ -3056,3 +3056,49 @@ pub enum PostgresqlType {
     //maybe Composite types
     //maybe Enumerations
 }
+
+pub trait AsPostgresqlBool {}
+pub trait AsPostgresqlChar {}
+pub trait AsPostgresqlSmallInt {}
+pub trait AsPostgresqlSmallSerial {}
+pub trait AsPostgresqlInt2 {}
+pub trait AsPostgresqlIntSerial {}
+pub trait AsPostgresqlInt4 {}
+pub trait AsPostgresqlBigInt {}
+pub trait AsPostgresqlBigSerial {}
+pub trait AsPostgresqlInt8 {}
+pub trait AsPostgresqlReal {}
+pub trait AsPostgresqlFloat4 {}
+pub trait AsPostgresqlDouble {}
+pub trait AsPostgresqlPrecision {}
+pub trait AsPostgresqlFloat8 {}
+pub trait AsPostgresqlVarchar {}
+pub trait AsPostgresqlCharN {}
+pub trait AsPostgresqlText {}
+pub trait AsPostgresqlName {}
+pub trait AsPostgresqlCiText {}
+pub trait AsPostgresqlBytea {}
+pub trait AsPostgresqlInterval {}
+pub trait AsPostgresqlInt8Range {}
+pub trait AsPostgresqlInt4Range {}
+pub trait AsPostgresqlTsRange {}
+pub trait AsPostgresqlTsTzRange {}
+pub trait AsPostgresqlDateRange {}
+pub trait AsPostgresqlNumRange {}
+pub trait AsPostgresqlMoney {}
+pub trait AsPostgresqlLTree {}
+pub trait AsPostgresqlLQuery {}
+pub trait AsPostgresqlNumeric {}
+pub trait AsPostgresqlTimestampTz {}
+pub trait AsPostgresqlDate {}
+pub trait AsPostgresqlTime {}
+pub trait AsPostgresqlTimeTz {}
+pub trait AsPostgresqlTimestamp {}
+pub trait AsPostgresqlUuid {}
+pub trait AsPostgresqlInet {}
+pub trait AsPostgresqlCidr {}
+pub trait AsPostgresqlMacAddr {}
+pub trait AsPostgresqlBit {}
+pub trait AsPostgresqlVarBit {}
+pub trait AsPostgresqlJson {}
+pub trait AsPostgresqlJsonB {}
