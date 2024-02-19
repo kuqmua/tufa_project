@@ -2570,6 +2570,7 @@ pub async fn something() {
 
 pub fn test_check_supported_postgresql_column_type() {
     //
+    //todo check if init functions are not panics. change to not panic init functions
     let std_primitive_bool = StdPrimitiveBool(true);
     let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
     let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
@@ -2886,8 +2887,16 @@ pub fn test_check_supported_postgresql_column_type() {
             )
             .unwrap(), //todo
         ));
-    // let sqlx_types_time_offset_date_time = SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
-    // let sqlx_types_time_date = SqlxTypesTimeDate(pub sqlx::types::time::Date);
+    let sqlx_types_time_offset_date_time =
+        SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
+    let sqlx_types_time_date = SqlxTypesTimeDate(
+        sqlx::types::time::Date::from_calendar_date(
+            std::primitive::i32::default(),
+            time::Month::February,
+            std::primitive::u8::default(),
+        )
+        .unwrap(),
+    );
     // let sqlx_types_time_time = SqlxTypesTimeTime(pub sqlx::types::time::Time);
     // let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
     // let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
