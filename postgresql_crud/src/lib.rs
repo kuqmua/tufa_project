@@ -2804,8 +2804,10 @@ pub fn test_check_supported_postgresql_column_type() {
     let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
         std::primitive::i64::default(),
     ));
-    // let sqlx_postgres_types_pg_l_tree = SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
-    // let sqlx_postgres_types_pg_l_query = SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
+    let sqlx_postgres_types_pg_l_tree =
+        SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
+    let sqlx_postgres_types_pg_l_query =
+        SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery::new());
     // let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
     // let sqlx_types_big_decimal = SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
     // let sqlx_types_decimal = SqlxTypesDecimal(pub sqlx::types::Decimal);
