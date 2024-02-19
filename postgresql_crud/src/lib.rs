@@ -2717,9 +2717,27 @@ pub fn test_check_supported_postgresql_column_type() {
                 sqlx::types::time::OffsetDateTime::now_utc(),
             ),
         });
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
+            sqlx::types::chrono::NaiveDate,
+        > {
+            start: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                sqlx::types::chrono::NaiveDate::from_ymd_opt(
+                    std::primitive::i32::default(),
+                    std::primitive::u32::default(),
+                    std::primitive::u32::default(),
+                )
+                .unwrap(),
+            ),
+            end: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                sqlx::types::chrono::NaiveDate::from_ymd_opt(
+                    std::primitive::i32::default(),
+                    std::primitive::u32::default(),
+                    std::primitive::u32::default(),
+                )
+                .unwrap(),
+            ),
+        });
     // let sqlx_postgres_types_pg_range_sqlx_types_time_date = SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
     // );
