@@ -2815,16 +2815,33 @@ pub fn test_check_supported_postgresql_column_type() {
         num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std::primitive::u32::default()]),
         std::primitive::i64::default(),
     ));
-    let sqlx_types_decimal = SqlxTypesDecimal(sqlx::types::Decimal::try_new(
-        std::primitive::i64::default(),
-        std::primitive::u32::default(),
-    ).unwrap());
-    // let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-    //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-    // );
-    // let sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
-    //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
-    // );
+    let sqlx_types_decimal = SqlxTypesDecimal(
+        sqlx::types::Decimal::try_new(
+            std::primitive::i64::default(),
+            std::primitive::u32::default(),
+        )
+        .unwrap(),
+    );
+    let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
+        SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime::<
+            sqlx::types::chrono::FixedOffset,
+        >::from_naive_utc_and_offset(
+            sqlx::types::chrono::NaiveDateTime::new(
+                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+            ),
+            sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
+        ));
+    let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
+            sqlx::types::chrono::Local,
+        >::from_naive_utc_and_offset(
+            sqlx::types::chrono::NaiveDateTime::new(
+                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+            ),
+            sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
+        ));
     // let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
     // );
