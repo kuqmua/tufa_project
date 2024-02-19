@@ -2620,9 +2620,34 @@ pub fn test_check_supported_postgresql_column_type() {
         }
         // pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
     );
-    // let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+        sqlx::postgres::types::PgRange::<sqlx::types::time::PrimitiveDateTime> {
+            start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_calendar_date(
+                    std::primitive::i32::default(),
+                    time::Month::February,
+                    std::primitive::u8::default(),
+                ).unwrap(),//todo
+                sqlx::types::time::Time::from_hms(
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                ).unwrap()//todo
+            )),
+            end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_calendar_date(
+                    std::primitive::i32::default(),
+                    time::Month::February,
+                    std::primitive::u8::default(),
+                ).unwrap(),//todo
+                sqlx::types::time::Time::from_hms(
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                ).unwrap()//todo
+            )),
+        }
+    );
     // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     //     pub  sqlx::postgres::types::PgRange<
     //         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
