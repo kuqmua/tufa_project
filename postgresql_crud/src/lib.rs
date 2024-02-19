@@ -2618,7 +2618,6 @@ pub fn test_check_supported_postgresql_column_type() {
                 sqlx::types::chrono::Utc
             )),
         }
-        // pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
     );
     let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
         SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
@@ -2842,9 +2841,16 @@ pub fn test_check_supported_postgresql_column_type() {
             ),
             sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
         ));
-    // let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
-    //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-    // );
+    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
+            sqlx::types::chrono::Utc,
+        >::from_naive_utc_and_offset(
+            sqlx::types::chrono::NaiveDateTime::new(
+                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+            ),
+            sqlx::types::chrono::Utc,
+        ));
     // let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
     // let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
     // let sqlx_postgres_types_pg_time_tz = SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
