@@ -2801,7 +2801,9 @@ pub fn test_check_supported_postgresql_column_type() {
                 .unwrap(),
             ),
         });
-    // let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
+    let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
+        std::primitive::i64::default(),
+    ));
     // let sqlx_postgres_types_pg_l_tree = SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
     // let sqlx_postgres_types_pg_l_query = SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
     // let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
