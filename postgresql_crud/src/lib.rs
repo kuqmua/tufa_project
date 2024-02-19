@@ -2935,7 +2935,15 @@ pub fn test_check_supported_postgresql_column_type() {
         std::primitive::u16::default(),
         std::primitive::u16::default(),
     )));
-    // let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
+    let sqlx_types_mac_address_mac_address =
+        SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new([
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+        ]));
     // let sqlx_types_bit_vec = SqlxTypesBitVec(pub sqlx::types::BitVec);
     // let sqlx_types_json = SqlxTypesJson<T>(pub sqlx::types::Json<T>);
     // let serde_json_value = SerdeJsonValue(pub serde_json::Value);
