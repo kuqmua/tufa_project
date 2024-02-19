@@ -2925,7 +2925,16 @@ pub fn test_check_supported_postgresql_column_type() {
             )
             .unwrap(),
         ));
-    // let std_net_ip_addr = StdNetIpAddr(pub std::net::IpAddr);
+    let std_net_ip_addr = StdNetIpAddr(std::net::IpAddr::V6(core::net::Ipv6Addr::new(
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+        std::primitive::u16::default(),
+    )));
     // let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
     // let sqlx_types_bit_vec = SqlxTypesBitVec(pub sqlx::types::BitVec);
     // let sqlx_types_json = SqlxTypesJson<T>(pub sqlx::types::Json<T>);
