@@ -2759,9 +2759,29 @@ pub fn test_check_supported_postgresql_column_type() {
                 .unwrap(),
             ),
         });
-    // let sqlx_postgres_types_pg_range_sqlx_types_big_decimal = SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
+            sqlx::types::BigDecimal,
+        > {
+            start: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                sqlx::types::BigDecimal::new(
+                    num_bigint::BigInt::new(
+                        num_bigint::Sign::Plus,
+                        vec![std::primitive::u32::default()],
+                    ),
+                    std::primitive::i64::default(),
+                ),
+            ),
+            end: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                sqlx::types::BigDecimal::new(
+                    num_bigint::BigInt::new(
+                        num_bigint::Sign::Plus,
+                        vec![std::primitive::u32::default()],
+                    ),
+                    std::primitive::i64::default(),
+                ),
+            ),
+        });
     // let sqlx_postgres_types_pg_range_sqlx_types_decimal = SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
     // );

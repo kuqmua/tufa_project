@@ -13,6 +13,7 @@ axum = {version = "=0.7.2", features = ["macros"]}
 serde = {version = "=1.0", features = ["derive"]}
 serde_json = {version = "=1.0"}
 time = {version = "=0.3.23"}
+num-bigint = {version = "=0.4.4"}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
