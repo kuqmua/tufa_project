@@ -2808,7 +2808,9 @@ pub fn test_check_supported_postgresql_column_type() {
         SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
     let sqlx_postgres_types_pg_l_query =
         SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery::new());
-    // let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
+    let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
+        sqlx::postgres::types::PgCiText(std::string::String::from("")),
+    );
     // let sqlx_types_big_decimal = SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
     // let sqlx_types_decimal = SqlxTypesDecimal(pub sqlx::types::Decimal);
     // let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
