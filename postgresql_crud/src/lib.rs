@@ -2871,7 +2871,21 @@ pub fn test_check_supported_postgresql_column_type() {
             )
             .unwrap(),
         });
-    // let sqlx_types_time_primitive_date_time = SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
+    let sqlx_types_time_primitive_date_time =
+        SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime::new(
+            sqlx::types::time::Date::from_calendar_date(
+                std::primitive::i32::default(),
+                time::Month::February,
+                std::primitive::u8::default(),
+            )
+            .unwrap(), //todo
+            sqlx::types::time::Time::from_hms(
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+            )
+            .unwrap(), //todo
+        ));
     // let sqlx_types_time_offset_date_time = SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
     // let sqlx_types_time_date = SqlxTypesTimeDate(pub sqlx::types::time::Date);
     // let sqlx_types_time_time = SqlxTypesTimeTime(pub sqlx::types::time::Time);
