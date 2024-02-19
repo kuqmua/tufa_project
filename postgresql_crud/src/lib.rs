@@ -2945,6 +2945,7 @@ pub fn test_check_supported_postgresql_column_type() {
             std::primitive::u8::default(),
         ]));
     let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
+    //
     #[derive(serde::Serialize, serde::Deserialize)]
     struct Something {
         something: std::string::String,
@@ -2953,7 +2954,8 @@ pub fn test_check_supported_postgresql_column_type() {
         something: std::string::String::from(""),
     };
     let sqlx_type_json_something: sqlx::types::Json<Something> = sqlx::types::Json(something);
-    // let sqlx_types_json = SqlxTypesJson<Something>(sqlx::types::Json<Something>);
+    let sqlx_types_json = SqlxTypesJson::<Something>(sqlx_type_json_something);
+    //
     // let serde_json_value = SerdeJsonValue(serde_json::Value);
     //
     //
