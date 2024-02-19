@@ -2620,52 +2620,74 @@ pub fn test_check_supported_postgresql_column_type() {
         }
         // pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
     );
-    let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
-        sqlx::postgres::types::PgRange::<sqlx::types::time::PrimitiveDateTime> {
-            start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_calendar_date(
-                    std::primitive::i32::default(),
-                    time::Month::February,
-                    std::primitive::u8::default(),
-                ).unwrap(),//todo
-                sqlx::types::time::Time::from_hms(
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                ).unwrap()//todo
-            )),
-            end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_calendar_date(
-                    std::primitive::i32::default(),
-                    time::Month::February,
-                    std::primitive::u8::default(),
-                ).unwrap(),//todo
-                sqlx::types::time::Time::from_hms(
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                ).unwrap()//todo
-            )),
-        }
-    );
-    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-        sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
-            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::FixedOffset>::from_naive_utc_and_offset(
-                sqlx::types::chrono::NaiveDateTime::new(
-                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
-                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+    let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
+            sqlx::types::time::PrimitiveDateTime,
+        > {
+            start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                sqlx::types::time::PrimitiveDateTime::new(
+                    sqlx::types::time::Date::from_calendar_date(
+                        std::primitive::i32::default(),
+                        time::Month::February,
+                        std::primitive::u8::default(),
+                    )
+                    .unwrap(), //todo
+                    sqlx::types::time::Time::from_hms(
+                        std::primitive::u8::default(),
+                        std::primitive::u8::default(),
+                        std::primitive::u8::default(),
+                    )
+                    .unwrap(), //todo
                 ),
-                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
-            )),
-            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::FixedOffset>::from_naive_utc_and_offset(
-                sqlx::types::chrono::NaiveDateTime::new(
-                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
-                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+            ),
+            end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                sqlx::types::time::PrimitiveDateTime::new(
+                    sqlx::types::time::Date::from_calendar_date(
+                        std::primitive::i32::default(),
+                        time::Month::February,
+                        std::primitive::u8::default(),
+                    )
+                    .unwrap(), //todo
+                    sqlx::types::time::Time::from_hms(
+                        std::primitive::u8::default(),
+                        std::primitive::u8::default(),
+                        std::primitive::u8::default(),
+                    )
+                    .unwrap(), //todo
                 ),
-                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
-            )),
-        }
-    );
+            ),
+        });
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+            sqlx::postgres::types::PgRange::<
+                sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+            > {
+                start: std::ops::Bound::<
+                    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+                >::Included(sqlx::types::chrono::DateTime::<
+                    sqlx::types::chrono::FixedOffset,
+                >::from_naive_utc_and_offset(
+                    sqlx::types::chrono::NaiveDateTime::new(
+                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                    ),
+                    sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default())
+                        .unwrap(),
+                )),
+                end: std::ops::Bound::<
+                    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+                >::Included(sqlx::types::chrono::DateTime::<
+                    sqlx::types::chrono::FixedOffset,
+                >::from_naive_utc_and_offset(
+                    sqlx::types::chrono::NaiveDateTime::new(
+                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                    ),
+                    sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default())
+                        .unwrap(),
+                )),
+            },
+        );
     let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
         sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
             start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
@@ -2684,9 +2706,17 @@ pub fn test_check_supported_postgresql_column_type() {
             )),
         }
     );
-    // let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange::<
+            sqlx::types::time::OffsetDateTime,
+        > {
+            start: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                sqlx::types::time::OffsetDateTime::now_utc(),
+            ),
+            end: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                sqlx::types::time::OffsetDateTime::now_utc(),
+            ),
+        });
     // let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
     // );
