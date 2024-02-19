@@ -2897,8 +2897,17 @@ pub fn test_check_supported_postgresql_column_type() {
         )
         .unwrap(),
     );
-    // let sqlx_types_time_time = SqlxTypesTimeTime(pub sqlx::types::time::Time);
-    // let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
+    let sqlx_types_time_time = SqlxTypesTimeTime(
+        sqlx::types::time::Time::from_hms(
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+            std::primitive::u8::default(),
+        )
+        .unwrap(),
+    );
+    let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
+        std::primitive::u128::default(),
+    ));
     // let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
     // let std_net_ip_addr = StdNetIpAddr(pub std::net::IpAddr);
     // let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
