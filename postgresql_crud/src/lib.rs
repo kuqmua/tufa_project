@@ -2782,9 +2782,25 @@ pub fn test_check_supported_postgresql_column_type() {
                 ),
             ),
         });
-    // let sqlx_postgres_types_pg_range_sqlx_types_decimal = SqlxPostgresTypesPgRangeSqlxTypesDecimal(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_decimal =
+        SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
+            sqlx::types::Decimal,
+        > {
+            start: std::ops::Bound::<sqlx::types::Decimal>::Included(
+                sqlx::types::Decimal::try_new(
+                    std::primitive::i64::default(),
+                    std::primitive::u32::default(),
+                )
+                .unwrap(),
+            ),
+            end: std::ops::Bound::<sqlx::types::Decimal>::Included(
+                sqlx::types::Decimal::try_new(
+                    std::primitive::i64::default(),
+                    std::primitive::u32::default(),
+                )
+                .unwrap(),
+            ),
+        });
     // let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
     // let sqlx_postgres_types_pg_l_tree = SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
     // let sqlx_postgres_types_pg_l_query = SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
