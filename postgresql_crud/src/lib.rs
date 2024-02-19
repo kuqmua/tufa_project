@@ -2738,9 +2738,27 @@ pub fn test_check_supported_postgresql_column_type() {
                 .unwrap(),
             ),
         });
-    // let sqlx_postgres_types_pg_range_sqlx_types_time_date = SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
-    //     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_time_date =
+        SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange::<
+            sqlx::types::time::Date,
+        > {
+            start: std::ops::Bound::<sqlx::types::time::Date>::Included(
+                sqlx::types::time::Date::from_calendar_date(
+                    std::primitive::i32::default(),
+                    time::Month::February,
+                    std::primitive::u8::default(),
+                )
+                .unwrap(),
+            ),
+            end: std::ops::Bound::<sqlx::types::time::Date>::Included(
+                sqlx::types::time::Date::from_calendar_date(
+                    std::primitive::i32::default(),
+                    time::Month::February,
+                    std::primitive::u8::default(),
+                )
+                .unwrap(),
+            ),
+        });
     // let sqlx_postgres_types_pg_range_sqlx_types_big_decimal = SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     //     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
     // );
