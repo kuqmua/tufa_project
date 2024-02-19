@@ -2851,7 +2851,9 @@ pub fn test_check_supported_postgresql_column_type() {
             ),
             sqlx::types::chrono::Utc,
         ));
-    // let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
+    let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
+        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),
+    );
     // let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
     // let sqlx_postgres_types_pg_time_tz = SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
     // let sqlx_types_time_primitive_date_time = SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
