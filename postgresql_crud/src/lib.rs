@@ -2648,11 +2648,24 @@ pub fn test_check_supported_postgresql_column_type() {
             )),
         }
     );
-    // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-    //     pub  sqlx::postgres::types::PgRange<
-    //         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-    //     >,
-    // );
+    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+        sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>> {
+            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::FixedOffset>::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
+            )),
+            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::FixedOffset>::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
+            )),
+        }
+    );
     // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     //     pub  sqlx::postgres::types::PgRange<
     //         sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
