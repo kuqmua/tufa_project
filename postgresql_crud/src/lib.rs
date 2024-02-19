@@ -2815,7 +2815,10 @@ pub fn test_check_supported_postgresql_column_type() {
         num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std::primitive::u32::default()]),
         std::primitive::i64::default(),
     ));
-    // let sqlx_types_decimal = SqlxTypesDecimal(pub sqlx::types::Decimal);
+    let sqlx_types_decimal = SqlxTypesDecimal(sqlx::types::Decimal::try_new(
+        std::primitive::i64::default(),
+        std::primitive::u32::default(),
+    ).unwrap());
     // let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset = SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     //     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
     // );
