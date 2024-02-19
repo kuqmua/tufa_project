@@ -2908,7 +2908,23 @@ pub fn test_check_supported_postgresql_column_type() {
     let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
         std::primitive::u128::default(),
     ));
-    // let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
+    let sqlx_types_ipnetwork_ip_network =
+        SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork::V6(
+            sqlx::types::ipnetwork::Ipv6Network::new(
+                std::net::Ipv6Addr::new(
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                    std::primitive::u16::default(),
+                ),
+                std::primitive::u8::default(),
+            )
+            .unwrap(),
+        ));
     // let std_net_ip_addr = StdNetIpAddr(pub std::net::IpAddr);
     // let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
     // let sqlx_types_bit_vec = SqlxTypesBitVec(pub sqlx::types::BitVec);
