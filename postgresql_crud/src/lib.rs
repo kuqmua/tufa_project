@@ -3020,8 +3020,7 @@ pub enum PostgresqlType {
     Int8,
     Real,
     Float4,
-    Double,
-    Precision,
+    DoublePrecision,
     Float8,
     Varchar,
     CharN,
@@ -3055,6 +3054,60 @@ pub enum PostgresqlType {
     JsonB,
     //maybe Composite types
     //maybe Enumerations
+}
+
+impl PostgresqlType {
+    pub fn postgresql_naming(&self) -> &str {
+        match self {
+            Self::Bool => "BOOL",
+            Self::Char => "CHAR",
+            Self::SmallInt => "SMALLINT",
+            Self::SmallSerial => "SMALLSERIAL",
+            Self::Int2 => "INT2",
+            Self::Int => "INT",
+            Self::Serial => "SERIAL",
+            Self::Int4 => "INT4",
+            Self::BigInt => "BIGINT",
+            Self::BigSerial => "BIGSERIAL",
+            Self::Int8 => "INT8",
+            Self::Real => "REAL",
+            Self::Float4 => "FLOAT4",
+            Self::DoublePrecision => "DOUBLE PRECISION",
+            Self::Float8 => "FLOAT8",
+            Self::Varchar => "VARCHAR",
+            Self::CharN => "CHAR(N)",
+            Self::Text => "TEXT",
+            Self::Name => "NAME",
+            Self::CiText => "CITEXT",
+            Self::Bytea => "BYTEA",
+            Self::Interval => "INTERVAL",
+            Self::Int8Range => "INT8RANGE",
+            Self::Int4Range => "INT4RANGE",
+            Self::TsRange => "TSRANGE",
+            Self::TsTzRange => "TSTZRANGE",
+            Self::DateRange => "DATERANGE",
+            Self::NumRange => "NUMRANGE",
+            Self::Money => "MONEY",
+            Self::LTree => "LTREE",
+            Self::LQuery => "LQUERY",
+            Self::Numeric => "NUMERIC",
+            Self::TimestampTz => "TIMESTAMPTZ",
+            Self::Date => "DATE",
+            Self::Time => "TIME",
+            Self::TimeTz => "TIMETZ",
+            Self::Timestamp => "TIMESTAMP",
+            Self::Uuid => "UUID",
+            Self::Inet => "INET",
+            Self::Cidr => "CIDR",
+            Self::MacAddr => "MACADDR",
+            Self::Bit => "BIT",
+            Self::VarBit => "VARBIT",
+            Self::Json => "JSON",
+            Self::JsonB => "JSONB",
+            //maybe Composite types
+            //maybe Enumerations
+        }
+    }
 }
 
 pub trait AsPostgresqlBool {}
