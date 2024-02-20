@@ -12,7 +12,7 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub mod app_state;
 pub mod json_value_extractor;
-struct Test<T> {
+pub struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: std::primitive::bool, //BOOL
     type_2: std::primitive::i8,   //“CHAR”
@@ -131,7 +131,7 @@ impl<T> std::convert::From<Test<T>> for TestWrapper<T> {
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
-struct Something {
+pub struct Something {
     something: std::string::String,
 }
 
@@ -574,7 +574,7 @@ impl Default for TestWrapper<Something> {
     }
 }
 
-struct TestWrapper<T> {
+pub struct TestWrapper<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: StdPrimitiveBool, //BOOL
     type_2: StdPrimitiveI8,   //“CHAR”

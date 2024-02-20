@@ -22,6 +22,7 @@ pub mod try_build_server;
 pub mod dev;
 
 fn main() {
+    common::repositories_types::server::routes::api::cats::ff();
     println!(
         "commit {}",
         common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit

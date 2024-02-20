@@ -1,6 +1,11 @@
 //todo openapi
 //todo test if create\update\delete empty array
 
+pub fn ff() {
+    let f = postgresql_crud::TestWrapper::<postgresql_crud::Something>::default();
+    println!("ok");
+}
+
 #[derive(
     Debug,
     postgresql_crud::GeneratePostgresqlCrud,
