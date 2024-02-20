@@ -130,6 +130,450 @@ impl<T> std::convert::From<Test<T>> for TestWrapper<T> {
     }
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
+struct Something {
+    something: std::string::String,
+}
+
+impl Default for TestWrapper<Something> {
+    fn default() -> Self {
+        let std_primitive_bool = StdPrimitiveBool(true);
+        let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
+        let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
+        let std_primitive_i32 = StdPrimitiveI32(std::primitive::i32::default());
+        let std_primitive_i64 = StdPrimitiveI64(std::primitive::i64::default());
+        let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
+        let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
+        let std_string_string = StdStringString(std::string::String::default());
+        let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std::primitive::u8::default()]);
+        let sqlx_postgres_types_pg_interval =
+            SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
+                months: std::primitive::i32::default(),
+                days: std::primitive::i32::default(),
+                microseconds: std::primitive::i64::default(),
+            });
+        let sqlx_postgres_types_pg_range_std_primitive_i64 =
+            SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
+                std::primitive::i64,
+            > {
+                start: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
+                end: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
+            });
+        let sqlx_postgres_types_pg_range_std_primitive_i32 =
+            SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
+                std::primitive::i32,
+            > {
+                start: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
+                end: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
+            });
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+            sqlx::postgres::types::PgRange::<
+                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+            > {
+                start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                    sqlx::types::chrono::NaiveDateTime::new(
+                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                    ),
+                    sqlx::types::chrono::Utc
+                )),
+                end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                    sqlx::types::chrono::NaiveDateTime::new(
+                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                    ),
+                    sqlx::types::chrono::Utc
+                )),
+            }
+        );
+        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
+            SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
+                sqlx::types::time::PrimitiveDateTime,
+            > {
+                start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                    sqlx::types::time::PrimitiveDateTime::new(
+                        sqlx::types::time::Date::from_calendar_date(
+                            std::primitive::i32::default(),
+                            time::Month::February,
+                            std::primitive::u8::default(),
+                        )
+                        .unwrap(), //todo
+                        sqlx::types::time::Time::from_hms(
+                            std::primitive::u8::default(),
+                            std::primitive::u8::default(),
+                            std::primitive::u8::default(),
+                        )
+                        .unwrap(), //todo
+                    ),
+                ),
+                end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                    sqlx::types::time::PrimitiveDateTime::new(
+                        sqlx::types::time::Date::from_calendar_date(
+                            std::primitive::i32::default(),
+                            time::Month::February,
+                            std::primitive::u8::default(),
+                        )
+                        .unwrap(), //todo
+                        sqlx::types::time::Time::from_hms(
+                            std::primitive::u8::default(),
+                            std::primitive::u8::default(),
+                            std::primitive::u8::default(),
+                        )
+                        .unwrap(), //todo
+                    ),
+                ),
+            });
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
+            SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
+                sqlx::postgres::types::PgRange::<
+                    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+                > {
+                    start: std::ops::Bound::<
+                        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+                    >::Included(sqlx::types::chrono::DateTime::<
+                        sqlx::types::chrono::FixedOffset,
+                    >::from_naive_utc_and_offset(
+                        sqlx::types::chrono::NaiveDateTime::new(
+                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                            sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                        ),
+                        sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default())
+                            .unwrap(),
+                    )),
+                    end: std::ops::Bound::<
+                        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
+                    >::Included(sqlx::types::chrono::DateTime::<
+                        sqlx::types::chrono::FixedOffset,
+                    >::from_naive_utc_and_offset(
+                        sqlx::types::chrono::NaiveDateTime::new(
+                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                            sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                        ),
+                        sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default())
+                            .unwrap(),
+                    )),
+                },
+            );
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+            sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+                start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                    sqlx::types::chrono::NaiveDateTime::new(
+                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                    ),
+                    sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
+                )),
+                end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                    sqlx::types::chrono::NaiveDateTime::new(
+                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
+                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                    ),
+                    sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
+                )),
+            }
+        );
+        let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
+            SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange::<
+                sqlx::types::time::OffsetDateTime,
+            > {
+                start: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                    sqlx::types::time::OffsetDateTime::now_utc(),
+                ),
+                end: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                    sqlx::types::time::OffsetDateTime::now_utc(),
+                ),
+            });
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
+            SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
+                sqlx::types::chrono::NaiveDate,
+            > {
+                start: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(
+                        std::primitive::i32::default(),
+                        std::primitive::u32::default(),
+                        std::primitive::u32::default(),
+                    )
+                    .unwrap(),
+                ),
+                end: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(
+                        std::primitive::i32::default(),
+                        std::primitive::u32::default(),
+                        std::primitive::u32::default(),
+                    )
+                    .unwrap(),
+                ),
+            });
+        let sqlx_postgres_types_pg_range_sqlx_types_time_date =
+            SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange::<
+                sqlx::types::time::Date,
+            > {
+                start: std::ops::Bound::<sqlx::types::time::Date>::Included(
+                    sqlx::types::time::Date::from_calendar_date(
+                        std::primitive::i32::default(),
+                        time::Month::February,
+                        std::primitive::u8::default(),
+                    )
+                    .unwrap(),
+                ),
+                end: std::ops::Bound::<sqlx::types::time::Date>::Included(
+                    sqlx::types::time::Date::from_calendar_date(
+                        std::primitive::i32::default(),
+                        time::Month::February,
+                        std::primitive::u8::default(),
+                    )
+                    .unwrap(),
+                ),
+            });
+        let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
+            SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
+                sqlx::types::BigDecimal,
+            > {
+                start: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                    sqlx::types::BigDecimal::new(
+                        num_bigint::BigInt::new(
+                            num_bigint::Sign::Plus,
+                            vec![std::primitive::u32::default()],
+                        ),
+                        std::primitive::i64::default(),
+                    ),
+                ),
+                end: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                    sqlx::types::BigDecimal::new(
+                        num_bigint::BigInt::new(
+                            num_bigint::Sign::Plus,
+                            vec![std::primitive::u32::default()],
+                        ),
+                        std::primitive::i64::default(),
+                    ),
+                ),
+            });
+        let sqlx_postgres_types_pg_range_sqlx_types_decimal =
+            SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
+                sqlx::types::Decimal,
+            > {
+                start: std::ops::Bound::<sqlx::types::Decimal>::Included(
+                    sqlx::types::Decimal::try_new(
+                        std::primitive::i64::default(),
+                        std::primitive::u32::default(),
+                    )
+                    .unwrap(),
+                ),
+                end: std::ops::Bound::<sqlx::types::Decimal>::Included(
+                    sqlx::types::Decimal::try_new(
+                        std::primitive::i64::default(),
+                        std::primitive::u32::default(),
+                    )
+                    .unwrap(),
+                ),
+            });
+        let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
+            std::primitive::i64::default(),
+        ));
+        let sqlx_postgres_types_pg_l_tree =
+            SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
+        let sqlx_postgres_types_pg_l_query =
+            SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery::new());
+        let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
+            sqlx::postgres::types::PgCiText(std::string::String::from("")),
+        );
+        let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(
+            num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std::primitive::u32::default()]),
+            std::primitive::i64::default(),
+        ));
+        let sqlx_types_decimal = SqlxTypesDecimal(
+            sqlx::types::Decimal::try_new(
+                std::primitive::i64::default(),
+                std::primitive::u32::default(),
+            )
+            .unwrap(),
+        );
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
+            SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime::<
+                sqlx::types::chrono::FixedOffset,
+            >::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
+            ));
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
+            SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
+                sqlx::types::chrono::Local,
+            >::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
+            ));
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
+            SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
+                sqlx::types::chrono::Utc,
+            >::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+                ),
+                sqlx::types::chrono::Utc,
+            ));
+        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
+            sqlx::types::chrono::NaiveDateTime::new(
+                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+            )
+        );
+        let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
+            sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),
+        );
+        let sqlx_types_chrono_naive_time =
+            SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap());
+        let sqlx_postgres_types_pg_time_tz =
+            SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
+                time: sqlx::types::time::Time::from_hms(
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                )
+                .unwrap(),
+                offset: sqlx::types::time::UtcOffset::from_hms(
+                    std::primitive::i8::default(),
+                    std::primitive::i8::default(),
+                    std::primitive::i8::default(),
+                )
+                .unwrap(),
+            });
+        let sqlx_types_time_primitive_date_time =
+            SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime::new(
+                sqlx::types::time::Date::from_calendar_date(
+                    std::primitive::i32::default(),
+                    time::Month::February,
+                    std::primitive::u8::default(),
+                )
+                .unwrap(), //todo
+                sqlx::types::time::Time::from_hms(
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                    std::primitive::u8::default(),
+                )
+                .unwrap(), //todo
+            ));
+        let sqlx_types_time_offset_date_time =
+            SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
+        let sqlx_types_time_date = SqlxTypesTimeDate(
+            sqlx::types::time::Date::from_calendar_date(
+                std::primitive::i32::default(),
+                time::Month::February,
+                std::primitive::u8::default(),
+            )
+            .unwrap(),
+        );
+        let sqlx_types_time_time = SqlxTypesTimeTime(
+            sqlx::types::time::Time::from_hms(
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+            )
+            .unwrap(),
+        );
+        let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
+            std::primitive::u128::default(),
+        ));
+        let sqlx_types_ipnetwork_ip_network =
+            SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork::V6(
+                sqlx::types::ipnetwork::Ipv6Network::new(
+                    std::net::Ipv6Addr::new(
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                        std::primitive::u16::default(),
+                    ),
+                    std::primitive::u8::default(),
+                )
+                .unwrap(),
+            ));
+        let std_net_ip_addr = StdNetIpAddr(std::net::IpAddr::V6(core::net::Ipv6Addr::new(
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+            std::primitive::u16::default(),
+        )));
+        let sqlx_types_mac_address_mac_address =
+            SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new([
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+                std::primitive::u8::default(),
+            ]));
+        let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
+        let something = Something {
+            something: std::string::String::from(""),
+        };
+        let sqlx_type_json_something: sqlx::types::Json<Something> = sqlx::types::Json(something);
+        let sqlx_types_json = SqlxTypesJson::<Something>(sqlx_type_json_something);
+        let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
+        //
+        Self {
+            type_1: std_primitive_bool,
+            type_2: std_primitive_i8,
+            type_3: std_primitive_i16,
+            type_4: std_primitive_i32,
+            type_5: std_primitive_i64,
+            type_6: std_primitive_f32,
+            type_7: std_primitive_f64,
+            type_9: std_string_string,
+            type_11: std_vec_vec_std_primitive_u8,
+            type_13: sqlx_postgres_types_pg_interval,
+            type_14: sqlx_postgres_types_pg_range_std_primitive_i64,
+            type_15: sqlx_postgres_types_pg_range_std_primitive_i32,
+            type_161: sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
+            type_162: sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time,
+            type_171: sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset,
+            type_172: sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local,
+            type_173: sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time,
+            type_181: sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date,
+            type_182: sqlx_postgres_types_pg_range_sqlx_types_time_date,
+            type_191: sqlx_postgres_types_pg_range_sqlx_types_big_decimal,
+            type_192: sqlx_postgres_types_pg_range_sqlx_types_decimal,
+            type_20: sqlx_postgres_types_pg_money,
+            type_21: sqlx_postgres_types_pg_l_tree,
+            type_22: sqlx_postgres_types_pg_l_query,
+            type_23: sqlx_postgres_types_pg_ci_text,
+            type_24: sqlx_types_big_decimal,
+            type_25: sqlx_types_decimal,
+            type_26: sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset,
+            type_27: sqlx_types_chrono_date_time_sqlx_types_chrono_local,
+            type_28: sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
+            type_29: sqlx_types_chrono_naive_date_time,
+            type_30: sqlx_types_chrono_naive_date,
+            type_31: sqlx_types_chrono_naive_time,
+            type_32: sqlx_postgres_types_pg_time_tz,
+            type_33: sqlx_types_time_primitive_date_time,
+            type_34: sqlx_types_time_offset_date_time,
+            type_35: sqlx_types_time_date,
+            type_36: sqlx_types_time_time,
+            type_37: sqlx_types_uuid_uuid,
+            type_38: sqlx_types_ipnetwork_ip_network,
+            type_39: std_net_ip_addr,
+            type_40: sqlx_types_mac_address_mac_address,
+            type_41: sqlx_types_bit_vec,
+            type_42: sqlx_types_json,
+            type_43: serde_json_value,
+        }
+    }
+}
+
 struct TestWrapper<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: StdPrimitiveBool, //BOOL
@@ -2742,397 +3186,7 @@ pub async fn something() {
 pub fn test_check_supported_postgresql_column_type() {
     //
     //todo check if init functions are not panics. change to not panic init functions
-    let std_primitive_bool = StdPrimitiveBool(true);
-    let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
-    let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
-    let std_primitive_i32 = StdPrimitiveI32(std::primitive::i32::default());
-    let std_primitive_i64 = StdPrimitiveI64(std::primitive::i64::default());
-    let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
-    let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
-    let std_string_string = StdStringString(std::string::String::default());
-    let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std::primitive::u8::default()]);
-    let sqlx_postgres_types_pg_interval =
-        SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
-            months: std::primitive::i32::default(),
-            days: std::primitive::i32::default(),
-            microseconds: std::primitive::i64::default(),
-        });
-    let sqlx_postgres_types_pg_range_std_primitive_i64 =
-        SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
-            std::primitive::i64,
-        > {
-            start: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
-            end: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
-        });
-    let sqlx_postgres_types_pg_range_std_primitive_i32 =
-        SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
-            std::primitive::i32,
-        > {
-            start: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
-            end: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
-        });
-    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
-        sqlx::postgres::types::PgRange::<
-            sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-        > {
-            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                sqlx::types::chrono::NaiveDateTime::new(
-                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
-                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-                ),
-                sqlx::types::chrono::Utc
-            )),
-            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                sqlx::types::chrono::NaiveDateTime::new(
-                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
-                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-                ),
-                sqlx::types::chrono::Utc
-            )),
-        }
-    );
-    let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
-        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
-            sqlx::types::time::PrimitiveDateTime,
-        > {
-            start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_calendar_date(
-                        std::primitive::i32::default(),
-                        time::Month::February,
-                        std::primitive::u8::default(),
-                    )
-                    .unwrap(), //todo
-                    sqlx::types::time::Time::from_hms(
-                        std::primitive::u8::default(),
-                        std::primitive::u8::default(),
-                        std::primitive::u8::default(),
-                    )
-                    .unwrap(), //todo
-                ),
-            ),
-            end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                sqlx::types::time::PrimitiveDateTime::new(
-                    sqlx::types::time::Date::from_calendar_date(
-                        std::primitive::i32::default(),
-                        time::Month::February,
-                        std::primitive::u8::default(),
-                    )
-                    .unwrap(), //todo
-                    sqlx::types::time::Time::from_hms(
-                        std::primitive::u8::default(),
-                        std::primitive::u8::default(),
-                        std::primitive::u8::default(),
-                    )
-                    .unwrap(), //todo
-                ),
-            ),
-        });
-    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
-        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-            sqlx::postgres::types::PgRange::<
-                sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-            > {
-                start: std::ops::Bound::<
-                    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-                >::Included(sqlx::types::chrono::DateTime::<
-                    sqlx::types::chrono::FixedOffset,
-                >::from_naive_utc_and_offset(
-                    sqlx::types::chrono::NaiveDateTime::new(
-                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
-                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-                    ),
-                    sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default())
-                        .unwrap(),
-                )),
-                end: std::ops::Bound::<
-                    sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-                >::Included(sqlx::types::chrono::DateTime::<
-                    sqlx::types::chrono::FixedOffset,
-                >::from_naive_utc_and_offset(
-                    sqlx::types::chrono::NaiveDateTime::new(
-                        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
-                        sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-                    ),
-                    sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default())
-                        .unwrap(),
-                )),
-            },
-        );
-    let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
-        sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-            start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                sqlx::types::chrono::NaiveDateTime::new(
-                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
-                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-                ),
-                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
-            )),
-            end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                sqlx::types::chrono::NaiveDateTime::new(
-                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),//todo
-                    sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-                ),
-                sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap()
-            )),
-        }
-    );
-    let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
-        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange::<
-            sqlx::types::time::OffsetDateTime,
-        > {
-            start: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                sqlx::types::time::OffsetDateTime::now_utc(),
-            ),
-            end: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                sqlx::types::time::OffsetDateTime::now_utc(),
-            ),
-        });
-    let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
-        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
-            sqlx::types::chrono::NaiveDate,
-        > {
-            start: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
-                sqlx::types::chrono::NaiveDate::from_ymd_opt(
-                    std::primitive::i32::default(),
-                    std::primitive::u32::default(),
-                    std::primitive::u32::default(),
-                )
-                .unwrap(),
-            ),
-            end: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
-                sqlx::types::chrono::NaiveDate::from_ymd_opt(
-                    std::primitive::i32::default(),
-                    std::primitive::u32::default(),
-                    std::primitive::u32::default(),
-                )
-                .unwrap(),
-            ),
-        });
-    let sqlx_postgres_types_pg_range_sqlx_types_time_date =
-        SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange::<
-            sqlx::types::time::Date,
-        > {
-            start: std::ops::Bound::<sqlx::types::time::Date>::Included(
-                sqlx::types::time::Date::from_calendar_date(
-                    std::primitive::i32::default(),
-                    time::Month::February,
-                    std::primitive::u8::default(),
-                )
-                .unwrap(),
-            ),
-            end: std::ops::Bound::<sqlx::types::time::Date>::Included(
-                sqlx::types::time::Date::from_calendar_date(
-                    std::primitive::i32::default(),
-                    time::Month::February,
-                    std::primitive::u8::default(),
-                )
-                .unwrap(),
-            ),
-        });
-    let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
-        SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
-            sqlx::types::BigDecimal,
-        > {
-            start: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
-                sqlx::types::BigDecimal::new(
-                    num_bigint::BigInt::new(
-                        num_bigint::Sign::Plus,
-                        vec![std::primitive::u32::default()],
-                    ),
-                    std::primitive::i64::default(),
-                ),
-            ),
-            end: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
-                sqlx::types::BigDecimal::new(
-                    num_bigint::BigInt::new(
-                        num_bigint::Sign::Plus,
-                        vec![std::primitive::u32::default()],
-                    ),
-                    std::primitive::i64::default(),
-                ),
-            ),
-        });
-    let sqlx_postgres_types_pg_range_sqlx_types_decimal =
-        SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
-            sqlx::types::Decimal,
-        > {
-            start: std::ops::Bound::<sqlx::types::Decimal>::Included(
-                sqlx::types::Decimal::try_new(
-                    std::primitive::i64::default(),
-                    std::primitive::u32::default(),
-                )
-                .unwrap(),
-            ),
-            end: std::ops::Bound::<sqlx::types::Decimal>::Included(
-                sqlx::types::Decimal::try_new(
-                    std::primitive::i64::default(),
-                    std::primitive::u32::default(),
-                )
-                .unwrap(),
-            ),
-        });
-    let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
-        std::primitive::i64::default(),
-    ));
-    let sqlx_postgres_types_pg_l_tree =
-        SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
-    let sqlx_postgres_types_pg_l_query =
-        SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery::new());
-    let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
-        sqlx::postgres::types::PgCiText(std::string::String::from("")),
-    );
-    let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(
-        num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std::primitive::u32::default()]),
-        std::primitive::i64::default(),
-    ));
-    let sqlx_types_decimal = SqlxTypesDecimal(
-        sqlx::types::Decimal::try_new(
-            std::primitive::i64::default(),
-            std::primitive::u32::default(),
-        )
-        .unwrap(),
-    );
-    let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
-        SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime::<
-            sqlx::types::chrono::FixedOffset,
-        >::from_naive_utc_and_offset(
-            sqlx::types::chrono::NaiveDateTime::new(
-                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
-                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-            ),
-            sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
-        ));
-    let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
-        SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
-            sqlx::types::chrono::Local,
-        >::from_naive_utc_and_offset(
-            sqlx::types::chrono::NaiveDateTime::new(
-                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
-                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-            ),
-            sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap(),
-        ));
-    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
-        SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
-            sqlx::types::chrono::Utc,
-        >::from_naive_utc_and_offset(
-            sqlx::types::chrono::NaiveDateTime::new(
-                sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
-                sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-            ),
-            sqlx::types::chrono::Utc,
-        ));
-    let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
-        sqlx::types::chrono::NaiveDateTime::new(
-            sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
-            sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
-        )
-    );
-    let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
-        sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),
-    );
-    let sqlx_types_chrono_naive_time =
-        SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap());
-    let sqlx_postgres_types_pg_time_tz =
-        SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
-            time: sqlx::types::time::Time::from_hms(
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-            )
-            .unwrap(),
-            offset: sqlx::types::time::UtcOffset::from_hms(
-                std::primitive::i8::default(),
-                std::primitive::i8::default(),
-                std::primitive::i8::default(),
-            )
-            .unwrap(),
-        });
-    let sqlx_types_time_primitive_date_time =
-        SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime::new(
-            sqlx::types::time::Date::from_calendar_date(
-                std::primitive::i32::default(),
-                time::Month::February,
-                std::primitive::u8::default(),
-            )
-            .unwrap(), //todo
-            sqlx::types::time::Time::from_hms(
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-            )
-            .unwrap(), //todo
-        ));
-    let sqlx_types_time_offset_date_time =
-        SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
-    let sqlx_types_time_date = SqlxTypesTimeDate(
-        sqlx::types::time::Date::from_calendar_date(
-            std::primitive::i32::default(),
-            time::Month::February,
-            std::primitive::u8::default(),
-        )
-        .unwrap(),
-    );
-    let sqlx_types_time_time = SqlxTypesTimeTime(
-        sqlx::types::time::Time::from_hms(
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-        )
-        .unwrap(),
-    );
-    let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
-        std::primitive::u128::default(),
-    ));
-    let sqlx_types_ipnetwork_ip_network =
-        SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork::V6(
-            sqlx::types::ipnetwork::Ipv6Network::new(
-                std::net::Ipv6Addr::new(
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                    std::primitive::u16::default(),
-                ),
-                std::primitive::u8::default(),
-            )
-            .unwrap(),
-        ));
-    let std_net_ip_addr = StdNetIpAddr(std::net::IpAddr::V6(core::net::Ipv6Addr::new(
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-        std::primitive::u16::default(),
-    )));
-    let sqlx_types_mac_address_mac_address =
-        SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new([
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-            std::primitive::u8::default(),
-        ]));
-    let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
-    //
-    #[derive(serde::Serialize, serde::Deserialize)]
-    struct Something {
-        something: std::string::String,
-    }
-    let something = Something {
-        something: std::string::String::from(""),
-    };
-    let sqlx_type_json_something: sqlx::types::Json<Something> = sqlx::types::Json(something);
-    let sqlx_types_json = SqlxTypesJson::<Something>(sqlx_type_json_something);
-    let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
+
     //
     //
     StdPrimitiveBool::check_supported_postgresql_column_type();
