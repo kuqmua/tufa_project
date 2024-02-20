@@ -139,6 +139,7 @@ impl Default for TestWrapper<Something> {
     fn default() -> Self {
         let std_primitive_i8_handle = std::primitive::i8::default();
         let std_primitive_i32_handle = std::primitive::i32::default();
+        let std_primitive_i64_handle = std::primitive::i64::default();
         let sqlx_types_time_date_handle = sqlx::types::time::Date::from_calendar_date(
             2024,
             time::Month::February,
@@ -159,7 +160,7 @@ impl Default for TestWrapper<Something> {
         let sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle.clone()).unwrap();
         let sqlx_types_time_offset_date_time_handle = sqlx::types::time::OffsetDateTime::now_utc();
         let sqlx_types_decimal_handle = sqlx::types::Decimal::try_new(
-            std::primitive::i64::default(),
+            std_primitive_i64_handle.clone(),
             std::primitive::u32::default(),
         )
         .unwrap();
@@ -169,7 +170,7 @@ impl Default for TestWrapper<Something> {
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
         let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
         let std_primitive_i32 = StdPrimitiveI32(std_primitive_i32_handle.clone());
-        let std_primitive_i64 = StdPrimitiveI64(std::primitive::i64::default());
+        let std_primitive_i64 = StdPrimitiveI64(std_primitive_i64_handle.clone());
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
         let std_string_string = StdStringString(std::string::String::default());
@@ -178,14 +179,14 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
                 months: std_primitive_i32_handle.clone(),
                 days: std_primitive_i32_handle.clone(),
-                microseconds: std::primitive::i64::default(),
+                microseconds: std_primitive_i64_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_std_primitive_i64 =
             SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
                 std::primitive::i64,
             > {
-                start: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
-                end: std::ops::Bound::<std::primitive::i64>::Included(std::primitive::i64::default()),
+                start: std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone()),
+                end: std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone()),
             });
         let sqlx_postgres_types_pg_range_std_primitive_i32 =
             SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
@@ -297,7 +298,7 @@ impl Default for TestWrapper<Something> {
                             num_bigint::Sign::Plus,
                             vec![std::primitive::u32::default()],
                         ),
-                        std::primitive::i64::default(),
+                        std_primitive_i64_handle.clone(),
                     ),
                 ),
                 end: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
@@ -306,7 +307,7 @@ impl Default for TestWrapper<Something> {
                             num_bigint::Sign::Plus,
                             vec![std::primitive::u32::default()],
                         ),
-                        std::primitive::i64::default(),
+                        std_primitive_i64_handle.clone(),
                     ),
                 ),
             });
@@ -316,21 +317,21 @@ impl Default for TestWrapper<Something> {
             > {
                 start: std::ops::Bound::<sqlx::types::Decimal>::Included(
                     sqlx::types::Decimal::try_new(
-                        std::primitive::i64::default(),
+                        std_primitive_i64_handle.clone(),
                         std::primitive::u32::default(),
                     )
                     .unwrap(),
                 ),
                 end: std::ops::Bound::<sqlx::types::Decimal>::Included(
                     sqlx::types::Decimal::try_new(
-                        std::primitive::i64::default(),
+                        std_primitive_i64_handle.clone(),
                         std::primitive::u32::default(),
                     )
                     .unwrap(),
                 ),
             });
         let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
-            std::primitive::i64::default(),
+            std_primitive_i64_handle.clone(),
         ));
         let sqlx_postgres_types_pg_l_tree =
             SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
@@ -341,11 +342,11 @@ impl Default for TestWrapper<Something> {
         );
         let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(
             num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std::primitive::u32::default()]),
-            std::primitive::i64::default(),
+            std_primitive_i64_handle.clone(),
         ));
         let sqlx_types_decimal = SqlxTypesDecimal(
             sqlx::types::Decimal::try_new(
-                std::primitive::i64::default(),
+                std_primitive_i64_handle.clone(),
                 std::primitive::u32::default(),
             )
             .unwrap(),
