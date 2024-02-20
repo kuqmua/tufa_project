@@ -169,6 +169,13 @@ impl Default for TestWrapper<Something> {
         )
         .unwrap();
         let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
+        let sqlx_types_big_decimal_handle = sqlx::types::BigDecimal::new(
+            num_bigint::BigInt::new(
+                num_bigint::Sign::Plus,
+                vec![std_primitive_u32_handle.clone()],
+            ),
+            std_primitive_i64_handle.clone(),
+        );
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
@@ -288,24 +295,8 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
                 sqlx::types::BigDecimal,
             > {
-                start: std::ops::Bound::Included(
-                    sqlx::types::BigDecimal::new(
-                        num_bigint::BigInt::new(
-                            num_bigint::Sign::Plus,
-                            vec![std_primitive_u32_handle.clone()],
-                        ),
-                        std_primitive_i64_handle.clone(),
-                    ),
-                ),
-                end: std::ops::Bound::Included(
-                    sqlx::types::BigDecimal::new(
-                        num_bigint::BigInt::new(
-                            num_bigint::Sign::Plus,
-                            vec![std_primitive_u32_handle.clone()],
-                        ),
-                        std_primitive_i64_handle.clone(),
-                    ),
-                ),
+                start: std::ops::Bound::Included(sqlx_types_big_decimal_handle.clone()),
+                end: std::ops::Bound::Included(sqlx_types_big_decimal_handle.clone()),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_decimal =
             SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
@@ -328,10 +319,7 @@ impl Default for TestWrapper<Something> {
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
             sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
-        let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(
-            num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std_primitive_u32_handle.clone()]),
-            std_primitive_i64_handle.clone(),
-        ));
+        let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx_types_big_decimal_handle.clone());
         let sqlx_types_decimal = SqlxTypesDecimal(
             sqlx_types_decimal_handle.clone(),
         );
