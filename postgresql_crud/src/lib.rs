@@ -155,6 +155,10 @@ impl Default for TestWrapper<Something> {
             sqlx_types_chrono_naive_date.clone(),//todo
             sqlx_types_chrono_naive_time.clone(),
         );
+        let sqlx_types_time_primitive_date_time = sqlx::types::time::PrimitiveDateTime::new(
+            sqlx_types_time_date.clone(), //todo
+            sqlx_types_time_time.clone(), //todo
+        );
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
@@ -204,16 +208,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::time::PrimitiveDateTime,
             > {
                 start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                    sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx_types_time_date.clone(), //todo
-                        sqlx_types_time_time.clone(), //todo
-                    ),
+                    sqlx_types_time_primitive_date_time.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                    sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx_types_time_date.clone(), //todo
-                        sqlx_types_time_time.clone(), //todo
-                    ),
+                    sqlx_types_time_primitive_date_time.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
@@ -388,10 +386,7 @@ impl Default for TestWrapper<Something> {
                 .unwrap(),
             });
         let sqlx_types_time_primitive_date_time =
-            SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime::new(
-                sqlx_types_time_date.clone(), //todo
-                sqlx_types_time_time.clone(), //todo
-            ));
+            SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time.clone());
         let sqlx_types_time_offset_date_time =
             SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
         let sqlx_types_time_date = SqlxTypesTimeDate(
