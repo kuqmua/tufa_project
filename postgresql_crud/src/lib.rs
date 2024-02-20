@@ -56,9 +56,7 @@ struct Test<T> {
     type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>, //TIMESTAMPTZ
     type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>, //TIMESTAMPTZ
     type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,  //TIMESTAMP
-    //
     type_29: sqlx::types::chrono::NaiveDateTime,//TIMESTAMP
-    //
     type_30: sqlx::types::chrono::NaiveDate,                           //DATE
     type_31: sqlx::types::chrono::NaiveTime,                           //TIME
     type_32: sqlx::postgres::types::PgTimeTz, //just present chrono or time flag
@@ -120,9 +118,7 @@ struct TestWrapper<T> {
     type_26: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
     type_27: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
     type_28: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
-    //
     type_29: SqlxTypesChronoNaiveDateTime,//TIMESTAMP
-    //
     type_30: SqlxTypesChronoNaiveDate,                     //DATE
     type_31: SqlxTypesChronoNaiveTime,                     //TIME
     type_32: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
@@ -2975,6 +2971,12 @@ pub fn test_check_supported_postgresql_column_type() {
             ),
             sqlx::types::chrono::Utc,
         ));
+    let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
+        sqlx::types::chrono::NaiveDateTime::new(
+            sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(), //todo
+            sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap(),
+        )
+    );
     let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
         sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap(),
     );
