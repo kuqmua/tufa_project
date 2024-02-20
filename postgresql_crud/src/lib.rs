@@ -137,26 +137,26 @@ pub struct Something {
 
 impl Default for TestWrapper<Something> {
     fn default() -> Self {
-        let sqlx_types_time_date = sqlx::types::time::Date::from_calendar_date(
+        let sqlx_types_time_date_handle = sqlx::types::time::Date::from_calendar_date(
             2024,
             time::Month::February,
             3,
         )
         .unwrap();
-        let sqlx_types_time_time = sqlx::types::time::Time::from_hms(1,1,1).unwrap();
-        let sqlx_types_chrono_naive_date = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
-        let sqlx_types_chrono_naive_time = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
-        let sqlx_types_chrono_naive_date_time = sqlx::types::chrono::NaiveDateTime::new(
-            sqlx_types_chrono_naive_date.clone(),//todo
-            sqlx_types_chrono_naive_time.clone(),
+        let sqlx_types_time_time_handle = sqlx::types::time::Time::from_hms(1,1,1).unwrap();
+        let sqlx_types_chrono_naive_date_handle = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
+        let sqlx_types_chrono_naive_time_handle = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
+        let sqlx_types_chrono_naive_date_time_handle = sqlx::types::chrono::NaiveDateTime::new(
+            sqlx_types_chrono_naive_date_handle.clone(),//todo
+            sqlx_types_chrono_naive_time_handle.clone(),
         );
-        let sqlx_types_time_primitive_date_time = sqlx::types::time::PrimitiveDateTime::new(
-            sqlx_types_time_date.clone(), //todo
-            sqlx_types_time_time.clone(), //todo
+        let sqlx_types_time_primitive_date_time_handle = sqlx::types::time::PrimitiveDateTime::new(
+            sqlx_types_time_date_handle.clone(), //todo
+            sqlx_types_time_time_handle.clone(), //todo
         );
-        let sqlx_types_chrono_fixed_offset = sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap();
-        let sqlx_types_time_offset_date_time = sqlx::types::time::OffsetDateTime::now_utc();
-        let sqlx_types_decimal = sqlx::types::Decimal::try_new(
+        let sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap();
+        let sqlx_types_time_offset_date_time_handle = sqlx::types::time::OffsetDateTime::now_utc();
+        let sqlx_types_decimal_handle = sqlx::types::Decimal::try_new(
             std::primitive::i64::default(),
             std::primitive::u32::default(),
         )
@@ -196,11 +196,11 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
             > {
                 start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                    sqlx_types_chrono_naive_date_time.clone(),
+                    sqlx_types_chrono_naive_date_time_handle.clone(),
                     sqlx::types::chrono::Utc
                 )),
                 end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                    sqlx_types_chrono_naive_date_time.clone(),
+                    sqlx_types_chrono_naive_date_time_handle.clone(),
                     sqlx::types::chrono::Utc
                 )),
             }
@@ -210,10 +210,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::time::PrimitiveDateTime,
             > {
                 start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                    sqlx_types_time_primitive_date_time.clone(),
+                    sqlx_types_time_primitive_date_time_handle.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                    sqlx_types_time_primitive_date_time.clone(),
+                    sqlx_types_time_primitive_date_time_handle.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
@@ -226,28 +226,28 @@ impl Default for TestWrapper<Something> {
                     >::Included(sqlx::types::chrono::DateTime::<
                         sqlx::types::chrono::FixedOffset,
                     >::from_naive_utc_and_offset(
-                        sqlx_types_chrono_naive_date_time.clone(),
-                        sqlx_types_chrono_fixed_offset.clone(),
+                        sqlx_types_chrono_naive_date_time_handle.clone(),
+                        sqlx_types_chrono_fixed_offset_handle.clone(),
                     )),
                     end: std::ops::Bound::<
                         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
                     >::Included(sqlx::types::chrono::DateTime::<
                         sqlx::types::chrono::FixedOffset,
                     >::from_naive_utc_and_offset(
-                        sqlx_types_chrono_naive_date_time.clone(),
-                        sqlx_types_chrono_fixed_offset.clone(),
+                        sqlx_types_chrono_naive_date_time_handle.clone(),
+                        sqlx_types_chrono_fixed_offset_handle.clone(),
                     )),
                 },
             );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
             sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
                 start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                    sqlx_types_chrono_naive_date_time.clone(),
-                    sqlx_types_chrono_fixed_offset.clone()
+                    sqlx_types_chrono_naive_date_time_handle.clone(),
+                    sqlx_types_chrono_fixed_offset_handle.clone()
                 )),
                 end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                    sqlx_types_chrono_naive_date_time.clone(),
-                    sqlx_types_chrono_fixed_offset.clone()
+                    sqlx_types_chrono_naive_date_time_handle.clone(),
+                    sqlx_types_chrono_fixed_offset_handle.clone()
                 )),
             }
         );
@@ -256,10 +256,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::time::OffsetDateTime,
             > {
                 start: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                    sqlx_types_time_offset_date_time.clone(),
+                    sqlx_types_time_offset_date_time_handle.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                    sqlx_types_time_offset_date_time.clone(),
+                    sqlx_types_time_offset_date_time_handle.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
@@ -267,10 +267,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::chrono::NaiveDate,
             > {
                 start: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
-                    sqlx_types_chrono_naive_date.clone(),
+                    sqlx_types_chrono_naive_date_handle.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
-                    sqlx_types_chrono_naive_date.clone(),
+                    sqlx_types_chrono_naive_date_handle.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_time_date =
@@ -278,10 +278,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::time::Date,
             > {
                 start: std::ops::Bound::<sqlx::types::time::Date>::Included(
-                    sqlx_types_time_date.clone(),
+                    sqlx_types_time_date_handle.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::Date>::Included(
-                    sqlx_types_time_date.clone(),
+                    sqlx_types_time_date_handle.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
@@ -351,33 +351,33 @@ impl Default for TestWrapper<Something> {
             SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::FixedOffset,
             >::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time.clone(),
-                sqlx_types_chrono_fixed_offset,
+                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_fixed_offset_handle,
             ));
         let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
             SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::Local,
             >::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time.clone(),
-                sqlx_types_chrono_fixed_offset,
+                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_fixed_offset_handle,
             ));
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
             SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::Utc,
             >::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time.clone(),
+                sqlx_types_chrono_naive_date_time_handle.clone(),
                 sqlx::types::chrono::Utc,
             ));
         let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
-            sqlx_types_chrono_naive_date_time.clone()
+            sqlx_types_chrono_naive_date_time_handle.clone()
         );
         let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
-            sqlx_types_chrono_naive_date.clone(),
+            sqlx_types_chrono_naive_date_handle.clone(),
         );
-        let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time.clone());
+        let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time_handle.clone());
         let sqlx_postgres_types_pg_time_tz =
             SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
-                time: sqlx_types_time_time.clone(),
+                time: sqlx_types_time_time_handle.clone(),
                 offset: sqlx::types::time::UtcOffset::from_hms(
                     std::primitive::i8::default(),
                     std::primitive::i8::default(),
@@ -386,14 +386,14 @@ impl Default for TestWrapper<Something> {
                 .unwrap(),
             });
         let sqlx_types_time_primitive_date_time =
-            SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time.clone());
+            SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time_handle.clone());
         let sqlx_types_time_offset_date_time =
-            SqlxTypesTimeOffsetDateTime(sqlx_types_time_offset_date_time.clone());
+            SqlxTypesTimeOffsetDateTime(sqlx_types_time_offset_date_time_handle.clone());
         let sqlx_types_time_date = SqlxTypesTimeDate(
-            sqlx_types_time_date.clone(),
+            sqlx_types_time_date_handle.clone(),
         );
         let sqlx_types_time_time = SqlxTypesTimeTime(
-            sqlx_types_time_time.clone(),
+            sqlx_types_time_time_handle.clone(),
         );
         let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
             std::primitive::u128::default(),
