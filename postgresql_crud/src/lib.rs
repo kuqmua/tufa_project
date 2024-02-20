@@ -1078,16 +1078,13 @@ impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
-// #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
-//
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct PgIntervalWithSerializeDeserialize {
     pub months: std::primitive::i32,
     pub days: std::primitive::i32,
     pub microseconds: std::primitive::i64,
 }
-
 impl std::convert::From<PgIntervalWithSerializeDeserialize> for sqlx::postgres::types::PgInterval {
     fn from(value: PgIntervalWithSerializeDeserialize) -> Self {
         Self {
@@ -1097,7 +1094,6 @@ impl std::convert::From<PgIntervalWithSerializeDeserialize> for sqlx::postgres::
         }
     }
 }
-
 impl std::convert::From<sqlx::postgres::types::PgInterval> for PgIntervalWithSerializeDeserialize {
     fn from(value: sqlx::postgres::types::PgInterval) -> Self {
         Self {
@@ -1107,7 +1103,6 @@ impl std::convert::From<sqlx::postgres::types::PgInterval> for PgIntervalWithSer
         }
     }
 }
-//
 impl SqlxPostgresTypesPgInterval {
     pub fn into_inner(self) -> sqlx::postgres::types::PgInterval {
         self.0
@@ -1162,6 +1157,27 @@ impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
+    pub start: std::ops::Bound<std::primitive::i64>,
+    pub end: std::ops::Bound<std::primitive::i64>,
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize> for sqlx::postgres::types::PgRange<std::primitive::i64> {
+    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize) -> Self {
+        Self {
+            start: value.start,
+            end: value.end,
+        }
+    }
+}
+impl std::convert::From<sqlx::postgres::types::PgRange<std::primitive::i64>> for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
+    fn from(value: sqlx::postgres::types::PgRange<std::primitive::i64>) -> Self {
+        Self {
+            start: value.start,
+            end: value.end,
+        }
+    }
+}
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i64> {
         self.0
