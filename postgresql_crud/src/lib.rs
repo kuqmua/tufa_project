@@ -1057,7 +1057,36 @@ impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
+// #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct PgIntervalWithSerializeDeserialize {
+    pub months: std::primitive::i32,
+    pub days: std::primitive::i32,
+    pub microseconds: std::primitive::i64,
+}
+
+impl std::convert::From<PgIntervalWithSerializeDeserialize> for sqlx::postgres::types::PgInterval {
+    fn from(value: PgIntervalWithSerializeDeserialize) -> Self {
+        Self {
+            months: value.months,
+            days: value.days,
+            microseconds: value.microseconds,
+        }
+    }
+}
+
+impl std::convert::From<sqlx::postgres::types::PgInterval> for PgIntervalWithSerializeDeserialize {
+    fn from(value: sqlx::postgres::types::PgInterval) -> Self {
+        Self {
+            months: value.months,
+            days: value.days,
+            microseconds: value.microseconds,
+        }
+    }
+}
+//
 impl SqlxPostgresTypesPgInterval {
     pub fn into_inner(self) -> sqlx::postgres::types::PgInterval {
         self.0
