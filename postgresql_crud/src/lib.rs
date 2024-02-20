@@ -162,9 +162,10 @@ impl Default for TestWrapper<Something> {
         )
         .unwrap();
         let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
+        let std_primitive_i8_handle = std::primitive::i8::default();
         //
         let std_primitive_bool = StdPrimitiveBool(true);
-        let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
+        let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
         let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
         let std_primitive_i32 = StdPrimitiveI32(std::primitive::i32::default());
         let std_primitive_i64 = StdPrimitiveI64(std::primitive::i64::default());
@@ -380,9 +381,9 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
                 time: sqlx_types_time_time_handle.clone(),
                 offset: sqlx::types::time::UtcOffset::from_hms(
-                    std::primitive::i8::default(),
-                    std::primitive::i8::default(),
-                    std::primitive::i8::default(),
+                    std_primitive_i8_handle.clone(),
+                    std_primitive_i8_handle.clone(),
+                    std_primitive_i8_handle.clone(),
                 )
                 .unwrap(),
             });
