@@ -156,6 +156,11 @@ impl Default for TestWrapper<Something> {
         );
         let sqlx_types_chrono_fixed_offset = sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap();
         let sqlx_types_time_offset_date_time = sqlx::types::time::OffsetDateTime::now_utc();
+        let sqlx_types_decimal = sqlx::types::Decimal::try_new(
+            std::primitive::i64::default(),
+            std::primitive::u32::default(),
+        )
+        .unwrap();
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
