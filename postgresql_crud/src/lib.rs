@@ -137,6 +137,8 @@ pub struct Something {
 
 impl Default for TestWrapper<Something> {
     fn default() -> Self {
+        let std_primitive_i8_handle = std::primitive::i8::default();
+        let std_primitive_i32_handle = std::primitive::i32::default();
         let sqlx_types_time_date_handle = sqlx::types::time::Date::from_calendar_date(
             2024,
             time::Month::February,
@@ -154,7 +156,7 @@ impl Default for TestWrapper<Something> {
             sqlx_types_time_date_handle.clone(), //todo
             sqlx_types_time_time_handle.clone(), //todo
         );
-        let sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap();
+        let sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle.clone()).unwrap();
         let sqlx_types_time_offset_date_time_handle = sqlx::types::time::OffsetDateTime::now_utc();
         let sqlx_types_decimal_handle = sqlx::types::Decimal::try_new(
             std::primitive::i64::default(),
@@ -162,12 +164,11 @@ impl Default for TestWrapper<Something> {
         )
         .unwrap();
         let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
-        let std_primitive_i8_handle = std::primitive::i8::default();
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
         let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
-        let std_primitive_i32 = StdPrimitiveI32(std::primitive::i32::default());
+        let std_primitive_i32 = StdPrimitiveI32(std_primitive_i32_handle.clone());
         let std_primitive_i64 = StdPrimitiveI64(std::primitive::i64::default());
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
@@ -175,8 +176,8 @@ impl Default for TestWrapper<Something> {
         let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std::primitive::u8::default()]);
         let sqlx_postgres_types_pg_interval =
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
-                months: std::primitive::i32::default(),
-                days: std::primitive::i32::default(),
+                months: std_primitive_i32_handle.clone(),
+                days: std_primitive_i32_handle.clone(),
                 microseconds: std::primitive::i64::default(),
             });
         let sqlx_postgres_types_pg_range_std_primitive_i64 =
@@ -190,8 +191,8 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
                 std::primitive::i32,
             > {
-                start: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
-                end: std::ops::Bound::<std::primitive::i32>::Included(std::primitive::i32::default()),
+                start: std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone()),
+                end: std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone()),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
             sqlx::postgres::types::PgRange::<
