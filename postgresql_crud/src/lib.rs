@@ -151,25 +151,6 @@ pub trait PostgresqlFilter {}
 // impl PostgresqlFilter for sqlx::types:: {}
 
 pub trait PostgresqlOrder {}
-// impl PostgresqlOrder for std::primitive::bool {} //BOOL
-// impl PostgresqlOrder for std::primitive::i16 {} //SMALLINT,SMALLSERIAL,INT2
-// impl PostgresqlOrder for std::primitive::i32 {} //INT,SERIAL,INT4
-// impl PostgresqlOrder for std::primitive::i64 {} //BIGINT,BIGSERIAL,INT8
-// impl PostgresqlOrder for sqlx::types::BigDecimal {} //NUMERIC
-// impl PostgresqlOrder for std::primitive::f32 {} //REAL,FLOAT4
-// impl PostgresqlOrder for std::primitive::f64 {} //DOUBLE PRECISION,FLOAT8
-// impl PostgresqlOrder for std::primitive::i8 {} //CHAR
-// impl PostgresqlOrder for std::primitive::str {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
-// impl PostgresqlOrder for std::string::String {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
-// impl PostgresqlOrder for chrono::NaiveDate {} //DATE
-// impl PostgresqlOrder for sqlx::types::time::Date {} //DATE
-// impl PostgresqlOrder for chrono::NaiveTime {} //TIME
-// impl PostgresqlOrder for sqlx::types::time::Time {} //TIME
-impl PostgresqlOrder for chrono::NaiveDateTime {} //TIMESTAMP
-impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {} //TIMESTAMP
-impl PostgresqlOrder for sqlx::postgres::types::PgInterval {} //INTERVAL
-impl PostgresqlOrder for sqlx::types::BitVec {} //BIT,VARBIT
-                                                //todo arrays, json and maybe something else...
 
 pub trait PostgresqlLimit {}
 
@@ -743,6 +724,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgInterval {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
+impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
@@ -1242,6 +1224,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDateTime {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxTypesChronoNaiveDateTime {}
+impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
@@ -2149,6 +2132,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimePrimitiveDateTime {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
+impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 impl SqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
@@ -2564,6 +2548,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesBitVec {
 }
 impl AsPostgresqlBit for SqlxTypesBitVec {}
 impl AsPostgresqlVarBit for SqlxTypesBitVec {}
+impl PostgresqlOrder for SqlxTypesBitVec {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesJson<T>(pub sqlx::types::Json<T>);
 impl<T> SqlxTypesJson<T> {
