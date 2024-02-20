@@ -137,6 +137,7 @@ pub struct Something {
 
 impl Default for TestWrapper<Something> {
     fn default() -> Self {
+        let std_primitive_u8_handle = std::primitive::u8::default();
         let std_primitive_i8_handle = std::primitive::i8::default();
         let std_primitive_i32_handle = std::primitive::i32::default();
         let std_primitive_i64_handle = std::primitive::i64::default();
@@ -174,7 +175,7 @@ impl Default for TestWrapper<Something> {
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
         let std_string_string = StdStringString(std::string::String::default());
-        let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std::primitive::u8::default()]);
+        let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle.clone()]);
         let sqlx_postgres_types_pg_interval =
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
                 months: std_primitive_i32_handle.clone(),
@@ -185,25 +186,25 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
                 std::primitive::i64,
             > {
-                start: std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone()),
-                end: std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone()),
+                start: std::ops::Bound::Included(std_primitive_i64_handle.clone()),
+                end: std::ops::Bound::Included(std_primitive_i64_handle.clone()),
             });
         let sqlx_postgres_types_pg_range_std_primitive_i32 =
             SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
                 std::primitive::i32,
             > {
-                start: std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone()),
-                end: std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone()),
+                start: std::ops::Bound::Included(std_primitive_i32_handle.clone()),
+                end: std::ops::Bound::Included(std_primitive_i32_handle.clone()),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
             sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
             > {
-                start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                start: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                     sqlx_types_chrono_naive_date_time_handle.clone(),
                     sqlx_types_chrono_utc_handle.clone()
                 )),
-                end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                end: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                     sqlx_types_chrono_naive_date_time_handle.clone(),
                     sqlx_types_chrono_utc_handle.clone()
                 )),
@@ -213,10 +214,10 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::PrimitiveDateTime,
             > {
-                start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                start: std::ops::Bound::Included(
                     sqlx_types_time_primitive_date_time_handle.clone(),
                 ),
-                end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                end: std::ops::Bound::Included(
                     sqlx_types_time_primitive_date_time_handle.clone(),
                 ),
             });
@@ -225,17 +226,13 @@ impl Default for TestWrapper<Something> {
                 sqlx::postgres::types::PgRange::<
                     sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
                 > {
-                    start: std::ops::Bound::<
-                        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-                    >::Included(sqlx::types::chrono::DateTime::<
+                    start: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<
                         sqlx::types::chrono::FixedOffset,
                     >::from_naive_utc_and_offset(
                         sqlx_types_chrono_naive_date_time_handle.clone(),
                         sqlx_types_chrono_fixed_offset_handle.clone(),
                     )),
-                    end: std::ops::Bound::<
-                        sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
-                    >::Included(sqlx::types::chrono::DateTime::<
+                    end: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<
                         sqlx::types::chrono::FixedOffset,
                     >::from_naive_utc_and_offset(
                         sqlx_types_chrono_naive_date_time_handle.clone(),
@@ -245,11 +242,11 @@ impl Default for TestWrapper<Something> {
             );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
             sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-                start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                start: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
                     sqlx_types_chrono_naive_date_time_handle.clone(),
                     sqlx_types_chrono_fixed_offset_handle.clone()
                 )),
-                end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                end: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
                     sqlx_types_chrono_naive_date_time_handle.clone(),
                     sqlx_types_chrono_fixed_offset_handle.clone()
                 )),
@@ -259,10 +256,10 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::OffsetDateTime,
             > {
-                start: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                start: std::ops::Bound::Included(
                     sqlx_types_time_offset_date_time_handle.clone(),
                 ),
-                end: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                end: std::ops::Bound::Included(
                     sqlx_types_time_offset_date_time_handle.clone(),
                 ),
             });
@@ -270,10 +267,10 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::NaiveDate,
             > {
-                start: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                start: std::ops::Bound::Included(
                     sqlx_types_chrono_naive_date_handle.clone(),
                 ),
-                end: std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                end: std::ops::Bound::Included(
                     sqlx_types_chrono_naive_date_handle.clone(),
                 ),
             });
@@ -281,10 +278,10 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::Date,
             > {
-                start: std::ops::Bound::<sqlx::types::time::Date>::Included(
+                start: std::ops::Bound::Included(
                     sqlx_types_time_date_handle.clone(),
                 ),
-                end: std::ops::Bound::<sqlx::types::time::Date>::Included(
+                end: std::ops::Bound::Included(
                     sqlx_types_time_date_handle.clone(),
                 ),
             });
@@ -292,7 +289,7 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
                 sqlx::types::BigDecimal,
             > {
-                start: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                start: std::ops::Bound::Included(
                     sqlx::types::BigDecimal::new(
                         num_bigint::BigInt::new(
                             num_bigint::Sign::Plus,
@@ -301,7 +298,7 @@ impl Default for TestWrapper<Something> {
                         std_primitive_i64_handle.clone(),
                     ),
                 ),
-                end: std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                end: std::ops::Bound::Included(
                     sqlx::types::BigDecimal::new(
                         num_bigint::BigInt::new(
                             num_bigint::Sign::Plus,
@@ -315,14 +312,14 @@ impl Default for TestWrapper<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
                 sqlx::types::Decimal,
             > {
-                start: std::ops::Bound::<sqlx::types::Decimal>::Included(
+                start: std::ops::Bound::Included(
                     sqlx::types::Decimal::try_new(
                         std_primitive_i64_handle.clone(),
                         std::primitive::u32::default(),
                     )
                     .unwrap(),
                 ),
-                end: std::ops::Bound::<sqlx::types::Decimal>::Included(
+                end: std::ops::Bound::Included(
                     sqlx::types::Decimal::try_new(
                         std_primitive_i64_handle.clone(),
                         std::primitive::u32::default(),
@@ -415,7 +412,7 @@ impl Default for TestWrapper<Something> {
                         std::primitive::u16::default(),
                         std::primitive::u16::default(),
                     ),
-                    std::primitive::u8::default(),
+                    std_primitive_u8_handle.clone(),
                 )
                 .unwrap(),
             ));
@@ -431,12 +428,12 @@ impl Default for TestWrapper<Something> {
         )));
         let sqlx_types_mac_address_mac_address =
             SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new([
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
+                std_primitive_u8_handle.clone(),
+                std_primitive_u8_handle.clone(),
+                std_primitive_u8_handle.clone(),
+                std_primitive_u8_handle.clone(),
+                std_primitive_u8_handle.clone(),
+                std_primitive_u8_handle.clone(),
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
         let sqlx_types_json = SqlxTypesJson::<Something>(sqlx::types::Json(Something {
