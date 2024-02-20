@@ -139,6 +139,7 @@ impl Default for TestWrapper<Something> {
     fn default() -> Self {
         let std_primitive_u8_handle = std::primitive::u8::default();
         let std_primitive_i8_handle = std::primitive::i8::default();
+        let std_primitive_u16_handle = std::primitive::u16::default();
         let std_primitive_u32_handle = std::primitive::u32::default();
         let std_primitive_i32_handle = std::primitive::i32::default();
         let std_primitive_i64_handle = std::primitive::i64::default();
@@ -227,9 +228,7 @@ impl Default for TestWrapper<Something> {
                 sqlx::postgres::types::PgRange::<
                     sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
                 > {
-                    start: std::ops::Bound::Included(sqlx::types::chrono::DateTime::<
-                        sqlx::types::chrono::FixedOffset,
-                    >::from_naive_utc_and_offset(
+                    start: std::ops::Bound::Included(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
                         sqlx_types_chrono_naive_date_time_handle.clone(),
                         sqlx_types_chrono_fixed_offset_handle.clone(),
                     )),
@@ -402,28 +401,28 @@ impl Default for TestWrapper<Something> {
             SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork::V6(
                 sqlx::types::ipnetwork::Ipv6Network::new(
                     std::net::Ipv6Addr::new(
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
-                        std::primitive::u16::default(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle.clone(),
                     ),
                     std_primitive_u8_handle.clone(),
                 )
                 .unwrap(),
             ));
         let std_net_ip_addr = StdNetIpAddr(std::net::IpAddr::V6(core::net::Ipv6Addr::new(
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
-            std::primitive::u16::default(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle.clone(),
         )));
         let sqlx_types_mac_address_mac_address =
             SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new([
@@ -435,7 +434,7 @@ impl Default for TestWrapper<Something> {
                 std_primitive_u8_handle.clone(),
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
-        let sqlx_types_json = SqlxTypesJson::<Something>(sqlx::types::Json(Something {
+        let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(Something {
             something: std::string::String::from(""),
         }));
         let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
