@@ -78,6 +78,58 @@ struct Test<T> {
                                                    //maybe Enumerations
 }
 
+impl<T> std::convert::From<Test<T>> for TestWrapper<T> {
+    fn from(value: Test<T>) -> Self {
+        TestWrapper {
+            type_1: StdPrimitiveBool(value.type_1), //BOOL
+            type_2: StdPrimitiveI8(value.type_2),   //“CHAR”
+            type_3: StdPrimitiveI16(value.type_3),  //SMALLINT, SMALLSERIAL, INT2
+            type_4: StdPrimitiveI32(value.type_4),  //INT, SERIAL, INT4
+            type_5: StdPrimitiveI64(value.type_5),  //BIGINT, BIGSERIAL, INT8
+            type_6: StdPrimitiveF32(value.type_6),  //REAL, FLOAT4
+            type_7: StdPrimitiveF64(value.type_7),  //DOUBLE PRECISION, FLOAT8
+            type_9: StdStringString(value.type_9), //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+            type_11: StdVecVecStdPrimitiveU8(value.type_11), //BYTEA
+            type_13: SqlxPostgresTypesPgInterval(value.type_13), //INTERVAL
+            type_14: SqlxPostgresTypesPgRangeStdPrimitiveI64(value.type_14), //INT8RANGE
+            type_15: SqlxPostgresTypesPgRangeStdPrimitiveI32(value.type_15), //INT4RANGE
+            type_161: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(value.type_161), //TSRANGE
+            type_162: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(value.type_162), //maybe not correct//TSRANGE
+            type_171: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(value.type_171), //TSTZRANGE
+            type_172: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(value.type_172), //TSTZRANGE
+            type_173: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(value.type_173), //maybe not correct//TSTZRANGE
+            type_181: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(value.type_181), //maybe not correct//DATERANGE
+            type_182: SqlxPostgresTypesPgRangeSqlxTypesTimeDate(value.type_182), //maybe not correct//DATERANGE
+            type_191: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(value.type_191), //NUMRANGE
+            type_192: SqlxPostgresTypesPgRangeSqlxTypesDecimal(value.type_192),    //NUMRANGE
+            type_20: SqlxPostgresTypesPgMoney(value.type_20),                           //MONEY
+            type_21: SqlxPostgresTypesPgLTree(value.type_21),                           //LTREE
+            type_22: SqlxPostgresTypesPgLQuery(value.type_22),                          //LQUERY
+            type_23: SqlxPostgresTypesPgCiText(value.type_23),                          //CITEXT
+            type_24: SqlxTypesBigDecimal(value.type_24),                                  //NUMERIC
+            type_25: SqlxTypesDecimal(value.type_25),                                     //NUMERIC
+            type_26: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(value.type_26), //TIMESTAMPTZ
+            type_27: SqlxTypesChronoDateTimeSqlxTypesChronoLocal(value.type_27), //TIMESTAMPTZ
+            type_28: SqlxTypesChronoDateTimeSqlxTypesChronoUtc(value.type_28),  //TIMESTAMP
+            type_29: SqlxTypesChronoNaiveDateTime(value.type_29),//TIMESTAMP
+            type_30: SqlxTypesChronoNaiveDate(value.type_30),                           //DATE
+            type_31: SqlxTypesChronoNaiveTime(value.type_31),                           //TIME
+            type_32: SqlxPostgresTypesPgTimeTz(value.type_32), //just present chrono or time flag
+            type_33: SqlxTypesTimePrimitiveDateTime(value.type_33), //TIMESTAMP
+            type_34: SqlxTypesTimeOffsetDateTime(value.type_34),    //TIMESTAMPTZ
+            type_35: SqlxTypesTimeDate(value.type_35),              //DATE
+            type_36: SqlxTypesTimeTime(value.type_36),              //TIME
+            type_37: SqlxTypesUuidUuid(value.type_37),              //UUID
+            type_38: SqlxTypesIpnetworkIpNetwork(value.type_38),    //INET, CIDR
+            type_39: StdNetIpAddr(value.type_39),                     //INET, CIDR
+            type_40: SqlxTypesMacAddressMacAddress(value.type_40), //MACADDR
+            type_41: SqlxTypesBitVec(value.type_41),                  //BIT, VARBIT
+            type_42: SqlxTypesJson::<T>(value.type_42),                 //JSON, JSONB
+            type_43: SerdeJsonValue(value.type_43),                    //JSON, JSONB
+        }
+    }
+}
+
 struct TestWrapper<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: StdPrimitiveBool, //BOOL
