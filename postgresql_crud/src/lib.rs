@@ -12,63 +12,6 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 pub mod app_state;
 pub mod json_value_extractor;
-
-pub trait IntoSerdeSerializeDeserialize {}
-
-pub trait PostgresqlFilter {}
-
-// impl PostgresqlFilter for sqlx::types:: {}
-
-pub trait PostgresqlOrder {}
-impl PostgresqlOrder for std::primitive::bool {} //BOOL
-impl PostgresqlOrder for std::primitive::i16 {} //SMALLINT,SMALLSERIAL,INT2
-impl PostgresqlOrder for std::primitive::i32 {} //INT,SERIAL,INT4
-impl PostgresqlOrder for std::primitive::i64 {} //BIGINT,BIGSERIAL,INT8
-impl PostgresqlOrder for sqlx::types::BigDecimal {} //NUMERIC
-impl PostgresqlOrder for std::primitive::f32 {} //REAL,FLOAT4
-impl PostgresqlOrder for std::primitive::f64 {} //DOUBLE PRECISION,FLOAT8
-impl PostgresqlOrder for std::primitive::i8 {} //CHAR
-impl PostgresqlOrder for std::primitive::str {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
-impl PostgresqlOrder for std::string::String {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
-impl PostgresqlOrder for chrono::NaiveDate {} //DATE
-impl PostgresqlOrder for sqlx::types::time::Date {} //DATE
-impl PostgresqlOrder for chrono::NaiveTime {} //TIME
-impl PostgresqlOrder for sqlx::types::time::Time {} //TIME
-impl PostgresqlOrder for chrono::NaiveDateTime {} //TIMESTAMP
-impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {} //TIMESTAMP
-impl PostgresqlOrder for sqlx::postgres::types::PgInterval {} //INTERVAL
-impl PostgresqlOrder for sqlx::types::BitVec {} //BIT,VARBIT
-                                                //todo arrays, json and maybe something else...
-
-pub trait PostgresqlLimit {}
-
-// integer, bigint
-// real, double precision
-// varchar
-// text
-// jsonb
-// tsvector
-// int4range
-// daterange
-
-// impl trait PostgresqlLimit for sqlx::types:: {}
-
-//todo swagger type\schema
-
-pub trait PostgersqlColumn<'a>:
-    std::fmt::Debug
-    + IntoSerdeSerializeDeserialize
-    + utoipa::ToSchema<'a>
-    + PostgresqlFilter
-    + PostgresqlOrder
-    + PostgresqlLimit
-{
-}
-
-pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
-    fn serde_serialize() -> T;
-}
-
 struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     type_1: std::primitive::bool, //BOOL
@@ -113,15 +56,18 @@ struct Test<T> {
     type_26: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>, //TIMESTAMPTZ
     type_27: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>, //TIMESTAMPTZ
     type_28: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,  //TIMESTAMP
-    type_29: sqlx::types::chrono::NaiveDate,                           //DATE
-    type_30: sqlx::types::chrono::NaiveTime,                           //TIME
-    type_31: sqlx::postgres::types::PgTimeTz, //just present chrono or time flag
-    // type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
-    type_32: sqlx::types::time::PrimitiveDateTime, //TIMESTAMP
-    type_33: sqlx::types::time::OffsetDateTime,    //TIMESTAMPTZ
-    type_34: sqlx::types::time::Date,              //DATE
-    type_35: sqlx::types::time::Time,              //TIME
-    // type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
+    //
+    type_29: sqlx::types::chrono::NaiveDateTime,//TIMESTAMP
+    //
+    type_30: sqlx::types::chrono::NaiveDate,                           //DATE
+    type_31: sqlx::types::chrono::NaiveTime,                           //TIME
+    type_32: sqlx::postgres::types::PgTimeTz, //just present chrono or time flag
+    // type_: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
+    type_33: sqlx::types::time::PrimitiveDateTime, //TIMESTAMP
+    type_34: sqlx::types::time::OffsetDateTime,    //TIMESTAMPTZ
+    type_35: sqlx::types::time::Date,              //DATE
+    type_36: sqlx::types::time::Time,              //TIME
+    // type_: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
     type_37: sqlx::types::uuid::Uuid,              //UUID
     type_38: sqlx::types::ipnetwork::IpNetwork,    //INET, CIDR
     type_39: std::net::IpAddr,                     //INET, CIDR
@@ -174,15 +120,18 @@ struct TestWrapper<T> {
     type_26: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
     type_27: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
     type_28: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
-    type_29: SqlxTypesChronoNaiveDate,                     //DATE
-    type_30: SqlxTypesChronoNaiveTime,                     //TIME
-    type_31: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
-    // type_31: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
-    type_32: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
-    type_33: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
-    type_34: SqlxTypesTimeDate,              //DATE
-    type_35: SqlxTypesTimeTime,              //TIME
-    // type_36: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
+    //
+    type_29: SqlxTypesChronoNaiveDateTime,//TIMESTAMP
+    //
+    type_30: SqlxTypesChronoNaiveDate,                     //DATE
+    type_31: SqlxTypesChronoNaiveTime,                     //TIME
+    type_32: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
+    // type_: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
+    type_33: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
+    type_34: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
+    type_35: SqlxTypesTimeDate,              //DATE
+    type_36: SqlxTypesTimeTime,              //TIME
+    // type_: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
     type_37: SqlxTypesUuidUuid,             //UUID
     type_38: SqlxTypesIpnetworkIpNetwork,   //INET, CIDR
     type_39: StdNetIpAddr,                  //INET, CIDR
@@ -193,6 +142,62 @@ struct TestWrapper<T> {
                                             // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
                                             //maybe Composite types
                                             //maybe Enumerations
+}
+
+pub trait IntoSerdeSerializeDeserialize {}
+
+pub trait PostgresqlFilter {}
+
+// impl PostgresqlFilter for sqlx::types:: {}
+
+pub trait PostgresqlOrder {}
+// impl PostgresqlOrder for std::primitive::bool {} //BOOL
+// impl PostgresqlOrder for std::primitive::i16 {} //SMALLINT,SMALLSERIAL,INT2
+// impl PostgresqlOrder for std::primitive::i32 {} //INT,SERIAL,INT4
+// impl PostgresqlOrder for std::primitive::i64 {} //BIGINT,BIGSERIAL,INT8
+// impl PostgresqlOrder for sqlx::types::BigDecimal {} //NUMERIC
+// impl PostgresqlOrder for std::primitive::f32 {} //REAL,FLOAT4
+// impl PostgresqlOrder for std::primitive::f64 {} //DOUBLE PRECISION,FLOAT8
+// impl PostgresqlOrder for std::primitive::i8 {} //CHAR
+// impl PostgresqlOrder for std::primitive::str {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
+// impl PostgresqlOrder for std::string::String {} //VARCHAR,CHAR(N),TEXT,NAME,CITEXT
+// impl PostgresqlOrder for chrono::NaiveDate {} //DATE
+// impl PostgresqlOrder for sqlx::types::time::Date {} //DATE
+// impl PostgresqlOrder for chrono::NaiveTime {} //TIME
+// impl PostgresqlOrder for sqlx::types::time::Time {} //TIME
+impl PostgresqlOrder for chrono::NaiveDateTime {} //TIMESTAMP
+impl PostgresqlOrder for sqlx::types::time::PrimitiveDateTime {} //TIMESTAMP
+impl PostgresqlOrder for sqlx::postgres::types::PgInterval {} //INTERVAL
+impl PostgresqlOrder for sqlx::types::BitVec {} //BIT,VARBIT
+                                                //todo arrays, json and maybe something else...
+
+pub trait PostgresqlLimit {}
+
+// integer, bigint
+// real, double precision
+// varchar
+// text
+// jsonb
+// tsvector
+// int4range
+// daterange
+
+// impl trait PostgresqlLimit for sqlx::types:: {}
+
+//todo swagger type\schema
+
+pub trait PostgersqlColumn<'a>:
+    std::fmt::Debug
+    + IntoSerdeSerializeDeserialize
+    + utoipa::ToSchema<'a>
+    + PostgresqlFilter
+    + PostgresqlOrder
+    + PostgresqlLimit
+{
+}
+
+pub trait PostgresqlSerdeSerialize<T: serde::Serialize> {
+    fn serde_serialize() -> T;
 }
 
 pub trait CheckSupportedPostgresqlColumnType {
@@ -216,7 +221,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -236,7 +241,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -252,6 +257,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlBool for StdPrimitiveBool {}
+impl PostgresqlOrder for StdPrimitiveBool {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI8(pub std::primitive::i8);
 impl StdPrimitiveI8 {
@@ -268,7 +274,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI8 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::i8 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::i8 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -288,7 +294,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI8 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -304,6 +310,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI8 {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlChar for StdPrimitiveI8 {}
+impl PostgresqlOrder for StdPrimitiveI8 {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 impl StdPrimitiveI16 {
@@ -320,7 +327,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -340,7 +347,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -358,6 +365,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI16 {
 impl AsPostgresqlSmallInt for StdPrimitiveI16 {}
 impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
+impl PostgresqlOrder for StdPrimitiveI16 {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
 impl StdPrimitiveI32 {
@@ -374,7 +382,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI32 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -394,7 +402,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -411,6 +419,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI32 {
 }
 impl AsPostgresqlReal for StdPrimitiveI32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveI32 {}
+impl PostgresqlOrder for StdPrimitiveI32 {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
 impl StdPrimitiveI64 {
@@ -427,7 +436,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::i64 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::i64 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -447,7 +456,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -465,6 +474,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI64 {
 impl AsPostgresqlBigInt for StdPrimitiveI64 {}
 impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
+impl PostgresqlOrder for StdPrimitiveI64 {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 impl StdPrimitiveF32 {
@@ -481,7 +491,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveF32 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::f32 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::f32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -501,7 +511,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF32 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -518,6 +528,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveF32 {
 }
 impl AsPostgresqlReal for StdPrimitiveF32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveF32 {}
+impl PostgresqlOrder for StdPrimitiveF32 {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 impl StdPrimitiveF64 {
@@ -534,7 +545,7 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveF64 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::primitive::f64 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::primitive::f64 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -554,7 +565,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF64 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -571,6 +582,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveF64 {
 }
 impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
 impl AsPostgresqlFloat8 for StdPrimitiveF64 {}
+impl PostgresqlOrder for StdPrimitiveF64 {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdStringString(pub std::string::String);
 impl StdStringString {
@@ -587,7 +599,7 @@ impl sqlx::Type<sqlx::Postgres> for StdStringString {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::string::String as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::string::String as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -607,7 +619,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdStringString {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -627,6 +639,7 @@ impl AsPostgresqlCharN for StdStringString {}
 impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlName for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
+impl PostgresqlOrder for StdStringString {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 impl StdVecVecStdPrimitiveU8 {
@@ -643,7 +656,7 @@ impl sqlx::Type<sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -663,7 +676,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -694,7 +707,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgInterval {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -714,7 +727,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -749,7 +762,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<std::primitive::i64> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<std::primitive::i64> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -769,7 +782,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI6
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -804,7 +817,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -824,7 +837,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI3
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -864,7 +877,7 @@ impl sqlx::Type<sqlx::Postgres>
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -886,7 +899,7 @@ impl sqlx::Encode<'_, sqlx::Postgres>
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -929,7 +942,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimiti
             sqlx::Postgres,
         >>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
             sqlx::Postgres,
         >>::compatible(ty)
@@ -951,7 +964,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeP
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1000,7 +1013,7 @@ impl sqlx::Type<sqlx::Postgres>
             sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
         > as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<
             sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
         > as sqlx::Type<sqlx::Postgres>>::compatible(ty)
@@ -1024,7 +1037,7 @@ impl sqlx::Encode<'_, sqlx::Postgres>
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1043,7 +1056,10 @@ impl CheckSupportedPostgresqlColumnType
 {
     fn check_supported_postgresql_column_type() {}
 }
-impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {}
+impl AsPostgresqlTsTzRange
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+{
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
@@ -1068,7 +1084,7 @@ impl sqlx::Type<sqlx::Postgres>
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1090,7 +1106,7 @@ impl sqlx::Encode<'_, sqlx::Postgres>
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1131,7 +1147,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetD
             sqlx::Postgres,
         >>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> as sqlx::Type<
             sqlx::Postgres,
         >>::compatible(ty)
@@ -1153,7 +1169,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeO
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1169,6 +1185,63 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
+pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
+impl SqlxTypesChronoNaiveDateTime {
+    pub fn into_inner(self) -> sqlx::types::chrono::NaiveDateTime {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveDateTime>
+    for sqlx::types::chrono::NaiveDateTime
+{
+    fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> std::primitive::usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDateTime {
+    fn check_supported_postgresql_column_type() {}
+}
+impl AsPostgresqlTsTzRange for SqlxTypesChronoNaiveDateTime {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
@@ -1190,7 +1263,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaive
             sqlx::Postgres,
         >>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate> as sqlx::Type<
             sqlx::Postgres,
         >>::compatible(ty)
@@ -1212,7 +1285,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChron
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1247,7 +1320,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<sqlx::types::time::Date> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::time::Date> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1267,7 +1340,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeD
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1302,7 +1375,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal 
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1322,7 +1395,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDe
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1357,7 +1430,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1377,7 +1450,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecim
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1408,7 +1481,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgMoney {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1428,7 +1501,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1443,7 +1516,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
     fn check_supported_postgresql_column_type() {}
 }
-impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney  {}
+impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
 pub struct SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
 impl SqlxPostgresTypesPgLTree {
     pub fn into_inner(self) -> sqlx::postgres::types::PgLTree {
@@ -1459,7 +1532,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLTree {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgLTree as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgLTree as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1479,7 +1552,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1510,7 +1583,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgLQuery as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgLQuery as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1530,7 +1603,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1561,7 +1634,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgCiText {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1581,7 +1654,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1612,7 +1685,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesBigDecimal {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1632,7 +1705,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1648,6 +1721,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesBigDecimal {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
+impl PostgresqlOrder for SqlxTypesBigDecimal {}
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
 impl SqlxTypesDecimal {
@@ -1664,7 +1738,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesDecimal {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1684,7 +1758,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesDecimal {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1721,7 +1795,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedO
             sqlx::Postgres,
         >>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset> as sqlx::Type<
             sqlx::Postgres,
         >>::compatible(ty)
@@ -1743,7 +1817,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1778,7 +1852,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal 
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1798,7 +1872,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1833,7 +1907,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1853,7 +1927,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChrono
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1884,7 +1958,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDate {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1904,7 +1978,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1920,6 +1994,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDate {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
+impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl SqlxTypesChronoNaiveTime {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveTime {
@@ -1935,7 +2010,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -1955,7 +2030,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -1971,6 +2046,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveTime {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
+impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 impl SqlxPostgresTypesPgTimeTz {
     pub fn into_inner(self) -> sqlx::postgres::types::PgTimeTz {
@@ -1986,7 +2062,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2006,7 +2082,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2021,7 +2097,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
     fn check_supported_postgresql_column_type() {}
 }
-impl AsPostgresqlTimeTz for  SqlxPostgresTypesPgTimeTz {}
+impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTime {
     pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
@@ -2037,7 +2113,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2057,7 +2133,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2088,7 +2164,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2108,7 +2184,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2139,7 +2215,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeDate {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2159,7 +2235,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2175,6 +2251,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeDate {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
+impl PostgresqlOrder for SqlxTypesTimeDate {}
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 impl SqlxTypesTimeTime {
     pub fn into_inner(self) -> sqlx::types::time::Time {
@@ -2190,7 +2267,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2210,7 +2287,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2226,6 +2303,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeTime {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
+impl PostgresqlOrder for SqlxTypesTimeTime {}
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 impl SqlxTypesUuidUuid {
     pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
@@ -2241,7 +2319,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2261,7 +2339,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2293,7 +2371,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2313,7 +2391,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2346,7 +2424,7 @@ impl sqlx::Type<sqlx::Postgres> for StdNetIpAddr {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2366,7 +2444,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2398,7 +2476,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2418,7 +2496,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2449,7 +2527,7 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesBitVec {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2469,7 +2547,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2502,7 +2580,7 @@ impl<T> sqlx::Type<sqlx::Postgres> for SqlxTypesJson<T> {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <sqlx::types::Json<T> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2536,7 +2614,7 @@ where
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
@@ -2583,7 +2661,7 @@ impl sqlx::Type<sqlx::Postgres> for SerdeJsonValue {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <serde_json::Value as sqlx::Type<sqlx::Postgres>>::type_info()
     }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
         <serde_json::Value as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
@@ -2603,7 +2681,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
     }
-    fn size_hint(&self) -> usize {
+    fn size_hint(&self) -> std::primitive::usize {
         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
     }
 }
