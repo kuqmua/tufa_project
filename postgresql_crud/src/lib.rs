@@ -155,6 +155,7 @@ impl Default for TestWrapper<Something> {
             sqlx_types_time_time.clone(), //todo
         );
         let sqlx_types_chrono_fixed_offset = sqlx::types::chrono::FixedOffset::west_opt(std::primitive::i32::default()).unwrap();
+        let sqlx_types_time_offset_date_time = sqlx::types::time::OffsetDateTime::now_utc();
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
@@ -250,10 +251,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::time::OffsetDateTime,
             > {
                 start: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                    sqlx::types::time::OffsetDateTime::now_utc(),
+                    sqlx_types_time_offset_date_time.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                    sqlx::types::time::OffsetDateTime::now_utc(),
+                    sqlx_types_time_offset_date_time.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
@@ -382,7 +383,7 @@ impl Default for TestWrapper<Something> {
         let sqlx_types_time_primitive_date_time =
             SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time.clone());
         let sqlx_types_time_offset_date_time =
-            SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
+            SqlxTypesTimeOffsetDateTime(sqlx_types_time_offset_date_time.clone());
         let sqlx_types_time_date = SqlxTypesTimeDate(
             sqlx_types_time_date.clone(),
         );
@@ -429,11 +430,9 @@ impl Default for TestWrapper<Something> {
                 std::primitive::u8::default(),
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
-        let something = Something {
+        let sqlx_types_json = SqlxTypesJson::<Something>(sqlx::types::Json(Something {
             something: std::string::String::from(""),
-        };
-        let sqlx_type_json_something: sqlx::types::Json<Something> = sqlx::types::Json(something);
-        let sqlx_types_json = SqlxTypesJson::<Something>(sqlx_type_json_something);
+        }));
         let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
         //
         Self {
