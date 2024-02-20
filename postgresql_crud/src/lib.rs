@@ -143,6 +143,7 @@ impl Default for TestWrapper<Something> {
         let std_primitive_u32_handle = std::primitive::u32::default();
         let std_primitive_i32_handle = std::primitive::i32::default();
         let std_primitive_i64_handle = std::primitive::i64::default();
+        let std_string_string_handle = std::string::String::default();
         let sqlx_types_time_date_handle = sqlx::types::time::Date::from_calendar_date(
             2024,
             time::Month::February,
@@ -176,7 +177,7 @@ impl Default for TestWrapper<Something> {
         let std_primitive_i64 = StdPrimitiveI64(std_primitive_i64_handle.clone());
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
-        let std_string_string = StdStringString(std::string::String::default());
+        let std_string_string = StdStringString(std_string_string_handle.clone());
         let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle.clone()]);
         let sqlx_postgres_types_pg_interval =
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
@@ -311,18 +312,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::Decimal,
             > {
                 start: std::ops::Bound::Included(
-                    sqlx::types::Decimal::try_new(
-                        std_primitive_i64_handle.clone(),
-                        std_primitive_u32_handle.clone(),
-                    )
-                    .unwrap(),
+                    sqlx_types_decimal_handle.clone(),
                 ),
                 end: std::ops::Bound::Included(
-                    sqlx::types::Decimal::try_new(
-                        std_primitive_i64_handle.clone(),
-                        std_primitive_u32_handle.clone(),
-                    )
-                    .unwrap(),
+                    sqlx_types_decimal_handle.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
@@ -333,18 +326,14 @@ impl Default for TestWrapper<Something> {
         let sqlx_postgres_types_pg_l_query =
             SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery::new());
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
-            sqlx::postgres::types::PgCiText(std::string::String::from("")),
+            sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
         let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx::types::BigDecimal::new(
             num_bigint::BigInt::new(num_bigint::Sign::Plus, vec![std_primitive_u32_handle.clone()]),
             std_primitive_i64_handle.clone(),
         ));
         let sqlx_types_decimal = SqlxTypesDecimal(
-            sqlx::types::Decimal::try_new(
-                std_primitive_i64_handle.clone(),
-                std_primitive_u32_handle.clone(),
-            )
-            .unwrap(),
+            sqlx_types_decimal_handle.clone(),
         );
         let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset =
             SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(sqlx::types::chrono::DateTime::<
@@ -435,7 +424,7 @@ impl Default for TestWrapper<Something> {
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(Something {
-            something: std::string::String::from(""),
+            something: std_string_string_handle.clone(),
         }));
         let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
         //
