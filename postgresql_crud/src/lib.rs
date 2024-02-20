@@ -161,6 +161,7 @@ impl Default for TestWrapper<Something> {
             std::primitive::u32::default(),
         )
         .unwrap();
+        let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std::primitive::i8::default());
@@ -197,11 +198,11 @@ impl Default for TestWrapper<Something> {
             > {
                 start: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                     sqlx_types_chrono_naive_date_time_handle.clone(),
-                    sqlx::types::chrono::Utc
+                    sqlx_types_chrono_utc_handle.clone()
                 )),
                 end: std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                     sqlx_types_chrono_naive_date_time_handle.clone(),
-                    sqlx::types::chrono::Utc
+                    sqlx_types_chrono_utc_handle.clone()
                 )),
             }
         );
@@ -366,7 +367,7 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::chrono::Utc,
             >::from_naive_utc_and_offset(
                 sqlx_types_chrono_naive_date_time_handle.clone(),
-                sqlx::types::chrono::Utc,
+                sqlx_types_chrono_utc_handle.clone()
             ));
         let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
             sqlx_types_chrono_naive_date_time_handle.clone()
