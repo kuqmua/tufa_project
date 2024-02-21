@@ -143,6 +143,12 @@ impl Default for TestWrapper<Something> {
             3,
         )
         .unwrap();
+        let sqlx_types_time_time = sqlx::types::time::Time::from_hms(
+            1,
+            1,
+            1,
+        )
+        .unwrap();
         let sqlx_types_chrono_naive_date = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
         let sqlx_types_chrono_naive_time = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
         let sqlx_types_chrono_naive_date_time = sqlx::types::chrono::NaiveDateTime::new(
@@ -200,23 +206,13 @@ impl Default for TestWrapper<Something> {
                 start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
                     sqlx::types::time::PrimitiveDateTime::new(
                         sqlx_types_time_date.clone(), //todo
-                        sqlx::types::time::Time::from_hms(
-                            std::primitive::u8::default(),
-                            std::primitive::u8::default(),
-                            std::primitive::u8::default(),
-                        )
-                        .unwrap(), //todo
+                        sqlx_types_time_time.clone(), //todo
                     ),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
                     sqlx::types::time::PrimitiveDateTime::new(
                         sqlx_types_time_date.clone(), //todo
-                        sqlx::types::time::Time::from_hms(
-                            std::primitive::u8::default(),
-                            std::primitive::u8::default(),
-                            std::primitive::u8::default(),
-                        )
-                        .unwrap(), //todo
+                        sqlx_types_time_time.clone(), //todo
                     ),
                 ),
             });
@@ -383,12 +379,7 @@ impl Default for TestWrapper<Something> {
         let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time.clone());
         let sqlx_postgres_types_pg_time_tz =
             SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
-                time: sqlx::types::time::Time::from_hms(
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                )
-                .unwrap(),
+                time: sqlx_types_time_time.clone(),
                 offset: sqlx::types::time::UtcOffset::from_hms(
                     std::primitive::i8::default(),
                     std::primitive::i8::default(),
@@ -399,12 +390,7 @@ impl Default for TestWrapper<Something> {
         let sqlx_types_time_primitive_date_time =
             SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime::new(
                 sqlx_types_time_date.clone(), //todo
-                sqlx::types::time::Time::from_hms(
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                    std::primitive::u8::default(),
-                )
-                .unwrap(), //todo
+                sqlx_types_time_time.clone(), //todo
             ));
         let sqlx_types_time_offset_date_time =
             SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
@@ -412,12 +398,7 @@ impl Default for TestWrapper<Something> {
             sqlx_types_time_date.clone(),
         );
         let sqlx_types_time_time = SqlxTypesTimeTime(
-            sqlx::types::time::Time::from_hms(
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-                std::primitive::u8::default(),
-            )
-            .unwrap(),
+            sqlx_types_time_time.clone(),
         );
         let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
             std::primitive::u128::default(),
