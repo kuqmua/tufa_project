@@ -3075,6 +3075,35 @@ impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
 
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimeTimeFromHmsWithSerializeDeserialize{
+    hour: std::primitive::u8,
+    minute: std::primitive::u8,
+    second: std::primitive::u8
+}
+//todo different init methods support
+impl std::convert::TryFrom<SqlxTypesTimeTimeFromHmsWithSerializeDeserialize> for SqlxTypesTimeTime {
+    type Error = time::error::ComponentRange;
+    fn try_from(value: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match sqlx::types::time::Time::from_hms(
+            value.hour,
+            value.minute,
+            value.second
+        ) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e)
+        }
+    }
+}
+impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeFromHmsWithSerializeDeserialize {
+    fn from(value: SqlxTypesTimeTime) -> Self {
+        Self{
+            hour: value.0.hour(),
+            minute: value.0.minute(),
+            second: value.0.second()
+        }
+    }
+}
 impl SqlxTypesTimeTime {
     pub fn into_inner(self) -> sqlx::types::time::Time {
         self.0
