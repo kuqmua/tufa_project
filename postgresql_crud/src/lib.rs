@@ -558,6 +558,7 @@ impl Default for TestNewType<Something> {
         let std_ops_bound_sqlx_types_time_date_handle = std::ops::Bound::<sqlx::types::time::Date>::Included(
             sqlx_types_time_date_handle.clone(),
         );
+        let std_ops_bound_sqlx_types_big_decimal_handle = std::ops::Bound::<sqlx::types::BigDecimal>::Included(sqlx_types_big_decimal_handle.clone());
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
@@ -643,8 +644,8 @@ impl Default for TestNewType<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
                 sqlx::types::BigDecimal,
             > {
-                start: std::ops::Bound::Included(sqlx_types_big_decimal_handle.clone()),
-                end: std::ops::Bound::Included(sqlx_types_big_decimal_handle.clone()),
+                start: std_ops_bound_sqlx_types_big_decimal_handle.clone(),
+                end: std_ops_bound_sqlx_types_big_decimal_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_decimal =
             SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
