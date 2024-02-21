@@ -2911,6 +2911,15 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize{
+    //todo support variations of init functions as enum
+    pub date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
+    pub time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize
+}
+// new(date: Date, time: Time)
+//
 impl SqlxTypesTimePrimitiveDateTime {
     pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
         self.0
