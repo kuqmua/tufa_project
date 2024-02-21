@@ -46,7 +46,7 @@ pub struct Test<T> {
     sqlx_postgres_types_pg_range_sqlx_types_big_decimal: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>, //NUMRANGE
     sqlx_postgres_types_pg_range_sqlx_types_decimal: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,    //NUMRANGE
     sqlx_postgres_types_pg_money: sqlx::postgres::types::PgMoney,                           //MONEY
-    sqlx_postgres_types_pg_l_tree: sqlx::postgres::types::PgLTree,                           //LTREE
+    // sqlx_postgres_types_pg_l_tree: sqlx::postgres::types::PgLTree,//LTREE//dont want to support that for postgresql_crud
     // sqlx_postgres_types_pg_l_query: sqlx::postgres::types::PgLQuery,//LQUERY//dont want to support that for postgresql_crud
     sqlx_postgres_types_pg_ci_text: sqlx::postgres::types::PgCiText,                          //CITEXT
     sqlx_types_big_decimal: sqlx::types::BigDecimal,                                  //NUMERIC
@@ -100,7 +100,6 @@ pub struct TestNewType<T> {
     sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal, //NUMRANGE
     sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
     sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,                     //MONEY
-    sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree,                     //LTREE
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,                    //CITEXT
     sqlx_types_big_decimal: SqlxTypesBigDecimal,                          //NUMERIC
     sqlx_types_decimal: SqlxTypesDecimal,                             //NUMERIC
@@ -354,7 +353,6 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
                 value.sqlx_postgres_types_pg_range_sqlx_types_decimal
             ),    //NUMRANGE
             sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney(value.sqlx_postgres_types_pg_money),                           //MONEY
-            sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree(value.sqlx_postgres_types_pg_l_tree),                           //LTREE
             sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText(value.sqlx_postgres_types_pg_ci_text),                          //CITEXT
             sqlx_types_big_decimal: SqlxTypesBigDecimal(value.sqlx_types_big_decimal),                                  //NUMERIC
             sqlx_types_decimal: SqlxTypesDecimal(value.sqlx_types_decimal),                                     //NUMERIC
@@ -693,8 +691,6 @@ impl Default for TestNewType<Something> {
         let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
             std_primitive_i64_handle.clone(),
         ));
-        let sqlx_postgres_types_pg_l_tree =
-            SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
             sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
@@ -817,7 +813,6 @@ impl Default for TestNewType<Something> {
             sqlx_postgres_types_pg_range_sqlx_types_big_decimal,
             sqlx_postgres_types_pg_range_sqlx_types_decimal,
             sqlx_postgres_types_pg_money,
-            sqlx_postgres_types_pg_l_tree,
             sqlx_postgres_types_pg_ci_text,
             sqlx_types_big_decimal,
             sqlx_types_decimal,
@@ -2341,58 +2336,6 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
-
-pub struct SqlxPostgresTypesPgLTree(pub sqlx::postgres::types::PgLTree);
-impl SqlxPostgresTypesPgLTree {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgLTree {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgLTree> for sqlx::postgres::types::PgLTree {
-    fn from(value: SqlxPostgresTypesPgLTree) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLTree {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgLTree as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::postgres::types::PgLTree as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLTree {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
-impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgLTree {
-    fn check_supported_postgresql_column_type() {}
-}
-impl AsPostgresqlLTree for SqlxPostgresTypesPgLTree {}
 
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -3938,7 +3881,6 @@ pub fn test_check_supported_postgresql_column_type() {
     SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesDecimal::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgMoney::check_supported_postgresql_column_type();
-    SqlxPostgresTypesPgLTree::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgCiText::check_supported_postgresql_column_type();
     SqlxTypesBigDecimal::check_supported_postgresql_column_type();
     SqlxTypesDecimal::check_supported_postgresql_column_type();
