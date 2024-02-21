@@ -548,6 +548,7 @@ impl Default for TestNewType<Something> {
             sqlx_types_time_primitive_date_time_handle.clone(),
         );
         let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset_handle = std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset_handle.clone());
+        let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle = std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone());
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
@@ -604,8 +605,8 @@ impl Default for TestNewType<Something> {
             );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
             sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-                start: std::ops::Bound::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone()),
-                end: std::ops::Bound::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone()),
+                start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
+                end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
             }
         );
         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
