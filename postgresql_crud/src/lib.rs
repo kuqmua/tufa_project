@@ -156,8 +156,8 @@ pub struct TestNewTypeWithSerializeDeserialize {//<T>
     sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgIntervalWithSerializeDeserialize, //INTERVAL
     //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
     sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize, //INT8RANGE
-    // sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32, //INT4RANGE
-    // // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
+    sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize, //INT4RANGE
+    // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
     // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc, //TSRANGE
     // sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime, //maybe not correct//TSRANGE
     // // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
@@ -463,7 +463,33 @@ pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
     month: TimeMonth,
     day: std::primitive::u8
 }
-//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize {
+    year: std::primitive::i32,
+    month: std::primitive::u32,
+    day: std::primitive::u32
+}
+
+// #[derive(serde::Serialize, serde::Deserialize)]
+// pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
+//     f: NaiveDateTime,
+// }
+// from_naive_utc_and_offset(
+//     datetime: NaiveDateTime,
+//     offset: <Tz as TimeZone>::Offset
+// )
+        // let sqlx_types_chrono_naive_date_handle = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
+        // let sqlx_types_chrono_naive_time_handle = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
+// let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
+// sqlx::types::chrono::NaiveDateTime::new(
+//             sqlx_types_chrono_naive_date_handle.clone(),//todo
+//             sqlx_types_chrono_naive_time_handle.clone(),
+//         )
+// sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
+//                     sqlx_types_chrono_naive_date_time_handle.clone(),
+//                     sqlx_types_chrono_utc_handle.clone()
+//                 )
+// //
 impl Default for TestNewType<Something> {
     fn default() -> Self {
         let std_primitive_u8_handle = std::primitive::u8::default();
