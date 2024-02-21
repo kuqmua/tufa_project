@@ -489,6 +489,7 @@ impl std::convert::From<sqlx::types::time::UtcOffset> for SqlxTypesTimeUtcOffset
 }
 impl Default for TestNewType<Something> {
     fn default() -> Self {
+        //todo unwraps
         let std_primitive_u8_handle = std::primitive::u8::default();
         let std_primitive_i8_handle = std::primitive::i8::default();
         let std_primitive_u16_handle = std::primitive::u16::default();
@@ -536,6 +537,12 @@ impl Default for TestNewType<Something> {
             sqlx_types_chrono_naive_date_time_handle.clone(),
             sqlx_types_chrono_fixed_offset_handle.clone(),
         );
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle = sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+            sqlx_types_chrono_naive_date_time_handle.clone(),
+            sqlx_types_chrono_fixed_offset_handle.clone()
+        );
+        let std_ops_bound_std_primitive_i64_handle = std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone());
+        let std_ops_bound_std_primitive_i32_handle = std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone());
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
@@ -556,15 +563,15 @@ impl Default for TestNewType<Something> {
             SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
                 std::primitive::i64,
             > {
-                start: std::ops::Bound::Included(std_primitive_i64_handle.clone()),
-                end: std::ops::Bound::Included(std_primitive_i64_handle.clone()),
+                start: std_ops_bound_std_primitive_i64_handle.clone(),
+                end: std_ops_bound_std_primitive_i64_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_std_primitive_i32 =
             SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
                 std::primitive::i32,
             > {
-                start: std::ops::Bound::Included(std_primitive_i32_handle.clone()),
-                end: std::ops::Bound::Included(std_primitive_i32_handle.clone()),
+                start: std_ops_bound_std_primitive_i32_handle.clone(),
+                end: std_ops_bound_std_primitive_i32_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
             sqlx::postgres::types::PgRange::<
@@ -596,14 +603,8 @@ impl Default for TestNewType<Something> {
             );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
             sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-                start: std::ops::Bound::Included(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
-                    sqlx_types_chrono_naive_date_time_handle.clone(),
-                    sqlx_types_chrono_fixed_offset_handle.clone()
-                )),
-                end: std::ops::Bound::Included(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
-                    sqlx_types_chrono_naive_date_time_handle.clone(),
-                    sqlx_types_chrono_fixed_offset_handle.clone()
-                )),
+                start: std::ops::Bound::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone()),
+                end: std::ops::Bound::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone()),
             }
         );
         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
