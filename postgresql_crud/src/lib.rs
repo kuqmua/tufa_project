@@ -2911,15 +2911,43 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-//
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize{
     //todo support variations of init functions as enum
     pub date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     pub time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize
 }
-// new(date: Date, time: Time)
-//
+impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
+    type Error = time::error::ComponentRange;//todo
+    fn try_from(value: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        //todo maybe error type variants in enum like both date and time ar efailed or only one of them adn which one
+        let date = match SqlxTypesTimeDate::try_from(value.date) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(e);
+            }
+        };
+        let time = match SqlxTypesTimeTime::try_from(value.time) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(e);
+            }
+        };
+        Ok(Self(sqlx::types::time::PrimitiveDateTime::new(
+            date.0,
+            time.0,
+        )))
+    }
+}
+impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize {
+    fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
+        Self {
+            //todo impl from directly from type?
+            date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(value.0.date())),
+            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(value.0.time()))
+        }
+    }
+}
 impl SqlxTypesTimePrimitiveDateTime {
     pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
         self.0
