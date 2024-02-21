@@ -2237,9 +2237,8 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize{
     pub start: std::ops::Bound<SqlxTypesDecimal>,
     pub end: std::ops::Bound<SqlxTypesDecimal>,
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    type Error = ();
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Result<Self, Self::Error> {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Self {
         let start = match value.start {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
@@ -2250,10 +2249,10 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerialize
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
+        Self(sqlx::postgres::types::PgRange{
             start,
             end
-        }))
+        })
     }
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
