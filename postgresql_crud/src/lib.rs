@@ -2835,6 +2835,36 @@ impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
 
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize{
+    //todo maybe make fields pub or not pub - think and decide
+    hour: std::primitive::u32,
+    min: std::primitive::u32,
+    sec: std::primitive::u32
+}
+impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize> for SqlxTypesChronoNaiveTime {
+    type Error = ();//todo
+    fn try_from(value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match sqlx::types::chrono::NaiveTime::from_hms_opt(
+            value.hour,
+            value.min, 
+            value.sec
+        ) {
+            Some(value) => Ok(Self(value)),
+            None => Err(())
+        }
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveTime> for SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize {
+    fn from(value: SqlxTypesChronoNaiveTime) -> Self {
+        use chrono::Timelike;
+        Self {
+            hour: value.0.hour(),
+            min: value.0.minute(),
+            sec: value.0.second()
+        }
+    }
+}
 impl SqlxTypesChronoNaiveTime {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveTime {
         self.0
