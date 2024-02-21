@@ -2718,44 +2718,41 @@ impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
-//
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize {
-//     pub date: std::ops::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
-//     pub time: std::ops::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
-// }
-
-// //
-//         let sqlx_types_chrono_naive_date_handle = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
-//         let sqlx_types_chrono_naive_time_handle = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
-//         let sqlx_types_chrono_naive_date_time_handle = sqlx::types::chrono::NaiveDateTime::new(
-//             sqlx_types_chrono_naive_date_handle.clone(),//todo
-//             sqlx_types_chrono_naive_time_handle.clone(),
-//         );
-//         let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
-//         //
-//         sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
-//             sqlx_types_chrono_naive_date_time_handle.clone(),
-//             sqlx_types_chrono_utc_handle.clone()
-//         )
-//
-// impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-//     fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize) -> Self {
-//         Self {
-//             start: value.start,
-//             end: value.end,
-//         }
-//     }
-// }
-// impl std::convert::From<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
-//     fn from(value: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>) -> Self {
-//         Self {
-//             start: value.start,
-//             end: value.end,
-//         }
-//     }
-// }
-//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize);
+impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    type Error = ();//todo
+    fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let value = match SqlxTypesChronoNaiveDateTime::try_from(value.0) {
+            Ok(value) => value.0,
+            Err(e) => {
+                return Err(e);
+            }
+        };
+        Ok(Self(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
+            value,
+            sqlx::types::chrono::Utc
+        )))
+    }
+}
+impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize {
+    type Error = ();//todo
+    fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Result<Self, Self::Error> {
+        let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(|| {
+            value.0.date_naive()//todo on commit time there is not non-panic version of .date_naive()
+        }) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(());
+            },
+        };
+        let time = value.0.time();
+        Ok(Self(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
+            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(date)),
+            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(time)),
+        }))
+    }
+}
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
         self.0
