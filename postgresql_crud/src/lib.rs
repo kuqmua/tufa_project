@@ -3128,6 +3128,26 @@ impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
 
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesUuidUuidTryParseWithSerializeDeserialize(pub std::string::String);
+impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize> for SqlxTypesUuidUuid {
+    type Error = sqlx::types::uuid::Error;//todo
+    fn try_from(value: SqlxTypesUuidUuidTryParseWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match sqlx::types::uuid::Uuid::try_parse(&value.0) {
+            Ok(value) => Ok({
+                let f = SqlxTypesUuidUuid(value);
+                let g = f.0.to_string();
+                f
+            }),
+            Err(e) => Err(e)
+        }
+    }
+}
+impl std::convert::From<SqlxTypesUuidUuid> for  SqlxTypesUuidUuidTryParseWithSerializeDeserialize {
+    fn from(value: SqlxTypesUuidUuid) -> Self {
+        Self(value.0.to_string())
+    }
+}
 impl SqlxTypesUuidUuid {
     pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
         self.0
@@ -3288,7 +3308,6 @@ impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
 
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
-//
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize(pub [std::primitive::u8; 6]);
 impl std::convert::From<SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize> for SqlxTypesMacAddressMacAddress {
