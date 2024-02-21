@@ -3288,6 +3288,19 @@ impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
 
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize(pub [std::primitive::u8; 6]);
+impl std::convert::From<SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize> for SqlxTypesMacAddressMacAddress {
+    fn from(value: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize) -> Self {
+        Self(sqlx::types::mac_address::MacAddress::new(value.0))
+    }
+}
+impl std::convert::From<SqlxTypesMacAddressMacAddress> for SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize {
+    fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
+        Self(value.0.bytes())
+    }
+}
 impl SqlxTypesMacAddressMacAddress {
     pub fn into_inner(self) -> sqlx::types::mac_address::MacAddress {
         self.0
@@ -3341,7 +3354,7 @@ impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
 
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct SqlxTypesBitVecFromBytesWithSerializeDeserialize(pub std::vec::Vec<std::primitive::u8>);
+pub struct SqlxTypesBitVecFromBytesWithSerializeDeserialize(pub std::vec::Vec<std::primitive::u8>);//todo maybe remove pub inside?
 impl std::convert::From<SqlxTypesBitVecFromBytesWithSerializeDeserialize> for SqlxTypesBitVec {
     fn from(value: SqlxTypesBitVecFromBytesWithSerializeDeserialize) -> Self {
         Self(sqlx::types::BitVec::from_bytes(&value.0))
