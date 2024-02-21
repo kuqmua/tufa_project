@@ -1233,6 +1233,29 @@ impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
+    pub start: std::ops::Bound<std::primitive::i32>,
+    pub end: std::ops::Bound<std::primitive::i32>,
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize> for sqlx::postgres::types::PgRange<std::primitive::i32> {
+    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize) -> Self {
+        Self {
+            start: value.start,
+            end: value.end,
+        }
+    }
+}
+impl std::convert::From<sqlx::postgres::types::PgRange<std::primitive::i32>> for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
+    fn from(value: sqlx::postgres::types::PgRange<std::primitive::i32>) -> Self {
+        Self {
+            start: value.start,
+            end: value.end,
+        }
+    }
+}
+//
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
         self.0
