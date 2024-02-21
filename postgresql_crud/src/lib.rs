@@ -2718,6 +2718,23 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChro
 }
 impl AsPostgresqlTimestamp for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
+//
+impl std::convert::TryFrom<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize> for SqlxTypesChronoNaiveDate {
+    type Error = ();
+    fn try_from(value: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let option_inner_value = sqlx::types::chrono::NaiveDate::from_ymd_opt(
+            value.year,
+            value.month,
+            value.day
+        );
+        match option_inner_value {
+            Some(value) => Ok(Self(value)),
+            None => Err(())
+        }
+    }
+}
+// SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize
+//
 impl SqlxTypesChronoNaiveDate {
     pub fn into_inner(self) -> sqlx::types::chrono::NaiveDate {
         self.0
