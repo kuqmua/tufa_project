@@ -407,7 +407,7 @@ pub struct Something {
 }
 //
 #[derive(serde::Serialize, serde::Deserialize)]
-pub enum TimeMonth {
+pub enum TimeMonth {//todo rename with prefix WithSerializeDeserialize
     January,// = 1,
     February,// = 2,
     March,// = 3,
@@ -454,6 +454,35 @@ impl std::convert::From<time::Month> for TimeMonth {
             time::Month::October => Self::October,
             time::Month::November => Self::November,
             time::Month::December => Self::December,
+        }
+    }
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
+    pub hours: std::primitive::i8,
+    pub minutes: std::primitive::i8,
+    pub seconds: std::primitive::i8
+}
+impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize> for sqlx::types::time::UtcOffset {
+    type Error = time::error::ComponentRange;//todo
+    fn try_from(value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match sqlx::types::time::UtcOffset::from_hms(
+            value.hours,
+            value.minutes,
+            value.seconds
+        ) {
+            Ok(value) => Ok(value),
+            Err(e) => Err(e)
+        }
+    }
+}
+impl std::convert::From<sqlx::types::time::UtcOffset> for SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
+    fn from(value: sqlx::types::time::UtcOffset) -> Self {
+        Self {
+            hours: value.whole_hours(),
+            minutes: value.minutes_past_hour(),
+            seconds: value.seconds_past_minute()
         }
     }
 }
@@ -2859,6 +2888,63 @@ impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize{
+    time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+//     {
+//     hour: std::primitive::u8,
+//     minute: std::primitive::u8,
+//     second: std::primitive::u8
+// }
+    offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
+//     {
+//     pub hours: std::primitive::i8,
+//     pub minutes: std::primitive::i8,
+//     pub seconds: std::primitive::i8
+// }
+}
+// // 
+// impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for SqlxPostgresTypesPgTimeTz {
+//     type Error = time::error::ComponentRange;//todo
+//     fn try_from(value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize) -> Result<Self, Self::Error> {
+//         //todo maybe error type variants in enum like both date and time ar efailed or only one of them adn which one
+//         let date = match SqlxTypesTimeDate::try_from(value.date) {
+//             Ok(value) => value,
+//             Err(e) => {
+//                 return Err(e);
+//             }
+//         };
+//         let time = match SqlxTypesTimeTime::try_from(value.time) {
+//             Ok(value) => value,
+//             Err(e) => {
+//                 return Err(e);
+//             }
+//         };
+//         Ok(Self(sqlx::types::time::PrimitiveDateTime::new(
+//             date.0,
+//             time.0,
+//         )))
+//     }
+// }
+// impl std::convert::From<SqlxPostgresTypesPgTimeTz> for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
+//     fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
+//         Self {
+//             //todo impl from directly from type?
+//             date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(value.0.date())),
+//             time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(value.0.time()))
+//         }
+//     }
+// }
+// // sqlx::postgres::types::PgTimeTz {
+// //                 time: sqlx::types::time::Time::from_hms(1,1,1).unwrap(),
+// //                 offset: sqlx::types::time::UtcOffset::from_hms(
+// //                     std_primitive_i8_handle.clone(),
+// //                     std_primitive_i8_handle.clone(),
+// //                     std_primitive_i8_handle.clone(),
+// //                 )
+// //                 .unwrap(),
+// //             }
+//
 impl SqlxPostgresTypesPgTimeTz {
     pub fn into_inner(self) -> sqlx::postgres::types::PgTimeTz {
         self.0
