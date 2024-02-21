@@ -2286,6 +2286,18 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDec
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
 
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
+impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize> for SqlxPostgresTypesPgMoney {
+    fn from(value: SqlxPostgresTypesPgMoneyWithSerializeDeserialize) -> Self {
+        Self(sqlx::postgres::types::PgMoney(value.0))
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgMoney> for SqlxPostgresTypesPgMoneyWithSerializeDeserialize {
+    fn from(value: SqlxPostgresTypesPgMoney) -> Self {
+        Self(value.0.0)
+    }
+}
 impl SqlxPostgresTypesPgMoney {
     pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
         self.0
