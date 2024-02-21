@@ -2519,44 +2519,25 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
-//
-//
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesBigDecimalNewWithSerializeDeserialize{
-    // digits: num_bigint::BigInt,
-    scale: std::primitive::u32
+    digits: NumBigintBigIntNewWithSerializeDeserialize,
+    scale: std::primitive::i64
 }
-
-
-// BigInt
-// pub fn new(sign: Sign, digits: Vec<u32>)
-// new(digits: BigInt, scale: i64) 
-
-// impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize> for SqlxTypesChronoNaiveTime {
-//     type Error = ();//todo
-//     fn try_from(value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
-//         match sqlx::types::chrono::NaiveTime::from_hms_opt(
-//             value.hour,
-//             value.min, 
-//             value.sec
-//         ) {
-//             Some(value) => Ok(Self(value)),
-//             None => Err(())
-//         }
-//     }
-// }
-// impl std::convert::From<SqlxTypesChronoNaiveTime> for SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize {
-//     fn from(value: SqlxTypesChronoNaiveTime) -> Self {
-//         use chrono::Timelike;
-//         Self {
-//             hour: value.0.hour(),
-//             min: value.0.minute(),
-//             sec: value.0.second()
-//         }
-//     }
-// }
-//
-//
+impl std::convert::From<SqlxTypesBigDecimalNewWithSerializeDeserialize> for SqlxTypesBigDecimal {
+    fn from(value: SqlxTypesBigDecimalNewWithSerializeDeserialize) -> Self {
+        Self(sqlx::types::BigDecimal::new(num_bigint::BigInt::from(value.digits), value.scale))
+    }
+}
+impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalNewWithSerializeDeserialize {
+    fn from(value: SqlxTypesBigDecimal) -> Self {
+        let (bigint, exponent) = value.0.into_bigint_and_exponent();
+        Self {
+            digits: NumBigintBigIntNewWithSerializeDeserialize::from(bigint),
+            scale: exponent//todo is exponent equal to scale?
+        }
+    }
+}
 impl SqlxTypesBigDecimal {
     pub fn into_inner(self) -> sqlx::types::BigDecimal {
         self.0
