@@ -2467,6 +2467,18 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgLQuery {
 impl AsPostgresqlLQuery for SqlxPostgresTypesPgLQuery {}
 
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
+impl std::convert::From<SqlxPostgresTypesPgCiTextWithSerializeDeserialize> for SqlxPostgresTypesPgCiText {
+    fn from(value: SqlxPostgresTypesPgCiTextWithSerializeDeserialize) -> Self {
+        Self(sqlx::postgres::types::PgCiText(value.0))
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgCiText> for SqlxPostgresTypesPgCiTextWithSerializeDeserialize {
+    fn from(value: SqlxPostgresTypesPgCiText) -> Self {
+        Self(value.0.0)
+    }
+}
 impl SqlxPostgresTypesPgCiText {
     pub fn into_inner(self) -> sqlx::postgres::types::PgCiText {
         self.0
