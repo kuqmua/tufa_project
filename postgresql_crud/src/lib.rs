@@ -47,7 +47,7 @@ pub struct Test<T> {
     sqlx_postgres_types_pg_range_sqlx_types_decimal: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,    //NUMRANGE
     sqlx_postgres_types_pg_money: sqlx::postgres::types::PgMoney,                           //MONEY
     sqlx_postgres_types_pg_l_tree: sqlx::postgres::types::PgLTree,                           //LTREE
-    sqlx_postgres_types_pg_l_query: sqlx::postgres::types::PgLQuery,                          //LQUERY
+    // sqlx_postgres_types_pg_l_query: sqlx::postgres::types::PgLQuery,//LQUERY//dont want to support that for postgresql_crud
     sqlx_postgres_types_pg_ci_text: sqlx::postgres::types::PgCiText,                          //CITEXT
     sqlx_types_big_decimal: sqlx::types::BigDecimal,                                  //NUMERIC
     sqlx_types_decimal: sqlx::types::Decimal,                                     //NUMERIC
@@ -109,7 +109,7 @@ pub struct TestNewType<T> {
     sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
     sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,                     //MONEY
     sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree,                     //LTREE
-    sqlx_postgres_types_pg_l_query: SqlxPostgresTypesPgLQuery,                    //LQUERY
+    // sqlx_postgres_types_pg_l_query: SqlxPostgresTypesPgLQuery,                    //LQUERY
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,                    //CITEXT
     sqlx_types_big_decimal: SqlxTypesBigDecimal,                          //NUMERIC
     sqlx_types_decimal: SqlxTypesDecimal,                             //NUMERIC
@@ -370,7 +370,6 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
             ),    //NUMRANGE
             sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney(value.sqlx_postgres_types_pg_money),                           //MONEY
             sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree(value.sqlx_postgres_types_pg_l_tree),                           //LTREE
-            sqlx_postgres_types_pg_l_query: SqlxPostgresTypesPgLQuery(value.sqlx_postgres_types_pg_l_query),                          //LQUERY
             sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText(value.sqlx_postgres_types_pg_ci_text),                          //CITEXT
             sqlx_types_big_decimal: SqlxTypesBigDecimal(value.sqlx_types_big_decimal),                                  //NUMERIC
             sqlx_types_decimal: SqlxTypesDecimal(value.sqlx_types_decimal),                                     //NUMERIC
@@ -711,8 +710,6 @@ impl Default for TestNewType<Something> {
         ));
         let sqlx_postgres_types_pg_l_tree =
             SqlxPostgresTypesPgLTree(sqlx::postgres::types::PgLTree::new());
-        let sqlx_postgres_types_pg_l_query =
-            SqlxPostgresTypesPgLQuery(sqlx::postgres::types::PgLQuery::new());
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
             sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
@@ -812,7 +809,6 @@ impl Default for TestNewType<Something> {
             something: std_string_string_handle.clone(),
         }));
         let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
-        //
         Self {
             std_primitive_bool,
             std_primitive_i8,
@@ -837,7 +833,6 @@ impl Default for TestNewType<Something> {
             sqlx_postgres_types_pg_range_sqlx_types_decimal,
             sqlx_postgres_types_pg_money,
             sqlx_postgres_types_pg_l_tree,
-            sqlx_postgres_types_pg_l_query,
             sqlx_postgres_types_pg_ci_text,
             sqlx_types_big_decimal,
             sqlx_types_decimal,
@@ -2414,58 +2409,6 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgLTree {
 }
 impl AsPostgresqlLTree for SqlxPostgresTypesPgLTree {}
 
-pub struct SqlxPostgresTypesPgLQuery(pub sqlx::postgres::types::PgLQuery);
-impl SqlxPostgresTypesPgLQuery {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgLQuery {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgLQuery> for sqlx::postgres::types::PgLQuery {
-    fn from(value: SqlxPostgresTypesPgLQuery) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgLQuery as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::postgres::types::PgLQuery as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgLQuery {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
-impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgLQuery {
-    fn check_supported_postgresql_column_type() {}
-}
-impl AsPostgresqlLQuery for SqlxPostgresTypesPgLQuery {}
-
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
@@ -3986,11 +3929,7 @@ pub async fn something() {
 }
 
 pub fn test_check_supported_postgresql_column_type() {
-    //
     //todo check if init functions are not panics. change to not panic init functions
-
-    //
-    //
     StdPrimitiveBool::check_supported_postgresql_column_type();
     StdPrimitiveI8::check_supported_postgresql_column_type();
     StdPrimitiveI16::check_supported_postgresql_column_type();
@@ -4015,7 +3954,6 @@ pub fn test_check_supported_postgresql_column_type() {
     SqlxPostgresTypesPgRangeSqlxTypesDecimal::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgMoney::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgLTree::check_supported_postgresql_column_type();
-    SqlxPostgresTypesPgLQuery::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgCiText::check_supported_postgresql_column_type();
     SqlxTypesBigDecimal::check_supported_postgresql_column_type();
     SqlxTypesDecimal::check_supported_postgresql_column_type();
@@ -4036,7 +3974,6 @@ pub fn test_check_supported_postgresql_column_type() {
     SqlxTypesBitVec::check_supported_postgresql_column_type();
     SqlxTypesJson::<bool>::check_supported_postgresql_column_type();
     SerdeJsonValue::check_supported_postgresql_column_type();
-    //
 }
 
 pub enum PostgresqlType {
