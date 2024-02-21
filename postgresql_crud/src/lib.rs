@@ -2232,6 +2232,49 @@ impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize{
+    pub start: std::ops::Bound<SqlxTypesDecimal>,
+    pub end: std::ops::Bound<SqlxTypesDecimal>,
+}
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    type Error = ();
+    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let start = match value.start {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.end {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Ok(Self(sqlx::postgres::types::PgRange{
+            start,
+            end
+        }))
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
+        use std::ops::RangeBounds;
+        let start = match value.0.start_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimal(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimal(*value)),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.0.end_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimal(*value)),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimal(*value)),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Self {
+            start,
+            end
+        }
+    }
+}
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
         self.0
