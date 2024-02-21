@@ -137,6 +137,71 @@ pub struct TestNewType<T> {
                                             //maybe Enumerations
 }
 
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct TestNewTypeWithSerializeDeserialize {//<T>
+    //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
+    std_primitive_bool: StdPrimitiveBool, //BOOL
+    std_primitive_i8: StdPrimitiveI8,   //“CHAR”
+    std_primitive_i16: StdPrimitiveI16,  //SMALLINT, SMALLSERIAL, INT2
+    std_primitive_i32: StdPrimitiveI32,  //INT, SERIAL, INT4
+    std_primitive_i64: StdPrimitiveI64,  //BIGINT, BIGSERIAL, INT8
+    std_primitive_f32: StdPrimitiveF32,  //REAL, FLOAT4
+    std_primitive_f64: StdPrimitiveF64,  //DOUBLE PRECISION, FLOAT8
+    // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    std_string_string: StdStringString, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
+    std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8, //BYTEA
+    // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
+    sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgIntervalWithSerializeDeserialize, //INTERVAL
+    //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
+    // sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64, //INT8RANGE
+    // sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32, //INT4RANGE
+    // // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc, //TSRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime, //maybe not correct//TSRANGE
+    // // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TSTZRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,       //TSTZRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime, //maybe not correct//TSTZRANGE
+    // // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate, //maybe not correct//DATERANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,        //maybe not correct//DATERANGE
+    // // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal, //NUMRANGE
+    // sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
+    // sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,                     //MONEY
+    // sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree,                     //LTREE
+    // sqlx_postgres_types_pg_l_query: SqlxPostgresTypesPgLQuery,                    //LQUERY
+    // sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,                    //CITEXT
+    // sqlx_types_big_decimal: SqlxTypesBigDecimal,                          //NUMERIC
+    // sqlx_types_decimal: SqlxTypesDecimal,                             //NUMERIC
+    // sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
+    // sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
+    // sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
+    // sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime,//TIMESTAMP
+    // sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate,                     //DATE
+    // sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime,                     //TIME
+    // sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
+    // // type_: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
+    // sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
+    // sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
+    // sqlx_types_time_date: SqlxTypesTimeDate,              //DATE
+    // sqlx_types_time_time: SqlxTypesTimeTime,              //TIME
+    // // type_: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
+    // sqlx_types_uuid_uuid: SqlxTypesUuidUuid,             //UUID
+    // sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork,   //INET, CIDR
+    // std_net_ip_addr: StdNetIpAddr,                  //INET, CIDR
+    // sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress, //MACADDR
+    // sqlx_types_bit_vec: SqlxTypesBitVec,               //BIT, VARBIT
+    // sqlx_types_json: SqlxTypesJson<T>,              //JSON, JSONB
+    // serde_json_value: SerdeJsonValue,                //JSON, JSONB
+    // // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
+    // //maybe Composite types
+    // //maybe Enumerations
+}
+//
+
 impl<T> std::convert::From<Test<T>> for TestNewType<T> {
     fn from(value: Test<T>) -> Self {
         Self {
@@ -1138,13 +1203,13 @@ impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 #[derive(serde::Serialize, serde::Deserialize)]
-pub struct PgIntervalWithSerializeDeserialize {
+pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     pub months: std::primitive::i32,
     pub days: std::primitive::i32,
     pub microseconds: std::primitive::i64,
 }
-impl std::convert::From<PgIntervalWithSerializeDeserialize> for sqlx::postgres::types::PgInterval {
-    fn from(value: PgIntervalWithSerializeDeserialize) -> Self {
+impl std::convert::From<SqlxPostgresTypesPgIntervalWithSerializeDeserialize> for sqlx::postgres::types::PgInterval {
+    fn from(value: SqlxPostgresTypesPgIntervalWithSerializeDeserialize) -> Self {
         Self {
             months: value.months,
             days: value.days,
@@ -1152,7 +1217,7 @@ impl std::convert::From<PgIntervalWithSerializeDeserialize> for sqlx::postgres::
         }
     }
 }
-impl std::convert::From<sqlx::postgres::types::PgInterval> for PgIntervalWithSerializeDeserialize {
+impl std::convert::From<sqlx::postgres::types::PgInterval> for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     fn from(value: sqlx::postgres::types::PgInterval) -> Self {
         Self {
             months: value.months,
