@@ -77,7 +77,7 @@ pub struct Test<T> {
 
 impl<T> std::convert::From<Test<T>> for TestWrapper<T> {
     fn from(value: Test<T>) -> Self {
-        TestWrapper {
+        Self {
             std_primitive_bool: StdPrimitiveBool(value.std_primitive_bool), //BOOL
             std_primitive_i8: StdPrimitiveI8(value.std_primitive_i8),   //“CHAR”
             std_primitive_i16: StdPrimitiveI16(value.std_primitive_i16),  //SMALLINT, SMALLSERIAL, INT2
@@ -155,7 +155,65 @@ impl<T> std::convert::From<Test<T>> for TestWrapper<T> {
 pub struct Something {
     something: std::string::String,
 }
-
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub enum TimeMonth {
+    January,// = 1,
+    February,// = 2,
+    March,// = 3,
+    April,// = 4,
+    May,// = 5,
+    June,// = 6,
+    July,// = 7,
+    August,// = 8,
+    September,// = 9,
+    October,// = 10,
+    November,// = 11,
+    December,// = 12,
+}
+impl std::convert::From<TimeMonth> for time::Month {
+    fn from(value: TimeMonth) -> Self {
+        match value {
+            TimeMonth::January => time::Month::January,
+            TimeMonth::February => time::Month::February,
+            TimeMonth::March => time::Month::March,
+            TimeMonth::April => time::Month::April,
+            TimeMonth::May => time::Month::May,
+            TimeMonth::June => time::Month::June,
+            TimeMonth::July => time::Month::July,
+            TimeMonth::August => time::Month::August,
+            TimeMonth::September => time::Month::September,
+            TimeMonth::October => time::Month::October,
+            TimeMonth::November => time::Month::November,
+            TimeMonth::December => time::Month::December,
+        }
+    }
+}
+impl std::convert::From<time::Month> for TimeMonth {
+    fn from(value: time::Month) -> Self {
+        match value {
+            time::Month::January => Self::January,
+            time::Month::February => Self::February,
+            time::Month::March => Self::March,
+            time::Month::April => Self::April,
+            time::Month::May => Self::May,
+            time::Month::June => Self::June,
+            time::Month::July => Self::July,
+            time::Month::August => Self::August,
+            time::Month::September => Self::September,
+            time::Month::October => Self::October,
+            time::Month::November => Self::November,
+            time::Month::December => Self::December,
+        }
+    }
+}
+// #[derive(serde::Serialize, serde::Deserialize)]
+// pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
+//     year: std::primitive::i32,
+//     month: time::Month,
+//     day: std::primitive::u8
+// }
+//
 impl Default for TestWrapper<Something> {
     fn default() -> Self {
         let std_primitive_u8_handle = std::primitive::u8::default();
@@ -1311,6 +1369,29 @@ impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
+//
+// #[derive(serde::Serialize, serde::Deserialize)]
+// pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
+//     pub start: std::ops::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+//     pub end: std::ops::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+// }
+// impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+//     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize) -> Self {
+//         Self {
+//             start: value.start,
+//             end: value.end,
+//         }
+//     }
+// }
+// impl std::convert::From<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
+//     fn from(value: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>) -> Self {
+//         Self {
+//             start: value.start,
+//             end: value.end,
+//         }
+//     }
+// }
+//
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub fn into_inner(
         self,
@@ -2347,6 +2428,29 @@ impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
+//
+// #[derive(serde::Serialize, serde::Deserialize)]
+// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
+//     pub start: std::ops::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+//     pub end: std::ops::Bound<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+// }
+// impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize> for sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+//     fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize) -> Self {
+//         Self {
+//             start: value.start,
+//             end: value.end,
+//         }
+//     }
+// }
+// impl std::convert::From<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
+//     fn from(value: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>) -> Self {
+//         Self {
+//             start: value.start,
+//             end: value.end,
+//         }
+//     }
+// }
+//
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
         self.0
