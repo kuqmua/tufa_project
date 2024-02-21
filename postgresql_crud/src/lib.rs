@@ -137,6 +137,12 @@ pub struct Something {
 
 impl Default for TestWrapper<Something> {
     fn default() -> Self {
+        let sqlx_types_time_date = sqlx::types::time::Date::from_calendar_date(
+            2024,
+            time::Month::February,
+            3,
+        )
+        .unwrap();
         let sqlx_types_chrono_naive_date = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
         let sqlx_types_chrono_naive_time = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
         let sqlx_types_chrono_naive_date_time = sqlx::types::chrono::NaiveDateTime::new(
@@ -193,12 +199,7 @@ impl Default for TestWrapper<Something> {
             > {
                 start: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
                     sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx::types::time::Date::from_calendar_date(
-                            2024,
-                            time::Month::February,
-                            1,
-                        )
-                        .unwrap(), //todo
+                        sqlx_types_time_date.clone(), //todo
                         sqlx::types::time::Time::from_hms(
                             std::primitive::u8::default(),
                             std::primitive::u8::default(),
@@ -209,12 +210,7 @@ impl Default for TestWrapper<Something> {
                 ),
                 end: std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
                     sqlx::types::time::PrimitiveDateTime::new(
-                        sqlx::types::time::Date::from_calendar_date(
-                            2024,
-                            time::Month::February,
-                            1,
-                        )
-                        .unwrap(), //todo
+                        sqlx_types_time_date.clone(), //todo
                         sqlx::types::time::Time::from_hms(
                             std::primitive::u8::default(),
                             std::primitive::u8::default(),
@@ -288,20 +284,10 @@ impl Default for TestWrapper<Something> {
                 sqlx::types::time::Date,
             > {
                 start: std::ops::Bound::<sqlx::types::time::Date>::Included(
-                    sqlx::types::time::Date::from_calendar_date(
-                        std::primitive::i32::default(),
-                        time::Month::February,
-                        std::primitive::u8::default(),
-                    )
-                    .unwrap(),
+                    sqlx_types_time_date.clone(),
                 ),
                 end: std::ops::Bound::<sqlx::types::time::Date>::Included(
-                    sqlx::types::time::Date::from_calendar_date(
-                        std::primitive::i32::default(),
-                        time::Month::February,
-                        std::primitive::u8::default(),
-                    )
-                    .unwrap(),
+                    sqlx_types_time_date.clone(),
                 ),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
@@ -412,12 +398,7 @@ impl Default for TestWrapper<Something> {
             });
         let sqlx_types_time_primitive_date_time =
             SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime::new(
-                sqlx::types::time::Date::from_calendar_date(
-                    std::primitive::i32::default(),
-                    time::Month::February,
-                    std::primitive::u8::default(),
-                )
-                .unwrap(), //todo
+                sqlx_types_time_date.clone(), //todo
                 sqlx::types::time::Time::from_hms(
                     std::primitive::u8::default(),
                     std::primitive::u8::default(),
@@ -428,12 +409,7 @@ impl Default for TestWrapper<Something> {
         let sqlx_types_time_offset_date_time =
             SqlxTypesTimeOffsetDateTime(sqlx::types::time::OffsetDateTime::now_utc());
         let sqlx_types_time_date = SqlxTypesTimeDate(
-            sqlx::types::time::Date::from_calendar_date(
-                std::primitive::i32::default(),
-                time::Month::February,
-                std::primitive::u8::default(),
-            )
-            .unwrap(),
+            sqlx_types_time_date.clone(),
         );
         let sqlx_types_time_time = SqlxTypesTimeTime(
             sqlx::types::time::Time::from_hms(
