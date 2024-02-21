@@ -3134,11 +3134,7 @@ impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize> fo
     type Error = sqlx::types::uuid::Error;//todo
     fn try_from(value: SqlxTypesUuidUuidTryParseWithSerializeDeserialize) -> Result<Self, Self::Error> {
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
-            Ok(value) => Ok({
-                let f = SqlxTypesUuidUuid(value);
-                let g = f.0.to_string();
-                f
-            }),
+            Ok(value) => Ok(Self(value)),
             Err(e) => Err(e)
         }
     }
