@@ -505,7 +505,7 @@ impl Default for TestNewType<Something> {
             sqlx_types_time_time_handle.clone(), //todo
         );
         let sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle.clone()).unwrap();
-        let sqlx_types_time_offset_date_time_handle = sqlx::types::time::OffsetDateTime::now_utc();
+        let sqlx_types_time_offset_date_time_handle = sqlx::types::time::OffsetDateTime::from_unix_timestamp(std::primitive::i64::default()).unwrap();
         let sqlx_types_decimal_handle = sqlx::types::Decimal::try_new(
             std_primitive_i64_handle.clone(),
             std_primitive_u32_handle.clone(),
@@ -2964,6 +2964,22 @@ impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
 
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize(pub std::primitive::i64);
+impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize> for SqlxTypesTimeOffsetDateTime {
+    type Error = time::error::ComponentRange;
+    fn try_from(value: SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match sqlx::types::time::OffsetDateTime::from_unix_timestamp(value.0) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
+impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize {
+    fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
+        Self(value.0.unix_timestamp())
+    }
+}
 impl SqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
         self.0
