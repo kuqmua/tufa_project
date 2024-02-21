@@ -3340,7 +3340,6 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesMacAddressMacAddress {
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
 
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
-//
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesBitVecFromBytesWithSerializeDeserialize(pub std::vec::Vec<std::primitive::u8>);
 impl std::convert::From<SqlxTypesBitVecFromBytesWithSerializeDeserialize> for SqlxTypesBitVec {
@@ -3348,7 +3347,11 @@ impl std::convert::From<SqlxTypesBitVecFromBytesWithSerializeDeserialize> for Sq
         Self(sqlx::types::BitVec::from_bytes(&value.0))
     }
 }
-//
+impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecFromBytesWithSerializeDeserialize {
+    fn from(value: SqlxTypesBitVec) -> Self {
+        Self(value.0.into_iter().map(|element|Into::into(element)).collect::<std::vec::Vec<std::primitive::u8>>())
+    }
+}
 impl SqlxTypesBitVec {
     pub fn into_inner(self) -> sqlx::types::BitVec {
         self.0
