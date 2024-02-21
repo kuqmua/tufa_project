@@ -407,7 +407,7 @@ pub struct Something {
 }
 //
 #[derive(serde::Serialize, serde::Deserialize)]
-pub enum TimeMonth {//todo rename with prefix WithSerializeDeserialize
+pub enum TimeMonthWithSerializeDeserialize {
     January,// = 1,
     February,// = 2,
     March,// = 3,
@@ -421,25 +421,25 @@ pub enum TimeMonth {//todo rename with prefix WithSerializeDeserialize
     November,// = 11,
     December,// = 12,
 }
-impl std::convert::From<TimeMonth> for time::Month {
-    fn from(value: TimeMonth) -> Self {
+impl std::convert::From<TimeMonthWithSerializeDeserialize> for time::Month {
+    fn from(value: TimeMonthWithSerializeDeserialize) -> Self {
         match value {
-            TimeMonth::January => time::Month::January,
-            TimeMonth::February => time::Month::February,
-            TimeMonth::March => time::Month::March,
-            TimeMonth::April => time::Month::April,
-            TimeMonth::May => time::Month::May,
-            TimeMonth::June => time::Month::June,
-            TimeMonth::July => time::Month::July,
-            TimeMonth::August => time::Month::August,
-            TimeMonth::September => time::Month::September,
-            TimeMonth::October => time::Month::October,
-            TimeMonth::November => time::Month::November,
-            TimeMonth::December => time::Month::December,
+            TimeMonthWithSerializeDeserialize::January => time::Month::January,
+            TimeMonthWithSerializeDeserialize::February => time::Month::February,
+            TimeMonthWithSerializeDeserialize::March => time::Month::March,
+            TimeMonthWithSerializeDeserialize::April => time::Month::April,
+            TimeMonthWithSerializeDeserialize::May => time::Month::May,
+            TimeMonthWithSerializeDeserialize::June => time::Month::June,
+            TimeMonthWithSerializeDeserialize::July => time::Month::July,
+            TimeMonthWithSerializeDeserialize::August => time::Month::August,
+            TimeMonthWithSerializeDeserialize::September => time::Month::September,
+            TimeMonthWithSerializeDeserialize::October => time::Month::October,
+            TimeMonthWithSerializeDeserialize::November => time::Month::November,
+            TimeMonthWithSerializeDeserialize::December => time::Month::December,
         }
     }
 }
-impl std::convert::From<time::Month> for TimeMonth {
+impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
     fn from(value: time::Month) -> Self {
         match value {
             time::Month::January => Self::January,
@@ -3158,7 +3158,7 @@ pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
     year: std::primitive::i32,
-    month: TimeMonth,
+    month: TimeMonthWithSerializeDeserialize,
     day: std::primitive::u8
 }
 impl std::convert::TryFrom<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize> for SqlxTypesTimeDate {
