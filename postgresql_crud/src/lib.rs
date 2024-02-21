@@ -555,6 +555,9 @@ impl Default for TestNewType<Something> {
         let std_ops_bound_sqlx_types_chrono_naive_date_handle = std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
             sqlx_types_chrono_naive_date_handle.clone(),
         );
+        let std_ops_bound_sqlx_types_time_date_handle = std::ops::Bound::<sqlx::types::time::Date>::Included(
+            sqlx_types_time_date_handle.clone(),
+        );
         //
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
@@ -633,12 +636,8 @@ impl Default for TestNewType<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::Date,
             > {
-                start: std::ops::Bound::Included(
-                    sqlx_types_time_date_handle.clone(),
-                ),
-                end: std::ops::Bound::Included(
-                    sqlx_types_time_date_handle.clone(),
-                ),
+                start: std_ops_bound_sqlx_types_time_date_handle.clone(),
+                end: std_ops_bound_sqlx_types_time_date_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
             SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
