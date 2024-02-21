@@ -511,6 +511,31 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
         }
     }
 }
+//todo pub or not for all - think
+#[derive(serde::Serialize, serde::Deserialize)]
+struct NumBigintBigIntNewWithSerializeDeserialize {
+    sign: NumBigintSignWithSerializeDeserialize,
+    digits: std::vec::Vec<std::primitive::u32>
+}
+impl std::convert::From<NumBigintBigIntNewWithSerializeDeserialize> for num_bigint::BigInt {
+    fn from(value: NumBigintBigIntNewWithSerializeDeserialize) -> Self {
+        let sign = match value.sign {
+            NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
+            NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
+            NumBigintSignWithSerializeDeserialize::Plus => num_bigint::Sign::Plus,
+        };
+        Self::new(sign, value.digits)
+    }
+}
+impl std::convert::From<num_bigint::BigInt> for NumBigintBigIntNewWithSerializeDeserialize {
+    fn from(value: num_bigint::BigInt) -> Self {
+        let (sign, digits) = value.to_u32_digits();
+        Self {
+            sign: NumBigintSignWithSerializeDeserialize::from(sign),
+            digits
+        }
+    }
+}
 impl Default for TestNewType<Something> {
     fn default() -> Self {
         //todo unwraps
