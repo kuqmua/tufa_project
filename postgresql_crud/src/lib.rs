@@ -207,12 +207,12 @@ impl std::convert::From<time::Month> for TimeMonth {
         }
     }
 }
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
-//     year: std::primitive::i32,
-//     month: time::Month,
-//     day: std::primitive::u8
-// }
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
+    year: std::primitive::i32,
+    month: TimeMonth,
+    day: std::primitive::u8
+}
 //
 impl Default for TestWrapper<Something> {
     fn default() -> Self {
