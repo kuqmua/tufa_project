@@ -487,11 +487,6 @@ impl std::convert::From<sqlx::types::time::UtcOffset> for SqlxTypesTimeUtcOffset
         }
     }
 }
-#[derive(serde::Serialize, serde::Deserialize)]
-pub enum SqlxTypesChronoFixedOffsetInitKind {
-    East(std::primitive::i32),
-    West(std::primitive::i32),
-}
 impl Default for TestNewType<Something> {
     fn default() -> Self {
         //todo unwraps
@@ -2643,47 +2638,55 @@ impl AsPostgresqlTimeTz for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
-//
-// #[derive(serde::Serialize, serde::Deserialize)]
-// pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize);
-// impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-//     type Error = ();//todo
-//     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
-//         let value = match SqlxTypesChronoNaiveDateTime::try_from(value.0) {
-//             Ok(value) => value.0,
-//             Err(e) => {
-//                 return Err(e);
-//             }
-//         };
-//         //
-// // SqlxTypesChronoFixedOffsetInitKind
-//         //
-//         Ok(Self(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
-//             value,
-//             sqlx::types::chrono::Utc
-//         )))
-//     }
-// }
-// impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize {
-//     type Error = ();//todo
-//     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Result<Self, Self::Error> {
-//         // let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(|| {
-//         //     value.0.date_naive()//todo on commit time there is not non-panic version of .date_naive()
-//         // }) {
-//         //     Ok(value) => value,
-//         //     Err(e) => {
-//         //         return Err(());
-//         //     },
-//         // };
-//         // let time = value.0.time();
-//         // Ok(Self(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
-//         //     date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(date)),
-//         //     time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(time)),
-//         // }))
-//         todo!()
-//     }
-// }
-//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize{
+    naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
+    fixed_offset: std::primitive::i32,
+}
+impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    type Error = ();//todo
+    fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let naive_date_time = match SqlxTypesChronoNaiveDateTime::try_from(value.naive_date_time) {
+            Ok(value) => value.0,
+            Err(e) => {
+                return Err(e);
+            }
+        };
+        //problem: after you created sqlx::types::chrono::FixedOffset - is not possible to known what offset used in creation for convertion. east default unfortunately 
+        let fixed_offset = match sqlx::types::chrono::FixedOffset::east_opt(value.fixed_offset) {
+            Some(value) => value,
+            None => {
+                return Err(());
+            }
+        };
+        Ok(Self(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
+            naive_date_time,
+            fixed_offset
+        )))
+    }
+}
+impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize {
+    type Error = ();//todo
+    fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Result<Self, Self::Error> {
+        let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(|| {
+            value.0.date_naive()//todo on commit time there is not non-panic version of .date_naive()
+        }) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(());
+            },
+        };
+        let time = value.0.time();
+        let offset = value.0.offset().local_minus_utc();//todo test - maybe need to use .utc_minus_local() instead
+        Ok(Self{
+            naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
+                date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(date)),
+                time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(time)),
+            },
+            fixed_offset: offset,
+        })
+    }
+}
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub fn into_inner(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> {
         self.0
