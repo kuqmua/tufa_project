@@ -487,6 +487,30 @@ impl std::convert::From<sqlx::types::time::UtcOffset> for SqlxTypesTimeUtcOffset
         }
     }
 }
+#[derive(serde::Serialize, serde::Deserialize)]
+pub enum NumBigintSignWithSerializeDeserialize {
+    Minus,
+    NoSign,
+    Plus,
+}
+impl std::convert::From<NumBigintSignWithSerializeDeserialize> for num_bigint::Sign {
+    fn from(value: NumBigintSignWithSerializeDeserialize) -> Self {
+        match value {
+            NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
+            NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
+            NumBigintSignWithSerializeDeserialize::Plus => num_bigint::Sign::Plus,
+        }
+    }
+}
+impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserialize {
+    fn from(value: num_bigint::Sign) -> Self {
+        match value {
+            num_bigint::Sign::Minus => NumBigintSignWithSerializeDeserialize::Minus,
+            num_bigint::Sign::NoSign => NumBigintSignWithSerializeDeserialize::NoSign,
+            num_bigint::Sign::Plus => NumBigintSignWithSerializeDeserialize::Plus,
+        }
+    }
+}
 impl Default for TestNewType<Something> {
     fn default() -> Self {
         //todo unwraps
@@ -2470,6 +2494,44 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
+//
+//
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesBigDecimalNewWithSerializeDeserialize{
+    // digits: num_bigint::BigInt,
+    scale: std::primitive::u32
+}
+
+
+// BigInt
+// pub fn new(sign: Sign, digits: Vec<u32>)
+// new(digits: BigInt, scale: i64) 
+
+// impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize> for SqlxTypesChronoNaiveTime {
+//     type Error = ();//todo
+//     fn try_from(value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
+//         match sqlx::types::chrono::NaiveTime::from_hms_opt(
+//             value.hour,
+//             value.min, 
+//             value.sec
+//         ) {
+//             Some(value) => Ok(Self(value)),
+//             None => Err(())
+//         }
+//     }
+// }
+// impl std::convert::From<SqlxTypesChronoNaiveTime> for SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize {
+//     fn from(value: SqlxTypesChronoNaiveTime) -> Self {
+//         use chrono::Timelike;
+//         Self {
+//             hour: value.0.hour(),
+//             min: value.0.minute(),
+//             sec: value.0.second()
+//         }
+//     }
+// }
+//
+//
 impl SqlxTypesBigDecimal {
     pub fn into_inner(self) -> sqlx::types::BigDecimal {
         self.0
