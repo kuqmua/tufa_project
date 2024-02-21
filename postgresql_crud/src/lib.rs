@@ -457,12 +457,6 @@ impl std::convert::From<time::Month> for TimeMonth {
         }
     }
 }
-#[derive(serde::Serialize, serde::Deserialize)]
-pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
-    year: std::primitive::i32,
-    month: TimeMonth,
-    day: std::primitive::u8
-}
 
 // #[derive(serde::Serialize, serde::Deserialize)]
 // pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
@@ -3022,6 +3016,34 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeOffsetDateTime {
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
 
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
+    year: std::primitive::i32,
+    month: TimeMonth,
+    day: std::primitive::u8
+}
+impl std::convert::TryFrom<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize> for SqlxTypesTimeDate {
+    type Error = time::error::ComponentRange;
+    fn try_from(value: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match sqlx::types::time::Date::from_calendar_date(
+            value.year,
+            time::Month::from(value.month),
+            value.day
+        ) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
+impl std::convert::From<SqlxTypesTimeDate> for SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
+    fn from(value: SqlxTypesTimeDate) -> Self {
+        Self{
+            year: value.0.year(),
+            month: value.0.month().into(),
+            day: value.0.day()
+        }
+    }
+}
 impl SqlxTypesTimeDate {
     pub fn into_inner(self) -> sqlx::types::time::Date {
         self.0
