@@ -2769,7 +2769,7 @@ pub struct SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize {
     day: std::primitive::u32
 }
 impl std::convert::TryFrom<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize> for SqlxTypesChronoNaiveDate {
-    type Error = ();
+    type Error = ();//todo
     fn try_from(value: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
         let option_inner_value = sqlx::types::chrono::NaiveDate::from_ymd_opt(
             value.year,
@@ -2779,6 +2779,16 @@ impl std::convert::TryFrom<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeseri
         match option_inner_value {
             Some(value) => Ok(Self(value)),
             None => Err(())
+        }
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveDate> for SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize {
+    fn from(value: SqlxTypesChronoNaiveDate) -> Self {
+        use chrono::Datelike;
+        Self {
+            year: value.0.year(),
+            month: value.0.month(),
+            day: value.0.day()
         }
     }
 }
