@@ -1761,10 +1761,94 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
-    pub  sqlx::postgres::types::PgRange<
+    pub sqlx::postgres::types::PgRange<
         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
     >,
 );
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserialize{
+    pub start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize>,
+    pub end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize>,
+}
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
+    type Error = ();
+    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let start = match value.start {
+            std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset::try_from(value) {
+                Ok(value) => std::ops::Bound::Included(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset::try_from(value) {
+                Ok(value) => std::ops::Bound::Excluded(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.end {
+            std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset::try_from(value) {
+                Ok(value) => std::ops::Bound::Included(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset::try_from(value) {
+                Ok(value) => std::ops::Bound::Excluded(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Ok(Self(sqlx::postgres::types::PgRange{
+            start,
+            end
+        }))
+    }
+}
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserialize {
+    type Error = ();
+    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Result<Self, Self::Error> {
+        use std::ops::RangeBounds;
+        let start = match value.0.start_bound() {
+            std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
+                Ok(value) => std::ops::Bound::Included(value),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
+                Ok(value) => std::ops::Bound::Excluded(value),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.0.end_bound() {
+            std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
+                Ok(value) => std::ops::Bound::Included(value),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
+                Ok(value) => std::ops::Bound::Excluded(value),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Ok(Self {
+            start,
+            end
+        })
+    }
+}
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
     pub fn into_inner(
         self,
