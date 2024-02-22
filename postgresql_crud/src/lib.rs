@@ -2176,6 +2176,48 @@ impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize{
+    pub start: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
+    pub end: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
+        let start = match value.start {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.end {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Self(sqlx::postgres::types::PgRange{
+            start,
+            end
+        })
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
+        use std::ops::RangeBounds;
+        let start = match value.0.start_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.0.end_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Self {
+            start,
+            end
+        }
+    }
+}
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> {
         self.0
