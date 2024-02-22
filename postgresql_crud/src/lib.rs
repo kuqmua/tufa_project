@@ -170,128 +170,101 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     serde_json_value: SerdeJsonValue,                //JSON, JSONB
 }
 
-
-// impl std::convert::TryFrom<TestNewTypeWithSerializeDeserialize> for TestNewType {
-//     type Error = ();//todo
-//     fn try_from(value: TestNewTypeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-//         let std_primitive_bool: StdPrimitiveBool, //BOOL
-//         let std_primitive_i8: StdPrimitiveI8,   //“CHAR”
-//         let std_primitive_i16: StdPrimitiveI16,  //SMALLINT, SMALLSERIAL, INT2
-//         let std_primitive_i32: StdPrimitiveI32,  //INT, SERIAL, INT4
-//         let std_primitive_i64: StdPrimitiveI64,  //BIGINT, BIGSERIAL, INT8
-//         let std_primitive_f32: StdPrimitiveF32,  //REAL, FLOAT4
-//         let std_primitive_f64: StdPrimitiveF64,  //DOUBLE PRECISION, FLOAT8
-//             // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-//         let std_string_string: StdStringString, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-//             // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
-//         let std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8, //BYTEA
-//             // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
-//         let sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgInterval, //INTERVAL
-//             //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-//         let sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64, //INT8RANGE
-//         let sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32, //INT4RANGE
-//             // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc, //TSRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime, //maybe not correct//TSRANGE
-//             // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TSTZRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,       //TSTZRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime, //maybe not correct//TSTZRANGE
-//             // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate, //maybe not correct//DATERANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,        //maybe not correct//DATERANGE
-//             // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal, //NUMRANGE
-//         let sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
-//         let sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,                     //MONEY
-//         let sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree,                     //LTREE
-//         let sqlx_postgres_types_pg_l_query: SqlxPostgresTypesPgLQuery,                    //LQUERY
-//         let sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,                    //CITEXT
-//         let sqlx_types_big_decimal: SqlxTypesBigDecimal,                          //NUMERIC
-//         let sqlx_types_decimal: SqlxTypesDecimal,                             //NUMERIC
-//         let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
-//         let sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
-//         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
-//         let sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime,//TIMESTAMP
-//         let sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate,                     //DATE
-//         let sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime,                     //TIME
-//         let sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
-//             // type_: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
-//         let sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
-//         let sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
-//         let sqlx_types_time_date: SqlxTypesTimeDate,              //DATE
-//         let sqlx_types_time_time: SqlxTypesTimeTime,              //TIME
-//             // type_: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
-//         let sqlx_types_uuid_uuid: SqlxTypesUuidUuid,             //UUID
-//         let sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork,   //INET, CIDR
-//         let std_net_ip_addr: StdNetIpAddr,                  //INET, CIDR
-//         let sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress, //MACADDR
-//         let sqlx_types_bit_vec: SqlxTypesBitVec,               //BIT, VARBIT
-//         let sqlx_types_json: SqlxTypesJson<T>,              //JSON, JSONB
-//         let serde_json_value: SerdeJsonValue,                //JSON, JSONB
-//         Ok(Self {
-//             //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
-//             std_primitive_bool: StdPrimitiveBool, //BOOL
-//             std_primitive_i8: StdPrimitiveI8,   //“CHAR”
-//             std_primitive_i16: StdPrimitiveI16,  //SMALLINT, SMALLSERIAL, INT2
-//             std_primitive_i32: StdPrimitiveI32,  //INT, SERIAL, INT4
-//             std_primitive_i64: StdPrimitiveI64,  //BIGINT, BIGSERIAL, INT8
-//             std_primitive_f32: StdPrimitiveF32,  //REAL, FLOAT4
-//             std_primitive_f64: StdPrimitiveF64,  //DOUBLE PRECISION, FLOAT8
-//             // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-//             std_string_string: StdStringString, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-//             // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
-//             std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8, //BYTEA
-//             // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
-//             sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgInterval, //INTERVAL
-//             //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-//             sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64, //INT8RANGE
-//             sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32, //INT4RANGE
-//             // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc, //TSRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime, //maybe not correct//TSRANGE
-//             // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TSTZRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,       //TSTZRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime, //maybe not correct//TSTZRANGE
-//             // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate, //maybe not correct//DATERANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,        //maybe not correct//DATERANGE
-//             // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal, //NUMRANGE
-//             sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
-//             sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,                     //MONEY
-//             sqlx_postgres_types_pg_l_tree: SqlxPostgresTypesPgLTree,                     //LTREE
-//             sqlx_postgres_types_pg_l_query: SqlxPostgresTypesPgLQuery,                    //LQUERY
-//             sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,                    //CITEXT
-//             sqlx_types_big_decimal: SqlxTypesBigDecimal,                          //NUMERIC
-//             sqlx_types_decimal: SqlxTypesDecimal,                             //NUMERIC
-//             sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
-//             sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
-//             sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
-//             sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime,//TIMESTAMP
-//             sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate,                     //DATE
-//             sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime,                     //TIME
-//             sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
-//             // type_: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
-//             sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
-//             sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
-//             sqlx_types_time_date: SqlxTypesTimeDate,              //DATE
-//             sqlx_types_time_time: SqlxTypesTimeTime,              //TIME
-//             // type_: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
-//             sqlx_types_uuid_uuid: SqlxTypesUuidUuid,             //UUID
-//             sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork,   //INET, CIDR
-//             std_net_ip_addr: StdNetIpAddr,                  //INET, CIDR
-//             sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress, //MACADDR
-//             sqlx_types_bit_vec: SqlxTypesBitVec,               //BIT, VARBIT
-//             sqlx_types_json: SqlxTypesJson<T>,              //JSON, JSONB
-//             serde_json_value: SerdeJsonValue,                //JSON, JSONB
-//             // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
-//             //maybe Composite types
-//             //maybe Enumerations
-//         })
-//     }
-// }
+impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNewType<T> {
+    type Error = ();//todo
+    fn try_from(value: TestNewTypeWithSerializeDeserialize<T>) -> Result<Self, Self::Error> {
+        let std_primitive_bool: StdPrimitiveBool = value.std_primitive_bool; //BOOL
+        let std_primitive_i8: StdPrimitiveI8 = value.std_primitive_i8;   //“CHAR”
+        let std_primitive_i16: StdPrimitiveI16 = value.std_primitive_i16;//SMALLINT, SMALLSERIAL, INT2
+        let std_primitive_i32: StdPrimitiveI32 = value.std_primitive_i32;//INT, SERIAL, INT4
+        let std_primitive_i64: StdPrimitiveI64 = value.std_primitive_i64;//BIGINT, BIGSERIAL, INT8
+        let std_primitive_f32: StdPrimitiveF32 = value.std_primitive_f32;//REAL, FLOAT4
+        let std_primitive_f64: StdPrimitiveF64 = value.std_primitive_f64;//DOUBLE PRECISION, FLOAT8
+        let std_string_string: StdStringString = value.std_string_string;//VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+        let std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8 = value.std_vec_vec_std_primitive_u8; //BYTEA
+        let sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgIntervalWithSerializeDeserialize = value.sqlx_postgres_types_pg_interval; //INTERVAL
+        let sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize = value.sqlx_postgres_types_pg_range_std_primitive_i64; //INT8RANGE
+        // let sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32 = value.sqlx_postgres_types_pg_range_std_primitive_i32; //INT4RANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc = value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc; //TSRANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime = value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time; //maybe not correct//TSRANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset = value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset; //TSTZRANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal = value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local;//TSTZRANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime = value.sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time;//maybe not correct//TSTZRANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate = value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date;//maybe not correct//DATERANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate = value.sqlx_postgres_types_pg_range_sqlx_types_time_date;//maybe not correct//DATERANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal = value.sqlx_postgres_types_pg_range_sqlx_types_big_decimal;//NUMRANGE
+        // let sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal = value.sqlx_postgres_types_pg_range_sqlx_types_decimal;//NUMRANGE
+        // let sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney = value.sqlx_postgres_types_pg_money;//MONEY
+        // let sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText = value.sqlx_postgres_types_pg_ci_text;//CITEXT
+        // let sqlx_types_big_decimal: SqlxTypesBigDecimal = value.sqlx_types_big_decimal;//NUMERIC
+        // let sqlx_types_decimal: SqlxTypesDecimal = value.sqlx_types_decimal;//NUMERIC
+        // let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset = value.sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset;//TIMESTAMPTZ
+        // let sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal = value.sqlx_types_chrono_date_time_sqlx_types_chrono_local;//TIMESTAMPTZ
+        // let sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc = value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc;//TIMESTAMP
+        // let sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime = value.sqlx_types_chrono_naive_date_time;//TIMESTAMP
+        // let sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate = value.sqlx_types_chrono_naive_date;//DATE
+        // let sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime = value.sqlx_types_chrono_naive_time;//TIME
+        // let sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTz = value.sqlx_postgres_types_pg_time_tz;//just present chrono or time flag
+        // let sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTime = value.sqlx_types_time_primitive_date_time;//TIMESTAMP
+        // let sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTime = value.sqlx_types_time_offset_date_time;//TIMESTAMPTZ
+        // let sqlx_types_time_date: SqlxTypesTimeDate = value.sqlx_types_time_date;//DATE
+        // let sqlx_types_time_time: SqlxTypesTimeTime = value.sqlx_types_time_time;//TIME
+        // let sqlx_types_uuid_uuid: SqlxTypesUuidUuid = value.sqlx_types_uuid_uuid;//UUID
+        // let sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork = value.sqlx_types_ipnetwork_ip_network;//INET, CIDR
+        // let std_net_ip_addr: StdNetIpAddr = value.std_net_ip_addr;//INET, CIDR
+        // let sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress = value.sqlx_types_mac_address_mac_address;//MACADDR
+        // let sqlx_types_bit_vec: SqlxTypesBitVec = value.sqlx_types_bit_vec;//BIT, VARBIT
+        // let sqlx_types_json: SqlxTypesJson<T> = value.sqlx_types_json;//JSON, JSONB
+        // let serde_json_value: SerdeJsonValue = value.serde_json_value;//JSON, JSONB
+        todo!()
+        // Ok(Self {
+        //     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
+        //     std_primitive_bool, //BOOL
+        //     // std_primitive_i8: StdPrimitiveI8,   //“CHAR”
+        //     // std_primitive_i16: StdPrimitiveI16,  //SMALLINT, SMALLSERIAL, INT2
+        //     // std_primitive_i32: StdPrimitiveI32,  //INT, SERIAL, INT4
+        //     // std_primitive_i64: StdPrimitiveI64,  //BIGINT, BIGSERIAL, INT8
+        //     // std_primitive_f32: StdPrimitiveF32,  //REAL, FLOAT4
+        //     // std_primitive_f64: StdPrimitiveF64,  //DOUBLE PRECISION, FLOAT8
+        //     // std_string_string: StdStringString, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+        //     // std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8, //BYTEA
+        //     // sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgInterval, //INTERVAL
+        //     // sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64, //INT8RANGE
+        //     // sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32, //INT4RANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc, //TSRANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime, //maybe not correct//TSRANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TSTZRANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,       //TSTZRANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime, //maybe not correct//TSTZRANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate, //maybe not correct//DATERANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,        //maybe not correct//DATERANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal, //NUMRANGE
+        //     // sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,    //NUMRANGE
+        //     // sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,                     //MONEY
+        //     // sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,                    //CITEXT
+        //     // sqlx_types_big_decimal: SqlxTypesBigDecimal,                          //NUMERIC
+        //     // sqlx_types_decimal: SqlxTypesDecimal,                             //NUMERIC
+        //     // sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset, //TIMESTAMPTZ
+        //     // sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,  //TIMESTAMPTZ
+        //     // sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,    //TIMESTAMP
+        //     // sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime,//TIMESTAMP
+        //     // sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate,                     //DATE
+        //     // sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime,                     //TIME
+        //     // sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTz,                    //just present chrono or time flag
+        //     // sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTime, //TIMESTAMP
+        //     // sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTime,    //TIMESTAMPTZ
+        //     // sqlx_types_time_date: SqlxTypesTimeDate,              //DATE
+        //     // sqlx_types_time_time: SqlxTypesTimeTime,              //TIME
+        //     // sqlx_types_uuid_uuid: SqlxTypesUuidUuid,             //UUID
+        //     // sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork,   //INET, CIDR
+        //     // std_net_ip_addr: StdNetIpAddr,                  //INET, CIDR
+        //     // sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddress, //MACADDR
+        //     // sqlx_types_bit_vec: SqlxTypesBitVec,               //BIT, VARBIT
+        //     // sqlx_types_json: SqlxTypesJson<T>,              //JSON, JSONB
+        //     // serde_json_value: SerdeJsonValue,                //JSON, JSONB
+        // })
+    }
+}
 //
 
 impl<T> std::convert::From<Test<T>> for TestNewType<T> {
