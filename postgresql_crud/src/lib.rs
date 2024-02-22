@@ -122,7 +122,7 @@ pub struct TestNewType<T> {
     serde_json_value: SerdeJsonValue,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_primitive_bool: StdPrimitiveBool,
     std_primitive_i8: StdPrimitiveI8,
@@ -432,12 +432,12 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]//user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum TimeMonthWithSerializeDeserialize {
     January,// = 1,
     February,// = 2,
@@ -488,7 +488,7 @@ impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
         }
     }
 }
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     hours: std::primitive::i8,
     minutes: std::primitive::i8,
@@ -516,7 +516,7 @@ impl std::convert::From<sqlx::types::time::UtcOffset> for SqlxTypesTimeUtcOffset
         }
     }
 }
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum NumBigintSignWithSerializeDeserialize {
     Minus,
     NoSign,
@@ -541,7 +541,7 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
     }
 }
 //todo pub or not for all - think
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 struct NumBigintBigIntNewWithSerializeDeserialize {
     sign: NumBigintSignWithSerializeDeserialize,
     digits: std::vec::Vec<std::primitive::u32>
@@ -927,7 +927,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveBool(pub std::primitive::bool);
 impl StdPrimitiveBool {
     pub fn into_inner(self) -> std::primitive::bool {
@@ -981,7 +981,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
 impl AsPostgresqlBool for StdPrimitiveBool {}
 impl PostgresqlOrder for StdPrimitiveBool {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI8(pub std::primitive::i8);
 impl StdPrimitiveI8 {
     pub fn into_inner(self) -> std::primitive::i8 {
@@ -1035,7 +1035,7 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI8 {
 impl AsPostgresqlChar for StdPrimitiveI8 {}
 impl PostgresqlOrder for StdPrimitiveI8 {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 impl StdPrimitiveI16 {
     pub fn into_inner(self) -> std::primitive::i16 {
@@ -1091,7 +1091,7 @@ impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
 impl PostgresqlOrder for StdPrimitiveI16 {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
 impl StdPrimitiveI32 {
     pub fn into_inner(self) -> std::primitive::i32 {
@@ -1146,7 +1146,7 @@ impl AsPostgresqlReal for StdPrimitiveI32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveI32 {}
 impl PostgresqlOrder for StdPrimitiveI32 {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
 impl StdPrimitiveI64 {
     pub fn into_inner(self) -> std::primitive::i64 {
@@ -1202,7 +1202,7 @@ impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
 impl PostgresqlOrder for StdPrimitiveI64 {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 impl StdPrimitiveF32 {
     pub fn into_inner(self) -> std::primitive::f32 {
@@ -1257,7 +1257,7 @@ impl AsPostgresqlReal for StdPrimitiveF32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveF32 {}
 impl PostgresqlOrder for StdPrimitiveF32 {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 impl StdPrimitiveF64 {
     pub fn into_inner(self) -> std::primitive::f64 {
@@ -1312,7 +1312,7 @@ impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
 impl AsPostgresqlFloat8 for StdPrimitiveF64 {}
 impl PostgresqlOrder for StdPrimitiveF64 {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdStringString(pub std::string::String);
 impl StdStringString {
     pub fn into_inner(self) -> std::string::String {
@@ -1370,7 +1370,7 @@ impl AsPostgresqlName for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 impl StdVecVecStdPrimitiveU8 {
     pub fn into_inner(self) -> std::vec::Vec<std::primitive::u8> {
@@ -1424,7 +1424,7 @@ impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     months: std::primitive::i32,
     days: std::primitive::i32,
@@ -1503,7 +1503,7 @@ impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i64>,
     end: std::ops::Bound<std::primitive::i64>,
@@ -1580,7 +1580,7 @@ impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i32>,
     end: std::ops::Bound<std::primitive::i32>,
@@ -1657,7 +1657,7 @@ impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize>,
@@ -1808,7 +1808,7 @@ impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlx
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
@@ -1943,7 +1943,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOf
         sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
     >,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize>,
@@ -2103,7 +2103,7 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSq
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize>,
@@ -2254,7 +2254,7 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSq
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
@@ -2383,7 +2383,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
 
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
     date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
     time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
@@ -2477,7 +2477,7 @@ impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>,
@@ -2608,7 +2608,7 @@ impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>,
@@ -2735,7 +2735,7 @@ impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
@@ -2833,7 +2833,7 @@ impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize{
     start: std::ops::Bound<SqlxTypesDecimal>,
     end: std::ops::Bound<SqlxTypesDecimal>,
@@ -2929,7 +2929,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDec
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
 
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
 impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize> for SqlxPostgresTypesPgMoney {
     fn from(value: SqlxPostgresTypesPgMoneyWithSerializeDeserialize) -> Self {
@@ -2993,7 +2993,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
 
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
 impl std::convert::From<SqlxPostgresTypesPgCiTextWithSerializeDeserialize> for SqlxPostgresTypesPgCiText {
     fn from(value: SqlxPostgresTypesPgCiTextWithSerializeDeserialize) -> Self {
@@ -3057,7 +3057,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBigDecimalNewWithSerializeDeserialize{
     digits: NumBigintBigIntNewWithSerializeDeserialize,
     scale: std::primitive::i64
@@ -3128,7 +3128,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesBigDecimal {
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
 impl SqlxTypesDecimal {
     pub fn into_inner(self) -> sqlx::types::Decimal {
@@ -3184,7 +3184,7 @@ impl AsPostgresqlNumeric for SqlxTypesDecimal {}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize{
     naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
     fixed_offset: std::primitive::i32,
@@ -3294,7 +3294,7 @@ impl AsPostgresqlTimeTz for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize{
     naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
     fixed_offset: std::primitive::i32,
@@ -3399,7 +3399,7 @@ impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize);
 impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     type Error = ();//todo
@@ -3488,7 +3488,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChro
 impl AsPostgresqlTimestamp for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize {
     year: std::primitive::i32,
     month: std::primitive::u32,
@@ -3571,7 +3571,7 @@ impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
 
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize{
     //todo maybe make fields pub or not pub - think and decide
     hour: std::primitive::u32,
@@ -3654,7 +3654,7 @@ impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize{
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
@@ -3742,7 +3742,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize{
     //todo support variations of init functions as enum
     date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
@@ -3832,7 +3832,7 @@ impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
 
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize(std::primitive::i64);
 impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize> for SqlxTypesTimeOffsetDateTime {
     type Error = time::error::ComponentRange;
@@ -3900,7 +3900,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeOffsetDateTime {
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
 
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
     year: std::primitive::i32,
     month: TimeMonthWithSerializeDeserialize,
@@ -3981,7 +3981,7 @@ impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
 
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeTimeFromHmsWithSerializeDeserialize{
     hour: std::primitive::u8,
     minute: std::primitive::u8,
@@ -4063,7 +4063,7 @@ impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
 
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidTryParseWithSerializeDeserialize(std::string::String);
 impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize> for SqlxTypesUuidUuid {
     type Error = sqlx::types::uuid::Error;//todo
@@ -4130,7 +4130,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesUuidUuid {
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
 impl SqlxTypesIpnetworkIpNetwork {
     pub fn into_inner(self) -> sqlx::types::ipnetwork::IpNetwork {
@@ -4184,7 +4184,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesIpnetworkIpNetwork {
 impl AsPostgresqlInet for SqlxTypesIpnetworkIpNetwork {}
 impl AsPostgresqlCidr for SqlxTypesIpnetworkIpNetwork {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl StdNetIpAddr {
     pub fn into_inner(self) -> std::net::IpAddr {
@@ -4239,7 +4239,7 @@ impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
 
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize([std::primitive::u8; 6]);
 impl std::convert::From<SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize> for SqlxTypesMacAddressMacAddress {
     fn from(value: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize) -> Self {
@@ -4303,7 +4303,7 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesMacAddressMacAddress {
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
 
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBitVecFromBytesWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
 impl std::convert::From<SqlxTypesBitVecFromBytesWithSerializeDeserialize> for SqlxTypesBitVec {
     fn from(value: SqlxTypesBitVecFromBytesWithSerializeDeserialize) -> Self {
@@ -4368,7 +4368,7 @@ impl AsPostgresqlBit for SqlxTypesBitVec {}
 impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner(self) -> sqlx::types::Json<T> {
@@ -4401,7 +4401,8 @@ where
         + std::hash::Hash
         + Default
         + serde::Serialize
-        + serde::Deserialize<'a>, //todo maybe add another traits impls
+        + serde::Deserialize<'a>
+        + utoipa::ToSchema<'a>, //todo maybe add another traits impls
 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
@@ -4435,7 +4436,8 @@ where
         + std::hash::Hash
         + Default
         + serde::Serialize
-        + serde::Deserialize<'a>, //todo maybe add another traits impls
+        + serde::Deserialize<'a>
+        + utoipa::ToSchema<'a>, //todo maybe add another traits impls
 {
     fn decode(value: sqlx::postgres::PgValueRef<'a>) -> Result<Self, sqlx::error::BoxDynError> {
         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
@@ -4450,7 +4452,7 @@ impl<T> CheckSupportedPostgresqlColumnType for SqlxTypesJson<T> {
 impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
 impl<T> AsPostgresqlJsonB for SqlxTypesJson<T> {}
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValue(serde_json::Value);
 impl SerdeJsonValue {
     pub fn into_inner(self) -> serde_json::Value {
