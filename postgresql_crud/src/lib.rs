@@ -440,7 +440,6 @@ impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
         }
     }
 }
-
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     pub hours: std::primitive::i8,
@@ -1554,7 +1553,6 @@ impl std::convert::From<sqlx::postgres::types::PgRange<std::primitive::i32>> for
         }
     }
 }
-//
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
         self.0
