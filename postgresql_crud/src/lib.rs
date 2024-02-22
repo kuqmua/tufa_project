@@ -542,7 +542,7 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
 }
 //todo pub or not for all - think
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-struct NumBigintBigIntNewWithSerializeDeserialize {
+pub struct NumBigintBigIntNewWithSerializeDeserialize {
     sign: NumBigintSignWithSerializeDeserialize,
     digits: std::vec::Vec<std::primitive::u32>
 }
