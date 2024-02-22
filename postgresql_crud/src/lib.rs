@@ -1908,6 +1908,77 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSq
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize{
+    pub start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
+    pub end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
+}
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    type Error = time::error::ComponentRange;
+    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let start = match value.start {
+            std::ops::Bound::Included(value) => match SqlxTypesTimeOffsetDateTime::try_from(value) {
+                Ok(value) => std::ops::Bound::Included(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Excluded(value) => match SqlxTypesTimeOffsetDateTime::try_from(value) {
+                Ok(value) => std::ops::Bound::Excluded(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.end {
+            std::ops::Bound::Included(value) => match SqlxTypesTimeOffsetDateTime::try_from(value) {
+                Ok(value) => std::ops::Bound::Included(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Excluded(value) => match SqlxTypesTimeOffsetDateTime::try_from(value) {
+                Ok(value) => std::ops::Bound::Excluded(value.0),
+                Err(e) => {
+                    return Err(e);
+                }
+            },
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Ok(Self(sqlx::postgres::types::PgRange{
+            start,
+            end
+        }))
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
+        use std::ops::RangeBounds;
+        let start = match value.0.start_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+            ),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+            ),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.0.end_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+            ),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+            ),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Self {
+            start,
+            end
+        }
+    }
+}
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime> {
         self.0
