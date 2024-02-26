@@ -3659,21 +3659,39 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize{
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
 }
+pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError {
+    TimeOffset {
+        time: time::error::ComponentRange,
+        offset: time::error::ComponentRange,
+    },
+    Time {
+        time: time::error::ComponentRange,
+    },
+    Offset {
+        offset: time::error::ComponentRange
+    }
+}
 impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for SqlxPostgresTypesPgTimeTz {
-    type Error = time::error::ComponentRange;//todo
+    type Error = SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError;
     fn try_from(value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        //todo maybe error type variants in enum like both date and time ar efailed or only one of them adn which one
-        let time = match SqlxTypesTimeTime::try_from(value.time) {
-            Ok(value) => value.0,
-            Err(e) => {
-                return Err(e);
-            }
-        };
-        let offset = match sqlx::types::time::UtcOffset::try_from(value.offset) {
-            Ok(value) => value,
-            Err(e) => {
-                return Err(e);
-            }
+        let (time, offset) = match (SqlxTypesTimeTime::try_from(value.time), sqlx::types::time::UtcOffset::try_from(value.offset)) {
+            (Ok(time), Ok(offset)) => (time.0,offset),
+            (Err(e), Ok(_)) => {
+                return Err(Self::Error::Time {
+                    time: e
+                });
+            },
+            (Ok(_), Err(e)) => {
+                return Err(Self::Error::Offset {
+                    offset: e
+                });
+            },
+            (Err(time_error), Err(offset_error)) => {
+                return Err(Self::Error::TimeOffset {
+                    time: time_error,
+                    offset: offset_error
+                });
+            },
         };
         Ok(Self(sqlx::postgres::types::PgTimeTz {
             time,
