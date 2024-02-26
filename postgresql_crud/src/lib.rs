@@ -13,6 +13,10 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 pub mod app_state;
 pub mod json_value_extractor;
 
+fn generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(fixed_offset: std::primitive::i32) -> std::string::String {
+    format!("failed to create sqlx::types::chrono::FixedOffset with .east_opt {}", fixed_offset)
+}
+
 pub struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     std_primitive_bool: std::primitive::bool, //BOOL
@@ -3221,25 +3225,38 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffse
     fixed_offset: std::primitive::i32,
 }
 pub enum SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetTryFromWithSerializeDeserialize {
-    SqlxTypesChronoNaiveDateTime(SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError),
-    SqlxTypesChronoFixedOffset
+    SqlxTypesChronoNaiveDateTime {
+        naive_date_time: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
+    },
+    SqlxTypesChronoFixedOffset {
+        fixed_offset: std::string::String
+    },
+    SqlxTypesChronoNaiveDateTimeSqlxTypesChronoFixedOffset {
+        naive_date_time: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
+        fixed_offset: std::string::String
+    }
 }
 impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {
     type Error = SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetTryFromWithSerializeDeserialize;
     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        //todo maybe move logic into function coz logic duplicates
-        let naive_date_time = match SqlxTypesChronoNaiveDateTime::try_from(value.naive_date_time) {
-            Ok(value) => value.0,
-            Err(e) => {
-                return Err(Self::Error::SqlxTypesChronoNaiveDateTime(e));
-            }
-        };
-        //problem: after you created sqlx::types::chrono::FixedOffset - is not possible to known what offset used in creation for convertion. east default unfortunately 
-        let fixed_offset = match sqlx::types::chrono::FixedOffset::east_opt(value.fixed_offset) {
-            Some(value) => value,
-            None => {
-                return Err(Self::Error::SqlxTypesChronoFixedOffset);
-            }
+        let (naive_date_time, fixed_offset) = match (SqlxTypesChronoNaiveDateTime::try_from(value.naive_date_time), sqlx::types::chrono::FixedOffset::east_opt(value.fixed_offset)) {
+            (Ok(naive_date_time), Some(fixed_offset)) => (naive_date_time.0, fixed_offset),
+            (Ok(_), None) => {
+                return Err(Self::Error::SqlxTypesChronoFixedOffset {
+                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(value.fixed_offset)
+                });
+            },
+            (Err(e), Some(_)) => {
+                return Err(Self::Error::SqlxTypesChronoNaiveDateTime {
+                    naive_date_time: e
+                });
+            },
+            (Err(naive_date_time_error), None) => {
+                return Err(Self::Error::SqlxTypesChronoNaiveDateTimeSqlxTypesChronoFixedOffset {
+                    naive_date_time: naive_date_time_error,
+                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(value.fixed_offset)
+                });
+            },
         };
         Ok(Self(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
             naive_date_time,
@@ -3348,7 +3365,6 @@ pub enum SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserial
 impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     type Error = SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError;
     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let generate_failed_message = |fixed_offset: std::primitive::i32|{format!("failed to create sqlx::types::chrono::FixedOffset with .east_opt {}", fixed_offset)};
         let (naive_date_time, fixed_offset) = match (SqlxTypesChronoNaiveDateTime::try_from(value.naive_date_time), sqlx::types::chrono::FixedOffset::east_opt(value.fixed_offset)) {
             (Ok(naive_date_time), Some(fixed_offset)) => (naive_date_time.0, fixed_offset),
             (Err(e), Some(_)) => {
@@ -3358,13 +3374,13 @@ impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveU
             },
             (Ok(_), None) => {
                 return Err(Self::Error::FixedOffset {
-                    fixed_offset: generate_failed_message(value.fixed_offset)
+                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(value.fixed_offset)
                 });
             },
             (Err(naive_date_time_error), None) => {
                 return Err(Self::Error::NaiveDateTimeFixedOffset {
                     naive_date_time: naive_date_time_error,
-                    fixed_offset: generate_failed_message(value.fixed_offset)
+                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(value.fixed_offset)
                 });
             },
         };
