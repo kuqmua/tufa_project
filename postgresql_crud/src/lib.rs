@@ -2007,13 +2007,15 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
             std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
                 Ok(value) => std::ops::Bound::Included(value),
                 Err(e) => {
-                    return Err(e);
+                    todo!()
+                    // return Err(e);
                 }
             },
             std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
                 Ok(value) => std::ops::Bound::Excluded(value),
                 Err(e) => {
-                    return Err(e);
+                    todo!()
+                    // return Err(e);
                 }
             },
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
@@ -2022,13 +2024,15 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
             std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
                 Ok(value) => std::ops::Bound::Included(value),
                 Err(e) => {
-                    return Err(e);
+                    todo!()
+                    // return Err(e);
                 }
             },
             std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(*value)) {
                 Ok(value) => std::ops::Bound::Excluded(value),
                 Err(e) => {
-                    return Err(e);
+                    todo!()
+                    // return Err(e);
                 }
             },
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
@@ -3244,13 +3248,13 @@ impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFrom
     }
 }
 impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize {
-    type Error = ();//todo
+    type Error = std::string::String;
     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Result<Self, Self::Error> {
-        //todo on commit time there is not non-panic version of .date_naive()
+        //on commit time there is not non-panic version of .date_naive()
         let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
             Ok(value) => value,
             Err(e) => {
-                return Err(());
+                return Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate with .date_naive()"));
             },
         };
         let time = value.0.time();
@@ -3373,7 +3377,7 @@ impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveU
 impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize {
     type Error = std::string::String;
     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Result<Self, Self::Error> {
-        //todo on commit time there is not non-panic version of .date_naive()
+        //on commit time there is not non-panic version of .date_naive()
         let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
             Ok(value) => value,
             Err(e) => {
