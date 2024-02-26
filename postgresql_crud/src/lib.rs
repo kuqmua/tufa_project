@@ -1814,7 +1814,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDe
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
 }
 impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    type Error = time::error::ComponentRange;
+    type Error = SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError;//todo new error type maybe?
     fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
         let start = match value.start {
             std::ops::Bound::Included(value) => match SqlxTypesTimePrimitiveDateTime::try_from(value) {
@@ -3744,25 +3744,44 @@ impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize{
-    //todo support variations of init functions as enum
     date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize
 }
+// #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]//todo
+pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
+    DateTime {
+        date: time::error::ComponentRange,
+        time: time::error::ComponentRange,
+    },
+    Date {
+        date: time::error::ComponentRange,
+    },
+    Time {
+        time: time::error::ComponentRange
+    }
+}
 impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
-    type Error = time::error::ComponentRange;//todo
+    type Error = SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError;
     fn try_from(value: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
         //todo maybe error type variants in enum like both date and time ar efailed or only one of them adn which one
-        let date = match SqlxTypesTimeDate::try_from(value.date) {
-            Ok(value) => value,
-            Err(e) => {
-                return Err(e);
-            }
-        };
-        let time = match SqlxTypesTimeTime::try_from(value.time) {
-            Ok(value) => value,
-            Err(e) => {
-                return Err(e);
-            }
+        let (date, time) = match (SqlxTypesTimeDate::try_from(value.date), SqlxTypesTimeTime::try_from(value.time)) {
+            (Ok(date), Ok(time)) => (date, time),
+            (Err(e), Ok(_)) => {
+                return Err(Self::Error::Date {
+                    date: e
+                });
+            },
+            (Ok(_), Err(e)) => {
+                return Err(Self::Error::Time {
+                    time: e
+                });
+            },
+            (Err(date_error), Err(time_error)) => {
+                return Err(Self::Error::DateTime {
+                    date: date_error,
+                    time: time_error
+                });
+            },
         };
         Ok(Self(sqlx::types::time::PrimitiveDateTime::new(
             date.0,
@@ -4066,7 +4085,7 @@ pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidTryParseWithSerializeDeserialize(std::string::String);
 impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize> for SqlxTypesUuidUuid {
-    type Error = sqlx::types::uuid::Error;//todo
+    type Error = sqlx::types::uuid::Error;
     fn try_from(value: SqlxTypesUuidUuidTryParseWithSerializeDeserialize) -> Result<Self, Self::Error> {
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
             Ok(value) => Ok(Self(value)),
