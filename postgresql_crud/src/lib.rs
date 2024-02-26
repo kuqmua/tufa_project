@@ -2400,7 +2400,8 @@ impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeseriali
         let time = match SqlxTypesChronoNaiveTime::try_from(value.time) {
             Ok(value) => value.0,
             Err(e) => {
-                return Err(e);
+                todo!()
+                // return Err(e);
             }
         };
         Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date,time)))
@@ -3573,13 +3574,12 @@ impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize{
-    //todo maybe make fields pub or not pub - think and decide
     hour: std::primitive::u32,
     min: std::primitive::u32,
     sec: std::primitive::u32
 }
 impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize> for SqlxTypesChronoNaiveTime {
-    type Error = ();//todo
+    type Error = std::string::String;
     fn try_from(value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
         match sqlx::types::chrono::NaiveTime::from_hms_opt(
             value.hour,
@@ -3587,7 +3587,7 @@ impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeseri
             value.sec
         ) {
             Some(value) => Ok(Self(value)),
-            None => Err(())
+            None => Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveTime from hour, minute and second"))
         }
     }
 }
