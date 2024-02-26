@@ -3747,7 +3747,6 @@ pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize{
     date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize
 }
-// #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]//todo
 pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
     DateTime {
         date: time::error::ComponentRange,
@@ -3763,7 +3762,6 @@ pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
 impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
     type Error = SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError;
     fn try_from(value: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        //todo maybe error type variants in enum like both date and time ar efailed or only one of them adn which one
         let (date, time) = match (SqlxTypesTimeDate::try_from(value.date), SqlxTypesTimeTime::try_from(value.time)) {
             (Ok(date), Ok(time)) => (date, time),
             (Err(e), Ok(_)) => {
