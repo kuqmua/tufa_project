@@ -16,6 +16,7 @@ pub enum SupportedSqlxPostgresType {
     SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset,
     SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+    SqlxTypesChronoNaiveDateTime,
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
     SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
@@ -27,7 +28,6 @@ pub enum SupportedSqlxPostgresType {
     SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset,
     SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-    SqlxTypesChronoNaiveDateTime,
     SqlxTypesChronoNaiveDate,
     SqlxTypesChronoNaiveTime,
     SqlxPostgresTypesPgTimeTz,
@@ -93,6 +93,8 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostg
         
             RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
 
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange => Self::SqlxTypesChronoNaiveDateTime,
+
             RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
         
             RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
@@ -114,8 +116,6 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostg
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-        
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange => Self::SqlxTypesChronoNaiveDateTime,
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::SqlxTypesChronoNaiveDate,
         
@@ -248,6 +248,8 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
         
             RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => Self::TsTzRange,
 
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange => Self::TsTzRange,
+
             RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Self::DateRange,
         
             RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Self::DateRange,
@@ -269,8 +271,6 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::TimestampTz,
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => Self::Timestamp,
-        
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange => Self::TsTzRange,
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::Date,
         
