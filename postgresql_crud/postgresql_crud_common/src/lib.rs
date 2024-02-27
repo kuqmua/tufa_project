@@ -40,6 +40,6 @@ pub enum SupportedSqlxPostgresType {
     StdNetIpAddr,
     SqlxTypesMacAddressMacAddress,
     SqlxTypesBitVec,
-    SqlxTypesJsonT,
+    SqlxTypesJsonT,//todo what to do with generic?
     SerdeJsonValue,
 }

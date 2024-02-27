@@ -984,6 +984,11 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
 }
 impl AsPostgresqlBool for StdPrimitiveBool {}
 impl PostgresqlOrder for StdPrimitiveBool {}
+impl std::convert::From<StdPrimitiveBool> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveBool) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveBool
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI8(pub std::primitive::i8);
@@ -1038,6 +1043,11 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI8 {
 }
 impl AsPostgresqlChar for StdPrimitiveI8 {}
 impl PostgresqlOrder for StdPrimitiveI8 {}
+impl std::convert::From<StdPrimitiveI8> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveI8) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI8
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
@@ -1094,6 +1104,11 @@ impl AsPostgresqlSmallInt for StdPrimitiveI16 {}
 impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
 impl PostgresqlOrder for StdPrimitiveI16 {}
+impl std::convert::From<StdPrimitiveI16> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveI16) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI16
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
@@ -1149,6 +1164,11 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveI32 {
 impl AsPostgresqlReal for StdPrimitiveI32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveI32 {}
 impl PostgresqlOrder for StdPrimitiveI32 {}
+impl std::convert::From<StdPrimitiveI32> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveI32) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI32
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
@@ -1205,6 +1225,11 @@ impl AsPostgresqlBigInt for StdPrimitiveI64 {}
 impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
 impl PostgresqlOrder for StdPrimitiveI64 {}
+impl std::convert::From<StdPrimitiveI64> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveI64) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI64
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
@@ -1260,6 +1285,11 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveF32 {
 impl AsPostgresqlReal for StdPrimitiveF32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveF32 {}
 impl PostgresqlOrder for StdPrimitiveF32 {}
+impl std::convert::From<StdPrimitiveF32> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveF32) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveF32
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
@@ -1315,6 +1345,11 @@ impl CheckSupportedPostgresqlColumnType for StdPrimitiveF64 {
 impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
 impl AsPostgresqlFloat8 for StdPrimitiveF64 {}
 impl PostgresqlOrder for StdPrimitiveF64 {}
+impl std::convert::From<StdPrimitiveF64> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdPrimitiveF64) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveF64
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdStringString(pub std::string::String);
@@ -1373,6 +1408,11 @@ impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlName for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
+impl std::convert::From<StdStringString> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdStringString) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdStringString
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
@@ -1426,6 +1466,11 @@ impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
+impl std::convert::From<StdVecVecStdPrimitiveU8> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdVecVecStdPrimitiveU8) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdVecVecStdPrimitiveU8
+    }
+}
 
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -1503,6 +1548,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgInterval {
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
+impl std::convert::From<SqlxPostgresTypesPgInterval> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgInterval) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgInterval
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
@@ -1580,6 +1630,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitive
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI64) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
@@ -1657,6 +1712,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitive
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
@@ -2088,6 +2148,11 @@ impl CheckSupportedPostgresqlColumnType
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
@@ -2356,6 +2421,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     pub sqlx::postgres::types::PgRange<
@@ -2798,6 +2868,11 @@ impl CheckSupportedPostgresqlColumnType
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset{}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
@@ -3229,6 +3304,11 @@ impl CheckSupportedPostgresqlColumnType
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
@@ -3495,6 +3575,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
+    }
+}
 
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -3606,6 +3691,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDateTime {
 }
 impl AsPostgresqlTsTzRange for SqlxTypesChronoNaiveDateTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
+impl std::convert::From<SqlxTypesChronoNaiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
@@ -3872,6 +3962,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChr
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
@@ -4134,6 +4229,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
@@ -4232,6 +4332,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBig
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
+    }
+}
 
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
@@ -4330,6 +4435,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDec
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal
+    }
+}
 
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -4394,6 +4504,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
+impl std::convert::From<SqlxPostgresTypesPgMoney> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgMoney) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney
+    }
+}
 
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -4458,6 +4573,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
+impl std::convert::From<SqlxPostgresTypesPgCiText> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgCiText) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText
+    }
+}
 
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -4530,6 +4650,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesBigDecimal {
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
+impl std::convert::From<SqlxTypesBigDecimal> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesBigDecimal) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesBigDecimal
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
@@ -4583,6 +4708,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesDecimal {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlNumeric for SqlxTypesDecimal {}
+impl std::convert::From<SqlxTypesDecimal> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesDecimal) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesDecimal
+    }
+}
 
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>,
@@ -4709,6 +4839,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChro
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTimeTz for SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset {}
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset
+    }
+}
 
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
@@ -4831,6 +4966,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChro
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
+    }
+}
 
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
@@ -4921,6 +5061,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChro
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTimestamp for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    }
+}
 
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5004,6 +5149,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDate {
 }
 impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
+impl std::convert::From<SqlxTypesChronoNaiveDate> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesChronoNaiveDate) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoNaiveDate
+    }
+}
 
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5086,6 +5236,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveTime {
 }
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
+impl std::convert::From<SqlxTypesChronoNaiveTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesChronoNaiveTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoNaiveTime
+    }
+}
 
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5192,6 +5347,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
+impl std::convert::From<SqlxPostgresTypesPgTimeTz> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz
+    }
+}
 
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5299,6 +5459,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimePrimitiveDateTime {
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
+impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime
+    }
+}
 
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5367,6 +5532,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeOffsetDateTime {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
+impl std::convert::From<SqlxTypesTimeOffsetDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime
+    }
+}
 
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5448,6 +5618,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeDate {
 }
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
+impl std::convert::From<SqlxTypesTimeDate> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesTimeDate) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesTimeDate
+    }
+}
 
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5530,6 +5705,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeTime {
 }
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
+impl std::convert::From<SqlxTypesTimeTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesTimeTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesTimeTime
+    }
+}
 
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5598,6 +5778,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesUuidUuid {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
+impl std::convert::From<SqlxTypesUuidUuid> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesUuidUuid) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesUuidUuid
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
@@ -5652,6 +5837,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesIpnetworkIpNetwork {
 }
 impl AsPostgresqlInet for SqlxTypesIpnetworkIpNetwork {}
 impl AsPostgresqlCidr for SqlxTypesIpnetworkIpNetwork {}
+impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesIpnetworkIpNetwork) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
@@ -5706,6 +5896,11 @@ impl CheckSupportedPostgresqlColumnType for StdNetIpAddr {
 }
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
+impl std::convert::From<StdNetIpAddr> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: StdNetIpAddr) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::StdNetIpAddr
+    }
+}
 
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5770,6 +5965,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesMacAddressMacAddress {
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
+impl std::convert::From<SqlxTypesMacAddressMacAddress> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress
+    }
+}
 
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -5836,6 +6036,11 @@ impl CheckSupportedPostgresqlColumnType for SqlxTypesBitVec {
 impl AsPostgresqlBit for SqlxTypesBitVec {}
 impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
+impl std::convert::From<SqlxTypesBitVec> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesBitVec) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesBitVec
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
@@ -5920,6 +6125,11 @@ impl<T> CheckSupportedPostgresqlColumnType for SqlxTypesJson<T> {
 }
 impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
 impl<T> AsPostgresqlJsonB for SqlxTypesJson<T> {}
+impl<T> std::convert::From<SqlxTypesJson<T>> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SqlxTypesJson<T>) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesJsonT
+    }
+}
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValue(serde_json::Value);
@@ -5974,6 +6184,11 @@ impl CheckSupportedPostgresqlColumnType for SerdeJsonValue {
 }
 impl AsPostgresqlJson for SerdeJsonValue {}
 impl AsPostgresqlJsonB for SerdeJsonValue {}
+impl std::convert::From<SerdeJsonValue> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(value: SerdeJsonValue) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SerdeJsonValue
+    }
+}
 
 pub async fn something() {
     let mut query = sqlx::query::<sqlx::Postgres>("test");
