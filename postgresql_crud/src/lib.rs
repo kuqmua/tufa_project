@@ -2128,42 +2128,173 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWi
     start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize>,
 }
+pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError {
+    Start {
+        start: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
+    },
+    End {
+        end: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
+    },
+    StartEnd {
+        start: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError,
+        end: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
+    }
+}
 impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    type Error = ();
+    type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError;
     fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let start = match value.start {
-            std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value) {
-                Ok(value) => std::ops::Bound::Included(value.0),
+        let (start, end) = match (value.start, value.end) {
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Included(end_value),
+            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Included(start_value.0),
+                    std::ops::Bound::Included(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Excluded(end_value),
+            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Included(start_value.0),
+                    std::ops::Bound::Excluded(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Unbounded,
+            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value) {
+                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
                 Err(e) => {
-                    todo!()
-                    // return Err(e);
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
                 }
             },
-            std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value) {
-                Ok(value) => std::ops::Bound::Excluded(value.0),
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Included(end_value),
+            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Excluded(start_value.0),
+                    std::ops::Bound::Included(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Excluded(end_value),
+            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Excluded(start_value.0),
+                    std::ops::Bound::Excluded(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Unbounded,
+            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value) {
+                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
                 Err(e) => {
-                    todo!()
-                    // return Err(e);
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
                 }
             },
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.end {
-            std::ops::Bound::Included(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value) {
-                Ok(value) => std::ops::Bound::Included(value.0),
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Included(end_value),
+            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value) {
+                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
                 Err(e) => {
-                    todo!()
-                    // return Err(e);
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
                 }
             },
-            std::ops::Bound::Excluded(value) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value) {
-                Ok(value) => std::ops::Bound::Excluded(value.0),
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Excluded(end_value),
+            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value) {
+                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
                 Err(e) => {
-                    todo!()
-                    // return Err(e);
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
                 }
             },
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Unbounded,
+            ) => (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Unbounded
+            ),
         };
         Ok(Self(sqlx::postgres::types::PgRange{
             start,
@@ -2172,7 +2303,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
     }
 }
 impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
-    type Error = ();
+    type Error = ();//todo
     fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Result<Self, Self::Error> {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
