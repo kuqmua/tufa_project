@@ -55,8 +55,9 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostg
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial => Self::StdPrimitiveI16,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2 => Self::StdPrimitiveI16,
         
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlReal => Self::StdPrimitiveI32,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlFloat4 => Self::StdPrimitiveI32,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt => Self::StdPrimitiveI32,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial => Self::StdPrimitiveI32,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4 => Self::StdPrimitiveI32,
         
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt => Self::StdPrimitiveI64,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => Self::StdPrimitiveI64,
@@ -209,8 +210,9 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial => Self::SmallSerial,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2 => Self::Int2,
         
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlReal => Self::Real,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlFloat4 => Self::Float4,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt => Self::Int,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial => Self::Serial,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4 => Self::Int4,
         
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt => Self::BigInt,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => Self::BigSerial,
@@ -365,8 +367,9 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     StdPrimitiveI16AsPostgresqlSmallSerial,
     StdPrimitiveI16AsPostgresqlInt2,
 
-    StdPrimitiveI32AsPostgresqlReal,
-    StdPrimitiveI32AsPostgresqlFloat4,
+    StdPrimitiveI32AsPostgresqlInt,
+    StdPrimitiveI32AsPostgresqlSerial,
+    StdPrimitiveI32AsPostgresqlInt4,
 
     StdPrimitiveI64AsPostgresqlBigInt,
     StdPrimitiveI64AsPostgresqlBigSerial,
@@ -401,8 +404,10 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange,
 
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange,
+
+    SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange,//????
     
-    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,//todo reorder from now
+    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
 
     SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
 
@@ -423,8 +428,6 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
 
     SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp,
-
-    SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange,
 
     SqlxTypesChronoNaiveDateAsPostgresqlDate,
 
