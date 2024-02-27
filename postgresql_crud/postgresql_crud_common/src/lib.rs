@@ -147,3 +147,11 @@ impl PostgresqlType {
         }
     }
 }
+
+pub enum Variants {
+    // ... todo
+    StdPrimitiveI16AsPostgresqlSmallInt,
+    StdPrimitiveI16AsPostgresqlSmallSerial,
+    StdPrimitiveI16AsPostgresqlInt2
+    // ...
+}
