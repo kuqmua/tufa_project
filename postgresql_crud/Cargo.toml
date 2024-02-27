@@ -15,6 +15,7 @@ serde_json = {version = "=1.0"}
 time = {version = "=0.3.23"}
 num-bigint = {version = "=0.4.4"}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
+postgresql_crud_common = {path = "./postgresql_crud_common"}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
 naming_constants = {path = "../naming_constants"}
