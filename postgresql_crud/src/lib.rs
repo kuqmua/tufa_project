@@ -716,9 +716,6 @@ impl Default for TestNewType<Something> {
                 start: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
                 end: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
             });
-        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
-            sqlx_types_chrono_naive_date_time_handle.clone()
-        );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::NaiveDate,
@@ -778,6 +775,9 @@ impl Default for TestNewType<Something> {
                 sqlx_types_chrono_naive_date_time_handle.clone(),
                 sqlx_types_chrono_utc_handle.clone()
             ));
+        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
+            sqlx_types_chrono_naive_date_time_handle.clone()
+        );
         let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
             sqlx_types_chrono_naive_date_handle.clone(),
         );
@@ -3583,122 +3583,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for
     }
 }
 
-pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
-#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
-    date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
-    time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
-}
-pub enum SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
-    Date {
-        date: std::string::String
-    },
-    Time {
-        time: std::string::String
-    },
-    DateTime {
-        date: std::string::String,
-        time: std::string::String
-    }
-}
-impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize> for SqlxTypesChronoNaiveDateTime {
-    type Error = SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let (date, time) = match (SqlxTypesChronoNaiveDate::try_from(value.date), SqlxTypesChronoNaiveTime::try_from(value.time)) {
-            (Ok(date), Ok(time)) => (date.0, time.0),
-            (Ok(_), Err(e)) => {
-                return Err(Self::Error::Time {
-                    time: e
-                });
-            },
-            (Err(e), Ok(_)) => {
-                return Err(Self::Error::Date {
-                    date: e
-                })
-            },
-            (Err(date_error), Err(time_error)) => {
-                return Err(Self::Error::DateTime {
-                    date: date_error,
-                    time: time_error
-                });
-            },
-        };
-        Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date,time)))
-    }
-}
-impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
-    fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
-        Self {
-            //todo maybe impl from directly
-            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(value.0.date())),
-            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(value.0.time())),
-        }
-       
-    }
-}
-impl SqlxTypesChronoNaiveDateTime {
-    pub fn into_inner(self) -> sqlx::types::chrono::NaiveDateTime {
-        self.0
-    }
-}
-impl std::convert::From<SqlxTypesChronoNaiveDateTime>
-    for sqlx::types::chrono::NaiveDateTime
-{
-    fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
-            sqlx::Postgres,
-        >>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
-            sqlx::Postgres,
-        >>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
-impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDateTime {
-    fn check_supported_postgresql_column_type() {}
-}
-impl AsPostgresqlTsTzRange for SqlxTypesChronoNaiveDateTime {}
-impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
-impl std::convert::From<SqlxTypesChronoNaiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
-    fn from(_value: SqlxTypesChronoNaiveDateTime) -> Self {
-        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime
-    }
-}
-
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
@@ -5066,6 +4950,122 @@ impl AsPostgresqlTimestamp for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for postgresql_crud_common::SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
         postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    }
+}
+
+pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
+    date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
+    time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
+}
+pub enum SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
+    Date {
+        date: std::string::String
+    },
+    Time {
+        time: std::string::String
+    },
+    DateTime {
+        date: std::string::String,
+        time: std::string::String
+    }
+}
+impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize> for SqlxTypesChronoNaiveDateTime {
+    type Error = SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
+    fn try_from(value: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let (date, time) = match (SqlxTypesChronoNaiveDate::try_from(value.date), SqlxTypesChronoNaiveTime::try_from(value.time)) {
+            (Ok(date), Ok(time)) => (date.0, time.0),
+            (Ok(_), Err(e)) => {
+                return Err(Self::Error::Time {
+                    time: e
+                });
+            },
+            (Err(e), Ok(_)) => {
+                return Err(Self::Error::Date {
+                    date: e
+                })
+            },
+            (Err(date_error), Err(time_error)) => {
+                return Err(Self::Error::DateTime {
+                    date: date_error,
+                    time: time_error
+                });
+            },
+        };
+        Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date,time)))
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
+    fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
+        Self {
+            //todo maybe impl from directly
+            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(value.0.date())),
+            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(value.0.time())),
+        }
+       
+    }
+}
+impl SqlxTypesChronoNaiveDateTime {
+    pub fn into_inner(self) -> sqlx::types::chrono::NaiveDateTime {
+        self.0
+    }
+}
+impl std::convert::From<SqlxTypesChronoNaiveDateTime>
+    for sqlx::types::chrono::NaiveDateTime
+{
+    fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> std::primitive::usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
+impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDateTime {
+    fn check_supported_postgresql_column_type() {}
+}
+impl AsPostgresqlTimestamp for SqlxTypesChronoNaiveDateTime {}
+impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
+impl std::convert::From<SqlxTypesChronoNaiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(_value: SqlxTypesChronoNaiveDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime
     }
 }
 
