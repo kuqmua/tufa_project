@@ -2417,23 +2417,38 @@ pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
     time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
 }
 pub enum SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
-    Date(std::string::String),
-    Time(std::string::String),
+    Date {
+        date: std::string::String
+    },
+    Time {
+        time: std::string::String
+    },
+    DateTime {
+        date: std::string::String,
+        time: std::string::String
+    }
 }
 impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize> for SqlxTypesChronoNaiveDateTime {
     type Error = SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
     fn try_from(value: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let date = match SqlxTypesChronoNaiveDate::try_from(value.date) {
-            Ok(value) => value.0,
-            Err(e) => {//Self::Error::SqlxTypesChronoNaiveDate(e)
-                return Err(Self::Error::Date(e));
-            }
-        };
-        let time = match SqlxTypesChronoNaiveTime::try_from(value.time) {
-            Ok(value) => value.0,
-            Err(e) => {
-                return Err(Self::Error::Date(e));
-            }
+        let (date, time) = match (SqlxTypesChronoNaiveDate::try_from(value.date), SqlxTypesChronoNaiveTime::try_from(value.time)) {
+            (Ok(date), Ok(time)) => (date.0, time.0),
+            (Ok(_), Err(e)) => {
+                return Err(Self::Error::Time {
+                    time: e
+                });
+            },
+            (Err(e), Ok(_)) => {
+                return Err(Self::Error::Date {
+                    date: e
+                })
+            },
+            (Err(date_error), Err(time_error)) => {
+                return Err(Self::Error::DateTime {
+                    date: date_error,
+                    time: time_error
+                });
+            },
         };
         Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date,time)))
     }
