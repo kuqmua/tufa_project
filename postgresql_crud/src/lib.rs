@@ -1840,6 +1840,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
         }))
     }
 }
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserializeTryFromOriginalError {
     Start {
         start: std::string::String
@@ -2540,6 +2541,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
         }))
     }
 }
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserializeTryFromOriginalError {
     Start {
         start: std::string::String
@@ -2979,6 +2981,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
         }))
     }
 }
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserializeTryFromOriginalError {
     Start {
         start: std::string::String
