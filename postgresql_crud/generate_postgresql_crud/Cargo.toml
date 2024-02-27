@@ -15,6 +15,7 @@ strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 convert_case = {version = "=0.6.0"}
 pluralizer = {version = "=0.4.0"}
+postgresql_crud_common = {path = "./../postgresql_crud_common"}
 proc_macro_assistants = {path = "../../proc_macro_assistants"}
 proc_macro_common = {path = "../../proc_macro_common"}
 proc_macro_helpers = {path = "../../proc_macro_helpers"}
