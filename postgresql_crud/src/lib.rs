@@ -716,6 +716,9 @@ impl Default for TestNewType<Something> {
                 start: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
                 end: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
             });
+        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
+            sqlx_types_chrono_naive_date_time_handle.clone()
+        );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::NaiveDate,
@@ -775,9 +778,6 @@ impl Default for TestNewType<Something> {
                 sqlx_types_chrono_naive_date_time_handle.clone(),
                 sqlx_types_chrono_utc_handle.clone()
             ));
-        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
-            sqlx_types_chrono_naive_date_time_handle.clone()
-        );
         let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
             sqlx_types_chrono_naive_date_handle.clone(),
         );
@@ -864,6 +864,7 @@ impl Default for TestNewType<Something> {
             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset,
             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local,
             sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time,
+            sqlx_types_chrono_naive_date_time,
             sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date,
             sqlx_postgres_types_pg_range_sqlx_types_time_date,
             sqlx_postgres_types_pg_range_sqlx_types_big_decimal,
@@ -875,7 +876,6 @@ impl Default for TestNewType<Something> {
             sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset,
             sqlx_types_chrono_date_time_sqlx_types_chrono_local,
             sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
-            sqlx_types_chrono_naive_date_time,
             sqlx_types_chrono_naive_date,
             sqlx_types_chrono_naive_time,
             sqlx_postgres_types_pg_time_tz,
