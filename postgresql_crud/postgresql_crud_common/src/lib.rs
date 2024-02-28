@@ -182,8 +182,6 @@ pub enum PostgresqlType {
     DateRange,
     NumRange,
     Money,
-    LTree,
-    LQuery,
     Numeric,
     TimestampTz,
     Date,
@@ -198,8 +196,6 @@ pub enum PostgresqlType {
     VarBit,
     Json,
     JsonB,
-    //maybe Composite types
-    //maybe Enumerations
 }
 
 impl PostgresqlType {
@@ -234,8 +230,6 @@ impl PostgresqlType {
             Self::DateRange => "DATERANGE",
             Self::NumRange => "NUMRANGE",
             Self::Money => "MONEY",
-            Self::LTree => "LTREE",
-            Self::LQuery => "LQUERY",
             Self::Numeric => "NUMERIC",
             Self::TimestampTz => "TIMESTAMPTZ",
             Self::Date => "DATE",
@@ -250,8 +244,6 @@ impl PostgresqlType {
             Self::VarBit => "VARBIT",
             Self::Json => "JSON",
             Self::JsonB => "JSONB",
-            //maybe Composite types
-            //maybe Enumerations
         }
     }
 }
