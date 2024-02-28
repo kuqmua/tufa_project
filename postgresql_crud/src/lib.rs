@@ -5655,14 +5655,12 @@ pub trait AsPostgresqlTsTzRange {}
 pub trait AsPostgresqlDateRange {}
 pub trait AsPostgresqlNumRange {}
 pub trait AsPostgresqlMoney {}
-pub trait AsPostgresqlLTree {}
-pub trait AsPostgresqlLQuery {}
 pub trait AsPostgresqlNumeric {}
 pub trait AsPostgresqlTimestampTz {}
+pub trait AsPostgresqlTimestamp {}
 pub trait AsPostgresqlDate {}
 pub trait AsPostgresqlTime {}
 pub trait AsPostgresqlTimeTz {}
-pub trait AsPostgresqlTimestamp {}
 pub trait AsPostgresqlUuid {}
 pub trait AsPostgresqlInet {}
 pub trait AsPostgresqlCidr {}
