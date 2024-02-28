@@ -110,8 +110,8 @@ pub struct TestNewType<T> {
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,
     sqlx_types_big_decimal: SqlxTypesBigDecimal,
     sqlx_types_decimal: SqlxTypesDecimal,
-    sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime,
@@ -155,8 +155,8 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
     sqlx_types_big_decimal: SqlxTypesBigDecimalNewWithSerializeDeserialize,
     sqlx_types_decimal: SqlxTypesDecimal,
-    sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
@@ -231,13 +231,13 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText::from(value.sqlx_postgres_types_pg_ci_text);
         let sqlx_types_big_decimal = SqlxTypesBigDecimal::from(value.sqlx_types_big_decimal);
         let sqlx_types_decimal: SqlxTypesDecimal = value.sqlx_types_decimal;
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_local = match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_local) {
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc) {
             Ok(value) => value,
             Err(_e) => {
                 return Err(());
             }
         };
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc) {
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local = match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_local) {
             Ok(value) => value,
             Err(_e) => {
                 return Err(());
@@ -392,11 +392,11 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
             sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText(value.sqlx_postgres_types_pg_ci_text),
             sqlx_types_big_decimal: SqlxTypesBigDecimal(value.sqlx_types_big_decimal),
             sqlx_types_decimal: SqlxTypesDecimal(value.sqlx_types_decimal),
-            sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
-                value.sqlx_types_chrono_date_time_sqlx_types_chrono_local
-            ),
             sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
                 value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc
+            ),
+            sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+                value.sqlx_types_chrono_date_time_sqlx_types_chrono_local
             ),
             sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime(value.sqlx_types_chrono_naive_date_time),
             sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate(value.sqlx_types_chrono_naive_date),
@@ -721,19 +721,19 @@ impl Default for TestNewType<Something> {
         let sqlx_types_decimal = SqlxTypesDecimal(
             sqlx_types_decimal_handle.clone(),
         );
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
-            SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
-                sqlx::types::chrono::Local,
-            >::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time_handle.clone(),
-                sqlx_types_chrono_fixed_offset_handle,
-            ));
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
             SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::Utc,
             >::from_naive_utc_and_offset(
                 sqlx_types_chrono_naive_date_time_handle.clone(),
                 sqlx_types_chrono_utc_handle.clone()
+            ));
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
+            SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
+                sqlx::types::chrono::Local,
+            >::from_naive_utc_and_offset(
+                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_fixed_offset_handle,
             ));
         let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
             sqlx_types_chrono_naive_date_time_handle.clone()
@@ -5608,8 +5608,8 @@ pub fn test_check_supported_postgresql_column_type() {
     SqlxPostgresTypesPgCiText::check_supported_postgresql_column_type();
     SqlxTypesBigDecimal::check_supported_postgresql_column_type();
     SqlxTypesDecimal::check_supported_postgresql_column_type();
-    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::check_supported_postgresql_column_type();
     SqlxTypesChronoDateTimeSqlxTypesChronoUtc::check_supported_postgresql_column_type();
+    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::check_supported_postgresql_column_type();
     SqlxTypesChronoNaiveDate::check_supported_postgresql_column_type();
     SqlxTypesChronoNaiveTime::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgTimeTz::check_supported_postgresql_column_type();
