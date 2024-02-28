@@ -4770,7 +4770,7 @@ impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffset> fo
         //on commit time there is not non-panic version of .date_naive()
         let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
             Ok(value) => value,
-            Err(e) => {
+            Err(_e) => {
                 return Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate with .date_naive()"));
             },
         };
@@ -4901,7 +4901,7 @@ impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for Sqlx
         //on commit time there is not non-panic version of .date_naive()
         let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
             Ok(value) => value,
-            Err(e) => {
+            Err(_e) => {
                 return Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate with .date_naive()"));
             },
         };
@@ -5000,7 +5000,7 @@ impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SqlxTy
         //on commit time there is not non-panic version of .date_naive()
         let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
             Ok(value) => value,
-            Err(e) => {
+            Err(_e) => {
                 return Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate with .date_naive()"));
             },
         };
