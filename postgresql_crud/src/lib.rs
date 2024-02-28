@@ -2108,283 +2108,10 @@ impl CheckSupportedPostgresqlColumnType
 {
     fn check_supported_postgresql_column_type() {}
 }
-impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
+impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for postgresql_crud_common::SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
         postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
-    }
-}
-
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
-    pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
-);
-#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize{
-    start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
-}
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
-    Start {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
-    },
-    End {
-        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
-    },
-    StartEnd {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
-        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
-    }
-}
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
-                }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
-                }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
-                }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
-                }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
-        };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
-        use std::ops::RangeBounds;
-        let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
-            ),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
-            ),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
-            ),
-            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-        };
-        Self {
-            start,
-            end
-        }
-    }
-}
-impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    pub fn into_inner(
-        self,
-    ) -> sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
-    for sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
-            sqlx::Postgres,
-        >>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
-            sqlx::Postgres,
-        >>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
-impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn check_supported_postgresql_column_type() {}
-}
-impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
-    fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
-        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
     }
 }
 
@@ -3091,6 +2818,283 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTi
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
         postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
+    }
+}
+
+//
+// todo
+//
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+    pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
+);
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize{
+    start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
+    end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
+}
+pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
+    Start {
+        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
+    },
+    End {
+        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
+    },
+    StartEnd {
+        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
+        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
+    }
+}
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
+    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        let (start, end) = match (value.start, value.end) {
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Included(end_value),
+            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Included(start_value.0),
+                    std::ops::Bound::Included(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Excluded(end_value),
+            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Included(start_value.0),
+                    std::ops::Bound::Excluded(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Unbounded,
+            ) => match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
+                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
+                Err(e) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
+                }
+            },
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Included(end_value),
+            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Excluded(start_value.0),
+                    std::ops::Bound::Included(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Excluded(end_value),
+            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
+                (Ok(start_value), Ok(end_value)) => (
+                    std::ops::Bound::Excluded(start_value.0),
+                    std::ops::Bound::Excluded(end_value.0)
+                ),
+                (Ok(_), Err(e)) => {
+                    return Err(Self::Error::End {
+                        end: e
+                    })
+                },
+                (Err(e), Ok(_)) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    })
+                },
+                (Err(start_error), Err(end_error)) => {
+                    return Err(Self::Error::StartEnd {
+                        start: start_error,
+                        end: end_error
+                    })
+                },
+            },
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Unbounded,
+            ) => match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
+                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
+                Err(e) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
+                }
+            },
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Included(end_value),
+            ) => match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
+                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
+                Err(e) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
+                }
+            },
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Excluded(end_value),
+            ) => match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
+                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
+                Err(e) => {
+                    return Err(Self::Error::Start {
+                        start: e
+                    });
+                }
+            },
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Unbounded,
+            ) => (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Unbounded
+            ),
+        };
+        Ok(Self(sqlx::postgres::types::PgRange{
+            start,
+            end
+        }))
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
+        use std::ops::RangeBounds;
+        let start = match value.0.start_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+            ),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+            ),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        let end = match value.0.end_bound() {
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+            ),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+            ),
+            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+        };
+        Self {
+            start,
+            end
+        }
+    }
+}
+impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    pub fn into_inner(
+        self,
+    ) -> sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> {
+        self.0
+    }
+}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
+    for sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>
+{
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
+        value.0
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
+            sqlx::Postgres,
+        >>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime> as sqlx::Type<
+            sqlx::Postgres,
+        >>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+    fn encode(
+        self,
+        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+    ) -> sqlx::encode::IsNull
+    where
+        Self: Sized,
+    {
+        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+    }
+    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+    }
+    fn size_hint(&self) -> std::primitive::usize {
+        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(e) => Err(e),
+        }
+    }
+}
+impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    fn check_supported_postgresql_column_type() {}
+}
+impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for postgresql_crud_common::SupportedSqlxPostgresType {
+    fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
+        postgresql_crud_common::SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
     }
 }
 
@@ -5594,10 +5598,11 @@ pub fn test_check_supported_postgresql_column_type() {
     SqlxPostgresTypesPgRangeStdPrimitiveI64::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeStdPrimitiveI32::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::check_supported_postgresql_column_type();
-    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::check_supported_postgresql_column_type(
-    );
     SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::check_supported_postgresql_column_type();
+    //todo
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::check_supported_postgresql_column_type(
+    );
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesTimeDate::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::check_supported_postgresql_column_type();
