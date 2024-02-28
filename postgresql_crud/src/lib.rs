@@ -660,13 +660,6 @@ impl Default for TestNewType<Something> {
                 end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle.clone(),
             }
         );
-        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
-            SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
-                sqlx::types::time::PrimitiveDateTime,
-            > {
-                start: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
-                end: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
-            });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
             sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
                 start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
@@ -679,6 +672,14 @@ impl Default for TestNewType<Something> {
             > {
                 start: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
                 end: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
+            });
+        //todo
+        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
+            SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
+                sqlx::types::time::PrimitiveDateTime,
+            > {
+                start: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
+                end: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
