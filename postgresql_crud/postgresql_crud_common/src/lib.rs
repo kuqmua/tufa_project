@@ -149,9 +149,106 @@ impl PostgresqlType {
 }
 
 pub enum Variants {
-    // ... todo
+    StdPrimitiveBoolAsPostgresqlBool,
+
+    StdPrimitiveI8AsPostgresqlChar,
+
     StdPrimitiveI16AsPostgresqlSmallInt,
     StdPrimitiveI16AsPostgresqlSmallSerial,
-    StdPrimitiveI16AsPostgresqlInt2
-    // ...
+    StdPrimitiveI16AsPostgresqlInt2,
+
+    StdPrimitiveI32AsPostgresqlReal,
+    StdPrimitiveI32AsPostgresqlFloat4,
+
+    StdPrimitiveI64AsPostgresqlBigInt,
+    StdPrimitiveI64AsPostgresqlBigSerial,
+    StdPrimitiveI64AsPostgresqlInt8,
+
+    StdPrimitiveF32AsPostgresqlReal,
+    StdPrimitiveF32AsPostgresqlFloat4,
+
+    StdPrimitiveF64AsPostgresqlDoublePrecision,
+    StdPrimitiveF64AsPostgresqlFloat8,
+
+    StdStringStringAsPostgresqlVarchar,
+    StdStringStringAsPostgresqlCharN,
+    StdStringStringAsPostgresqlText,
+    StdStringStringAsPostgresqlName,
+    StdStringStringAsPostgresqlCiText,
+
+    StdVecVecStdPrimitiveU8AsPostgresqlBytea,
+
+    SqlxPostgresTypesPgIntervalAsPostgresqlInterval,
+
+    SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range,
+
+    SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range,
+
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsRange,
+
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange,
+
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetAsPostgresqlTsTzRange,
+
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange,
+
+    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange,
+    
+    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,//todo reorder from now
+
+    SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
+
+    SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange,
+
+    SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange,
+
+    SqlxPostgresTypesPgMoneyAsPostgresqlMoney,
+
+    SqlxPostgresTypesPgCiTextAsPostgresqlCiText,
+
+    SqlxTypesBigDecimalAsPostgresqlNumeric,
+
+    SqlxTypesDecimalAsPostgresqlNumeric,
+
+    SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetAsPostgresqlTimeTz,
+
+    SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
+
+    SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp,
+
+    SqlxTypesChronoNaiveDateTimeAsPostgresqlTsTzRange,
+
+    SqlxTypesChronoNaiveDateAsPostgresqlDate,
+
+    SqlxTypesChronoNaiveTimeAsPostgresqlTime,
+
+    SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz,
+
+    SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
+
+    SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz,
+
+    SqlxTypesTimeDateAsPostgresqlDate,
+
+    SqlxTypesTimeTimeAsPostgresqlTime,
+
+    SqlxTypesUuidUuidAsPostgresqlUuid,
+
+    SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
+    SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr,
+
+    StdNetIpAddrAsPostgresqlInet,
+    StdNetIpAddrAsPostgresqlCidr,
+
+    SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr,
+
+    SqlxTypesBitVecAsPostgresqlBit,
+    SqlxTypesBitVecAsPostgresqlVarBit,
+
+    //todo what to do with generic?
+    SqlxTypesJsonTAsPostgresqlJson,
+    SqlxTypesJsonTAsPostgresqlJsonB,
+
+    SerdeJsonValueAsPostgresqlJson,
+    SerdeJsonValueAsPostgresqlJsonB,
 }
