@@ -40,14 +40,17 @@ pub struct Test<T> {
     //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
     sqlx_postgres_types_pg_range_std_primitive_i64: sqlx::postgres::types::PgRange<std::primitive::i64>, //INT8RANGE
     sqlx_postgres_types_pg_range_std_primitive_i32: sqlx::postgres::types::PgRange<std::primitive::i32>, //INT4RANGE
-    // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
-        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>, //TSRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>, //maybe not correct//TSRANGE
-    // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>, //TSTZRANGE
+
+
+    // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>, //TSTZRANGE
     sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>, //TSTZRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>, //maybe not correct//TSRANGE
+    // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
     sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>, //maybe not correct//TSTZRANGE
+    
+    
+    
     // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
     sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>, //maybe not correct//DATERANGE
     sqlx_postgres_types_pg_range_sqlx_types_time_date: sqlx::postgres::types::PgRange<sqlx::types::time::Date>, //maybe not correct//DATERANGE
@@ -60,7 +63,6 @@ pub struct Test<T> {
     sqlx_postgres_types_pg_ci_text: sqlx::postgres::types::PgCiText,                          //CITEXT
     sqlx_types_big_decimal: sqlx::types::BigDecimal,                                  //NUMERIC
     sqlx_types_decimal: sqlx::types::Decimal,                                     //NUMERIC
-    sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset: sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>, //TIMESTAMPTZ
     sqlx_types_chrono_date_time_sqlx_types_chrono_local: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>, //TIMESTAMPTZ
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,  //TIMESTAMP
     sqlx_types_chrono_naive_date_time: sqlx::types::chrono::NaiveDateTime,//TIMESTAMP
@@ -99,9 +101,10 @@ pub struct TestNewType<T> {
     sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64,
     sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32,
     sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+    //todo SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
+    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
     sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
@@ -144,9 +147,10 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize,
     sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize,
     sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
+    //todo
+    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize,
@@ -195,12 +199,6 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
                 return Err(());
             }
         };
-        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = match SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local) {
             Ok(value) => value,
             Err(_e) => {
@@ -208,6 +206,13 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
             }
         };
         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time = match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time) {
+            Ok(value) => value,
+            Err(_e) => {
+                return Err(());
+            }
+        };
+        //todo
+        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time) {
             Ok(value) => value,
             Err(_e) => {
                 return Err(());
@@ -367,14 +372,15 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
                 value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc
             ),
-            sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
-                value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time
-            ),
             sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
                 value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local
             ),
             sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
                 value.sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time
+            ),
+            //todo
+            sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+                value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time
             ),
             sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
                 value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date
@@ -596,10 +602,6 @@ impl Default for TestNewType<Something> {
             sqlx_types_chrono_naive_date_time_handle.clone(),
             sqlx_types_chrono_utc_handle.clone()
         );
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::DateTime::<sqlx::types::chrono::FixedOffset>::from_naive_utc_and_offset(
-            sqlx_types_chrono_naive_date_time_handle.clone(),
-            sqlx_types_chrono_fixed_offset_handle.clone(),
-        );
         let sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle = sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
             sqlx_types_chrono_naive_date_time_handle.clone(),
             sqlx_types_chrono_fixed_offset_handle.clone()
@@ -610,7 +612,6 @@ impl Default for TestNewType<Something> {
         let std_ops_bound_sqlx_types_time_primitive_date_time_handle = std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
             sqlx_types_time_primitive_date_time_handle.clone(),
         );
-        let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset_handle = std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::FixedOffset>>::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_fixed_offset_handle.clone());
         let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle = std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone());
         let std_ops_bound_sqlx_types_time_offset_date_time_handle = std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
             sqlx_types_time_offset_date_time_handle.clone(),
