@@ -13,6 +13,11 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 pub mod app_state;
 pub mod json_value_extractor;
 
+// todo maybe wrap all errors into error occurence ?
+// todo shared enum of postgres types for postgresql_crud and generate_postgresql_crud
+// remove and make one
+//todo support variations of init functions as enum
+
 fn generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(fixed_offset: std::primitive::i32) -> std::string::String {
     format!("failed to create sqlx::types::chrono::FixedOffset with .east_opt {}", fixed_offset)
 }
