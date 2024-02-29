@@ -10,6 +10,8 @@ pub use generate_postgresql_crud::update_many_additional_http_status_codes_error
 pub use generate_postgresql_crud::update_one_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
+//todo reexport struct field types(table column types) from postgresql_crud_common
+
 pub mod app_state;
 pub mod json_value_extractor;
 
