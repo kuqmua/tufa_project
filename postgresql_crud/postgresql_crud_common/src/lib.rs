@@ -730,220 +730,440 @@ pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdPrimitiveBool);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBool {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveI8AsPostgresqlChar(pub StdPrimitiveI8);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI8AsPostgresqlChar {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveI8AsPostgresqlCharNotNull(pub StdPrimitiveI8);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI8AsPostgresqlCharNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(pub StdPrimitiveI16);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallInt {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(pub StdPrimitiveI16);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(pub StdPrimitiveI16);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallSerial {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(pub StdPrimitiveI16);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveI16AsPostgresqlInt2(pub StdPrimitiveI16);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlInt2 {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(pub StdPrimitiveI16);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlInt2NotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveI32AsPostgresqlInt(pub StdPrimitiveI32);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveI32AsPostgresqlIntNotNull(pub StdPrimitiveI32);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIntNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveI32AsPostgresqlSerial(pub StdPrimitiveI32);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSerial {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(pub StdPrimitiveI32);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSerialNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveI32AsPostgresqlInt4(pub StdPrimitiveI32);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt4 {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(pub StdPrimitiveI32);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt4NotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveI64AsPostgresqlBigInt(pub StdPrimitiveI64);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigInt {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(pub StdPrimitiveI64);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigIntNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(pub StdPrimitiveI64);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerial {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveI64AsPostgresqlInt8(pub StdPrimitiveI64);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlInt8 {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(pub StdPrimitiveI64);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlInt8NotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveF32AsPostgresqlReal(pub StdPrimitiveF32);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlReal {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveF32AsPostgresqlRealNotNull(pub StdPrimitiveF32);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRealNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveF32AsPostgresqlFloat4(pub StdPrimitiveF32);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFloat4 {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(pub StdPrimitiveF32);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFloat4NotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(pub StdPrimitiveF64);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDoublePrecision {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(pub StdPrimitiveF64);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveF64AsPostgresqlFloat8(pub StdPrimitiveF64);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFloat8 {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(pub StdPrimitiveF64);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFloat8NotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdStringStringAsPostgresqlVarchar(pub StdStringString);
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarchar {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdStringStringAsPostgresqlVarcharNotNull(pub StdStringString);
+impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarcharNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdStringStringAsPostgresqlCharN(pub StdStringString);
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCharN {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdStringStringAsPostgresqlCharNNotNull(pub StdStringString);
+impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCharNNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdStringStringAsPostgresqlText(pub StdStringString);
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlText {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
+impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTextNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdStringStringAsPostgresqlName(pub StdStringString);
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlName {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdStringStringAsPostgresqlNameNotNull(pub StdStringString);
+impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNameNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdStringStringAsPostgresqlCiText(pub StdStringString);
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCiText {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdStringStringAsPostgresqlCiTextNotNull(pub StdStringString);
+impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCiTextNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdVecVecStdPrimitiveU8);
 impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPostgresqlBytea {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
+impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(pub SqlxPostgresTypesPgInterval);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull(pub SqlxPostgresTypesPgInterval);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(pub SqlxPostgresTypesPgRangeStdPrimitiveI64);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull(pub SqlxPostgresTypesPgRangeStdPrimitiveI64);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(pub SqlxPostgresTypesPgRangeStdPrimitiveI32);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(pub SqlxPostgresTypesPgRangeStdPrimitiveI32);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(pub SqlxPostgresTypesPgRangeSqlxTypesDecimal);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesDecimal);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(pub SqlxPostgresTypesPgMoney);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(pub SqlxPostgresTypesPgMoney);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiText(pub SqlxPostgresTypesPgCiText);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull(pub SqlxPostgresTypesPgCiText);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(pub SqlxTypesBigDecimal);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgresqlNumeric {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(pub SqlxTypesBigDecimal);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesDecimalAsPostgresqlNumeric(pub SqlxTypesDecimal);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlNumeric {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(pub SqlxTypesDecimal);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlNumericNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp(pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull(pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull(pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesChronoNaiveDateTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull(pub SqlxTypesChronoNaiveDateTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(pub SqlxTypesChronoNaiveDate);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPostgresqlDate {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull(pub SqlxTypesChronoNaiveDate);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(pub SqlxTypesChronoNaiveTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPostgresqlTime {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull(pub SqlxTypesChronoNaiveTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(pub SqlxPostgresTypesPgTimeTz);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(pub SqlxPostgresTypesPgTimeTz);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesTimePrimitiveDateTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull(pub SqlxTypesTimePrimitiveDateTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(pub SqlxTypesTimeOffsetDateTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull(pub SqlxTypesTimeOffsetDateTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesTimeDateAsPostgresqlDate(pub SqlxTypesTimeDate);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresqlDate {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesTimeDateAsPostgresqlDateNotNull(pub SqlxTypesTimeDate);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresqlDateNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesTimeTimeAsPostgresqlTime(pub SqlxTypesTimeTime);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresqlTime {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesTimeTimeAsPostgresqlTimeNotNull(pub SqlxTypesTimeTime);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesUuidUuidAsPostgresqlUuid(pub SqlxTypesUuidUuid);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuid {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNull(pub SqlxTypesUuidUuid);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(pub SqlxTypesIpnetworkIpNetwork);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull(pub SqlxTypesIpnetworkIpNetwork);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(pub SqlxTypesIpnetworkIpNetwork);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull(pub SqlxTypesIpnetworkIpNetwork);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdNetIpAddrAsPostgresqlInet(pub StdNetIpAddr);
 impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInet {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct StdNetIpAddrAsPostgresqlInetNotNull(pub StdNetIpAddr);
+impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInetNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct StdNetIpAddrAsPostgresqlCidr(pub StdNetIpAddr);
 impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidr {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct StdNetIpAddrAsPostgresqlCidrNotNull(pub StdNetIpAddr);
+impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidrNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(pub SqlxTypesMacAddressMacAddress);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull(pub SqlxTypesMacAddressMacAddress);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesBitVecAsPostgresqlBit(pub SqlxTypesBitVec);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBit {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesBitVecAsPostgresqlBitNotNull(pub SqlxTypesBitVec);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBitNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesBitVecAsPostgresqlVarBit(pub SqlxTypesBitVec);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVarBit {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesBitVecAsPostgresqlVarBitNotNull(pub SqlxTypesBitVec);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVarBitNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 //todo what to do with generic?
@@ -951,19 +1171,34 @@ pub struct SqlxTypesJsonTAsPostgresqlJson<T>(pub SqlxTypesJson<T>);
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJson<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SqlxTypesJsonTAsPostgresqlJsonNotNull<T>(pub SqlxTypesJson<T>);
+impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SqlxTypesJsonTAsPostgresqlJsonB<T>(pub SqlxTypesJson<T>);
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonB<T> {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>(pub SqlxTypesJson<T>);
+impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SerdeJsonValueAsPostgresqlJson(pub SerdeJsonValue);
 impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJson {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
+pub struct SerdeJsonValueAsPostgresqlJsonNotNull(pub SerdeJsonValue);
+impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 pub struct SerdeJsonValueAsPostgresqlJsonB(pub SerdeJsonValue);
 impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonB {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
-//
+pub struct SerdeJsonValueAsPostgresqlJsonBNotNull(pub SerdeJsonValue);
+impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonBNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
