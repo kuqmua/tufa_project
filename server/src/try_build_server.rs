@@ -90,7 +90,7 @@
             postgresql_crud::SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize,
             postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
             postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-            postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetWithSerializeDeserialize,
+            //todo check all types and type decl order
             postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
             postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
             postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize,
@@ -101,7 +101,7 @@
             postgresql_crud::SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
             postgresql_crud::SqlxTypesBigDecimalNewWithSerializeDeserialize,
             postgresql_crud::SqlxTypesDecimal,
-            postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoFixedOffsetFromNaiveUtcAndOffsetWithSerializeDeserialize,
+            //todo
             postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
             postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
             postgresql_crud::SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
