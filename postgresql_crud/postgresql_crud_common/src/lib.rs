@@ -720,6 +720,172 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonB,
     SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
+//todo maybe remove later
+impl std::fmt::Display for RustSqlxMapToPostgresTypeVariant {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::StdPrimitiveBoolAsPostgresqlBool => write!(f, "StdPrimitiveBoolAsPostgresqlBool"),
+            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => write!(f, "StdPrimitiveBoolAsPostgresqlBoolNotNull"),
+
+            Self::StdPrimitiveI8AsPostgresqlChar => write!(f, "StdPrimitiveI8AsPostgresqlChar"),
+            Self::StdPrimitiveI8AsPostgresqlCharNotNull => write!(f, "StdPrimitiveI8AsPostgresqlCharNotNull"),
+
+            Self::StdPrimitiveI16AsPostgresqlSmallInt => write!(f, "StdPrimitiveI16AsPostgresqlSmallInt"),
+            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => write!(f, "StdPrimitiveI16AsPostgresqlSmallIntNotNull"),
+            Self::StdPrimitiveI16AsPostgresqlSmallSerial => write!(f, "StdPrimitiveI16AsPostgresqlSmallSerial"),
+            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => write!(f, "StdPrimitiveI16AsPostgresqlSmallSerialNotNull"),
+            Self::StdPrimitiveI16AsPostgresqlInt2 => write!(f, "StdPrimitiveI16AsPostgresqlInt2"),
+            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => write!(f, "StdPrimitiveI16AsPostgresqlInt2NotNull"),
+
+            Self::StdPrimitiveI32AsPostgresqlInt => write!(f, "StdPrimitiveI32AsPostgresqlInt"),
+            Self::StdPrimitiveI32AsPostgresqlIntNotNull => write!(f, "StdPrimitiveI32AsPostgresqlIntNotNull"),
+            Self::StdPrimitiveI32AsPostgresqlSerial => write!(f, "StdPrimitiveI32AsPostgresqlSerial"),
+            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => write!(f, "StdPrimitiveI32AsPostgresqlSerialNotNull"),
+            Self::StdPrimitiveI32AsPostgresqlInt4 => write!(f, "StdPrimitiveI32AsPostgresqlInt4"),
+            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => write!(f, "StdPrimitiveI32AsPostgresqlInt4NotNull"),
+
+            Self::StdPrimitiveI64AsPostgresqlBigInt => write!(f, "StdPrimitiveI64AsPostgresqlBigInt"),
+            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => write!(f, "StdPrimitiveI64AsPostgresqlBigIntNotNull"),
+            Self::StdPrimitiveI64AsPostgresqlBigSerial => write!(f, "StdPrimitiveI64AsPostgresqlBigSerial"),
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => write!(f, "StdPrimitiveI64AsPostgresqlBigSerialNotNull"),
+            Self::StdPrimitiveI64AsPostgresqlInt8 => write!(f, "StdPrimitiveI64AsPostgresqlInt8"),
+            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => write!(f, "StdPrimitiveI64AsPostgresqlInt8NotNull"),
+
+            Self::StdPrimitiveF32AsPostgresqlReal => write!(f, "StdPrimitiveF32AsPostgresqlReal"),
+            Self::StdPrimitiveF32AsPostgresqlRealNotNull => write!(f, "StdPrimitiveF32AsPostgresqlRealNotNull"),
+            Self::StdPrimitiveF32AsPostgresqlFloat4 => write!(f, "StdPrimitiveF32AsPostgresqlFloat4"),
+            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => write!(f, "StdPrimitiveF32AsPostgresqlFloat4NotNull"),
+
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => write!(f, "StdPrimitiveF64AsPostgresqlDoublePrecision"),
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => write!(f, "StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull"),
+            Self::StdPrimitiveF64AsPostgresqlFloat8 => write!(f, "StdPrimitiveF64AsPostgresqlFloat"),
+            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => write!(f, "StdPrimitiveF64AsPostgresqlFloat8NotNull"),
+
+            Self::StdStringStringAsPostgresqlVarchar => write!(f, "StdStringStringAsPostgresqlVarchar"),
+            Self::StdStringStringAsPostgresqlVarcharNotNull => write!(f, "StdStringStringAsPostgresqlVarcharNotNull"),
+            Self::StdStringStringAsPostgresqlCharN => write!(f, "StdStringStringAsPostgresqlCharN"),
+            Self::StdStringStringAsPostgresqlCharNNotNull => write!(f, "StdStringStringAsPostgresqlCharNNotNull"),
+            Self::StdStringStringAsPostgresqlText => write!(f, "StdStringStringAsPostgresqlText"),
+            Self::StdStringStringAsPostgresqlTextNotNull => write!(f, "StdStringStringAsPostgresqlTextNotNull"),
+            Self::StdStringStringAsPostgresqlName => write!(f, "StdStringStringAsPostgresqlName"),
+            Self::StdStringStringAsPostgresqlNameNotNull => write!(f, "StdStringStringAsPostgresqlNameNotNull"),
+            Self::StdStringStringAsPostgresqlCiText => write!(f, "StdStringStringAsPostgresqlCiText"),
+            Self::StdStringStringAsPostgresqlCiTextNotNull => write!(f, "StdStringStringAsPostgresqlCiTextNotNull"),
+
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => write!(f, "StdVecVecStdPrimitiveU8AsPostgresqlBytea"),
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => write!(f, "StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull"),
+
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => write!(f, "SqlxPostgresTypesPgIntervalAsPostgresqlInterval"),
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => write!(f, "SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => write!(f, "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range"),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => write!(f, "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => write!(f, "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range"),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => write!(f, "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => write!(f, "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull"),
+
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => write!(f, "SqlxPostgresTypesPgMoneyAsPostgresqlMoney"),
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => write!(f, "SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull"),
+
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => write!(f, "SqlxPostgresTypesPgCiTextAsPostgresqlCiText"),
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => write!(f, "SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull"),
+
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => write!(f, "SqlxTypesBigDecimalAsPostgresqlNumeric"),
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => write!(f, "SqlxTypesBigDecimalAsPostgresqlNumericNotNull"),
+
+            Self::SqlxTypesDecimalAsPostgresqlNumeric => write!(f, "SqlxTypesDecimalAsPostgresqlNumeric"),
+            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => write!(f, "SqlxTypesDecimalAsPostgresqlNumericNotNull"),
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull"),
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull"),
+
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => write!(f, "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp"),
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => write!(f, "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull"),
+
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => write!(f, "SqlxTypesChronoNaiveDateAsPostgresqlDate"),
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => write!(f, "SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull"),
+
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => write!(f, "SqlxTypesChronoNaiveTimeAsPostgresqlTime"),
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => write!(f, "SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull"),
+
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => write!(f, "SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz"),
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => write!(f, "SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull"),
+
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => write!(f, "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp"),
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => write!(f, "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull"),
+
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => write!(f, "SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz"),
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => write!(f, "SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull"),
+
+            Self::SqlxTypesTimeDateAsPostgresqlDate => write!(f, "SqlxTypesTimeDateAsPostgresqlDate"),
+            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => write!(f, "SqlxTypesTimeDateAsPostgresqlDateNotNull"),
+
+            Self::SqlxTypesTimeTimeAsPostgresqlTime => write!(f, "SqlxTypesTimeTimeAsPostgresqlTime"),
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => write!(f, "SqlxTypesTimeTimeAsPostgresqlTimeNotNull"),
+
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => write!(f, "SqlxTypesUuidUuidAsPostgresqlUuid"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => write!(f, "SqlxTypesUuidUuidAsPostgresqlUuidNotNull"),
+
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => write!(f, "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet"),
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => write!(f, "SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull"),
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => write!(f, "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr"),
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => write!(f, "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull"),
+
+            Self::StdNetIpAddrAsPostgresqlInet => write!(f, "StdNetIpAddrAsPostgresqlInet"),
+            Self::StdNetIpAddrAsPostgresqlInetNotNull => write!(f, "StdNetIpAddrAsPostgresqlInetNotNull"),
+            Self::StdNetIpAddrAsPostgresqlCidr => write!(f, "StdNetIpAddrAsPostgresqlCidr"),
+            Self::StdNetIpAddrAsPostgresqlCidrNotNull => write!(f, "StdNetIpAddrAsPostgresqlCidrNotNull"),
+
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => write!(f, "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr"),
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => write!(f, "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull"),
+
+            Self::SqlxTypesBitVecAsPostgresqlBit => write!(f, "SqlxTypesBitVecAsPostgresqlBit"),
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => write!(f, "SqlxTypesBitVecAsPostgresqlBitNotNull"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBit => write!(f, "SqlxTypesBitVecAsPostgresqlVarBit"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => write!(f, "SqlxTypesBitVecAsPostgresqlVarBitNotNull"),
+
+            //todo what to do with generic?
+            Self::SqlxTypesJsonTAsPostgresqlJson => write!(f, "SqlxTypesJsonTAsPostgresqlJson"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => write!(f, "SqlxTypesJsonTAsPostgresqlJsonNotNull"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonB => write!(f, "SqlxTypesJsonTAsPostgresqlJsonB"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => write!(f, "SqlxTypesJsonTAsPostgresqlJsonBNotNull"),
+
+            Self::SerdeJsonValueAsPostgresqlJson => write!(f, "SerdeJsonValueAsPostgresqlJson"),
+            Self::SerdeJsonValueAsPostgresqlJsonNotNull => write!(f, "SerdeJsonValueAsPostgresqlJsonNotNull"),
+            Self::SerdeJsonValueAsPostgresqlJsonB => write!(f, "SerdeJsonValueAsPostgresqlJsonB"),
+            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => write!(f, "SerdeJsonValueAsPostgresqlJsonBNotNull"),
+        }
+    }
+}
 
 pub trait CheckSupportedRustAndPostgresqlColumnType {
     fn check_supported_rust_and_postgresql_column_type();
