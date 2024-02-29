@@ -53,7 +53,7 @@ pub struct Dog {
     pub color: std::string::String,
 }
 
-pub struct F {
-    l: postgresql_crud::StdStringStringAsPostgresqlVarchar
-}
+// pub struct F {
+//     l: postgresql_crud::StdStringStringAsPostgresqlVarchar
+// }
 

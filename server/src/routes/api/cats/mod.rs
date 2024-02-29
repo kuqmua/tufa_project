@@ -32,40 +32,40 @@ fn crud(
             "/create_many",
             axum::routing::post(common::repositories_types::server::routes::api::cats::create_many),
         )
-        .route(
-            "/create_one",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::create_one),
-        )
-        .route(
-            "/read_many",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::read_many),
-        )
-        .route(
-            "/read_one",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::read_one),
-        )
-        .route(
-            "/update_many",
-            axum::routing::patch(
-                common::repositories_types::server::routes::api::cats::update_many,
-            ),
-        )
-        .route(
-            "/update_one",
-            axum::routing::patch(common::repositories_types::server::routes::api::cats::update_one),
-        )
-        .route(
-            "/delete_many",
-            axum::routing::delete(
-                common::repositories_types::server::routes::api::cats::delete_many,
-            ),
-        )
-        .route(
-            "/delete_one",
-            axum::routing::delete(
-                common::repositories_types::server::routes::api::cats::delete_one,
-            ),
-        )
+        // .route(
+        //     "/create_one",
+        //     axum::routing::post(common::repositories_types::server::routes::api::cats::create_one),
+        // )
+        // .route(
+        //     "/read_many",
+        //     axum::routing::post(common::repositories_types::server::routes::api::cats::read_many),
+        // )
+        // .route(
+        //     "/read_one",
+        //     axum::routing::post(common::repositories_types::server::routes::api::cats::read_one),
+        // )
+        // .route(
+        //     "/update_many",
+        //     axum::routing::patch(
+        //         common::repositories_types::server::routes::api::cats::update_many,
+        //     ),
+        // )
+        // .route(
+        //     "/update_one",
+        //     axum::routing::patch(common::repositories_types::server::routes::api::cats::update_one),
+        // )
+        // .route(
+        //     "/delete_many",
+        //     axum::routing::delete(
+        //         common::repositories_types::server::routes::api::cats::delete_many,
+        //     ),
+        // )
+        // .route(
+        //     "/delete_one",
+        //     axum::routing::delete(
+        //         common::repositories_types::server::routes::api::cats::delete_one,
+        //     ),
+        // )
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
         // ))
