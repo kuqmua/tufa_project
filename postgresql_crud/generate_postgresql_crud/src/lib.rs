@@ -139,57 +139,217 @@ pub fn additional_http_status_codes_error_variants(
     attributes(
         generate_postgresql_crud_primary_key,
 
-        generate_postgresql_crud_bool,
-        generate_postgresql_crud_char,
-        generate_postgresql_crud_smallint,
-        generate_postgresql_crud_smallserial,
-        generate_postgresql_crud_int2,
-        generate_postgresql_crud_int,
-        generate_postgresql_crud_serial, 
-        generate_postgresql_crud_int4,
-        generate_postgresql_crud_bigint,
-        generate_postgresql_crud_bigserial, 
-        generate_postgresql_crud_int8,
-        generate_postgresql_crud_real, 
-        generate_postgresql_crud_float4,
-        generate_postgresql_crud_double_precision,
-        generate_postgresql_crud_float8,
-        generate_postgresql_crud_varchar,
-        generate_postgresql_crud_charn, //wtf????
-        generate_postgresql_crud_text,
-        generate_postgresql_crud_name,
-        generate_postgresql_crud_bytea,
-        generate_postgresql_crud_void,
-        generate_postgresql_crud_interval,
-        generate_postgresql_crud_int8range,
-        generate_postgresql_crud_int4range,
-        generate_postgresql_crud_tsrange,
-        generate_postgresql_crud_tstzrange,
-        generate_postgresql_crud_daterange,
-        generate_postgresql_crud_numrange,
-        generate_postgresql_crud_money,
-        generate_postgresql_crud_ltree,
-        generate_postgresql_crud_lquery,
+        // generate_postgresql_crud_bool,
+        // generate_postgresql_crud_char,
+        // generate_postgresql_crud_smallint,
+        // generate_postgresql_crud_smallserial,
+        // generate_postgresql_crud_int2,
+        // generate_postgresql_crud_int,
+        // generate_postgresql_crud_serial, 
+        // generate_postgresql_crud_int4,
+        // generate_postgresql_crud_bigint,
+        // generate_postgresql_crud_bigserial, 
+        // generate_postgresql_crud_int8,
+        // generate_postgresql_crud_real, 
+        // generate_postgresql_crud_float4,
+        // generate_postgresql_crud_double_precision,
+        // generate_postgresql_crud_float8,
+        // generate_postgresql_crud_varchar,
+        // generate_postgresql_crud_charn, //wtf????
+        // generate_postgresql_crud_text,
+        // generate_postgresql_crud_name,
+        // generate_postgresql_crud_bytea,
+        // generate_postgresql_crud_void,
+        // generate_postgresql_crud_interval,
+        // generate_postgresql_crud_int8range,
+        // generate_postgresql_crud_int4range,
+        // generate_postgresql_crud_tsrange,
+        // generate_postgresql_crud_tstzrange,
+        // generate_postgresql_crud_daterange,
+        // generate_postgresql_crud_numrange,
+        // generate_postgresql_crud_money,
+        // generate_postgresql_crud_ltree,
+        // generate_postgresql_crud_lquery,
 
-        generate_postgresql_crud_numeric,
+        // generate_postgresql_crud_numeric,
 
-        generate_postgresql_crud_timestamptz,
-        generate_postgresql_crud_timestamp,
-        generate_postgresql_crud_date,
-        generate_postgresql_crud_time,
-        generate_postgresql_crud_timetz,
-        generate_postgresql_crud_uuid,
+        // generate_postgresql_crud_timestamptz,
+        // generate_postgresql_crud_timestamp,
+        // generate_postgresql_crud_date,
+        // generate_postgresql_crud_time,
+        // generate_postgresql_crud_timetz,
+        // generate_postgresql_crud_uuid,
 
-        generate_postgresql_crud_inet,
-        generate_postgresql_crud_cidr,
+        // generate_postgresql_crud_inet,
+        // generate_postgresql_crud_cidr,
 
-        generate_postgresql_crud_macaddr,
+        // generate_postgresql_crud_macaddr,
 
-        generate_postgresql_crud_bit,
-        generate_postgresql_crud_varbit,
+        // generate_postgresql_crud_bit,
+        // generate_postgresql_crud_varbit,
 
-        generate_postgresql_crud_json,
-        generate_postgresql_crud_jsonb
+        // generate_postgresql_crud_json,
+        // generate_postgresql_crud_jsonb
+        StdPrimitiveBoolAsPostgresqlBool,
+        StdPrimitiveBoolAsPostgresqlBoolNotNull,
+
+        StdPrimitiveI8AsPostgresqlChar,
+        StdPrimitiveI8AsPostgresqlCharNotNull,
+
+        StdPrimitiveI16AsPostgresqlSmallInt,
+        StdPrimitiveI16AsPostgresqlSmallIntNotNull,
+        StdPrimitiveI16AsPostgresqlSmallSerial,
+        StdPrimitiveI16AsPostgresqlSmallSerialNotNull,
+        StdPrimitiveI16AsPostgresqlInt2,
+        StdPrimitiveI16AsPostgresqlInt2NotNull,
+
+        StdPrimitiveI32AsPostgresqlInt,
+        StdPrimitiveI32AsPostgresqlIntNotNull,
+        StdPrimitiveI32AsPostgresqlSerial,
+        StdPrimitiveI32AsPostgresqlSerialNotNull,
+        StdPrimitiveI32AsPostgresqlInt4,
+        StdPrimitiveI32AsPostgresqlInt4NotNull,
+
+        StdPrimitiveI64AsPostgresqlBigInt,
+        StdPrimitiveI64AsPostgresqlBigIntNotNull,
+        StdPrimitiveI64AsPostgresqlBigSerial,
+        StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+        StdPrimitiveI64AsPostgresqlInt8,
+        StdPrimitiveI64AsPostgresqlInt8NotNull,
+
+        StdPrimitiveF32AsPostgresqlReal,
+        StdPrimitiveF32AsPostgresqlRealNotNull,
+        StdPrimitiveF32AsPostgresqlFloat4,
+        StdPrimitiveF32AsPostgresqlFloat4NotNull,
+
+        StdPrimitiveF64AsPostgresqlDoublePrecision,
+        StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull,
+        StdPrimitiveF64AsPostgresqlFloat8,
+        StdPrimitiveF64AsPostgresqlFloat8NotNull,
+
+        StdStringStringAsPostgresqlVarchar,
+        StdStringStringAsPostgresqlVarcharNotNull,
+        StdStringStringAsPostgresqlCharN,
+        StdStringStringAsPostgresqlCharNNotNull,
+        StdStringStringAsPostgresqlText,
+        StdStringStringAsPostgresqlTextNotNull,
+        StdStringStringAsPostgresqlName,
+        StdStringStringAsPostgresqlNameNotNull,
+        StdStringStringAsPostgresqlCiText,
+        StdStringStringAsPostgresqlCiTextNotNull,
+
+        StdVecVecStdPrimitiveU8AsPostgresqlBytea,
+        StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull,
+
+        SqlxPostgresTypesPgIntervalAsPostgresqlInterval,
+        SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull,
+
+        SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range,
+        SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull,
+
+        SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range,
+        SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange,
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange,
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull,
+        
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
+        SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange,
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull,
+
+        SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange,
+        SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull,
+
+        SqlxPostgresTypesPgMoneyAsPostgresqlMoney,
+        SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull,
+
+        SqlxPostgresTypesPgCiTextAsPostgresqlCiText,
+        SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull,
+
+        SqlxTypesBigDecimalAsPostgresqlNumeric,
+        SqlxTypesBigDecimalAsPostgresqlNumericNotNull,
+
+        SqlxTypesDecimalAsPostgresqlNumeric,
+        SqlxTypesDecimalAsPostgresqlNumericNotNull,
+
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp,
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull,
+
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
+
+        SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
+        SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull,
+
+        SqlxTypesChronoNaiveDateAsPostgresqlDate,
+        SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
+
+        SqlxTypesChronoNaiveTimeAsPostgresqlTime,
+        SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
+
+        SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz,
+        SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull,
+
+        SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
+        SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull,
+
+        SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz,
+        SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull,
+
+        SqlxTypesTimeDateAsPostgresqlDate,
+        SqlxTypesTimeDateAsPostgresqlDateNotNull,
+
+        SqlxTypesTimeTimeAsPostgresqlTime,
+        SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
+
+        SqlxTypesUuidUuidAsPostgresqlUuid,
+        SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
+
+        SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
+        SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
+        SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr,
+        SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
+
+        StdNetIpAddrAsPostgresqlInet,
+        StdNetIpAddrAsPostgresqlInetNotNull,
+        StdNetIpAddrAsPostgresqlCidr,
+        StdNetIpAddrAsPostgresqlCidrNotNull,
+
+        SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr,
+        SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull,
+
+        SqlxTypesBitVecAsPostgresqlBit,
+        SqlxTypesBitVecAsPostgresqlBitNotNull,
+        SqlxTypesBitVecAsPostgresqlVarBit,
+        SqlxTypesBitVecAsPostgresqlVarBitNotNull,
+
+        //todo what to do with generic?
+        SqlxTypesJsonTAsPostgresqlJson,
+        SqlxTypesJsonTAsPostgresqlJsonNotNull,
+        SqlxTypesJsonTAsPostgresqlJsonB,
+        SqlxTypesJsonTAsPostgresqlJsonBNotNull,
+
+        SerdeJsonValueAsPostgresqlJson,
+        SerdeJsonValueAsPostgresqlJsonNotNull,
+        SerdeJsonValueAsPostgresqlJsonB,
+        SerdeJsonValueAsPostgresqlJsonBNotNull,
     )
 )]//todo check on postgresql max length value of type
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {//todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)

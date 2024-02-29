@@ -1,3 +1,5 @@
+use postgresql_crud::StdStringStringAsPostgresqlVarchar;
+
 #[derive(
     Debug,
     postgresql_crud::GeneratePostgresqlCrud,
@@ -47,10 +49,10 @@
 pub struct Dog {
     #[generate_postgresql_crud_primary_key]
     pub id: sqlx::types::Uuid, //todo make it UuidWrapper todo - if using js JSON.parse() - must be two variants - for usage and deserialization - coz json number type capacity less than i64::MAX
-    #[generate_postgresql_crud_varchar]
-    pub name: std::string::String,
-    #[generate_postgresql_crud_varchar]
-    pub color: std::string::String,
+    #[StdStringStringAsPostgresqlVarchar]
+    pub name: StdStringStringAsPostgresqlVarchar,
+    #[StdStringStringAsPostgresqlVarchar]
+    pub color: StdStringStringAsPostgresqlVarchar,
 }
 
 // pub struct F {
