@@ -6,6 +6,7 @@
 )]
 #![allow(clippy::too_many_arguments)]
 
+//todo maybe reexport from crates
 ///you need to install this crates to use this macro(check on work was only with this versions)
 /// strum = {version = "=0.24.1"}
 /// strum_macros = {version = "=0.24.3"}
