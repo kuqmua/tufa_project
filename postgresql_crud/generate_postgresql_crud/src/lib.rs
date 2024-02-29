@@ -1722,688 +1722,688 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &["crate","server","postgres","regex_filter","RegexFilter"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    // let code_occurence_field = syn::Field {
-    //     attrs: vec![],
-    //     vis: syn::Visibility::Inherited,
-    //     ident: Some(
-    //         syn::Ident::new("code_occurence", proc_macro2::Span::call_site())
-    //     ),
-    //     colon_token: Some(
-    //         syn::token::Colon {
-    //             spans: [proc_macro2::Span::call_site()],
-    //         },
-    //     ),
-    //     ty: syn::Type::Path(
-    //         syn::TypePath {
-    //             qself: None,
-    //             path: syn::Path {
-    //                 leading_colon: None,
-    //                 segments: proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-    //                     &["error_occurence_lib","code_occurence","CodeOccurence"],
-    //                     &proc_macro_name_upper_camel_case_ident_stringified
-    //                 ),
-    //             },
-    //         },
-    //     ),
-    // };
-    // let bind_query_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = "BindQuery";
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-    //         variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![(
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
-    //             &variant_name_snake_case_stringified, 
-    //             proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-    //                 &["crate","server","postgres","bind_query","TryGenerateBindIncrementsErrorNamed"],
-    //                 &proc_macro_name_upper_camel_case_ident_stringified
-    //             ),
-    //         )]
-    //     )
-    // };
-    // let bind_query_variant_initialization_token_stream = {
-    //     let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     quote::quote!{
-    //         BindQuery { 
-    //             bind_query: #error_value_snake_case_token_stream.into_serialize_deserialize_version(), 
-    //             #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
-    //         }
-    //     }
-    // };
-    // let checked_add_syn_variant = generate_std_string_string_error_syn_variant(
-    //     "CheckedAdd",
-    //     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-    //     &code_occurence_field,
-    //     std_string_string_syn_punctuated_punctuated.clone()
-    // );
-    // let checked_add_variant_initialization_token_stream = {
-    //     let checked_add_upper_camel_case_stringified = "CheckedAdd";
-    //     let checked_add_upper_camel_case_token_stream = {
-    //         checked_add_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     };
-    //     let checked_add_snake_case_token_stream = {
-    //         let checked_add_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&checked_add_upper_camel_case_stringified);
-    //         checked_add_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     };
-    //     let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     quote::quote!{
-    //         #checked_add_upper_camel_case_token_stream { //todo remove it? refactor it?
-    //             #checked_add_snake_case_token_stream: #std_string_string_token_stream::from("checked_add is None"), 
-    //             #field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream, 
-    //         }
-    //     }
-    // };
-    // let query_and_rollback_failed_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-    //     "QueryAndRollbackFailed",
-    //     &code_occurence_field,
-    //     vec![
-    //         (
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //             "query_error", 
-    //             sqlx_error_syn_punctuated_punctuated.clone(),
-    //         ),
-    //         (
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //             "rollback_error", 
-    //             sqlx_error_syn_punctuated_punctuated.clone(),
-    //         )   
-    //     ]
-    // );
-    // let primary_key_from_row_and_failed_rollback_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //     proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-    //     "PrimaryKeyFromRowAndFailedRollback",
-    //     &code_occurence_field,
-    //     vec![
-    //         (
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //             "primary_key_from_row",
-    //             sqlx_error_syn_punctuated_punctuated.clone() 
-    //         ),
-    //         (
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //             "rollback_error", 
-    //             sqlx_error_syn_punctuated_punctuated.clone()
-    //         )
-    //     ]
-    // );
-    // let non_existing_primary_keys_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = "NonExistingPrimaryKeys";
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //         variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
-    //                 &variant_name_snake_case_stringified,
-    //                 std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
-    //             )
-    //         ]
-    //     )
-    // };
-    // let non_existing_primary_keys_and_failed_rollback_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //     proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //     "NonExistingPrimaryKeysAndFailedRollback",
-    //     &code_occurence_field,
-    //     vec![
-    //         (
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
-    //             "non_existing_primary_keys", 
-    //             std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
-    //         ),
-    //         (
-    //             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //             "rollback_error",
-    //             sqlx_error_syn_punctuated_punctuated.clone()
-    //         )
-    //     ]
-    // );
-    // let commit_failed_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = "CommitFailed";
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-    //         variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //                 &variant_name_snake_case_stringified, 
-    //                 sqlx_error_syn_punctuated_punctuated.clone()
-    //             )
-    //         ]
-    //     )
-    // };
-    // let not_unique_primary_keys_name_token_stream = quote::quote!{not_unique_primary_keys};
-    // let not_unique_primary_keys_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = "NotUniquePrimaryKeys";
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //         variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
-    //                 &variant_name_snake_case_stringified,
-    //                 std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone() 
-    //             )
-    //         ]
-    //     )
-    // };
-    // let not_unique_primary_key_variant_initialization_token_stream = {
-    //     let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     quote::quote!{
-    //         NotUniquePrimaryKeys {
-    //             not_unique_primary_keys,
-    //             #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
-    //         }
-    //     }
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified = "OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapper";
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified = format!(
-    //     "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified}{}{}",
-    //     proc_macro_helpers::naming_conventions::in_upper_camel_case_stringified(),
-    //     proc_macro_helpers::naming_conventions::server_upper_camel_case_stringified()
-    // );
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_token_stream = {
-    //     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified = format!(
-    //     "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified}{}{}",
-    //     proc_macro_helpers::naming_conventions::in_upper_camel_case_stringified(),
-    //     proc_macro_helpers::naming_conventions::client_upper_camel_case_stringified()
-    // );//todo reuse it
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream = {
-    //     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream = {
-    //     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified.to_string());
-    //     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream = {
-    //     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = format!(
-    //         "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified}{}{}",
-    //         proc_macro_helpers::naming_conventions::error_upper_camel_case_stringified(),
-    //         proc_macro_helpers::naming_conventions::unnamed_upper_camel_case_stringified()
-    //     );
-    //     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified;
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,//todo - is it right status code for this case?
-    //         &variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //                 &variant_name_snake_case_stringified, 
-    //                 sqlx_error_syn_punctuated_punctuated.clone()
-    //             )
-    //         ]
-    //     )
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream = {
-    //     let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     quote::quote!{
-    //         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_token_stream {
-    //             operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server: #error_value_snake_case_token_stream,
-    //             #field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream,
-    //         }
-    //     }
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream = quote::quote!{
-    //     #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-    //         #eo_vec_error_occurence_token_stream
-    //         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream: std::vec::Vec<#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream>,
-    //         #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //     }
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream = {
-    //     let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     quote::quote!{
-    //         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-    //             #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream: vec_errors,
-    //             #field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream
-    //         }
-    //     }
-    // };
-    // let uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream = quote::quote!{uuid_wrapper_try_from_possible_uuid_wrapper_in_client};
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = quote::quote!{
-    //     #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-    //         #eo_error_occurence_attribute_token_stream
-    //         #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-    //         #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //     }
-    // };
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = {
-    //     let field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     quote::quote!{
-    //         #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-    //             #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #error_value_snake_case_token_stream,
-    //             #field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream,
-    //         }
-    //     }
-    // };
-    // let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len - 1), |mut acc, element| {
-    //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-    //         panic!(
-    //             "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-    //             naming_constants::FIELD_IDENT_IS_NONE
-    //         )
-    //     });
-    //     let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
-    //     let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
-    //     acc.push(crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //         &not_unique_field_vec_upper_camel_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize, 
-    //                 &not_unique_field_vec_snake_case_stringified,
-    //                 std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated.clone()
-    //             )
-    //         ]
-    //     ));
-    //     acc
-    // });
-    // let not_uuid_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = format!(
-    //         "{}{}",
-    //         proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
-    //         proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
-    //     );
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //         &variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-    //                 &variant_name_snake_case_stringified, 
-    //                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-    //                     &["sqlx","types","uuid","Error"],
-    //                     &proc_macro_name_upper_camel_case_ident_stringified
-    //                 ),
-    //             )
-    //         ]
-    //     )
-    // };
-    // let no_payload_fields_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = format!(
-    //         "{}{}{}",
-    //         proc_macro_helpers::naming_conventions::no_upper_camel_case_stringified(),
-    //         proc_macro_helpers::naming_conventions::payload_upper_camel_case_stringified(),
-    //         proc_macro_helpers::naming_conventions::fields_upper_camel_case_stringified()
-    //     );
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //         &variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-    //                 &variant_name_snake_case_stringified,
-    //                 std_string_string_syn_punctuated_punctuated.clone()
-    //             )
-    //         ]
-    //     )
-    // };
-    // let no_payload_parameters_syn_variant = {
-    //     let variant_name_upper_camel_case_stringified = format!(
-    //         "{}{}{}",
-    //         proc_macro_helpers::naming_conventions::no_upper_camel_case_stringified(),
-    //         proc_macro_helpers::naming_conventions::payload_upper_camel_case_stringified(),
-    //         proc_macro_helpers::naming_conventions::parameters_upper_camel_case_stringified()
-    //     );
-    //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //         proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-    //         &variant_name_upper_camel_case_stringified,
-    //         &code_occurence_field,
-    //         vec![
-    //             (
-    //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-    //                 &variant_name_snake_case_stringified, 
-    //                 std_string_string_syn_punctuated_punctuated.clone()
-    //             )
-    //         ]
-    //     )
-    // };
-    // let commit_header_addition_token_stream = quote::quote!{
-    //     .header(
-    //         postgresql_crud::COMMIT,
-    //         crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit,
-    //     )
-    // };
-    // let application_json_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
-    //     "application/json",
-    //     &proc_macro_name_upper_camel_case_ident_stringified,
-    // );
-    // let content_type_application_json_header_addition_token_stream = quote::quote!{
-    //     .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
-    // };
-    // let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
-    // let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
-    // let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
-    // let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
-    // let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
-    // let axum_json_token_stream = quote::quote!{axum::Json};
-    // let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote!{crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
-    // let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};//todo move trait to own crate to reuse in postgresql_crud and common
-    // let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
-    // let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
-    // let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
-    // let http_status_code_token_stream = proc_macro_common::http_status_code_token_stream();
-    // let reqwest_header_header_map_token_stream = proc_macro_common::reqwest_header_header_map_token_stream();
-    // let reqwest_error_token_stream = proc_macro_common::reqwest_error_token_stream();
-    // let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
-    // let try_extract_value_token_stream = quote::quote!{try_extract_value};
-    // let server_location_name_token_stream = quote::quote!{server_location};
-    // let dot_space = ", ";
-    // // let pg_temp_stringified = "pg_temp";
-    // let pg_connection_token_stream = quote::quote!{pg_connection};
-    // let query_string_name_token_stream = quote::quote!{query_string};
-    // let binded_query_name_token_stream = quote::quote!{binded_query};
-    // let order_by_token_stream = quote::quote!{order_by};
-    // let current_vec_len_name_token_stream = quote::quote!{current_vec_len};
-    // let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
-    // let select_snake_case_token_stream = proc_macro_helpers::naming_conventions::select_snake_case_token_stream();
-    // let limit_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
-    // let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
-    // let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
-    // let element_name_token_stream = proc_macro_helpers::naming_conventions::element_snake_case_token_stream();
-    // let acc_name_token_stream = proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
-    // let query_name_token_stream = proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
-    // let not_uuid_upper_camel_case_stringified = format!(
-    //     "{}{}",
-    //     proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
-    //     proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
-    // );
-    // let not_uuid_token_upper_camel_case_stream = {
-    //     not_uuid_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let not_uuid_token_snake_case_stream = {
-    //     let not_uuid_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&not_uuid_upper_camel_case_stringified.to_string());
-    //     not_uuid_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let underscore_vec_name_stringified = "_vec";
-    // let update_name_stringified = proc_macro_helpers::naming_conventions::update_snake_case_stringified();
-    // let as_name_stringified = proc_macro_helpers::naming_conventions::as_snake_case_stringified();
-    // let set_name_stringified = proc_macro_helpers::naming_conventions::set_snake_case_stringified();
-    // let from_name_stringified = proc_macro_helpers::naming_conventions::from_snake_case_stringified();
-    // let insert_name_stringified = proc_macro_helpers::naming_conventions::insert_snake_case_stringified();
-    // let into_name_stringified = proc_macro_helpers::naming_conventions::into_snake_case_stringified();
-    // let values_name_stringified = proc_macro_helpers::naming_conventions::values_snake_case_stringified();
-    // let delete_name_stringified = proc_macro_helpers::naming_conventions::delete_snake_case_stringified();
-    // let where_name_stringified = proc_macro_helpers::naming_conventions::where_snake_case_stringified();
-    // let where_name_qoutes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
-    //     &where_name_stringified,
-    //     &proc_macro_name_upper_camel_case_ident_stringified
-    // );
-    // let and_name_stringified = proc_macro_helpers::naming_conventions::and_snake_case_stringified();
-    // // let any_name_stringified = "any";
-    // // let array_name_stringified = "array";
-    // let select_name_stringified = proc_macro_helpers::naming_conventions::select_snake_case_stringified();
-    // let order_by_name_stringified = "order by";
-    // let limit_name_stringified = proc_macro_helpers::naming_conventions::limit_snake_case_stringified();
-    // let offset_name_stringified = proc_macro_helpers::naming_conventions::offset_snake_case_stringified();
-    // let in_name_stringified = proc_macro_helpers::naming_conventions::in_snake_case_stringified();
-    // let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
-    // let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
-    // let expected_type_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_upper_camel_case_token_stream();
-    // let expected_type_snake_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_snake_case_token_stream();
-    // //todo make crate::type_variants_from_request_response_generator::construct_syn_variant(
-    // let (generate_expected_type_declaration_token_stream, expected_type_initialization_token_stream) = {
-    //     let field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     (
-    //         |operation: &crate::Operation| -> proc_macro2::TokenStream {
-    //             let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
-    //             quote::quote!{
-    //                 #expected_type_upper_camel_case_token_stream {
-    //                     #eo_display_with_serialize_deserialize_token_stream
-    //                     #expected_type_snake_case_token_stream: #try_operation_with_serialize_deserialize_token_stream,
-    //                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //                 }
-    //             }
-    //         },
-    //         quote::quote!{
-    //             #expected_type_upper_camel_case_token_stream {
-    //                 #expected_type_snake_case_token_stream: #error_value_snake_case_token_stream, 
-    //                 #field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream 
-    //             }
-    //         }
-    //     )
-    // };
-    // let unexpected_status_code_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::unexpected_status_code_upper_camel_case_token_stream();
-    // let status_code_snake_case_token_stream = proc_macro_helpers::naming_conventions::status_code_snake_case_token_stream();
-    // let headers_snake_case_token_stream = proc_macro_helpers::naming_conventions::headers_snake_case_token_stream();
-    // let response_text_result_snake_case_token_stream = proc_macro_helpers::naming_conventions::response_text_result_snake_case_token_stream();
-    // let response_text_snake_case_token_stream = proc_macro_helpers::naming_conventions::response_text_snake_case_token_stream();
-    // let (unexpected_status_code_declaration_token_stream, unexpected_status_code_initialization_token_stream) = {
-    //     let field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     (
-    //         quote::quote!{
-    //             #unexpected_status_code_upper_camel_case_token_stream {
-    //                 #eo_display_token_stream
-    //                 #status_code_snake_case_token_stream: #http_status_code_token_stream,
-    //                 #eo_display_foreign_type_token_stream
-    //                 #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
-    //                 #eo_display_foreign_type_token_stream
-    //                 #response_text_result_snake_case_token_stream: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
-    //                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //             }
-    //         },
-    //         quote::quote!{
-    //             #unexpected_status_code_upper_camel_case_token_stream {
-    //                 #status_code_snake_case_token_stream, 
-    //                 #headers_snake_case_token_stream, 
-    //                 #response_text_result_snake_case_token_stream: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
-    //                 #field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream
-    //             }
-    //         }
-    //     )
-    // };
-    // let failed_to_get_response_text_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_token_stream();
-    // let reqwest_snake_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_snake_case_token_stream();
-    // let (failed_to_get_response_text_declaration_token_stream, failed_to_get_response_text_initialization_token_stream) = {
-    //     let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     (
-    //         quote::quote!{
-    //             #failed_to_get_response_text_upper_camel_case_token_stream {
-    //                 #eo_display_foreign_type_token_stream
-    //                 #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
-    //                 #eo_display_token_stream
-    //                 #status_code_snake_case_token_stream: #http_status_code_token_stream,
-    //                 #eo_display_foreign_type_token_stream
-    //                 #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
-    //                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //             }
-    //         },
-    //         quote::quote!{
-    //             #failed_to_get_response_text_upper_camel_case_token_stream {
-    //                 #reqwest_snake_case_token_stream: #error_value_snake_case_token_stream, 
-    //                 #status_code_snake_case_token_stream, 
-    //                 #headers_snake_case_token_stream, 
-    //                 #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
-    //             }
-    //         }
-    //     )
-    // };
-    // let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::deserialize_response_upper_camel_case_token_stream();
-    // let serde_snake_case_token_stream = proc_macro_helpers::naming_conventions::serde_snake_case_token_stream();
-    // let (deserialize_response_declaration_token_stream, deserialize_response_initialization_token_stream) = {
-    //     let field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     (
-    //         quote::quote!{
-    //             #deserialize_response_upper_camel_case_token_stream {
-    //                 #eo_display_token_stream
-    //                 #serde_snake_case_token_stream: serde_json::Error,
-    //                 #eo_display_token_stream
-    //                 #status_code_snake_case_token_stream: #http_status_code_token_stream,
-    //                 #eo_display_foreign_type_token_stream
-    //                 #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
-    //                 #eo_display_with_serialize_deserialize_token_stream
-    //                 #response_text_snake_case_token_stream: #std_string_string_token_stream,
-    //                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //             }
-    //         },
-    //         quote::quote!{
-    //             #deserialize_response_upper_camel_case_token_stream {
-    //                 #serde_snake_case_token_stream: #error_value_snake_case_token_stream, 
-    //                 #status_code_snake_case_token_stream, 
-    //                 #headers_snake_case_token_stream, 
-    //                 #response_text_snake_case_token_stream,
-    //                 #field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream
-    //             }
-    //         }
-    //     )
-    // };
-    // let reqwest_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_upper_camel_case_token_stream();
-    // let (reqwest_declaration_token_stream, reqwest_initialization_token_stream) = {
-    //     let field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-    //         file!(),
-    //         line!(),
-    //         column!(),
-    //         &proc_macro_name_upper_camel_case_ident_stringified,
-    //     );
-    //     (
-    //         quote::quote!{
-    //             #reqwest_upper_camel_case_token_stream {
-    //                 #eo_display_foreign_type_token_stream
-    //                 #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
-    //                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //             }
-    //         },
-    //         quote::quote!{
-    //             #reqwest_upper_camel_case_token_stream {
-    //                 #reqwest_snake_case_token_stream: #error_value_snake_case_token_stream, 
-    //                 #field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream,
-    //             }
-    //         }
-    //     )
-    // };
-    // let common_error_syn_variants = {
-    //     let sqlx_postgres_error_named_syn_variants = proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
-    //     let json_extractor_error_named_syn_variants = proc_macro_helpers::enum_variants::json_extractor_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
-    //     let mut common_error_variants_vec = std::vec::Vec::with_capacity(common_middlewares_error_syn_variants_len + sqlx_postgres_error_named_syn_variants.len() + 1);
-    //     for element in sqlx_postgres_error_named_syn_variants {
-    //         common_error_variants_vec.push(element);
-    //     }
-    //     for element in json_extractor_error_named_syn_variants {
-    //         common_error_variants_vec.push(element);
-    //     }
-    //     let unexpected_case_syn_variant = {
-    //         let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::unexpected_case_upper_camel_case_stringified();
-    //         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-    //         crate::type_variants_from_request_response_generator::construct_syn_variant(
-    //             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-    //             &variant_name_upper_camel_case_stringified,
-    //             &code_occurence_field,
-    //             vec![
-    //                 (
-    //                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-    //                     &variant_name_snake_case_stringified, 
-    //                     std_string_string_syn_punctuated_punctuated.clone()
-    //                 )
-    //             ]
-    //         )
-    //     };
-    //     common_error_variants_vec.push(unexpected_case_syn_variant);
-    //     common_error_variants_vec
-    // };
-    // let fields_named_excluding_primary_key = fields_named_wrappers_excluding_primary_key.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>();
-    // // let fields_named_idents_comma_excluding_primary_key_token_stream = generate_self_fields_token_stream(
-    // //     &fields_named_excluding_primary_key,
-    // //     &proc_macro_name_upper_camel_case_ident_stringified,
-    // // ).iter().map(|element|quote::quote!{#element,}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    // let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(
-    //     &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
+    let code_occurence_field = syn::Field {
+        attrs: vec![],
+        vis: syn::Visibility::Inherited,
+        ident: Some(
+            syn::Ident::new("code_occurence", proc_macro2::Span::call_site())
+        ),
+        colon_token: Some(
+            syn::token::Colon {
+                spans: [proc_macro2::Span::call_site()],
+            },
+        ),
+        ty: syn::Type::Path(
+            syn::TypePath {
+                qself: None,
+                path: syn::Path {
+                    leading_colon: None,
+                    segments: proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["error_occurence_lib","code_occurence","CodeOccurence"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                },
+            },
+        ),
+    };
+    let bind_query_syn_variant = {
+        let variant_name_upper_camel_case_stringified = "BindQuery";
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+            variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![(
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                &variant_name_snake_case_stringified, 
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["crate","server","postgres","bind_query","TryGenerateBindIncrementsErrorNamed"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )]
+        )
+    };
+    let bind_query_variant_initialization_token_stream = {
+        let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            BindQuery { 
+                bind_query: #error_value_snake_case_token_stream.into_serialize_deserialize_version(), 
+                #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
+            }
+        }
+    };
+    let checked_add_syn_variant = generate_std_string_string_error_syn_variant(
+        "CheckedAdd",
+        proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+        &code_occurence_field,
+        std_string_string_syn_punctuated_punctuated.clone()
+    );
+    let checked_add_variant_initialization_token_stream = {
+        let checked_add_upper_camel_case_stringified = "CheckedAdd";
+        let checked_add_upper_camel_case_token_stream = {
+            checked_add_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let checked_add_snake_case_token_stream = {
+            let checked_add_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&checked_add_upper_camel_case_stringified);
+            checked_add_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            #checked_add_upper_camel_case_token_stream { //todo remove it? refactor it?
+                #checked_add_snake_case_token_stream: #std_string_string_token_stream::from("checked_add is None"), 
+                #field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream, 
+            }
+        }
+    };
+    let query_and_rollback_failed_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
+        proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+        "QueryAndRollbackFailed",
+        &code_occurence_field,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                "query_error", 
+                sqlx_error_syn_punctuated_punctuated.clone(),
+            ),
+            (
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                "rollback_error", 
+                sqlx_error_syn_punctuated_punctuated.clone(),
+            )   
+        ]
+    );
+    let primary_key_from_row_and_failed_rollback_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
+        proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+        "PrimaryKeyFromRowAndFailedRollback",
+        &code_occurence_field,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                "primary_key_from_row",
+                sqlx_error_syn_punctuated_punctuated.clone() 
+            ),
+            (
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                "rollback_error", 
+                sqlx_error_syn_punctuated_punctuated.clone()
+            )
+        ]
+    );
+    let non_existing_primary_keys_syn_variant = {
+        let variant_name_upper_camel_case_stringified = "NonExistingPrimaryKeys";
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
+                    &variant_name_snake_case_stringified,
+                    std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    let non_existing_primary_keys_and_failed_rollback_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
+        proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+        "NonExistingPrimaryKeysAndFailedRollback",
+        &code_occurence_field,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
+                "non_existing_primary_keys", 
+                std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
+            ),
+            (
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                "rollback_error",
+                sqlx_error_syn_punctuated_punctuated.clone()
+            )
+        ]
+    );
+    let commit_failed_syn_variant = {
+        let variant_name_upper_camel_case_stringified = "CommitFailed";
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+            variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                    &variant_name_snake_case_stringified, 
+                    sqlx_error_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    let not_unique_primary_keys_name_token_stream = quote::quote!{not_unique_primary_keys};
+    let not_unique_primary_keys_syn_variant = {
+        let variant_name_upper_camel_case_stringified = "NotUniquePrimaryKeys";
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
+                    &variant_name_snake_case_stringified,
+                    std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone() 
+                )
+            ]
+        )
+    };
+    let not_unique_primary_key_variant_initialization_token_stream = {
+        let field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            NotUniquePrimaryKeys {
+                not_unique_primary_keys,
+                #field_code_occurence_new_0a70da64_9e15_4760_9656_14961b286f36_token_stream,
+            }
+        }
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified = "OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapper";
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified = format!(
+        "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified}{}{}",
+        proc_macro_helpers::naming_conventions::in_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::server_upper_camel_case_stringified()
+    );
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_token_stream = {
+        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified = format!(
+        "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified}{}{}",
+        proc_macro_helpers::naming_conventions::in_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::client_upper_camel_case_stringified()
+    );//todo reuse it
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream = {
+        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream = {
+        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified.to_string());
+        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream = {
+        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = format!(
+            "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified}{}{}",
+            proc_macro_helpers::naming_conventions::error_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::unnamed_upper_camel_case_stringified()
+        );
+        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_syn_variant = {
+        let variant_name_upper_camel_case_stringified = operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified;
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,//todo - is it right status code for this case?
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                    &variant_name_snake_case_stringified, 
+                    sqlx_error_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream = {
+        let field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_token_stream {
+                operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server: #error_value_snake_case_token_stream,
+                #field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream,
+            }
+        }
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream = quote::quote!{
+        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+            #eo_vec_error_occurence_token_stream
+            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream: std::vec::Vec<#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream>,
+            #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream,
+        }
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream = {
+        let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+                #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream: vec_errors,
+                #field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream
+            }
+        }
+    };
+    let uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream = quote::quote!{uuid_wrapper_try_from_possible_uuid_wrapper_in_client};
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = quote::quote!{
+        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+            #eo_error_occurence_attribute_token_stream
+            #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
+            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+        }
+    };
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = {
+        let field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        quote::quote!{
+            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+                #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #error_value_snake_case_token_stream,
+                #field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream,
+            }
+        }
+    };
+    let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len - 1), |mut acc, element| {
+        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+            panic!(
+                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                naming_constants::FIELD_IDENT_IS_NONE
+            )
+        });
+        let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
+        let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
+        acc.push(crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            &not_unique_field_vec_upper_camel_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize, 
+                    &not_unique_field_vec_snake_case_stringified,
+                    std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated.clone()
+                )
+            ]
+        ));
+        acc
+    });
+    let not_uuid_syn_variant = {
+        let variant_name_upper_camel_case_stringified = format!(
+            "{}{}",
+            proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
+        );
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                    &variant_name_snake_case_stringified, 
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["sqlx","types","uuid","Error"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        )
+    };
+    let no_payload_fields_syn_variant = {
+        let variant_name_upper_camel_case_stringified = format!(
+            "{}{}{}",
+            proc_macro_helpers::naming_conventions::no_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::payload_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::fields_upper_camel_case_stringified()
+        );
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
+                    &variant_name_snake_case_stringified,
+                    std_string_string_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    let no_payload_parameters_syn_variant = {
+        let variant_name_upper_camel_case_stringified = format!(
+            "{}{}{}",
+            proc_macro_helpers::naming_conventions::no_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::payload_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::parameters_upper_camel_case_stringified()
+        );
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        crate::type_variants_from_request_response_generator::construct_syn_variant(
+            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+            &variant_name_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
+                    &variant_name_snake_case_stringified, 
+                    std_string_string_syn_punctuated_punctuated.clone()
+                )
+            ]
+        )
+    };
+    let commit_header_addition_token_stream = quote::quote!{
+        .header(
+            postgresql_crud::COMMIT,
+            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit,
+        )
+    };
+    let application_json_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        "application/json",
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let content_type_application_json_header_addition_token_stream = quote::quote!{
+        .header(reqwest::header::CONTENT_TYPE, #application_json_quotes_token_stream)
+    };
+    let axum_response_into_response_token_stream = proc_macro_common::axum_response_into_response_token_stream();
+    let axum_extract_rejection_json_rejection_token_stream = proc_macro_common::axum_extract_rejection_json_rejection_token_stream();
+    let sqlx_query_sqlx_postgres_token_stream = quote::quote!{sqlx::query::<sqlx::Postgres>};
+    let reqwest_client_new_token_stream = quote::quote!{reqwest::Client::new()};
+    let axum_extract_state_token_stream = quote::quote!{axum::extract::State};
+    let axum_json_token_stream = quote::quote!{axum::Json};
+    let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote!{crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
+    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::bind_value_to_query};//todo move trait to own crate to reuse in postgresql_crud and common
+    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_generate_bind_increments};
+    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote!{crate::server::postgres::bind_query::BindQuery::try_increment};
+    let increment_initialization_token_stream = quote::quote!{let mut increment: u64 = 0;};
+    let http_status_code_token_stream = proc_macro_common::http_status_code_token_stream();
+    let reqwest_header_header_map_token_stream = proc_macro_common::reqwest_header_header_map_token_stream();
+    let reqwest_error_token_stream = proc_macro_common::reqwest_error_token_stream();
+    let crate_common_api_request_unexpected_error_response_text_result_token_stream = quote::quote! {crate::common::api_request_unexpected_error::ResponseTextResult};
+    let try_extract_value_token_stream = quote::quote!{try_extract_value};
+    let server_location_name_token_stream = quote::quote!{server_location};
+    let dot_space = ", ";
+    // let pg_temp_stringified = "pg_temp";
+    let pg_connection_token_stream = quote::quote!{pg_connection};
+    let query_string_name_token_stream = quote::quote!{query_string};
+    let binded_query_name_token_stream = quote::quote!{binded_query};
+    let order_by_token_stream = quote::quote!{order_by};
+    let current_vec_len_name_token_stream = quote::quote!{current_vec_len};
+    let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
+    let select_snake_case_token_stream = proc_macro_helpers::naming_conventions::select_snake_case_token_stream();
+    let limit_token_stream = proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
+    let offset_token_stream = proc_macro_helpers::naming_conventions::offset_snake_case_token_stream();
+    let rollback_snake_case_token_stream = proc_macro_helpers::naming_conventions::rollback_snake_case_token_stream();
+    let element_name_token_stream = proc_macro_helpers::naming_conventions::element_snake_case_token_stream();
+    let acc_name_token_stream = proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
+    let query_name_token_stream = proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
+    let not_uuid_upper_camel_case_stringified = format!(
+        "{}{}",
+        proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
+    );
+    let not_uuid_token_upper_camel_case_stream = {
+        not_uuid_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let not_uuid_token_snake_case_stream = {
+        let not_uuid_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&not_uuid_upper_camel_case_stringified.to_string());
+        not_uuid_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let underscore_vec_name_stringified = "_vec";
+    let update_name_stringified = proc_macro_helpers::naming_conventions::update_snake_case_stringified();
+    let as_name_stringified = proc_macro_helpers::naming_conventions::as_snake_case_stringified();
+    let set_name_stringified = proc_macro_helpers::naming_conventions::set_snake_case_stringified();
+    let from_name_stringified = proc_macro_helpers::naming_conventions::from_snake_case_stringified();
+    let insert_name_stringified = proc_macro_helpers::naming_conventions::insert_snake_case_stringified();
+    let into_name_stringified = proc_macro_helpers::naming_conventions::into_snake_case_stringified();
+    let values_name_stringified = proc_macro_helpers::naming_conventions::values_snake_case_stringified();
+    let delete_name_stringified = proc_macro_helpers::naming_conventions::delete_snake_case_stringified();
+    let where_name_stringified = proc_macro_helpers::naming_conventions::where_snake_case_stringified();
+    let where_name_qoutes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        &where_name_stringified,
+        &proc_macro_name_upper_camel_case_ident_stringified
+    );
+    let and_name_stringified = proc_macro_helpers::naming_conventions::and_snake_case_stringified();
+    // let any_name_stringified = "any";
+    // let array_name_stringified = "array";
+    let select_name_stringified = proc_macro_helpers::naming_conventions::select_snake_case_stringified();
+    let order_by_name_stringified = "order by";
+    let limit_name_stringified = proc_macro_helpers::naming_conventions::limit_snake_case_stringified();
+    let offset_name_stringified = proc_macro_helpers::naming_conventions::offset_snake_case_stringified();
+    let in_name_stringified = proc_macro_helpers::naming_conventions::in_snake_case_stringified();
+    let unnest_name_stringified = proc_macro_helpers::naming_conventions::unnest_snake_case_stringified();
+    let api_request_unexpected_error_module_path_token_stream = quote::quote! { crate::common::api_request_unexpected_error };
+    let expected_type_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_upper_camel_case_token_stream();
+    let expected_type_snake_case_token_stream = proc_macro_helpers::naming_conventions::expected_type_snake_case_token_stream();
+    //todo make crate::type_variants_from_request_response_generator::construct_syn_variant(
+    let (generate_expected_type_declaration_token_stream, expected_type_initialization_token_stream) = {
+        let field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            |operation: &crate::Operation| -> proc_macro2::TokenStream {
+                let try_operation_with_serialize_deserialize_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeTokenStream::try_self_with_serialize_deserialize_token_stream(operation);
+                quote::quote!{
+                    #expected_type_upper_camel_case_token_stream {
+                        #eo_display_with_serialize_deserialize_token_stream
+                        #expected_type_snake_case_token_stream: #try_operation_with_serialize_deserialize_token_stream,
+                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                    }
+                }
+            },
+            quote::quote!{
+                #expected_type_upper_camel_case_token_stream {
+                    #expected_type_snake_case_token_stream: #error_value_snake_case_token_stream, 
+                    #field_code_occurence_new_a2da8618_eb3a_425c_a2d8_c02d39845168_token_stream 
+                }
+            }
+        )
+    };
+    let unexpected_status_code_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::unexpected_status_code_upper_camel_case_token_stream();
+    let status_code_snake_case_token_stream = proc_macro_helpers::naming_conventions::status_code_snake_case_token_stream();
+    let headers_snake_case_token_stream = proc_macro_helpers::naming_conventions::headers_snake_case_token_stream();
+    let response_text_result_snake_case_token_stream = proc_macro_helpers::naming_conventions::response_text_result_snake_case_token_stream();
+    let response_text_snake_case_token_stream = proc_macro_helpers::naming_conventions::response_text_snake_case_token_stream();
+    let (unexpected_status_code_declaration_token_stream, unexpected_status_code_initialization_token_stream) = {
+        let field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #unexpected_status_code_upper_camel_case_token_stream {
+                    #eo_display_token_stream
+                    #status_code_snake_case_token_stream: #http_status_code_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    #response_text_result_snake_case_token_stream: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #unexpected_status_code_upper_camel_case_token_stream {
+                    #status_code_snake_case_token_stream, 
+                    #headers_snake_case_token_stream, 
+                    #response_text_result_snake_case_token_stream: #api_request_unexpected_error_module_path_token_stream::ResponseTextResult::ResponseText(response_text), 
+                    #field_code_occurence_new_9d155a81_cad2_46fd_96ae_5d53eb306083_token_stream
+                }
+            }
+        )
+    };
+    let failed_to_get_response_text_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::failed_to_get_response_text_upper_camel_case_token_stream();
+    let reqwest_snake_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_snake_case_token_stream();
+    let (failed_to_get_response_text_declaration_token_stream, failed_to_get_response_text_initialization_token_stream) = {
+        let field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #failed_to_get_response_text_upper_camel_case_token_stream {
+                    #eo_display_foreign_type_token_stream
+                    #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
+                    #eo_display_token_stream
+                    #status_code_snake_case_token_stream: #http_status_code_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #failed_to_get_response_text_upper_camel_case_token_stream {
+                    #reqwest_snake_case_token_stream: #error_value_snake_case_token_stream, 
+                    #status_code_snake_case_token_stream, 
+                    #headers_snake_case_token_stream, 
+                    #field_code_occurence_new_4528b9ed_5b9d_486b_af78_345e1b9d95cc_token_stream
+                }
+            }
+        )
+    };
+    let deserialize_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::deserialize_response_upper_camel_case_token_stream();
+    let serde_snake_case_token_stream = proc_macro_helpers::naming_conventions::serde_snake_case_token_stream();
+    let (deserialize_response_declaration_token_stream, deserialize_response_initialization_token_stream) = {
+        let field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #deserialize_response_upper_camel_case_token_stream {
+                    #eo_display_token_stream
+                    #serde_snake_case_token_stream: serde_json::Error,
+                    #eo_display_token_stream
+                    #status_code_snake_case_token_stream: #http_status_code_token_stream,
+                    #eo_display_foreign_type_token_stream
+                    #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
+                    #eo_display_with_serialize_deserialize_token_stream
+                    #response_text_snake_case_token_stream: #std_string_string_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #deserialize_response_upper_camel_case_token_stream {
+                    #serde_snake_case_token_stream: #error_value_snake_case_token_stream, 
+                    #status_code_snake_case_token_stream, 
+                    #headers_snake_case_token_stream, 
+                    #response_text_snake_case_token_stream,
+                    #field_code_occurence_new_ddbdaed4_ec8e_4fc7_bcc7_152edc67f22b_token_stream
+                }
+            }
+        )
+    };
+    let reqwest_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::reqwest_upper_camel_case_token_stream();
+    let (reqwest_declaration_token_stream, reqwest_initialization_token_stream) = {
+        let field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+            file!(),
+            line!(),
+            column!(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
+        (
+            quote::quote!{
+                #reqwest_upper_camel_case_token_stream {
+                    #eo_display_foreign_type_token_stream
+                    #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                }
+            },
+            quote::quote!{
+                #reqwest_upper_camel_case_token_stream {
+                    #reqwest_snake_case_token_stream: #error_value_snake_case_token_stream, 
+                    #field_code_occurence_new_484abc36_0756_417a_a448_7956000c2d8c_token_stream,
+                }
+            }
+        )
+    };
+    let common_error_syn_variants = {
+        let sqlx_postgres_error_named_syn_variants = proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
+        let json_extractor_error_named_syn_variants = proc_macro_helpers::enum_variants::json_extractor_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
+        let mut common_error_variants_vec = std::vec::Vec::with_capacity(common_middlewares_error_syn_variants_len + sqlx_postgres_error_named_syn_variants.len() + 1);
+        for element in sqlx_postgres_error_named_syn_variants {
+            common_error_variants_vec.push(element);
+        }
+        for element in json_extractor_error_named_syn_variants {
+            common_error_variants_vec.push(element);
+        }
+        let unexpected_case_syn_variant = {
+            let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::unexpected_case_upper_camel_case_stringified();
+            let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+            crate::type_variants_from_request_response_generator::construct_syn_variant(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+                &variant_name_upper_camel_case_stringified,
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
+                        &variant_name_snake_case_stringified, 
+                        std_string_string_syn_punctuated_punctuated.clone()
+                    )
+                ]
+            )
+        };
+        common_error_variants_vec.push(unexpected_case_syn_variant);
+        common_error_variants_vec
+    };
+    let fields_named_excluding_primary_key = fields_named_wrappers_excluding_primary_key.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>();
+    // let fields_named_idents_comma_excluding_primary_key_token_stream = generate_self_fields_token_stream(
+    //     &fields_named_excluding_primary_key,
     //     &proc_macro_name_upper_camel_case_ident_stringified,
     // ).iter().map(|element|quote::quote!{#element,}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    // let select_full_variant_token_stream = {
-    //     let select_full_variant_stringified = fields_named.iter().fold(std::string::String::default(), |mut acc, field| {
-    //         use convert_case::Casing;
-    //         let field_ident_stringified = field.ident
-    //             .as_ref()
-    //             .unwrap_or_else(|| {
-    //                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-    //             }).to_string().to_case(convert_case::Case::Title);
-    //         acc.push_str(&field_ident_stringified);
-    //         acc
-    //     });
-    //     select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {select_full_variant_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    // let primary_keys_token_stream = quote::quote!{primary_keys};
-    // let primary_key_token_stream = quote::quote!{primary_key};
+    let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(
+        &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    ).iter().map(|element|quote::quote!{#element,}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+    let select_full_variant_token_stream = {
+        let select_full_variant_stringified = fields_named.iter().fold(std::string::String::default(), |mut acc, field| {
+            use convert_case::Casing;
+            let field_ident_stringified = field.ident
+                .as_ref()
+                .unwrap_or_else(|| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
+                }).to_string().to_case(convert_case::Case::Title);
+            acc.push_str(&field_ident_stringified);
+            acc
+        });
+        select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {select_full_variant_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let primary_keys_token_stream = quote::quote!{primary_keys};
+    let primary_key_token_stream = quote::quote!{primary_key};
     // let (
     //     create_many_token_stream,
     //     create_many_http_request_test_token_stream
