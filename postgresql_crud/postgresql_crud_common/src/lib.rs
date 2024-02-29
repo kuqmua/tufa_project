@@ -457,6 +457,117 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonB,
 }
 
+//
+pub trait CheckSupportedRustAndPostgresqlColumnType {
+    fn check_supported_rust_and_postgresql_column_type();
+}
+
+pub struct StdPrimitiveBoolAsPostgresqlBool(StdPrimitiveBool);
+impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBool {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+
+pub struct StdPrimitiveI8AsPostgresqlChar(StdPrimitiveI8);
+
+pub struct StdPrimitiveI16AsPostgresqlSmallInt(StdPrimitiveI16);
+pub struct StdPrimitiveI16AsPostgresqlSmallSerial(StdPrimitiveI16);
+pub struct StdPrimitiveI16AsPostgresqlInt2(StdPrimitiveI16);
+
+pub struct StdPrimitiveI32AsPostgresqlInt(StdPrimitiveI32);
+pub struct StdPrimitiveI32AsPostgresqlSerial(StdPrimitiveI32);
+pub struct StdPrimitiveI32AsPostgresqlInt4(StdPrimitiveI32);
+
+pub struct StdPrimitiveI64AsPostgresqlBigInt(StdPrimitiveI64);
+pub struct StdPrimitiveI64AsPostgresqlBigSerial(StdPrimitiveI64);
+pub struct StdPrimitiveI64AsPostgresqlInt8(StdPrimitiveI64);
+
+pub struct StdPrimitiveF32AsPostgresqlReal(StdPrimitiveF32);
+pub struct StdPrimitiveF32AsPostgresqlFloat4(StdPrimitiveF32);
+
+pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(StdPrimitiveF64);
+pub struct StdPrimitiveF64AsPostgresqlFloat8(StdPrimitiveF64);
+
+pub struct StdStringStringAsPostgresqlVarchar(StdStringString);
+pub struct StdStringStringAsPostgresqlCharN(StdStringString);
+pub struct StdStringStringAsPostgresqlText(StdStringString);
+pub struct StdStringStringAsPostgresqlName(StdStringString);
+pub struct StdStringStringAsPostgresqlCiText(StdStringString);
+
+pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(StdVecVecStdPrimitiveU8);
+
+pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(SqlxPostgresTypesPgInterval);
+
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(SqlxPostgresTypesPgRangeStdPrimitiveI64);
+
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(SqlxPostgresTypesPgRangeStdPrimitiveI32);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
+    
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
+
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(SqlxPostgresTypesPgRangeSqlxTypesDecimal);
+
+pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(SqlxPostgresTypesPgMoney);
+
+pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiText(SqlxPostgresTypesPgCiText);
+
+pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(SqlxTypesBigDecimal);
+
+pub struct SqlxTypesDecimalAsPostgresqlNumeric(SqlxTypesDecimal);
+
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp(SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+
+pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(SqlxTypesChronoNaiveDateTime);
+
+pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(SqlxTypesChronoNaiveDate);
+
+pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(SqlxTypesChronoNaiveTime);
+
+pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(SqlxPostgresTypesPgTimeTz);
+
+pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(SqlxTypesTimePrimitiveDateTime);
+
+pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(SqlxTypesTimeOffsetDateTime);
+
+pub struct SqlxTypesTimeDateAsPostgresqlDate(SqlxTypesTimeDate);
+
+pub struct SqlxTypesTimeTimeAsPostgresqlTime(SqlxTypesTimeTime);
+
+pub struct SqlxTypesUuidUuidAsPostgresqlUuid(SqlxTypesUuidUuid);
+
+pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(SqlxTypesIpnetworkIpNetwork);
+pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(SqlxTypesIpnetworkIpNetwork);
+
+pub struct StdNetIpAddrAsPostgresqlInet(StdNetIpAddr);
+pub struct StdNetIpAddrAsPostgresqlCidr(StdNetIpAddr);
+
+pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(SqlxTypesMacAddressMacAddress);
+
+pub struct SqlxTypesBitVecAsPostgresqlBit(SqlxTypesBitVec);
+pub struct SqlxTypesBitVecAsPostgresqlVarBit(SqlxTypesBitVec);
+
+//todo what to do with generic?
+pub struct SqlxTypesJsonTAsPostgresqlJson<T>(SqlxTypesJson<T>);
+pub struct SqlxTypesJsonTAsPostgresqlJsonB<T>(SqlxTypesJson<T>);
+
+pub struct SerdeJsonValueAsPostgresqlJson(SerdeJsonValue);
+pub struct SerdeJsonValueAsPostgresqlJsonB(SerdeJsonValue);
+//
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
