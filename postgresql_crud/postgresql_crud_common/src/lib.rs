@@ -4059,6 +4059,13 @@ impl std::convert::From<StdStringString> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdStringString
     }
 }
+//
+// impl std::convert::From<StdStringStringAsPostgresqlVarchar> for StdStringString {
+//     fn from(value: StdStringStringAsPostgresqlVarchar) -> Self {
+//         value.0
+//     }
+// }
+//
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
