@@ -77,7 +77,6 @@
             postgresql_crud::NumBigintSignWithSerializeDeserialize,
             postgresql_crud::NumBigintBigIntNewWithSerializeDeserialize,
             postgresql_crud::StdPrimitiveBool,
-            postgresql_crud::StdPrimitiveI8,
             postgresql_crud::StdPrimitiveI16,
             postgresql_crud::StdPrimitiveI32,
             postgresql_crud::StdPrimitiveI64,

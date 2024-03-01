@@ -1,6 +1,5 @@
 pub enum SupportedSqlxPostgresType {
     StdPrimitiveBool,
-    StdPrimitiveI8,
     StdPrimitiveI16,
     StdPrimitiveI32,
     StdPrimitiveI64,
@@ -48,9 +47,6 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostg
         match value {
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => Self::StdPrimitiveBool,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull => Self::StdPrimitiveBool,
-
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI8AsPostgresqlChar => Self::StdPrimitiveI8,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI8AsPostgresqlCharNotNull => Self::StdPrimitiveI8,
         
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt => Self::StdPrimitiveI16,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull => Self::StdPrimitiveI16,
@@ -303,9 +299,6 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
         match value {
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => Self::Bool,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull => Self::BoolNotNull,
-
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI8AsPostgresqlChar => Self::Char,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI8AsPostgresqlCharNotNull => Self::CharNotNull,
         
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt => Self::SmallInt,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull => Self::SmallIntNotNull,
@@ -570,9 +563,6 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     StdPrimitiveBoolAsPostgresqlBool,
     StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
-    StdPrimitiveI8AsPostgresqlChar,
-    StdPrimitiveI8AsPostgresqlCharNotNull,
-
     StdPrimitiveI16AsPostgresqlSmallInt,
     StdPrimitiveI16AsPostgresqlSmallIntNotNull,
     StdPrimitiveI16AsPostgresqlSmallSerial,
@@ -735,9 +725,6 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
         match value {
             "postgresql_crud::StdPrimitiveBoolAsPostgresqlBool" => Ok(Self::StdPrimitiveBoolAsPostgresqlBool),
             "postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull" => Ok(Self::StdPrimitiveBoolAsPostgresqlBoolNotNull),
-
-            "postgresql_crud::StdPrimitiveI8AsPostgresqlChar" => Ok(Self::StdPrimitiveI8AsPostgresqlChar),
-            "postgresql_crud::StdPrimitiveI8AsPostgresqlCharNotNull" => Ok(Self::StdPrimitiveI8AsPostgresqlCharNotNull),
 
             "postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallInt),
             "postgresql_crud::StdPrimitiveI16AsPostgresqlSmallIntNotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull),
@@ -907,9 +894,6 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
 //             Self::StdPrimitiveBoolAsPostgresqlBool => write!(f, "StdPrimitiveBoolAsPostgresqlBool"),
 //             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => write!(f, "StdPrimitiveBoolAsPostgresqlBoolNotNull"),
 
-//             Self::StdPrimitiveI8AsPostgresqlChar => write!(f, "StdPrimitiveI8AsPostgresqlChar"),
-//             Self::StdPrimitiveI8AsPostgresqlCharNotNull => write!(f, "StdPrimitiveI8AsPostgresqlCharNotNull"),
-
 //             Self::StdPrimitiveI16AsPostgresqlSmallInt => write!(f, "StdPrimitiveI16AsPostgresqlSmallInt"),
 //             Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => write!(f, "StdPrimitiveI16AsPostgresqlSmallIntNotNull"),
 //             Self::StdPrimitiveI16AsPostgresqlSmallSerial => write!(f, "StdPrimitiveI16AsPostgresqlSmallSerial"),
@@ -1073,9 +1057,6 @@ impl std::str::FromStr for RustSqlxMapToPostgresTypeVariant {
         match value {
             "StdPrimitiveBoolAsPostgresqlBool" => Ok(Self::StdPrimitiveBoolAsPostgresqlBool),
             "StdPrimitiveBoolAsPostgresqlBoolNotNull" => Ok(Self::StdPrimitiveBoolAsPostgresqlBoolNotNull),
-
-            "StdPrimitiveI8AsPostgresqlChar" => Ok(Self::StdPrimitiveI8AsPostgresqlChar),
-            "StdPrimitiveI8AsPostgresqlCharNotNull" => Ok(Self::StdPrimitiveI8AsPostgresqlCharNotNull),
 
             "StdPrimitiveI16AsPostgresqlSmallInt" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallInt),
             "StdPrimitiveI16AsPostgresqlSmallIntNotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull),
@@ -1250,14 +1231,6 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlB
 }
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-pub struct StdPrimitiveI8AsPostgresqlChar(pub StdPrimitiveI8);
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI8AsPostgresqlChar {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-pub struct StdPrimitiveI8AsPostgresqlCharNotNull(pub StdPrimitiveI8);
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI8AsPostgresqlCharNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(pub StdPrimitiveI16);
@@ -1733,7 +1706,7 @@ fn generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(fixed_offset:
 pub struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     std_primitive_bool: std::primitive::bool, //BOOL
-    std_primitive_i8: std::primitive::i8,   //“CHAR”
+    // std_primitive_i8: std::primitive::i8,   //“CHAR”//not clear how to make primary key from it
     std_primitive_i16: std::primitive::i16,  //SMALLINT, SMALLSERIAL, INT2
     std_primitive_i32: std::primitive::i32,  //INT, SERIAL, INT4
     std_primitive_i64: std::primitive::i64,  //BIGINT, BIGSERIAL, INT8
@@ -1793,7 +1766,6 @@ pub struct Test<T> {
 
 pub struct TestNewType<T> {
     std_primitive_bool: StdPrimitiveBool,
-    std_primitive_i8: StdPrimitiveI8,
     std_primitive_i16: StdPrimitiveI16,
     std_primitive_i32: StdPrimitiveI32,
     std_primitive_i64: StdPrimitiveI64,
@@ -1839,7 +1811,6 @@ pub struct TestNewType<T> {
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_primitive_bool: StdPrimitiveBool,
-    std_primitive_i8: StdPrimitiveI8,
     std_primitive_i16: StdPrimitiveI16,
     std_primitive_i32: StdPrimitiveI32,
     std_primitive_i64: StdPrimitiveI64,
@@ -1886,7 +1857,6 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
     type Error = ();//todo
     fn try_from(value: TestNewTypeWithSerializeDeserialize<T>) -> Result<Self, Self::Error> {
         let std_primitive_bool: StdPrimitiveBool = value.std_primitive_bool;
-        let std_primitive_i8: StdPrimitiveI8 = value.std_primitive_i8;
         let std_primitive_i16: StdPrimitiveI16 = value.std_primitive_i16;
         let std_primitive_i32: StdPrimitiveI32 = value.std_primitive_i32;
         let std_primitive_i64: StdPrimitiveI64 = value.std_primitive_i64;
@@ -2019,7 +1989,6 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let serde_json_value: SerdeJsonValue = value.serde_json_value;
         Ok(Self {
             std_primitive_bool,
-            std_primitive_i8,
             std_primitive_i16,
             std_primitive_i32,
             std_primitive_i64,
@@ -2068,7 +2037,6 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
     fn from(value: Test<T>) -> Self {
         Self {
             std_primitive_bool: StdPrimitiveBool(value.std_primitive_bool),
-            std_primitive_i8: StdPrimitiveI8(value.std_primitive_i8),
             std_primitive_i16: StdPrimitiveI16(value.std_primitive_i16),
             std_primitive_i32: StdPrimitiveI32(value.std_primitive_i32),
             std_primitive_i64: StdPrimitiveI64(value.std_primitive_i64),
@@ -2342,7 +2310,6 @@ impl Default for TestNewType<Something> {
             sqlx_types_chrono_naive_date_time_handle.clone()
         );
         let std_primitive_bool = StdPrimitiveBool(true);
-        let std_primitive_i8 = StdPrimitiveI8(std_primitive_i8_handle.clone());
         let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
         let std_primitive_i32 = StdPrimitiveI32(std_primitive_i32_handle.clone());
         let std_primitive_i64 = StdPrimitiveI64(std_primitive_i64_handle.clone());
@@ -2530,7 +2497,6 @@ impl Default for TestNewType<Something> {
         let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
         Self {
             std_primitive_bool,
-            std_primitive_i8,
             std_primitive_i16,
             std_primitive_i32,
             std_primitive_i64,
@@ -2673,65 +2639,6 @@ impl PostgresqlOrder for StdPrimitiveBool {}
 impl std::convert::From<StdPrimitiveBool> for SupportedSqlxPostgresType {
     fn from(_value: StdPrimitiveBool) -> Self {
         SupportedSqlxPostgresType::StdPrimitiveBool
-    }
-}
-
-#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct StdPrimitiveI8(pub std::primitive::i8);
-impl StdPrimitiveI8 {
-    pub fn into_inner(self) -> std::primitive::i8 {
-        self.0
-    }
-}
-impl std::convert::From<StdPrimitiveI8> for std::primitive::i8 {
-    fn from(value: StdPrimitiveI8) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI8 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i8 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <std::primitive::i8 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI8 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI8 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
-impl CheckSupportedPostgresqlColumnType for StdPrimitiveI8 {
-    fn check_supported_postgresql_column_type() {}
-}
-impl AsPostgresqlChar for StdPrimitiveI8 {}
-impl PostgresqlOrder for StdPrimitiveI8 {}
-impl std::convert::From<StdPrimitiveI8> for SupportedSqlxPostgresType {
-    fn from(_value: StdPrimitiveI8) -> Self {
-        SupportedSqlxPostgresType::StdPrimitiveI8
     }
 }
 
@@ -7578,7 +7485,6 @@ pub async fn something() {
 pub fn test_check_supported_postgresql_column_type() {
     //todo check if init functions are not panics. change to not panic init functions
     StdPrimitiveBool::check_supported_postgresql_column_type();
-    StdPrimitiveI8::check_supported_postgresql_column_type();
     StdPrimitiveI16::check_supported_postgresql_column_type();
     StdPrimitiveI32::check_supported_postgresql_column_type();
     StdPrimitiveI64::check_supported_postgresql_column_type();

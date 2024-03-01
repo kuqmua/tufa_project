@@ -14,7 +14,6 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 //
 pub use postgresql_crud_common::StdPrimitiveBoolAsPostgresqlBool;
-pub use postgresql_crud_common::StdPrimitiveI8AsPostgresqlChar;
 pub use postgresql_crud_common::StdPrimitiveI16AsPostgresqlSmallInt;
 pub use postgresql_crud_common::StdPrimitiveI16AsPostgresqlSmallSerial;
 pub use postgresql_crud_common::StdPrimitiveI16AsPostgresqlInt2;
@@ -79,7 +78,6 @@ pub use postgresql_crud_common::SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeseri
 pub use postgresql_crud_common::NumBigintSignWithSerializeDeserialize;
 pub use postgresql_crud_common::NumBigintBigIntNewWithSerializeDeserialize;
 pub use postgresql_crud_common::StdPrimitiveBool;
-pub use postgresql_crud_common::StdPrimitiveI8;
 pub use postgresql_crud_common::StdPrimitiveI16;
 pub use postgresql_crud_common::StdPrimitiveI32;
 pub use postgresql_crud_common::StdPrimitiveI64;

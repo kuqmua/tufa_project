@@ -193,9 +193,6 @@ pub fn additional_http_status_codes_error_variants(
         StdPrimitiveBoolAsPostgresqlBool,
         StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
-        StdPrimitiveI8AsPostgresqlChar,
-        StdPrimitiveI8AsPostgresqlCharNotNull,
-
         StdPrimitiveI16AsPostgresqlSmallInt,
         StdPrimitiveI16AsPostgresqlSmallIntNotNull,
         StdPrimitiveI16AsPostgresqlSmallSerial,
