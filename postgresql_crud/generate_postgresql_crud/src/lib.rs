@@ -454,8 +454,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let ty = &element.ty;
                 let ty_stringified = quote::quote!{#ty}.to_string().replace(' ', "");
                 let rust_sqlx_map_to_postgres_type_variant = {
-                    use std::str::FromStr;
-                    postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::from_str(ty_stringified.as_str()).unwrap_or_else(|_| panic!(
+                    postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(ty_stringified.as_str()).unwrap_or_else(|_| panic!(
                         "{proc_macro_name_upper_camel_case_ident_stringified} {ty_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed. supported: {:?}", 
                         postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::into_array().into_iter().map(|element|element.to_string()).collect::<std::vec::Vec<std::string::String>>()
                     ))
