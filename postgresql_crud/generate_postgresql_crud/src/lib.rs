@@ -435,7 +435,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let attrs = &element.attrs;
         let (
             rust_sqlx_map_to_postgres_type_variant,
-            inner_type_token_stream
+            maybe_generic_token_stream
         ) = match attrs.iter().fold(None, |mut acc, element| {
             let generated_path = proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&element.path.segments);
             let rust_sqlx_map_to_postgres_type_variant = {
@@ -460,14 +460,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     "{proc_macro_name_upper_camel_case_ident_stringified} {ty_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed. supported: {:?}", 
                     postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::into_array().into_iter().map(|element|element.to_string()).collect::<std::vec::Vec<std::string::String>>()
                 ));
-                let inner_type_token_stream = {
-                    let inner_type_stringified = rust_sqlx_map_to_postgres_type_variant.generate_inner_type_stringified("");//todo refactoring to support generic for json//todo add as new field upper in code
-                    inner_type_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
                 (
                     rust_sqlx_map_to_postgres_type_variant,
-                    inner_type_token_stream
+                    quote::quote!{}//todo serde::Json<T> generic type like ::<T> or just empty
                 )
             }
             None => panic!(
@@ -478,7 +473,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         FieldNamedWrapperExcludingPrimaryKey {
             field: element,
             rust_sqlx_map_to_postgres_type_variant,
-            inner_type_token_stream
+            maybe_generic_token_stream
         }
     }).collect::<std::vec::Vec<FieldNamedWrapperExcludingPrimaryKey>>();
     let fields_named_len = fields_named.len();
@@ -3019,8 +3014,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let inner_type_token_stream = &element.inner_type_token_stream;
-                        quote::quote!{#query_name_token_stream = #query_name_token_stream.bind(#field_ident_underscore_vec_token_stream.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<#inner_type_token_stream>>());}
+                        // let inner_type_token_stream = &element.inner_type_token_stream;
+                        quote::quote!{
+                            #query_name_token_stream = #query_name_token_stream.bind(#field_ident_underscore_vec_token_stream.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<#inner_type_token_stream>>());
+                            // postgresql_crud::StdStringStringAsPostgresqlVarchar::into_inner_sqlx_type_vec(name_vec)
+                        }
                     });
                     quote::quote!{
                         let mut #query_name_token_stream = #sqlx_query_sqlx_postgres_token_stream(&#query_string_name_token_stream);
@@ -7548,7 +7546,7 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
 struct FieldNamedWrapperExcludingPrimaryKey {
     field: syn::Field,
     rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant,
-    inner_type_token_stream: proc_macro2::TokenStream,
+    maybe_generic_token_stream: proc_macro2::TokenStream,//todo maybe rewrite it as struct with methods
 }
 
 fn generate_common_middlewares_error_syn_variants_from_impls(
