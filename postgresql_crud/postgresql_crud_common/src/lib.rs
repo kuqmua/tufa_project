@@ -3693,6 +3693,11 @@ impl std::convert::From<StdPrimitiveBool> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveBool
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
@@ -3815,6 +3820,11 @@ impl std::convert::From<StdPrimitiveI32> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveI32
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
@@ -3874,6 +3884,11 @@ impl PostgresqlOrder for StdPrimitiveI64 {}
 impl std::convert::From<StdPrimitiveI64> for SupportedSqlxPostgresType {
     fn from(_value: StdPrimitiveI64) -> Self {
         SupportedSqlxPostgresType::StdPrimitiveI64
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -3936,6 +3951,11 @@ impl std::convert::From<StdPrimitiveF32> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveF32
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
@@ -3994,6 +4014,11 @@ impl PostgresqlOrder for StdPrimitiveF64 {}
 impl std::convert::From<StdPrimitiveF64> for SupportedSqlxPostgresType {
     fn from(_value: StdPrimitiveF64) -> Self {
         SupportedSqlxPostgresType::StdPrimitiveF64
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -4124,6 +4149,11 @@ impl std::convert::From<StdVecVecStdPrimitiveU8> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdVecVecStdPrimitiveU8
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
@@ -4205,6 +4235,11 @@ impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 impl std::convert::From<SqlxPostgresTypesPgInterval> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgInterval) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgInterval
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -4290,6 +4325,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for SupportedSq
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
@@ -4371,6 +4411,11 @@ impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -4809,6 +4854,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
@@ -5245,6 +5295,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
@@ -5517,6 +5572,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
@@ -5787,6 +5847,11 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateT
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -6063,6 +6128,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> 
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
@@ -6335,6 +6405,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for Su
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
@@ -6603,6 +6678,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for Supported
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
@@ -6705,6 +6785,11 @@ impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -6811,6 +6896,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SupportedS
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
@@ -6881,6 +6971,11 @@ impl std::convert::From<SqlxPostgresTypesPgMoney> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
@@ -6949,6 +7044,11 @@ impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 impl std::convert::From<SqlxPostgresTypesPgCiText> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgCiText) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -7029,6 +7129,11 @@ impl std::convert::From<SqlxTypesBigDecimal> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesBigDecimal
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
@@ -7085,6 +7190,11 @@ impl AsPostgresqlNumeric for SqlxTypesDecimal {}
 impl std::convert::From<SqlxTypesDecimal> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesDecimal) -> Self {
         SupportedSqlxPostgresType::SqlxTypesDecimal
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -7181,6 +7291,11 @@ impl AsPostgresqlTimestamp for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
         SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -7311,6 +7426,11 @@ impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for Support
         SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
@@ -7428,6 +7548,11 @@ impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresT
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
@@ -7517,6 +7642,11 @@ impl std::convert::From<SqlxTypesChronoNaiveDate> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveDate
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
@@ -7603,6 +7733,11 @@ impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 impl std::convert::From<SqlxTypesChronoNaiveTime> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesChronoNaiveTime) -> Self {
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveTime
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -7715,6 +7850,11 @@ impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 impl std::convert::From<SqlxPostgresTypesPgTimeTz> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgTimeTz) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -7830,6 +7970,11 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SupportedSqlxPostgre
         SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
@@ -7902,6 +8047,11 @@ impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
 impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesTimeOffsetDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -7989,6 +8139,11 @@ impl PostgresqlOrder for SqlxTypesTimeDate {}
 impl std::convert::From<SqlxTypesTimeDate> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesTimeDate) -> Self {
         SupportedSqlxPostgresType::SqlxTypesTimeDate
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -8079,6 +8234,11 @@ impl std::convert::From<SqlxTypesTimeTime> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesTimeTime
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
@@ -8153,6 +8313,11 @@ impl std::convert::From<SqlxTypesUuidUuid> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesUuidUuid
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
@@ -8212,6 +8377,11 @@ impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for SupportedSqlxPostgresTy
         SupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
@@ -8269,6 +8439,11 @@ impl AsPostgresqlCidr for StdNetIpAddr {}
 impl std::convert::From<StdNetIpAddr> for SupportedSqlxPostgresType {
     fn from(_value: StdNetIpAddr) -> Self {
         SupportedSqlxPostgresType::StdNetIpAddr
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -8341,6 +8516,11 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress> for SupportedSqlxPostgres
         SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
@@ -8411,6 +8591,11 @@ impl PostgresqlOrder for SqlxTypesBitVec {}
 impl std::convert::From<SqlxTypesBitVec> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesBitVec) -> Self {
         SupportedSqlxPostgresType::SqlxTypesBitVec
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
@@ -8502,6 +8687,11 @@ impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesJsonT
     }
 }
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
+    }
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValue(serde_json::Value);
@@ -8559,6 +8749,11 @@ impl AsPostgresqlJsonB for SerdeJsonValue {}
 impl std::convert::From<SerdeJsonValue> for SupportedSqlxPostgresType {
     fn from(_value: SerdeJsonValue) -> Self {
         SupportedSqlxPostgresType::SerdeJsonValue
+    }
+}
+impl std::convert::From<> for {
+    fn from(value: ) -> Self {
+        value.0
     }
 }
 
