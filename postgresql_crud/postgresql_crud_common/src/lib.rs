@@ -724,15 +724,15 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
-const PATH: &str = "postgresql_crud";
+const PATH: &str = "postgresql_crud::";
 
 impl RustSqlxMapToPostgresTypeVariant {
     pub fn generate_path_stringified(&self) -> std::string::String {
-        format!("{PATH}::{self}")
+        format!("{PATH}{self}")
     }
     //todo maybe refactor it later(coz json generic)
     pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
-        match self {
+        let value = match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("StdPrimitiveBool"),
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("StdPrimitiveBool"),
 
@@ -890,7 +890,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SerdeJsonValueAsPostgresqlJsonNotNull => std::string::String::from("SerdeJsonValue"),
             Self::SerdeJsonValueAsPostgresqlJsonB => std::string::String::from("SerdeJsonValue"),
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from("SerdeJsonValue"),
-        }
+        };
+        format!("{PATH}{value}")
     }
 }
 //todo maybe move to generate_postgresql_crud macro 
