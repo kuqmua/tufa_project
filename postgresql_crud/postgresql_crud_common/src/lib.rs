@@ -726,7 +726,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 
 //todo maybe move to generate_postgresql_crud macro 
 impl RustSqlxMapToPostgresTypeVariant {
-    pub fn generate_inner_type_string(&self, generic_type_str: &str) -> std::string::String {
+    pub fn generate_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("std::primitive::bool"),//todo maybe Option<T> for nullable ?
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("std::primitive::bool"),

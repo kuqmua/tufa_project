@@ -430,8 +430,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .unwrap_or_else(|| {
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
             });
+        //todo remove attrs logic
+        //todo add check on one field as primary key
         let attrs = &element.attrs;
-        let rust_sqlx_map_to_postgres_type_variant = match attrs.iter().fold(None, |mut acc, element| {
+        let (
+            rust_sqlx_map_to_postgres_type_variant,
+            inner_type_token_stream
+        ) = match attrs.iter().fold(None, |mut acc, element| {
             let generated_path = proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&element.path.segments);
             let rust_sqlx_map_to_postgres_type_variant = {
                 use std::str::FromStr;
@@ -451,13 +456,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             Some(supported_attribute_type) => {
                 let ty = &element.ty;
                 let ty_stringified = quote::quote!{#ty}.to_string().replace(' ', "");
-                let rust_sqlx_map_to_postgres_type_variant = {
-                    postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(ty_stringified.as_str()).unwrap_or_else(|_| panic!(
-                        "{proc_macro_name_upper_camel_case_ident_stringified} {ty_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed. supported: {:?}", 
-                        postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::into_array().into_iter().map(|element|element.to_string()).collect::<std::vec::Vec<std::string::String>>()
-                    ))
+                let rust_sqlx_map_to_postgres_type_variant = postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(ty_stringified.as_str()).unwrap_or_else(|_| panic!(
+                    "{proc_macro_name_upper_camel_case_ident_stringified} {ty_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed. supported: {:?}", 
+                    postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::into_array().into_iter().map(|element|element.to_string()).collect::<std::vec::Vec<std::string::String>>()
+                ));
+                let inner_type_token_stream = {
+                    let inner_type_stringified = rust_sqlx_map_to_postgres_type_variant.generate_inner_type_stringified("");//todo refactoring to support generic for json//todo add as new field upper in code
+                    inner_type_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
-                rust_sqlx_map_to_postgres_type_variant
+                (
+                    rust_sqlx_map_to_postgres_type_variant,
+                    inner_type_token_stream
+                )
             }
             None => panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} no field attribute found for {field_ident}, supported: {:?}", 
@@ -466,7 +477,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         FieldNamedWrapperExcludingPrimaryKey {
             field: element,
-            rust_sqlx_map_to_postgres_type_variant
+            rust_sqlx_map_to_postgres_type_variant,
+            inner_type_token_stream
         }
     }).collect::<std::vec::Vec<FieldNamedWrapperExcludingPrimaryKey>>();
     let fields_named_len = fields_named.len();
@@ -3007,11 +3019,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let inner_type_token_stream = {
-                            let inner_type_string = element.rust_sqlx_map_to_postgres_type_variant.generate_inner_type_string("");//todo refactoring to support generic for json//todo add as new field upper in code
-                            inner_type_string.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_string} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let inner_type_token_stream = &element.inner_type_token_stream;
                         quote::quote!{#query_name_token_stream = #query_name_token_stream.bind(#field_ident_underscore_vec_token_stream.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<#inner_type_token_stream>>());}
                     });
                     quote::quote!{
@@ -7539,7 +7547,8 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
 #[derive(Debug)]
 struct FieldNamedWrapperExcludingPrimaryKey {
     field: syn::Field,
-    rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant
+    rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant,
+    inner_type_token_stream: proc_macro2::TokenStream,
 }
 
 fn generate_common_middlewares_error_syn_variants_from_impls(

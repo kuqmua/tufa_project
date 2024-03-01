@@ -1,5 +1,5 @@
 #[derive(
-    Debug,
+    // Debug,
     postgresql_crud::GeneratePostgresqlCrud,
 )]
 #[postgresql_crud::create_many_additional_http_status_codes_error_variants{}]
