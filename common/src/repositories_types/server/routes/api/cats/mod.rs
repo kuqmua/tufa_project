@@ -48,9 +48,9 @@ pub struct Dog {
     #[generate_postgresql_crud_primary_key]
     pub id: sqlx::types::Uuid, //todo make it UuidWrapper todo - if using js JSON.parse() - must be two variants - for usage and deserialization - coz json number type capacity less than i64::MAX
     #[StdStringStringAsPostgresqlVarchar]
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,//todo not null
     #[StdStringStringAsPostgresqlVarchar]
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,//todo not null
 }
 
 //////////////
@@ -3226,8 +3226,8 @@ pub async fn create_many(
                     acc
                 },
             );
-            query = query.bind(name_vec.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<std::string::String>>());//HERE
-            query = query.bind(color_vec.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<std::string::String>>());
+            query = query.bind(postgresql_crud::StdStringStringAsPostgresqlVarchar::into_inner_sqlx_type_vec(name_vec));//HERE
+            query = query.bind(postgresql_crud::StdStringStringAsPostgresqlVarchar::into_inner_sqlx_type_vec(color_vec));
             query
         };
         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {

@@ -1541,6 +1541,11 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFl
 }
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlVarchar(pub StdStringString);
+impl StdStringStringAsPostgresqlVarchar {
+    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+        value.into_iter().map(|element|element.0.into_inner()).collect()
+    }
+}
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarchar {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
@@ -2879,7 +2884,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct StdPrimitiveBool(pub std::primitive::bool);
+pub struct StdPrimitiveBool(pub std::primitive::bool);//todo maybe make it private?
 impl StdPrimitiveBool {
     pub fn into_inner(self) -> std::primitive::bool {
         self.0
