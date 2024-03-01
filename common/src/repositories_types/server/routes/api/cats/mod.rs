@@ -47,9 +47,9 @@
 pub struct Dog {
     #[generate_postgresql_crud_primary_key]
     pub id: sqlx::types::Uuid, //todo make it UuidWrapper todo - if using js JSON.parse() - must be two variants - for usage and deserialization - coz json number type capacity less than i64::MAX
-    #[StdStringStringAsPostgresqlVarchar]
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,//todo not null
-    #[StdStringStringAsPostgresqlVarchar]
+    // #[StdStringStringAsPostgresqlVarchar]
+    pub name: postgresql_crud::SqlxTypesJsonTAsPostgresqlJson<test_mod::Something>,//todo not null
+    // #[StdStringStringAsPostgresqlVarchar]
     pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,//todo not null
 }
 
@@ -69,8 +69,8 @@ impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
         Self {
             id: Some(value.id.into()),
-            name: Some(value.name.into()),
-            color: Some(value.color.into()),
+            name: Some(value.name.0),//HERE
+            color: Some(value.color.0),
         }
     }
 }

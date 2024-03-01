@@ -724,11 +724,11 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
-const PATH: &str = "postgresql_crud::";
+pub const POSTGRESQL_CRUD_SNAKE_CASE: &str = "postgresql_crud";
 
 impl RustSqlxMapToPostgresTypeVariant {
     pub fn generate_path_stringified(&self) -> std::string::String {
-        format!("{PATH}{self}")
+        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{self}")
     }
     //todo maybe refactor it later(coz json generic)
     pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
@@ -891,7 +891,7 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SerdeJsonValueAsPostgresqlJsonB => std::string::String::from("SerdeJsonValue"),
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from("SerdeJsonValue"),
         };
-        format!("{PATH}{value}")
+        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
 }
 //todo maybe move to generate_postgresql_crud macro 
@@ -1064,164 +1064,164 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
     type Error = std::string::String;
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         match value {
-            "postgresql_crud::StdPrimitiveBoolAsPostgresqlBool" => Ok(Self::StdPrimitiveBoolAsPostgresqlBool),
-            "postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull" => Ok(Self::StdPrimitiveBoolAsPostgresqlBoolNotNull),
+            "StdPrimitiveBoolAsPostgresqlBool" => Ok(Self::StdPrimitiveBoolAsPostgresqlBool),
+            "StdPrimitiveBoolAsPostgresqlBoolNotNull" => Ok(Self::StdPrimitiveBoolAsPostgresqlBoolNotNull),
 
-            "postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallInt),
-            "postgresql_crud::StdPrimitiveI16AsPostgresqlSmallIntNotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull),
-            "postgresql_crud::StdPrimitiveI16AsPostgresqlSmallSerial" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallSerial),
-            "postgresql_crud::StdPrimitiveI16AsPostgresqlSmallSerialNotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull),
-            "postgresql_crud::StdPrimitiveI16AsPostgresqlInt2" => Ok(Self::StdPrimitiveI16AsPostgresqlInt2),
-            "postgresql_crud::StdPrimitiveI16AsPostgresqlInt2NotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlInt2NotNull),
+            "StdPrimitiveI16AsPostgresqlSmallInt" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallInt),
+            "StdPrimitiveI16AsPostgresqlSmallIntNotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull),
+            "StdPrimitiveI16AsPostgresqlSmallSerial" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallSerial),
+            "StdPrimitiveI16AsPostgresqlSmallSerialNotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull),
+            "StdPrimitiveI16AsPostgresqlInt2" => Ok(Self::StdPrimitiveI16AsPostgresqlInt2),
+            "StdPrimitiveI16AsPostgresqlInt2NotNull" => Ok(Self::StdPrimitiveI16AsPostgresqlInt2NotNull),
 
-            "postgresql_crud::StdPrimitiveI32AsPostgresqlInt" => Ok(Self::StdPrimitiveI32AsPostgresqlInt),
-            "postgresql_crud::StdPrimitiveI32AsPostgresqlIntNotNull" => Ok(Self::StdPrimitiveI32AsPostgresqlIntNotNull),
-            "postgresql_crud::StdPrimitiveI32AsPostgresqlSerial" => Ok(Self::StdPrimitiveI32AsPostgresqlSerial),
-            "postgresql_crud::StdPrimitiveI32AsPostgresqlSerialNotNull" => Ok(Self::StdPrimitiveI32AsPostgresqlSerialNotNull),
-            "postgresql_crud::StdPrimitiveI32AsPostgresqlInt4" => Ok(Self::StdPrimitiveI32AsPostgresqlInt4),
-            "postgresql_crud::StdPrimitiveI32AsPostgresqlInt4NotNull" => Ok(Self::StdPrimitiveI32AsPostgresqlInt4NotNull),
+            "StdPrimitiveI32AsPostgresqlInt" => Ok(Self::StdPrimitiveI32AsPostgresqlInt),
+            "StdPrimitiveI32AsPostgresqlIntNotNull" => Ok(Self::StdPrimitiveI32AsPostgresqlIntNotNull),
+            "StdPrimitiveI32AsPostgresqlSerial" => Ok(Self::StdPrimitiveI32AsPostgresqlSerial),
+            "StdPrimitiveI32AsPostgresqlSerialNotNull" => Ok(Self::StdPrimitiveI32AsPostgresqlSerialNotNull),
+            "StdPrimitiveI32AsPostgresqlInt4" => Ok(Self::StdPrimitiveI32AsPostgresqlInt4),
+            "StdPrimitiveI32AsPostgresqlInt4NotNull" => Ok(Self::StdPrimitiveI32AsPostgresqlInt4NotNull),
 
-            "postgresql_crud::StdPrimitiveI64AsPostgresqlBigInt" => Ok(Self::StdPrimitiveI64AsPostgresqlBigInt),
-            "postgresql_crud::StdPrimitiveI64AsPostgresqlBigIntNotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlBigIntNotNull),
-            "postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerial" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerial),
-            "postgresql_crud::StdPrimitiveI64AsPostgresqlBigSerialNotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull),
-            "postgresql_crud::StdPrimitiveI64AsPostgresqlInt8" => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
-            "postgresql_crud::StdPrimitiveI64AsPostgresqlInt8NotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlInt8NotNull),
+            "StdPrimitiveI64AsPostgresqlBigInt" => Ok(Self::StdPrimitiveI64AsPostgresqlBigInt),
+            "StdPrimitiveI64AsPostgresqlBigIntNotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlBigIntNotNull),
+            "StdPrimitiveI64AsPostgresqlBigSerial" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerial),
+            "StdPrimitiveI64AsPostgresqlBigSerialNotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull),
+            "StdPrimitiveI64AsPostgresqlInt8" => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
+            "StdPrimitiveI64AsPostgresqlInt8NotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlInt8NotNull),
 
-            "postgresql_crud::StdPrimitiveF32AsPostgresqlReal" => Ok(Self::StdPrimitiveF32AsPostgresqlReal),
-            "postgresql_crud::StdPrimitiveF32AsPostgresqlRealNotNull" => Ok(Self::StdPrimitiveF32AsPostgresqlRealNotNull),
-            "postgresql_crud::StdPrimitiveF32AsPostgresqlFloat4" => Ok(Self::StdPrimitiveF32AsPostgresqlFloat4),
-            "postgresql_crud::StdPrimitiveF32AsPostgresqlFloat4NotNull" => Ok(Self::StdPrimitiveF32AsPostgresqlFloat4NotNull),
+            "StdPrimitiveF32AsPostgresqlReal" => Ok(Self::StdPrimitiveF32AsPostgresqlReal),
+            "StdPrimitiveF32AsPostgresqlRealNotNull" => Ok(Self::StdPrimitiveF32AsPostgresqlRealNotNull),
+            "StdPrimitiveF32AsPostgresqlFloat4" => Ok(Self::StdPrimitiveF32AsPostgresqlFloat4),
+            "StdPrimitiveF32AsPostgresqlFloat4NotNull" => Ok(Self::StdPrimitiveF32AsPostgresqlFloat4NotNull),
 
-            "postgresql_crud::StdPrimitiveF64AsPostgresqlDoublePrecision" => Ok(Self::StdPrimitiveF64AsPostgresqlDoublePrecision),
-            "postgresql_crud::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull" => Ok(Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull),
-            "postgresql_crud::StdPrimitiveF64AsPostgresqlFloat8" => Ok(Self::StdPrimitiveF64AsPostgresqlFloat8),
-            "postgresql_crud::StdPrimitiveF64AsPostgresqlFloat8NotNull" => Ok(Self::StdPrimitiveF64AsPostgresqlFloat8NotNull),
+            "StdPrimitiveF64AsPostgresqlDoublePrecision" => Ok(Self::StdPrimitiveF64AsPostgresqlDoublePrecision),
+            "StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull" => Ok(Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull),
+            "StdPrimitiveF64AsPostgresqlFloat8" => Ok(Self::StdPrimitiveF64AsPostgresqlFloat8),
+            "StdPrimitiveF64AsPostgresqlFloat8NotNull" => Ok(Self::StdPrimitiveF64AsPostgresqlFloat8NotNull),
 
-            "postgresql_crud::StdStringStringAsPostgresqlVarchar" => Ok(Self::StdStringStringAsPostgresqlVarchar),
-            "postgresql_crud::StdStringStringAsPostgresqlVarcharNotNull" => Ok(Self::StdStringStringAsPostgresqlVarcharNotNull),
-            "postgresql_crud::StdStringStringAsPostgresqlCharN" => Ok(Self::StdStringStringAsPostgresqlCharN),
-            "postgresql_crud::StdStringStringAsPostgresqlCharNNotNull" => Ok(Self::StdStringStringAsPostgresqlCharNNotNull),
-            "postgresql_crud::StdStringStringAsPostgresqlText" => Ok(Self::StdStringStringAsPostgresqlText),
-            "postgresql_crud::StdStringStringAsPostgresqlTextNotNull" => Ok(Self::StdStringStringAsPostgresqlTextNotNull),
-            "postgresql_crud::StdStringStringAsPostgresqlName" => Ok(Self::StdStringStringAsPostgresqlName),
-            "postgresql_crud::StdStringStringAsPostgresqlNameNotNull" => Ok(Self::StdStringStringAsPostgresqlNameNotNull),
-            "postgresql_crud::StdStringStringAsPostgresqlCiText" => Ok(Self::StdStringStringAsPostgresqlCiText),
-            "postgresql_crud::StdStringStringAsPostgresqlCiTextNotNull" => Ok(Self::StdStringStringAsPostgresqlCiTextNotNull),
+            "StdStringStringAsPostgresqlVarchar" => Ok(Self::StdStringStringAsPostgresqlVarchar),
+            "StdStringStringAsPostgresqlVarcharNotNull" => Ok(Self::StdStringStringAsPostgresqlVarcharNotNull),
+            "StdStringStringAsPostgresqlCharN" => Ok(Self::StdStringStringAsPostgresqlCharN),
+            "StdStringStringAsPostgresqlCharNNotNull" => Ok(Self::StdStringStringAsPostgresqlCharNNotNull),
+            "StdStringStringAsPostgresqlText" => Ok(Self::StdStringStringAsPostgresqlText),
+            "StdStringStringAsPostgresqlTextNotNull" => Ok(Self::StdStringStringAsPostgresqlTextNotNull),
+            "StdStringStringAsPostgresqlName" => Ok(Self::StdStringStringAsPostgresqlName),
+            "StdStringStringAsPostgresqlNameNotNull" => Ok(Self::StdStringStringAsPostgresqlNameNotNull),
+            "StdStringStringAsPostgresqlCiText" => Ok(Self::StdStringStringAsPostgresqlCiText),
+            "StdStringStringAsPostgresqlCiTextNotNull" => Ok(Self::StdStringStringAsPostgresqlCiTextNotNull),
 
-            "postgresql_crud::StdVecVecStdPrimitiveU8AsPostgresqlBytea" => Ok(Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea),
-            "postgresql_crud::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull" => Ok(Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull),
+            "StdVecVecStdPrimitiveU8AsPostgresqlBytea" => Ok(Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea),
+            "StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull" => Ok(Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgIntervalAsPostgresqlInterval" => Ok(Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval),
-            "postgresql_crud::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull" => Ok(Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull),
+            "SqlxPostgresTypesPgIntervalAsPostgresqlInterval" => Ok(Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval),
+            "SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull" => Ok(Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range),
-            "postgresql_crud::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull),
+            "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range),
+            "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range),
-            "postgresql_crud::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull),
+            "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range),
+            "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange),
-            "postgresql_crud::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull),
+            "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange),
+            "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull" => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgMoneyAsPostgresqlMoney" => Ok(Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney),
-            "postgresql_crud::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull" => Ok(Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull),
+            "SqlxPostgresTypesPgMoneyAsPostgresqlMoney" => Ok(Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney),
+            "SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull" => Ok(Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgCiTextAsPostgresqlCiText" => Ok(Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText),
-            "postgresql_crud::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull" => Ok(Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull),
+            "SqlxPostgresTypesPgCiTextAsPostgresqlCiText" => Ok(Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText),
+            "SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull" => Ok(Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull),
 
-            "postgresql_crud::SqlxTypesBigDecimalAsPostgresqlNumeric" => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumeric),
-            "postgresql_crud::SqlxTypesBigDecimalAsPostgresqlNumericNotNull" => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull),
+            "SqlxTypesBigDecimalAsPostgresqlNumeric" => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumeric),
+            "SqlxTypesBigDecimalAsPostgresqlNumericNotNull" => Ok(Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull),
 
-            "postgresql_crud::SqlxTypesDecimalAsPostgresqlNumeric" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
-            "postgresql_crud::SqlxTypesDecimalAsPostgresqlNumericNotNull" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumericNotNull),
+            "SqlxTypesDecimalAsPostgresqlNumeric" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
+            "SqlxTypesDecimalAsPostgresqlNumericNotNull" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumericNotNull),
 
-            "postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp),
-            "postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull),
 
-            "postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
-            "postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull),
 
-            "postgresql_crud::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp" => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
-            "postgresql_crud::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull),
+            "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp" => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
+            "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull),
 
-            "postgresql_crud::SqlxTypesChronoNaiveDateAsPostgresqlDate" => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDate),
-            "postgresql_crud::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull" => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull),
+            "SqlxTypesChronoNaiveDateAsPostgresqlDate" => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDate),
+            "SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull" => Ok(Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull),
 
-            "postgresql_crud::SqlxTypesChronoNaiveTimeAsPostgresqlTime" => Ok(Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime),
-            "postgresql_crud::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull" => Ok(Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull),
+            "SqlxTypesChronoNaiveTimeAsPostgresqlTime" => Ok(Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime),
+            "SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull" => Ok(Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull),
 
-            "postgresql_crud::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz" => Ok(Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz),
-            "postgresql_crud::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull" => Ok(Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull),
+            "SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz" => Ok(Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz),
+            "SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull" => Ok(Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull),
 
-            "postgresql_crud::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp" => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
-            "postgresql_crud::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull),
+            "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp" => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
+            "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull),
 
-            "postgresql_crud::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz),
-            "postgresql_crud::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull),
+            "SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz),
+            "SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull),
 
-            "postgresql_crud::SqlxTypesTimeDateAsPostgresqlDate" => Ok(Self::SqlxTypesTimeDateAsPostgresqlDate),
-            "postgresql_crud::SqlxTypesTimeDateAsPostgresqlDateNotNull" => Ok(Self::SqlxTypesTimeDateAsPostgresqlDateNotNull),
+            "SqlxTypesTimeDateAsPostgresqlDate" => Ok(Self::SqlxTypesTimeDateAsPostgresqlDate),
+            "SqlxTypesTimeDateAsPostgresqlDateNotNull" => Ok(Self::SqlxTypesTimeDateAsPostgresqlDateNotNull),
 
-            "postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTime" => Ok(Self::SqlxTypesTimeTimeAsPostgresqlTime),
-            "postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTimeNotNull" => Ok(Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull),
+            "SqlxTypesTimeTimeAsPostgresqlTime" => Ok(Self::SqlxTypesTimeTimeAsPostgresqlTime),
+            "SqlxTypesTimeTimeAsPostgresqlTimeNotNull" => Ok(Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull),
 
-            "postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuid" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuid),
-            "postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNull" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull),
-            "postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
+            "SqlxTypesUuidUuidAsPostgresqlUuid" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuid),
+            "SqlxTypesUuidUuidAsPostgresqlUuidNotNull" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull),
+            "SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
 
-            "postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet),
-            "postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull),
-            "postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr),
-            "postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull),
+            "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet),
+            "SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull),
+            "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr),
+            "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull),
 
-            "postgresql_crud::StdNetIpAddrAsPostgresqlInet" => Ok(Self::StdNetIpAddrAsPostgresqlInet),
-            "postgresql_crud::StdNetIpAddrAsPostgresqlInetNotNull" => Ok(Self::StdNetIpAddrAsPostgresqlInetNotNull),
-            "postgresql_crud::StdNetIpAddrAsPostgresqlCidr" => Ok(Self::StdNetIpAddrAsPostgresqlCidr),
-            "postgresql_crud::StdNetIpAddrAsPostgresqlCidrNotNull" => Ok(Self::StdNetIpAddrAsPostgresqlCidrNotNull),
+            "StdNetIpAddrAsPostgresqlInet" => Ok(Self::StdNetIpAddrAsPostgresqlInet),
+            "StdNetIpAddrAsPostgresqlInetNotNull" => Ok(Self::StdNetIpAddrAsPostgresqlInetNotNull),
+            "StdNetIpAddrAsPostgresqlCidr" => Ok(Self::StdNetIpAddrAsPostgresqlCidr),
+            "StdNetIpAddrAsPostgresqlCidrNotNull" => Ok(Self::StdNetIpAddrAsPostgresqlCidrNotNull),
 
-            "postgresql_crud::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr" => Ok(Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr),
-            "postgresql_crud::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull" => Ok(Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull),
+            "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr" => Ok(Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr),
+            "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull" => Ok(Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull),
 
-            "postgresql_crud::SqlxTypesBitVecAsPostgresqlBit" => Ok(Self::SqlxTypesBitVecAsPostgresqlBit),
-            "postgresql_crud::SqlxTypesBitVecAsPostgresqlBitNotNull" => Ok(Self::SqlxTypesBitVecAsPostgresqlBitNotNull),
-            "postgresql_crud::SqlxTypesBitVecAsPostgresqlVarBit" => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBit),
-            "postgresql_crud::SqlxTypesBitVecAsPostgresqlVarBitNotNull" => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull),
+            "SqlxTypesBitVecAsPostgresqlBit" => Ok(Self::SqlxTypesBitVecAsPostgresqlBit),
+            "SqlxTypesBitVecAsPostgresqlBitNotNull" => Ok(Self::SqlxTypesBitVecAsPostgresqlBitNotNull),
+            "SqlxTypesBitVecAsPostgresqlVarBit" => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBit),
+            "SqlxTypesBitVecAsPostgresqlVarBitNotNull" => Ok(Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull),
 
             //todo what to do with generic?
-            "postgresql_crud::SqlxTypesJsonTAsPostgresqlJson" => Ok(Self::SqlxTypesJsonTAsPostgresqlJson),
-            "postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonNotNull),
-            "postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonB" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonB),
-            "postgresql_crud::SqlxTypesJsonTAsPostgresqlJsonBNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull),
+            "SqlxTypesJsonTAsPostgresqlJson" => Ok(Self::SqlxTypesJsonTAsPostgresqlJson),
+            "SqlxTypesJsonTAsPostgresqlJsonNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonNotNull),
+            "SqlxTypesJsonTAsPostgresqlJsonB" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonB),
+            "SqlxTypesJsonTAsPostgresqlJsonBNotNull" => Ok(Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull),
 
-            "postgresql_crud::SerdeJsonValueAsPostgresqlJson" => Ok(Self::SerdeJsonValueAsPostgresqlJson),
-            "postgresql_crud::SerdeJsonValueAsPostgresqlJsonNotNull" => Ok(Self::SerdeJsonValueAsPostgresqlJsonNotNull),
-            "postgresql_crud::SerdeJsonValueAsPostgresqlJsonB" => Ok(Self::SerdeJsonValueAsPostgresqlJsonB),
-            "postgresql_crud::SerdeJsonValueAsPostgresqlJsonBNotNull" => Ok(Self::SerdeJsonValueAsPostgresqlJsonBNotNull),
+            "SerdeJsonValueAsPostgresqlJson" => Ok(Self::SerdeJsonValueAsPostgresqlJson),
+            "SerdeJsonValueAsPostgresqlJsonNotNull" => Ok(Self::SerdeJsonValueAsPostgresqlJsonNotNull),
+            "SerdeJsonValueAsPostgresqlJsonB" => Ok(Self::SerdeJsonValueAsPostgresqlJsonB),
+            "SerdeJsonValueAsPostgresqlJsonBNotNull" => Ok(Self::SerdeJsonValueAsPostgresqlJsonBNotNull),
             _ => Err(format!(
                 "unsupported value: {value}, {:?}",
                 Self::into_array().into_iter().map(|element|element.to_string()).collect::<std::vec::Vec<std::string::String>>()
@@ -3693,11 +3693,16 @@ impl std::convert::From<StdPrimitiveBool> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveBool
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
+impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
+    fn from(value: StdPrimitiveBoolAsPostgresqlBool) -> Self {
         value.0
     }
 }
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
@@ -3820,11 +3825,11 @@ impl std::convert::From<StdPrimitiveI32> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveI32
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
@@ -3886,11 +3891,11 @@ impl std::convert::From<StdPrimitiveI64> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveI64
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
@@ -3951,11 +3956,11 @@ impl std::convert::From<StdPrimitiveF32> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveF32
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
@@ -4016,11 +4021,11 @@ impl std::convert::From<StdPrimitiveF64> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveF64
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdStringString(pub std::string::String);
@@ -4149,11 +4154,11 @@ impl std::convert::From<StdVecVecStdPrimitiveU8> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdVecVecStdPrimitiveU8
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
@@ -4237,11 +4242,11 @@ impl std::convert::From<SqlxPostgresTypesPgInterval> for SupportedSqlxPostgresTy
         SupportedSqlxPostgresType::SqlxPostgresTypesPgInterval
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
@@ -4325,11 +4330,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for SupportedSq
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
@@ -4413,11 +4418,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for SupportedSq
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
@@ -4854,11 +4859,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
@@ -5295,11 +5300,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
@@ -5572,11 +5577,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
@@ -5849,11 +5854,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime> fo
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
@@ -6128,11 +6133,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> 
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
@@ -6405,11 +6410,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for Su
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
@@ -6678,11 +6683,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for Supported
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
@@ -6787,11 +6792,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for Support
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
@@ -6896,11 +6901,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SupportedS
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
@@ -6971,11 +6976,11 @@ impl std::convert::From<SqlxPostgresTypesPgMoney> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
@@ -7046,11 +7051,11 @@ impl std::convert::From<SqlxPostgresTypesPgCiText> for SupportedSqlxPostgresType
         SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
@@ -7129,11 +7134,11 @@ impl std::convert::From<SqlxTypesBigDecimal> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesBigDecimal
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
@@ -7192,11 +7197,11 @@ impl std::convert::From<SqlxTypesDecimal> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesDecimal
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
@@ -7293,11 +7298,11 @@ impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for Supported
         SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
@@ -7426,11 +7431,11 @@ impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for Support
         SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
@@ -7548,11 +7553,11 @@ impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresT
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
@@ -7642,11 +7647,11 @@ impl std::convert::From<SqlxTypesChronoNaiveDate> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveDate
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
@@ -7735,11 +7740,11 @@ impl std::convert::From<SqlxTypesChronoNaiveTime> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
@@ -7852,11 +7857,11 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz> for SupportedSqlxPostgresType
         SupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
@@ -7970,11 +7975,11 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SupportedSqlxPostgre
         SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
@@ -8049,11 +8054,11 @@ impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SupportedSqlxPostgresTy
         SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
@@ -8141,11 +8146,11 @@ impl std::convert::From<SqlxTypesTimeDate> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesTimeDate
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
@@ -8234,11 +8239,11 @@ impl std::convert::From<SqlxTypesTimeTime> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesTimeTime
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
@@ -8313,11 +8318,11 @@ impl std::convert::From<SqlxTypesUuidUuid> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesUuidUuid
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
@@ -8377,11 +8382,11 @@ impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for SupportedSqlxPostgresTy
         SupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
@@ -8441,11 +8446,11 @@ impl std::convert::From<StdNetIpAddr> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdNetIpAddr
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
@@ -8516,11 +8521,11 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress> for SupportedSqlxPostgres
         SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
@@ -8593,11 +8598,11 @@ impl std::convert::From<SqlxTypesBitVec> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesBitVec
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
@@ -8687,11 +8692,11 @@ impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesJsonT
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValue(serde_json::Value);
@@ -8751,11 +8756,11 @@ impl std::convert::From<SerdeJsonValue> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SerdeJsonValue
     }
 }
-impl std::convert::From<> for {
-    fn from(value: ) -> Self {
-        value.0
-    }
-}
+// impl std::convert::From<> for {
+//     fn from(value: ) -> Self {
+//         value.0
+//     }
+// }
 
 pub async fn something() {
     // let mut query = sqlx::query::<sqlx::Postgres>("test");
