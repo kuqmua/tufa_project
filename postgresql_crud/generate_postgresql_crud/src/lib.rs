@@ -318,6 +318,7 @@ pub fn additional_http_status_codes_error_variants(
 
         SqlxTypesUuidUuidAsPostgresqlUuid,
         SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
+        SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,
 
         SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
         SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,

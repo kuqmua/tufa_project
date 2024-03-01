@@ -173,6 +173,7 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostg
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => Self::SqlxTypesUuidUuid,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => Self::SqlxTypesUuidUuid,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Self::SqlxTypesUuidUuid,
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Self::SqlxTypesIpnetworkIpNetwork,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => Self::SqlxTypesIpnetworkIpNetwork,
@@ -278,6 +279,7 @@ pub enum PostgresqlType {
     TimestampNotNull,
     Uuid,
     UuidNotNull,
+    UuidNotNullPrimaryKey,
     Inet,
     InetNotNull,
     Cidr,
@@ -425,6 +427,7 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => Self::Uuid,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => Self::UuidNotNull,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Self::UuidNotNullPrimaryKey,
         
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Self::Inet,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => Self::InetNotNull,
@@ -458,7 +461,7 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
 }
 
 impl PostgresqlType {
-    //todo add NOT NULL or not? or add different method
+    //todo add NOT NULL or not? or add different method and Primary Key
     pub fn postgresql_naming(&self) -> &str {
         match self {
             Self::Bool => "BOOL",
@@ -533,6 +536,7 @@ impl PostgresqlType {
             Self::TimestampNotNull => "TIMESTAMP",
             Self::Uuid => "UUID",
             Self::UuidNotNull => "UUID",
+            Self::UuidNotNullPrimaryKey => "UUID",
             Self::Inet => "INET",
             Self::InetNotNull => "INET",
             Self::Cidr => "CIDR",
@@ -688,6 +692,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 
     SqlxTypesUuidUuidAsPostgresqlUuid,
     SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
+    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,//todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough
 
     SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
     SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
@@ -851,6 +856,7 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
 
             "postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuid" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuid),
             "postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNull" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull),
+            "postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
 
             "postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet),
             "postgresql_crud::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull),
@@ -1018,6 +1024,7 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
 
 //             Self::SqlxTypesUuidUuidAsPostgresqlUuid => write!(f, "SqlxTypesUuidUuidAsPostgresqlUuid"),
 //             Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => write!(f, "SqlxTypesUuidUuidAsPostgresqlUuidNotNull"),
+//             Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => write!(f, "SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey"),
 
 //             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => write!(f, "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet"),
 //             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => write!(f, "SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull"),
@@ -1183,6 +1190,7 @@ impl std::str::FromStr for RustSqlxMapToPostgresTypeVariant {
 
             "SqlxTypesUuidUuidAsPostgresqlUuid" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuid),
             "SqlxTypesUuidUuidAsPostgresqlUuidNotNull" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull),
+            "SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey" => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
 
             "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet),
             "SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull" => Ok(Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull),
@@ -1599,6 +1607,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresql
 }
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNull(pub SqlxTypesUuidUuid);
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
+    fn check_supported_rust_and_postgresql_column_type() {}
+}
+pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey(pub SqlxTypesUuidUuid);
+impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(pub SqlxTypesIpnetworkIpNetwork);
