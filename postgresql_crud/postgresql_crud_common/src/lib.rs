@@ -726,7 +726,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 
 //todo maybe move to generate_postgresql_crud macro 
 impl RustSqlxMapToPostgresTypeVariant {
-    pub fn generate_inner_type_string(&self, generic: std::option::Option<std::string::String>) -> std::string::String {
+    pub fn generate_inner_type_string(&self, generic_type_string: std::string::String) -> std::string::String {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("std::primitive::bool"),//todo maybe Option<T> for nullable ?
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("std::primitive::bool"),
@@ -876,11 +876,10 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesBitVecAsPostgresqlVarBit => std::string::String::from("sqlx::types::BitVec"),
             Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => std::string::String::from("sqlx::types::BitVec"),
 
-            //todo what to do with generic?
-            Self::SqlxTypesJsonTAsPostgresqlJson => std::string::String::from("sqlx::types::Json<T>"),//todo
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => std::string::String::from("sqlx::types::Json<T>"),
-            Self::SqlxTypesJsonTAsPostgresqlJsonB => std::string::String::from("sqlx::types::Json<T>"),
-            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => std::string::String::from("sqlx::types::Json<T>"),
+            Self::SqlxTypesJsonTAsPostgresqlJson => format!("sqlx::types::Json<{generic_type_string}>"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => format!("sqlx::types::Json<{generic_type_string}>"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonB => format!("sqlx::types::Json<{generic_type_string}>"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => format!("sqlx::types::Json<{generic_type_string}>"),
 
             Self::SerdeJsonValueAsPostgresqlJson => std::string::String::from("serde_json::Value"),
             Self::SerdeJsonValueAsPostgresqlJsonNotNull => std::string::String::from("serde_json::Value"),
