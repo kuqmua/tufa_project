@@ -3226,7 +3226,7 @@ pub async fn create_many(
                     acc
                 },
             );
-            query = query.bind(name_vec.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<std::string::String>>());
+            query = query.bind(name_vec.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<std::string::String>>());//HERE
             query = query.bind(color_vec.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<std::string::String>>());
             query
         };

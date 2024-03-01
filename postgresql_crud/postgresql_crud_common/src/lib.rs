@@ -2615,34 +2615,34 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBool {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBool {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
     fn check_supported_postgresql_column_type() {}
 }
@@ -2674,34 +2674,34 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16 {
         <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdPrimitiveI16 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -2735,34 +2735,34 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI32 {
         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI32 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI32 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI32 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdPrimitiveI32 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -2796,34 +2796,34 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI64 {
         <std::primitive::i64 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI64 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI64 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdPrimitiveI64 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -2857,34 +2857,34 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveF32 {
         <std::primitive::f32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF32 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF32 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF32 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF32 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdPrimitiveF32 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -2917,34 +2917,34 @@ impl sqlx::Type<sqlx::Postgres> for StdPrimitiveF64 {
         <std::primitive::f64 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF64 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF64 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveF64 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveF64 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdPrimitiveF64 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -2977,34 +2977,34 @@ impl sqlx::Type<sqlx::Postgres> for StdStringString {
         <std::string::String as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdStringString {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdStringString {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdStringString {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdStringString {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdStringString {
     fn check_supported_postgresql_column_type() {}
 }
@@ -3040,34 +3040,34 @@ impl sqlx::Type<sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
         <std::vec::Vec<std::primitive::u8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdVecVecStdPrimitiveU8 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdVecVecStdPrimitiveU8 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -3121,34 +3121,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgInterval {
         <sqlx::postgres::types::PgInterval as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgInterval {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgInterval {
     fn check_supported_postgresql_column_type() {}
 }
@@ -3204,34 +3204,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
         <sqlx::postgres::types::PgRange<std::primitive::i64> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -3286,34 +3286,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     fn check_supported_postgresql_column_type() {}
 }
@@ -3715,38 +3715,38 @@ impl sqlx::Type<sqlx::Postgres>
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
-{
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
-{
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres>
+//     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+// {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres>
+//     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+// {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType
     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
 {
@@ -4150,38 +4150,38 @@ impl sqlx::Type<sqlx::Postgres>
         <sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
-{
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres>
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
-{
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres>
+//     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+// {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres>
+//     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+// {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType
     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
 {
@@ -4427,34 +4427,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetD
         >>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -4698,34 +4698,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaive
         >>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -4971,34 +4971,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimiti
         >>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5242,34 +5242,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaive
         >>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5509,34 +5509,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
         <sqlx::postgres::types::PgRange<sqlx::types::time::Date> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5612,34 +5612,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal 
         <sqlx::postgres::types::PgRange<sqlx::types::BigDecimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5715,34 +5715,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
         <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5784,34 +5784,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgMoney {
         <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5853,34 +5853,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgCiText {
         <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5929,34 +5929,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesBigDecimal {
         <sqlx::types::BigDecimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBigDecimal {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesBigDecimal {
     fn check_supported_postgresql_column_type() {}
 }
@@ -5988,34 +5988,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesDecimal {
         <sqlx::types::Decimal as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesDecimal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesDecimal {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesDecimal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesDecimal {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesDecimal {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6083,34 +6083,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6210,34 +6210,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal 
         <sqlx::types::chrono::DateTime<sqlx::types::chrono::Local> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6325,34 +6325,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
         >>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDateTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6413,34 +6413,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDate {
         <sqlx::types::chrono::NaiveDate as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveDate {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6500,34 +6500,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
         <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesChronoNaiveTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6612,34 +6612,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
         <sqlx::postgres::types::PgTimeTz as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgTimeTz {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgTimeTz {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6723,34 +6723,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
         <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesTimePrimitiveDateTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6797,34 +6797,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
         <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeOffsetDateTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6882,34 +6882,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeDate {
         <sqlx::types::time::Date as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeDate {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeDate {
     fn check_supported_postgresql_column_type() {}
 }
@@ -6969,34 +6969,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeTime {
         <sqlx::types::time::Time as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeTime {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeTime {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7043,34 +7043,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
         <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesUuidUuid {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7101,34 +7101,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
         <sqlx::types::ipnetwork::IpNetwork as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesIpnetworkIpNetwork {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesIpnetworkIpNetwork {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7160,34 +7160,34 @@ impl sqlx::Type<sqlx::Postgres> for StdNetIpAddr {
         <std::net::IpAddr as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for StdNetIpAddr {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for StdNetIpAddr {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for StdNetIpAddr {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for StdNetIpAddr {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7230,34 +7230,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
         <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesMacAddressMacAddress {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7299,34 +7299,34 @@ impl sqlx::Type<sqlx::Postgres> for SqlxTypesBitVec {
         <sqlx::types::BitVec as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBitVec {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesBitVec {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesBitVec {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SqlxTypesBitVec {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7448,34 +7448,34 @@ impl sqlx::Type<sqlx::Postgres> for SerdeJsonValue {
         <serde_json::Value as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-    fn encode(
-        self,
-        buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-    ) -> sqlx::encode::IsNull
-    where
-        Self: Sized,
-    {
-        sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-    }
-    fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-    }
-    fn size_hint(&self) -> std::primitive::usize {
-        sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SerdeJsonValue {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
-        }
-    }
-}
+// impl sqlx::Encode<'_, sqlx::Postgres> for SerdeJsonValue {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+//     }
+//     fn encode(
+//         self,
+//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+//     ) -> sqlx::encode::IsNull
+//     where
+//         Self: Sized,
+//     {
+//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+//     }
+//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+//     }
+//     fn size_hint(&self) -> std::primitive::usize {
+//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for SerdeJsonValue {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+//             Ok(value) => Ok(Self(value)),
+//             Err(e) => Err(e),
+//         }
+//     }
+// }
 impl CheckSupportedPostgresqlColumnType for SerdeJsonValue {
     fn check_supported_postgresql_column_type() {}
 }
@@ -7488,10 +7488,10 @@ impl std::convert::From<SerdeJsonValue> for SupportedSqlxPostgresType {
 }
 
 pub async fn something() {
-    let mut query = sqlx::query::<sqlx::Postgres>("test");
-    query = query.bind(Into::<bool>::into(StdPrimitiveBool(false)));
-    query = query.bind(StdPrimitiveBool(false).into_inner());
-    let _query = query.bind(StdPrimitiveBool(false));
+    // let mut query = sqlx::query::<sqlx::Postgres>("test");
+    // query = query.bind(Into::<bool>::into(StdPrimitiveBool(false)));
+    // query = query.bind(StdPrimitiveBool(false).into_inner());
+    // let _query = query.bind(StdPrimitiveBool(false));
 }
 
 pub fn test_check_supported_postgresql_column_type() {
