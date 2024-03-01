@@ -724,6 +724,11 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
+impl RustSqlxMapToPostgresTypeVariant {
+    pub fn generate_path_stringified(&self) -> std::string::String {
+        format!("postgresql_crud::{self}")
+    }
+}
 //todo maybe move to generate_postgresql_crud macro 
 // impl RustSqlxMapToPostgresTypeVariant {
 //     pub fn generate_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {

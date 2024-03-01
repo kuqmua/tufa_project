@@ -3014,10 +3014,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        // let inner_type_token_stream = &element.inner_type_token_stream;
+                        let path_to_postgresql_crud_supported_type_token_stream = {
+                            let path_to_postgresql_crud_supported_type_stringified = element.rust_sqlx_map_to_postgres_type_variant.generate_path_stringified();
+                            path_to_postgresql_crud_supported_type_stringified.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_to_postgresql_crud_supported_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        };
+                        //todo maybe reuse into_inner_sqlx_type_vec naming
                         quote::quote!{
-                            #query_name_token_stream = #query_name_token_stream.bind(#field_ident_underscore_vec_token_stream.into_iter().map(|element|element.0.0).collect::<std::vec::Vec<#inner_type_token_stream>>());
-                            // postgresql_crud::StdStringStringAsPostgresqlVarchar::into_inner_sqlx_type_vec(name_vec)
+                            #query_name_token_stream = #query_name_token_stream.bind(
+                                #path_to_postgresql_crud_supported_type_token_stream::into_inner_sqlx_type_vec(#field_ident_underscore_vec_token_stream)
+                            );
                         }
                     });
                     quote::quote!{
