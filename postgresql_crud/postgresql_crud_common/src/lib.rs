@@ -2860,7 +2860,7 @@ pub struct TestNewType<T> {
 pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_primitive_bool: StdPrimitiveBoolWithSerializeDeserialize,
     std_primitive_i16: StdPrimitiveI16WithSerializeDeserialize,
-    std_primitive_i32: StdPrimitiveI32,
+    std_primitive_i32: StdPrimitiveI32WithSerializeDeserialize,
     std_primitive_i64: StdPrimitiveI64,
     std_primitive_f32: StdPrimitiveF32,
     std_primitive_f64: StdPrimitiveF64,
@@ -2907,7 +2907,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
     fn try_from(value: TestNewTypeWithSerializeDeserialize<T>) -> Result<Self, Self::Error> {
         let std_primitive_bool = StdPrimitiveBool::from(value.std_primitive_bool);
         let std_primitive_i16 = StdPrimitiveI16::from(value.std_primitive_i16);
-        let std_primitive_i32: StdPrimitiveI32 = value.std_primitive_i32;
+        let std_primitive_i32 = StdPrimitiveI32::from(value.std_primitive_i32);
         let std_primitive_i64: StdPrimitiveI64 = value.std_primitive_i64;
         let std_primitive_f32: StdPrimitiveF32 = value.std_primitive_f32;
         let std_primitive_f64: StdPrimitiveF64 = value.std_primitive_f64;
@@ -3791,8 +3791,20 @@ impl std::convert::From<StdPrimitiveI16> for SupportedSqlxPostgresType {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdPrimitiveI32WithSerializeDeserialize(std::primitive::i32);
+impl std::convert::From<StdPrimitiveI32WithSerializeDeserialize> for StdPrimitiveI32 {
+    fn from(value: StdPrimitiveI32WithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdPrimitiveI32> for StdPrimitiveI32WithSerializeDeserialize {
+    fn from(value: StdPrimitiveI32) -> Self {
+        Self(value.0)
+    }
+}
 impl StdPrimitiveI32 {
     pub fn into_inner(self) -> std::primitive::i32 {
         self.0
