@@ -439,7 +439,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ) = match &element.ty {
             syn::Type::Path(value) => match value.path.segments.len() == 2 {
                 true => {
-                    if let false = value.path.segments[0].ident == postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                    if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
                     }
                     match value.path.segments[0].arguments {
@@ -457,42 +457,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         },
                         syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
                     };
-                    // arguments AngleBracketed(
-                        // AngleBracketedGenericArguments {
-                            // colon2_token: None,
-                            // lt_token: Lt,
-                            // args: [
-                                // Type(
-                                    // Path(
-                                        // TypePath {
-                                            // qself: None,
-                                            // path: Path {
-                                                // leading_colon: None,
-                                                // segments: [
-                                                    // PathSegment {
-                                                        // ident: Ident {
-                                                            // ident: "test_mod",
-                                                            // span: #0 bytes(182558..182566),
-                                                        // },
-                                                        // arguments: None,
-                                                    // },
-                                                    // Colon2,
-                                                    // PathSegment {
-                                                        // ident: Ident {
-                                                            // ident: "Something",
-                                                            // span: #0 bytes(182568..182577),
-                                                        // },
-                                                        // arguments: None,
-                                                    // },
-                                                // ],
-                                            // },
-                                        // },
-                                    // ),
-                                // ),
-                            // ],
-                            // gt_token: Gt,
-                        // },
-                    // )
                     (
                         rust_sqlx_map_to_postgres_type_variant,
                         maybe_generic_token_stream
@@ -676,17 +640,52 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         });
                     // println!("{variant_column:#?}");
                     let variant_column_type = &variant_column.ty;
+                    // get_inner_type_with_serialize_deserialize_stringified(
                     //
                     //todo json generic
-                    // let inner_type_with_serialize_deserialize_token_stream = {
-                    //     let inner_type_with_serialize_deserialize_stringified = &variant_column.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                    //     inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-                    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    // };
-                   
+                    //todo reuse it 
+                    println!("--- {:#?}", variant_column.ty);
+                    let (
+                        rust_sqlx_map_to_postgres_type_variant,
+                        maybe_generic_token_stream
+                    ) = match &variant_column.ty {
+                        syn::Type::Path(value) => match value.path.segments.len() == 2 {
+                            true => {
+                                if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
+                                }
+                                match value.path.segments[0].arguments {
+                                    syn::PathArguments::None => (),
+                                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments.is_some()")
+                                }
+                                let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
+                                    Ok(value) => value,
+                                    Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
+                                };
+                                let maybe_generic_token_stream = match &value.path.segments[1].arguments {
+                                    syn::PathArguments::None => quote::quote!{},
+                                    syn::PathArguments::AngleBracketed(value) => {
+                                        quote::quote!{#value}//< test_mod :: Something >
+                                    },
+                                    syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
+                                };
+                                (
+                                    rust_sqlx_map_to_postgres_type_variant,
+                                    maybe_generic_token_stream
+                                )
+                            },
+                            false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                        },
+                        _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                    };
+                    let inner_type_with_serialize_deserialize_token_stream = {
+                        let inner_type_with_serialize_deserialize_stringified = rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
+                        inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
                     //
                     quote::quote! {
-                        pub #variant_column_ident: #variant_column_type,
+                        pub #variant_column_ident: #inner_type_with_serialize_deserialize_token_stream,//#variant_column_type
                     }
                 });
                 quote::quote! {
@@ -7497,9 +7496,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream
+            #common_token_stream
 
-            // #create_many_token_stream
+            #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
@@ -7510,11 +7509,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // }
     };
     // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &proc_macro_name_upper_camel_case,
-    //         &gen,
-    //         &proc_macro_name_upper_camel_case_ident_stringified
-    //     );
+        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            &proc_macro_name_upper_camel_case,
+            &gen,
+            &proc_macro_name_upper_camel_case_ident_stringified
+        );
     // }
     gen.into()
 }
