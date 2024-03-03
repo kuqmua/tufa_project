@@ -2881,7 +2881,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoneyWithSerializeDeserialize,
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
     sqlx_types_big_decimal: SqlxTypesBigDecimalNewWithSerializeDeserialize,
-    sqlx_types_decimal: SqlxTypesDecimal,
+    sqlx_types_decimal: SqlxTypesDecimalWithSerializeDeserialize,
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
@@ -2963,7 +2963,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney::from(value.sqlx_postgres_types_pg_money);
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText::from(value.sqlx_postgres_types_pg_ci_text);
         let sqlx_types_big_decimal = SqlxTypesBigDecimal::from(value.sqlx_types_big_decimal);
-        let sqlx_types_decimal: SqlxTypesDecimal = value.sqlx_types_decimal;
+        let sqlx_types_decimal = SqlxTypesDecimal::from(value.sqlx_types_decimal);
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc) {
             Ok(value) => value,
             Err(_e) => {
@@ -6986,8 +6986,8 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize{
-    start: std::ops::Bound<SqlxTypesDecimal>,
-    end: std::ops::Bound<SqlxTypesDecimal>,
+    start: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
+    end: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Self {
@@ -7011,13 +7011,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SqlxPostgr
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimal(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimal(*value)),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimal(*value)),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimal(*value)),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         Self {
@@ -7342,8 +7342,20 @@ impl SqlxTypesBigDecimal {
 //     }
 // }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct SqlxTypesDecimalWithSerializeDeserialize(sqlx::types::Decimal);
+impl std::convert::From<SqlxTypesDecimalWithSerializeDeserialize> for SqlxTypesDecimal {
+    fn from(value: SqlxTypesDecimalWithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<SqlxTypesDecimal> for SqlxTypesDecimalWithSerializeDeserialize {
+    fn from(value: SqlxTypesDecimal) -> Self {
+        Self(value.0)
+    }
+}
 impl SqlxTypesDecimal {
     pub fn into_inner(self) -> sqlx::types::Decimal {
         self.0
