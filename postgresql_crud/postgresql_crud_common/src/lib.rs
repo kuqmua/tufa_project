@@ -2864,7 +2864,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_primitive_i64: StdPrimitiveI64WithSerializeDeserialize,
     std_primitive_f32: StdPrimitiveF32WithSerializeDeserialize,
     std_primitive_f64: StdPrimitiveF64WithSerializeDeserialize,
-    std_string_string: StdStringString,
+    std_string_string: StdStringStringWithSerializeDeserialize,
     std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8,
     sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgIntervalWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize,
@@ -2911,7 +2911,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let std_primitive_i64 = StdPrimitiveI64::from(value.std_primitive_i64);
         let std_primitive_f32 = StdPrimitiveF32::from(value.std_primitive_f32);
         let std_primitive_f64 = StdPrimitiveF64::from(value.std_primitive_f64);
-        let std_string_string: StdStringString = value.std_string_string;
+        let std_string_string = StdStringString::from(value.std_string_string);
         let std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8 = value.std_vec_vec_std_primitive_u8;
         let sqlx_postgres_types_pg_interval = SqlxPostgresTypesPgInterval::from(value.sqlx_postgres_types_pg_interval);
         let sqlx_postgres_types_pg_range_std_primitive_i64 = SqlxPostgresTypesPgRangeStdPrimitiveI64::from(value.sqlx_postgres_types_pg_range_std_primitive_i64);
@@ -4121,8 +4121,20 @@ impl StdPrimitiveF64 {
 //     }
 // }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct StdStringString(pub std::string::String);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdStringStringWithSerializeDeserialize(std::string::String);
+impl std::convert::From<StdStringStringWithSerializeDeserialize> for StdStringString {
+    fn from(value: StdStringStringWithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdStringString> for StdStringStringWithSerializeDeserialize {
+    fn from(value: StdStringString) -> Self {
+        Self(value.0)
+    }
+}
 impl StdStringString {
     pub fn into_inner(self) -> std::string::String {
         self.0
