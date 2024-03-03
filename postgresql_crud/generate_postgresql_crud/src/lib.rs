@@ -378,7 +378,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
                 });
             quote::quote!{
-                #field_ident: Some(value.#field_ident.into())//todo what if type does not implement serialize deserialize
+                #field_ident: Some(value.#field_ident.0)//todo what if type does not implement serialize deserialize
             }
         });
         quote::quote! {
