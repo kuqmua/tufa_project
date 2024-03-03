@@ -712,15 +712,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                     quote::quote!{
                                         let #primary_key_field_ident = match value.#primary_key_field_ident {
-                                            Some(value) => match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
-                                                Ok(value) => value.into_inner(),
-                                                Err(#error_value_snake_case_token_stream) => {
-                                                    return Err(Self::Error::#uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_token_stream {
-                                                        #uuid_wrapper_try_from_possible_uuid_wrapper_snake_case_token_stream: #error_value_snake_case_token_stream,
-                                                        #field_code_occurence_new_ea56ed9e_86e6_4b3e_b116_106eb0bca826_token_stream,
-                                                    });
-                                                }
-                                            },
+                                            //
+                                            // match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
+                                            //     Ok(value) => value.into_inner(),
+                                            //     Err(#error_value_snake_case_token_stream) => {
+                                            //         return Err(Self::Error::#uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_token_stream {
+                                            //             #uuid_wrapper_try_from_possible_uuid_wrapper_snake_case_token_stream: #error_value_snake_case_token_stream,
+                                            //             #field_code_occurence_new_ea56ed9e_86e6_4b3e_b116_106eb0bca826_token_stream,
+                                            //         });
+                                            //     }
+                                            // }
+                                            //
+                                            Some(value) => value,
                                             None => {
                                                 return Err(Self::Error::IdIsNone {
                                                     id_is_none: #std_string_string_token_stream::from("id is None"),//todo primary key field naming fix
