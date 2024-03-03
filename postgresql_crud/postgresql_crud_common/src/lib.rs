@@ -2894,7 +2894,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_time_time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
     sqlx_types_uuid_uuid: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
     sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
-    std_net_ip_addr: StdNetIpAddr,
+    std_net_ip_addr: StdNetIpAddrWithSerializeDeserialize,
     sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize,
     sqlx_types_bit_vec: SqlxTypesBitVecFromBytesWithSerializeDeserialize,
 
@@ -3031,7 +3031,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
             }
         };
         let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork::from(value.sqlx_types_ipnetwork_ip_network);
-        let std_net_ip_addr: StdNetIpAddr = value.std_net_ip_addr;
+        let std_net_ip_addr = StdNetIpAddr::from(value.std_net_ip_addr);
         let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress::from(value.sqlx_types_mac_address_mac_address);
         let sqlx_types_bit_vec = SqlxTypesBitVec::from(value.sqlx_types_bit_vec);
         let sqlx_types_json: SqlxTypesJson<T> = value.sqlx_types_json;
@@ -8679,8 +8679,20 @@ impl SqlxTypesIpnetworkIpNetwork {
 //     }
 // }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdNetIpAddrWithSerializeDeserialize(std::net::IpAddr);
+impl std::convert::From<StdNetIpAddrWithSerializeDeserialize> for StdNetIpAddr {
+    fn from(value: StdNetIpAddrWithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdNetIpAddr> for StdNetIpAddrWithSerializeDeserialize {
+    fn from(value: StdNetIpAddr) -> Self {
+        Self(value.0)
+    }
+}
 impl StdNetIpAddr {
     pub fn into_inner(self) -> std::net::IpAddr {
         self.0
