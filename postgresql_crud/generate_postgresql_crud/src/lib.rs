@@ -1101,7 +1101,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #declaration_primary_key_token_stream
                         #(#declaration_excluding_primary_key_token_stream)*
                         match self {
-                            //todo why id in all cases
+                            //todo why id in all cases 
+                            // let primary_key_try_get_result: Result<
+                            //     std::option::Option<sqlx::types::Uuid>,
+                            //     sqlx::Error,
+                            // > = row.try_get("id");
                             #(#assignment_token_stream)*
                         }
                         Ok(#struct_options_ident_token_stream { 
