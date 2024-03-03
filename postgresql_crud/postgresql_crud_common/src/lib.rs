@@ -4184,7 +4184,7 @@ impl std::convert::From<StdVecVecStdPrimitiveU8> for SupportedSqlxPostgresType {
     }
 }
 impl StdVecVecStdPrimitiveU8 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::u8> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
         value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
@@ -4370,7 +4370,7 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for SupportedSq
     }
 }
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
         value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
