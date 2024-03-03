@@ -1573,7 +1573,7 @@ pub trait CheckSupportedRustAndPostgresqlColumnType {
 pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdPrimitiveBool);
 //todo maybe make it a trait, but need to specify generics
 impl StdPrimitiveBoolAsPostgresqlBool {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1583,7 +1583,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlB
 #[derive(Debug)]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
 impl StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1593,7 +1593,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlB
 #[derive(Debug)]
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallInt {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1603,7 +1603,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 #[derive(Debug)]
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallIntNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1613,7 +1613,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 #[derive(Debug)]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallSerial {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1623,7 +1623,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 #[derive(Debug)]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1633,7 +1633,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 #[derive(Debug)]
 pub struct StdPrimitiveI16AsPostgresqlInt2(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlInt2 {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1643,7 +1643,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlInt2NotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1653,7 +1653,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI32AsPostgresqlInt(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1663,7 +1663,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlIntNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1673,7 +1673,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI32AsPostgresqlSerial(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlSerial {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1683,7 +1683,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSe
 #[derive(Debug)]
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlSerialNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1693,7 +1693,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSe
 #[derive(Debug)]
 pub struct StdPrimitiveI32AsPostgresqlInt4(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt4 {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1703,7 +1703,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt4NotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1713,7 +1713,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI64AsPostgresqlBigInt(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigInt {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1723,7 +1723,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 #[derive(Debug)]
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigIntNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1733,7 +1733,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 #[derive(Debug)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigSerial {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1743,7 +1743,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 #[derive(Debug)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1753,7 +1753,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 #[derive(Debug)]
 pub struct StdPrimitiveI64AsPostgresqlInt8(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlInt8 {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1763,7 +1763,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlInt8NotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1773,7 +1773,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlIn
 #[derive(Debug)]
 pub struct StdPrimitiveF32AsPostgresqlReal(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlReal {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1783,7 +1783,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRe
 #[derive(Debug)]
 pub struct StdPrimitiveF32AsPostgresqlRealNotNull(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlRealNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1793,7 +1793,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRe
 #[derive(Debug)]
 pub struct StdPrimitiveF32AsPostgresqlFloat4(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlFloat4 {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1803,7 +1803,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFl
 #[derive(Debug)]
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlFloat4NotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1813,7 +1813,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFl
 #[derive(Debug)]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlDoublePrecision {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1823,7 +1823,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDo
 #[derive(Debug)]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1833,7 +1833,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDo
 #[derive(Debug)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlFloat8 {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1843,7 +1843,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFl
 #[derive(Debug)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlFloat8NotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1853,7 +1853,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFl
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlVarchar(pub StdStringString);
 impl StdStringStringAsPostgresqlVarchar {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1863,7 +1863,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVa
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlVarcharNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlVarcharNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1873,7 +1873,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVa
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlCharN(pub StdStringString);
 impl StdStringStringAsPostgresqlCharN {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1883,7 +1883,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCh
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlCharNNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlCharNNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1893,7 +1893,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCh
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlText(pub StdStringString);
 impl StdStringStringAsPostgresqlText {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1903,7 +1903,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTe
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlTextNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1913,7 +1913,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTe
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlName(pub StdStringString);
 impl StdStringStringAsPostgresqlName {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1923,7 +1923,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNa
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlNameNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlNameNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1933,7 +1933,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNa
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlCiText(pub StdStringString);
 impl StdStringStringAsPostgresqlCiText {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1943,7 +1943,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCi
 #[derive(Debug)]
 pub struct StdStringStringAsPostgresqlCiTextNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlCiTextNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1953,7 +1953,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCi
 #[derive(Debug)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdVecVecStdPrimitiveU8);
 impl StdVecVecStdPrimitiveU8AsPostgresqlBytea {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1963,7 +1963,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPost
 #[derive(Debug)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
 impl StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1973,7 +1973,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPost
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(pub SqlxPostgresTypesPgInterval);
 impl SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1983,7 +1983,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAs
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull(pub SqlxPostgresTypesPgInterval);
 impl SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -1993,7 +1993,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAs
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(pub SqlxPostgresTypesPgRangeStdPrimitiveI64);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2003,7 +2003,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPr
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull(pub SqlxPostgresTypesPgRangeStdPrimitiveI64);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2013,7 +2013,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPr
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(pub SqlxPostgresTypesPgRangeStdPrimitiveI32);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2023,7 +2023,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPr
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(pub SqlxPostgresTypesPgRangeStdPrimitiveI32);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2033,7 +2033,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPr
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2043,7 +2043,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2053,7 +2053,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2063,7 +2063,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2073,7 +2073,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2083,7 +2083,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2093,7 +2093,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2103,7 +2103,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2113,7 +2113,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2123,7 +2123,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2133,7 +2133,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2143,7 +2143,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2153,7 +2153,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2163,7 +2163,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2173,7 +2173,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2183,7 +2183,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2193,7 +2193,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(pub SqlxPostgresTypesPgRangeSqlxTypesDecimal);
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2203,7 +2203,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesDecimal);
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2213,7 +2213,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxT
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(pub SqlxPostgresTypesPgMoney);
 impl SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2223,7 +2223,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPos
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(pub SqlxPostgresTypesPgMoney);
 impl SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2233,7 +2233,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPos
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiText(pub SqlxPostgresTypesPgCiText);
 impl SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2243,7 +2243,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPo
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull(pub SqlxPostgresTypesPgCiText);
 impl SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2253,7 +2253,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPo
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(pub SqlxTypesBigDecimal);
 impl SqlxTypesBigDecimalAsPostgresqlNumeric {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2263,7 +2263,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgres
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(pub SqlxTypesBigDecimal);
 impl SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2273,7 +2273,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgres
 #[derive(Debug)]
 pub struct SqlxTypesDecimalAsPostgresqlNumeric(pub SqlxTypesDecimal);
 impl SqlxTypesDecimalAsPostgresqlNumeric {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2283,7 +2283,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlN
 #[derive(Debug)]
 pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(pub SqlxTypesDecimal);
 impl SqlxTypesDecimalAsPostgresqlNumericNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2293,7 +2293,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlN
 #[derive(Debug)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp(pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2303,7 +2303,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTy
 #[derive(Debug)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull(pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2313,7 +2313,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTy
 #[derive(Debug)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2323,7 +2323,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTy
 #[derive(Debug)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull(pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2333,7 +2333,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTy
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesChronoNaiveDateTime);
 impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2343,7 +2343,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateTimeA
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull(pub SqlxTypesChronoNaiveDateTime);
 impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2353,7 +2353,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateTimeA
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(pub SqlxTypesChronoNaiveDate);
 impl SqlxTypesChronoNaiveDateAsPostgresqlDate {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2363,7 +2363,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPos
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull(pub SqlxTypesChronoNaiveDate);
 impl SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2373,7 +2373,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPos
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(pub SqlxTypesChronoNaiveTime);
 impl SqlxTypesChronoNaiveTimeAsPostgresqlTime {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2383,7 +2383,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPos
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull(pub SqlxTypesChronoNaiveTime);
 impl SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2393,7 +2393,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPos
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(pub SqlxPostgresTypesPgTimeTz);
 impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2403,7 +2403,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPo
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(pub SqlxPostgresTypesPgTimeTz);
 impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2413,7 +2413,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPo
 #[derive(Debug)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesTimePrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2423,7 +2423,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimePrimitiveDateTim
 #[derive(Debug)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull(pub SqlxTypesTimePrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2433,7 +2433,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimePrimitiveDateTim
 #[derive(Debug)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(pub SqlxTypesTimeOffsetDateTime);
 impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2443,7 +2443,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeOffsetDateTimeAs
 #[derive(Debug)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull(pub SqlxTypesTimeOffsetDateTime);
 impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2453,7 +2453,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeOffsetDateTimeAs
 #[derive(Debug)]
 pub struct SqlxTypesTimeDateAsPostgresqlDate(pub SqlxTypesTimeDate);
 impl SqlxTypesTimeDateAsPostgresqlDate {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2463,7 +2463,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesTimeDateAsPostgresqlDateNotNull(pub SqlxTypesTimeDate);
 impl SqlxTypesTimeDateAsPostgresqlDateNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2473,7 +2473,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTime(pub SqlxTypesTimeTime);
 impl SqlxTypesTimeTimeAsPostgresqlTime {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2483,7 +2483,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTimeNotNull(pub SqlxTypesTimeTime);
 impl SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2493,7 +2493,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuid(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuid {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2503,7 +2503,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNull(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2513,7 +2513,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2523,7 +2523,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2533,7 +2533,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAs
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2543,7 +2543,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAs
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2553,7 +2553,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAs
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2563,7 +2563,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAs
 #[derive(Debug)]
 pub struct StdNetIpAddrAsPostgresqlInet(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlInet {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2573,7 +2573,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInet 
 #[derive(Debug)]
 pub struct StdNetIpAddrAsPostgresqlInetNotNull(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlInetNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2583,7 +2583,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInetN
 #[derive(Debug)]
 pub struct StdNetIpAddrAsPostgresqlCidr(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlCidr {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2593,7 +2593,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidr 
 #[derive(Debug)]
 pub struct StdNetIpAddrAsPostgresqlCidrNotNull(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlCidrNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2603,7 +2603,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidrN
 #[derive(Debug)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(pub SqlxTypesMacAddressMacAddress);
 impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2613,7 +2613,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesMacAddressMacAddress
 #[derive(Debug)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull(pub SqlxTypesMacAddressMacAddress);
 impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2623,7 +2623,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesMacAddressMacAddress
 #[derive(Debug)]
 pub struct SqlxTypesBitVecAsPostgresqlBit(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlBit {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2633,7 +2633,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBi
 #[derive(Debug)]
 pub struct SqlxTypesBitVecAsPostgresqlBitNotNull(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlBitNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2643,7 +2643,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBi
 #[derive(Debug)]
 pub struct SqlxTypesBitVecAsPostgresqlVarBit(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlVarBit {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2653,7 +2653,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVa
 #[derive(Debug)]
 pub struct SqlxTypesBitVecAsPostgresqlVarBitNotNull(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlVarBitNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2664,7 +2664,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVa
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJson<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJson<T> {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2674,7 +2674,7 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJsonNotNull<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2684,7 +2684,7 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJsonB<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJsonB<T> {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2694,7 +2694,7 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2704,7 +2704,7 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 #[derive(Debug)]
 pub struct SerdeJsonValueAsPostgresqlJson(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJson {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2714,7 +2714,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 #[derive(Debug)]
 pub struct SerdeJsonValueAsPostgresqlJsonNotNull(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2724,7 +2724,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 #[derive(Debug)]
 pub struct SerdeJsonValueAsPostgresqlJsonB(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonB {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -2734,7 +2734,7 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 #[derive(Debug)]
 pub struct SerdeJsonValueAsPostgresqlJsonBNotNull(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonBNotNull {
-    pub fn into_inner_sqlx_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
         value.into_iter().map(|element|element.0.into_inner()).collect()
     }
 }
@@ -3698,6 +3698,11 @@ impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
         value.0
     }
 }
+impl StdPrimitiveBool {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -3825,6 +3830,11 @@ impl std::convert::From<StdPrimitiveI32> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveI32
     }
 }
+impl StdPrimitiveI32 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -3889,6 +3899,11 @@ impl PostgresqlOrder for StdPrimitiveI64 {}
 impl std::convert::From<StdPrimitiveI64> for SupportedSqlxPostgresType {
     fn from(_value: StdPrimitiveI64) -> Self {
         SupportedSqlxPostgresType::StdPrimitiveI64
+    }
+}
+impl StdPrimitiveI64 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -3956,6 +3971,11 @@ impl std::convert::From<StdPrimitiveF32> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveF32
     }
 }
+impl StdPrimitiveF32 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -4019,6 +4039,11 @@ impl PostgresqlOrder for StdPrimitiveF64 {}
 impl std::convert::From<StdPrimitiveF64> for SupportedSqlxPostgresType {
     fn from(_value: StdPrimitiveF64) -> Self {
         SupportedSqlxPostgresType::StdPrimitiveF64
+    }
+}
+impl StdPrimitiveF64 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4089,7 +4114,11 @@ impl std::convert::From<StdStringString> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdStringString
     }
 }
-//
+impl StdStringString {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<StdStringStringAsPostgresqlVarchar> for StdStringString {
 //     fn from(value: StdStringStringAsPostgresqlVarchar) -> Self {
 //         value.0
@@ -4152,6 +4181,11 @@ impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 impl std::convert::From<StdVecVecStdPrimitiveU8> for SupportedSqlxPostgresType {
     fn from(_value: StdVecVecStdPrimitiveU8) -> Self {
         SupportedSqlxPostgresType::StdVecVecStdPrimitiveU8
+    }
+}
+impl StdVecVecStdPrimitiveU8 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::u8> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4242,6 +4276,11 @@ impl std::convert::From<SqlxPostgresTypesPgInterval> for SupportedSqlxPostgresTy
         SupportedSqlxPostgresType::SqlxPostgresTypesPgInterval
     }
 }
+impl SqlxPostgresTypesPgInterval {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -4330,6 +4369,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for SupportedSq
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64
     }
 }
+impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -4416,6 +4460,11 @@ impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32
+    }
+}
+impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4859,6 +4908,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -5300,6 +5354,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -5577,6 +5636,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -5852,6 +5916,11 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateT
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
+    }
+}
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -6133,6 +6202,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> 
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -6410,6 +6484,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for Su
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -6683,6 +6762,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for Supported
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -6790,6 +6874,11 @@ impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
+    }
+}
+impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -6901,6 +6990,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SupportedS
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal
     }
 }
+impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -6976,6 +7070,11 @@ impl std::convert::From<SqlxPostgresTypesPgMoney> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney
     }
 }
+impl SqlxPostgresTypesPgMoney {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -7049,6 +7148,11 @@ impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 impl std::convert::From<SqlxPostgresTypesPgCiText> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgCiText) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText
+    }
+}
+impl SqlxPostgresTypesPgCiText {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7134,6 +7238,11 @@ impl std::convert::From<SqlxTypesBigDecimal> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesBigDecimal
     }
 }
+impl SqlxTypesBigDecimal {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -7195,6 +7304,11 @@ impl AsPostgresqlNumeric for SqlxTypesDecimal {}
 impl std::convert::From<SqlxTypesDecimal> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesDecimal) -> Self {
         SupportedSqlxPostgresType::SqlxTypesDecimal
+    }
+}
+impl SqlxTypesDecimal {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7296,6 +7410,11 @@ impl AsPostgresqlTimestamp for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
 impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
         SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+    }
+}
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7431,6 +7550,11 @@ impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for Support
         SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
+impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -7553,6 +7677,11 @@ impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresT
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime
     }
 }
+impl SqlxTypesChronoNaiveDateTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -7647,6 +7776,11 @@ impl std::convert::From<SqlxTypesChronoNaiveDate> for SupportedSqlxPostgresType 
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveDate
     }
 }
+impl SqlxTypesChronoNaiveDate {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -7738,6 +7872,11 @@ impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 impl std::convert::From<SqlxTypesChronoNaiveTime> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesChronoNaiveTime) -> Self {
         SupportedSqlxPostgresType::SqlxTypesChronoNaiveTime
+    }
+}
+impl SqlxTypesChronoNaiveTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7855,6 +7994,11 @@ impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 impl std::convert::From<SqlxPostgresTypesPgTimeTz> for SupportedSqlxPostgresType {
     fn from(_value: SqlxPostgresTypesPgTimeTz) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz
+    }
+}
+impl SqlxPostgresTypesPgTimeTz {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7975,6 +8119,11 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SupportedSqlxPostgre
         SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime
     }
 }
+impl SqlxTypesTimePrimitiveDateTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -8052,6 +8201,11 @@ impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
 impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesTimeOffsetDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime
+    }
+}
+impl SqlxTypesTimeOffsetDateTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8144,6 +8298,11 @@ impl PostgresqlOrder for SqlxTypesTimeDate {}
 impl std::convert::From<SqlxTypesTimeDate> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesTimeDate) -> Self {
         SupportedSqlxPostgresType::SqlxTypesTimeDate
+    }
+}
+impl SqlxTypesTimeDate {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8239,6 +8398,11 @@ impl std::convert::From<SqlxTypesTimeTime> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesTimeTime
     }
 }
+impl SqlxTypesTimeTime {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -8318,6 +8482,11 @@ impl std::convert::From<SqlxTypesUuidUuid> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesUuidUuid
     }
 }
+impl SqlxTypesUuidUuid {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -8382,6 +8551,11 @@ impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for SupportedSqlxPostgresTy
         SupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork
     }
 }
+impl SqlxTypesIpnetworkIpNetwork {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -8444,6 +8618,11 @@ impl AsPostgresqlCidr for StdNetIpAddr {}
 impl std::convert::From<StdNetIpAddr> for SupportedSqlxPostgresType {
     fn from(_value: StdNetIpAddr) -> Self {
         SupportedSqlxPostgresType::StdNetIpAddr
+    }
+}
+impl StdNetIpAddr {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8521,6 +8700,11 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress> for SupportedSqlxPostgres
         SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress
     }
 }
+impl SqlxTypesMacAddressMacAddress {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -8596,6 +8780,11 @@ impl PostgresqlOrder for SqlxTypesBitVec {}
 impl std::convert::From<SqlxTypesBitVec> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesBitVec) -> Self {
         SupportedSqlxPostgresType::SqlxTypesBitVec
+    }
+}
+impl SqlxTypesBitVec {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8692,6 +8881,11 @@ impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::SqlxTypesJsonT
     }
 }
+impl<T> SqlxTypesJson<T> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 // impl std::convert::From<> for {
 //     fn from(value: ) -> Self {
 //         value.0
@@ -8754,6 +8948,11 @@ impl AsPostgresqlJsonB for SerdeJsonValue {}
 impl std::convert::From<SerdeJsonValue> for SupportedSqlxPostgresType {
     fn from(_value: SerdeJsonValue) -> Self {
         SupportedSqlxPostgresType::SerdeJsonValue
+    }
+}
+impl SerdeJsonValue {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
+        value.into_iter().map(|element|element.into_inner()).collect()
     }
 }
 // impl std::convert::From<> for {

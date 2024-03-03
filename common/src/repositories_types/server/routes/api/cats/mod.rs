@@ -59,7 +59,7 @@ pub const TABLE_NAME: &str = "dogs";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct DogOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub id: std::option::Option<crate::server::postgres::uuid_wrapper::PossibleUuidWrapper>,
+    pub id: std::option::Option<postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: std::option::Option<postgresql_crud::StdStringString>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -68,9 +68,9 @@ pub struct DogOptions {
 impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
         Self {
-            id: Some(value.id.into()),
-            name: Some(value.name.into()),
-            color: Some(value.color.into()),
+            id: Some(postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(value.id.0)),
+            name: Some(value.name.0),
+            color: Some(value.color.0),
         }
     }
 }
@@ -109,12 +109,12 @@ pub struct DogIdNameColor {
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DogIdTryFromDogOptionsErrorNamed {
-    UuidWrapperTryFromPossibleUuidWrapper {
-        #[eo_error_occurence]
-        uuid_wrapper_try_from_possible_uuid_wrapper:
-            crate::server::postgres::uuid_wrapper::UuidWrapperTryFromPossibleUuidWrapperErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    // UuidWrapperTryFromPossibleUuidWrapper {
+    //     #[eo_error_occurence]
+    //     uuid_wrapper_try_from_possible_uuid_wrapper:
+    //         crate::server::postgres::uuid_wrapper::UuidWrapperTryFromPossibleUuidWrapperErrorNamed,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
     IdIsNone {
         #[eo_display_with_serialize_deserialize]
         id_is_none: std::string::String,
@@ -127,31 +127,30 @@ impl std::convert::TryFrom<DogOptions> for DogId {
         let id =
             match value.id {
                 Some(value) => {
-                    match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
-                        Ok(value) => value.into_inner(),
-                        Err(e) => {
-                            return
-                    Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
-                    {
-                        uuid_wrapper_try_from_possible_uuid_wrapper : e,
-                        code_occurence : error_occurence_lib :: code_occurence ::
-                        CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                        file! ().to_string(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 619, column : 41,
-                        })),
-                    }) ;
-                        }
-                    }
+                    value
+                    // match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+                    //     Ok(value) => value.into_inner(),
+                    //     Err(e) => {
+                    //         return Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
+                    // {
+                    //     uuid_wrapper_try_from_possible_uuid_wrapper : e,
+                    //     code_occurence : error_occurence_lib :: code_occurence ::
+                    //     CodeOccurence ::
+                    //     new(crate :: global_variables :: compile_time ::
+                    //     project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    //     file! ().to_string(), line! (), column! (),
+                    //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    //     {
+                    //         file : std :: string :: String ::
+                    //         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    //         line : 619, column : 41,
+                    //     })),
+                    // }) ;
+                    //     }
+                    // }
                 }
                 None => {
-                    return
-                Err(Self :: Error :: IdIsNone
+                    return Err(Self :: Error :: IdIsNone
                 {
                     id_is_none : std :: string :: String :: from("id is None"),
                     code_occurence : error_occurence_lib :: code_occurence ::
@@ -268,27 +267,28 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
         let id =
             match value.id {
                 Some(value) => {
-                    match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
-                        Ok(value) => value.into_inner(),
-                        Err(e) => {
-                            return
-                    Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
-                    {
-                        uuid_wrapper_try_from_possible_uuid_wrapper : e,
-                        code_occurence : error_occurence_lib :: code_occurence ::
-                        CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                        file! ().to_string(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 619, column : 41,
-                        })),
-                    }) ;
-                        }
-                    }
+                    // match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+                    //     Ok(value) => value.into_inner(),
+                    //     Err(e) => {
+                    //         return
+                    // Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
+                    // {
+                    //     uuid_wrapper_try_from_possible_uuid_wrapper : e,
+                    //     code_occurence : error_occurence_lib :: code_occurence ::
+                    //     CodeOccurence ::
+                    //     new(crate :: global_variables :: compile_time ::
+                    //     project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    //     file! ().to_string(), line! (), column! (),
+                    //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    //     {
+                    //         file : std :: string :: String ::
+                    //         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    //         line : 619, column : 41,
+                    //     })),
+                    // }) ;
+                    //     }
+                    // }
+                    value
                 }
                 None => {
                     return
@@ -359,27 +359,28 @@ impl std::convert::TryFrom<DogOptions> for DogIdColor {
         let id =
             match value.id {
                 Some(value) => {
-                    match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
-                        Ok(value) => value.into_inner(),
-                        Err(e) => {
-                            return
-                    Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
-                    {
-                        uuid_wrapper_try_from_possible_uuid_wrapper : e,
-                        code_occurence : error_occurence_lib :: code_occurence ::
-                        CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                        file! ().to_string(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 619, column : 41,
-                        })),
-                    }) ;
-                        }
-                    }
+                    // match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+                    //     Ok(value) => value.into_inner(),
+                    //     Err(e) => {
+                    //         return
+                    // Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
+                    // {
+                    //     uuid_wrapper_try_from_possible_uuid_wrapper : e,
+                    //     code_occurence : error_occurence_lib :: code_occurence ::
+                    //     CodeOccurence ::
+                    //     new(crate :: global_variables :: compile_time ::
+                    //     project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    //     file! ().to_string(), line! (), column! (),
+                    //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    //     {
+                    //         file : std :: string :: String ::
+                    //         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    //         line : 619, column : 41,
+                    //     })),
+                    // }) ;
+                    //     }
+                    // }
+                    value
                 }
                 None => {
                     return
@@ -518,27 +519,28 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
         let id =
             match value.id {
                 Some(value) => {
-                    match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
-                        Ok(value) => value.into_inner(),
-                        Err(e) => {
-                            return
-                    Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
-                    {
-                        uuid_wrapper_try_from_possible_uuid_wrapper : e,
-                        code_occurence : error_occurence_lib :: code_occurence ::
-                        CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                        file! ().to_string(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 619, column : 41,
-                        })),
-                    }) ;
-                        }
-                    }
+                    // match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value) {
+                    //     Ok(value) => value.into_inner(),
+                    //     Err(e) => {
+                    //         return
+                    // Err(Self :: Error :: UuidWrapperTryFromPossibleUuidWrapper
+                    // {
+                    //     uuid_wrapper_try_from_possible_uuid_wrapper : e,
+                    //     code_occurence : error_occurence_lib :: code_occurence ::
+                    //     CodeOccurence ::
+                    //     new(crate :: global_variables :: compile_time ::
+                    //     project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    //     file! ().to_string(), line! (), column! (),
+                    //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    //     {
+                    //         file : std :: string :: String ::
+                    //         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    //         line : 619, column : 41,
+                    //     })),
+                    // }) ;
+                    //     }
+                    // }
+                    value
                 }
                 None => {
                     return
@@ -723,21 +725,20 @@ impl DogColumnSelect {
         &'a std::primitive::str: sqlx::ColumnIndex<R>,
         std::option::Option<sqlx::types::Uuid>: sqlx::decode::Decode<'a, R::Database>,
         std::option::Option<sqlx::types::Uuid>: sqlx::types::Type<R::Database>,
-        std::option::Option<postgresql_crud::StdStringStringAsPostgresqlVarchar>:
+        std::option::Option<std::string::String>:
             sqlx::decode::Decode<'a, R::Database>,
-        std::option::Option<postgresql_crud::StdStringStringAsPostgresqlVarchar>:
+        std::option::Option<std::string::String>:
             sqlx::types::Type<R::Database>,
-        std::option::Option<postgresql_crud::StdStringStringAsPostgresqlVarchar>:
+        std::option::Option<std::string::String>:
             sqlx::decode::Decode<'a, R::Database>,
-        std::option::Option<postgresql_crud::StdStringStringAsPostgresqlVarchar>:
+        std::option::Option<std::string::String>:
             sqlx::types::Type<R::Database>,
     {
-        let mut id: std::option::Option<
-            crate::server::postgres::uuid_wrapper::PossibleUuidWrapper,
-        > = None;
-        let mut name: std::option::Option<postgresql_crud::StdStringStringAsPostgresqlVarchar> =
+        let mut id: std::option::Option<postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize> = None;
+        //postgresql_crud::StdStringStringAsPostgresqlVarchar
+        let mut name: std::option::Option<postgresql_crud::StdStringString> =
             None;
-        let mut color: std::option::Option<postgresql_crud::StdStringStringAsPostgresqlVarchar> =
+        let mut color: std::option::Option<postgresql_crud::StdStringString> =
             None;
         match self {
             Self::Id => {
@@ -746,9 +747,11 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
@@ -760,14 +763,19 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
                 };
-                name = row.try_get("name")?;
+                name = {
+                    let value: std::option::Option<std::string::String> = row.try_get("name")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
             }
             Self::Color => {
                 let primary_key_try_get_result: Result<
@@ -775,14 +783,19 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
                 };
-                color = row.try_get("color")?;
+                color = {
+                    let value: std::option::Option<std::string::String> = row.try_get("color")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                }
             }
             Self::IdName => {
                 let primary_key_try_get_result: Result<
@@ -790,14 +803,19 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
                 };
-                name = row.try_get("name")?;
+                name = {
+                    let value: std::option::Option<std::string::String> = row.try_get("name")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
             }
             Self::IdColor => {
                 let primary_key_try_get_result: Result<
@@ -805,14 +823,19 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
                 };
-                color = row.try_get("color")?;
+                color = {
+                    let value: std::option::Option<std::string::String> = row.try_get("color")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
             }
             Self::NameColor => {
                 let primary_key_try_get_result: Result<
@@ -820,15 +843,23 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
                 };
-                name = row.try_get("name")?;
-                color = row.try_get("color")?;
+                name = {
+                    let value: std::option::Option<std::string::String> = row.try_get("name")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
+                color = {
+                    let value: std::option::Option<std::string::String> = row.try_get("color")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
             }
             Self::IdNameColor => {
                 let primary_key_try_get_result: Result<
@@ -836,15 +867,23 @@ impl DogColumnSelect {
                     sqlx::Error,
                 > = row.try_get("id");
                 id = match primary_key_try_get_result {
-                    Ok(option_primary_key) => option_primary_key.map(|value| {
-                        crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value)
-                    }),
+                    Ok(option_primary_key) => {
+                        option_primary_key.map(|value| {
+                            postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(postgresql_crud::SqlxTypesUuidUuid(value))
+                        })
+                    },
                     Err(e) => {
                         return Err(e);
                     }
                 };
-                name = row.try_get("name")?;
-                color = row.try_get("color")?;
+                name = {
+                    let value: std::option::Option<std::string::String> = row.try_get("name")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
+                color = {
+                    let value: std::option::Option<std::string::String> = row.try_get("color")?;
+                    value.map(|value|postgresql_crud::StdStringString(value))
+                };
             }
         }
         Ok(DogOptions { id, name, color })
@@ -1656,17 +1695,17 @@ fn dog_emulate_crud_api_usage_test() {
         }
     }
 }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayloadElement {
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub name: postgresql_crud::StdStringString,//without serialize deserialize
+    pub color: postgresql_crud::StdStringString,
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayload(pub std::vec::Vec<CreateManyPayloadElement>);
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayloadElementWithSerializeDeserialize {
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub name: postgresql_crud::StdStringString,//with serialize deserialize
+    pub color: postgresql_crud::StdStringString,//with serialize deserialize
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct CreateManyPayloadWithSerializeDeserialize(
@@ -3226,14 +3265,10 @@ pub async fn create_many(
                 },
             );
             query = query.bind(
-                postgresql_crud::StdStringStringAsPostgresqlVarchar::into_inner_sqlx_type_vec(
-                    name_vec,
-                ),
+                name_vec.into_iter().map(|element|element.into_inner()).collect()
             );
             query = query.bind(
-                postgresql_crud::StdStringStringAsPostgresqlVarchar::into_inner_sqlx_type_vec(
-                    color_vec,
-                ),
+                color_vec.into_iter().map(|element|element.into_inner()).collect()
             );
             query
         };

@@ -2415,7 +2415,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let primary_keys_token_stream = quote::quote!{primary_keys};
     let primary_key_token_stream = quote::quote!{primary_key};
-    let into_inner_sqlx_type_vec_snake_case_token_stream = quote::quote!{into_inner_sqlx_type_vec};
+    let into_inner_type_vec_snake_case_token_stream = quote::quote!{into_inner_type_vec};
     let (
         create_many_token_stream,
         create_many_http_request_test_token_stream
@@ -2870,7 +2870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote!{
                             #query_name_token_stream = #query_name_token_stream.bind(
                                 //todo add ::<T> for serde json <T> case. for others just empty token stream
-                                #path_to_postgresql_crud_supported_type_token_stream::#into_inner_sqlx_type_vec_snake_case_token_stream(#field_ident_underscore_vec_token_stream)
+                                #path_to_postgresql_crud_supported_type_token_stream::#into_inner_type_vec_snake_case_token_stream(#field_ident_underscore_vec_token_stream)
                             );
                         }
                     });
