@@ -1695,12 +1695,12 @@ fn dog_emulate_crud_api_usage_test() {
         }
     }
 }
-// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+#[derive(Debug)]//, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema
 pub struct CreateManyPayloadElement {
     pub name: postgresql_crud::StdStringString,//without serialize deserialize
     pub color: postgresql_crud::StdStringString,
 }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+#[derive(Debug)]//, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema
 pub struct CreateManyPayload(pub std::vec::Vec<CreateManyPayloadElement>);
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayloadElementWithSerializeDeserialize {
