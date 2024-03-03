@@ -1101,6 +1101,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #declaration_primary_key_token_stream
                         #(#declaration_excluding_primary_key_token_stream)*
                         match self {
+                            //todo why id in all cases
                             #(#assignment_token_stream)*
                         }
                         Ok(#struct_options_ident_token_stream { 
