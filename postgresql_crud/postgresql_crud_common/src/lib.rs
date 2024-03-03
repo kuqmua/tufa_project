@@ -2859,7 +2859,7 @@ pub struct TestNewType<T> {
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_primitive_bool: StdPrimitiveBoolWithSerializeDeserialize,
-    std_primitive_i16: StdPrimitiveI16,
+    std_primitive_i16: StdPrimitiveI16WithSerializeDeserialize,
     std_primitive_i32: StdPrimitiveI32,
     std_primitive_i64: StdPrimitiveI64,
     std_primitive_f32: StdPrimitiveF32,
@@ -2906,7 +2906,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
     type Error = ();//todo
     fn try_from(value: TestNewTypeWithSerializeDeserialize<T>) -> Result<Self, Self::Error> {
         let std_primitive_bool = StdPrimitiveBool::from(value.std_primitive_bool);
-        let std_primitive_i16: StdPrimitiveI16 = value.std_primitive_i16;
+        let std_primitive_i16 = StdPrimitiveI16::from(value.std_primitive_i16);
         let std_primitive_i32: StdPrimitiveI32 = value.std_primitive_i32;
         let std_primitive_i64: StdPrimitiveI64 = value.std_primitive_i64;
         let std_primitive_f32: StdPrimitiveF32 = value.std_primitive_f32;
@@ -3718,8 +3718,20 @@ impl StdPrimitiveBool {
 //     }
 // }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdPrimitiveI16WithSerializeDeserialize(std::primitive::i16);
+impl std::convert::From<StdPrimitiveI16WithSerializeDeserialize> for StdPrimitiveI16 {
+    fn from(value: StdPrimitiveI16WithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdPrimitiveI16> for StdPrimitiveI16WithSerializeDeserialize {
+    fn from(value: StdPrimitiveI16) -> Self {
+        Self(value.0)
+    }
+}
 impl StdPrimitiveI16 {
     pub fn into_inner(self) -> std::primitive::i16 {
         self.0
