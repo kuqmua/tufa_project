@@ -3959,6 +3959,18 @@ impl StdPrimitiveI64 {
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdPrimitiveF32WithSerializeDeserialize(std::primitive::f32);
+impl std::convert::From<StdPrimitiveF32WithSerializeDeserialize> for StdPrimitiveF32 {
+    fn from(value: StdPrimitiveF32WithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdPrimitiveF32> for StdPrimitiveF32WithSerializeDeserialize {
+    fn from(value: StdPrimitiveF32) -> Self {
+        Self(value.0)
+    }
+}
 impl StdPrimitiveF32 {
     pub fn into_inner(self) -> std::primitive::f32 {
         self.0
