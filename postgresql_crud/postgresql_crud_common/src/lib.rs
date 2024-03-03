@@ -2865,7 +2865,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_primitive_f32: StdPrimitiveF32WithSerializeDeserialize,
     std_primitive_f64: StdPrimitiveF64WithSerializeDeserialize,
     std_string_string: StdStringStringWithSerializeDeserialize,
-    std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8,
+    std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8WithSerializeDeserialize,
     sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgIntervalWithSerializeDeserialize,
     sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize,
     sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize,
@@ -2912,7 +2912,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let std_primitive_f32 = StdPrimitiveF32::from(value.std_primitive_f32);
         let std_primitive_f64 = StdPrimitiveF64::from(value.std_primitive_f64);
         let std_string_string = StdStringString::from(value.std_string_string);
-        let std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8 = value.std_vec_vec_std_primitive_u8;
+        let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8::from(value.std_vec_vec_std_primitive_u8);
         let sqlx_postgres_types_pg_interval = SqlxPostgresTypesPgInterval::from(value.sqlx_postgres_types_pg_interval);
         let sqlx_postgres_types_pg_range_std_primitive_i64 = SqlxPostgresTypesPgRangeStdPrimitiveI64::from(value.sqlx_postgres_types_pg_range_std_primitive_i64);
         let sqlx_postgres_types_pg_range_std_primitive_i32 = SqlxPostgresTypesPgRangeStdPrimitiveI32::from(value.sqlx_postgres_types_pg_range_std_primitive_i32);
@@ -4207,8 +4207,20 @@ impl StdStringString {
 // }
 //
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdVecVecStdPrimitiveU8WithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
+impl std::convert::From<StdVecVecStdPrimitiveU8WithSerializeDeserialize> for StdVecVecStdPrimitiveU8 {
+    fn from(value: StdVecVecStdPrimitiveU8WithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdVecVecStdPrimitiveU8> for StdVecVecStdPrimitiveU8WithSerializeDeserialize {
+    fn from(value: StdVecVecStdPrimitiveU8) -> Self {
+        Self(value.0)
+    }
+}
 impl StdVecVecStdPrimitiveU8 {
     pub fn into_inner(self) -> std::vec::Vec<std::primitive::u8> {
         self.0
