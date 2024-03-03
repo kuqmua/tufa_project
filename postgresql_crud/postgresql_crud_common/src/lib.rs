@@ -2898,7 +2898,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize,
     sqlx_types_bit_vec: SqlxTypesBitVecFromBytesWithSerializeDeserialize,
 
-    sqlx_types_json: SqlxTypesJson<T>,
+    sqlx_types_json: SqlxTypesJsonWithSerializeDeserialize<T>,
     serde_json_value: SerdeJsonValue,
 }
 
@@ -3034,7 +3034,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let std_net_ip_addr = StdNetIpAddr::from(value.std_net_ip_addr);
         let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress::from(value.sqlx_types_mac_address_mac_address);
         let sqlx_types_bit_vec = SqlxTypesBitVec::from(value.sqlx_types_bit_vec);
-        let sqlx_types_json: SqlxTypesJson<T> = value.sqlx_types_json;
+        let sqlx_types_json = SqlxTypesJson::<T>::from(value.sqlx_types_json);
         let serde_json_value: SerdeJsonValue = value.serde_json_value;
         Ok(Self {
             std_primitive_bool,
@@ -8922,8 +8922,20 @@ impl SqlxTypesBitVec {
 //     }
 // }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct SqlxTypesJsonWithSerializeDeserialize<T>(sqlx::types::Json<T>);
+impl<T> std::convert::From<SqlxTypesJsonWithSerializeDeserialize<T>> for SqlxTypesJson<T> {
+    fn from(value: SqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
+        Self(value.0)
+    }
+}
+impl<T> std::convert::From<SqlxTypesJson<T>> for SqlxTypesJsonWithSerializeDeserialize<T> {
+    fn from(value: SqlxTypesJson<T>) -> Self {
+        Self(value.0)
+    }
+}
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner(self) -> sqlx::types::Json<T> {
         self.0
