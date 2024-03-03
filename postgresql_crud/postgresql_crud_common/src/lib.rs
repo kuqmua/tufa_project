@@ -2893,7 +2893,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_time_date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     sqlx_types_time_time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
     sqlx_types_uuid_uuid: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
-    sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork,
+    sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
     std_net_ip_addr: StdNetIpAddr,
     sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize,
     sqlx_types_bit_vec: SqlxTypesBitVecFromBytesWithSerializeDeserialize,
@@ -3030,7 +3030,7 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
                 return Err(());
             }
         };
-        let sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetwork = value.sqlx_types_ipnetwork_ip_network;
+        let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork::from(value.sqlx_types_ipnetwork_ip_network);
         let std_net_ip_addr: StdNetIpAddr = value.std_net_ip_addr;
         let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress::from(value.sqlx_types_mac_address_mac_address);
         let sqlx_types_bit_vec = SqlxTypesBitVec::from(value.sqlx_types_bit_vec);
@@ -8598,8 +8598,20 @@ impl SqlxTypesUuidUuid {
 //     }
 // }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize(sqlx::types::ipnetwork::IpNetwork);
+impl std::convert::From<SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize> for SqlxTypesIpnetworkIpNetwork {
+    fn from(value: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize {
+    fn from(value: SqlxTypesIpnetworkIpNetwork) -> Self {
+        Self(value.0)
+    }
+}
 impl SqlxTypesIpnetworkIpNetwork {
     pub fn into_inner(self) -> sqlx::types::ipnetwork::IpNetwork {
         self.0
