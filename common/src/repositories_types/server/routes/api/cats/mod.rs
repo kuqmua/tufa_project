@@ -3265,10 +3265,10 @@ pub async fn create_many(
                 },
             );
             query = query.bind(
-                name_vec.into_iter().map(|element|element.into_inner()).collect()
+                postgresql_crud::StdStringString::into_inner_type_vec(name_vec)
             );
             query = query.bind(
-                color_vec.into_iter().map(|element|element.into_inner()).collect()
+                postgresql_crud::StdStringString::into_inner_type_vec(color_vec)
             );
             query
         };
