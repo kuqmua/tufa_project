@@ -45,10 +45,10 @@
     // }
 }]
 pub struct Dog {
-    #[generate_postgresql_crud_primary_key]
+    // #[generate_postgresql_crud_primary_key]
     pub id: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,//sqlx::types::Uuid //todo make it UuidWrapper todo - if using js JSON.parse() - must be two variants - for usage and deserialization - coz json number type capacity less than i64::MAX
     // #[StdStringStringAsPostgresqlVarchar]
-    pub name: postgresql_crud::SqlxTypesJsonTAsPostgresqlJson<test_mod::Something>,//todo not null
+    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,//todo not null
     // #[StdStringStringAsPostgresqlVarchar]
     pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,//todo not null
 }
@@ -69,43 +69,43 @@ impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
         Self {
             id: Some(value.id.into()),
-            name: Some(value.name.0),//HERE
-            color: Some(value.color.0),
+            name: Some(value.name.into()),
+            color: Some(value.color.into()),
         }
     }
 }
 #[derive(Debug)]
 pub struct DogId {
-    pub id: sqlx::types::Uuid,
+    pub id: postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
 }
 #[derive(Debug)]
 pub struct DogName {
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub name: postgresql_crud::StdStringString,
 }
 #[derive(Debug)]
 pub struct DogColor {
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub color: postgresql_crud::StdStringString,
 }
 #[derive(Debug)]
 pub struct DogIdName {
-    pub id: sqlx::types::Uuid,
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub id: postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
+    pub name: postgresql_crud::StdStringString,
 }
 #[derive(Debug)]
 pub struct DogIdColor {
-    pub id: sqlx::types::Uuid,
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub id: postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
+    pub color: postgresql_crud::StdStringString,
 }
 #[derive(Debug)]
 pub struct DogNameColor {
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub name: postgresql_crud::StdStringString,
+    pub color: postgresql_crud::StdStringString,
 }
 #[derive(Debug)]
 pub struct DogIdNameColor {
-    pub id: sqlx::types::Uuid,
-    pub name: postgresql_crud::StdStringStringAsPostgresqlVarchar,
-    pub color: postgresql_crud::StdStringStringAsPostgresqlVarchar,
+    pub id: postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
+    pub name: postgresql_crud::StdStringString,
+    pub color: postgresql_crud::StdStringString,
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DogIdTryFromDogOptionsErrorNamed {
@@ -143,7 +143,7 @@ impl std::convert::TryFrom<DogOptions> for DogId {
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 783, column : 41,
+                            line : 619, column : 41,
                         })),
                     }) ;
                         }
@@ -163,7 +163,7 @@ impl std::convert::TryFrom<DogOptions> for DogId {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 789, column : 41,
+                        line : 625, column : 41,
                     })),
                 }) ;
                 }
@@ -199,7 +199,7 @@ impl std::convert::TryFrom<DogOptions> for DogName {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -235,7 +235,7 @@ impl std::convert::TryFrom<DogOptions> for DogColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -284,7 +284,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 783, column : 41,
+                            line : 619, column : 41,
                         })),
                     }) ;
                         }
@@ -304,7 +304,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 789, column : 41,
+                        line : 625, column : 41,
                     })),
                 }) ;
                 }
@@ -326,7 +326,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -375,7 +375,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdColor {
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 783, column : 41,
+                            line : 619, column : 41,
                         })),
                     }) ;
                         }
@@ -395,7 +395,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 789, column : 41,
+                        line : 625, column : 41,
                     })),
                 }) ;
                 }
@@ -417,7 +417,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -458,7 +458,7 @@ impl std::convert::TryFrom<DogOptions> for DogNameColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -480,7 +480,7 @@ impl std::convert::TryFrom<DogOptions> for DogNameColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -534,7 +534,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 783, column : 41,
+                            line : 619, column : 41,
                         })),
                     }) ;
                         }
@@ -554,7 +554,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 789, column : 41,
+                        line : 625, column : 41,
                     })),
                 }) ;
                 }
@@ -576,7 +576,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -598,7 +598,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 848, column : 29,
+                        line : 684, column : 29,
                     })),
                 }) ;
                 }
@@ -706,7 +706,7 @@ impl std::str::FromStr for DogColumnSelect {
                 {
                     file : std :: string :: String ::
                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line : 1141, column : 17,
+                    line : 977, column : 17,
                 })),
             }),
         }
@@ -1108,7 +1108,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                             {
                                                 file : std :: string :: String ::
                                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                line : 1567, column : 17,
+                                                line : 1403, column : 17,
                                             })),
                                         }) ;
                                             }
@@ -1128,7 +1128,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         {
                                             file : std :: string :: String ::
                                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1573, column : 17,
+                                            line : 1409, column : 17,
                                         })),
                                     }) ;
                                     }
@@ -1151,7 +1151,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         {
                                             file : std :: string :: String ::
                                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1579, column : 17,
+                                            line : 1415, column : 17,
                                         })),
                                     }) ;
                                     }
@@ -1170,7 +1170,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                     {
                                         file : std :: string :: String ::
                                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line : 1585, column : 17,
+                                        line : 1421, column : 17,
                                     })),
                                 }) ;
                                 }
@@ -1191,7 +1191,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 1591, column : 17,
+                                line : 1427, column : 17,
                             })),
                         }) ;
                     }
@@ -1210,7 +1210,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 1597, column : 17,
+                            line : 1433, column : 17,
                         })),
                     }) ;
                 }
@@ -1231,7 +1231,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 1603,
+                            line: 1439,
                             column: 17,
                         }),
                     ),
@@ -1263,7 +1263,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                             {
                                                 file : std :: string :: String ::
                                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                line : 1609, column : 17,
+                                                line : 1445, column : 17,
                                             })),
                                         }) ;
                                             }
@@ -1283,7 +1283,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         {
                                             file : std :: string :: String ::
                                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1615, column : 17,
+                                            line : 1451, column : 17,
                                         })),
                                     }) ;
                                     }
@@ -1308,7 +1308,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         {
                                             file : std :: string :: String ::
                                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1621, column : 17,
+                                            line : 1457, column : 17,
                                         }))
                                     }) ;
                                         }
@@ -1328,7 +1328,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                     {
                                         file : std :: string :: String ::
                                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line : 1627, column : 17,
+                                        line : 1463, column : 17,
                                     })),
                                 }) ;
                                 }
@@ -1349,7 +1349,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                             {
                                 file : std :: string :: String ::
                                 from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 1633, column : 17,
+                                line : 1469, column : 17,
                             })),
                         }) ;
                     }
@@ -1368,7 +1368,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 1639, column : 17,
+                            line : 1475, column : 17,
                         })),
                     }) ;
                 }
@@ -2223,6 +2223,99 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr404NotFound>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateManyResponseVariantsTvfrr400BadRequest {
+    TypeNotFound
+    {
+        type_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnNotFound
+    {
+        column_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonDataError
+    {
+        json_data_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonSyntaxError
+    {
+        json_syntax_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, MissingJsonContentType
+    {
+        missing_json_content_type : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserialize
+    {
+        create_many_payload_try_from_create_many_payload_with_serialize_deserialize
+        :
+        CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorNotEqual
+    {
+        commit_not_equal : std::string::String<>, commit_to_use :
+        std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorToStrConversion
+    {
+        commit_to_str_conversion : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NoCommitExtractorHeader
+    {
+        no_commit_header : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+}
+impl std::convert::From<TryCreateManyResponseVariantsTvfrr400BadRequest>
+    for TryCreateManyResponseVariants
+{
+    fn from(value: TryCreateManyResponseVariantsTvfrr400BadRequest) -> Self {
+        match value
+        {
+            TryCreateManyResponseVariantsTvfrr400BadRequest :: TypeNotFound
+            { type_not_found, code_occurence } => Self :: TypeNotFound
+            { type_not_found, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest :: ColumnNotFound
+            { column_not_found, code_occurence } => Self :: ColumnNotFound
+            { column_not_found, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest :: JsonDataError
+            { json_data_error, code_occurence } => Self :: JsonDataError
+            { json_data_error, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
+            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            { json_syntax_error, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence } => Self ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest ::
+            CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserialize
+            {
+                create_many_payload_try_from_create_many_payload_with_serialize_deserialize,
+                code_occurence
+            } => Self ::
+            CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserialize
+            {
+                create_many_payload_try_from_create_many_payload_with_serialize_deserialize,
+                code_occurence
+            }, TryCreateManyResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence } => Self ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence } => Self ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence },
+            TryCreateManyResponseVariantsTvfrr400BadRequest ::
+            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
+            Self :: NoCommitExtractorHeader
+            { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
     PoolTimedOut {
         pool_timed_out: std::string::String,
@@ -2372,99 +2465,6 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr500InternalServerError
                 operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
                 code_occurence
             }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateManyResponseVariantsTvfrr400BadRequest {
-    TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserialize
-    {
-        create_many_payload_try_from_create_many_payload_with_serialize_deserialize
-        :
-        CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }
-}
-impl std::convert::From<TryCreateManyResponseVariantsTvfrr400BadRequest>
-    for TryCreateManyResponseVariants
-{
-    fn from(value: TryCreateManyResponseVariantsTvfrr400BadRequest) -> Self {
-        match value
-        {
-            TryCreateManyResponseVariantsTvfrr400BadRequest :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest :: JsonDataError
-            { json_data_error, code_occurence } => Self :: JsonDataError
-            { json_data_error, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest ::
-            CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserialize
-            {
-                create_many_payload_try_from_create_many_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            CreateManyPayloadTryFromCreateManyPayloadWithSerializeDeserialize
-            {
-                create_many_payload_try_from_create_many_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryCreateManyResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } => Self ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } => Self ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence },
-            TryCreateManyResponseVariantsTvfrr400BadRequest ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
-            Self :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence }
         }
     }
 }
@@ -2890,7 +2890,7 @@ pub async fn try_create_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 1861,
+                        line: 1697,
                         column: 13,
                     }),
                 ),
@@ -2923,7 +2923,7 @@ pub async fn try_create_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2503,
+                        line: 2339,
                         column: 13,
                     }),
                 ),
@@ -2950,7 +2950,7 @@ pub async fn try_create_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2439,
+                        line: 2275,
                         column: 13,
                     }),
                 ),
@@ -2977,13 +2977,13 @@ pub async fn try_create_many<'a>(
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 2470, column : 13,
+                        line : 2306, column : 13,
                     }))
                 }) ;
                 }
             }
-        } else if status_code == http::StatusCode::BAD_REQUEST {
-            match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
+        } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+            match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr408RequestTimeout>(
                 &response_text,
             ) {
                 Ok(value) => TryCreateManyResponseVariants::from(value),
@@ -3001,31 +3001,7 @@ pub async fn try_create_many<'a>(
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 2470, column : 13,
-                    }))
-                }) ;
-                }
-            }
-        } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-            match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr500InternalServerError>(
-                &response_text,
-            ) {
-                Ok(value) => TryCreateManyResponseVariants::from(value),
-                Err(e) => {
-                    return
-                Err(TryCreateManyErrorNamed :: DeserializeResponse
-                {
-                    serde : e, status_code, headers, response_text,
-                    code_occurence : error_occurence_lib :: code_occurence ::
-                    CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                    file! ().to_string(), line! (), column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    {
-                        file : std :: string :: String ::
-                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 2470, column : 13,
+                        line : 2306, column : 13,
                     }))
                 }) ;
                 }
@@ -3049,7 +3025,31 @@ pub async fn try_create_many<'a>(
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 2470, column : 13,
+                        line : 2306, column : 13,
+                    }))
+                }) ;
+                }
+            }
+        } else if status_code == http::StatusCode::BAD_REQUEST {
+            match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
+                &response_text,
+            ) {
+                Ok(value) => TryCreateManyResponseVariants::from(value),
+                Err(e) => {
+                    return
+                Err(TryCreateManyErrorNamed :: DeserializeResponse
+                {
+                    serde : e, status_code, headers, response_text,
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(crate :: global_variables :: compile_time ::
+                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 2306, column : 13,
                     }))
                 }) ;
                 }
@@ -3073,7 +3073,7 @@ pub async fn try_create_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2408,
+                        line: 2244,
                         column: 13,
                     }),
                 ),
@@ -3113,7 +3113,7 @@ pub async fn try_create_many<'a>(
                     {
                         file : std :: string :: String ::
                         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 2167, column : 13,
+                        line : 2003, column : 13,
                     }))
                 }) ;
             }
@@ -3133,7 +3133,7 @@ pub async fn try_create_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2377,
+                        line: 2213,
                         column: 13,
                     }),
                 ),
@@ -3193,7 +3193,7 @@ pub async fn create_many(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 3117, column : 17,
+                            line : 2953, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -3293,7 +3293,7 @@ pub async fn create_many(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 2146, column : 13,
+                            line : 1982, column : 13,
                         })),
                     } ;
                     error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());

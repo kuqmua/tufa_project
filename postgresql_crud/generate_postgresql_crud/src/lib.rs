@@ -134,225 +134,7 @@ pub fn additional_http_status_codes_error_variants(
     item
 }
 
-#[proc_macro_derive(
-    GeneratePostgresqlCrud,
-    attributes(
-        generate_postgresql_crud_primary_key,
-
-        // generate_postgresql_crud_bool,
-        // generate_postgresql_crud_char,
-        // generate_postgresql_crud_smallint,
-        // generate_postgresql_crud_smallserial,
-        // generate_postgresql_crud_int2,
-        // generate_postgresql_crud_int,
-        // generate_postgresql_crud_serial, 
-        // generate_postgresql_crud_int4,
-        // generate_postgresql_crud_bigint,
-        // generate_postgresql_crud_bigserial, 
-        // generate_postgresql_crud_int8,
-        // generate_postgresql_crud_real, 
-        // generate_postgresql_crud_float4,
-        // generate_postgresql_crud_double_precision,
-        // generate_postgresql_crud_float8,
-        // generate_postgresql_crud_varchar,
-        // generate_postgresql_crud_charn, //wtf????
-        // generate_postgresql_crud_text,
-        // generate_postgresql_crud_name,
-        // generate_postgresql_crud_bytea,
-        // generate_postgresql_crud_void,
-        // generate_postgresql_crud_interval,
-        // generate_postgresql_crud_int8range,
-        // generate_postgresql_crud_int4range,
-        // generate_postgresql_crud_tsrange,
-        // generate_postgresql_crud_tstzrange,
-        // generate_postgresql_crud_daterange,
-        // generate_postgresql_crud_numrange,
-        // generate_postgresql_crud_money,
-        // generate_postgresql_crud_ltree,
-        // generate_postgresql_crud_lquery,
-
-        // generate_postgresql_crud_numeric,
-
-        // generate_postgresql_crud_timestamptz,
-        // generate_postgresql_crud_timestamp,
-        // generate_postgresql_crud_date,
-        // generate_postgresql_crud_time,
-        // generate_postgresql_crud_timetz,
-        // generate_postgresql_crud_uuid,
-
-        // generate_postgresql_crud_inet,
-        // generate_postgresql_crud_cidr,
-
-        // generate_postgresql_crud_macaddr,
-
-        // generate_postgresql_crud_bit,
-        // generate_postgresql_crud_varbit,
-
-        // generate_postgresql_crud_json,
-        // generate_postgresql_crud_jsonb
-
-
-
-        // StdPrimitiveBoolAsPostgresqlBool,
-        // StdPrimitiveBoolAsPostgresqlBoolNotNull,
-
-        // StdPrimitiveI16AsPostgresqlSmallInt,
-        // StdPrimitiveI16AsPostgresqlSmallIntNotNull,
-        // StdPrimitiveI16AsPostgresqlSmallSerial,
-        // StdPrimitiveI16AsPostgresqlSmallSerialNotNull,
-        // StdPrimitiveI16AsPostgresqlInt2,
-        // StdPrimitiveI16AsPostgresqlInt2NotNull,
-
-        // StdPrimitiveI32AsPostgresqlInt,
-        // StdPrimitiveI32AsPostgresqlIntNotNull,
-        // StdPrimitiveI32AsPostgresqlSerial,
-        // StdPrimitiveI32AsPostgresqlSerialNotNull,
-        // StdPrimitiveI32AsPostgresqlInt4,
-        // StdPrimitiveI32AsPostgresqlInt4NotNull,
-
-        // StdPrimitiveI64AsPostgresqlBigInt,
-        // StdPrimitiveI64AsPostgresqlBigIntNotNull,
-        // StdPrimitiveI64AsPostgresqlBigSerial,
-        // StdPrimitiveI64AsPostgresqlBigSerialNotNull,
-        // StdPrimitiveI64AsPostgresqlInt8,
-        // StdPrimitiveI64AsPostgresqlInt8NotNull,
-
-        // StdPrimitiveF32AsPostgresqlReal,
-        // StdPrimitiveF32AsPostgresqlRealNotNull,
-        // StdPrimitiveF32AsPostgresqlFloat4,
-        // StdPrimitiveF32AsPostgresqlFloat4NotNull,
-
-        // StdPrimitiveF64AsPostgresqlDoublePrecision,
-        // StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull,
-        // StdPrimitiveF64AsPostgresqlFloat8,
-        // StdPrimitiveF64AsPostgresqlFloat8NotNull,
-
-        // StdStringStringAsPostgresqlVarchar,
-        // StdStringStringAsPostgresqlVarcharNotNull,
-        // StdStringStringAsPostgresqlCharN,
-        // StdStringStringAsPostgresqlCharNNotNull,
-        // StdStringStringAsPostgresqlText,
-        // StdStringStringAsPostgresqlTextNotNull,
-        // StdStringStringAsPostgresqlName,
-        // StdStringStringAsPostgresqlNameNotNull,
-        // StdStringStringAsPostgresqlCiText,
-        // StdStringStringAsPostgresqlCiTextNotNull,
-
-        // StdVecVecStdPrimitiveU8AsPostgresqlBytea,
-        // StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull,
-
-        // SqlxPostgresTypesPgIntervalAsPostgresqlInterval,
-        // SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull,
-
-        // SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range,
-        // SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull,
-
-        // SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range,
-        // SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull,
-        
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull,
-
-        // SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange,
-        // SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull,
-
-        // SqlxPostgresTypesPgMoneyAsPostgresqlMoney,
-        // SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull,
-
-        // SqlxPostgresTypesPgCiTextAsPostgresqlCiText,
-        // SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull,
-
-        // SqlxTypesBigDecimalAsPostgresqlNumeric,
-        // SqlxTypesBigDecimalAsPostgresqlNumericNotNull,
-
-        // SqlxTypesDecimalAsPostgresqlNumeric,
-        // SqlxTypesDecimalAsPostgresqlNumericNotNull,
-
-        // SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp,
-        // SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull,
-
-        // SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
-        // SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
-
-        // SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
-        // SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull,
-
-        // SqlxTypesChronoNaiveDateAsPostgresqlDate,
-        // SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
-
-        // SqlxTypesChronoNaiveTimeAsPostgresqlTime,
-        // SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
-
-        // SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz,
-        // SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull,
-
-        // SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
-        // SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull,
-
-        // SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz,
-        // SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull,
-
-        // SqlxTypesTimeDateAsPostgresqlDate,
-        // SqlxTypesTimeDateAsPostgresqlDateNotNull,
-
-        // SqlxTypesTimeTimeAsPostgresqlTime,
-        // SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
-
-        // SqlxTypesUuidUuidAsPostgresqlUuid,
-        // SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
-        // SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,
-
-        // SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
-        // SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
-        // SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr,
-        // SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
-
-        // StdNetIpAddrAsPostgresqlInet,
-        // StdNetIpAddrAsPostgresqlInetNotNull,
-        // StdNetIpAddrAsPostgresqlCidr,
-        // StdNetIpAddrAsPostgresqlCidrNotNull,
-
-        // SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr,
-        // SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull,
-
-        // SqlxTypesBitVecAsPostgresqlBit,
-        // SqlxTypesBitVecAsPostgresqlBitNotNull,
-        // SqlxTypesBitVecAsPostgresqlVarBit,
-        // SqlxTypesBitVecAsPostgresqlVarBitNotNull,
-
-        // //todo what to do with generic?
-        // SqlxTypesJsonTAsPostgresqlJson,
-        // SqlxTypesJsonTAsPostgresqlJsonNotNull,
-        // SqlxTypesJsonTAsPostgresqlJsonB,
-        // SqlxTypesJsonTAsPostgresqlJsonBNotNull,
-
-        // SerdeJsonValueAsPostgresqlJson,
-        // SerdeJsonValueAsPostgresqlJsonNotNull,
-        // SerdeJsonValueAsPostgresqlJsonB,
-        // SerdeJsonValueAsPostgresqlJsonBNotNull,
-    )
-)]//todo check on postgresql max length value of type
+#[proc_macro_derive(GeneratePostgresqlCrud)]//todo check on postgresql max length value of type
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {//todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
@@ -387,20 +169,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let primary_key_attr_name = "generate_postgresql_crud_primary_key";
         let mut primary_key_field_option = None;
         for field_named in fields_named {
-            let attrs = &field_named.attrs;
-            if let 1 = attrs.len() {
-                match attrs.first() {
-                    Some(attr) => match proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&attr.path.segments) == primary_key_attr_name {
-                        true => match primary_key_field_option {
-                            Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one primary_key attribute"),
-                            None => {
-                                primary_key_field_option = Some(field_named.clone());
+            match &field_named.ty {
+                syn::Type::Path(value) => match value.path.segments.len() == 2 {
+                    true => {
+                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
+                        }
+                        match value.path.segments[0].arguments {
+                            syn::PathArguments::None => (),
+                            _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
+                        }
+                        match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
+                            Ok(value) => match value {
+                                //todo maybe support other postgresql primary key types
+                                postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => match primary_key_field_option {
+                                    Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one PrimaryKey"),
+                                    None => {
+                                        primary_key_field_option = Some(field_named.clone());
+                                    },
+                                },
+                                _ => ()
                             },
-                        },
-                        false => (),
+                            Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
+                        }
                     },
-                    None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_named.attrs.len() == 1, but attrs.get(0) == None"),
-                }
+                    false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                },
+                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
             }
         }
         match primary_key_field_option {
@@ -415,12 +210,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {sqlx_types_uuid_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    {
-        let primary_key_field_ident_handle = quote::quote!{#primary_key_field_type}.to_string().replace(' ', "");
-        if primary_key_field_ident_handle != sqlx_types_uuid_stringified {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key is not type {sqlx_types_uuid_stringified}");
-        }
-    }
+    // {
+    //     let primary_key_field_ident_handle = quote::quote!{#primary_key_field_type}.to_string().replace(' ', "");
+    //     println!("222 {primary_key_field_ident_handle}");
+    //     if primary_key_field_ident_handle != sqlx_types_uuid_stringified {
+    //         panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key is not type {sqlx_types_uuid_stringified}");
+    //     }
+    // }
     let primary_key_field_ident = primary_key_field.ident.as_ref()
         .unwrap_or_else(|| {
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key_field.ident is None")
@@ -444,7 +240,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                     match value.path.segments[0].arguments {
                         syn::PathArguments::None => (),
-                        _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments.is_some()")
+                        _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
                     }
                     let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
                         Ok(value) => value,
@@ -644,7 +440,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     //
                     //todo json generic
                     //todo reuse it 
-                    println!("--- {:#?}", variant_column.ty);
                     let (
                         rust_sqlx_map_to_postgres_type_variant,
                         maybe_generic_token_stream
@@ -656,7 +451,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                                 match value.path.segments[0].arguments {
                                     syn::PathArguments::None => (),
-                                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments.is_some()")
+                                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
                                 }
                                 let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
                                     Ok(value) => value,
@@ -7496,9 +7291,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
@@ -7509,11 +7304,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // }
     };
     // if ident == "" {
-        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            &proc_macro_name_upper_camel_case,
-            &gen,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         &proc_macro_name_upper_camel_case,
+    //         &gen,
+    //         &proc_macro_name_upper_camel_case_ident_stringified
+    //     );
     // }
     gen.into()
 }
