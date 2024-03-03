@@ -2858,7 +2858,7 @@ pub struct TestNewType<T> {
 
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct TestNewTypeWithSerializeDeserialize<T> {
-    std_primitive_bool: StdPrimitiveBool,
+    std_primitive_bool: StdPrimitiveBoolWithSerializeDeserialize,
     std_primitive_i16: StdPrimitiveI16,
     std_primitive_i32: StdPrimitiveI32,
     std_primitive_i64: StdPrimitiveI64,
@@ -2905,7 +2905,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
 impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNewType<T> {
     type Error = ();//todo
     fn try_from(value: TestNewTypeWithSerializeDeserialize<T>) -> Result<Self, Self::Error> {
-        let std_primitive_bool: StdPrimitiveBool = value.std_primitive_bool;
+        let std_primitive_bool = StdPrimitiveBool::from(value.std_primitive_bool);
         let std_primitive_i16: StdPrimitiveI16 = value.std_primitive_i16;
         let std_primitive_i32: StdPrimitiveI32 = value.std_primitive_i32;
         let std_primitive_i64: StdPrimitiveI64 = value.std_primitive_i64;
@@ -3632,8 +3632,20 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug)]
 pub struct StdPrimitiveBool(pub std::primitive::bool);//todo maybe make it private?
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
+impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
+    fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
+    fn from(value: StdPrimitiveBool) -> Self {
+        Self(value.0)
+    }
+}
 impl StdPrimitiveBool {
     pub fn into_inner(self) -> std::primitive::bool {
         self.0
