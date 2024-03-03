@@ -28,7 +28,7 @@ impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for UuidWrapper {
     }
 }
 
-impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for Vec<UuidWrapper> {
+impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for std::vec::Vec<UuidWrapper> {
     fn serde_urlencoded_parameter(self) -> std::string::String {
         let mut value = std::string::String::from("");
         for element in self {
