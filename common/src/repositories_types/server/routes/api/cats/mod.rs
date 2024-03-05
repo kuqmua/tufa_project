@@ -55,22 +55,23 @@ pub struct Dog {
 
 //////////////
 
+
 pub const TABLE_NAME: &str = "dogs";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct DogOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub id: std::option::Option<postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub name: std::option::Option<postgresql_crud::StdStringString>,
+    pub name: std::option::Option<postgresql_crud::StdStringStringWithSerializeDeserialize>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub color: std::option::Option<postgresql_crud::StdStringString>,
+    pub color: std::option::Option<postgresql_crud::StdStringStringWithSerializeDeserialize>,
 }
 impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
         Self {
             id: Some(postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize::from(value.id.0)),
-            name: Some(value.name.0),
-            color: Some(value.color.0),
+            name: Some(postgresql_crud::StdStringStringWithSerializeDeserialize::from(value.name.0)),
+            color: Some(postgresql_crud::StdStringStringWithSerializeDeserialize::from(value.color.0)),
         }
     }
 }
@@ -183,7 +184,7 @@ impl std::convert::TryFrom<DogOptions> for DogName {
     fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
         let name =
             match value.name {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: NameIsNone
@@ -219,7 +220,7 @@ impl std::convert::TryFrom<DogOptions> for DogColor {
     fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
         let color =
             match value.color {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: ColorIsNone
@@ -311,7 +312,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
             };
         let name =
             match value.name {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: NameIsNone
@@ -403,7 +404,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdColor {
             };
         let color =
             match value.color {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: ColorIsNone
@@ -444,7 +445,7 @@ impl std::convert::TryFrom<DogOptions> for DogNameColor {
     fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
         let name =
             match value.name {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: NameIsNone
@@ -466,7 +467,7 @@ impl std::convert::TryFrom<DogOptions> for DogNameColor {
             };
         let color =
             match value.color {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: ColorIsNone
@@ -563,7 +564,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
             };
         let name =
             match value.name {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: NameIsNone
@@ -585,7 +586,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdNameColor {
             };
         let color =
             match value.color {
-                Some(value) => value,
+                Some(value) => postgresql_crud::StdStringString::from(value),
                 None => {
                     return
                 Err(Self :: Error :: ColorIsNone
@@ -736,9 +737,9 @@ impl DogColumnSelect {
     {
         let mut id: std::option::Option<postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize> = None;
         //postgresql_crud::StdStringStringAsPostgresqlVarchar
-        let mut name: std::option::Option<postgresql_crud::StdStringString> =
+        let mut name: std::option::Option<postgresql_crud::StdStringStringWithSerializeDeserialize> =
             None;
-        let mut color: std::option::Option<postgresql_crud::StdStringString> =
+        let mut color: std::option::Option<postgresql_crud::StdStringStringWithSerializeDeserialize> =
             None;
         match self {
             Self::Id => {
@@ -774,7 +775,7 @@ impl DogColumnSelect {
                 };
                 name = {
                     let value: std::option::Option<std::string::String> = row.try_get("name")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
             }
             Self::Color => {
@@ -794,7 +795,7 @@ impl DogColumnSelect {
                 };
                 color = {
                     let value: std::option::Option<std::string::String> = row.try_get("color")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 }
             }
             Self::IdName => {
@@ -814,7 +815,7 @@ impl DogColumnSelect {
                 };
                 name = {
                     let value: std::option::Option<std::string::String> = row.try_get("name")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
             }
             Self::IdColor => {
@@ -834,7 +835,7 @@ impl DogColumnSelect {
                 };
                 color = {
                     let value: std::option::Option<std::string::String> = row.try_get("color")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
             }
             Self::NameColor => {
@@ -854,11 +855,11 @@ impl DogColumnSelect {
                 };
                 name = {
                     let value: std::option::Option<std::string::String> = row.try_get("name")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
                 color = {
                     let value: std::option::Option<std::string::String> = row.try_get("color")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
             }
             Self::IdNameColor => {
@@ -878,11 +879,11 @@ impl DogColumnSelect {
                 };
                 name = {
                     let value: std::option::Option<std::string::String> = row.try_get("name")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
                 color = {
                     let value: std::option::Option<std::string::String> = row.try_get("color")?;
-                    value.map(|value|postgresql_crud::StdStringString(value))
+                    value.map(|value|postgresql_crud::StdStringStringWithSerializeDeserialize::from(postgresql_crud::StdStringString(value)))
                 };
             }
         }
@@ -1704,8 +1705,8 @@ pub struct CreateManyPayloadElement {
 pub struct CreateManyPayload(pub std::vec::Vec<CreateManyPayloadElement>);
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayloadElementWithSerializeDeserialize {
-    pub name: postgresql_crud::StdStringString,//with serialize deserialize
-    pub color: postgresql_crud::StdStringString,//with serialize deserialize
+    pub name: postgresql_crud::StdStringStringWithSerializeDeserialize,//with serialize deserialize
+    pub color: postgresql_crud::StdStringStringWithSerializeDeserialize,//with serialize deserialize
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct CreateManyPayloadWithSerializeDeserialize(
@@ -1728,8 +1729,8 @@ impl std::convert::TryFrom<CreateManyPayloadElementWithSerializeDeserialize>
     fn try_from(
         value: CreateManyPayloadElementWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
-        let name = value.name;
-        let color = value.color;
+        let name = postgresql_crud::StdStringString::from(value.name);
+        let color = postgresql_crud::StdStringString::from(value.color);
         Ok(Self { name, color })
     }
 }
@@ -1761,8 +1762,8 @@ impl std::convert::From<CreateManyPayloadElement>
     for CreateManyPayloadElementWithSerializeDeserialize
 {
     fn from(value: CreateManyPayloadElement) -> Self {
-        let name = value.name;
-        let color = value.color;
+        let name = postgresql_crud::StdStringStringWithSerializeDeserialize::from(value.name);
+        let color = postgresql_crud::StdStringStringWithSerializeDeserialize::from(value.color);
         Self { name, color }
     }
 }
