@@ -2827,7 +2827,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 quote::quote!{
                     #operation_payload_element_token_stream
-                    #derive_debug_serialize_deserialize_to_schema_token_stream
+                    #derive_debug_token_stream
                     pub struct #operation_payload_upper_camel_case_token_stream(pub std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>);
                 }
             };
@@ -7827,7 +7827,6 @@ fn generate_pub_field_ident_field_type_token_stream(
             )
         });
     let field_type = &element.field.ty;
-    //  HERE
     let inner_type_token_stream = {
         let inner_type_stringified = &element.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic for json
         inner_type_stringified.parse::<proc_macro2::TokenStream>()
@@ -7850,8 +7849,13 @@ fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(
             )
         });
     let field_type = &element.field.ty;
+    let inner_type_with_serialize_deserialize_token_stream = {
+        let inner_type_with_serialize_deserialize_stringified = &element.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
+        inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     quote::quote!{
-        pub #field_ident: #field_type //todo with serialize deserialize conversion
+        pub #field_ident: #inner_type_with_serialize_deserialize_token_stream//#field_type //todo with serialize deserialize conversion
     }
 }
 
