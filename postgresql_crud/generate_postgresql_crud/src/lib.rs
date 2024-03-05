@@ -7870,8 +7870,13 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
                 naming_constants::FIELD_IDENT_IS_NONE
             )
         });
+    let inner_type_token_stream = {
+        let inner_type_stringified = &element.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic for json
+        inner_type_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     quote::quote!{
-        let #field_ident = value.#field_ident;//todo with serialize deserialize
+        let #field_ident = #inner_type_token_stream::from(value.#field_ident);//todo from or try_from
     }
 }
 
