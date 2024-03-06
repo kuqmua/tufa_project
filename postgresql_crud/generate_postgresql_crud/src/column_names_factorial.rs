@@ -3,7 +3,7 @@ pub fn column_names_factorial(
     input: std::vec::Vec<&syn::Field>,
     output: &mut [std::vec::Vec<syn::Field>],
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
-) -> Vec<Vec<syn::Field>> {
+) -> std::vec::Vec<std::vec::Vec<syn::Field>> {
     let len = input.len();
     match len {
         0 => {
