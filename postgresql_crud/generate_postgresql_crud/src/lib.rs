@@ -2894,13 +2894,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = {
                 let query_string_token_stream = {
                     let column_names = {
-                        let fields_named_filtered = fields_named_wrappers_excluding_primary_key.iter()
-                        .map(|element|&element.field)
-                        .collect::<std::vec::Vec<&syn::Field>>();
-                        fields_named_filtered.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, field)| {
-                            let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            });
+                        fields_named_wrappers_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                            let field_ident = &element.field_ident;
                             let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                             match incremented_index == fields_named_wrappers_excluding_primary_key_len {
                                 true => {
@@ -2915,13 +2910,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let column_increments = {
                         let mut column_increments = fields_named_wrappers_excluding_primary_key.iter()
-                        .map(|element|&element.field)
-                        .collect::<std::vec::Vec<&syn::Field>>()
-                        .iter()
-                        .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
-                            acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
-                            acc
-                        });
+                            .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
+                                acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
+                                acc
+                            });
                         column_increments.pop();
                         column_increments.pop();
                         column_increments
