@@ -2728,12 +2728,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
-                    let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                        element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            })
-                    });
+                    let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|&element.field_ident);
                     quote::quote!{
                         impl std::convert::From<#operation_payload_element_upper_camel_case_token_stream> for #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream {
                             fn from(value: #operation_payload_element_upper_camel_case_token_stream) -> Self {
