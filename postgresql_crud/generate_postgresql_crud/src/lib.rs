@@ -5531,10 +5531,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     let field_type = &element.field.ty;
                     quote::quote!{
                         pub #field_ident: std::option::Option<#field_type>
@@ -5551,13 +5548,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     let field_type = &element.field.ty;
                     quote::quote!{
-                        #field_ident: std::option::Option<#field_type>//todo with serialize deserialize conversion variants
+                        #field_ident: std::option::Option<#field_type>
                     }   
                 });
                 quote::quote!{
