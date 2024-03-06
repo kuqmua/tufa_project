@@ -168,8 +168,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_syn_field_with_additional_info = {
         let primary_key_attr_name = "generate_postgresql_crud_primary_key";
         let mut primary_key_field_option = None;
-        for field_named in fields_named {
-            match &field_named.ty {
+        for element in fields_named {
+            match &element.ty {
                 syn::Type::Path(value) => match value.path.segments.len() == 2 {
                     true => {
                         if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
@@ -192,7 +192,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => match primary_key_field_option {
                                     Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one PrimaryKey"),
                                     None => {
-                                        primary_key_field_option = Some(SynFieldWithAdditionalInfo::from(field_named.clone()));
+                                        primary_key_field_option = Some(SynFieldWithAdditionalInfo::from(element.clone()));
                                     },
                                 },
                                 _ => ()
