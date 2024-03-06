@@ -7290,6 +7290,79 @@ struct SynFieldWithAdditionalInfo {
     inner_type_token_stream: proc_macro2::TokenStream,
     inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
 }
+impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
+    fn from(value: syn::Field) -> Self {
+        let name = "SynFieldWithAdditionalInfo from syn::Field error";
+        let field = value.clone();
+        let field_ident = value.ident
+            .unwrap_or_else(|| {
+                panic!("{name} field ident is none")
+            });
+        let (
+            rust_sqlx_map_to_postgres_type_variant,
+            maybe_generic_token_stream
+        ) = match &value.ty {
+            syn::Type::Path(value) => match value.path.segments.len() == 2 {
+                true => {
+                    if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                        panic!("{name} field_type is not syn::Type::Path");
+                    }
+                    match value.path.segments[0].arguments {
+                        syn::PathArguments::None => (),
+                        _ => panic!("{name} value.path.segments[0].arguments != syn::PathArguments::None")
+                    }
+                    let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
+                        Ok(value) => value,
+                        Err(e) => panic!("{name} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
+                    };
+                    let maybe_generic_token_stream = match &value.path.segments[1].arguments {
+                        syn::PathArguments::None => quote::quote!{},
+                        syn::PathArguments::AngleBracketed(value) => {
+                            quote::quote!{#value}//< test_mod :: Something >
+                        },
+                        syn::PathArguments::Parenthesized(_) => panic!("{name} does not support syn::PathArguments::Parenthesized"),
+                    };
+                    (
+                        rust_sqlx_map_to_postgres_type_variant,
+                        maybe_generic_token_stream
+                    )
+                },
+                false => panic!("{name} field_type is not syn::Type::Path")
+            },
+            _ => panic!("{name} field_type is not syn::Type::Path")
+        };
+        let path_token_stream = {
+            let path_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified();//todo generic for json
+            path_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {path_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let original_type_token_stream = {
+            let original_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");//todo generic for json
+            original_type_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {original_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let inner_type_token_stream = {
+            let inner_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic for json
+            inner_type_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let inner_type_with_serialize_deserialize_token_stream = {
+            let inner_type_with_serialize_deserialize_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
+            inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        Self {
+            field,
+            field_ident,
+            rust_sqlx_map_to_postgres_type_variant,//todo maybe not need to add here
+            maybe_generic_token_stream,//todo maybe not need to add here
+            path_token_stream,
+            original_type_token_stream,
+            inner_type_token_stream,
+            inner_type_with_serialize_deserialize_token_stream,
+        }
+    }
+}
 
 fn generate_common_middlewares_error_syn_variants_from_impls(
     common_middlewares_error_syn_variants: std::vec::Vec::<&(
