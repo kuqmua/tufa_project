@@ -192,40 +192,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => match primary_key_field_option {
                                     Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one PrimaryKey"),
                                     None => {
-                                        let field_ident = field_named.ident.as_ref()
-                                            .unwrap_or_else(|| {
-                                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_named.ident is None")
-                                            });
-                                        let path_token_stream = {
-                                            let path_stringified = &value.get_path_stringified();//todo generic for json
-                                            path_stringified.parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                        };
-                                        let original_type_token_stream = {
-                                            let original_type_stringified = &value.get_original_type_stringified("");//todo generic for json
-                                            original_type_stringified.parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {original_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                        };
-                                        let inner_type_token_stream = {
-                                            let inner_type_stringified = &value.get_inner_type_stringified("");//todo generic for json
-                                            inner_type_stringified.parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                        };
-                                        let inner_type_with_serialize_deserialize_token_stream = {
-                                            let inner_type_with_serialize_deserialize_stringified = &value.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
-                                            inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                        };
-                                        primary_key_field_option = Some(SynFieldWithAdditionalInfo {
-                                            field: field_named.clone(),
-                                            field_ident: field_ident.clone(),
-                                            rust_sqlx_map_to_postgres_type_variant: value,
-                                            maybe_generic_token_stream,
-                                            path_token_stream,
-                                            original_type_token_stream,
-                                            inner_type_token_stream,
-                                            inner_type_with_serialize_deserialize_token_stream,
-                                        });
+                                        primary_key_field_option = Some(SynFieldWithAdditionalInfo::from(field_named.clone()));
                                     },
                                 },
                                 _ => ()
