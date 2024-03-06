@@ -1203,18 +1203,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             let sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
                 let field_type = &element.field.ty;
-                //
-                let inner_type_token_stream = {
-                    let inner_type_stringified = &element.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");//todo generic for json
-                    inner_type_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                //
+                let original_type_token_stream = &element.original_type_token_stream;
                 quote::quote!{
-                    // std::option::Option<#field_type>: #sqlx_decode_decode_database_token_stream,
-                    // std::option::Option<#field_type>: #sqlx_types_type_database_token_stream,
-                    std::option::Option<#inner_type_token_stream>: #sqlx_decode_decode_database_token_stream,
-                    std::option::Option<#inner_type_token_stream>: #sqlx_types_type_database_token_stream,
+                    std::option::Option<#original_type_token_stream>: #sqlx_decode_decode_database_token_stream,
+                    std::option::Option<#original_type_token_stream>: #sqlx_types_type_database_token_stream,
                 }
             });
             quote::quote! {
