@@ -290,10 +290,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
             _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
         };
-        let field_ident = element.ident.as_ref()
-            .unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.ident is None")
-            });
         let path_token_stream = {
             let path_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified();//todo generic for json
             path_stringified.parse::<proc_macro2::TokenStream>()
@@ -405,7 +401,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let fields_options_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
             let field_vis = &element.field.vis;
-            let field_ident = &element.field.ident;
+            let field_ident = &element.field_ident;
             let field_type_path = &element.field.ty;
             let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
             quote::quote!{
@@ -5583,12 +5579,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         element,
                         &proc_macro_name_upper_camel_case_ident_stringified
                     ));
-                    let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                        element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            })
-                    });
+                    let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|&element.field_ident);
                     let field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                         file!(),
                         line!(),
@@ -5629,12 +5620,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     element,
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ));
-                let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        })
-                });
+                let fields_idents_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|&element.field_ident);
                 quote::quote!{
                     impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
@@ -5790,12 +5776,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 let query_string_token_stream = {
                     let additional_parameters_modification_token_stream = {
-                        let fields_named_filtered = fields_named_wrappers_excluding_primary_key.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>();
-                        fields_named_filtered.iter().enumerate().map(|(index, field)| {
-                            let field_ident = field.ident.as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                });
+                        fields_named_wrappers_excluding_primary_key.iter().enumerate().map(|(index, element)| {
+                            let field_ident = &element.field_ident;
                             let handle_token_stream = {
                                 let possible_dot_space = match (
                                     index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
@@ -5855,10 +5837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                        let field_ident = element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            });
+                        let field_ident = &element.field_ident;
                         quote::quote!{
                             if let Some(value) = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#field_ident {
                                 query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(
@@ -6087,10 +6066,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         pub #field_ident: std::option::Option<std::vec::Vec<#crate_server_postgres_regex_filter_regex_filter_token_stream>>//todo
                     }
@@ -6106,10 +6082,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         #field_ident: std::option::Option<std::vec::Vec<#crate_server_postgres_regex_filter_regex_filter_token_stream>>
                     }
@@ -6496,10 +6469,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         };
                         let filter_unique_parameters_other_columns_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                            let field_ident = element.field.ident.as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                });
+                            let field_ident = &element.field_ident;
                             let field_handle_token_stream = {
                                 let field_handle_stringified = format!("{field_ident}_handle");
                                 field_handle_stringified.parse::<proc_macro2::TokenStream>()
@@ -6578,10 +6548,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let query_string_token_stream = {
                         let additional_parameters_modification_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                            let field_ident = element.field.ident.as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                });
+                            let field_ident = &element.field_ident;
                             let field_handle_token_stream = {
                                 let field_handle_stringified = format!("{field_ident}_handle");
                                 field_handle_stringified.parse::<proc_macro2::TokenStream>()
@@ -6676,10 +6643,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let binded_query_token_stream = {
                         let binded_query_modifications_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                            let field_ident = element.field.ident.as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                });
+                            let field_ident = &element.field_ident;
                             let field_handle_token_stream = {
                                 let field_handle_stringified = format!("{field_ident}_handle");
                                 field_handle_stringified.parse::<proc_macro2::TokenStream>()
