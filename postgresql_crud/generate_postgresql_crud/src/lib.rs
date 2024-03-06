@@ -5294,10 +5294,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_query_bind_vecs_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
                         let field_ident_underscore_vec_token_stream = {
                             let field_ident_underscore_vec_stringified = {
-                                let field_ident = element.field.ident.as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                    });
+                                let field_ident = &element.field_ident;
                                 format!("{field_ident}{underscore_vec_name_stringified}")
                             };
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
