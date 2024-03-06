@@ -727,7 +727,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 pub const POSTGRESQL_CRUD_SNAKE_CASE: &str = "postgresql_crud";
 
 impl RustSqlxMapToPostgresTypeVariant {
-    pub fn generate_path_stringified(&self) -> std::string::String {
+    pub fn get_path_stringified(&self) -> std::string::String {
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{self}")
     }
     //todo maybe move to generate_postgresql_crud macro 
