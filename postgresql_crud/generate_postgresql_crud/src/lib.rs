@@ -251,76 +251,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let field_ident_is_none_stringified = naming_constants::FIELD_IDENT_IS_NONE;
-    let fields_named_wrappers_excluding_primary_key = fields_named.clone().into_iter().filter(|field|*field != primary_key_syn_field_with_additional_info.field).map(|element|{
-        let field_ident = element.ident
-            .as_ref()
-            .unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-            });
-        let (
-            rust_sqlx_map_to_postgres_type_variant,
-            maybe_generic_token_stream
-        ) = match &element.ty {
-            syn::Type::Path(value) => match value.path.segments.len() == 2 {
-                true => {
-                    if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
-                    }
-                    match value.path.segments[0].arguments {
-                        syn::PathArguments::None => (),
-                        _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
-                    }
-                    let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
-                        Ok(value) => value,
-                        Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
-                    };
-                    let maybe_generic_token_stream = match &value.path.segments[1].arguments {
-                        syn::PathArguments::None => quote::quote!{},
-                        syn::PathArguments::AngleBracketed(value) => {
-                            quote::quote!{#value}//< test_mod :: Something >
-                        },
-                        syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
-                    };
-                    (
-                        rust_sqlx_map_to_postgres_type_variant,
-                        maybe_generic_token_stream
-                    )
-                },
-                false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-            },
-            _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-        };
-        let path_token_stream = {
-            let path_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified();//todo generic for json
-            path_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let original_type_token_stream = {
-            let original_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");//todo generic for json
-            original_type_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {original_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let inner_type_token_stream = {
-            let inner_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic for json
-            inner_type_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let inner_type_with_serialize_deserialize_token_stream = {
-            let inner_type_with_serialize_deserialize_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
-            inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        SynFieldWithAdditionalInfo {
-            field: element.clone(),
-            field_ident: field_ident.clone(),
-            rust_sqlx_map_to_postgres_type_variant,
-            maybe_generic_token_stream,
-            path_token_stream,
-            original_type_token_stream,
-            inner_type_token_stream,
-            inner_type_with_serialize_deserialize_token_stream,
-        }
-    }).collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>();
+    let fields_named_wrappers_excluding_primary_key = fields_named.clone().into_iter().filter(|field|*field != primary_key_syn_field_with_additional_info.field).map(
+        |element|SynFieldWithAdditionalInfo::from(element)
+    ).collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>();
     let fields_named_len = fields_named.len();
     if fields_named_len <= 1 {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1" );
@@ -458,77 +391,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &mut veced_vec as &mut [std::vec::Vec<syn::Field>],
             &proc_macro_name_upper_camel_case_ident_stringified
         );
-        column_variants_vec.into_iter().map(|elements|elements.into_iter().map(|element|{
-            //todo reuse as impl from for syn::Field
-            let field_ident = element.ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                });
-            let (
-                rust_sqlx_map_to_postgres_type_variant,
-                maybe_generic_token_stream
-            ) = match &element.ty {
-                syn::Type::Path(value) => match value.path.segments.len() == 2 {
-                    true => {
-                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
-                        }
-                        match value.path.segments[0].arguments {
-                            syn::PathArguments::None => (),
-                            _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
-                        }
-                        let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
-                            Ok(value) => value,
-                            Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
-                        };
-                        let maybe_generic_token_stream = match &value.path.segments[1].arguments {
-                            syn::PathArguments::None => quote::quote!{},
-                            syn::PathArguments::AngleBracketed(value) => {
-                                quote::quote!{#value}//< test_mod :: Something >
-                            },
-                            syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
-                        };
-                        (
-                            rust_sqlx_map_to_postgres_type_variant,
-                            maybe_generic_token_stream
-                        )
-                    },
-                    false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                },
-                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-            };
-            let path_token_stream = {
-                let path_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified();//todo generic for json
-                path_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let original_type_token_stream = {
-                let original_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");//todo generic for json
-                original_type_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {original_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let inner_type_token_stream = {
-                let inner_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic for json
-                inner_type_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let inner_type_with_serialize_deserialize_token_stream = {
-                let inner_type_with_serialize_deserialize_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
-                inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            SynFieldWithAdditionalInfo {
-                field: element.clone(),
-                field_ident: field_ident.clone(),
-                rust_sqlx_map_to_postgres_type_variant,
-                maybe_generic_token_stream,
-                path_token_stream,
-                original_type_token_stream,
-                inner_type_token_stream,
-                inner_type_with_serialize_deserialize_token_stream,
-            }
-        }).collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>()).collect::<std::vec::Vec<std::vec::Vec<SynFieldWithAdditionalInfo>>>()//syn::Field
+        column_variants_vec.into_iter().map(|elements|
+            elements.into_iter().map(|element|SynFieldWithAdditionalInfo::from(element)).collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>()
+        ).collect::<std::vec::Vec<std::vec::Vec<SynFieldWithAdditionalInfo>>>()
     };
     let structs_variants_token_stream = column_variants.iter().map(|variant_columns| {
         let struct_name_token_stream = {
