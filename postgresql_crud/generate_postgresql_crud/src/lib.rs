@@ -1069,55 +1069,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let declaration_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                let field_ident = element.field.ident
-                    .as_ref()
-                    .unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                    });
+                let field_ident = &element.field_ident;
                 let field_type = &element.field.ty;
-                //
-                //todo reuse
-                let (
-                    rust_sqlx_map_to_postgres_type_variant,
-                    maybe_generic_token_stream
-                ) = match &element.field.ty {
-                    syn::Type::Path(value) => match value.path.segments.len() == 2 {
-                        true => {
-                            if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
-                            }
-                            match value.path.segments[0].arguments {
-                                syn::PathArguments::None => (),
-                                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
-                            }
-                            let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
-                                Ok(value) => value,
-                                Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
-                            };
-                            let maybe_generic_token_stream = match &value.path.segments[1].arguments {
-                                syn::PathArguments::None => quote::quote!{},
-                                syn::PathArguments::AngleBracketed(value) => {
-                                    quote::quote!{#value}//< test_mod :: Something >
-                                },
-                                syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
-                            };
-                            (
-                                rust_sqlx_map_to_postgres_type_variant,
-                                maybe_generic_token_stream
-                            )
-                        },
-                        false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                    },
-                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                };
-                let inner_type_with_serialize_deserialize_token_stream = {
-                    let inner_type_with_serialize_deserialize_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
-                    inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                //
+                let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
                 quote::quote! {
-                    let mut #field_ident: std::option::Option<#inner_type_with_serialize_deserialize_token_stream> = None;//#field_type
+                    let mut #field_ident: std::option::Option<#inner_type_with_serialize_deserialize_token_stream> = None;
                 }
             });
             let assignment_token_stream = column_variants.iter().map(|column_variant|{
