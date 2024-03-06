@@ -3433,10 +3433,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                        let field_ident = element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            });
+                        let field_ident = &element.field_ident;
                         quote::quote!{
                             query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#field_ident, query);
                         }
@@ -3642,10 +3639,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         pub #field_ident: std::option::Option<std::vec::Vec<#crate_server_postgres_regex_filter_regex_filter_token_stream>>,
                     }
@@ -3665,10 +3659,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         #field_ident: std::option::Option<std::vec::Vec<#crate_server_postgres_regex_filter_regex_filter_token_stream>>,
                     }
