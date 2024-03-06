@@ -1097,45 +1097,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{serde_urlencoded_parameter_token_stream}");
         let options_try_from_sqlx_row_token_stream = {
             let declaration_primary_key_token_stream = {
-                //todo reuse
-                let (
-                    rust_sqlx_map_to_postgres_type_variant,
-                    maybe_generic_token_stream
-                ) = match &primary_key_syn_field_with_additional_info.field.ty {
-                    syn::Type::Path(value) => match value.path.segments.len() == 2 {
-                        true => {
-                            if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
-                            }
-                            match value.path.segments[0].arguments {
-                                syn::PathArguments::None => (),
-                                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
-                            }
-                            let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
-                                Ok(value) => value,
-                                Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
-                            };
-                            let maybe_generic_token_stream = match &value.path.segments[1].arguments {
-                                syn::PathArguments::None => quote::quote!{},
-                                syn::PathArguments::AngleBracketed(value) => {
-                                    quote::quote!{#value}//< test_mod :: Something >
-                                },
-                                syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
-                            };
-                            (
-                                rust_sqlx_map_to_postgres_type_variant,
-                                maybe_generic_token_stream
-                            )
-                        },
-                        false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                    },
-                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                };
-                let inner_type_with_serialize_deserialize_token_stream = {
-                    let inner_type_with_serialize_deserialize_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");//todo generic for json
-                    inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
+                let inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
                 quote::quote! {
                     let mut #primary_key_field_ident: std::option::Option<#inner_type_with_serialize_deserialize_token_stream> = None;
                 }
@@ -1311,54 +1273,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             let sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream = {
-                //
-                // let f = primary_key_field
-                //todo reuse
-                let (
-                    rust_sqlx_map_to_postgres_type_variant,
-                    maybe_generic_token_stream
-                ) = match &primary_key_syn_field_with_additional_info.field.ty {
-                    syn::Type::Path(value) => match value.path.segments.len() == 2 {
-                        true => {
-                            if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
-                            }
-                            match value.path.segments[0].arguments {
-                                syn::PathArguments::None => (),
-                                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
-                            }
-                            let rust_sqlx_map_to_postgres_type_variant = match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
-                                Ok(value) => value,
-                                Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
-                            };
-                            let maybe_generic_token_stream = match &value.path.segments[1].arguments {
-                                syn::PathArguments::None => quote::quote!{},
-                                syn::PathArguments::AngleBracketed(value) => {
-                                    quote::quote!{#value}//< test_mod :: Something >
-                                },
-                                syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
-                            };
-                            (
-                                rust_sqlx_map_to_postgres_type_variant,
-                                maybe_generic_token_stream
-                            )
-                        },
-                        false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                    },
-                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
-                };
-                // 
-                let inner_type_token_stream = {
-                    let inner_type_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");//todo generic for json
-                    inner_type_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                //
+                let original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
                 quote::quote!{
-                    std::option::Option<#inner_type_token_stream>: #sqlx_decode_decode_database_token_stream,
-                    std::option::Option<#inner_type_token_stream>: #sqlx_types_type_database_token_stream,
-                    // std::option::Option<#sqlx_types_uuid_token_stream>: #sqlx_decode_decode_database_token_stream,
-                    // std::option::Option<#sqlx_types_uuid_token_stream>: #sqlx_types_type_database_token_stream,
+                    std::option::Option<#original_type_token_stream>: #sqlx_decode_decode_database_token_stream,
+                    std::option::Option<#original_type_token_stream>: #sqlx_types_type_database_token_stream,
                 }
             };
             let sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
