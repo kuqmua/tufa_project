@@ -2889,21 +2889,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let try_operation_token_stream = {
                 let query_string_token_stream = {
-                    let column_names = {
-                        fields_named_wrappers_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                            let field_ident = &element.field_ident;
-                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                            match incremented_index == fields_named_wrappers_excluding_primary_key_len {
-                                true => {
-                                    acc.push_str(&format!("{field_ident}"));
-                                },
-                                false => {
-                                    acc.push_str(&format!("{field_ident}{dot_space}"));
-                                },
-                            }
-                            acc
-                        })
-                    };
+                    let column_names = fields_named_wrappers_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                        let field_ident = &element.field_ident;
+                        let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                        match incremented_index == fields_named_wrappers_excluding_primary_key_len {
+                            true => {
+                                acc.push_str(&format!("{field_ident}"));
+                            },
+                            false => {
+                                acc.push_str(&format!("{field_ident}{dot_space}"));
+                            },
+                        }
+                        acc
+                    });
                     let column_increments = {
                         let mut column_increments = fields_named_wrappers_excluding_primary_key.iter()
                             .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
@@ -2931,8 +2929,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     });
                     let column_vecs_with_capacity_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
-                    let columns_acc_push_elements_token_stream = fields_named_wrappers_excluding_primary_key.iter()
-                    .enumerate().map(|(index, element)|{
+                    let columns_acc_push_elements_token_stream = fields_named_wrappers_excluding_primary_key.iter().enumerate().map(|(index, element)|{
                         let field_ident = &element.field_ident;
                         let index_token_stream = {
                             let index_stringified = index.to_string();
