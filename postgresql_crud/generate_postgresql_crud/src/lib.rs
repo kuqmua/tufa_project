@@ -165,7 +165,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
-    let primary_key_field = {
+    struct SynFieldWithAdditionalInfo {
+        field: syn::Field,
+        rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant,
+        maybe_generic_token_stream: proc_macro2::TokenStream,
+    }
+    let primary_key_syn_field_with_additional_info = {
         let primary_key_attr_name = "generate_postgresql_crud_primary_key";
         let mut primary_key_field_option = None;
         for field_named in fields_named {
@@ -179,13 +184,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             syn::PathArguments::None => (),
                             _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
                         }
+                        let maybe_generic_token_stream = match &value.path.segments[1].arguments {
+                            syn::PathArguments::None => quote::quote!{},
+                            syn::PathArguments::AngleBracketed(value) => {
+                                quote::quote!{#value}//< test_mod :: Something >
+                            },
+                            syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
+                        };
                         match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
                             Ok(value) => match value {
                                 //todo maybe support other postgresql primary key types
                                 postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => match primary_key_field_option {
                                     Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one PrimaryKey"),
                                     None => {
-                                        primary_key_field_option = Some(field_named.clone());
+                                        primary_key_field_option = Some(SynFieldWithAdditionalInfo {
+                                            field: field_named.clone(),
+                                            rust_sqlx_map_to_postgres_type_variant: value,
+                                            maybe_generic_token_stream,
+                                        });
                                     },
                                 },
                                 _ => ()
@@ -203,7 +219,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {primary_key_attr_name} attribute"),
         }
     };
-    let primary_key_field_type = &primary_key_field.ty;
+    let primary_key_field_type = &primary_key_syn_field_with_additional_info.field.ty;
     // println!("{primary_key_field:#?}");
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;
     let sqlx_types_uuid_token_stream = {
@@ -217,13 +233,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //         panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key is not type {sqlx_types_uuid_stringified}");
     //     }
     // }
-    let primary_key_field_ident = primary_key_field.ident.as_ref()
+    let primary_key_field_ident = primary_key_syn_field_with_additional_info.field.ident.as_ref()
         .unwrap_or_else(|| {
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} primary_key_field.ident is None")
         });
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let field_ident_is_none_stringified = naming_constants::FIELD_IDENT_IS_NONE;
-    let fields_named_wrappers_excluding_primary_key = fields_named.clone().into_iter().filter(|field|*field != primary_key_field).map(|element|{
+    let fields_named_wrappers_excluding_primary_key = fields_named.clone().into_iter().filter(|field|*field != primary_key_syn_field_with_additional_info.field).map(|element|{
         let field_ident = element.ident
             .as_ref()
             .unwrap_or_else(|| {
@@ -344,7 +360,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let (
                 rust_sqlx_map_to_postgres_type_variant,
                 maybe_generic_token_stream
-            ) = match &primary_key_field.ty {
+            ) = match &primary_key_syn_field_with_additional_info.field.ty {
                 syn::Type::Path(value) => match value.path.segments.len() == 2 {
                     true => {
                         if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
@@ -417,7 +433,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (
             rust_sqlx_map_to_postgres_type_variant,
             maybe_generic_token_stream
-        ) = match &primary_key_field.ty {
+        ) = match &primary_key_syn_field_with_additional_info.field.ty {
             syn::Type::Path(value) => match value.path.segments.len() == 2 {
                 true => {
                     if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
@@ -1139,7 +1155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let (
                     rust_sqlx_map_to_postgres_type_variant,
                     maybe_generic_token_stream
-                ) = match &primary_key_field.ty {
+                ) = match &primary_key_syn_field_with_additional_info.field.ty {
                     syn::Type::Path(value) => match value.path.segments.len() == 2 {
                         true => {
                             if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
@@ -1249,7 +1265,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //         };
                 //     }
                 // };
-                let write_ident_token_stream = column_variant.iter().filter_map(|field|match field == &primary_key_field {
+                let write_ident_token_stream = column_variant.iter().filter_map(|field|match field == &primary_key_syn_field_with_additional_info.field {
                     true => None,
                     false => {
                         let field_ident = field.ident.as_ref()
@@ -1355,7 +1371,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let (
                     rust_sqlx_map_to_postgres_type_variant,
                     maybe_generic_token_stream
-                ) = match &primary_key_field.ty {
+                ) = match &primary_key_syn_field_with_additional_info.field.ty {
                     syn::Type::Path(value) => match value.path.segments.len() == 2 {
                         true => {
                             if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
@@ -6067,7 +6083,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = {
                 let check_for_none_token_stream_excluding_primary_key = crate::check_for_none::check_for_none(
                     fields_named,
-                    &primary_key_field,
+                    &primary_key_syn_field_with_additional_info.field,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     dot_space,
                     &try_operation_response_variants_token_stream,
@@ -6643,7 +6659,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = {
                 let check_for_none_token_stream = crate::check_for_none::check_for_none(
                     fields_named,
-                    &primary_key_field,
+                    &primary_key_syn_field_with_additional_info.field,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     dot_space,
                     &try_operation_response_variants_token_stream,
