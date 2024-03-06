@@ -2928,27 +2928,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let column_vecs_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
                         let field_ident_underscore_vec_stringified = {
-                            let field_ident = element.field.ident.as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                });
+                            let field_ident = &element.field_ident;
                             format!("{field_ident}{underscore_vec_name_stringified}")
                         };
                         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     });
-                    // let handle_fields_named_wrappers_excluding_primary_key = fields_named_wrappers_excluding_primary_key.iter()
-                    // .map(|element|&element.field)
-                    // .collect::<std::vec::Vec<&syn::Field>>();
                     let column_vecs_with_capacity_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
                     let columns_acc_push_elements_token_stream = fields_named_wrappers_excluding_primary_key.iter()
                     .enumerate().map(|(index, element)|{
-                        let field_ident = element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            });
+                        let field_ident = &element.field_ident;
                         let index_token_stream = {
-                            let index_stringified = format!("{index}");
+                            let index_stringified = index.to_string();
                             index_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
@@ -2957,20 +2948,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_query_bind_vecs_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
                         let field_ident_underscore_vec_token_stream = {
                             let field_ident_underscore_vec_stringified = {
-                                let field_ident = element.field.ident.as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                    });
+                                let field_ident = &element.field_ident;
                                 format!("{field_ident}{underscore_vec_name_stringified}")
                             };
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let inner_type_token_stream = {
-                            let inner_type_stringified = element.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-                            inner_type_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let inner_type_token_stream = &element.inner_type_token_stream;
                         quote::quote!{
                             #query_name_token_stream = #query_name_token_stream.bind(
                                 //todo add ::<T> for serde json <T> case. for others just empty token stream
