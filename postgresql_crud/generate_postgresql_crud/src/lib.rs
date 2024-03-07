@@ -8126,3 +8126,9 @@ impl Order {
         }
     }
 }
+
+
+trait Convert {
+    fn get_from_or_try_from(&self) -> proc_macro2::TokenStream;
+    fn enum_variant(&self) -> proc_macro2::TokenStream;
+}
