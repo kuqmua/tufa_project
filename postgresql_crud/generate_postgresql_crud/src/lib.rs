@@ -8129,7 +8129,7 @@ impl Order {
 
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
-    fn get_from_or_try_from(&self) -> proc_macro2::TokenStream;
+    fn get_inner_type_with_serialize_deserialize_from_or_try_from_inner_type(&self) -> proc_macro2::TokenStream;
     fn enum_variant(&self) -> proc_macro2::TokenStream;
 }
 impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_crud_common::RustSqlxMapToPostgresTypeVariant {
@@ -8137,7 +8137,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
     //original_type_token_stream
     //inner_type_token_stream
     //inner_type_with_serialize_deserialize_token_stream
-    fn get_from_or_try_from(&self) -> proc_macro2::TokenStream {
+    fn get_inner_type_with_serialize_deserialize_from_or_try_from_inner_type(&self) -> proc_macro2::TokenStream {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => quote::quote!{},
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => quote::quote!{},
