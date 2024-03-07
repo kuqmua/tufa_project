@@ -604,7 +604,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let variant_ident_token_stream = {
                     use convert_case::Casing;
-                    let variant_ident_stringified = field_ident_stringified.to_case(convert_case::Case::Title);
+                    let variant_ident_stringified = field_ident_stringified.to_case(convert_case::Case::Title).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();
                     variant_ident_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
