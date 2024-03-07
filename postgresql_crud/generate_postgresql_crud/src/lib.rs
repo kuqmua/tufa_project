@@ -370,6 +370,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let column_title_cased = variant_column.field_ident.to_string().to_case(convert_case::Case::Title);
                 struct_name_stringified.push_str(&column_title_cased);
             });
+            struct_name_stringified = struct_name_stringified.chars().filter(|c| !c.is_whitespace()).collect();
             struct_name_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
