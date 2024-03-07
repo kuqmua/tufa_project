@@ -700,7 +700,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             use convert_case::Casing;
                             acc.push_str(&field.field_ident.to_string().to_case(convert_case::Case::Title));
                             acc
-                        });
+                        }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();//todo reuse
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
