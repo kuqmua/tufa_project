@@ -321,7 +321,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let from_ident_for_ident_options_token_stream = {
         let inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
         let ident_option_variant_primary_key_token_stream = quote::quote!{
-            #primary_key_field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::from(value.#primary_key_field_ident.0)),//todo from impl match 
+            #primary_key_field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::from(value.#primary_key_field_ident.0)),//todo from or try_from
         };
         let ident_option_variants_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
             let field_ident = &element.field_ident;
@@ -875,7 +875,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #field_ident = {
                                 let value: std::option::Option<#original_type_token_stream> = row.try_get(#field_ident_string_quotes_token_stream)?;
                                 value.map(|value|
-                                    #inner_type_with_serialize_deserialize_token_stream::from(#inner_type_token_stream(value))
+                                    #inner_type_with_serialize_deserialize_token_stream::from(#inner_type_token_stream(value))//todo from or try_from
                                 )
                             };
                         })
@@ -8133,6 +8133,10 @@ trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
     fn enum_variant(&self) -> proc_macro2::TokenStream;
 }
 impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_crud_common::RustSqlxMapToPostgresTypeVariant {
+    //path_token_token_stream
+    //original_type_token_stream
+    //inner_type_token_stream
+    //inner_type_with_serialize_deserialize_token_stream
     fn get_from_or_try_from(&self) -> proc_macro2::TokenStream {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => quote::quote!{},
