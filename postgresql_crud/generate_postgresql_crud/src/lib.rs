@@ -782,7 +782,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     use convert_case::Casing;
                     acc.push_str(&field.field_ident.to_string().to_case(convert_case::Case::Title));
                     acc
-                });
+                }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();
                 let write_ident_token_stream = {
                     let write_ident_stringified = format!("\"{variant_ident_stringified_handle}\"");
                     write_ident_stringified.parse::<proc_macro2::TokenStream>()
@@ -7013,9 +7013,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
@@ -7026,11 +7026,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // }
     };
     // if ident == "" {
-        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            &proc_macro_name_upper_camel_case,
-            &gen,
-            &proc_macro_name_upper_camel_case_ident_stringified
-        );
+        // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     &proc_macro_name_upper_camel_case,
+        //     &gen,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
     // }
     gen.into()
 }
