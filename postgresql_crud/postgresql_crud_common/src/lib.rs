@@ -1035,8 +1035,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::StdNetIpAddrAsPostgresqlCidr => std::string::String::from("StdNetIpAddr"),
             Self::StdNetIpAddrAsPostgresqlCidrNotNull => std::string::String::from("StdNetIpAddr"),
 
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddressNew"),
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddressNew"),
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddress"),
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddress"),
 
             Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVecFromBytes"),
             Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVecFromBytes"),
