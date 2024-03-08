@@ -141,8 +141,8 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostg
             RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumeric => Self::SqlxTypesDecimal,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumericNotNull => Self::SqlxTypesDecimal,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
@@ -395,8 +395,8 @@ impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for PostgresqlType {
             RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumeric => Self::Numeric,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumericNotNull => Self::NumericNotNull,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => Self::Timestamp,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => Self::TimestampNotNull,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::Timestamp,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => Self::TimestampNotNull,
 
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::TimestampTz,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => Self::TimestampTzNotNull,
@@ -660,8 +660,8 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SqlxTypesDecimalAsPostgresqlNumeric,
     SqlxTypesDecimalAsPostgresqlNumericNotNull,
 
-    SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp,
-    SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull,
+    SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
+    SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull,
 
     SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
     SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
@@ -829,8 +829,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesDecimalAsPostgresqlNumeric => std::string::String::from("sqlx::types::Decimal"),
             Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => std::string::String::from("sqlx::types::Decimal"),
 
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => std::string::String::from("sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => std::string::String::from("sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => std::string::String::from("sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => std::string::String::from("sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>"),
 
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>"),
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>"),
@@ -991,8 +991,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesDecimal"),
             Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesDecimal"),
 
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffset"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffset"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffset"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffset"),
 
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffset"),
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffset"),
@@ -1158,8 +1158,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesDecimalWithSerializeDeserialize"),
             Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesDecimalWithSerializeDeserialize"),
 
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize"),
 
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize"),
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize"),
@@ -1324,8 +1324,8 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
             "SqlxTypesDecimalAsPostgresqlNumeric" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
             "SqlxTypesDecimalAsPostgresqlNumericNotNull" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumericNotNull),
 
-            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp),
-            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull),
 
             "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
             "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull),
@@ -1492,8 +1492,8 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
 //             Self::SqlxTypesDecimalAsPostgresqlNumeric => write!(f, "SqlxTypesDecimalAsPostgresqlNumeric"),
 //             Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => write!(f, "SqlxTypesDecimalAsPostgresqlNumericNotNull"),
 
-//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp"),
-//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull"),
+//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz"),
+//             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull"),
 
 //             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz"),
 //             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => write!(f, "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull"),
@@ -1658,8 +1658,8 @@ impl std::str::FromStr for RustSqlxMapToPostgresTypeVariant {
             "SqlxTypesDecimalAsPostgresqlNumeric" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumeric),
             "SqlxTypesDecimalAsPostgresqlNumericNotNull" => Ok(Self::SqlxTypesDecimalAsPostgresqlNumericNotNull),
 
-            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp),
-            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
+            "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull),
 
             "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz),
             "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull" => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull),
@@ -2837,10 +2837,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlN
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp(
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
-impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp {
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz {
     pub fn into_inner_type_vec(
         value: std::vec::Vec<Self>,
     ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
@@ -2851,15 +2851,15 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp {
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz
 {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull(
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
-impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull {
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull {
     pub fn into_inner_type_vec(
         value: std::vec::Vec<Self>,
     ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
@@ -2870,7 +2870,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull {
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull
 {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
@@ -3716,8 +3716,8 @@ pub struct TestNewTypeWithAdditionalInfo<T> {
     sqlx_types_decimal_as_postgresql_numeric: SqlxTypesDecimalAsPostgresqlNumeric,
     sqlx_types_decimal_as_postgresql_numeric_not_null: SqlxTypesDecimalAsPostgresqlNumericNotNull,
 
-    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp: SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp,
-    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_not_null: SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz: SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_not_null: SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull,
 
     sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz: SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
     sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_not_null: SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
