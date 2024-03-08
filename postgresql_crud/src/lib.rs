@@ -203,6 +203,7 @@ pub use postgresql_crud_common::SqlxTypesChronoDateTimeSqlxTypesChronoUtc;
 pub use postgresql_crud_common::SqlxTypesChronoNaiveDate;
 pub use postgresql_crud_common::SqlxTypesChronoNaiveDateTime;
 pub use postgresql_crud_common::SqlxTypesChronoNaiveTime;
+pub use postgresql_crud_common::SqlxTypesIpnetworkIpNetwork;
 pub use postgresql_crud_common::SqlxTypesJson;
 pub use postgresql_crud_common::SqlxTypesMacAddressMacAddress;
 pub use postgresql_crud_common::SqlxTypesTimeDate;

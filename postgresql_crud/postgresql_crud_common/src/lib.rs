@@ -9051,7 +9051,7 @@ impl SqlxTypesUuidUuid {
 // }
 
 #[derive(Debug)]
-pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
+pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize(sqlx::types::ipnetwork::IpNetwork);
 impl std::convert::From<SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize>
