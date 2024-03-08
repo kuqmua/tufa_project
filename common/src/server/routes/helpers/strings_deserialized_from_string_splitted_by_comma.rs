@@ -43,9 +43,9 @@ impl crate::server::postgres::bind_query::BindQuery
                     *increment = incr;
                 }
                 None => {
-                    return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
-                        checked_add: std::string::String::from("checked_add is None"), 
-                        code_occurence: crate::code_occurence!(), 
+                    return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        checked_add: std::string::String::from("checked_add is None"),
+                        code_occurence: crate::code_occurence!(),
                     });
                 }
             }
@@ -66,9 +66,9 @@ impl crate::server::postgres::bind_query::BindQuery
                     *increment = incr;
                 }
                 None => {
-                    return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
-                        checked_add: std::string::String::from("checked_add is None"), 
-                        code_occurence: crate::code_occurence!(), 
+                    return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        checked_add: std::string::String::from("checked_add is None"),
+                        code_occurence: crate::code_occurence!(),
                     });
                 }
             }

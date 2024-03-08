@@ -162,9 +162,9 @@ impl crate::server::postgres::bind_query::BindQuery for Bigserial {
                 *increment = incr;
                 Ok(format!("${increment}"))
             },
-            None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
+            None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
                 checked_add: std::string::String::from("checked_add is None"), 
-                code_occurence: crate::code_occurence!(), 
+                code_occurence: crate::code_occurence!(),
             }),
         }
     }

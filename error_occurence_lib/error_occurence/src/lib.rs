@@ -13,10 +13,10 @@
 // }
 //todo - maybe remove possibility to use references for display, display_foreign_type, error occurence for WithSerializeDeserialize
 #[proc_macro_derive(
-    ErrorOccurence, 
+    ErrorOccurence,
     attributes(
         eo_display,
-        eo_display_with_serialize_deserialize, 
+        eo_display_with_serialize_deserialize,
         eo_display_foreign_type,
         eo_display_foreign_type_with_serialize_deserialize,
         eo_error_occurence,
@@ -175,13 +175,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let get_upper_camel_case_stringified =
         proc_macro_helpers::naming_conventions::get_upper_camel_case_stringified();
     let crate_common_config_config_fields_get_source_place_type_stringified = format!("{crate_common_config_config_fields_stringified}{get_upper_camel_case_stringified}{source_upper_camel_case_stringified}PlaceType");
-    let crate_common_config_config_fields_get_source_place_type_token_stream = 
+    let crate_common_config_config_fields_get_source_place_type_token_stream =
     crate_common_config_config_fields_get_source_place_type_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_config_fields_get_source_place_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let crate_common_config_config_fields_get_timezone_stringified = format!(
         "{crate_common_config_config_fields_stringified}{get_upper_camel_case_stringified}Timezone"
     );
-    let crate_common_config_config_fields_get_timezone_token_stream = 
+    let crate_common_config_config_fields_get_timezone_token_stream =
     crate_common_config_config_fields_get_timezone_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_config_fields_get_timezone_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let source_snake_case_stringified =
@@ -194,10 +194,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         );
     let source_to_string_with_config_stringified =
         format!("{source_snake_case_stringified}_{to_string_with_config_snake_case_stringified}");
-    let source_to_string_with_config_token_stream = 
+    let source_to_string_with_config_token_stream =
     source_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let to_string_without_config_token_stream = 
+    let to_string_without_config_token_stream =
     to_string_without_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let with_serialize_deserialize_snake_case =
@@ -205,7 +205,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let to_string_without_config_with_serialize_deserialize_stringified = format!(
         "{to_string_without_config_snake_case_stringified}_{with_serialize_deserialize_snake_case}"
     );
-    let to_string_without_config_with_serialize_deserialize_token_stream = 
+    let to_string_without_config_with_serialize_deserialize_token_stream =
     to_string_without_config_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let into_upper_camel_case_stringified =
@@ -234,10 +234,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {compile_time_check_error_occurence_members_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let error_occurence_lib_to_string_with_config_to_string_with_config_stringified = format!("{error_occurence_lib_stringified}::{to_string_with_config_snake_case_stringified}::{to_string_with_config_upper_camel_case}");
-    let error_occurence_lib_to_string_with_config_to_string_with_config_token_stream = 
+    let error_occurence_lib_to_string_with_config_to_string_with_config_token_stream =
     error_occurence_lib_to_string_with_config_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_with_config_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let to_string_with_config_token_stream = 
+    let to_string_with_config_token_stream =
     to_string_with_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_with_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let key_snake_case = proc_macro_helpers::naming_conventions::key_upper_camel_case_stringified();
@@ -532,7 +532,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         if path_segment.ident == proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified() {
                                             let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
                                                 if angle_brackets_generic_arguments.args.len() == 1 {
-                                                    if let syn::GenericArgument::Type(type_handle) = 
+                                                    if let syn::GenericArgument::Type(type_handle) =
                                                         angle_brackets_generic_arguments.args
                                                         .into_iter().next()
                                                         .unwrap_or_else(|| panic!(
@@ -544,7 +544,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                             syn::Type::Path(type_path) => proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path{
                                                                 element_path: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
                                                                 vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                                                    &type_path.path.segments, 
+                                                                    &type_path.path.segments,
                                                                     &proc_macro_name_ident_stringified
                                                                 )
                                                             },
@@ -633,8 +633,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                             ))
                                                         )
                                                     };
-                                                    let hashmap_key_type 
-                                                    = if let syn::GenericArgument::Type(type_handle) = 
+                                                    let hashmap_key_type
+                                                    = if let syn::GenericArgument::Type(type_handle) =
                                                         key_generic_argument
                                                     {
                                                         match type_handle {
@@ -642,7 +642,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path{
                                                                     key_segments_stringified: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
                                                                     key_vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                                                        &type_path.path.segments, 
+                                                                        &type_path.path.segments,
                                                                         &proc_macro_name_ident_stringified
                                                                     )
                                                                 }
@@ -689,7 +689,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path{
                                                                     value_segments_stringified: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
                                                                     value_vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                                                        &type_path.path.segments,  
+                                                                        &type_path.path.segments,
                                                                         &proc_macro_name_ident_stringified
                                                                     )
                                                                 }
@@ -749,7 +749,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         }
                                         else {
                                             proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path{
-                                                path, 
+                                                path,
                                                 vec_lifetime,
                                             }
                                         }
@@ -802,12 +802,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     panic!("{proc_macro_name_ident_stringified} expected fields would be named");
                 };
                 (
-                    variant.ident, 
+                    variant.ident,
                     variant_fields_vec,
                 )
             })
             .collect::<Vec<(
-                proc_macro2::Ident, 
+                proc_macro2::Ident,
                  Vec<(
                     proc_macro2::Ident,
                     proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence
@@ -815,17 +815,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             )>>();
             let source_to_string_without_config_upper_camel_case = format!("{source_upper_camel_case_stringified}{to_string_without_config_upper_camel_case}");
             let source_to_string_without_config_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&source_to_string_without_config_upper_camel_case);
-            let source_to_string_without_config_token_stream = 
+            let source_to_string_without_config_token_stream =
             source_to_string_without_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_without_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             //
             let error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified = format!("{error_occurence_lib_stringified}::{source_to_string_without_config_snake_case_stringified}::{source_to_string_without_config_upper_camel_case}");
-            let error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream = 
+            let error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream =
             error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             //
             let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified = format!("{error_occurence_lib_stringified}::{source_to_string_with_config_stringified}::{source_to_string_with_config_upper_camel_case}");
-            let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream = 
+            let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream =
             error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let mut lifetimes_for_serialize_deserialize = Vec::with_capacity(generics_len);
@@ -839,7 +839,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let mut logic_for_compile_time_check_error_occurence_members: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut should_generate_impl_compile_time_check_error_occurence_members = false;
             variants_vec.into_iter().for_each(|(
-                variant_ident, 
+                variant_ident,
                 fields_vec
             )|{
                 let mut enum_fields_logic_for_source_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
@@ -864,8 +864,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&to_string_upper_camel_case);
                     let hashmap_display_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
                     match error_or_code_occurence {
-                        proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField { 
-                            attribute, 
+                        proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
+                            attribute,
                             supported_container,
                         } => {
                             let field_name_with_field_value_token_stream = {
@@ -874,7 +874,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 .parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {field_name_with_field_value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
-                            let display_foreign_type_snake_case_token_stream = 
+                            let display_foreign_type_snake_case_token_stream =
                             display_foreign_type_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {display_foreign_type_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -883,17 +883,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let lines_space_backslash_upper_camel_case = "LinesSpaceBackslash";
                             let lines_space_backslash_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&lines_space_backslash_upper_camel_case);
-                            let lines_space_backslash_snake_case_token_stream = 
+                            let lines_space_backslash_snake_case_token_stream =
                             lines_space_backslash_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lines_space_backslash_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified = format!("{error_occurence_lib_stringified}::{lines_space_backslash_snake_case_stringified}::{lines_space_backslash_upper_camel_case}");
-                            let error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream = 
+                            let error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream =
                             error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_display_foreign_type_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_snake_case_stringified}::{display_foreign_type_upper_camel_case}");
-                            let error_occurence_lib_display_foreign_type_display_foreign_type_token_stream = 
+                            let error_occurence_lib_display_foreign_type_display_foreign_type_token_stream =
                             error_occurence_lib_display_foreign_type_display_foreign_type_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_display_foreign_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -902,7 +902,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified()
                             );
                             let vec_display_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_to_string_upper_camel_case);
-                            let vec_display_to_string_snake_case_token_stream = 
+                            let vec_display_to_string_snake_case_token_stream =
                             vec_display_to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -910,12 +910,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
 
 
                             let error_occurence_lib_vec_display_to_string_vec_display_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_to_string_snake_case_stringified}::{vec_display_to_string_upper_camel_case}");
-                            let error_occurence_lib_vec_display_to_string_vec_display_to_string_token_stream = 
+                            let error_occurence_lib_vec_display_to_string_vec_display_to_string_token_stream =
                             error_occurence_lib_vec_display_to_string_vec_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_to_string_vec_display_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_display_to_string_snake_case_token_stream = 
+                            let hashmap_display_display_to_string_snake_case_token_stream =
                             hashmap_display_display_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -923,13 +923,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 "{error_occurence_lib_stringified}::{hashmap_display_display_to_string_snake_case}::{}{display_upper_camel_case_stringified}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_token_stream = 
+                            let error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_token_stream =
                             error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-                            let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream = 
+                            let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
                             hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -937,16 +937,15 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 "{error_occurence_lib_stringified}::{hashmap_display_to_string_without_config_to_string_snake_case}::{}{display_upper_camel_case_stringified}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}{with_serialize_deserialize_upper_camel_case}",
                                 proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_token_stream = 
+                            let error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_token_stream =
                             error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified());
                             let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
-                            
                             let std_stringified = "std";
                             let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
-                            let hashmap_display_display_foreign_type_to_string_snake_case_token_stream = 
+                            let hashmap_display_display_foreign_type_to_string_snake_case_token_stream =
                             hashmap_display_display_foreign_type_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -954,7 +953,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_to_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}",
                                 proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream = 
+                            let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream =
                             error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -967,17 +966,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified()
                             );
                             let vec_display_foreign_type_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_foreign_type_to_string_upper_camel_case);
-                            let vec_display_foreign_type_to_string_snake_case_token_stream = 
+                            let vec_display_foreign_type_to_string_snake_case_token_stream =
                             vec_display_foreign_type_to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_to_string_snake_case_stringified}::{vec_display_foreign_type_to_string_upper_camel_case}");
-                            let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream = 
+                            let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream =
                             error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_foreign_type_display_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_foreign_type_display_to_string_snake_case_token_stream = 
+                            let hashmap_display_foreign_type_display_to_string_snake_case_token_stream =
                             hashmap_display_foreign_type_display_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -985,12 +984,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream = 
+                            let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream =
                             error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream = 
+                            let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream =
                             hashmap_display_foreign_type_display_foreign_type_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -998,7 +997,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}", 
                                 proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream = 
+                            let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream =
                             error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1087,7 +1086,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_display_into_hashmap_string_string_snake_case}::{hashmap_display_display_into_hashmap_string_string_upper_camel_case}");
-                            let error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_token_stream = 
+                            let error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_token_stream =
                             error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1117,7 +1116,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_token_stream = error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_display_into_hashmap_display_string_token_stream = 
+                            let hashmap_display_display_into_hashmap_display_string_token_stream =
                             hashmap_display_display_into_hashmap_display_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_display_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1139,7 +1138,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
 
                             //
                             let (
-                                logic_for_source_to_string_with_config_for_attribute, 
+                                logic_for_source_to_string_with_config_for_attribute,
                                 logic_for_source_to_string_without_config_for_attribute,
                                 logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute,
                                 logic_for_into_serialize_deserialize_version_for_attribute,
@@ -1188,7 +1187,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             quote::quote! {
                                                 #std_string_string_token_stream
                                             },
-                                            proc_macro2::TokenStream::new(), 
+                                            proc_macro2::TokenStream::new(),
                                             quote::quote! {
                                                 #field_ident: #unused_argument_handle_token_stream
                                             },
@@ -1198,7 +1197,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {} {}{}", 
-                                            attribute.attribute_view_stringified(), 
+                                            attribute.attribute_view_stringified(),
                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                             naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                                             proc_macro_helpers::naming_conventions::path_upper_camel_case_stringified()
@@ -1216,7 +1215,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    vec_lifetime, 
+                                                    vec_lifetime,
                                                     &mut lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
@@ -1236,7 +1235,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         &format!(
                                                             #field_name_with_field_value_token_stream,
                                                             #field_ident
-                                                        ) 
+                                                        )
                                                     )
                                                 },
                                                 quote::quote! {
@@ -1253,7 +1252,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     }
                                                 },
                                                 type_token_stream,
-                                                serde_borrow_token_stream, 
+                                                serde_borrow_token_stream,
                                                 quote::quote! {
                                                     #field_ident: #unused_argument_handle_token_stream
                                                 },
@@ -1381,9 +1380,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 type_stringified
                                                 .parse::<proc_macro2::TokenStream>()
                                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                            }, 
+                                            },
                                             get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                vec_lifetime, 
+                                                vec_lifetime,
                                                 &mut lifetimes_for_serialize_deserialize,
                                                 &trait_lifetime_stringified,
                                                 &proc_macro_name_ident_stringified
@@ -1450,9 +1449,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 type_stringified
                                                 .parse::<proc_macro2::TokenStream>()
                                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                            }, 
+                                            },
                                             get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                vec_lifetime, 
+                                                vec_lifetime,
                                                 &mut lifetimes_for_serialize_deserialize,
                                                 &trait_lifetime_stringified,
                                                 &proc_macro_name_ident_stringified
@@ -1516,9 +1515,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay => {
-                                    let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec { 
-                                        path, 
-                                        vec_element_type 
+                                    let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
+                                        path,
+                                        vec_element_type
                                     } = supported_container {
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime: _vec_lifetime } = vec_element_type {
                                             inform_use_str_string_in_different_attribute(
@@ -1592,12 +1591,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize => {
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec { 
-                                        path, 
-                                        vec_element_type 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
+                                        path,
+                                        vec_element_type
                                     } = supported_container {
                                         match vec_element_type {
                                             proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime } => (
@@ -1606,9 +1605,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                }, 
+                                                },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    vec_lifetime, 
+                                                    vec_lifetime,
                                                     &mut lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
@@ -1628,7 +1627,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     &attribute
                                                 );
                                                 let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_into_vec_string_snake_case_stringified}::{vec_display_into_vec_string_upper_camel_case}");
-                                                let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_token_stream = 
+                                                let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_token_stream =
                                                 error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified
                                                 .parse::<proc_macro2::TokenStream>()
                                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1703,9 +1702,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => {
-                                    if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec { 
-                                        path: _path, 
-                                        vec_element_type 
+                                    if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
+                                        path: _path,
+                                        vec_element_type
                                     } = supported_container {
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path: _element_path, vec_lifetime: _vec_lifetime } = vec_element_type {}
                                         else {
@@ -1726,12 +1725,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
                                     );
                                     let vec_display_foreign_type_into_vec_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_foreign_type_into_vec_string_upper_camel_case);
-                                    let vec_display_foreign_type_into_vec_string_snake_case_token_stream = 
+                                    let vec_display_foreign_type_into_vec_string_snake_case_token_stream =
                                     vec_display_foreign_type_into_vec_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_into_vec_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_into_vec_string_snake_case_stringified}::{vec_display_foreign_type_into_vec_string_upper_camel_case}");
-                                    let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream = 
+                                    let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream =
                                     error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1782,9 +1781,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => {
-                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec { 
-                                        path, 
-                                        vec_element_type 
+                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
+                                        path,
+                                        vec_element_type
                                     } = supported_container {
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime } = vec_element_type {
                                             (
@@ -1793,9 +1792,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                }, 
+                                                },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    vec_lifetime, 
+                                                    vec_lifetime,
                                                     &mut lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
@@ -1859,8 +1858,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
-                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec { 
-                                        path, 
+                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
+                                        path,
                                         vec_element_type
                                     } = supported_container {
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime } = vec_element_type  {
@@ -1870,9 +1869,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                }, 
+                                                },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    vec_lifetime, 
+                                                    vec_lifetime,
                                                     &mut lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
@@ -1881,7 +1880,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         }
                                         else {
                                             panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                        }                                        
+                                        }
                                     }
                                     else {
                                         panic!(
@@ -1895,12 +1894,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified()
                                     );
                                     let vec_to_string_without_config_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_string_without_config_to_string_upper_camel_case);
-                                    let vec_to_string_without_config_to_string_snake_case_token_stream = 
+                                    let vec_to_string_without_config_to_string_snake_case_token_stream =
                                     vec_to_string_without_config_to_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_without_config_to_string_snake_case_stringified}::{vec_to_string_without_config_to_string_upper_camel_case}");
-                                    let error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_token_stream = 
+                                    let error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_token_stream =
                                     error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1909,12 +1908,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified()
                                     );
                                     let vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case);
-                                    let vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream = 
+                                    let vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
                                     vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_without_config_to_string_snake_case_stringified}::{vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case}");
-                                    let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_token_stream = 
+                                    let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_token_stream =
                                     error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1985,12 +1984,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                         path,
-                                        hashmap_key_type, 
+                                        hashmap_key_type,
                                         hashmap_value_type,
                                     } = supported_container {
                                         let hashmap_key_type_path_case = |
@@ -2021,7 +2020,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    key_vec_lifetime, 
+                                                    key_vec_lifetime,
                                                     lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
@@ -2064,13 +2063,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         };
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified, 
-                                                    key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified,
+                                                    key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => {
                                                 inform_use_str_string_in_different_attribute(
@@ -2085,23 +2084,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => {
                                                 inform_use_str_string_in_different_attribute(
@@ -2115,13 +2114,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -2189,23 +2188,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => {
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic,
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                         path,
-                                        hashmap_key_type, 
+                                        hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified, 
-                                                    key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified,
+                                                    key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_string::panic_if_not_string(
@@ -2226,10 +2225,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                    }, 
+                                                    },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-                                                        key_vec_lifetime, 
-                                                        value_vec_lifetime, 
+                                                        key_vec_lifetime,
+                                                        value_vec_lifetime,
                                                         &mut lifetimes_for_serialize_deserialize,
                                                             &trait_lifetime_stringified,
                                                             &proc_macro_name_ident_stringified,
@@ -2242,13 +2241,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified, 
-                                                    key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident, 
-                                                    value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified,
+                                                    key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident,
+                                                    value_lifetime_ident
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_string::panic_if_not_string(
@@ -2275,10 +2274,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                    }, 
+                                                    },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-                                                        key_vec_lifetime, 
-                                                        vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())], 
+                                                        key_vec_lifetime,
+                                                        vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())],
                                                         &mut lifetimes_for_serialize_deserialize,
                                                             &trait_lifetime_stringified,
                                                             &proc_macro_name_ident_stringified,
@@ -2291,13 +2290,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident, 
-                                                    key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident,
+                                                    key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -2332,13 +2331,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                             proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
                                                         );
                                                         let hashmap_display_display_into_hashmap_string_display_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_snake_case_stringified}");
-                                                        let hashmap_display_display_into_hashmap_string_display_token_stream = 
+                                                        let hashmap_display_display_into_hashmap_string_display_token_stream =
                                                         hashmap_display_display_into_hashmap_string_display_snake_case
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                                        let error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified = 
+                                                        let error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified =
                                                         format!("{error_occurence_lib_stringified}::{hashmap_display_display_into_hashmap_string_display_snake_case}::{hashmap_display_display_into_hashmap_string_display_upper_camel_case}");
-                                                        let error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_token_stream = 
+                                                        let error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_token_stream =
                                                         error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -2351,13 +2350,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident, 
-                                                    key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident, 
-                                                    value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident,
+                                                    key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident,
+                                                    value_lifetime_ident
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -2383,8 +2382,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     },
                                                     {
                                                         get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-                                                            vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_ident.to_string())], 
-                                                            vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())], 
+                                                            vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_ident.to_string())],
+                                                            vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())],
                                                             &mut lifetimes_for_serialize_deserialize,
                                                                 &trait_lifetime_stringified,
                                                                 &proc_macro_name_ident_stringified,
@@ -2455,12 +2454,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => {
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic,
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                         path,
-                                        hashmap_key_type, 
+                                        hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         let hashmap_key_type_path_case = |
@@ -2472,7 +2471,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             proc_macro2::TokenStream,
                                             proc_macro2::TokenStream
                                         ) {
-                                            let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream = 
+                                            let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream =
                                             hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case
                                             .parse::<proc_macro2::TokenStream>()
                                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -2482,7 +2481,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified(),
                                                 proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
                                             );
-                                            let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream = 
+                                            let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream =
                                             error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified
                                             .parse::<proc_macro2::TokenStream>()
                                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -2497,7 +2496,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    key_vec_lifetime, 
+                                                    key_vec_lifetime,
                                                     lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
@@ -2534,23 +2533,22 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     );
                                                     quote::quote!{#[serde(borrow)]}
                                                 },
-                                                
                                                 quote::quote! {
                                                     #crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream(
                                                         #field_ident
                                                     )
-                                                }    
+                                                }
                                             )
                                         };
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified, 
-                                                    key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified,
+                                                    key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => hashmap_key_type_path_case(
                                                 key_segments_stringified,
@@ -2558,23 +2556,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 &mut lifetimes_for_serialize_deserialize
                                             ),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident, 
-                                                    key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident,
+                                                    key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => hashmap_key_type_reference_case(
                                                 key_reference_ident,
@@ -2582,13 +2580,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 &mut lifetimes_for_serialize_deserialize
                                             ),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -2648,23 +2646,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => {
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                         path,
-                                        hashmap_key_type, 
+                                        hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified, 
-                                                    key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified,
+                                                    key_vec_lifetime
+                                                },
+                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_string::panic_if_not_string(
@@ -2687,8 +2685,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-                                                        key_vec_lifetime, 
-                                                        value_vec_lifetime, 
+                                                        key_vec_lifetime,
+                                                        value_vec_lifetime,
                                                         &mut lifetimes_for_serialize_deserialize,
                                                             &trait_lifetime_stringified,
                                                             &proc_macro_name_ident_stringified
@@ -2699,23 +2697,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident, 
-                                                    key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident,
+                                                    key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -2750,13 +2748,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -2819,23 +2817,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                         path,
-                                        hashmap_key_type, 
+                                        hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified, 
-                                                    key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified,
+                                                    key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_string::panic_if_not_string(
@@ -2856,10 +2854,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                    }, 
+                                                    },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-                                                        key_vec_lifetime, 
-                                                        value_vec_lifetime, 
+                                                        key_vec_lifetime,
+                                                        value_vec_lifetime,
                                                         &mut lifetimes_for_serialize_deserialize,
                                                         &trait_lifetime_stringified,
                                                         &proc_macro_name_ident_stringified
@@ -2874,23 +2872,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident, 
-                                                    key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident,
+                                                    key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -2927,25 +2925,25 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
                                     }
                                     else {
                                         panic!(
-                                            "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+                                            "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
                                             attribute.attribute_view_stringified(),
                                             proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                                         );
                                     };
-                                    let hashmap_display_to_string_without_config_to_string_snake_case_token_stream = 
+                                    let hashmap_display_to_string_without_config_to_string_snake_case_token_stream =
                                     hashmap_display_to_string_without_config_to_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_without_config_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -2953,7 +2951,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         "{error_occurence_lib_stringified}::{hashmap_display_to_string_without_config_to_string_snake_case}::{}{display_upper_camel_case_stringified}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
                                         proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                                     );
-                                    let error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_token_stream = 
+                                    let error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_token_stream =
                                     error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3017,8 +3015,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
-                                    let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
-                                        path, 
+                                    let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
+                                        path,
                                         hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
@@ -3030,13 +3028,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         };
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => {
                                                 inform_use_str_string_in_different_attribute(
@@ -3047,33 +3045,33 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 hashmap_key_type_path_case()
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
                                                     key_vec_lifetime: _key_vec_lifetime
-                                                 }, 
-                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident  
+                                                 },
+                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -3133,27 +3131,27 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => {
                                     let (
-                                        type_token_stream, 
+                                        type_token_stream,
                                         serde_borrow_token_stream,
                                         into_serialize_deserialize_logic
-                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
-                                        path, 
+                                    ) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
+                                        path,
                                         hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => {
                                                 let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_snake_case_stringified}");
-                                                let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream = 
+                                                let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream =
                                                 hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case
                                                 .parse::<proc_macro2::TokenStream>()
                                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3163,7 +3161,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified(),
                                                     proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
                                                 );
-                                                let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream = 
+                                                let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream =
                                                 error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified
                                                 .parse::<proc_macro2::TokenStream>()
                                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3176,9 +3174,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                    }, 
+                                                    },
                                                     get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                        value_vec_lifetime, 
+                                                        value_vec_lifetime,
                                                         &mut lifetimes_for_serialize_deserialize,
                                                         &trait_lifetime_stringified,
                                                         &proc_macro_name_ident_stringified
@@ -3191,13 +3189,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident, 
-                                                    value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident,
+                                                    value_lifetime_ident
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -3215,9 +3213,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                    }, 
+                                                    },
                                                     get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                        vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())], 
+                                                        vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())],
                                                         &mut lifetimes_for_serialize_deserialize,
                                                         &trait_lifetime_stringified,
                                                         &proc_macro_name_ident_stringified
@@ -3230,23 +3228,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 )
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
                                                 },
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -3301,20 +3299,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => {
-                                    let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
-                                        path, 
+                                    let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
+                                        path,
                                         hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => {
                                                 let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
@@ -3323,33 +3321,33 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                             },
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
                                                     key_vec_lifetime:  _key_vec_lifetime
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -3362,7 +3360,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         );
                                     };
                                     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                                    let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream = 
+                                    let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream =
                                     hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3373,7 +3371,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified(),
                                         proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
                                     );
-                                    let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream = 
+                                    let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream =
                                     error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3424,20 +3422,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     )
                                 },
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => {
-                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
-                                        path, 
+                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
+                                        path,
                                         hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
                                                     key_vec_lifetime: _key_vec_lifetime
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => (
                                                 {
@@ -3450,40 +3448,40 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    value_vec_lifetime, 
+                                                    value_vec_lifetime,
                                                     &mut lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
                                                 )
                                             ),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                                                     value_reference_ident: _value_reference_ident,
                                                     value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -3559,20 +3557,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
-                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap { 
-                                        path, 
+                                    let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
+                                        path,
                                         hashmap_key_type,
                                         hashmap_value_type
                                     } = supported_container {
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified, 
-                                                    value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    value_vec_lifetime
                                                 }
                                             ) => (
                                                 {
@@ -3583,42 +3581,42 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
                                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                                }, 
+                                                },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-                                                    value_vec_lifetime, 
+                                                    value_vec_lifetime,
                                                     &mut lifetimes_for_serialize_deserialize,
                                                     &trait_lifetime_stringified,
                                                     &proc_macro_name_ident_stringified
                                                 )
                                             ),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path { 
-                                                    key_segments_stringified: _key_segments_stringified, 
-                                                    key_vec_lifetime: _key_vec_lifetime 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+                                                    key_segments_stringified: _key_segments_stringified,
+                                                    key_vec_lifetime: _key_vec_lifetime
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
                                                     value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path { 
-                                                    value_segments_stringified: _value_segments_stringified, 
-                                                    value_vec_lifetime: _value_vec_lifetime 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified: _value_segments_stringified,
+                                                    value_vec_lifetime: _value_vec_lifetime
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                                             (
-                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference { 
-                                                    key_reference_ident: _key_reference_ident, 
-                                                    key_lifetime_ident: _key_lifetime_ident 
-                                                }, 
-                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference { 
-                                                    value_reference_ident: _value_reference_ident, 
-                                                    value_lifetime_ident: _value_lifetime_ident 
+                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                    key_reference_ident: _key_reference_ident,
+                                                    key_lifetime_ident: _key_lifetime_ident
+                                                },
+                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                    value_reference_ident: _value_reference_ident,
+                                                    value_lifetime_ident: _value_lifetime_ident
                                                 }
                                             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", attribute.attribute_view_stringified()),
                                         }
@@ -3631,7 +3629,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         );
                                     };
                                     let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
-                                    let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream = 
+                                    let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream =
                                     hashmap_display_foreign_type_to_string_without_config_to_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_without_config_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3639,7 +3637,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_without_config_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
                                         proc_macro_helpers::naming_conventions::hashmap_upper_camel_case_stringified()
                                     );
-                                    let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream = 
+                                    let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream =
                                     error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -3749,12 +3747,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 #logic_for_compile_time_check_error_occurence_members_for_attribute
                             });
                         },
-                        proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence { 
+                        proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
                             field_type,
                             vec_lifetime: _vec_lifetime,
                          } => {
                             let code_occurence_type_with_serialize_deserialize_token_stream = {
-                                let code_occurence_type_with_serialize_deserialize_stringified = 
+                                let code_occurence_type_with_serialize_deserialize_stringified =
                                 format!("{field_type}{with_serialize_deserialize_upper_camel_case}");
                                 code_occurence_type_with_serialize_deserialize_stringified
                                 .parse::<proc_macro2::TokenStream>()
@@ -3895,14 +3893,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let get_code_occurence_upper_camel_case = format!("{get_upper_camel_case_stringified}{code_occurence_upper_camel_case_stringified}");
             let get_code_occurence_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_code_occurence_upper_camel_case);
             let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
-            let error_occurence_lib_get_code_occurence_get_code_occurence_token_stream = 
+            let error_occurence_lib_get_code_occurence_get_code_occurence_token_stream =
             error_occurence_lib_get_code_occurence_get_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let error_occurence_lib_code_occurence_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{code_occurence_upper_camel_case_stringified}");
-            let error_occurence_lib_code_occurence_code_occurence_token_stream = 
+            let error_occurence_lib_code_occurence_code_occurence_token_stream =
             error_occurence_lib_code_occurence_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_code_occurence_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-            let get_code_occurence_token_stream = 
+            let get_code_occurence_token_stream =
             get_code_occurence_snake_case_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {get_code_occurence_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let compile_time_check_error_occurence_members_impl_token_stream = match should_generate_impl_compile_time_check_error_occurence_members {
@@ -3927,15 +3925,15 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 {
                     fn #source_to_string_with_config_token_stream
                     <
-                        #config_generic_token_stream: 
+                        #config_generic_token_stream:
                         #crate_common_config_config_fields_get_source_place_type_token_stream
-                        + #crate_common_config_config_fields_get_timezone_token_stream 
-                        + 
+                        + #crate_common_config_config_fields_get_timezone_token_stream
+                        +
                         ?Sized
                     >
                     (
                         &self,
-                        config: &#config_generic_token_stream 
+                        config: &#config_generic_token_stream
                     ) -> std::string::String {
                         match self {
                             #(#logic_for_source_to_string_with_config_iter),*
@@ -3969,7 +3967,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         }
                     }
                 }
-                impl #error_occurence_lib_get_code_occurence_get_code_occurence_token_stream 
+                impl #error_occurence_lib_get_code_occurence_get_code_occurence_token_stream
                     for #ident_with_serialize_deserialize_token_stream
                 {
                     fn #get_code_occurence_token_stream(
@@ -3991,7 +3989,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 impl std::fmt::Display for #ident {
                     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(
-                            f, 
+                            f,
                             "{}", 
                             #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_token_stream(self)
                         )
@@ -4000,7 +3998,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
                     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(
-                            f, 
+                            f,
                             "{}",
                             #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_token_stream(
                                 self
@@ -4121,7 +4119,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 impl<#trait_lifetime_token_stream>
                     #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream<
                         #trait_lifetime_token_stream
-                    > 
+                    >
                     for #ident_with_serialize_deserialize_token_stream
                 {
                     fn #to_string_without_config_with_serialize_deserialize_token_stream(&self) -> std::string::String {
@@ -4140,7 +4138,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 impl std::fmt::Display for #ident {
                     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(
-                            f, 
+                            f,
                             "{}", 
                             #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_token_stream(
                                 self
@@ -4151,7 +4149,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
                     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(
-                            f, 
+                            f,
                             "{}", 
                             #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_token_stream(
                                 self

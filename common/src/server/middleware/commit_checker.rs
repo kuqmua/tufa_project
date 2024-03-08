@@ -11,7 +11,7 @@ pub async fn commit_checker(
         true => match req
             .headers()
             .get(postgresql_crud::COMMIT)
-            .and_then(|header| header.to_str().ok()) 
+            .and_then(|header| header.to_str().ok())
         {
             Some(commit_checker_header) => match commit_checker_header
                 == crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO

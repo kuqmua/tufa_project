@@ -524,7 +524,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             },
                             false => proc_macro2::TokenStream::new()
                         },
-                        None => proc_macro2::TokenStream::new()  
+                        None => proc_macro2::TokenStream::new()
                     };
                     let is_none_variant_columns_token_stream = variant_columns.iter().map(|element|{
                         let field_ident = &element.field_ident;
@@ -548,7 +548,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #field_ident_is_none_snake_case_token_stream: #std_string_string_token_stream,
                                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             }
-                        }   
+                        }
                     });
                     quote::quote! {
                         #derive_debug_thiserror_error_occurence_token_stream
@@ -602,7 +602,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 false => proc_macro2::TokenStream::new()
                             }
                         },
-                        None => proc_macro2::TokenStream::new()  
+                        None => proc_macro2::TokenStream::new()
                     };
                     let variant_columns_assignment_token_stream = variant_columns.iter().filter(|element|element.field_ident != primary_key_field_ident).map(|element|{
                         let field_ident = &element.field_ident;
@@ -1718,8 +1718,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![(
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
-                &variant_name_snake_case_stringified, 
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
+                &variant_name_snake_case_stringified,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["crate","server","postgres","bind_query","TryGenerateBindIncrementsErrorNamed"],
                     &proc_macro_name_upper_camel_case_ident_stringified
@@ -1816,7 +1816,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
                     &variant_name_snake_case_stringified,
                     std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
                 )
@@ -1829,12 +1829,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &code_occurence_field,
         vec![
             (
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
                 "non_existing_primary_keys", 
                 std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
             ),
             (
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
                 "rollback_error",
                 sqlx_error_syn_punctuated_punctuated.clone()
             )
@@ -1864,9 +1864,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
                     &variant_name_snake_case_stringified,
-                    std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone() 
+                    std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
                 )
             ]
         )
@@ -2006,7 +2006,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize,
                     &not_unique_field_vec_snake_case_stringified,
                     std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated.clone()
                 )
@@ -2027,8 +2027,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay, 
-                    &variant_name_snake_case_stringified, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
+                    &variant_name_snake_case_stringified,
                     proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["sqlx","types","uuid","Error"],
                         &proc_macro_name_upper_camel_case_ident_stringified
@@ -2051,7 +2051,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -2072,8 +2072,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-                    &variant_name_snake_case_stringified, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
+                    &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
             ]
@@ -2394,8 +2394,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &code_occurence_field,
                 vec![
                     (
-                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-                        &variant_name_snake_case_stringified, 
+                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
+                        &variant_name_snake_case_stringified,
                         std_string_string_syn_punctuated_punctuated.clone()
                     )
                 ]
@@ -2463,7 +2463,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -3061,7 +3061,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -3533,7 +3533,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -4373,7 +4373,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -4806,7 +4806,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -5473,7 +5473,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -5732,7 +5732,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let field_ident = element.ident.as_ref()
                         .unwrap_or_else(|| {
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        }); 
+                        });
                     let field_type = &element.ty;
                     quote::quote!{
                         #field_ident: Some(#field_type::default())
@@ -6026,7 +6026,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -6875,7 +6875,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence, 
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                     &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_stringified),
                     proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
                         &operation
@@ -8318,9 +8318,9 @@ fn generate_swagger_open_api_token_stream(
         let body_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, element);
         quote::quote!{
             (
-                status = #status_token_stream, 
-                #description_snake_case_token_stream = #description_token_stream, 
-                body = #body_token_stream, 
+                status = #status_token_stream,
+                #description_snake_case_token_stream = #description_token_stream,
+                body = #body_token_stream,
                 #content_type_snake_case_token_stream = #application_json_quotes_token_stream
             )
         }
@@ -8488,8 +8488,8 @@ fn generate_std_string_string_error_syn_variant(
         code_occurence_field,
         vec![
             (
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize, 
-                &variant_name_snake_case_stringified, 
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
+                &variant_name_snake_case_stringified,
                 std_string_string_syn_punctuated_punctuated
             )
         ]

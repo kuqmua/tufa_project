@@ -89,9 +89,9 @@ impl crate::server::postgres::bind_query::BindQuery for UuidWrapper {
                 *increment = incr;
                 Ok(format!("${increment}"))
             },
-            None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
-                checked_add: std::string::String::from("checked_add is None"), 
-                code_occurence: crate::code_occurence!(), 
+            None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                checked_add: std::string::String::from("checked_add is None"),
+                code_occurence: crate::code_occurence!(),
             }),
         }
     }
