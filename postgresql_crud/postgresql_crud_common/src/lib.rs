@@ -3875,7 +3875,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
-    sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
+    sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
     sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize,
     sqlx_types_time_offset_date_time:
@@ -8414,36 +8414,21 @@ impl SqlxTypesChronoNaiveDate {
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize {
-    hour: std::primitive::u32,
-    min: std::primitive::u32,
-    sec: std::primitive::u32,
-}
-impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize>
+pub struct SqlxTypesChronoNaiveTimeWithSerializeDeserialize(
+    sqlx::types::chrono::NaiveTime
+);
+impl std::convert::From<SqlxTypesChronoNaiveTimeWithSerializeDeserialize>
     for SqlxTypesChronoNaiveTime
 {
-    type Error = std::string::String;
-    fn try_from(
-        value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        match sqlx::types::chrono::NaiveTime::from_hms_opt(value.hour, value.min, value.sec) {
-            Some(value) => Ok(Self(value)),
-            None => Err(std::string::String::from(
-                "failed to create sqlx::types::chrono::NaiveTime from hour, minute and second",
-            )),
-        }
+    fn from(value: SqlxTypesChronoNaiveTimeWithSerializeDeserialize) -> Self {
+        Self(value.0)
     }
 }
 impl std::convert::From<SqlxTypesChronoNaiveTime>
-    for SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize
+    for SqlxTypesChronoNaiveTimeWithSerializeDeserialize
 {
     fn from(value: SqlxTypesChronoNaiveTime) -> Self {
-        use chrono::Timelike;
-        Self {
-            hour: value.0.hour(),
-            min: value.0.minute(),
-            sec: value.0.second(),
-        }
+        Self(value.0)
     }
 }
 impl SqlxTypesChronoNaiveTime {
