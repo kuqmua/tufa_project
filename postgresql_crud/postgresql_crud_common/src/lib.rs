@@ -4115,6 +4115,11 @@ impl std::convert::From<StdPrimitiveI16> for SupportedSqlxPostgresType {
         SupportedSqlxPostgresType::StdPrimitiveI16
     }
 }
+impl StdPrimitiveI16 {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
+        value.into_iter().map(|element|element.into_inner()).collect()
+    }
+}
 
 #[derive(Debug)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
