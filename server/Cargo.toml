@@ -17,7 +17,7 @@ tower-http = {version = "=0.5.0", features = ["trace", "fs", "cors"]}
 argon2 = {version = "=0.4.0", features = ["std"]}
 base64 = {version = "=0.21.0"}
 bytes = {version = "=1.2.1"}
-chrono = {version = "=0.4"}
+chrono = {version = "=0.4", features = ["serde"]}
 config = {version = "=0.13.3"}
 convert_case = {version = "=0.6.0"}
 dotenv = {version = "=0.15.0"}

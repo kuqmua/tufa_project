@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 secrecy = {version = "=0.8", features = ["serde"]}
-chrono = {version = "=0.4"}
+chrono = {version = "=0.4", features = ["serde"]}
 getset = {version = "=0.1.2"}
 serde = {version = "=1.0", features = ["derive"]}
 convert_case = {version = "=0.6.0"}
