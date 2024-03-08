@@ -1012,8 +1012,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesTimePrimitiveDateTime"),
             Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesTimePrimitiveDateTime"),
 
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesTimeOffsetDateTimeFromUnixTimestamp"),
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesTimeOffsetDateTimeFromUnixTimestamp"),
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesTimeOffsetDateTime"),
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesTimeOffsetDateTime"),
 
             Self::SqlxTypesTimeDateAsPostgresqlDate => std::string::String::from("SqlxTypesTimeDateFromCalendarDate"),
             Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => std::string::String::from("SqlxTypesTimeDateFromCalendarDate"),
