@@ -12,6 +12,7 @@ pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
 //todo reexport struct field types(table column types) from postgresql_crud_common
 
+//todo reorder
 pub use postgresql_crud_common::SerdeJsonValueAsPostgresqlJson;
 pub use postgresql_crud_common::SerdeJsonValueAsPostgresqlJsonB;
 pub use postgresql_crud_common::SerdeJsonValueAsPostgresqlJsonBNotNull;
@@ -157,6 +158,7 @@ pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
 pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize;
 pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize;
 pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize;
 pub use postgresql_crud_common::SqlxTypesBigDecimalNewWithSerializeDeserialize;
 pub use postgresql_crud_common::SqlxTypesDecimalWithSerializeDeserialize;
 
