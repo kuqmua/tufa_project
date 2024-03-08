@@ -5705,6 +5705,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWith
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
     >,
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcTryFromWithSerializeDeserializeError
 {
     Start {
@@ -6143,6 +6144,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWi
         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
     >,
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
 {
     Start {
@@ -6576,6 +6578,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeser
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
 }
+#[derive(Debug)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError {
     Start {
         start: time::error::ComponentRange,
@@ -6848,6 +6851,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDese
     start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>,
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
     Start {
         start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
@@ -7120,6 +7124,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDe
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
 }
+#[derive(Debug)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError
 {
     Start {
@@ -7395,6 +7400,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserial
     start: std::ops::Bound<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>,
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTryFromWithSerializeDeserializeError {
     Start {
         start: std::string::String,
@@ -7665,6 +7671,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>,
 }
+#[derive(Debug)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializeError {
     Start {
         start: time::error::ComponentRange,
@@ -8684,6 +8691,7 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithS
     naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
     fixed_offset: std::primitive::i32,
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError {
     NaiveDateTime {
         naive_date_time: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
@@ -8844,6 +8852,7 @@ pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
     date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
     time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
     Date {
         date: std::string::String,
@@ -9192,6 +9201,7 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
+#[derive(Debug)]
 pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError {
     TimeOffset {
         time: time::error::ComponentRange,
@@ -9323,6 +9333,7 @@ pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize {
     date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
 }
+#[derive(Debug)]
 pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
     DateTime {
         date: time::error::ComponentRange,
