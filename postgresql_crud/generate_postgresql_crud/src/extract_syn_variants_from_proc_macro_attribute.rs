@@ -10,11 +10,12 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
 )> {
     let additional_http_status_codes_error_variant_path =
         format!("{proc_macro_name_snake_case}::{proc_macro_attribute_name}");
-    let additional_http_status_codes_error_variants_attribute = proc_macro_helpers::get_macro_attribute::get_macro_attribute(
-        &ast.attrs,
-        &additional_http_status_codes_error_variant_path,
-        proc_macro_name_upper_camel_case_ident_stringified,
-    );
+    let additional_http_status_codes_error_variants_attribute =
+        proc_macro_helpers::get_macro_attribute::get_macro_attribute(
+            &ast.attrs,
+            &additional_http_status_codes_error_variant_path,
+            proc_macro_name_upper_camel_case_ident_stringified,
+        );
     match additional_http_status_codes_error_variants_attribute.path.segments.len() == 2 {
         true => {
             let first_ident = &additional_http_status_codes_error_variants_attribute.path.segments.first().unwrap_or_else(|| {

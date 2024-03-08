@@ -20,13 +20,17 @@ pub fn generate_postgres_transaction(
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
-    let error_value_snake_case_token_stream = proc_macro_common::error_value_snake_case_token_stream();
+    let error_value_snake_case_token_stream =
+        proc_macro_common::error_value_snake_case_token_stream();
     let sqlx_acquire_token_stream = proc_macro_common::sqlx_acquire_token_stream();
-    let begin_token_stream = proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
-    let expected_updated_primary_keys_name_token_stream = quote::quote!{expected_updated_primary_keys};
-    let primary_key_vec_name_token_stream = quote::quote!{primary_key_vec};
-    let commit_token_stream = proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
-    let postgres_transaction_token_stream = quote::quote!{postgres_transaction};
+    let begin_token_stream =
+        proc_macro_helpers::naming_conventions::begin_snake_case_token_stream();
+    let expected_updated_primary_keys_name_token_stream =
+        quote::quote! {expected_updated_primary_keys};
+    let primary_key_vec_name_token_stream = quote::quote! {primary_key_vec};
+    let commit_token_stream =
+        proc_macro_helpers::naming_conventions::commit_snake_case_token_stream();
+    let postgres_transaction_token_stream = quote::quote! {postgres_transaction};
     let query_and_rollback_failed_variant_initialization_token_stream = {
         let field_code_occurence_new_254f2939_bca7_4b8a_b737_cd9bbbbdd5df_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -34,7 +38,7 @@ pub fn generate_postgres_transaction(
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote!{
+        quote::quote! {
             QueryAndRollbackFailed {
                 query_error: #error_value_snake_case_token_stream,
                 #rollback_error_name_token_stream,
@@ -49,7 +53,7 @@ pub fn generate_postgres_transaction(
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote!{
+        quote::quote! {
             PrimaryKeyFromRowAndFailedRollback {
                 primary_key_from_row: #error_value_snake_case_token_stream,
                 #rollback_error_name_token_stream,
@@ -64,7 +68,7 @@ pub fn generate_postgres_transaction(
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote!{
+        quote::quote! {
             NonExistingPrimaryKeys {
                 #non_existing_primary_keys_name_token_stream,
                 #field_code_occurence_new_4853d33a_b7e0_45df_8024_98ba66d26973_token_stream,
@@ -78,7 +82,7 @@ pub fn generate_postgres_transaction(
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote!{
+        quote::quote! {
             NonExistingPrimaryKeysAndFailedRollback {
                 #non_existing_primary_keys_name_token_stream,
                 #rollback_error_name_token_stream: #error_value_snake_case_token_stream,
@@ -93,7 +97,7 @@ pub fn generate_postgres_transaction(
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote!{
+        quote::quote! {
             CommitFailed {
                 commit_failed: #error_value_snake_case_token_stream,
                 #field_code_occurence_new_52fad21a_c2cd_40f2_85af_dfec05be9d22_token_stream,

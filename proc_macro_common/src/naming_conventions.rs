@@ -82,7 +82,8 @@ where
     T: ToScreamingSnakeCaseStringified,
 {
     fn to_screaming_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_screaming_snake_case_stringified = ToScreamingSnakeCaseStringified::to_screaming_snake_case_stringified(self);
+        let value_screaming_snake_case_stringified =
+            ToScreamingSnakeCaseStringified::to_screaming_snake_case_stringified(self);
         value_screaming_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value_screaming_snake_case_stringified} {}", crate::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }

@@ -17,12 +17,10 @@ pub fn generate_getter_traits_for_struct_fields(
     let generated_traits_implementations = match ast.data {
         syn::Data::Struct(datastruct) => datastruct.fields.into_iter().map(|field| {
             let (field_ident, upper_camel_case_field_ident) = {
-                let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-                    panic!(
-                        "{ident} {}",
-                        naming_constants::FIELD_IDENT_IS_NONE
-                    )
-                });
+                let field_ident = field
+                    .ident
+                    .as_ref()
+                    .unwrap_or_else(|| panic!("{ident} {}", naming_constants::FIELD_IDENT_IS_NONE));
                 (
                     field_ident,
                     syn::Ident::new(

@@ -8,24 +8,31 @@ pub fn type_variants_from_request_response_generator(
     type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     operation: &crate::Operation,
-    generate_expected_type_declaration_token_stream: &dyn Fn(&crate::Operation) -> proc_macro2::TokenStream,
+    generate_expected_type_declaration_token_stream: &dyn Fn(
+        &crate::Operation,
+    ) -> proc_macro2::TokenStream,
     unexpected_status_code_declaration_token_stream: &proc_macro2::TokenStream,
     failed_to_get_response_text_declaration_token_stream: &proc_macro2::TokenStream,
     deserialize_response_declaration_token_stream: &proc_macro2::TokenStream,
     reqwest_declaration_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
-    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
-    let desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
+    let code_occurence_upper_camel_case_stringified =
+        proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
+    let code_occurence_snake_case_stringified =
+        proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
+    let desirable_upper_camel_case_token_stream =
+        proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseStringified::try_self_response_variants_upper_camel_case_stringified(operation);
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);
     let try_operation_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_with_serialize_deserialize_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_desirable_status_code_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, desirable_status_code);
     let try_operation_request_error_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRequestErrorUpperCamelCaseTokenStream::try_self_request_error_upper_camel_case_token_stream(operation);
-    let axum_http_status_code_quote_token_stream = desirable_status_code.to_axum_http_status_code_token_stream();
-    let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
-    let type_variants_from_request_response_syn_variants_len = type_variants_from_request_response_syn_variants.len();
+    let axum_http_status_code_quote_token_stream =
+        desirable_status_code.to_axum_http_status_code_token_stream();
+    let axum_http_status_code_token_stream = quote::quote! {axum::http::StatusCode};
+    let type_variants_from_request_response_syn_variants_len =
+        type_variants_from_request_response_syn_variants.len();
     let try_operation_token_stream = {
         let try_operation_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
             let variant_ident = &error_variant.ident;
@@ -272,7 +279,7 @@ pub fn type_variants_from_request_response_generator(
                     #(#fields_mapped_into_token_stream),*
                 }
             }
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();      
+        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {
             #derive_debug_serialize_deserialize_token_stream
             pub enum #try_operation_response_variants_upper_camel_case_token_stream {
@@ -590,7 +597,8 @@ pub fn type_variants_from_request_response_generator(
         }
     };
     let ident_request_error_logic_token_stream_handle_token_stream = {
-        let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
+        let expected_type_declaration_token_stream =
+            generate_expected_type_declaration_token_stream(&operation);
         quote::quote! {
             #error_named_derive_token_stream
             pub enum #try_operation_request_error_upper_camel_case_token_stream {
@@ -604,7 +612,8 @@ pub fn type_variants_from_request_response_generator(
     };
     let enum_status_codes_checker_name_logic_token_stream_handle_token_stream = {
         let enum_status_codes_checker_upper_camel_case_token_stream = {
-            let enum_status_codes_checker_upper_camel_case_stringified = format!("{try_operation_upper_camel_case_token_stream}StatusCodesChecker");
+            let enum_status_codes_checker_upper_camel_case_stringified =
+                format!("{try_operation_upper_camel_case_token_stream}StatusCodesChecker");
             enum_status_codes_checker_upper_camel_case_stringified
             .parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {enum_status_codes_checker_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -691,99 +700,91 @@ pub fn construct_syn_variant(
     tvfrr_status_code: proc_macro_helpers::status_code::StatusCode,
     variant_name: &str,
     code_occurence_field: &syn::Field,
-    fields: std::vec::Vec<(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute, &str, syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>)>
+    fields: std::vec::Vec<(
+        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute,
+        &str,
+        syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2>,
+    )>,
 ) -> syn::Variant {
     syn::Variant {
-        attrs: vec![
-            syn::Attribute {
-                pound_token: syn::token::Pound {
-                    spans: [proc_macro2::Span::call_site()],
-                },
-                style: syn::AttrStyle::Outer,
-                bracket_token: syn::token::Bracket {
-                    span: proc_macro2::Span::call_site(),
-                },
-                path: syn::Path {
-                    leading_colon: None,
-                    segments: {
-                        let mut handle = syn::punctuated::Punctuated::new();
-                        handle.push(syn::PathSegment {
+        attrs: vec![syn::Attribute {
+            pound_token: syn::token::Pound {
+                spans: [proc_macro2::Span::call_site()],
+            },
+            style: syn::AttrStyle::Outer,
+            bracket_token: syn::token::Bracket {
+                span: proc_macro2::Span::call_site(),
+            },
+            path: syn::Path {
+                leading_colon: None,
+                segments: {
+                    let mut handle = syn::punctuated::Punctuated::new();
+                    handle.push(syn::PathSegment {
                             ident: proc_macro2::Ident::new(&proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&tvfrr_status_code), proc_macro2::Span::call_site()),
                             arguments: syn::PathArguments::None,
                         });
-                       handle
-                    },
-                },
-                tokens: proc_macro2::TokenStream::new(),
-            },
-        ],
-        ident: syn::Ident::new(variant_name, proc_macro2::Span::call_site()),
-        fields: syn::Fields::Named(
-            syn::FieldsNamed {
-                brace_token: syn::token::Brace {
-                    span: proc_macro2::Span::call_site(),
-                },
-                named: {
-                    let mut handle = fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc, element| {
-                        acc.push_value(
-                            syn::Field {
-                                attrs: vec![
-                                    syn::Attribute {
-                                        pound_token: syn::token::Pound {
-                                            spans: [proc_macro2::Span::call_site()],
-                                        },
-                                        style: syn::AttrStyle::Outer,
-                                        bracket_token: syn::token::Bracket {
-                                            span: proc_macro2::Span::call_site(),
-                                        },
-                                        path: syn::Path {
-                                            leading_colon: None,
-                                            segments: {
-                                                let mut handle = syn::punctuated::Punctuated::new();
-                                                handle.push(
-                                                    syn::PathSegment {
-                                                        ident: proc_macro2::Ident::new(&element.0.to_string(), proc_macro2::Span::call_site()),
-                                                        arguments: syn::PathArguments::None,
-                                                    }
-                                                );
-                                                handle
-                                            },
-                                        },
-                                        tokens: proc_macro2::TokenStream::new(),
-                                    },
-                                ],
-                                vis: syn::Visibility::Inherited,
-                                ident: Some(
-                                    syn::Ident::new(element.1, proc_macro2::Span::call_site())
-                                ),
-                                colon_token: Some(
-                                    syn::token::Colon {
-                                        spans: [proc_macro2::Span::call_site()],
-                                    },
-                                ),
-                                ty: syn::Type::Path(
-                                    syn::TypePath {
-                                        qself: None,
-                                        path: syn::Path {
-                                            leading_colon: None,
-                                            segments: element.2
-                                        },
-                                    },
-                                ),
-                            }
-                        );
-                        acc.push_punct(
-                            syn::token::Comma {
-                                spans: [proc_macro2::Span::call_site()],
-                            }
-                        );
-                        acc
-                    });
-                    handle.push_value(code_occurence_field.clone());
                     handle
                 },
             },
-        ),
+            tokens: proc_macro2::TokenStream::new(),
+        }],
+        ident: syn::Ident::new(variant_name, proc_macro2::Span::call_site()),
+        fields: syn::Fields::Named(syn::FieldsNamed {
+            brace_token: syn::token::Brace {
+                span: proc_macro2::Span::call_site(),
+            },
+            named: {
+                let mut handle = fields.into_iter().fold(
+                    syn::punctuated::Punctuated::new(),
+                    |mut acc, element| {
+                        acc.push_value(syn::Field {
+                            attrs: vec![syn::Attribute {
+                                pound_token: syn::token::Pound {
+                                    spans: [proc_macro2::Span::call_site()],
+                                },
+                                style: syn::AttrStyle::Outer,
+                                bracket_token: syn::token::Bracket {
+                                    span: proc_macro2::Span::call_site(),
+                                },
+                                path: syn::Path {
+                                    leading_colon: None,
+                                    segments: {
+                                        let mut handle = syn::punctuated::Punctuated::new();
+                                        handle.push(syn::PathSegment {
+                                            ident: proc_macro2::Ident::new(
+                                                &element.0.to_string(),
+                                                proc_macro2::Span::call_site(),
+                                            ),
+                                            arguments: syn::PathArguments::None,
+                                        });
+                                        handle
+                                    },
+                                },
+                                tokens: proc_macro2::TokenStream::new(),
+                            }],
+                            vis: syn::Visibility::Inherited,
+                            ident: Some(syn::Ident::new(element.1, proc_macro2::Span::call_site())),
+                            colon_token: Some(syn::token::Colon {
+                                spans: [proc_macro2::Span::call_site()],
+                            }),
+                            ty: syn::Type::Path(syn::TypePath {
+                                qself: None,
+                                path: syn::Path {
+                                    leading_colon: None,
+                                    segments: element.2,
+                                },
+                            }),
+                        });
+                        acc.push_punct(syn::token::Comma {
+                            spans: [proc_macro2::Span::call_site()],
+                        });
+                        acc
+                    },
+                );
+                handle.push_value(code_occurence_field.clone());
+                handle
+            },
+        }),
         discriminant: None,
     }
 }

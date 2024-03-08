@@ -7,11 +7,12 @@ pub async fn start_bot() {
     let limit = 1000;
     let offset = 0;
     //
-    println!("--------------try_create_many-----------------");//todo add try_create_many
+    println!("--------------try_create_many-----------------"); //todo add try_create_many
     let primary_keys = match common::repositories_types::server::routes::api::cats::try_create_many(
         &api_location,
-        common::repositories_types::server::routes::api::cats::CreateManyParameters { 
-            payload: common::repositories_types::server::routes::api::cats::CreateManyPayload(vec![
+        common::repositories_types::server::routes::api::cats::CreateManyParameters {
+            payload: common::repositories_types::server::routes::api::cats::CreateManyPayload(
+                vec![
                 common::repositories_types::server::routes::api::cats::CreateManyPayloadElement{
                     name: std::string::String::from("try_create_many_name1"),
                     color: std::string::String::from("try_create_many_color1"),
@@ -20,7 +21,8 @@ pub async fn start_bot() {
                     name: std::string::String::from("try_create_many_name2"),
                     color: std::string::String::from("try_create_many_color2"),
                 },
-            ])
+            ],
+            ),
         },
     )
     .await
@@ -28,7 +30,7 @@ pub async fn start_bot() {
         Ok(value) => {
             println!("{value:#?}");
             value
-        },
+        }
         Err(e) => {
             panic!("{e}");
         }
@@ -177,29 +179,25 @@ pub async fn start_bot() {
     match common::repositories_types::server::routes::api::cats::try_delete_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::DeleteManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::DeleteManyPayload { 
+        common::repositories_types::server::routes::api::cats::DeleteManyParameters {
+            payload: common::repositories_types::server::routes::api::cats::DeleteManyPayload {
                 id: Some(
-                    primary_keys.clone()
-                    // vec![
-                    //     common::server::postgres::uuid_wrapper::UuidWrapper::try_from(
-                    //         common::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
-                    //     ).unwrap()
-                    // ]
+                    primary_keys.clone(), // vec![
+                                          //     common::server::postgres::uuid_wrapper::UuidWrapper::try_from(
+                                          //         common::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
+                                          //     ).unwrap()
+                                          // ]
                 ),
-                name: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,//or and support
-                color: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,
-            } 
+                name: None, // Some(vec![common::server::postgres::regex_filter::RegexFilter {
+                            //     regex: std::string::String::from("test"),
+                            //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
+                            // }])
+                            ,//or and support
+                color: None, // Some(vec![common::server::postgres::regex_filter::RegexFilter {
+                             //     regex: std::string::String::from("test"),
+                             //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
+                             // }])
+            },
         },
     )
     .await
@@ -283,16 +281,16 @@ pub async fn start_bot() {
         Err(e) => {
             println!("{e}");
         }
-    }    
+    }
     //
-    println!("--------------try_create_one-----------------");//todo add try_create_many
+    println!("--------------try_create_one-----------------"); //todo add try_create_many
     let primary_key = match common::repositories_types::server::routes::api::cats::try_create_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::CreateOneParameters { 
+        common::repositories_types::server::routes::api::cats::CreateOneParameters {
             payload: common::repositories_types::server::routes::api::cats::CreateOnePayload {
                 name: std::string::String::from("try_create_one_name"),
                 color: std::string::String::from("try_create_one_color"),
-            }
+            },
         },
     )
     .await
@@ -300,7 +298,7 @@ pub async fn start_bot() {
         Ok(value) => {
             println!("{value:#?}");
             value
-        },
+        }
         Err(e) => {
             panic!("{e}");
         }
@@ -322,23 +320,23 @@ pub async fn start_bot() {
             panic!("{e}");
         }
     }
-    println!("--------------try_update_one------------------");//todo try_update_many
+    println!("--------------try_update_one------------------"); //todo try_update_many
     let primary_key = match common::repositories_types::server::routes::api::cats::try_update_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::UpdateOneParameters { 
+        common::repositories_types::server::routes::api::cats::UpdateOneParameters {
             payload: common::repositories_types::server::routes::api::cats::UpdateOnePayload {
                 id: primary_key.clone(),
-                name: Some(std::string::String::from("name")), 
-                color: Some(std::string::String::from("color")), 
-            }
-        }
+                name: Some(std::string::String::from("name")),
+                color: Some(std::string::String::from("color")),
+            },
+        },
     )
     .await
     {
         Ok(value) => {
             println!("{value:#?}");
             value
-        },
+        }
         Err(e) => panic!("{e}"),
     };
     println!("--------------try_read_one-----------------");
@@ -361,10 +359,10 @@ pub async fn start_bot() {
     println!("--------------try_delete_one------------------");
     match common::repositories_types::server::routes::api::cats::try_delete_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::DeleteOneParameters { 
+        common::repositories_types::server::routes::api::cats::DeleteOneParameters {
             payload: common::repositories_types::server::routes::api::cats::DeleteOnePayload {
-                id: primary_key.clone()
-            }
+                id: primary_key.clone(),
+            },
         },
     )
     .await
@@ -388,7 +386,7 @@ pub async fn start_bot() {
         Err(e) => {
             println!("{e}");
         }
-    }    
+    }
     // let bot = teloxide::Bot::from_env();
     // teloxide::commands_repl(bot, answer, {
     //     use teloxide::utils::command::BotCommands;

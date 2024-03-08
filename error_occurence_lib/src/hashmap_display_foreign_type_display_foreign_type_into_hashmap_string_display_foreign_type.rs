@@ -12,9 +12,8 @@ impl<HashMapKeyGeneric, HashMapValueGeneric>
         HashMapValueGeneric,
     > for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType
-        + std::cmp::Eq
-        + std::hash::Hash,
+    HashMapKeyGeneric:
+        crate::display_foreign_type::DisplayForeignType + std::cmp::Eq + std::hash::Hash,
     HashMapValueGeneric: crate::display_foreign_type::DisplayForeignType,
 {
     fn hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type(

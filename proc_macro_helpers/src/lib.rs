@@ -11,13 +11,13 @@ pub mod construct_syn_variant;
 pub mod enum_variants;
 pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
+pub mod generate_simple_syn_punctuated_punctuated;
+pub mod get_macro_attribute;
+pub mod naming_conventions;
 pub mod status_code;
 pub mod type_variants_from_request_response;
-pub mod write_token_stream_into_file;
-pub mod get_macro_attribute;
-pub mod generate_simple_syn_punctuated_punctuated;
-pub mod naming_conventions;
 pub mod wrap_derive;
+pub mod write_token_stream_into_file;
 
 // impl OperationHttpMethod {
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
@@ -31,7 +31,7 @@ pub mod wrap_derive;
 //     fn parameters_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
 // }
 
-// impl<Generic> ParametersUpperCamelCaseTokenStream for Generic 
+// impl<Generic> ParametersUpperCamelCaseTokenStream for Generic
 //     where Generic: proc_macro_helpers::naming_conventions::ToUpperCamelCase
 // {
 //     fn parameters_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
@@ -44,12 +44,10 @@ pub mod wrap_derive;
 //     }
 // }
 
-#[derive(
-    proc_macro_assistants::ToSnakeCaseStringified,
-)]
+#[derive(proc_macro_assistants::ToSnakeCaseStringified)]
 pub enum TestOperationPrintlnInfo {
     Start,
-    End
+    End,
 }
 
 // impl std::fmt::Display for TestOperationPrintlnInfo {

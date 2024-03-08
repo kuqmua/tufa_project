@@ -1,14 +1,11 @@
-#![deny(
-    clippy::unwrap_used,
-    clippy::float_arithmetic
-)]
+#![deny(clippy::unwrap_used, clippy::float_arithmetic)]
 #![allow(clippy::too_many_arguments)]
 
-//there is a possibility for not doing with_serialize_deserialize case (then type does not implement serde::Serialize and serde::Deserialize) https://serde.rs/remote-derive.html 
+//there is a possibility for not doing with_serialize_deserialize case (then type does not implement serde::Serialize and serde::Deserialize) https://serde.rs/remote-derive.html
 //todo not all implementations of Unnnamed ErrorOccurence are support Sized config Generic. fix its(hashmap\vec impl)
 //todo change how hashmap shows in console
 //todo maybe structs that are enums or containing enums - maybe convert them not into std::string::String, but some custom type that copies all logic of the type?
-//todo maybe add multiple lifetimes supports with attribute parameters like this 
+//todo maybe add multiple lifetimes supports with attribute parameters like this
 // #[derive(Serialize)]
 // struct Foo {
 //     #[doc = include_str!("x.md")]
@@ -40,37 +37,49 @@
         eo_hashmap_key_display_foreign_type_value_error_occurence,
     )
 )]
-pub fn error_occurence(
-    input: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name = proc_macro_helpers::naming_conventions::error_occurence_upper_camel_case_stringified();
-    let ast: syn::DeriveInput =
-        syn::parse(input).unwrap_or_else(|_| panic!("{proc_macro_name} {}", proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED));
-    let error_occurence_snake_case = proc_macro_helpers::naming_conventions::error_occurence_snake_case_stringified();
-    let trait_lifetime_stringified = format!("'{error_occurence_snake_case}_proc_macro_reserved_lifetime_name");
+    let proc_macro_name =
+        proc_macro_helpers::naming_conventions::error_occurence_upper_camel_case_stringified();
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
+        panic!(
+            "{proc_macro_name} {}",
+            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+        )
+    });
+    let error_occurence_snake_case =
+        proc_macro_helpers::naming_conventions::error_occurence_snake_case_stringified();
+    let trait_lifetime_stringified =
+        format!("'{error_occurence_snake_case}_proc_macro_reserved_lifetime_name");
     let ident = &ast.ident;
     let ident_stringified = ident.to_string();
     let proc_macro_name_ident_stringified = format!("{proc_macro_name} {ident_stringified}");
     let data_enum = if let syn::Data::Enum(data_enum) = ast.data {
         data_enum
-    }
-    else {
-        panic!("{proc_macro_name_ident_stringified} {} syn::Data::Enum", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+    } else {
+        panic!(
+            "{proc_macro_name_ident_stringified} {} syn::Data::Enum",
+            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+        );
     };
     //todo ident lifetimes removed. maybe some other logic must be removed too
     let generics_len = ast.generics.params.len();
     let generics = {
-        let mut lifetimes_stringified = ast.generics.params.iter()
-        .fold(String::from(""), |mut acc, gen_param| {
-            if let syn::GenericParam::Lifetime(lifetime_deref) = gen_param {
-                acc.push_str(&format!("'{},", lifetime_deref.lifetime.ident));
-                acc
-            }
-            else {
-                panic!("{proc_macro_name_ident_stringified} {} syn::GenericParam::Lifetime", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-            }
-        });
+        let mut lifetimes_stringified =
+            ast.generics
+                .params
+                .iter()
+                .fold(String::from(""), |mut acc, gen_param| {
+                    if let syn::GenericParam::Lifetime(lifetime_deref) = gen_param {
+                        acc.push_str(&format!("'{},", lifetime_deref.lifetime.ident));
+                        acc
+                    } else {
+                        panic!(
+                            "{proc_macro_name_ident_stringified} {} syn::GenericParam::Lifetime",
+                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                        );
+                    }
+                });
         lifetimes_stringified.pop();
         if lifetimes_stringified.contains(&trait_lifetime_stringified) {
             panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
@@ -80,25 +89,30 @@ pub fn error_occurence(
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lifetimes_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let named_snake_case = proc_macro_helpers::naming_conventions::named_snake_case_stringified();
-    let unnamed_upper_camel_case = proc_macro_helpers::naming_conventions::unnamed_upper_camel_case_stringified();
-    let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create_supported_enum_variant(
-        &data_enum,
-        &proc_macro_name_ident_stringified
-    );
+    let unnamed_upper_camel_case =
+        proc_macro_helpers::naming_conventions::unnamed_upper_camel_case_stringified();
+    let supported_enum_variant =
+        proc_macro_helpers::error_occurence::supported_enum_variant::create_supported_enum_variant(
+            &data_enum,
+            &proc_macro_name_ident_stringified,
+        );
     let trait_lifetime_token_stream = trait_lifetime_stringified
         .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {trait_lifetime_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let with_serialize_deserialize_upper_camel_case = proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified();
-    let ident_with_serialize_deserialize_stringified = format!("{ident}{with_serialize_deserialize_upper_camel_case}");
+    let ident_with_serialize_deserialize_stringified =
+        format!("{ident}{with_serialize_deserialize_upper_camel_case}");
     let ident_with_serialize_deserialize_token_stream = ident_with_serialize_deserialize_stringified
         .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {ident_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let config_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::config_upper_camel_case_stringified();
+    let config_upper_camel_case_stringified =
+        proc_macro_helpers::naming_conventions::config_upper_camel_case_stringified();
     let config_generic_upper_camel_case = format!("{config_upper_camel_case_stringified}Generic");
     let config_generic_token_stream = config_generic_upper_camel_case
     .parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {config_generic_upper_camel_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let source_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::source_upper_camel_case_stringified();
+    let source_upper_camel_case_stringified =
+        proc_macro_helpers::naming_conventions::source_upper_camel_case_stringified();
     let to_string_upper_camel_case = format!(
         "To{}",
         proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified()
@@ -107,15 +121,25 @@ pub fn error_occurence(
         "{to_string_upper_camel_case}{}{config_upper_camel_case_stringified}",
         proc_macro_helpers::naming_conventions::with_upper_camel_case_stringified()
     );
-    let source_to_string_with_config_upper_camel_case = format!("{source_upper_camel_case_stringified}{to_string_with_config_upper_camel_case}");
-    let unnamed_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&unnamed_upper_camel_case);
-    let error_occurence_named_upper_camel_case = format!("{proc_macro_name}{}", proc_macro_helpers::naming_conventions::named_upper_camel_case_stringified());
-    let error_occurence_named_snake_case = format!("{error_occurence_snake_case}_{named_snake_case}");
+    let source_to_string_with_config_upper_camel_case =
+        format!("{source_upper_camel_case_stringified}{to_string_with_config_upper_camel_case}");
+    let unnamed_snake_case_stringified =
+        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+            &unnamed_upper_camel_case,
+        );
+    let error_occurence_named_upper_camel_case = format!(
+        "{proc_macro_name}{}",
+        proc_macro_helpers::naming_conventions::named_upper_camel_case_stringified()
+    );
+    let error_occurence_named_snake_case =
+        format!("{error_occurence_snake_case}_{named_snake_case}");
     let error_occurence_named_token_stream = error_occurence_named_snake_case
     .parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_named_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let error_occurence_unnamed_upper_camel_case = format!("{proc_macro_name}{unnamed_upper_camel_case}");
-    let error_occurence_unnamed_snake_case = format!("{error_occurence_snake_case}_{unnamed_snake_case_stringified}");
+    let error_occurence_unnamed_upper_camel_case =
+        format!("{proc_macro_name}{unnamed_upper_camel_case}");
+    let error_occurence_unnamed_snake_case =
+        format!("{error_occurence_snake_case}_{unnamed_snake_case_stringified}");
     let error_occurence_unnamed_token_stream = error_occurence_unnamed_snake_case
     .parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_unnamed_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -132,7 +156,10 @@ pub fn error_occurence(
         "{to_string_upper_camel_case}{}out{config_upper_camel_case_stringified}",
         proc_macro_helpers::naming_conventions::with_upper_camel_case_stringified()
     );
-    let to_string_without_config_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&to_string_without_config_upper_camel_case);
+    let to_string_without_config_snake_case_stringified =
+        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+            &to_string_without_config_upper_camel_case,
+        );
     let error_occurence_lib_to_string_without_config_to_string_without_config_stringified = format!("{error_occurence_lib_stringified}::{to_string_without_config_snake_case_stringified}::{to_string_without_config_upper_camel_case}");
     let error_occurence_lib_to_string_without_config_to_string_without_config_token_stream = error_occurence_lib_to_string_without_config_to_string_without_config_stringified
     .parse::<proc_macro2::TokenStream>()
@@ -142,45 +169,67 @@ pub fn error_occurence(
     .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let config_fields_stringified = "config_fields";
-    let crate_common_config_stringified = "config_lib";//crate::common::config
-    let crate_common_config_config_fields_stringified = format!("{crate_common_config_stringified}::{config_fields_stringified}::");
-    let get_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::get_upper_camel_case_stringified();
+    let crate_common_config_stringified = "config_lib"; //crate::common::config
+    let crate_common_config_config_fields_stringified =
+        format!("{crate_common_config_stringified}::{config_fields_stringified}::");
+    let get_upper_camel_case_stringified =
+        proc_macro_helpers::naming_conventions::get_upper_camel_case_stringified();
     let crate_common_config_config_fields_get_source_place_type_stringified = format!("{crate_common_config_config_fields_stringified}{get_upper_camel_case_stringified}{source_upper_camel_case_stringified}PlaceType");
     let crate_common_config_config_fields_get_source_place_type_token_stream = 
     crate_common_config_config_fields_get_source_place_type_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_config_fields_get_source_place_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let crate_common_config_config_fields_get_timezone_stringified = format!("{crate_common_config_config_fields_stringified}{get_upper_camel_case_stringified}Timezone");
+    let crate_common_config_config_fields_get_timezone_stringified = format!(
+        "{crate_common_config_config_fields_stringified}{get_upper_camel_case_stringified}Timezone"
+    );
     let crate_common_config_config_fields_get_timezone_token_stream = 
     crate_common_config_config_fields_get_timezone_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_config_fields_get_timezone_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let source_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&source_upper_camel_case_stringified);
-    let to_string_with_config_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&to_string_with_config_upper_camel_case);
-    let source_to_string_with_config_stringified = format!("{source_snake_case_stringified}_{to_string_with_config_snake_case_stringified}");
+    let source_snake_case_stringified =
+        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+            &source_upper_camel_case_stringified,
+        );
+    let to_string_with_config_snake_case_stringified =
+        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+            &to_string_with_config_upper_camel_case,
+        );
+    let source_to_string_with_config_stringified =
+        format!("{source_snake_case_stringified}_{to_string_with_config_snake_case_stringified}");
     let source_to_string_with_config_token_stream = 
     source_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let to_string_without_config_token_stream = 
     to_string_without_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let with_serialize_deserialize_snake_case = proc_macro_helpers::naming_conventions::with_serialize_deserialize_snake_case_stringified();
-    let to_string_without_config_with_serialize_deserialize_stringified = format!("{to_string_without_config_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+    let with_serialize_deserialize_snake_case =
+        proc_macro_helpers::naming_conventions::with_serialize_deserialize_snake_case_stringified();
+    let to_string_without_config_with_serialize_deserialize_stringified = format!(
+        "{to_string_without_config_snake_case_stringified}_{with_serialize_deserialize_snake_case}"
+    );
     let to_string_without_config_with_serialize_deserialize_token_stream = 
     to_string_without_config_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let into_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::into_upper_camel_case_stringified();
-    let into_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&into_upper_camel_case_stringified);
-    let serialize_deserialize_snake_case_stringified = proc_macro_helpers::naming_conventions::serialize_deserialize_snake_case_stringified();
-    
-    
-    
+    let into_upper_camel_case_stringified =
+        proc_macro_helpers::naming_conventions::into_upper_camel_case_stringified();
+    let into_snake_case_stringified =
+        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+            &into_upper_camel_case_stringified,
+        );
+    let serialize_deserialize_snake_case_stringified =
+        proc_macro_helpers::naming_conventions::serialize_deserialize_snake_case_stringified();
+
     // proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&proc_macro_helpers::naming_conventions::SERIALIZE_DESERIALIZE_UPPER_CAMEL_CASE);
-    let into_serialize_deserialize_version_stringified = format!("{into_snake_case_stringified}_{serialize_deserialize_snake_case_stringified}_version");
+    let into_serialize_deserialize_version_stringified = format!(
+        "{into_snake_case_stringified}_{serialize_deserialize_snake_case_stringified}_version"
+    );
     let into_serialize_deserialize_version_token_stream = into_serialize_deserialize_version_stringified
     .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {into_serialize_deserialize_version_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let supports_only_supported_container_stringified = proc_macro_helpers::naming_conventions::supports_only_supported_container_stringified();
-    let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
-    let compile_time_check_error_occurence_members_stringified = format!("_compile_time_check_{error_occurence_snake_case}_members");
+    let supports_only_supported_container_stringified =
+        proc_macro_helpers::naming_conventions::supports_only_supported_container_stringified();
+    let syn_type_path_stringified =
+        proc_macro_helpers::naming_conventions::syn_type_path_stringified();
+    let compile_time_check_error_occurence_members_stringified =
+        format!("_compile_time_check_{error_occurence_snake_case}_members");
     let compile_time_check_error_occurence_members_token_stream = compile_time_check_error_occurence_members_stringified
     .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {compile_time_check_error_occurence_members_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -192,9 +241,11 @@ pub fn error_occurence(
     to_string_with_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_with_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let key_snake_case = proc_macro_helpers::naming_conventions::key_upper_camel_case_stringified();
-    let value_snake_case = proc_macro_helpers::naming_conventions::value_upper_camel_case_stringified();
-    let hashmap_snake_case = proc_macro_helpers::naming_conventions::hashmap_snake_case_stringified();
-    let vec_snake_case = proc_macro_helpers::naming_conventions::vec_snake_case_stringified(); 
+    let value_snake_case =
+        proc_macro_helpers::naming_conventions::value_upper_camel_case_stringified();
+    let hashmap_snake_case =
+        proc_macro_helpers::naming_conventions::hashmap_snake_case_stringified();
+    let vec_snake_case = proc_macro_helpers::naming_conventions::vec_snake_case_stringified();
     let enum_with_serialize_deserialize_logic = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_with_serialize_deserialize_version(
         &supported_enum_variant,
         &data_enum.variants.iter().collect(),
@@ -4136,14 +4187,18 @@ pub fn error_occurence(
 }
 
 fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
-    vec_lifetime: Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>, 
+    vec_lifetime: Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>,
     lifetimes_for_serialize_deserialize: &mut Vec<String>,
     trait_lifetime_stringified: &String,
     proc_macro_name_ident_stringified: &String,
 ) -> proc_macro2::TokenStream {
     let token_stream = match vec_lifetime_to_lifetime(&vec_lifetime) {
-        proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_) => quote::quote!{#[serde(borrow)]},
-        proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified => proc_macro2::TokenStream::new(),
+        proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_) => {
+            quote::quote! {#[serde(borrow)]}
+        }
+        proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified => {
+            proc_macro2::TokenStream::new()
+        }
     };
     vec_lifetime.into_iter().for_each(|k|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(specified_lifetime) = k {
@@ -4160,8 +4215,8 @@ fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_add
 }
 //potential support for few lifetime annotations, but now supported only one lifetime annotation
 fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-    key_vec_lifetime: Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>, 
-    value_vec_lifetime: Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>, 
+    key_vec_lifetime: Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>,
+    value_vec_lifetime: Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>,
     lifetimes_for_serialize_deserialize: &mut Vec<String>,
     trait_lifetime_stringified: &String,
     proc_macro_name_ident_stringified: &String,
@@ -4169,10 +4224,22 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     let key_lifetime_enum = vec_lifetime_to_lifetime(&key_vec_lifetime);
     let value_lifetime_enum = vec_lifetime_to_lifetime(&value_vec_lifetime);
     let token_stream = match (key_lifetime_enum, value_lifetime_enum) {
-        (proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_), proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_)) => quote::quote!{#[serde(borrow)]},
-        (proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_), proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified) => quote::quote!{#[serde(borrow)]},
-        (proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified, proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_)) => quote::quote!{#[serde(borrow)]},
-        (proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified, proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified) => proc_macro2::TokenStream::new(),
+        (
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
+        ) => quote::quote! {#[serde(borrow)]},
+        (
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
+        ) => quote::quote! {#[serde(borrow)]},
+        (
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
+        ) => quote::quote! {#[serde(borrow)]},
+        (
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
+        ) => proc_macro2::TokenStream::new(),
     };
     let error_message = "must not contain reserved by macro lifetime name:";
     key_vec_lifetime.into_iter().for_each(|k|{
@@ -4200,8 +4267,11 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     token_stream
 }
 
-fn vec_lifetime_to_lifetime(vec: &Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>) -> &proc_macro_helpers::error_occurence::lifetime::Lifetime {
-    let mut lifetime_handle = &proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified;
+fn vec_lifetime_to_lifetime(
+    vec: &Vec<proc_macro_helpers::error_occurence::lifetime::Lifetime>,
+) -> &proc_macro_helpers::error_occurence::lifetime::Lifetime {
+    let mut lifetime_handle =
+        &proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified;
     for lft in vec {
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_) = lft {
             lifetime_handle = lft;

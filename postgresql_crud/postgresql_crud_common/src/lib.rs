@@ -38,7 +38,7 @@ pub enum SupportedSqlxPostgresType {
     StdNetIpAddr,
     SqlxTypesMacAddressMacAddress,
     SqlxTypesBitVec,
-    SqlxTypesJsonT,//todo what to do with generic?
+    SqlxTypesJsonT, //todo what to do with generic?
     SerdeJsonValue,
 }
 
@@ -556,7 +556,7 @@ impl PostgresqlType {
 }
 //todo maybe use it as type for struct field but with inner type like StdPrimitiveBoolAsPostgresqlBool(StdPrimitiveBool)
 #[derive(
-    Debug, 
+    Debug,
     PartialEq,
     Eq,
     strum_macros::Display,
@@ -635,7 +635,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 
     SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange,
     SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull,
-    
+
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull,
 
@@ -692,7 +692,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 
     SqlxTypesUuidUuidAsPostgresqlUuid,
     SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
-    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,//todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough
+    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey, //todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough
 
     SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
     SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
@@ -730,7 +730,7 @@ impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_path_stringified(&self) -> std::string::String {
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{self}")
     }
-    //todo maybe move to generate_postgresql_crud macro 
+    //todo maybe move to generate_postgresql_crud macro
     pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("std::primitive::bool"),//todo maybe Option<T> for nullable ?
@@ -1057,7 +1057,10 @@ impl RustSqlxMapToPostgresTypeVariant {
     }
     //
     //todo maybe refactor it later(coz json generic)
-    pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
+    pub fn get_inner_type_with_serialize_deserialize_stringified(
+        &self,
+        generic_type_str: &str,
+    ) -> std::string::String {
         let value = match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("StdPrimitiveBoolWithSerializeDeserialize"),
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("StdPrimitiveBoolWithSerializeDeserialize"),
@@ -1735,7 +1738,10 @@ pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdPrimitiveBool);
 //todo maybe make it a trait, but need to specify generics
 impl StdPrimitiveBoolAsPostgresqlBool {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBool {
@@ -1745,7 +1751,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlB
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
 impl StdPrimitiveBoolAsPostgresqlBoolNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
@@ -1755,7 +1764,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlB
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallInt {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallInt {
@@ -1765,7 +1777,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallIntNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
@@ -1775,7 +1790,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallSerial {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallSerial {
@@ -1785,7 +1803,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
@@ -1795,7 +1816,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSm
 pub struct StdPrimitiveI16AsPostgresqlInt2(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlInt2 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlInt2 {
@@ -1805,7 +1829,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlIn
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlInt2NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlInt2NotNull {
@@ -1815,7 +1842,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlIn
 pub struct StdPrimitiveI32AsPostgresqlInt(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt {
@@ -1825,7 +1855,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlIntNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIntNotNull {
@@ -1835,7 +1868,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 pub struct StdPrimitiveI32AsPostgresqlSerial(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlSerial {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSerial {
@@ -1845,7 +1881,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSe
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlSerialNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSerialNotNull {
@@ -1855,7 +1894,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSe
 pub struct StdPrimitiveI32AsPostgresqlInt4(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt4 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt4 {
@@ -1865,7 +1907,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt4NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt4NotNull {
@@ -1875,7 +1920,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIn
 pub struct StdPrimitiveI64AsPostgresqlBigInt(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigInt {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigInt {
@@ -1885,7 +1933,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigIntNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigIntNotNull {
@@ -1895,7 +1946,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigSerial {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerial {
@@ -1905,7 +1959,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
@@ -1915,7 +1972,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBi
 pub struct StdPrimitiveI64AsPostgresqlInt8(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlInt8 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlInt8 {
@@ -1925,7 +1985,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlIn
 pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlInt8NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlInt8NotNull {
@@ -1935,7 +1998,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlIn
 pub struct StdPrimitiveF32AsPostgresqlReal(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlReal {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlReal {
@@ -1945,7 +2011,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRe
 pub struct StdPrimitiveF32AsPostgresqlRealNotNull(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlRealNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRealNotNull {
@@ -1955,7 +2024,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRe
 pub struct StdPrimitiveF32AsPostgresqlFloat4(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlFloat4 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFloat4 {
@@ -1965,7 +2037,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFl
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlFloat4NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFloat4NotNull {
@@ -1975,7 +2050,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFl
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlDoublePrecision {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDoublePrecision {
@@ -1985,17 +2063,25 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDo
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlFloat8 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFloat8 {
@@ -2005,7 +2091,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFl
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlFloat8NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFloat8NotNull {
@@ -2015,7 +2104,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFl
 pub struct StdStringStringAsPostgresqlVarchar(pub StdStringString);
 impl StdStringStringAsPostgresqlVarchar {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarchar {
@@ -2025,7 +2117,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVa
 pub struct StdStringStringAsPostgresqlVarcharNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlVarcharNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarcharNotNull {
@@ -2035,7 +2130,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVa
 pub struct StdStringStringAsPostgresqlCharN(pub StdStringString);
 impl StdStringStringAsPostgresqlCharN {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCharN {
@@ -2045,7 +2143,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCh
 pub struct StdStringStringAsPostgresqlCharNNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlCharNNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCharNNotNull {
@@ -2055,7 +2156,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCh
 pub struct StdStringStringAsPostgresqlText(pub StdStringString);
 impl StdStringStringAsPostgresqlText {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlText {
@@ -2065,7 +2169,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTe
 pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlTextNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTextNotNull {
@@ -2075,7 +2182,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTe
 pub struct StdStringStringAsPostgresqlName(pub StdStringString);
 impl StdStringStringAsPostgresqlName {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlName {
@@ -2085,7 +2195,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNa
 pub struct StdStringStringAsPostgresqlNameNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlNameNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNameNotNull {
@@ -2095,7 +2208,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNa
 pub struct StdStringStringAsPostgresqlCiText(pub StdStringString);
 impl StdStringStringAsPostgresqlCiText {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCiText {
@@ -2105,7 +2221,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCi
 pub struct StdStringStringAsPostgresqlCiTextNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlCiTextNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCiTextNotNull {
@@ -2114,8 +2233,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCi
 #[derive(Debug)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdVecVecStdPrimitiveU8);
 impl StdVecVecStdPrimitiveU8AsPostgresqlBytea {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPostgresqlBytea {
@@ -2124,8 +2248,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPost
 #[derive(Debug)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
 impl StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
@@ -2134,8 +2263,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPost
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(pub SqlxPostgresTypesPgInterval);
 impl SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
@@ -2144,238 +2278,454 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAs
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull(pub SqlxPostgresTypesPgInterval);
 impl SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(pub SqlxPostgresTypesPgRangeStdPrimitiveI64);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(
+    pub SqlxPostgresTypesPgRangeStdPrimitiveI64,
+);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull(pub SqlxPostgresTypesPgRangeStdPrimitiveI64);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull(
+    pub SqlxPostgresTypesPgRangeStdPrimitiveI64,
+);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(pub SqlxPostgresTypesPgRangeStdPrimitiveI32);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(
+    pub SqlxPostgresTypesPgRangeStdPrimitiveI32,
+);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(pub SqlxPostgresTypesPgRangeStdPrimitiveI32);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(
+    pub SqlxPostgresTypesPgRangeStdPrimitiveI32,
+);
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+    > {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+    > {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
+    > {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal);
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+);
+impl
+    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull
+{
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
+    > {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(pub SqlxPostgresTypesPgRangeSqlxTypesDecimal);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(
+    pub SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull(pub SqlxPostgresTypesPgRangeSqlxTypesDecimal);
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull(
+    pub SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+);
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(pub SqlxPostgresTypesPgMoney);
 impl SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
@@ -2384,18 +2734,30 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPos
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(pub SqlxPostgresTypesPgMoney);
 impl SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiText(pub SqlxPostgresTypesPgCiText);
 impl SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
@@ -2404,18 +2766,30 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPo
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull(pub SqlxPostgresTypesPgCiText);
 impl SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(pub SqlxTypesBigDecimal);
 impl SqlxTypesBigDecimalAsPostgresqlNumeric {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::BigDecimal> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgresqlNumeric {
@@ -2424,8 +2798,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgres
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(pub SqlxTypesBigDecimal);
 impl SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::BigDecimal> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
@@ -2435,7 +2814,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgres
 pub struct SqlxTypesDecimalAsPostgresqlNumeric(pub SqlxTypesDecimal);
 impl SqlxTypesDecimalAsPostgresqlNumeric {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlNumeric {
@@ -2445,77 +2827,137 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlN
 pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(pub SqlxTypesDecimal);
 impl SqlxTypesDecimalAsPostgresqlNumericNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlNumericNotNull {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp(pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp(
+    pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestamp
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull(pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull(
+    pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(
+    pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull(pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal);
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull(
+    pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+);
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesChronoNaiveDateTime);
 impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull(pub SqlxTypesChronoNaiveDateTime);
+pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull(
+    pub SqlxTypesChronoNaiveDateTime,
+);
 impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(pub SqlxTypesChronoNaiveDate);
 impl SqlxTypesChronoNaiveDateAsPostgresqlDate {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPostgresqlDate {
@@ -2524,8 +2966,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPos
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull(pub SqlxTypesChronoNaiveDate);
 impl SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
@@ -2534,8 +2981,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPos
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(pub SqlxTypesChronoNaiveTime);
 impl SqlxTypesChronoNaiveTimeAsPostgresqlTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPostgresqlTime {
@@ -2544,8 +2996,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPos
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull(pub SqlxTypesChronoNaiveTime);
 impl SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
@@ -2554,8 +3011,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPos
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(pub SqlxPostgresTypesPgTimeTz);
 impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
@@ -2564,58 +3026,102 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPo
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(pub SqlxPostgresTypesPgTimeTz);
 impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesTimePrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull(pub SqlxTypesTimePrimitiveDateTime);
+pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull(
+    pub SqlxTypesTimePrimitiveDateTime,
+);
 impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(pub SqlxTypesTimeOffsetDateTime);
 impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull(pub SqlxTypesTimeOffsetDateTime);
+pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull(
+    pub SqlxTypesTimeOffsetDateTime,
+);
 impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesTimeDateAsPostgresqlDate(pub SqlxTypesTimeDate);
 impl SqlxTypesTimeDateAsPostgresqlDate {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::Date> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresqlDate {
@@ -2624,8 +3130,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesTimeDateAsPostgresqlDateNotNull(pub SqlxTypesTimeDate);
 impl SqlxTypesTimeDateAsPostgresqlDateNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::Date> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresqlDateNotNull {
@@ -2634,8 +3145,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTime(pub SqlxTypesTimeTime);
 impl SqlxTypesTimeTimeAsPostgresqlTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::Time> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresqlTime {
@@ -2644,8 +3160,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTimeNotNull(pub SqlxTypesTimeTime);
 impl SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::Time> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
@@ -2654,8 +3175,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuid(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuid {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuid {
@@ -2664,8 +3190,13 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNull(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
@@ -2674,18 +3205,30 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresql
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
@@ -2694,18 +3237,30 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAs
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
@@ -2714,18 +3269,28 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAs
 #[derive(Debug)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct StdNetIpAddrAsPostgresqlInet(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlInet {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInet {
@@ -2735,7 +3300,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInet 
 pub struct StdNetIpAddrAsPostgresqlInetNotNull(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlInetNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInetNotNull {
@@ -2745,7 +3313,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInetN
 pub struct StdNetIpAddrAsPostgresqlCidr(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlCidr {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidr {
@@ -2755,7 +3326,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidr 
 pub struct StdNetIpAddrAsPostgresqlCidrNotNull(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlCidrNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidrNotNull {
@@ -2764,28 +3338,47 @@ impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidrN
 #[derive(Debug)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(pub SqlxTypesMacAddressMacAddress);
 impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
-pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull(pub SqlxTypesMacAddressMacAddress);
+pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull(
+    pub SqlxTypesMacAddressMacAddress,
+);
 impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull {
+impl CheckSupportedRustAndPostgresqlColumnType
+    for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull
+{
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesBitVecAsPostgresqlBit(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlBit {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBit {
@@ -2795,7 +3388,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBi
 pub struct SqlxTypesBitVecAsPostgresqlBitNotNull(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlBitNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBitNotNull {
@@ -2805,7 +3401,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBi
 pub struct SqlxTypesBitVecAsPostgresqlVarBit(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlVarBit {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVarBit {
@@ -2815,7 +3414,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVa
 pub struct SqlxTypesBitVecAsPostgresqlVarBitNotNull(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlVarBitNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVarBitNotNull {
@@ -2826,7 +3428,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVa
 pub struct SqlxTypesJsonTAsPostgresqlJson<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJson<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJson<T> {
@@ -2836,7 +3441,10 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 pub struct SqlxTypesJsonTAsPostgresqlJsonNotNull<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
@@ -2846,7 +3454,10 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 pub struct SqlxTypesJsonTAsPostgresqlJsonB<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJsonB<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonB<T> {
@@ -2856,7 +3467,10 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 pub struct SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>(pub SqlxTypesJson<T>);
 impl<T> SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
@@ -2866,7 +3480,10 @@ impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresql
 pub struct SerdeJsonValueAsPostgresqlJson(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJson {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJson {
@@ -2876,7 +3493,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 pub struct SerdeJsonValueAsPostgresqlJsonNotNull(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonNotNull {
@@ -2886,7 +3506,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 pub struct SerdeJsonValueAsPostgresqlJsonB(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonB {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonB {
@@ -2896,7 +3519,10 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 pub struct SerdeJsonValueAsPostgresqlJsonBNotNull(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonBNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value.into_iter().map(|element|element.0.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.0.into_inner())
+            .collect()
     }
 }
 impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonBNotNull {
@@ -2905,25 +3531,29 @@ impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJso
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 // todo maybe wrap all errors into error occurence ?
 // todo shared enum of postgres types for postgresql_crud and generate_postgresql_crud
 // remove and make one
 //todo support variations of init functions as enum
 
-fn generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(fixed_offset: std::primitive::i32) -> std::string::String {
-    format!("failed to create sqlx::types::chrono::FixedOffset with .east_opt {}", fixed_offset)
+fn generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(
+    fixed_offset: std::primitive::i32,
+) -> std::string::String {
+    format!(
+        "failed to create sqlx::types::chrono::FixedOffset with .east_opt {}",
+        fixed_offset
+    )
 }
 
 pub struct Test<T> {
     //https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
     std_primitive_bool: std::primitive::bool, //BOOL
     // std_primitive_i8: std::primitive::i8,   //“CHAR”//not clear how to make primary key from it
-    std_primitive_i16: std::primitive::i16,  //SMALLINT, SMALLSERIAL, INT2
-    std_primitive_i32: std::primitive::i32,  //INT, SERIAL, INT4
-    std_primitive_i64: std::primitive::i64,  //BIGINT, BIGSERIAL, INT8
-    std_primitive_f32: std::primitive::f32,  //REAL, FLOAT4
-    std_primitive_f64: std::primitive::f64,  //DOUBLE PRECISION, FLOAT8
+    std_primitive_i16: std::primitive::i16, //SMALLINT, SMALLSERIAL, INT2
+    std_primitive_i32: std::primitive::i32, //INT, SERIAL, INT4
+    std_primitive_i64: std::primitive::i64, //BIGINT, BIGSERIAL, INT8
+    std_primitive_f32: std::primitive::f32, //REAL, FLOAT4
+    std_primitive_f64: std::primitive::f64, //DOUBLE PRECISION, FLOAT8
     // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
     std_string_string: std::string::String, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
     // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
@@ -2931,49 +3561,62 @@ pub struct Test<T> {
     // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
     sqlx_postgres_types_pg_interval: sqlx::postgres::types::PgInterval, //INTERVAL
     //INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-    sqlx_postgres_types_pg_range_std_primitive_i64: sqlx::postgres::types::PgRange<std::primitive::i64>, //INT8RANGE
-    sqlx_postgres_types_pg_range_std_primitive_i32: sqlx::postgres::types::PgRange<std::primitive::i32>, //INT4RANGE
+    sqlx_postgres_types_pg_range_std_primitive_i64:
+        sqlx::postgres::types::PgRange<std::primitive::i64>, //INT8RANGE
+    sqlx_postgres_types_pg_range_std_primitive_i32:
+        sqlx::postgres::types::PgRange<std::primitive::i32>, //INT4RANGE
     // type_16: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSTZRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>, //TSTZRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>, //TSTZRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>, //TSTZRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>, //TSTZRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local:
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>, //TSTZRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time:
+        sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>, //TSTZRANGE
     // type_17: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//TSRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>, //TSRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>, //TSRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time:
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>, //TSRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time:
+        sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>, //TSRANGE
     // type_18: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//DATERANGE
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>, //DATERANGE
-    sqlx_postgres_types_pg_range_sqlx_types_time_date: sqlx::postgres::types::PgRange<sqlx::types::time::Date>, //DATERANGE
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date:
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>, //DATERANGE
+    sqlx_postgres_types_pg_range_sqlx_types_time_date:
+        sqlx::postgres::types::PgRange<sqlx::types::time::Date>, //DATERANGE
     // type_19: sqlx::postgres::types::PgRange<Generic>,//maybe another impls//NUMRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_big_decimal: sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>, //NUMRANGE
-    sqlx_postgres_types_pg_range_sqlx_types_decimal: sqlx::postgres::types::PgRange<sqlx::types::Decimal>,    //NUMRANGE
-    sqlx_postgres_types_pg_money: sqlx::postgres::types::PgMoney,                           //MONEY
+    sqlx_postgres_types_pg_range_sqlx_types_big_decimal:
+        sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>, //NUMRANGE
+    sqlx_postgres_types_pg_range_sqlx_types_decimal:
+        sqlx::postgres::types::PgRange<sqlx::types::Decimal>, //NUMRANGE
+    sqlx_postgres_types_pg_money: sqlx::postgres::types::PgMoney, //MONEY
     // sqlx_postgres_types_pg_l_tree: sqlx::postgres::types::PgLTree,//LTREE//dont want to support that for postgresql_crud
     // sqlx_postgres_types_pg_l_query: sqlx::postgres::types::PgLQuery,//LQUERY//dont want to support that for postgresql_crud
-    sqlx_postgres_types_pg_ci_text: sqlx::postgres::types::PgCiText,                          //CITEXT
-    sqlx_types_big_decimal: sqlx::types::BigDecimal,                                  //NUMERIC
-    sqlx_types_decimal: sqlx::types::Decimal,                                     //NUMERIC
-    sqlx_types_chrono_date_time_sqlx_types_chrono_utc: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,  //TIMESTAMP
-    sqlx_types_chrono_date_time_sqlx_types_chrono_local: sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>, //TIMESTAMPTZ
-    sqlx_types_chrono_naive_date_time: sqlx::types::chrono::NaiveDateTime,//TIMESTAMP
-    sqlx_types_chrono_naive_date: sqlx::types::chrono::NaiveDate,                           //DATE
-    sqlx_types_chrono_naive_time: sqlx::types::chrono::NaiveTime,                           //TIME
+    sqlx_postgres_types_pg_ci_text: sqlx::postgres::types::PgCiText, //CITEXT
+    sqlx_types_big_decimal: sqlx::types::BigDecimal,                 //NUMERIC
+    sqlx_types_decimal: sqlx::types::Decimal,                        //NUMERIC
+    sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
+        sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>, //TIMESTAMP
+    sqlx_types_chrono_date_time_sqlx_types_chrono_local:
+        sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>, //TIMESTAMPTZ
+    sqlx_types_chrono_naive_date_time: sqlx::types::chrono::NaiveDateTime, //TIMESTAMP
+    sqlx_types_chrono_naive_date: sqlx::types::chrono::NaiveDate,    //DATE
+    sqlx_types_chrono_naive_time: sqlx::types::chrono::NaiveTime,    //TIME
     sqlx_postgres_types_pg_time_tz: sqlx::postgres::types::PgTimeTz, //just present chrono or time flag
     // type_: sqlx::postgres::types::PgTimeTz,//feature flag chrono//TIMETZ
     sqlx_types_time_primitive_date_time: sqlx::types::time::PrimitiveDateTime, //TIMESTAMP
-    sqlx_types_time_offset_date_time: sqlx::types::time::OffsetDateTime,    //TIMESTAMPTZ
-    sqlx_types_time_date: sqlx::types::time::Date,              //DATE
-    sqlx_types_time_time: sqlx::types::time::Time,              //TIME
+    sqlx_types_time_offset_date_time: sqlx::types::time::OffsetDateTime,       //TIMESTAMPTZ
+    sqlx_types_time_date: sqlx::types::time::Date,                             //DATE
+    sqlx_types_time_time: sqlx::types::time::Time,                             //TIME
     // type_: sqlx::postgres::types::PgTimeTz,//feature flag time//TIMETZ
-    sqlx_types_uuid_uuid: sqlx::types::uuid::Uuid,              //UUID
-    sqlx_types_ipnetwork_ip_network: sqlx::types::ipnetwork::IpNetwork,    //INET, CIDR
-    std_net_ip_addr: std::net::IpAddr,                     //INET, CIDR
+    sqlx_types_uuid_uuid: sqlx::types::uuid::Uuid, //UUID
+    sqlx_types_ipnetwork_ip_network: sqlx::types::ipnetwork::IpNetwork, //INET, CIDR
+    std_net_ip_addr: std::net::IpAddr,             //INET, CIDR
     sqlx_types_mac_address_mac_address: sqlx::types::mac_address::MacAddress, //MACADDR
-    sqlx_types_bit_vec: sqlx::types::BitVec,                  //BIT, VARBIT
-    sqlx_types_json: sqlx::types::Json<T>,                 //JSON, JSONB
-    serde_json_value: serde_json::Value,                    //JSON, JSONB
-    // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
-    //maybe Composite types
-    //maybe Enumerations
+    sqlx_types_bit_vec: sqlx::types::BitVec,       //BIT, VARBIT
+    sqlx_types_json: sqlx::types::Json<T>,         //JSON, JSONB
+    serde_json_value: serde_json::Value,           //JSON, JSONB
+                                                   // type_44: serde_json::value::RawValue,//lifetime and borrow problem//JSON, JSONB
+                                                   //maybe Composite types
+                                                   //maybe Enumerations
 }
 
 pub struct TestNewTypeWithAdditionalInfo<T> {
@@ -3149,21 +3792,29 @@ pub struct TestNewType<T> {
     sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgInterval,
     sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64,
     sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time:
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time:
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-    sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+    sqlx_postgres_types_pg_range_sqlx_types_big_decimal:
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
     sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoney,
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiText,
     sqlx_types_big_decimal: SqlxTypesBigDecimal,
     sqlx_types_decimal: SqlxTypesDecimal,
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-    sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_local:
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTime,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDate,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTime,
@@ -3192,29 +3843,43 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     std_string_string: StdStringStringWithSerializeDeserialize,
     std_vec_vec_std_primitive_u8: StdVecVecStdPrimitiveU8WithSerializeDeserialize,
     sqlx_postgres_types_pg_interval: SqlxPostgresTypesPgIntervalWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_std_primitive_i64: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_std_primitive_i32: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,//todo maybe naming
-    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_big_decimal: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize,
-    sqlx_postgres_types_pg_range_sqlx_types_decimal: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_std_primitive_i64:
+        SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_std_primitive_i32:
+        SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time:
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize, //todo maybe naming
+    sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time:
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date:
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_time_date:
+        SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_big_decimal:
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize,
+    sqlx_postgres_types_pg_range_sqlx_types_decimal:
+        SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize,
     sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoneyWithSerializeDeserialize,
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
     sqlx_types_big_decimal: SqlxTypesBigDecimalNewWithSerializeDeserialize,
     sqlx_types_decimal: SqlxTypesDecimalWithSerializeDeserialize,
-    sqlx_types_chrono_date_time_sqlx_types_chrono_utc: SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
-    sqlx_types_chrono_date_time_sqlx_types_chrono_local: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    sqlx_types_chrono_date_time_sqlx_types_chrono_local:
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
     sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize,
-    sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize,
+    sqlx_types_time_offset_date_time:
+        SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize,
     sqlx_types_time_date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     sqlx_types_time_time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
     sqlx_types_uuid_uuid: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
@@ -3228,7 +3893,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
 }
 
 impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNewType<T> {
-    type Error = ();//todo
+    type Error = (); //todo
     fn try_from(value: TestNewTypeWithSerializeDeserialize<T>) -> Result<Self, Self::Error> {
         let std_primitive_bool = StdPrimitiveBool::from(value.std_primitive_bool);
         let std_primitive_i16 = StdPrimitiveI16::from(value.std_primitive_i16);
@@ -3237,106 +3902,154 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
         let std_primitive_f32 = StdPrimitiveF32::from(value.std_primitive_f32);
         let std_primitive_f64 = StdPrimitiveF64::from(value.std_primitive_f64);
         let std_string_string = StdStringString::from(value.std_string_string);
-        let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8::from(value.std_vec_vec_std_primitive_u8);
-        let sqlx_postgres_types_pg_interval = SqlxPostgresTypesPgInterval::from(value.sqlx_postgres_types_pg_interval);
-        let sqlx_postgres_types_pg_range_std_primitive_i64 = SqlxPostgresTypesPgRangeStdPrimitiveI64::from(value.sqlx_postgres_types_pg_range_std_primitive_i64);
-        let sqlx_postgres_types_pg_range_std_primitive_i32 = SqlxPostgresTypesPgRangeStdPrimitiveI32::from(value.sqlx_postgres_types_pg_range_std_primitive_i32);
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = match SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
+        let std_vec_vec_std_primitive_u8 =
+            StdVecVecStdPrimitiveU8::from(value.std_vec_vec_std_primitive_u8);
+        let sqlx_postgres_types_pg_interval =
+            SqlxPostgresTypesPgInterval::from(value.sqlx_postgres_types_pg_interval);
+        let sqlx_postgres_types_pg_range_std_primitive_i64 =
+            SqlxPostgresTypesPgRangeStdPrimitiveI64::from(
+                value.sqlx_postgres_types_pg_range_std_primitive_i64,
+            );
+        let sqlx_postgres_types_pg_range_std_primitive_i32 =
+            SqlxPostgresTypesPgRangeStdPrimitiveI32::from(
+                value.sqlx_postgres_types_pg_range_std_primitive_i32,
+            );
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
+            match SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(
+                value
+                    .sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = match SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local) {
             Ok(value) => value,
             Err(_e) => {
                 return Err(());
             }
         };
-        let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time = match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time = match SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time = match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date = match SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_postgres_types_pg_range_sqlx_types_time_date = match SqlxPostgresTypesPgRangeSqlxTypesTimeDate::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_time_date) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_postgres_types_pg_range_sqlx_types_big_decimal = SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::from(value.sqlx_postgres_types_pg_range_sqlx_types_big_decimal);
-        let sqlx_postgres_types_pg_range_sqlx_types_decimal = SqlxPostgresTypesPgRangeSqlxTypesDecimal::from(value.sqlx_postgres_types_pg_range_sqlx_types_decimal);
-        let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney::from(value.sqlx_postgres_types_pg_money);
-        let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText::from(value.sqlx_postgres_types_pg_ci_text);
+        let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
+            match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time =
+            match SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime::try_from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
+            match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
+            match SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::try_from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_postgres_types_pg_range_sqlx_types_time_date =
+            match SqlxPostgresTypesPgRangeSqlxTypesTimeDate::try_from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_time_date,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
+            SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_big_decimal,
+            );
+        let sqlx_postgres_types_pg_range_sqlx_types_decimal =
+            SqlxPostgresTypesPgRangeSqlxTypesDecimal::from(
+                value.sqlx_postgres_types_pg_range_sqlx_types_decimal,
+            );
+        let sqlx_postgres_types_pg_money =
+            SqlxPostgresTypesPgMoney::from(value.sqlx_postgres_types_pg_money);
+        let sqlx_postgres_types_pg_ci_text =
+            SqlxPostgresTypesPgCiText::from(value.sqlx_postgres_types_pg_ci_text);
         let sqlx_types_big_decimal = SqlxTypesBigDecimal::from(value.sqlx_types_big_decimal);
         let sqlx_types_decimal = SqlxTypesDecimal::from(value.sqlx_types_decimal);
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc) {
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
+            match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(
+                value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
+            match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(
+                value.sqlx_types_chrono_date_time_sqlx_types_chrono_local,
+            ) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_types_chrono_naive_date_time =
+            match SqlxTypesChronoNaiveDateTime::try_from(value.sqlx_types_chrono_naive_date_time) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_types_chrono_naive_date =
+            match SqlxTypesChronoNaiveDate::try_from(value.sqlx_types_chrono_naive_date) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_types_chrono_naive_time =
+            match SqlxTypesChronoNaiveTime::try_from(value.sqlx_types_chrono_naive_time) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_postgres_types_pg_time_tz =
+            match SqlxPostgresTypesPgTimeTz::try_from(value.sqlx_postgres_types_pg_time_tz) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
+        let sqlx_types_time_primitive_date_time = match SqlxTypesTimePrimitiveDateTime::try_from(
+            value.sqlx_types_time_primitive_date_time,
+        ) {
             Ok(value) => value,
             Err(_e) => {
                 return Err(());
             }
         };
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_local = match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value.sqlx_types_chrono_date_time_sqlx_types_chrono_local) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_types_chrono_naive_date_time = match SqlxTypesChronoNaiveDateTime::try_from(value.sqlx_types_chrono_naive_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_types_chrono_naive_date = match SqlxTypesChronoNaiveDate::try_from(value.sqlx_types_chrono_naive_date) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_types_chrono_naive_time = match SqlxTypesChronoNaiveTime::try_from(value.sqlx_types_chrono_naive_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_postgres_types_pg_time_tz = match SqlxPostgresTypesPgTimeTz::try_from(value.sqlx_postgres_types_pg_time_tz) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_types_time_primitive_date_time = match SqlxTypesTimePrimitiveDateTime::try_from(value.sqlx_types_time_primitive_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
-        let sqlx_types_time_offset_date_time = match SqlxTypesTimeOffsetDateTime::try_from(value.sqlx_types_time_offset_date_time) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
+        let sqlx_types_time_offset_date_time =
+            match SqlxTypesTimeOffsetDateTime::try_from(value.sqlx_types_time_offset_date_time) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(());
+                }
+            };
         let sqlx_types_time_date = match SqlxTypesTimeDate::try_from(value.sqlx_types_time_date) {
             Ok(value) => value,
             Err(_e) => {
@@ -3355,9 +4068,11 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
                 return Err(());
             }
         };
-        let sqlx_types_ipnetwork_ip_network = SqlxTypesIpnetworkIpNetwork::from(value.sqlx_types_ipnetwork_ip_network);
+        let sqlx_types_ipnetwork_ip_network =
+            SqlxTypesIpnetworkIpNetwork::from(value.sqlx_types_ipnetwork_ip_network);
         let std_net_ip_addr = StdNetIpAddr::from(value.std_net_ip_addr);
-        let sqlx_types_mac_address_mac_address = SqlxTypesMacAddressMacAddress::from(value.sqlx_types_mac_address_mac_address);
+        let sqlx_types_mac_address_mac_address =
+            SqlxTypesMacAddressMacAddress::from(value.sqlx_types_mac_address_mac_address);
         let sqlx_types_bit_vec = SqlxTypesBitVec::from(value.sqlx_types_bit_vec);
         let sqlx_types_json = SqlxTypesJson::<T>::from(value.sqlx_types_json);
         let serde_json_value = SerdeJsonValue::from(value.serde_json_value);
@@ -3477,25 +4192,25 @@ impl<T> std::convert::From<Test<T>> for TestNewType<T> {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]//user type must implement utoipa::ToSchema trait
+#[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)] //user type must implement utoipa::ToSchema trait
 pub struct Something {
     something: std::string::String,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum TimeMonthWithSerializeDeserialize {
-    January,// = 1,
-    February,// = 2,
-    March,// = 3,
-    April,// = 4,
-    May,// = 5,
-    June,// = 6,
-    July,// = 7,
-    August,// = 8,
-    September,// = 9,
-    October,// = 10,
-    November,// = 11,
-    December,// = 12,
+    January,   // = 1,
+    February,  // = 2,
+    March,     // = 3,
+    April,     // = 4,
+    May,       // = 5,
+    June,      // = 6,
+    July,      // = 7,
+    August,    // = 8,
+    September, // = 9,
+    October,   // = 10,
+    November,  // = 11,
+    December,  // = 12,
 }
 impl std::convert::From<TimeMonthWithSerializeDeserialize> for time::Month {
     fn from(value: TimeMonthWithSerializeDeserialize) -> Self {
@@ -3537,27 +4252,29 @@ impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
 pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     hours: std::primitive::i8,
     minutes: std::primitive::i8,
-    seconds: std::primitive::i8
+    seconds: std::primitive::i8,
 }
-impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize> for sqlx::types::time::UtcOffset {
-    type Error = time::error::ComponentRange;//todo
-    fn try_from(value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match sqlx::types::time::UtcOffset::from_hms(
-            value.hours,
-            value.minutes,
-            value.seconds
-        ) {
+impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize>
+    for sqlx::types::time::UtcOffset
+{
+    type Error = time::error::ComponentRange; //todo
+    fn try_from(
+        value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        match sqlx::types::time::UtcOffset::from_hms(value.hours, value.minutes, value.seconds) {
             Ok(value) => Ok(value),
-            Err(e) => Err(e)
+            Err(e) => Err(e),
         }
     }
 }
-impl std::convert::From<sqlx::types::time::UtcOffset> for SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
+impl std::convert::From<sqlx::types::time::UtcOffset>
+    for SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
+{
     fn from(value: sqlx::types::time::UtcOffset) -> Self {
         Self {
             hours: value.whole_hours(),
             minutes: value.minutes_past_hour(),
-            seconds: value.seconds_past_minute()
+            seconds: value.seconds_past_minute(),
         }
     }
 }
@@ -3589,7 +4306,7 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct NumBigintBigIntNewWithSerializeDeserialize {
     sign: NumBigintSignWithSerializeDeserialize,
-    digits: std::vec::Vec<std::primitive::u32>
+    digits: std::vec::Vec<std::primitive::u32>,
 }
 impl std::convert::From<NumBigintBigIntNewWithSerializeDeserialize> for num_bigint::BigInt {
     fn from(value: NumBigintBigIntNewWithSerializeDeserialize) -> Self {
@@ -3606,7 +4323,7 @@ impl std::convert::From<num_bigint::BigInt> for NumBigintBigIntNewWithSerializeD
         let (sign, digits) = value.to_u32_digits();
         Self {
             sign: NumBigintSignWithSerializeDeserialize::from(sign),
-            digits
+            digits,
         }
     }
 }
@@ -3620,25 +4337,26 @@ impl Default for TestNewType<Something> {
         let std_primitive_i32_handle = std::primitive::i32::default();
         let std_primitive_i64_handle = std::primitive::i64::default();
         let std_string_string_handle = std::string::String::default();
-        let sqlx_types_time_date_handle = sqlx::types::time::Date::from_calendar_date(
-            2024,
-            time::Month::February,
-            3,
-        )
-        .unwrap();
-        let sqlx_types_time_time_handle = sqlx::types::time::Time::from_hms(1,1,1).unwrap();
-        let sqlx_types_chrono_naive_date_handle = sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
-        let sqlx_types_chrono_naive_time_handle = sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
+        let sqlx_types_time_date_handle =
+            sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 3).unwrap();
+        let sqlx_types_time_time_handle = sqlx::types::time::Time::from_hms(1, 1, 1).unwrap();
+        let sqlx_types_chrono_naive_date_handle =
+            sqlx::types::chrono::NaiveDate::from_ymd_opt(2016, 11, 3).unwrap();
+        let sqlx_types_chrono_naive_time_handle =
+            sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
         let sqlx_types_chrono_naive_date_time_handle = sqlx::types::chrono::NaiveDateTime::new(
-            sqlx_types_chrono_naive_date_handle.clone(),//todo
+            sqlx_types_chrono_naive_date_handle.clone(), //todo
             sqlx_types_chrono_naive_time_handle.clone(),
         );
         let sqlx_types_time_primitive_date_time_handle = sqlx::types::time::PrimitiveDateTime::new(
             sqlx_types_time_date_handle.clone(), //todo
             sqlx_types_time_time_handle.clone(), //todo
         );
-        let sqlx_types_chrono_fixed_offset_handle = sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle.clone()).unwrap();
-        let sqlx_types_time_offset_date_time_handle = sqlx::types::time::OffsetDateTime::from_unix_timestamp(std::primitive::i64::default()).unwrap();
+        let sqlx_types_chrono_fixed_offset_handle =
+            sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle.clone()).unwrap();
+        let sqlx_types_time_offset_date_time_handle =
+            sqlx::types::time::OffsetDateTime::from_unix_timestamp(std::primitive::i64::default())
+                .unwrap();
         let sqlx_types_decimal_handle = sqlx::types::Decimal::try_new(
             std_primitive_i64_handle.clone(),
             std_primitive_u32_handle.clone(),
@@ -3652,37 +4370,54 @@ impl Default for TestNewType<Something> {
             ),
             std_primitive_i64_handle.clone(),
         );
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle = sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-            sqlx_types_chrono_naive_date_time_handle.clone(),
-            sqlx_types_chrono_utc_handle.clone()
-        );
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle = sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-            sqlx_types_chrono_naive_date_time_handle.clone(),
-            sqlx_types_chrono_fixed_offset_handle.clone()
-        );
-        let std_ops_bound_std_primitive_i64_handle = std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone());
-        let std_ops_bound_std_primitive_i32_handle = std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone());
-        let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle = std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle.clone());
-        let std_ops_bound_sqlx_types_time_primitive_date_time_handle = std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-            sqlx_types_time_primitive_date_time_handle.clone(),
-        );
-        let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle = std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone());
-        let std_ops_bound_sqlx_types_time_offset_date_time_handle = std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-            sqlx_types_time_offset_date_time_handle.clone(),
-        );
-        let std_ops_bound_sqlx_types_chrono_naive_date_handle = std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
-            sqlx_types_chrono_naive_date_handle.clone(),
-        );
-        let std_ops_bound_sqlx_types_time_date_handle = std::ops::Bound::<sqlx::types::time::Date>::Included(
-            sqlx_types_time_date_handle.clone(),
-        );
-        let std_ops_bound_sqlx_types_big_decimal_handle = std::ops::Bound::<sqlx::types::BigDecimal>::Included(sqlx_types_big_decimal_handle.clone());
-        let std_ops_bound_sqlx_types_decimal_handle = std::ops::Bound::<sqlx::types::Decimal>::Included(
-            sqlx_types_decimal_handle.clone(),
-        );
-        let std_ops_bound_sqlx_types_chrono_naive_date_time_handle = std::ops::Bound::<sqlx::types::chrono::NaiveDateTime>::Included(
-            sqlx_types_chrono_naive_date_time_handle.clone()
-        );
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle =
+            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_utc_handle.clone(),
+            );
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle =
+            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_fixed_offset_handle.clone(),
+            );
+        let std_ops_bound_std_primitive_i64_handle =
+            std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone());
+        let std_ops_bound_std_primitive_i32_handle =
+            std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone());
+        let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle =
+            std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(
+                sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_time_primitive_date_time_handle =
+            std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
+                sqlx_types_time_primitive_date_time_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle =
+            std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(
+                sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_time_offset_date_time_handle =
+            std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
+                sqlx_types_time_offset_date_time_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_chrono_naive_date_handle =
+            std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
+                sqlx_types_chrono_naive_date_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_time_date_handle =
+            std::ops::Bound::<sqlx::types::time::Date>::Included(
+                sqlx_types_time_date_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_big_decimal_handle =
+            std::ops::Bound::<sqlx::types::BigDecimal>::Included(
+                sqlx_types_big_decimal_handle.clone(),
+            );
+        let std_ops_bound_sqlx_types_decimal_handle =
+            std::ops::Bound::<sqlx::types::Decimal>::Included(sqlx_types_decimal_handle.clone());
+        let std_ops_bound_sqlx_types_chrono_naive_date_time_handle =
+            std::ops::Bound::<sqlx::types::chrono::NaiveDateTime>::Included(
+                sqlx_types_chrono_naive_date_time_handle.clone(),
+            );
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
         let std_primitive_i32 = StdPrimitiveI32(std_primitive_i32_handle.clone());
@@ -3690,7 +4425,8 @@ impl Default for TestNewType<Something> {
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
         let std_string_string = StdStringString(std_string_string_handle.clone());
-        let std_vec_vec_std_primitive_u8 = StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle.clone()]);
+        let std_vec_vec_std_primitive_u8 =
+            StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle.clone()]);
         let sqlx_postgres_types_pg_interval =
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
                 months: std_primitive_i32_handle.clone(),
@@ -3711,20 +4447,28 @@ impl Default for TestNewType<Something> {
                 start: std_ops_bound_std_primitive_i32_handle.clone(),
                 end: std_ops_bound_std_primitive_i32_handle.clone(),
             });
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
-            sqlx::postgres::types::PgRange::<
-                sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
-            > {
-                start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle.clone(),
-                end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle.clone(),
-            }
-        );
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
-            sqlx::postgres::types::PgRange::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-                start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
-                end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
-            }
-        );
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
+            SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
+                sqlx::postgres::types::PgRange::<
+                    sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
+                > {
+                    start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle
+                        .clone(),
+                    end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle
+                        .clone(),
+                },
+            );
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local =
+            SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
+                sqlx::postgres::types::PgRange::<
+                    sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
+                > {
+                    start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle
+                        .clone(),
+                    end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle
+                        .clone(),
+                },
+            );
         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
             SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::OffsetDateTime,
@@ -3732,20 +4476,20 @@ impl Default for TestNewType<Something> {
                 start: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
                 end: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
             });
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
-            sqlx::postgres::types::PgRange::<
-                sqlx::types::chrono::NaiveDateTime
-            >{
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time =
+            SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange::<
+                sqlx::types::chrono::NaiveDateTime,
+            > {
                 start: std_ops_bound_sqlx_types_chrono_naive_date_time_handle.clone(),
                 end: std_ops_bound_sqlx_types_chrono_naive_date_time_handle.clone(),
             });
         let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
-            SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(sqlx::postgres::types::PgRange::<
-                sqlx::types::time::PrimitiveDateTime,
-            > {
-                start: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
-                end: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
-            });
+            SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
+                sqlx::postgres::types::PgRange::<sqlx::types::time::PrimitiveDateTime> {
+                    start: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
+                    end: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
+                },
+            );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::NaiveDate,
@@ -3774,22 +4518,20 @@ impl Default for TestNewType<Something> {
                 start: std_ops_bound_sqlx_types_decimal_handle.clone(),
                 end: std_ops_bound_sqlx_types_decimal_handle.clone(),
             });
-        let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(sqlx::postgres::types::PgMoney(
-            std_primitive_i64_handle.clone(),
-        ));
+        let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(
+            sqlx::postgres::types::PgMoney(std_primitive_i64_handle.clone()),
+        );
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
             sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
         let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx_types_big_decimal_handle.clone());
-        let sqlx_types_decimal = SqlxTypesDecimal(
-            sqlx_types_decimal_handle.clone(),
-        );
+        let sqlx_types_decimal = SqlxTypesDecimal(sqlx_types_decimal_handle.clone());
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
             SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::Utc,
             >::from_naive_utc_and_offset(
                 sqlx_types_chrono_naive_date_time_handle.clone(),
-                sqlx_types_chrono_utc_handle.clone()
+                sqlx_types_chrono_utc_handle.clone(),
             ));
         let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
             SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
@@ -3798,13 +4540,12 @@ impl Default for TestNewType<Something> {
                 sqlx_types_chrono_naive_date_time_handle.clone(),
                 sqlx_types_chrono_fixed_offset_handle,
             ));
-        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime(
-            sqlx_types_chrono_naive_date_time_handle.clone()
-        );
-        let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate(
-            sqlx_types_chrono_naive_date_handle.clone(),
-        );
-        let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time_handle.clone());
+        let sqlx_types_chrono_naive_date_time =
+            SqlxTypesChronoNaiveDateTime(sqlx_types_chrono_naive_date_time_handle.clone());
+        let sqlx_types_chrono_naive_date =
+            SqlxTypesChronoNaiveDate(sqlx_types_chrono_naive_date_handle.clone());
+        let sqlx_types_chrono_naive_time =
+            SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time_handle.clone());
         let sqlx_postgres_types_pg_time_tz =
             SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
                 time: sqlx_types_time_time_handle.clone(),
@@ -3819,12 +4560,8 @@ impl Default for TestNewType<Something> {
             SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time_handle.clone());
         let sqlx_types_time_offset_date_time =
             SqlxTypesTimeOffsetDateTime(sqlx_types_time_offset_date_time_handle.clone());
-        let sqlx_types_time_date = SqlxTypesTimeDate(
-            sqlx_types_time_date_handle.clone(),
-        );
-        let sqlx_types_time_time = SqlxTypesTimeTime(
-            sqlx_types_time_time_handle.clone(),
-        );
+        let sqlx_types_time_date = SqlxTypesTimeDate(sqlx_types_time_date_handle.clone());
+        let sqlx_types_time_time = SqlxTypesTimeTime(sqlx_types_time_time_handle.clone());
         let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
             std::primitive::u128::default(),
         ));
@@ -3868,7 +4605,8 @@ impl Default for TestNewType<Something> {
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(Something {
             something: std_string_string_handle.clone(),
         }));
-        let serde_json_value = SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
+        let serde_json_value =
+            SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));
         Self {
             std_primitive_bool,
             std_primitive_i16,
@@ -3958,7 +4696,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
 #[derive(Debug)]
-pub struct StdPrimitiveBool(pub std::primitive::bool);//todo maybe make it private?
+pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
 impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
@@ -4034,7 +4772,10 @@ impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
 }
 impl StdPrimitiveBool {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4117,7 +4858,10 @@ impl std::convert::From<StdPrimitiveI16> for SupportedSqlxPostgresType {
 }
 impl StdPrimitiveI16 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 
@@ -4195,7 +4939,10 @@ impl std::convert::From<StdPrimitiveI32> for SupportedSqlxPostgresType {
 }
 impl StdPrimitiveI32 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4278,7 +5025,10 @@ impl std::convert::From<StdPrimitiveI64> for SupportedSqlxPostgresType {
 }
 impl StdPrimitiveI64 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4360,7 +5110,10 @@ impl std::convert::From<StdPrimitiveF32> for SupportedSqlxPostgresType {
 }
 impl StdPrimitiveF32 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4442,7 +5195,10 @@ impl std::convert::From<StdPrimitiveF64> for SupportedSqlxPostgresType {
 }
 impl StdPrimitiveF64 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4527,7 +5283,10 @@ impl std::convert::From<StdStringString> for SupportedSqlxPostgresType {
 }
 impl StdStringString {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<StdStringStringAsPostgresqlVarchar> for StdStringString {
@@ -4541,12 +5300,16 @@ impl StdStringString {
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdVecVecStdPrimitiveU8WithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
-impl std::convert::From<StdVecVecStdPrimitiveU8WithSerializeDeserialize> for StdVecVecStdPrimitiveU8 {
+impl std::convert::From<StdVecVecStdPrimitiveU8WithSerializeDeserialize>
+    for StdVecVecStdPrimitiveU8
+{
     fn from(value: StdVecVecStdPrimitiveU8WithSerializeDeserialize) -> Self {
         Self(value.0)
     }
 }
-impl std::convert::From<StdVecVecStdPrimitiveU8> for StdVecVecStdPrimitiveU8WithSerializeDeserialize {
+impl std::convert::From<StdVecVecStdPrimitiveU8>
+    for StdVecVecStdPrimitiveU8WithSerializeDeserialize
+{
     fn from(value: StdVecVecStdPrimitiveU8) -> Self {
         Self(value.0)
     }
@@ -4607,8 +5370,13 @@ impl std::convert::From<StdVecVecStdPrimitiveU8> for SupportedSqlxPostgresType {
     }
 }
 impl StdVecVecStdPrimitiveU8 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4625,16 +5393,20 @@ pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     days: std::primitive::i32,
     microseconds: std::primitive::i64,
 }
-impl std::convert::From<SqlxPostgresTypesPgIntervalWithSerializeDeserialize> for SqlxPostgresTypesPgInterval {
+impl std::convert::From<SqlxPostgresTypesPgIntervalWithSerializeDeserialize>
+    for SqlxPostgresTypesPgInterval
+{
     fn from(value: SqlxPostgresTypesPgIntervalWithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgInterval{
+        Self(sqlx::postgres::types::PgInterval {
             months: value.months,
             days: value.days,
             microseconds: value.microseconds,
         })
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgInterval> for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgInterval>
+    for SqlxPostgresTypesPgIntervalWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgInterval) -> Self {
         Self {
             months: value.0.months,
@@ -4700,8 +5472,13 @@ impl std::convert::From<SqlxPostgresTypesPgInterval> for SupportedSqlxPostgresTy
     }
 }
 impl SqlxPostgresTypesPgInterval {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4719,15 +5496,19 @@ pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i64>,
     end: std::ops::Bound<std::primitive::i64>,
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize> for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize>
+    for SqlxPostgresTypesPgRangeStdPrimitiveI64
+{
     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgRange{
+        Self(sqlx::postgres::types::PgRange {
             start: value.start,
             end: value.end,
         })
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64>
+    for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI64) -> Self {
         Self {
             start: value.0.start,
@@ -4793,8 +5574,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64> for SupportedSq
     }
 }
 impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4812,15 +5598,19 @@ pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i32>,
     end: std::ops::Bound<std::primitive::i32>,
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize>
+    for SqlxPostgresTypesPgRangeStdPrimitiveI32
+{
     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize) -> Self {
-        Self(sqlx::postgres::types::PgRange{
+        Self(sqlx::postgres::types::PgRange {
             start: value.start,
             end: value.end,
         })
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
+    for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeStdPrimitiveI32) -> Self {
         Self {
             start: value.0.start,
@@ -4886,8 +5676,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32> for SupportedSq
     }
 }
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -4901,200 +5696,186 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize{
-    start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize>,
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize
+{
+    start: std::ops::Bound<
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    >,
+    end: std::ops::Bound<
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    >,
 }
-pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcTryFromWithSerializeDeserializeError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcTryFromWithSerializeDeserializeError
+{
     Start {
-        start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
+        start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
     },
     End {
-        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
+        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
     },
     StartEnd {
         start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
-    }
+        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+impl
+    std::convert::TryFrom<
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
+    > for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
+{
     type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserializeTryFromOriginalError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserializeTryFromOriginalError
+{
     Start {
-        start: std::string::String
+        start: std::string::String,
     },
     End {
-        end: std::string::String
+        end: std::string::String,
     },
     StartEnd {
         start: std::string::String,
-        end: std::string::String
-    }
+        end: std::string::String,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize
+{
     type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserializeTryFromOriginalError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.0.start, value.0.end) {
             (
                 std::ops::Bound::Included(start_value),
@@ -5257,10 +6038,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
                 std::ops::Bound::Unbounded
             ),
         };
-        Ok(Self {
-            start,
-            end
-        })
+        Ok(Self { start, end })
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
@@ -5326,14 +6104,23 @@ impl CheckSupportedPostgresqlColumnType
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SupportedSqlxPostgresType {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc>
+    for SupportedSqlxPostgresType
+{
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
+    > {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -5347,200 +6134,186 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize{
-    start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize>,
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
+{
+    start: std::ops::Bound<
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    >,
+    end: std::ops::Bound<
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    >,
 }
-pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
+{
     Start {
-        start: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
+        start: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError,
     },
     End {
-        end: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
+        end: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError,
     },
     StartEnd {
         start: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError,
-        end: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError
-    }
+        end: SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+impl
+    std::convert::TryFrom<
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
+    > for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
+{
     type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value), SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value),
+                    SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
 #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserializeTryFromOriginalError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserializeTryFromOriginalError
+{
     Start {
-        start: std::string::String
+        start: std::string::String,
     },
     End {
-        end: std::string::String
+        end: std::string::String,
     },
     StartEnd {
         start: std::string::String,
-        end: std::string::String
-    }
+        end: std::string::String,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
+{
     type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserializeTryFromOriginalError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.0.start, value.0.end) {
             (
                 std::ops::Bound::Included(start_value),
@@ -5703,10 +6476,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
                 std::ops::Bound::Unbounded
             ),
         };
-        Ok(Self {
-            start,
-            end
-        })
+        Ok(Self { start, end })
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
@@ -5772,14 +6542,23 @@ impl CheckSupportedPostgresqlColumnType
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SupportedSqlxPostgresType {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal>
+    for SupportedSqlxPostgresType
+{
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<
+        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
+    > {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -5793,209 +6572,192 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>,
 }
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError {
     Start {
-        start: time::error::ComponentRange
+        start: time::error::ComponentRange,
     },
     End {
-        end: time::error::ComponentRange
+        end: time::error::ComponentRange,
     },
     StartEnd {
         start: time::error::ComponentRange,
-        end: time::error::ComponentRange
-    }
+        end: time::error::ComponentRange,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+impl
+    std::convert::TryFrom<
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
+    > for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
+{
+    type Error =
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError;
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimeOffsetDateTime::try_from(start_value), SqlxTypesTimeOffsetDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimeOffsetDateTime::try_from(start_value), SqlxTypesTimeOffsetDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimeOffsetDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
+                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimeOffsetDateTime::try_from(start_value), SqlxTypesTimeOffsetDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimeOffsetDateTime::try_from(start_value), SqlxTypesTimeOffsetDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimeOffsetDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
+                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesTimeOffsetDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesTimeOffsetDateTime::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesTimeOffsetDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
+                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesTimeOffsetDateTime::try_from(start_value),
+                    SqlxTypesTimeOffsetDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesTimeOffsetDateTime::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesTimeOffsetDateTime::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesTimeOffsetDateTime::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(
+                    SqlxTypesTimeOffsetDateTime(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(
+                    SqlxTypesTimeOffsetDateTime(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(
+                    SqlxTypesTimeOffsetDateTime(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(SqlxTypesTimeOffsetDateTime(*value))
+                SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize::from(
+                    SqlxTypesTimeOffsetDateTime(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
@@ -6054,14 +6816,21 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for SupportedSqlxPostgresType {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
+    for SupportedSqlxPostgresType
+{
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -6075,209 +6844,192 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>,
 }
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
     Start {
-        start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
+        start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
     },
     End {
-        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
+        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
     },
     StartEnd {
         start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError
-    }
+        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+impl
+    std::convert::TryFrom<
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
+    > for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
+{
+    type Error =
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoNaiveDateTime::try_from(start_value), SqlxTypesChronoNaiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoNaiveDateTime::try_from(start_value), SqlxTypesChronoNaiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoNaiveDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
+                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoNaiveDateTime::try_from(start_value), SqlxTypesChronoNaiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoNaiveDateTime::try_from(start_value), SqlxTypesChronoNaiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoNaiveDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
+                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesChronoNaiveDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoNaiveDateTime::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesChronoNaiveDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
+                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
+                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoNaiveDateTime::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesChronoNaiveDateTime::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesChronoNaiveDateTime::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesChronoNaiveDateTime(*value))
+                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesChronoNaiveDateTime(*value))
+                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesChronoNaiveDateTime(*value))
+                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesChronoNaiveDateTime(*value))
+                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
@@ -6336,14 +7088,21 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChr
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresType {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
+    for SupportedSqlxPostgresType
+{
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -6357,209 +7116,193 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
 }
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError
+{
     Start {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
+        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
     },
     End {
-        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
+        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
     },
     StartEnd {
         start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
-        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError
-    }
+        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+impl
+    std::convert::TryFrom<
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
+    > for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
+{
+    type Error =
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesTimePrimitiveDateTime::try_from(start_value),
+                    SqlxTypesTimePrimitiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimePrimitiveDateTime::try_from(start_value), SqlxTypesTimePrimitiveDateTime::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesTimePrimitiveDateTime::try_from(start_value),
+                    SqlxTypesTimePrimitiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesTimePrimitiveDateTime::try_from(start_value),
+                    SqlxTypesTimePrimitiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesTimePrimitiveDateTime::try_from(start_value),
+                    SqlxTypesTimePrimitiveDateTime::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesTimePrimitiveDateTime::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesTimePrimitiveDateTime::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
+    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesTimePrimitiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesTimePrimitiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesTimePrimitiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(SqlxTypesTimePrimitiveDateTime(*value))
+                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                    SqlxTypesTimePrimitiveDateTime(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
@@ -6620,14 +7363,21 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesTim
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime> for SupportedSqlxPostgresType {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
+    for SupportedSqlxPostgresType
+{
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -6641,209 +7391,190 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>,
 }
 pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTryFromWithSerializeDeserializeError {
     Start {
-        start: std::string::String
+        start: std::string::String,
     },
     End {
-        end: std::string::String
+        end: std::string::String,
     },
     StartEnd {
         start: std::string::String,
-        end: std::string::String
-    }
+        end: std::string::String,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
+{
+    type Error =
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTryFromWithSerializeDeserializeError;
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoNaiveDate::try_from(start_value), SqlxTypesChronoNaiveDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoNaiveDate::try_from(start_value), SqlxTypesChronoNaiveDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoNaiveDate::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDate::try_from(start_value),
+                    SqlxTypesChronoNaiveDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesChronoNaiveDate::try_from(start_value), SqlxTypesChronoNaiveDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesChronoNaiveDate::try_from(start_value), SqlxTypesChronoNaiveDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesChronoNaiveDate::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDate::try_from(start_value),
+                    SqlxTypesChronoNaiveDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesChronoNaiveDate::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoNaiveDate::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesChronoNaiveDate::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDate::try_from(start_value),
+                    SqlxTypesChronoNaiveDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesChronoNaiveDate::try_from(start_value),
+                    SqlxTypesChronoNaiveDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesChronoNaiveDate::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesChronoNaiveDate::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesChronoNaiveDate::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
+    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(*value))
+                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDate(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(*value))
+                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDate(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(*value))
+                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDate(*value),
+                ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(*value))
+                SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDate(*value),
+                ),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
@@ -6902,14 +7633,21 @@ impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChr
     fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate> for SupportedSqlxPostgresType {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
+    for SupportedSqlxPostgresType
+{
     fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate) -> Self {
         SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -6923,209 +7661,189 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>,
 }
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializeError {
     Start {
-        start: time::error::ComponentRange
+        start: time::error::ComponentRange,
     },
     End {
-        end: time::error::ComponentRange
+        end: time::error::ComponentRange,
     },
     StartEnd {
         start: time::error::ComponentRange,
-        end: time::error::ComponentRange
-    }
+        end: time::error::ComponentRange,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize>
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeDate
+{
     type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let (start, end) = match (value.start, value.end) {
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimeDate::try_from(start_value), SqlxTypesTimeDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimeDate::try_from(start_value), SqlxTypesTimeDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Included(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Included(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimeDate::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Included(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesTimeDate::try_from(start_value),
+                    SqlxTypesTimeDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Included(end_value),
-            ) => match (SqlxTypesTimeDate::try_from(start_value), SqlxTypesTimeDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Included(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Excluded(end_value),
-            ) => match (SqlxTypesTimeDate::try_from(start_value), SqlxTypesTimeDate::try_from(end_value)) {
-                (Ok(start_value), Ok(end_value)) => (
-                    std::ops::Bound::Excluded(start_value.0),
-                    std::ops::Bound::Excluded(end_value.0)
-                ),
-                (Ok(_), Err(e)) => {
-                    return Err(Self::Error::End {
-                        end: e
-                    })
-                },
-                (Err(e), Ok(_)) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    })
-                },
-                (Err(start_error), Err(end_error)) => {
-                    return Err(Self::Error::StartEnd {
-                        start: start_error,
-                        end: end_error
-                    })
-                },
-            },
-            (
-                std::ops::Bound::Excluded(start_value),
-                std::ops::Bound::Unbounded,
-            ) => match SqlxTypesTimeDate::try_from(start_value) {
-                Ok(value) => (std::ops::Bound::Excluded(value.0), std::ops::Bound::Unbounded),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesTimeDate::try_from(start_value),
+                    SqlxTypesTimeDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Included(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Included(end_value),
-            ) => match SqlxTypesTimeDate::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesTimeDate::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Included(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Excluded(end_value),
-            ) => match SqlxTypesTimeDate::try_from(end_value) {
-                Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value.0)),
-                Err(e) => {
-                    return Err(Self::Error::Start {
-                        start: e
-                    });
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
+                match (
+                    SqlxTypesTimeDate::try_from(start_value),
+                    SqlxTypesTimeDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Included(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
                 }
-            },
-            (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded,
-            ) => (
-                std::ops::Bound::Unbounded,
-                std::ops::Bound::Unbounded
-            ),
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
+                match (
+                    SqlxTypesTimeDate::try_from(start_value),
+                    SqlxTypesTimeDate::try_from(end_value),
+                ) {
+                    (Ok(start_value), Ok(end_value)) => (
+                        std::ops::Bound::Excluded(start_value.0),
+                        std::ops::Bound::Excluded(end_value.0),
+                    ),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Err(start_error), Err(end_error)) => {
+                        return Err(Self::Error::StartEnd {
+                            start: start_error,
+                            end: end_error,
+                        })
+                    }
+                }
+            }
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
+                match SqlxTypesTimeDate::try_from(start_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Excluded(value.0),
+                        std::ops::Bound::Unbounded,
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
+                match SqlxTypesTimeDate::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Included(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
+                match SqlxTypesTimeDate::try_from(end_value) {
+                    Ok(value) => (
+                        std::ops::Bound::Unbounded,
+                        std::ops::Bound::Excluded(value.0),
+                    ),
+                    Err(e) => {
+                        return Err(Self::Error::Start { start: e });
+                    }
+                }
+            }
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
+                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        }))
+        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
+    for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(*value))
+                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
+                    *value,
+                )),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(*value))
+                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
+                    *value,
+                )),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(*value))
+                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
+                    *value,
+                )),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(*value))
+                SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(
+                    *value,
+                )),
             ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
@@ -7186,8 +7904,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate> for Supported
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7201,45 +7924,67 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize>
+    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
         let start = match value.start {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0),
+            std::ops::Bound::Included(value) => {
+                std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0)
+            }
+            std::ops::Bound::Excluded(value) => {
+                std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0)
+            }
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.end {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0),
+            std::ops::Bound::Included(value) => {
+                std::ops::Bound::Included(SqlxTypesBigDecimal::from(value).0)
+            }
+            std::ops::Bound::Excluded(value) => {
+                std::ops::Bound::Excluded(SqlxTypesBigDecimal::from(value).0)
+            }
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        })
+        Self(sqlx::postgres::types::PgRange { start, end })
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
+    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
+            std::ops::Bound::Included(value) => {
+                std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                    SqlxTypesBigDecimal(value.clone()),
+                ))
+            }
+            std::ops::Bound::Excluded(value) => {
+                std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                    SqlxTypesBigDecimal(value.clone()),
+                ))
+            }
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(SqlxTypesBigDecimal(value.clone()))),
+            std::ops::Bound::Included(value) => {
+                std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                    SqlxTypesBigDecimal(value.clone()),
+                ))
+            }
+            std::ops::Bound::Excluded(value) => {
+                std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                    SqlxTypesBigDecimal(value.clone()),
+                ))
+            }
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
@@ -7300,8 +8045,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal> for Support
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7315,11 +8065,13 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize>
+    for SqlxPostgresTypesPgRangeSqlxTypesDecimal
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Self {
         let start = match value.start {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
@@ -7331,29 +8083,33 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDes
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self(sqlx::postgres::types::PgRange{
-            start,
-            end
-        })
+        Self(sqlx::postgres::types::PgRange { start, end })
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
+    for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(
+                SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value)),
+            ),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
+                SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value)),
+            ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         let end = match value.0.end_bound() {
-            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
-            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value))),
+            std::ops::Bound::Included(value) => std::ops::Bound::Included(
+                SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value)),
+            ),
+            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
+                SqlxTypesDecimalWithSerializeDeserialize::from(SqlxTypesDecimal(*value)),
+            ),
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
-        Self {
-            start,
-            end
-        }
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
@@ -7414,8 +8170,13 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SupportedS
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7428,14 +8189,18 @@ impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
-impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize> for SqlxPostgresTypesPgMoney {
+impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize>
+    for SqlxPostgresTypesPgMoney
+{
     fn from(value: SqlxPostgresTypesPgMoneyWithSerializeDeserialize) -> Self {
         Self(sqlx::postgres::types::PgMoney(value.0))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgMoney> for SqlxPostgresTypesPgMoneyWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgMoney>
+    for SqlxPostgresTypesPgMoneyWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgMoney) -> Self {
-        Self(value.0.0)
+        Self(value.0 .0)
     }
 }
 impl SqlxPostgresTypesPgMoney {
@@ -7494,8 +8259,13 @@ impl std::convert::From<SqlxPostgresTypesPgMoney> for SupportedSqlxPostgresType 
     }
 }
 impl SqlxPostgresTypesPgMoney {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7508,14 +8278,18 @@ impl SqlxPostgresTypesPgMoney {
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
-impl std::convert::From<SqlxPostgresTypesPgCiTextWithSerializeDeserialize> for SqlxPostgresTypesPgCiText {
+impl std::convert::From<SqlxPostgresTypesPgCiTextWithSerializeDeserialize>
+    for SqlxPostgresTypesPgCiText
+{
     fn from(value: SqlxPostgresTypesPgCiTextWithSerializeDeserialize) -> Self {
         Self(sqlx::postgres::types::PgCiText(value.0))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgCiText> for SqlxPostgresTypesPgCiTextWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgCiText>
+    for SqlxPostgresTypesPgCiTextWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgCiText) -> Self {
-        Self(value.0.0)
+        Self(value.0 .0)
     }
 }
 impl SqlxPostgresTypesPgCiText {
@@ -7574,8 +8348,13 @@ impl std::convert::From<SqlxPostgresTypesPgCiText> for SupportedSqlxPostgresType
     }
 }
 impl SqlxPostgresTypesPgCiText {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7587,13 +8366,16 @@ impl SqlxPostgresTypesPgCiText {
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesBigDecimalNewWithSerializeDeserialize{
+pub struct SqlxTypesBigDecimalNewWithSerializeDeserialize {
     digits: NumBigintBigIntNewWithSerializeDeserialize,
-    scale: std::primitive::i64
+    scale: std::primitive::i64,
 }
 impl std::convert::From<SqlxTypesBigDecimalNewWithSerializeDeserialize> for SqlxTypesBigDecimal {
     fn from(value: SqlxTypesBigDecimalNewWithSerializeDeserialize) -> Self {
-        Self(sqlx::types::BigDecimal::new(num_bigint::BigInt::from(value.digits), value.scale))
+        Self(sqlx::types::BigDecimal::new(
+            num_bigint::BigInt::from(value.digits),
+            value.scale,
+        ))
     }
 }
 impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalNewWithSerializeDeserialize {
@@ -7601,7 +8383,7 @@ impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalNewWithSeria
         let (bigint, exponent) = value.0.into_bigint_and_exponent();
         Self {
             digits: NumBigintBigIntNewWithSerializeDeserialize::from(bigint),
-            scale: exponent//todo is exponent equal to scale?
+            scale: exponent, //todo is exponent equal to scale?
         }
     }
 }
@@ -7662,8 +8444,13 @@ impl std::convert::From<SqlxTypesBigDecimal> for SupportedSqlxPostgresType {
     }
 }
 impl SqlxTypesBigDecimal {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BigDecimal> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::BigDecimal> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7743,7 +8530,10 @@ impl std::convert::From<SqlxTypesDecimal> for SupportedSqlxPostgresType {
 }
 impl SqlxTypesDecimal {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7757,37 +8547,58 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize);
-impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize(
+    SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
+);
+impl
+    std::convert::TryFrom<
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    > for SqlxTypesChronoDateTimeSqlxTypesChronoUtc
+{
     type Error = SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         let value = match SqlxTypesChronoNaiveDateTime::try_from(value.0) {
             Ok(value) => value.0,
             Err(e) => {
                 return Err(e);
             }
         };
-        Ok(Self(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
-            value,
-            sqlx::types::chrono::Utc
-        )))
+        Ok(Self(
+            sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
+                value,
+                sqlx::types::chrono::Utc,
+            ),
+        ))
     }
 }
-impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize {
+impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoUtc>
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize
+{
     type Error = std::string::String;
     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc) -> Result<Self, Self::Error> {
         //on commit time there is not non-panic version of .date_naive()
-        let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate with .date_naive()"));
-            },
-        };
+        let date: sqlx::types::chrono::NaiveDate =
+            match std::panic::catch_unwind(|| value.0.date_naive()) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(std::string::String::from(
+                        "failed to create sqlx::types::chrono::NaiveDate with .date_naive()",
+                    ));
+                }
+            };
         let time = value.0.time();
-        Ok(Self(SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
-            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(date)),
-            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(time)),
-        }))
+        Ok(Self(
+            SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
+                date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDate(date),
+                ),
+                time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveTime(time),
+                ),
+            },
+        ))
     }
 }
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
@@ -7848,8 +8659,13 @@ impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoUtc> for Supported
     }
 }
 impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -7863,66 +8679,86 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize{
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize
+{
     naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
     fixed_offset: std::primitive::i32,
 }
 pub enum SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError {
     NaiveDateTime {
         naive_date_time: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-    }, 
+    },
     FixedOffset {
-        fixed_offset: std::string::String
+        fixed_offset: std::string::String,
     },
     NaiveDateTimeFixedOffset {
         naive_date_time: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-        fixed_offset: std::string::String
-    }
+        fixed_offset: std::string::String,
+    },
 }
-impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+impl
+    std::convert::TryFrom<
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    > for SqlxTypesChronoDateTimeSqlxTypesChronoLocal
+{
     type Error = SqlxTypesChronoDateTimeSqlxTypesChronoLocalTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let (naive_date_time, fixed_offset) = match (SqlxTypesChronoNaiveDateTime::try_from(value.naive_date_time), sqlx::types::chrono::FixedOffset::east_opt(value.fixed_offset)) {
+    fn try_from(
+        value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        let (naive_date_time, fixed_offset) = match (
+            SqlxTypesChronoNaiveDateTime::try_from(value.naive_date_time),
+            sqlx::types::chrono::FixedOffset::east_opt(value.fixed_offset),
+        ) {
             (Ok(naive_date_time), Some(fixed_offset)) => (naive_date_time.0, fixed_offset),
             (Err(e), Some(_)) => {
-                return Err(Self::Error::NaiveDateTime {
-                    naive_date_time: e,
-                });
-            },
+                return Err(Self::Error::NaiveDateTime { naive_date_time: e });
+            }
             (Ok(_), None) => {
                 return Err(Self::Error::FixedOffset {
-                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(value.fixed_offset)
+                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(
+                        value.fixed_offset,
+                    ),
                 });
-            },
+            }
             (Err(naive_date_time_error), None) => {
                 return Err(Self::Error::NaiveDateTimeFixedOffset {
                     naive_date_time: naive_date_time_error,
-                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(value.fixed_offset)
+                    fixed_offset: generate_sqlx_types_chrono_fixed_offset_east_opt_failed_message(
+                        value.fixed_offset,
+                    ),
                 });
-            },
+            }
         };
-        Ok(Self(sqlx::types::chrono::DateTime::from_naive_utc_and_offset(
-            naive_date_time,
-            fixed_offset
-        )))
+        Ok(Self(
+            sqlx::types::chrono::DateTime::from_naive_utc_and_offset(naive_date_time, fixed_offset),
+        ))
     }
 }
-impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize {
+impl std::convert::TryFrom<SqlxTypesChronoDateTimeSqlxTypesChronoLocal>
+    for SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize
+{
     type Error = std::string::String;
     fn try_from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Result<Self, Self::Error> {
         //on commit time there is not non-panic version of .date_naive()
-        let date: sqlx::types::chrono::NaiveDate = match std::panic::catch_unwind(||value.0.date_naive()) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate with .date_naive()"));
-            },
-        };
+        let date: sqlx::types::chrono::NaiveDate =
+            match std::panic::catch_unwind(|| value.0.date_naive()) {
+                Ok(value) => value,
+                Err(_e) => {
+                    return Err(std::string::String::from(
+                        "failed to create sqlx::types::chrono::NaiveDate with .date_naive()",
+                    ));
+                }
+            };
         let time = value.0.time();
-        let offset = value.0.offset().local_minus_utc();//todo test - maybe need to use .utc_minus_local() instead
-        Ok(Self{
+        let offset = value.0.offset().local_minus_utc(); //todo test - maybe need to use .utc_minus_local() instead
+        Ok(Self {
             naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
-                date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(date)),
-                time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(time)),
+                date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveDate(date),
+                ),
+                time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(
+                    SqlxTypesChronoNaiveTime(time),
+                ),
             },
             fixed_offset: offset,
         })
@@ -7986,8 +8822,13 @@ impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for Support
     }
 }
 impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8005,49 +8846,55 @@ pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
 }
 pub enum SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
     Date {
-        date: std::string::String
+        date: std::string::String,
     },
     Time {
-        time: std::string::String
+        time: std::string::String,
     },
     DateTime {
         date: std::string::String,
-        time: std::string::String
-    }
+        time: std::string::String,
+    },
 }
-impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize> for SqlxTypesChronoNaiveDateTime {
+impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>
+    for SqlxTypesChronoNaiveDateTime
+{
     type Error = SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let (date, time) = match (SqlxTypesChronoNaiveDate::try_from(value.date), SqlxTypesChronoNaiveTime::try_from(value.time)) {
+    fn try_from(
+        value: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        let (date, time) = match (
+            SqlxTypesChronoNaiveDate::try_from(value.date),
+            SqlxTypesChronoNaiveTime::try_from(value.time),
+        ) {
             (Ok(date), Ok(time)) => (date.0, time.0),
             (Ok(_), Err(e)) => {
-                return Err(Self::Error::Time {
-                    time: e
-                });
-            },
-            (Err(e), Ok(_)) => {
-                return Err(Self::Error::Date {
-                    date: e
-                })
-            },
+                return Err(Self::Error::Time { time: e });
+            }
+            (Err(e), Ok(_)) => return Err(Self::Error::Date { date: e }),
             (Err(date_error), Err(time_error)) => {
                 return Err(Self::Error::DateTime {
                     date: date_error,
-                    time: time_error
+                    time: time_error,
                 });
-            },
+            }
         };
-        Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date,time)))
+        Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date, time)))
     }
 }
-impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesChronoNaiveDateTime>
+    for SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize
+{
     fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
         Self {
             //todo maybe impl from directly
-            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveDate(value.0.date())),
-            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(SqlxTypesChronoNaiveTime(value.0.time())),
+            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
+                SqlxTypesChronoNaiveDate(value.0.date()),
+            ),
+            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(
+                SqlxTypesChronoNaiveTime(value.0.time()),
+            ),
         }
-       
     }
 }
 impl SqlxTypesChronoNaiveDateTime {
@@ -8055,23 +8902,17 @@ impl SqlxTypesChronoNaiveDateTime {
         self.0
     }
 }
-impl std::convert::From<SqlxTypesChronoNaiveDateTime>
-    for sqlx::types::chrono::NaiveDateTime
-{
+impl std::convert::From<SqlxTypesChronoNaiveDateTime> for sqlx::types::chrono::NaiveDateTime {
     fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
         value.0
     }
 }
 impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
-            sqlx::Postgres,
-        >>::type_info()
+        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<
-            sqlx::Postgres,
-        >>::compatible(ty)
+        <sqlx::types::chrono::NaiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
 // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDateTime {
@@ -8113,8 +8954,13 @@ impl std::convert::From<SqlxTypesChronoNaiveDateTime> for SupportedSqlxPostgresT
     }
 }
 impl SqlxTypesChronoNaiveDateTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8129,29 +8975,34 @@ pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 pub struct SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize {
     year: std::primitive::i32,
     month: std::primitive::u32,
-    day: std::primitive::u32
+    day: std::primitive::u32,
 }
-impl std::convert::TryFrom<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize> for SqlxTypesChronoNaiveDate {
+impl std::convert::TryFrom<SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize>
+    for SqlxTypesChronoNaiveDate
+{
     type Error = std::string::String;
-    fn try_from(value: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let option_inner_value = sqlx::types::chrono::NaiveDate::from_ymd_opt(
-            value.year,
-            value.month,
-            value.day
-        );
+    fn try_from(
+        value: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        let option_inner_value =
+            sqlx::types::chrono::NaiveDate::from_ymd_opt(value.year, value.month, value.day);
         match option_inner_value {
             Some(value) => Ok(Self(value)),
-            None => Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveDate from year, month and day"))
+            None => Err(std::string::String::from(
+                "failed to create sqlx::types::chrono::NaiveDate from year, month and day",
+            )),
         }
     }
 }
-impl std::convert::From<SqlxTypesChronoNaiveDate> for SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesChronoNaiveDate>
+    for SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize
+{
     fn from(value: SqlxTypesChronoNaiveDate) -> Self {
         use chrono::Datelike;
         Self {
             year: value.0.year(),
             month: value.0.month(),
-            day: value.0.day()
+            day: value.0.day(),
         }
     }
 }
@@ -8212,8 +9063,13 @@ impl std::convert::From<SqlxTypesChronoNaiveDate> for SupportedSqlxPostgresType 
     }
 }
 impl SqlxTypesChronoNaiveDate {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8225,31 +9081,35 @@ impl SqlxTypesChronoNaiveDate {
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize{
+pub struct SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize {
     hour: std::primitive::u32,
     min: std::primitive::u32,
-    sec: std::primitive::u32
+    sec: std::primitive::u32,
 }
-impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize> for SqlxTypesChronoNaiveTime {
+impl std::convert::TryFrom<SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize>
+    for SqlxTypesChronoNaiveTime
+{
     type Error = std::string::String;
-    fn try_from(value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match sqlx::types::chrono::NaiveTime::from_hms_opt(
-            value.hour,
-            value.min, 
-            value.sec
-        ) {
+    fn try_from(
+        value: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        match sqlx::types::chrono::NaiveTime::from_hms_opt(value.hour, value.min, value.sec) {
             Some(value) => Ok(Self(value)),
-            None => Err(std::string::String::from("failed to create sqlx::types::chrono::NaiveTime from hour, minute and second"))
+            None => Err(std::string::String::from(
+                "failed to create sqlx::types::chrono::NaiveTime from hour, minute and second",
+            )),
         }
     }
 }
-impl std::convert::From<SqlxTypesChronoNaiveTime> for SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesChronoNaiveTime>
+    for SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize
+{
     fn from(value: SqlxTypesChronoNaiveTime) -> Self {
         use chrono::Timelike;
         Self {
             hour: value.0.hour(),
             min: value.0.minute(),
-            sec: value.0.second()
+            sec: value.0.second(),
         }
     }
 }
@@ -8310,8 +9170,13 @@ impl std::convert::From<SqlxTypesChronoNaiveTime> for SupportedSqlxPostgresType 
     }
 }
 impl SqlxTypesChronoNaiveTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8323,9 +9188,9 @@ impl SqlxTypesChronoNaiveTime {
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize{
+pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
-    offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
+    offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
 pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError {
     TimeOffset {
@@ -8336,43 +9201,47 @@ pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError {
         time: time::error::ComponentRange,
     },
     Offset {
-        offset: time::error::ComponentRange
-    }
+        offset: time::error::ComponentRange,
+    },
 }
-impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for SqlxPostgresTypesPgTimeTz {
+impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize>
+    for SqlxPostgresTypesPgTimeTz
+{
     type Error = SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError;
-    fn try_from(value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let (time, offset) = match (SqlxTypesTimeTime::try_from(value.time), sqlx::types::time::UtcOffset::try_from(value.offset)) {
-            (Ok(time), Ok(offset)) => (time.0,offset),
+    fn try_from(
+        value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        let (time, offset) = match (
+            SqlxTypesTimeTime::try_from(value.time),
+            sqlx::types::time::UtcOffset::try_from(value.offset),
+        ) {
+            (Ok(time), Ok(offset)) => (time.0, offset),
             (Err(e), Ok(_)) => {
-                return Err(Self::Error::Time {
-                    time: e
-                });
-            },
+                return Err(Self::Error::Time { time: e });
+            }
             (Ok(_), Err(e)) => {
-                return Err(Self::Error::Offset {
-                    offset: e
-                });
-            },
+                return Err(Self::Error::Offset { offset: e });
+            }
             (Err(time_error), Err(offset_error)) => {
                 return Err(Self::Error::TimeOffset {
                     time: time_error,
-                    offset: offset_error
+                    offset: offset_error,
                 });
-            },
+            }
         };
-        Ok(Self(sqlx::postgres::types::PgTimeTz {
-            time,
-            offset,
-        }))
+        Ok(Self(sqlx::postgres::types::PgTimeTz { time, offset }))
     }
 }
-impl std::convert::From<SqlxPostgresTypesPgTimeTz> for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
+impl std::convert::From<SqlxPostgresTypesPgTimeTz>
+    for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize
+{
     fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
         Self {
             //todo impl from directly from type?
-            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(value.0.time)),
-            offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize::from(value.0.offset)
+            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(
+                value.0.time,
+            )),
+            offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize::from(value.0.offset),
         }
     }
 }
@@ -8432,8 +9301,13 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz> for SupportedSqlxPostgresType
     }
 }
 impl SqlxPostgresTypesPgTimeTz {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8445,9 +9319,9 @@ impl SqlxPostgresTypesPgTimeTz {
 #[derive(Debug)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize{
+pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize {
     date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
-    time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize
+    time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
 }
 pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
     DateTime {
@@ -8458,43 +9332,51 @@ pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
         date: time::error::ComponentRange,
     },
     Time {
-        time: time::error::ComponentRange
-    }
+        time: time::error::ComponentRange,
+    },
 }
-impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
+impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>
+    for SqlxTypesTimePrimitiveDateTime
+{
     type Error = SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError;
-    fn try_from(value: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let (date, time) = match (SqlxTypesTimeDate::try_from(value.date), SqlxTypesTimeTime::try_from(value.time)) {
+    fn try_from(
+        value: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        let (date, time) = match (
+            SqlxTypesTimeDate::try_from(value.date),
+            SqlxTypesTimeTime::try_from(value.time),
+        ) {
             (Ok(date), Ok(time)) => (date, time),
             (Err(e), Ok(_)) => {
-                return Err(Self::Error::Date {
-                    date: e
-                });
-            },
+                return Err(Self::Error::Date { date: e });
+            }
             (Ok(_), Err(e)) => {
-                return Err(Self::Error::Time {
-                    time: e
-                });
-            },
+                return Err(Self::Error::Time { time: e });
+            }
             (Err(date_error), Err(time_error)) => {
                 return Err(Self::Error::DateTime {
                     date: date_error,
-                    time: time_error
+                    time: time_error,
                 });
-            },
+            }
         };
         Ok(Self(sqlx::types::time::PrimitiveDateTime::new(
-            date.0,
-            time.0,
+            date.0, time.0,
         )))
     }
 }
-impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
+    for SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize
+{
     fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
         Self {
             //todo impl from directly from type?
-            date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(SqlxTypesTimeDate(value.0.date())),
-            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(value.0.time()))
+            date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize::from(
+                SqlxTypesTimeDate(value.0.date()),
+            ),
+            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(
+                value.0.time(),
+            )),
         }
     }
 }
@@ -8555,8 +9437,13 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SupportedSqlxPostgre
     }
 }
 impl SqlxTypesTimePrimitiveDateTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8568,17 +9455,25 @@ impl SqlxTypesTimePrimitiveDateTime {
 #[derive(Debug)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize(std::primitive::i64);
-impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize> for SqlxTypesTimeOffsetDateTime {
+pub struct SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize(
+    std::primitive::i64,
+);
+impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize>
+    for SqlxTypesTimeOffsetDateTime
+{
     type Error = time::error::ComponentRange;
-    fn try_from(value: SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         match sqlx::types::time::OffsetDateTime::from_unix_timestamp(value.0) {
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(e),
         }
     }
 }
-impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesTimeOffsetDateTime>
+    for SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize
+{
     fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
         Self(value.0.unix_timestamp())
     }
@@ -8639,8 +9534,13 @@ impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SupportedSqlxPostgresTy
     }
 }
 impl SqlxTypesTimeOffsetDateTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8655,27 +9555,33 @@ pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 pub struct SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
     year: std::primitive::i32,
     month: TimeMonthWithSerializeDeserialize,
-    day: std::primitive::u8
+    day: std::primitive::u8,
 }
-impl std::convert::TryFrom<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize> for SqlxTypesTimeDate {
+impl std::convert::TryFrom<SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize>
+    for SqlxTypesTimeDate
+{
     type Error = time::error::ComponentRange;
-    fn try_from(value: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         match sqlx::types::time::Date::from_calendar_date(
             value.year,
             time::Month::from(value.month),
-            value.day
+            value.day,
         ) {
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(e),
         }
     }
 }
-impl std::convert::From<SqlxTypesTimeDate> for SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesTimeDate>
+    for SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize
+{
     fn from(value: SqlxTypesTimeDate) -> Self {
-        Self{
+        Self {
             year: value.0.year(),
             month: value.0.month().into(),
-            day: value.0.day()
+            day: value.0.day(),
         }
     }
 }
@@ -8736,8 +9642,13 @@ impl std::convert::From<SqlxTypesTimeDate> for SupportedSqlxPostgresType {
     }
 }
 impl SqlxTypesTimeDate {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Date> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::Date> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8749,31 +9660,29 @@ impl SqlxTypesTimeDate {
 #[derive(Debug)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeTimeFromHmsWithSerializeDeserialize{
+pub struct SqlxTypesTimeTimeFromHmsWithSerializeDeserialize {
     hour: std::primitive::u8,
     minute: std::primitive::u8,
-    second: std::primitive::u8
+    second: std::primitive::u8,
 }
 //todo different init methods support
 impl std::convert::TryFrom<SqlxTypesTimeTimeFromHmsWithSerializeDeserialize> for SqlxTypesTimeTime {
     type Error = time::error::ComponentRange;
-    fn try_from(value: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match sqlx::types::time::Time::from_hms(
-            value.hour,
-            value.minute,
-            value.second
-        ) {
+    fn try_from(
+        value: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
+        match sqlx::types::time::Time::from_hms(value.hour, value.minute, value.second) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e)
+            Err(e) => Err(e),
         }
     }
 }
 impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeFromHmsWithSerializeDeserialize {
     fn from(value: SqlxTypesTimeTime) -> Self {
-        Self{
+        Self {
             hour: value.0.hour(),
             minute: value.0.minute(),
-            second: value.0.second()
+            second: value.0.second(),
         }
     }
 }
@@ -8834,8 +9743,13 @@ impl std::convert::From<SqlxTypesTimeTime> for SupportedSqlxPostgresType {
     }
 }
 impl SqlxTypesTimeTime {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::time::Time> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::time::Time> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8848,16 +9762,20 @@ impl SqlxTypesTimeTime {
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidTryParseWithSerializeDeserialize(std::string::String);
-impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize> for SqlxTypesUuidUuid {
+impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize>
+    for SqlxTypesUuidUuid
+{
     type Error = sqlx::types::uuid::Error;
-    fn try_from(value: SqlxTypesUuidUuidTryParseWithSerializeDeserialize) -> Result<Self, Self::Error> {
+    fn try_from(
+        value: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
+    ) -> Result<Self, Self::Error> {
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e)
+            Err(e) => Err(e),
         }
     }
 }
-impl std::convert::From<SqlxTypesUuidUuid> for  SqlxTypesUuidUuidTryParseWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidTryParseWithSerializeDeserialize {
     fn from(value: SqlxTypesUuidUuid) -> Self {
         Self(value.0.to_string())
     }
@@ -8918,8 +9836,13 @@ impl std::convert::From<SqlxTypesUuidUuid> for SupportedSqlxPostgresType {
     }
 }
 impl SqlxTypesUuidUuid {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -8932,12 +9855,16 @@ impl SqlxTypesUuidUuid {
 pub struct SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize(sqlx::types::ipnetwork::IpNetwork);
-impl std::convert::From<SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize> for SqlxTypesIpnetworkIpNetwork {
+impl std::convert::From<SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize>
+    for SqlxTypesIpnetworkIpNetwork
+{
     fn from(value: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize) -> Self {
         Self(value.0)
     }
 }
-impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesIpnetworkIpNetwork>
+    for SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize
+{
     fn from(value: SqlxTypesIpnetworkIpNetwork) -> Self {
         Self(value.0)
     }
@@ -8999,8 +9926,13 @@ impl std::convert::From<SqlxTypesIpnetworkIpNetwork> for SupportedSqlxPostgresTy
     }
 }
 impl SqlxTypesIpnetworkIpNetwork {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -9081,7 +10013,10 @@ impl std::convert::From<StdNetIpAddr> for SupportedSqlxPostgresType {
 }
 impl StdNetIpAddr {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -9094,12 +10029,16 @@ impl StdNetIpAddr {
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize([std::primitive::u8; 6]);
-impl std::convert::From<SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize> for SqlxTypesMacAddressMacAddress {
+impl std::convert::From<SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize>
+    for SqlxTypesMacAddressMacAddress
+{
     fn from(value: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize) -> Self {
         Self(sqlx::types::mac_address::MacAddress::new(value.0))
     }
 }
-impl std::convert::From<SqlxTypesMacAddressMacAddress> for SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesMacAddressMacAddress>
+    for SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize
+{
     fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
         Self(value.0.bytes())
     }
@@ -9160,8 +10099,13 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress> for SupportedSqlxPostgres
     }
 }
 impl SqlxTypesMacAddressMacAddress {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+    pub fn into_inner_type_vec(
+        value: std::vec::Vec<Self>,
+    ) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -9181,7 +10125,13 @@ impl std::convert::From<SqlxTypesBitVecFromBytesWithSerializeDeserialize> for Sq
 }
 impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecFromBytesWithSerializeDeserialize {
     fn from(value: SqlxTypesBitVec) -> Self {
-        Self(value.0.into_iter().map(|element|Into::into(element)).collect::<std::vec::Vec<std::primitive::u8>>())
+        Self(
+            value
+                .0
+                .into_iter()
+                .map(|element| Into::into(element))
+                .collect::<std::vec::Vec<std::primitive::u8>>(),
+        )
     }
 }
 impl SqlxTypesBitVec {
@@ -9243,7 +10193,10 @@ impl std::convert::From<SqlxTypesBitVec> for SupportedSqlxPostgresType {
 }
 impl SqlxTypesBitVec {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -9354,7 +10307,10 @@ impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
 }
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -9435,7 +10391,10 @@ impl std::convert::From<SerdeJsonValue> for SupportedSqlxPostgresType {
 }
 impl SerdeJsonValue {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value.into_iter().map(|element|element.into_inner()).collect()
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
     }
 }
 // impl std::convert::From<> for {
@@ -9468,7 +10427,8 @@ pub fn test_check_supported_postgresql_column_type() {
     SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime::check_supported_postgresql_column_type();
-    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::check_supported_postgresql_column_type();
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::check_supported_postgresql_column_type(
+    );
     SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesTimeDate::check_supported_postgresql_column_type();
     SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::check_supported_postgresql_column_type();

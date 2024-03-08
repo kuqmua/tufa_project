@@ -9,16 +9,15 @@ where
     HashMapValueGeneric: std::fmt::Display,
 {
     fn hashmap_display_foreign_type_display_to_string(&self) -> std::string::String {
-        crate::helpers::error_occurence_hashmap_formatter(
-            self.iter().fold(String::from(""), |mut acc, (key, value)| {
-                acc.push_str(
-                    &crate::helpers::stringified_lines_error_hashmap_element(
-                        key.display_foreign_type(),
-                        value.to_string(),
-                    ),
-                );
+        crate::helpers::error_occurence_hashmap_formatter(self.iter().fold(
+            String::from(""),
+            |mut acc, (key, value)| {
+                acc.push_str(&crate::helpers::stringified_lines_error_hashmap_element(
+                    key.display_foreign_type(),
+                    value.to_string(),
+                ));
                 acc
-            })
-        )
+            },
+        ))
     }
 }

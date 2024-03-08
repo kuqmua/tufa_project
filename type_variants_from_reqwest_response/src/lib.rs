@@ -293,11 +293,11 @@ fn generate_from_logic(
 //                             ),
 //                             |mut acc, field| {
 //                                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-                                    //     panic!(
-                                    //         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                    //         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
-                                    //     )
-                                    // });
+//     panic!(
+//         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+//         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+//     )
+// });
 //                                 acc.0.push(quote::quote! { #field_ident: _ });
 //                                 acc.1.push(field_ident);
 //                                 acc
@@ -462,12 +462,12 @@ fn generate_from_logic(
 //                         let fields = if let syn::Fields::Named(fields_named) = &variant.fields {
 //                             fields_named.named.iter().map(|field| {
 //                                 let field_ident = &field.ident
-                                    // .as_ref().unwrap_or_else(|| {
-                                    //     panic!(
-                                    //         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                    //         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
-                                    //     )
-                                    // });
+// .as_ref().unwrap_or_else(|| {
+//     panic!(
+//         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+//         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+//     )
+// });
 //                                 quote::quote! { #field_ident }
 //                             })
 //                         }
@@ -809,12 +809,12 @@ fn generate_from_logic(
 //                 syn::Fields::Named(fields_named) => {
 //                     let fields = fields_named.named.iter().map(|field|{
 //                         let field_ident = field.ident
-                            // .as_ref().unwrap_or_else(|| {
-                            //     panic!(
-                            //         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                            //         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
-                            //     )
-                            // });
+// .as_ref().unwrap_or_else(|| {
+//     panic!(
+//         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+//         proc_macro_helpers::naming_conventions::FIELD_IDENT_IS_NONE
+//     )
+// });
 //                         quote::quote! { #field_ident: _ }
 //                     });
 //                     let status_code_token_stream = proc_macro_helpers::status_code::get_only_one_status_code(
