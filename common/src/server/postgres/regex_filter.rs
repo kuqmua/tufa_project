@@ -6,7 +6,11 @@ pub struct RegexFilter {
 
 impl std::fmt::Display for RegexFilter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "regex: {}, conjuctive_operator: {}", self.regex, self.conjuctive_operator)
+        write!(
+            f,
+            "regex: {}, conjuctive_operator: {}",
+            self.regex, self.conjuctive_operator
+        )
     }
 }
 
@@ -26,7 +30,13 @@ impl crate::server::postgres::bind_query::BindQuery for RegexFilter {
             }),
         }
     }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(
+        &self,
+        increment: &mut u64,
+    ) -> Result<
+        std::string::String,
+        crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed,
+    > {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
@@ -56,31 +66,37 @@ impl crate::server::postgres::bind_query::BindQuery for Vec<RegexFilter> {
             match increment.checked_add(1) {
                 Some(incr) => {
                     *increment = incr;
-                },
+                }
                 None => {
                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                         checked_add: std::string::String::from("checked_add is None"), 
                         code_occurence: crate::code_occurence!(), 
                     });
-                },
+                }
             }
         }
         Ok(())
     }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(
+        &self,
+        increment: &mut u64,
+    ) -> Result<
+        std::string::String,
+        crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed,
+    > {
         let mut value = std::string::String::default();
         for _ in self {
             match increment.checked_add(1) {
                 Some(incr) => {
                     *increment = incr;
                     value.push_str(&format!("${increment},"));
-                },
+                }
                 None => {
                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                         checked_add: std::string::String::from("checked_add is None"), 
                         code_occurence: crate::code_occurence!(), 
                     });
-                },
+                }
             }
         }
         value.pop();

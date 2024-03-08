@@ -73,7 +73,6 @@
 //     }
 // }
 
-
 // ///////////////////
 // impl std::convert::From<QueryExtractorErrorNamed>
 //     for crate::repositories_types::server::routes::api::cats::TryReadManyResponseVariants

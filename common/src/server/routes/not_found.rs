@@ -29,5 +29,7 @@ async fn not_found(
 }
 
 pub fn not_found_route(app_state: DynArcNotFoundRouteParametersSendSync) -> axum::Router {
-    axum::Router::new().fallback(not_found).with_state(app_state)
+    axum::Router::new()
+        .fallback(not_found)
+        .with_state(app_state)
 }

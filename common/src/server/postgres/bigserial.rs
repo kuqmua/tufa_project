@@ -100,12 +100,10 @@ impl std::str::FromStr for Bigserial {
         match value.parse::<i64>() {
             Ok(i64_value) => match Self::try_from(i64_value) {
                 Ok(bigserial) => Ok(bigserial),
-                Err(bigserial_try_from_i64_error) => {
-                    Err(Self::Err::NotPositive {
-                        not_positive: bigserial_try_from_i64_error,
-                        code_occurence: crate::code_occurence!(),
-                    })
-                }
+                Err(bigserial_try_from_i64_error) => Err(Self::Err::NotPositive {
+                    not_positive: bigserial_try_from_i64_error,
+                    code_occurence: crate::code_occurence!(),
+                }),
             },
             Err(parse_int_error) => Err(Self::Err::ParseIntError {
                 parse_int_error,
@@ -122,12 +120,10 @@ impl std::convert::TryFrom<&str> for Bigserial {
         match value.parse::<i64>() {
             Ok(i64_value) => match Self::try_from(i64_value) {
                 Ok(bigserial) => Ok(bigserial),
-                Err(bigserial_try_from_i64_error) => {
-                    Err(Self::Error::NotPositive {
-                        not_positive: bigserial_try_from_i64_error,
-                        code_occurence: crate::code_occurence!(),
-                    })
-                }
+                Err(bigserial_try_from_i64_error) => Err(Self::Error::NotPositive {
+                    not_positive: bigserial_try_from_i64_error,
+                    code_occurence: crate::code_occurence!(),
+                }),
             },
             Err(parse_int_error) => Err(Self::Error::ParseIntError {
                 parse_int_error,
@@ -154,7 +150,13 @@ impl crate::server::postgres::bind_query::BindQuery for Bigserial {
             })
         }
     }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(
+        &self,
+        increment: &mut u64,
+    ) -> Result<
+        std::string::String,
+        crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed,
+    > {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;

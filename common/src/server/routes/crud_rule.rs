@@ -6,5 +6,5 @@ pub enum CrudRule {
     ReadCreateUpdate,
     ReadUpdateDelete,
     ReadCreateDelete,
-    ReadCreateUpdateDelete
+    ReadCreateUpdateDelete,
 }

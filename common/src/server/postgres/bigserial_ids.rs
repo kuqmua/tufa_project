@@ -81,13 +81,13 @@ impl crate::server::postgres::bind_query::BindQuery for BigserialIds {
             match increment.checked_add(1) {
                 Some(incr) => {
                     *increment = incr;
-                },
+                }
                 None => {
                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                         checked_add: std::string::String::from("checked_add is None"), 
                         code_occurence: crate::code_occurence!(), 
                     });
-                },
+                }
             }
         }
         Ok(())
@@ -104,13 +104,13 @@ impl crate::server::postgres::bind_query::BindQuery for BigserialIds {
             match increment.checked_add(1) {
                 Some(incr) => {
                     *increment = incr;
-                },
+                }
                 None => {
                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                         checked_add: std::string::String::from("checked_add is None"), 
                         code_occurence: crate::code_occurence!(), 
                     });
-                },
+                }
             }
             increments.push_str(&format!("${increment}, "));
         }

@@ -77,7 +77,13 @@ impl crate::server::postgres::bind_query::BindQuery for UuidWrapper {
             })
         }
     }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(
+        &self,
+        increment: &mut u64,
+    ) -> Result<
+        std::string::String,
+        crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed,
+    > {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;

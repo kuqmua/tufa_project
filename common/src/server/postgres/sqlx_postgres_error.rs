@@ -124,18 +124,14 @@ impl std::convert::From<sqlx::Error> for SqlxPostgresErrorNamed {
         // todo https://github.com/cschaible/actix-web-security-samples/blob/46bb7aa62ada7cb176d8765e2f60b497392b1840/oauth-resource-server/backend/src/error/mod.rs#L46
         // todo https://www.postgresql.org/docs/current/errcodes-appendix.html
         match e {
-            sqlx::Error::Configuration(value) => {
-                Self::Configuration {
-                    configuration: value.to_string(),
-                    code_occurence: crate::code_occurence!(),
-                }
-            }
-            sqlx::Error::Database(database) => {
-                Self::Database {
-                    database: database.message().to_string(),
-                    code_occurence: crate::code_occurence!(),
-                }
-            }
+            sqlx::Error::Configuration(value) => Self::Configuration {
+                configuration: value.to_string(),
+                code_occurence: crate::code_occurence!(),
+            },
+            sqlx::Error::Database(database) => Self::Database {
+                database: database.message().to_string(),
+                code_occurence: crate::code_occurence!(),
+            },
             sqlx::Error::Io(io) => Self::Io {
                 io,
                 code_occurence: crate::code_occurence!(),
@@ -156,26 +152,20 @@ impl std::convert::From<sqlx::Error> for SqlxPostgresErrorNamed {
                 type_not_found: type_name,
                 code_occurence: crate::code_occurence!(),
             },
-            sqlx::Error::ColumnIndexOutOfBounds { index, len } => {
-                Self::ColumnIndexOutOfBounds {
-                    column_index_out_of_bounds: index,
-                    len,
-                    code_occurence: crate::code_occurence!(),
-                }
-            }
-            sqlx::Error::ColumnNotFound(column_not_found) => {
-                Self::ColumnNotFound {
-                    column_not_found,
-                    code_occurence: crate::code_occurence!(),
-                }
-            }
-            sqlx::Error::ColumnDecode { index, source } => {
-                Self::ColumnDecode {
-                    column_decode_index: index,
-                    source_handle: source.to_string(),
-                    code_occurence: crate::code_occurence!(),
-                }
-            }
+            sqlx::Error::ColumnIndexOutOfBounds { index, len } => Self::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds: index,
+                len,
+                code_occurence: crate::code_occurence!(),
+            },
+            sqlx::Error::ColumnNotFound(column_not_found) => Self::ColumnNotFound {
+                column_not_found,
+                code_occurence: crate::code_occurence!(),
+            },
+            sqlx::Error::ColumnDecode { index, source } => Self::ColumnDecode {
+                column_decode_index: index,
+                source_handle: source.to_string(),
+                code_occurence: crate::code_occurence!(),
+            },
             sqlx::Error::Decode(value) => Self::Decode {
                 decode: value.to_string(),
                 code_occurence: crate::code_occurence!(),

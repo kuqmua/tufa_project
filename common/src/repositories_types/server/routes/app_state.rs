@@ -11,10 +11,7 @@ pub trait AppStatePossibilities:
 {
 }
 
-impl<'a> postgresql_crud::app_state::GetConfigGetPostgresPool
-    for AppState<'a>
-{
-}
+impl<'a> postgresql_crud::app_state::GetConfigGetPostgresPool for AppState<'a> {}
 
 impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppState<'a> {
     fn get_enable_api_git_commit_check(&self) -> &bool {

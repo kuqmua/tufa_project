@@ -23,7 +23,13 @@ impl crate::server::postgres::bind_query::BindQuery for PostgresBigint {
             }),
         }
     }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(
+        &self,
+        increment: &mut u64,
+    ) -> Result<
+        std::string::String,
+        crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed,
+    > {
         match increment.checked_add(1) {
             Some(incr) => {
                 *increment = incr;
@@ -67,7 +73,7 @@ impl std::str::FromStr for PostgresBigint {
             Err(e) => Err(Self::Err::NotCorrectValue {
                 not_correct_value: format!("wrong rust i64 value: {value}, error: {e}"),
                 code_occurence: crate::code_occurence!(),
-            })
+            }),
         }
     }
 }

@@ -22,9 +22,10 @@ where
 impl std::convert::From<std::string::String> for StringsDeserializedFromStringSplittedByComma {
     fn from(value: std::string::String) -> Self {
         Self(
-            value.split(',')
-            .map(|element| element.to_string())
-            .collect::<Vec<std::string::String>>()
+            value
+                .split(',')
+                .map(|element| element.to_string())
+                .collect::<Vec<std::string::String>>(),
         )
     }
 }
@@ -40,30 +41,36 @@ impl crate::server::postgres::bind_query::BindQuery
             match increment.checked_add(1) {
                 Some(incr) => {
                     *increment = incr;
-                },
+                }
                 None => {
                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                         checked_add: std::string::String::from("checked_add is None"), 
                         code_occurence: crate::code_occurence!(), 
                     });
-                },
+                }
             }
         }
         Ok(())
     }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed> {
+    fn try_generate_bind_increments(
+        &self,
+        increment: &mut u64,
+    ) -> Result<
+        std::string::String,
+        crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed,
+    > {
         let mut increments = std::string::String::default();
         for _ in 0..self.0.len() {
             match increment.checked_add(1) {
                 Some(incr) => {
                     *increment = incr;
-                },
+                }
                 None => {
                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd { 
                         checked_add: std::string::String::from("checked_add is None"), 
                         code_occurence: crate::code_occurence!(), 
                     });
-                },
+                }
             }
             increments.push_str(&format!("${increment}, "));
         }
