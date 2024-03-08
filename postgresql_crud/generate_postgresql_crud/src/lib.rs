@@ -352,6 +352,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .iter()
             .map(|field| vec![(*field).clone()])
             .collect::<std::vec::Vec<std::vec::Vec<syn::Field>>>();
+        //todo rewrite in different way, coz compile time for many columns in not accaptable
         let column_variants_vec: std::vec::Vec<std::vec::Vec<syn::Field>> = crate::column_names_factorial::column_names_factorial(
             fields_named_enumerated,
             fields_named_clone_stringified,
