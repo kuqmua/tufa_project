@@ -103,9 +103,9 @@
             //todo
             postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
             postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesChronoNaiveDateWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
             postgresql_crud::SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize,
