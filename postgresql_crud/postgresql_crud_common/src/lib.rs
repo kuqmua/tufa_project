@@ -9519,7 +9519,7 @@ impl<T> SqlxTypesJson<T> {
 // }
 
 #[derive(Debug)]
-pub struct SerdeJsonValue(serde_json::Value);
+pub struct SerdeJsonValue(pub serde_json::Value);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValueWithSerializeDeserialize(serde_json::Value);
 impl std::convert::From<SerdeJsonValueWithSerializeDeserialize> for SerdeJsonValue {
