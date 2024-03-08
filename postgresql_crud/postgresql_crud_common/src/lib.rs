@@ -1164,8 +1164,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize"),
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize"),
 
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize"),
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize"),
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize"),
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize"),
 
             Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => std::string::String::from("SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize"),
             Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => std::string::String::from("SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize"),
@@ -3873,7 +3873,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
     sqlx_types_chrono_date_time_sqlx_types_chrono_local:
         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
-    sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
+    sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
     sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
@@ -6433,158 +6433,52 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
+    end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
-    Start {
-        start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-    },
-    End {
-        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-    },
-    StartEnd {
-        start: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-        end: SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError,
-    },
-}
-impl
-    std::convert::TryFrom<
-        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
-    > for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime
-{
-    type Error =
-        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(
-        value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
+impl std::convert::From<
+    SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
+> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
+    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize) -> Self {
         let (start, end) = match (value.start, value.end) {
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => {
-                match (
-                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
-                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Included(start_value.0),
-                        std::ops::Bound::Included(end_value.0),
-                    ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => {
-                match (
-                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
-                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Included(start_value.0),
-                        std::ops::Bound::Excluded(end_value.0),
-                    ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => {
-                match SqlxTypesChronoNaiveDateTime::try_from(start_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Included(value.0),
-                        std::ops::Bound::Unbounded,
-                    ),
-                    Err(e) => {
-                        return Err(Self::Error::Start { start: e });
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => {
-                match (
-                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
-                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Excluded(start_value.0),
-                        std::ops::Bound::Included(end_value.0),
-                    ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => {
-                match (
-                    SqlxTypesChronoNaiveDateTime::try_from(start_value),
-                    SqlxTypesChronoNaiveDateTime::try_from(end_value),
-                ) {
-                    (Ok(start_value), Ok(end_value)) => (
-                        std::ops::Bound::Excluded(start_value.0),
-                        std::ops::Bound::Excluded(end_value.0),
-                    ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
-                    (Err(start_error), Err(end_error)) => {
-                        return Err(Self::Error::StartEnd {
-                            start: start_error,
-                            end: end_error,
-                        })
-                    }
-                }
-            }
-            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => {
-                match SqlxTypesChronoNaiveDateTime::try_from(start_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Excluded(value.0),
-                        std::ops::Bound::Unbounded,
-                    ),
-                    Err(e) => {
-                        return Err(Self::Error::Start { start: e });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => {
-                match SqlxTypesChronoNaiveDateTime::try_from(end_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Unbounded,
-                        std::ops::Bound::Included(value.0),
-                    ),
-                    Err(e) => {
-                        return Err(Self::Error::Start { start: e });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => {
-                match SqlxTypesChronoNaiveDateTime::try_from(end_value) {
-                    Ok(value) => (
-                        std::ops::Bound::Unbounded,
-                        std::ops::Bound::Excluded(value.0),
-                    ),
-                    Err(e) => {
-                        return Err(Self::Error::Start { start: e });
-                    }
-                }
-            }
-            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-                (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded)
-            }
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Included(end_value)) => (
+                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(start_value).0),
+                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(end_value).0),
+            ),
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Excluded(end_value)) => (
+                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(start_value).0),
+                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(end_value).0),
+            ),
+            (std::ops::Bound::Included(start_value), std::ops::Bound::Unbounded) => (
+                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(start_value).0),
+                std::ops::Bound::Unbounded,
+            ),
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Included(end_value)) => (
+                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(start_value).0),
+                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(end_value).0),
+            ),
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Excluded(end_value)) => (
+                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(start_value).0),
+                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(end_value).0),
+            ),
+            (std::ops::Bound::Excluded(start_value), std::ops::Bound::Unbounded) => (
+                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(start_value).0),
+                std::ops::Bound::Unbounded,
+            ),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end_value)) => (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Included(SqlxTypesChronoNaiveDateTime::from(end_value).0),
+            ),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end_value)) => (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTime::from(end_value).0),
+            ),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (
+                std::ops::Bound::Unbounded, 
+                std::ops::Bound::Unbounded
+            )
         };
-        Ok(Self(sqlx::postgres::types::PgRange { start, end }))
+        Self(sqlx::postgres::types::PgRange { start, end })
     }
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
@@ -6594,12 +6488,12 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesChronoNaiveDateTime(*value),
                 ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesChronoNaiveDateTime(*value),
                 ),
             ),
@@ -6607,12 +6501,12 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesChronoNaiveDateTime(*value),
                 ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesChronoNaiveDateTime(*value),
                 ),
             ),
@@ -8319,62 +8213,21 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 #[derive(Debug)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize {
-    date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize,
-    time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize,
-}
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub enum SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError {
-    Date {
-        date: std::string::String,
-    },
-    Time {
-        time: std::string::String,
-    },
-    DateTime {
-        date: std::string::String,
-        time: std::string::String,
-    },
-}
-impl std::convert::TryFrom<SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize>
+pub struct SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize(
+    sqlx::types::chrono::NaiveDateTime
+);
+impl std::convert::From<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>
     for SqlxTypesChronoNaiveDateTime
 {
-    type Error = SqlxTypesChronoNaiveDateTimeTryFromWithSerializeDeserializeError;
-    fn try_from(
-        value: SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize,
-    ) -> Result<Self, Self::Error> {
-        let (date, time) = match (
-            SqlxTypesChronoNaiveDate::try_from(value.date),
-            SqlxTypesChronoNaiveTime::try_from(value.time),
-        ) {
-            (Ok(date), Ok(time)) => (date.0, time.0),
-            (Ok(_), Err(e)) => {
-                return Err(Self::Error::Time { time: e });
-            }
-            (Err(e), Ok(_)) => return Err(Self::Error::Date { date: e }),
-            (Err(date_error), Err(time_error)) => {
-                return Err(Self::Error::DateTime {
-                    date: date_error,
-                    time: time_error,
-                });
-            }
-        };
-        Ok(Self(sqlx::types::chrono::NaiveDateTime::new(date, time)))
+    fn from(value: SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize) -> Self {
+        Self(value.0)
     }
 }
 impl std::convert::From<SqlxTypesChronoNaiveDateTime>
-    for SqlxTypesChronoNaiveDateTimeNewWithSerializeDeserialize
+    for SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize
 {
     fn from(value: SqlxTypesChronoNaiveDateTime) -> Self {
-        Self {
-            //todo maybe impl from directly
-            date: SqlxTypesChronoNaiveDateFromYmdOptWithSerializeDeserialize::from(
-                SqlxTypesChronoNaiveDate(value.0.date()),
-            ),
-            time: SqlxTypesChronoNaiveTimeFromHmsOptWithSerializeDeserialize::from(
-                SqlxTypesChronoNaiveTime(value.0.time()),
-            ),
-        }
+        Self(value.0)
     }
 }
 impl SqlxTypesChronoNaiveDateTime {
