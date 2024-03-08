@@ -206,7 +206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 },
                                 _ => ()
                             },
-                            Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from faield {e}")
+                            Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed {e}")
                         }
                     },
                     false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
@@ -7342,9 +7342,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream
+            #common_token_stream
 
-            // #create_many_token_stream
+            #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
@@ -7479,7 +7479,7 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
                             ) {
                                 Ok(value) => value,
                                 Err(e) => panic!(
-                                    "{name} RustSqlxMapToPostgresTypeVariant::try_from faield {e}"
+                                    "{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"
                                 ),
                             };
                         let maybe_generic_token_stream = match &value.path.segments[1].arguments {
