@@ -1021,9 +1021,9 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesTimeTimeAsPostgresqlTime => std::string::String::from("SqlxTypesTimeTime"),
             Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => std::string::String::from("SqlxTypesTimeTime"),
 
-            Self::SqlxTypesUuidUuidAsPostgresqlUuid => std::string::String::from("SqlxTypesUuidUuidTryParse"),
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => std::string::String::from("SqlxTypesUuidUuidTryParse"),
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => std::string::String::from("SqlxTypesUuidUuidTryParse"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => std::string::String::from("SqlxTypesUuidUuid"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => std::string::String::from("SqlxTypesUuidUuid"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => std::string::String::from("SqlxTypesUuidUuid"),
 
             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
