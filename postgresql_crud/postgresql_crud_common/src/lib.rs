@@ -1161,8 +1161,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize"),
             Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize"),
 
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize"),
 
             Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize"),
             Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize"),
@@ -3872,7 +3872,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
     sqlx_types_chrono_date_time_sqlx_types_chrono_local:
-        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
     sqlx_types_chrono_naive_date_time: SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDateWithSerializeDeserialize,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
@@ -5942,10 +5942,10 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
 {
     start: std::ops::Bound<
-        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
     >,
     end: std::ops::Bound<
-        SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
     >,
 }
 impl std::convert::From<
@@ -6003,42 +6003,42 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
                 std::ops::Bound::Included(start_value),
                 std::ops::Bound::Included(end_value),
             ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
             ),
             (
                 std::ops::Bound::Included(start_value),
                 std::ops::Bound::Excluded(end_value),
             ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
             ),
             (
                 std::ops::Bound::Included(start_value),
                 std::ops::Bound::Unbounded,
             ) => (
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))), 
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))), 
                 std::ops::Bound::Unbounded
             ),
             (
                 std::ops::Bound::Excluded(start_value),
                 std::ops::Bound::Included(end_value),
             ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
             ),
             (
                 std::ops::Bound::Excluded(start_value),
                 std::ops::Bound::Excluded(end_value),
             ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
             ),
             (
                 std::ops::Bound::Excluded(start_value),
                 std::ops::Bound::Unbounded,
             ) => (
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))), 
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))), 
                 std::ops::Bound::Unbounded
             ),
             (
@@ -6046,14 +6046,14 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
                 std::ops::Bound::Included(end_value),
             ) => (
                 std::ops::Bound::Unbounded, 
-                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
             ),
             (
                 std::ops::Bound::Unbounded,
                 std::ops::Bound::Excluded(end_value),
             ) => (
                 std::ops::Bound::Unbounded, 
-                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
             ),
             (
                 std::ops::Bound::Unbounded,
@@ -8020,15 +8020,15 @@ pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize(
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize(
     sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>
 );
-impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize) -> Self {
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize> for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
+    fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize) -> Self {
         Self(value.0)
     }
 }
-impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesChronoDateTimeSqlxTypesChronoLocal> for SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
     fn from(value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
         Self(value.0)
     }
