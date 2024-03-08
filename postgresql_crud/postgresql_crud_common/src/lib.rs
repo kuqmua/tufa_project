@@ -1038,10 +1038,10 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddress"),
             Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddress"),
 
-            Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVecFromBytes"),
-            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVecFromBytes"),
-            Self::SqlxTypesBitVecAsPostgresqlVarBit => std::string::String::from("SqlxTypesBitVecFromBytes"),
-            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => std::string::String::from("SqlxTypesBitVecFromBytes"),
+            Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVec"),
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVec"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBit => std::string::String::from("SqlxTypesBitVec"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => std::string::String::from("SqlxTypesBitVec"),
 
             Self::SqlxTypesJsonTAsPostgresqlJson => format!("sqlx::types::Json<{generic_type_str}>"),//todo maybe turbofish syntax
             Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => format!("sqlx::types::Json<{generic_type_str}>"),
