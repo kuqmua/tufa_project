@@ -5998,170 +5998,72 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
     for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
 {
     fn from(value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal) -> Self {
-        // let (start, end) = match (value.0.start, value.0.end) {
-        //     (
-        //         std::ops::Bound::Included(start_value),
-        //         std::ops::Bound::Included(end_value),
-        //     ) => match (
-        //         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)),
-        //         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-        //     ) {
-        //         (Ok(start_value), Ok(end_value)) => (
-        //             std::ops::Bound::Included(start_value),
-        //             std::ops::Bound::Included(end_value)
-        //         ),
-        //         (Ok(_), Err(e)) => {
-        //             return Err(Self::Error::End {
-        //                 end: e
-        //             })
-        //         },
-        //         (Err(e), Ok(_)) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             })
-        //         },
-        //         (Err(start_error), Err(end_error)) => {
-        //             return Err(Self::Error::StartEnd {
-        //                 start: start_error,
-        //                 end: end_error
-        //             })
-        //         },
-        //     },
-        //     (
-        //         std::ops::Bound::Included(start_value),
-        //         std::ops::Bound::Excluded(end_value),
-        //     ) => match (
-        //         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)), SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-        //     ) {
-        //         (Ok(start_value), Ok(end_value)) => (
-        //             std::ops::Bound::Included(start_value),
-        //             std::ops::Bound::Excluded(end_value)
-        //         ),
-        //         (Ok(_), Err(e)) => {
-        //             return Err(Self::Error::End {
-        //                 end: e
-        //             })
-        //         },
-        //         (Err(e), Ok(_)) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             })
-        //         },
-        //         (Err(start_error), Err(end_error)) => {
-        //             return Err(Self::Error::StartEnd {
-        //                 start: start_error,
-        //                 end: end_error
-        //             })
-        //         },
-        //     },
-        //     (
-        //         std::ops::Bound::Included(start_value),
-        //         std::ops::Bound::Unbounded,
-        //     ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)) {
-        //         Ok(value) => (std::ops::Bound::Included(value), std::ops::Bound::Unbounded),
-        //         Err(e) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             });
-        //         }
-        //     },
-        //     (
-        //         std::ops::Bound::Excluded(start_value),
-        //         std::ops::Bound::Included(end_value),
-        //     ) => match (
-        //         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)), SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-        //     ) {
-        //         (Ok(start_value), Ok(end_value)) => (
-        //             std::ops::Bound::Excluded(start_value),
-        //             std::ops::Bound::Included(end_value)
-        //         ),
-        //         (Ok(_), Err(e)) => {
-        //             return Err(Self::Error::End {
-        //                 end: e
-        //             })
-        //         },
-        //         (Err(e), Ok(_)) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             })
-        //         },
-        //         (Err(start_error), Err(end_error)) => {
-        //             return Err(Self::Error::StartEnd {
-        //                 start: start_error,
-        //                 end: end_error
-        //             })
-        //         },
-        //     },
-        //     (
-        //         std::ops::Bound::Excluded(start_value),
-        //         std::ops::Bound::Excluded(end_value),
-        //     ) => match (
-        //         SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)), SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value))
-        //     ) {
-        //         (Ok(start_value), Ok(end_value)) => (
-        //             std::ops::Bound::Excluded(start_value),
-        //             std::ops::Bound::Excluded(end_value)
-        //         ),
-        //         (Ok(_), Err(e)) => {
-        //             return Err(Self::Error::End {
-        //                 end: e
-        //             })
-        //         },
-        //         (Err(e), Ok(_)) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             })
-        //         },
-        //         (Err(start_error), Err(end_error)) => {
-        //             return Err(Self::Error::StartEnd {
-        //                 start: start_error,
-        //                 end: end_error
-        //             })
-        //         },
-        //     },
-        //     (
-        //         std::ops::Bound::Excluded(start_value),
-        //         std::ops::Bound::Unbounded,
-        //     ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value)) {
-        //         Ok(value) => (std::ops::Bound::Excluded(value), std::ops::Bound::Unbounded),
-        //         Err(e) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             });
-        //         }
-        //     },
-        //     (
-        //         std::ops::Bound::Unbounded,
-        //         std::ops::Bound::Included(end_value),
-        //     ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)) {
-        //         Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Included(value)),
-        //         Err(e) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             });
-        //         }
-        //     },
-        //     (
-        //         std::ops::Bound::Unbounded,
-        //         std::ops::Bound::Excluded(end_value),
-        //     ) => match SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::try_from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)) {
-        //         Ok(value) => (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(value)),
-        //         Err(e) => {
-        //             return Err(Self::Error::Start {
-        //                 start: e
-        //             });
-        //         }
-        //     },
-        //     (
-        //         std::ops::Bound::Unbounded,
-        //         std::ops::Bound::Unbounded,
-        //     ) => (
-        //         std::ops::Bound::Unbounded,
-        //         std::ops::Bound::Unbounded
-        //     ),
-        // };
-        // Ok(Self { start, end })
-        todo!()
+        let (start, end) = match (value.0.start, value.0.end) {
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Included(end_value),
+            ) => (
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+            ),
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Excluded(end_value),
+            ) => (
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+            ),
+            (
+                std::ops::Bound::Included(start_value),
+                std::ops::Bound::Unbounded,
+            ) => (
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))), 
+                std::ops::Bound::Unbounded
+            ),
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Included(end_value),
+            ) => (
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+            ),
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Excluded(end_value),
+            ) => (
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))),
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+            ),
+            (
+                std::ops::Bound::Excluded(start_value),
+                std::ops::Bound::Unbounded,
+            ) => (
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(start_value))), 
+                std::ops::Bound::Unbounded
+            ),
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Included(end_value),
+            ) => (
+                std::ops::Bound::Unbounded, 
+                std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+            ),
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Excluded(end_value),
+            ) => (
+                std::ops::Bound::Unbounded, 
+                std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize::from(SqlxTypesChronoDateTimeSqlxTypesChronoLocal(end_value)))
+            ),
+            (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Unbounded,
+            ) => (
+                std::ops::Bound::Unbounded,
+                std::ops::Bound::Unbounded
+            ),
+        };
+        Self { start, end }
     }
 }
 impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
