@@ -211,6 +211,7 @@ pub use postgresql_crud_common::SqlxTypesTimeOffsetDateTime;
 pub use postgresql_crud_common::SqlxTypesTimePrimitiveDateTime;
 pub use postgresql_crud_common::SqlxTypesTimeTime;
 pub use postgresql_crud_common::SqlxTypesUuidUuid;
+pub use postgresql_crud_common::StdNetIpAddr;
 pub use postgresql_crud_common::StdPrimitiveBool;
 pub use postgresql_crud_common::StdPrimitiveF32;
 pub use postgresql_crud_common::StdPrimitiveF64;
