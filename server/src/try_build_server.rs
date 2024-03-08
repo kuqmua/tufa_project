@@ -101,8 +101,8 @@
             postgresql_crud::SqlxTypesBigDecimalNewWithSerializeDeserialize,
             postgresql_crud::SqlxTypesDecimalWithSerializeDeserialize,
             //todo
-            postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocalFromNaiveUtcAndOffsetWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtcFromNaiveUtcAndOffsetWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
             postgresql_crud::SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
             postgresql_crud::SqlxTypesChronoNaiveDateWithSerializeDeserialize,
             postgresql_crud::SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
