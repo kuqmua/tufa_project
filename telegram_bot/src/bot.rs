@@ -39,8 +39,8 @@ pub async fn start_bot() {
     match common::repositories_types::server::routes::api::cats::try_read_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::ReadManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload { 
+        common::repositories_types::server::routes::api::cats::ReadManyParameters{
+            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload {
                 select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
                 id: Some(
                     primary_keys.clone()
@@ -68,7 +68,7 @@ pub async fn start_bot() {
                 },
                 limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
                 offset: common::server::postgres::postgres_bigint::PostgresBigint(offset),
-            } 
+            }
         },
     )
     .await
@@ -97,11 +97,11 @@ pub async fn start_bot() {
     println!("--------------try_update_many------------------");
     match common::repositories_types::server::routes::api::cats::try_update_many(
         &api_location,
-        common::repositories_types::server::routes::api::cats::UpdateManyParameters { 
+        common::repositories_types::server::routes::api::cats::UpdateManyParameters {
             payload: common::repositories_types::server::routes::api::cats::UpdateManyPayload(
                 primary_keys.clone().into_iter().map(|element| {
                     common::repositories_types::server::routes::api::cats::UpdateManyPayloadElement {
-                        id: element,  
+                        id: element,
                         name: std::string::String::from("name"), //todo make sure name and color both are not None(make it option<value>, not just a value)
                         color: std::string::String::from("color"), 
                     }
@@ -120,8 +120,8 @@ pub async fn start_bot() {
     match common::repositories_types::server::routes::api::cats::try_read_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::ReadManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload { 
+        common::repositories_types::server::routes::api::cats::ReadManyParameters{
+            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload {
                 select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
                 id: Some(
                     primary_keys.clone()
@@ -149,7 +149,7 @@ pub async fn start_bot() {
                 },
                 limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
                 offset: common::server::postgres::postgres_bigint::PostgresBigint(offset),
-            } 
+            }
         },
     )
     .await
@@ -189,10 +189,10 @@ pub async fn start_bot() {
                                           // ]
                 ),
                 name: None, // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                            //     regex: std::string::String::from("test"),
-                            //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                            // }])
-                            ,//or and support
+                //     regex: std::string::String::from("test"),
+                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
+                // }])
+                //or and support
                 color: None, // Some(vec![common::server::postgres::regex_filter::RegexFilter {
                              //     regex: std::string::String::from("test"),
                              //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
@@ -227,8 +227,8 @@ pub async fn start_bot() {
     match common::repositories_types::server::routes::api::cats::try_read_many(
         &api_location,
         //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::ReadManyParameters{ 
-            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload { 
+        common::repositories_types::server::routes::api::cats::ReadManyParameters{
+            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload {
                 select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
                 id: Some(
                     primary_keys.clone()
@@ -256,7 +256,7 @@ pub async fn start_bot() {
                 },
                 limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
                 offset: common::server::postgres::postgres_bigint::PostgresBigint(offset),
-            } 
+            }
         },
     )
     .await
@@ -306,7 +306,7 @@ pub async fn start_bot() {
     println!("--------------try_read_one-----------------");
     match common::repositories_types::server::routes::api::cats::try_read_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::ReadOneParameters { 
+        common::repositories_types::server::routes::api::cats::ReadOneParameters {
             payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
                 id: primary_key.clone(),
                 select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
@@ -342,7 +342,7 @@ pub async fn start_bot() {
     println!("--------------try_read_one-----------------");
     match common::repositories_types::server::routes::api::cats::try_read_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::ReadOneParameters { 
+        common::repositories_types::server::routes::api::cats::ReadOneParameters {
             payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
                 id: primary_key.clone(),
                 select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
@@ -373,10 +373,10 @@ pub async fn start_bot() {
     println!("--------------try_read_one-----------------");
     match common::repositories_types::server::routes::api::cats::try_read_one(
         &api_location,
-        common::repositories_types::server::routes::api::cats::ReadOneParameters { 
+        common::repositories_types::server::routes::api::cats::ReadOneParameters {
             payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
                 id: primary_key,
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor 
+                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
             }
         },
     )
