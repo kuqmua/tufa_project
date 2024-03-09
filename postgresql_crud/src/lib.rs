@@ -237,7 +237,7 @@ pub use postgresql_crud_common::SqlxTypesTimePrimitiveDateTimeWithSerializeDeser
 
 pub use postgresql_crud_common::SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize;//
 
-pub use postgresql_crud_common::SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesTimeDateWithSerializeDeserialize;//
 
 pub use postgresql_crud_common::SqlxTypesTimeTimeFromHmsWithSerializeDeserialize;
 
