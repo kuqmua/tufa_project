@@ -2843,7 +2843,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             index_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        quote::quote!{#acc_name_token_stream.#index_token_stream.push(#element_name_token_stream.#field_ident);}
+                        quote::quote!{#acc_name_token_stream.#index_token_stream.push(#element_name_token_stream.#field_ident);}//HERE2
                     });
                     let column_query_bind_vecs_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
                         let field_ident_underscore_vec_token_stream = {
@@ -7332,9 +7332,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
@@ -7652,6 +7652,7 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
     let field_ident = &element.field_ident;
     let inner_type_token_stream = &element.inner_type_token_stream;
     quote::quote! {
+        //HERE
         let #field_ident = #inner_type_token_stream::from(value.#field_ident);//todo from or try_from
     }
 }
@@ -8502,6 +8503,7 @@ impl Order {
     }
 }
 
+#[derive(Debug)]
 enum FromOrTryFrom {
     From,
     TryFrom,

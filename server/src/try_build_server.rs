@@ -108,7 +108,7 @@
             postgresql_crud::SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
             postgresql_crud::SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
             postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
