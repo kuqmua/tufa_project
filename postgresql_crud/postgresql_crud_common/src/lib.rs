@@ -8389,7 +8389,7 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
 #[derive(Debug)]
-pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError {
+pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed {
     TimeOffset {
         time: time::error::ComponentRange,
         offset: time::error::ComponentRange,
@@ -8401,10 +8401,26 @@ pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError {
         offset: time::error::ComponentRange,
     },
 }
+impl std::fmt::Display for SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::TimeOffset {
+                time,
+                offset,
+            } => write!(f, "time: {time}, offset: {offset}"),
+            Self::Time {
+                time,
+            } => write!(f, "time: {time}"),
+            Self::Offset {
+                offset,
+            } => write!(f, "offset: {offset}"),
+        }
+    }
+}
 impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize>
     for SqlxPostgresTypesPgTimeTz
 {
-    type Error = SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeError;
+    type Error = SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {

@@ -336,6 +336,8 @@ pub use postgresql_crud_common::SqlxTypesBitVec;
 pub use postgresql_crud_common::SqlxTypesJson;
 
 pub use postgresql_crud_common::SerdeJsonValue;
+/////////////////////////////////////////////////////
+pub use postgresql_crud_common::SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed;
 
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 
