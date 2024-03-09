@@ -1549,8 +1549,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{order_by_wrapper_token_stream}");
     let allow_methods_token_stream = {
+        let http_method_token_stream = quote::quote!{http::Method};
         quote::quote! {
-            pub const ALLOW_METHODS: [http::Method;4] = [http::Method::GET, http::Method::POST, http::Method::PATCH, http::Method::DELETE];//todo new axum version does not support it or something - find out
+            pub const ALLOW_METHODS: [#http_method_token_stream;4] = [
+                #http_method_token_stream::GET, 
+                #http_method_token_stream::POST, 
+                #http_method_token_stream::PATCH, 
+                #http_method_token_stream::DELETE
+            ];//todo new axum version does not support it or something - find out
         }
     };
     let ident_column_read_permission_token_stream = {
