@@ -488,10 +488,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .map(|variant_columns| {
                 let struct_name_stringified = {
                     let variant_columns_merged_upper_camel_case_stringified = variant_columns.iter().fold(std::string::String::from(""), |mut acc, element| {
-                        let column_title_cased = remove_white_spaces(
-                            convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::Title)
-                        );
-                        acc.push_str(&column_title_cased);
+                        acc.push_str(&convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel));
                         acc
                     });
                     format!("{ident}{variant_columns_merged_upper_camel_case_stringified}")
@@ -529,9 +526,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let is_none_variant_columns_token_stream = variant_columns.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_ident_title_case_stringified = remove_white_spaces(
-                            convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::Title)
-                        );
+                        let field_ident_title_case_stringified = convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::UpperCamel);
                         let field_ident_is_none_title_case_token_stream = {
                             let field_ident_is_none_title_case_stringified = format!("{field_ident_title_case_stringified}{is_none_upper_camel_case_stringified}");
                             field_ident_is_none_title_case_stringified.parse::<proc_macro2::TokenStream>()
@@ -606,9 +601,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let variant_columns_assignment_token_stream = variant_columns.iter().filter(|element|element.field_ident != primary_key_field_ident).map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_ident_title_case_stringified = remove_white_spaces(
-                            convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::Title)
-                        );
+                        let field_ident_title_case_stringified = convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::UpperCamel);
                         let field_ident_is_none_title_case_token_stream = {
                             let field_ident_is_none_title_case_stringified = format!("{field_ident_title_case_stringified}{is_none_upper_camel_case_stringified}");
                             field_ident_is_none_title_case_stringified.parse::<proc_macro2::TokenStream>()
@@ -683,9 +676,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let serialize_deserialize_ident_token_stream = format!("\"{field_ident_stringified}\"").parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let variant_ident_token_stream = {
-                    let variant_ident_stringified = remove_white_spaces(
-                        convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::Title)
-                    );
+                    let variant_ident_stringified = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
                     variant_ident_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
@@ -746,9 +737,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_ident_token_stream = {
                     let variant_ident_stringified_handle = column_variant.iter()
                         .fold(std::string::String::default(), |mut acc, field| {
-                            acc.push_str(&remove_white_spaces(
-                                convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::Title)
-                            ));
+                            acc.push_str(&convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::UpperCamel));
                             acc
                         });
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
@@ -781,9 +770,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_ident_token_stream = {
                     let variant_ident_stringified_handle = column_variant.iter()
                         .fold(std::string::String::default(), |mut acc, field| {
-                            acc.push_str(&remove_white_spaces(
-                                convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::Title))
-                            );
+                            acc.push_str(&convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::UpperCamel));
                             acc
                         });
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
@@ -813,9 +800,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .unwrap_or_else(|| {
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
                         }).to_string();
-                    acc.push_str(&remove_white_spaces(
-                        convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::Title)
-                    ));
+                    acc.push_str(&convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel));
                     acc
                 });
                 default_select_variant_ident_stringified.parse::<proc_macro2::TokenStream>()
@@ -865,9 +850,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let match_acceptable_variants_token_stream = column_variants.iter().map(|column_variant|{
                 let variant_ident_stringified_handle = column_variant.iter()
                 .fold(std::string::String::default(), |mut acc, field| {
-                    acc.push_str(&remove_white_spaces(
-                        convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::Title))
-                    );
+                    acc.push_str(&convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::UpperCamel));
                     acc
                 });
                 let write_ident_token_stream = {
@@ -890,13 +873,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let variant_ident_stringified_handle = column_variant.iter().fold(
                             std::string::String::default(),
                             |mut acc, field| {
-                                use convert_case::Casing;
-                                acc.push_str(
+                                acc.push_str(&convert_case::Casing::to_case(
                                     &field
-                                        .field_ident
-                                        .to_string()
-                                        .to_case(convert_case::Case::Title),
-                                );
+                                    .field_ident
+                                    .to_string(),
+                                    convert_case::Case::UpperCamel
+                                ));
                                 acc
                             },
                         );
@@ -985,9 +967,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_ident_token_stream = {
                     let variant_ident_stringified_handle = column_variant.iter()
                         .fold(std::string::String::default(), |mut acc, element| {
-                            acc.push_str(&remove_white_spaces(
-                                convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::Title))
-                            );
+                            acc.push_str(&convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel));
                             acc
                         });
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
@@ -2431,9 +2411,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .unwrap_or_else(|| {
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
                 }).to_string();
-            acc.push_str(&remove_white_spaces(
-                convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::Title))
-            );
+            acc.push_str(&convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel));
             acc
         });
         select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
@@ -8515,10 +8493,6 @@ impl Order {
             Self::Desc => quote::quote! {Desc},
         }
     }
-}
-
-fn remove_white_spaces(value: std::string::String) -> std::string::String {
-    value.chars().filter(|c| !c.is_whitespace()).collect()
 }
 
 // enum FromOrTryFrom {
