@@ -1188,9 +1188,9 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesTimeTimeAsPostgresqlTime => std::string::String::from("SqlxTypesTimeTimeWithSerializeDeserialize"),
             Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => std::string::String::from("SqlxTypesTimeTimeWithSerializeDeserialize"),
 
-            Self::SqlxTypesUuidUuidAsPostgresqlUuid => std::string::String::from("SqlxTypesUuidUuidTryParseWithSerializeDeserialize"),
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => std::string::String::from("SqlxTypesUuidUuidTryParseWithSerializeDeserialize"),
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => std::string::String::from("SqlxTypesUuidUuidTryParseWithSerializeDeserialize"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => std::string::String::from("SqlxTypesUuidUuidWithSerializeDeserialize"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => std::string::String::from("SqlxTypesUuidUuidWithSerializeDeserialize"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => std::string::String::from("SqlxTypesUuidUuidWithSerializeDeserialize"),
 
             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => std::string::String::from("SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize"),
             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => std::string::String::from("SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize"),
@@ -3881,7 +3881,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     sqlx_types_time_date: SqlxTypesTimeDateWithSerializeDeserialize,
     sqlx_types_time_time: SqlxTypesTimeTimeWithSerializeDeserialize,
-    sqlx_types_uuid_uuid: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
+    sqlx_types_uuid_uuid: SqlxTypesUuidUuidWithSerializeDeserialize,
     sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
     std_net_ip_addr: StdNetIpAddrWithSerializeDeserialize,
     sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressWithSerializeDeserialize,
@@ -8959,13 +8959,13 @@ impl SqlxTypesTimeTime {
 #[derive(Debug)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesUuidUuidTryParseWithSerializeDeserialize(std::string::String);
-impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize>
+pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
+impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize>
     for SqlxTypesUuidUuid
 {
     type Error = sqlx::types::uuid::Error;
     fn try_from(
-        value: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
+        value: SqlxTypesUuidUuidWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
             Ok(value) => Ok(Self(value)),
@@ -8973,7 +8973,7 @@ impl std::convert::TryFrom<SqlxTypesUuidUuidTryParseWithSerializeDeserialize>
         }
     }
 }
-impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidTryParseWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidWithSerializeDeserialize {
     fn from(value: SqlxTypesUuidUuid) -> Self {
         Self(value.0.to_string())
     }

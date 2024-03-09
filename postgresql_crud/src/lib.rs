@@ -239,9 +239,9 @@ pub use postgresql_crud_common::SqlxTypesTimeOffsetDateTimeWithSerializeDeserial
 
 pub use postgresql_crud_common::SqlxTypesTimeDateWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesTimeTimeWithSerializeDeserialize;//
+pub use postgresql_crud_common::SqlxTypesTimeTimeWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesUuidUuidTryParseWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesUuidUuidWithSerializeDeserialize;//
 
 pub use postgresql_crud_common::SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize;
 
