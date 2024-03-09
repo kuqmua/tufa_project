@@ -985,8 +985,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => std::string::String::from("SqlxPostgresTypesPgCiText"),
             Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => std::string::String::from("SqlxPostgresTypesPgCiText"),
 
-            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesBigDecimalNew"),
-            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesBigDecimalNew"),
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesBigDecimal"),
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesBigDecimal"),
 
             Self::SqlxTypesDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesDecimal"),
             Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesDecimal"),
