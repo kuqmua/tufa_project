@@ -115,7 +115,7 @@
             postgresql_crud::SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
             postgresql_crud::StdNetIpAddrWithSerializeDeserialize,
             postgresql_crud::SqlxTypesMacAddressMacAddressWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesBitVecFromBytesWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesBitVecWithSerializeDeserialize,
             // postgresql_crud::SqlxTypesJsonWithSerializeDeserialize,//todo what to do with generics?
             postgresql_crud::SerdeJsonValueWithSerializeDeserialize,
         )

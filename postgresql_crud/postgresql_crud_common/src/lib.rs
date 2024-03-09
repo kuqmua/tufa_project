@@ -1205,10 +1205,10 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddressWithSerializeDeserialize"),
             Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddressWithSerializeDeserialize"),
 
-            Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVecFromBytesWithSerializeDeserialize"),
-            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVecFromBytesWithSerializeDeserialize"),
-            Self::SqlxTypesBitVecAsPostgresqlVarBit => std::string::String::from("SqlxTypesBitVecFromBytesWithSerializeDeserialize"),
-            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => std::string::String::from("SqlxTypesBitVecFromBytesWithSerializeDeserialize"),
+            Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVecWithSerializeDeserialize"),
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVecWithSerializeDeserialize"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBit => std::string::String::from("SqlxTypesBitVecWithSerializeDeserialize"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => std::string::String::from("SqlxTypesBitVecWithSerializeDeserialize"),
 
             Self::SqlxTypesJsonTAsPostgresqlJson => format!("sqlx::types::JsonWithSerializeDeserialize<{generic_type_str}>"),//todo maybe turbofish syntax
             Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => format!("sqlx::types::JsonWithSerializeDeserialize<{generic_type_str}>"),
@@ -3885,7 +3885,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
     std_net_ip_addr: StdNetIpAddrWithSerializeDeserialize,
     sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressWithSerializeDeserialize,
-    sqlx_types_bit_vec: SqlxTypesBitVecFromBytesWithSerializeDeserialize,
+    sqlx_types_bit_vec: SqlxTypesBitVecWithSerializeDeserialize,
 
     sqlx_types_json: SqlxTypesJsonWithSerializeDeserialize<T>,
     serde_json_value: SerdeJsonValueWithSerializeDeserialize,
@@ -9315,13 +9315,13 @@ impl SqlxTypesMacAddressMacAddress {
 #[derive(Debug)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesBitVecFromBytesWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
-impl std::convert::From<SqlxTypesBitVecFromBytesWithSerializeDeserialize> for SqlxTypesBitVec {
-    fn from(value: SqlxTypesBitVecFromBytesWithSerializeDeserialize) -> Self {
+pub struct SqlxTypesBitVecWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
+impl std::convert::From<SqlxTypesBitVecWithSerializeDeserialize> for SqlxTypesBitVec {
+    fn from(value: SqlxTypesBitVecWithSerializeDeserialize) -> Self {
         Self(sqlx::types::BitVec::from_bytes(&value.0))
     }
 }
-impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecFromBytesWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecWithSerializeDeserialize {
     fn from(value: SqlxTypesBitVec) -> Self {
         Self(
             value

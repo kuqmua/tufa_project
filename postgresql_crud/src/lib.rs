@@ -241,7 +241,7 @@ pub use postgresql_crud_common::SqlxTypesTimeDateWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesTimeTimeWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesUuidUuidWithSerializeDeserialize;//
+pub use postgresql_crud_common::SqlxTypesUuidUuidWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize;
 
@@ -249,7 +249,7 @@ pub use postgresql_crud_common::StdNetIpAddrWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesMacAddressMacAddressWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesBitVecFromBytesWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesBitVecWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesJsonWithSerializeDeserialize;
 
