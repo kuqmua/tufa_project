@@ -8508,11 +8508,11 @@ enum FromOrTryFrom {
 }
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
-    fn inner_type_with_serialize_deserialize_from_or_try_from_inner_type(&self) -> FromOrTryFrom;
-    fn inner_type_with_serialize_deserialize_from_or_try_from_inner_type_token_stream(
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom;
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
         &self,
     ) -> proc_macro2::TokenStream;
-    fn inner_type_with_serialize_deserialize_from_or_try_from_inner_type_error_variant_token_stream(
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
         &self,
     ) -> proc_macro2::TokenStream;
 }
@@ -8521,7 +8521,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
     //original_type_token_stream
     //inner_type_token_stream
     //inner_type_with_serialize_deserialize_token_stream
-    fn inner_type_with_serialize_deserialize_from_or_try_from_inner_type(&self) -> FromOrTryFrom {
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => FromOrTryFrom::From,
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => FromOrTryFrom::From,
@@ -8682,7 +8682,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => FromOrTryFrom::From,
         }
     }
-    fn inner_type_with_serialize_deserialize_from_or_try_from_inner_type_token_stream(&self) -> proc_macro2::TokenStream {
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => quote::quote!{},
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => quote::quote!{},
@@ -8843,7 +8843,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => quote::quote!{},
         }
     }
-    fn inner_type_with_serialize_deserialize_from_or_try_from_inner_type_error_variant_token_stream(&self) -> proc_macro2::TokenStream {
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => quote::quote!{},
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => quote::quote!{},
