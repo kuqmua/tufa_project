@@ -434,13 +434,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let structs_variants_token_stream = column_variants.iter().map(|variant_columns| {
         let struct_name_token_stream = {
-            let mut struct_name_stringified = format!("{ident}");
+            let mut struct_name_stringified = format!("{ident}");//todo fold instead of for_each
             variant_columns.iter().for_each(|variant_column| {
-                use convert_case::Casing;
-                let column_title_cased = variant_column.field_ident.to_string().to_case(convert_case::Case::Title);
-                struct_name_stringified.push_str(&column_title_cased);
+                struct_name_stringified.push_str(
+                    &remove_white_spaces(
+                        convert_case::Casing::to_case(&variant_column.field_ident.to_string(), convert_case::Case::Title)
+                    )
+                );
             });
-            struct_name_stringified = struct_name_stringified.chars().filter(|c| !c.is_whitespace()).collect();
             struct_name_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
@@ -488,12 +489,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .map(|variant_columns| {
                 let struct_name_stringified = {
                     let variant_columns_merged_upper_camel_case_stringified = variant_columns.iter().fold(std::string::String::from(""), |mut acc, element| {
-                        use convert_case::Casing;
-                        let column_title_cased = element.field_ident.to_string().to_case(convert_case::Case::Title);
+                        let column_title_cased = remove_white_spaces(
+                            convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::Title)
+                        );
                         acc.push_str(&column_title_cased);
                         acc
                     });
-                    format!("{ident}{variant_columns_merged_upper_camel_case_stringified}").chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>()//todo reuse chars().filter(|c| !c.is_whitespace()).collect
+                    format!("{ident}{variant_columns_merged_upper_camel_case_stringified}")
                 };
                 let struct_name_token_stream = {
                     struct_name_stringified.parse::<proc_macro2::TokenStream>()
@@ -528,10 +530,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let is_none_variant_columns_token_stream = variant_columns.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_ident_title_case_stringified = {
-                            use convert_case::Casing;
-                            field_ident.to_string().to_case(convert_case::Case::Title).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>()//todo
-                        };
+                        let field_ident_title_case_stringified = remove_white_spaces(
+                            convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::Title)
+                        );
                         let field_ident_is_none_title_case_token_stream = {
                             let field_ident_is_none_title_case_stringified = format!("{field_ident_title_case_stringified}{is_none_upper_camel_case_stringified}");
                             field_ident_is_none_title_case_stringified.parse::<proc_macro2::TokenStream>()
@@ -606,10 +607,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let variant_columns_assignment_token_stream = variant_columns.iter().filter(|element|element.field_ident != primary_key_field_ident).map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_ident_title_case_stringified = {
-                            use convert_case::Casing;
-                            field_ident.to_string().to_case(convert_case::Case::Title).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>()//todo reuse
-                        };
+                        let field_ident_title_case_stringified = remove_white_spaces(
+                            convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::Title)
+                        );
                         let field_ident_is_none_title_case_token_stream = {
                             let field_ident_is_none_title_case_stringified = format!("{field_ident_title_case_stringified}{is_none_upper_camel_case_stringified}");
                             field_ident_is_none_title_case_stringified.parse::<proc_macro2::TokenStream>()
@@ -684,8 +684,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let serialize_deserialize_ident_token_stream = format!("\"{field_ident_stringified}\"").parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let variant_ident_token_stream = {
-                    use convert_case::Casing;
-                    let variant_ident_stringified = field_ident_stringified.to_case(convert_case::Case::Title).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();//todo reuse
+                    let variant_ident_stringified = remove_white_spaces(
+                        convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::Title)
+                    );
                     variant_ident_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
@@ -746,10 +747,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_ident_token_stream = {
                     let variant_ident_stringified_handle = column_variant.iter()
                         .fold(std::string::String::default(), |mut acc, field| {
-                            use convert_case::Casing;
-                            acc.push_str(&field.field_ident.to_string().to_case(convert_case::Case::Title));
+                            acc.push_str(&remove_white_spaces(
+                                convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::Title)
+                            ));
                             acc
-                        }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();//todo reuse
+                        });
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
@@ -780,10 +782,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_ident_token_stream = {
                     let variant_ident_stringified_handle = column_variant.iter()
                         .fold(std::string::String::default(), |mut acc, field| {
-                            use convert_case::Casing;
-                            acc.push_str(&field.field_ident.to_string().to_case(convert_case::Case::Title));
+                            acc.push_str(&remove_white_spaces(
+                                convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::Title))
+                            );
                             acc
-                        }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();//todo reuse
+                        });
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
@@ -806,15 +809,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let default_select_variant_ident_token_stream = {
                 let default_select_variant_ident_stringified = fields_named.iter()
                 .fold(std::string::String::default(), |mut acc, field| {
-                    use convert_case::Casing;
                     let field_ident_stringified = field.ident
                         .as_ref()
                         .unwrap_or_else(|| {
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        }).to_string().to_case(convert_case::Case::Title);
-                    acc.push_str(&field_ident_stringified);
+                        }).to_string();
+                    acc.push_str(&remove_white_spaces(
+                        convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::Title)
+                    ));
                     acc
-                }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>(); //todo reuse
+                });
                 default_select_variant_ident_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {default_select_variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
@@ -862,10 +866,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let match_acceptable_variants_token_stream = column_variants.iter().map(|column_variant|{
                 let variant_ident_stringified_handle = column_variant.iter()
                 .fold(std::string::String::default(), |mut acc, field| {
-                    use convert_case::Casing;
-                    acc.push_str(&field.field_ident.to_string().to_case(convert_case::Case::Title));
+                    acc.push_str(&remove_white_spaces(
+                        convert_case::Casing::to_case(&field.field_ident.to_string(), convert_case::Case::Title))
+                    );
                     acc
-                }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();
+                });
                 let write_ident_token_stream = {
                     let write_ident_stringified = format!("\"{variant_ident_stringified_handle}\"");
                     write_ident_stringified.parse::<proc_macro2::TokenStream>()
@@ -981,10 +986,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let variant_ident_token_stream = {
                     let variant_ident_stringified_handle = column_variant.iter()
                         .fold(std::string::String::default(), |mut acc, element| {
-                             use convert_case::Casing;
-                            acc.push_str(&element.field_ident.to_string().to_case(convert_case::Case::Title));
+                            acc.push_str(&remove_white_spaces(
+                                convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::Title))
+                            );
                             acc
-                        }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>();//todo reuse
+                        });
                     variant_ident_stringified_handle.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
@@ -2421,15 +2427,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let select_full_variant_token_stream = {
         let select_full_variant_stringified = fields_named.iter().fold(std::string::String::default(), |mut acc, field| {
-            use convert_case::Casing;
             let field_ident_stringified = field.ident
                 .as_ref()
                 .unwrap_or_else(|| {
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                }).to_string().to_case(convert_case::Case::Title);
-            acc.push_str(&field_ident_stringified);
+                }).to_string();
+            acc.push_str(&remove_white_spaces(
+                convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::Title))
+            );
             acc
-        }).chars().filter(|c| !c.is_whitespace()).collect::<std::string::String>(); //todo reuse
+        });
         select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {select_full_variant_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -8509,6 +8516,10 @@ impl Order {
             Self::Desc => quote::quote! {Desc},
         }
     }
+}
+
+fn remove_white_spaces(value: std::string::String) -> std::string::String {
+    value.chars().filter(|c| !c.is_whitespace()).collect()
 }
 
 // enum FromOrTryFrom {
