@@ -1185,8 +1185,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxTypesTimeDateAsPostgresqlDate => std::string::String::from("SqlxTypesTimeDateWithSerializeDeserialize"),
             Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => std::string::String::from("SqlxTypesTimeDateWithSerializeDeserialize"),
 
-            Self::SqlxTypesTimeTimeAsPostgresqlTime => std::string::String::from("SqlxTypesTimeTimeFromHmsWithSerializeDeserialize"),
-            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => std::string::String::from("SqlxTypesTimeTimeFromHmsWithSerializeDeserialize"),
+            Self::SqlxTypesTimeTimeAsPostgresqlTime => std::string::String::from("SqlxTypesTimeTimeWithSerializeDeserialize"),
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => std::string::String::from("SqlxTypesTimeTimeWithSerializeDeserialize"),
 
             Self::SqlxTypesUuidUuidAsPostgresqlUuid => std::string::String::from("SqlxTypesUuidUuidTryParseWithSerializeDeserialize"),
             Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => std::string::String::from("SqlxTypesUuidUuidTryParseWithSerializeDeserialize"),
@@ -3880,7 +3880,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     sqlx_types_time_date: SqlxTypesTimeDateWithSerializeDeserialize,
-    sqlx_types_time_time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+    sqlx_types_time_time: SqlxTypesTimeTimeWithSerializeDeserialize,
     sqlx_types_uuid_uuid: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
     sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
     std_net_ip_addr: StdNetIpAddrWithSerializeDeserialize,
@@ -8385,7 +8385,7 @@ impl SqlxTypesChronoNaiveTime {
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
-    time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+    time: SqlxTypesTimeTimeWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
 #[derive(Debug)]
@@ -8435,7 +8435,7 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz>
     fn from(value: SqlxPostgresTypesPgTimeTz) -> Self {
         Self {
             //todo impl from directly from type?
-            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(
+            time: SqlxTypesTimeTimeWithSerializeDeserialize::from(SqlxTypesTimeTime(
                 value.0.time,
             )),
             offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize::from(value.0.offset),
@@ -8518,7 +8518,7 @@ pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTi
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     date: SqlxTypesTimeDateWithSerializeDeserialize,
-    time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+    time: SqlxTypesTimeTimeWithSerializeDeserialize,
 }
 #[derive(Debug)]
 pub enum SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
@@ -8572,7 +8572,7 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
             date: SqlxTypesTimeDateWithSerializeDeserialize::from(
                 SqlxTypesTimeDate(value.0.date()),
             ),
-            time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize::from(SqlxTypesTimeTime(
+            time: SqlxTypesTimeTimeWithSerializeDeserialize::from(SqlxTypesTimeTime(
                 value.0.time(),
             )),
         }
@@ -8858,16 +8858,16 @@ impl SqlxTypesTimeDate {
 #[derive(Debug)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimeTimeFromHmsWithSerializeDeserialize {
+pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
     hour: std::primitive::u8,
     minute: std::primitive::u8,
     second: std::primitive::u8,
 }
 //todo different init methods support
-impl std::convert::TryFrom<SqlxTypesTimeTimeFromHmsWithSerializeDeserialize> for SqlxTypesTimeTime {
+impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTypesTimeTime {
     type Error = time::error::ComponentRange;
     fn try_from(
-        value: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+        value: SqlxTypesTimeTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::Time::from_hms(value.hour, value.minute, value.second) {
             Ok(value) => Ok(Self(value)),
@@ -8875,7 +8875,7 @@ impl std::convert::TryFrom<SqlxTypesTimeTimeFromHmsWithSerializeDeserialize> for
         }
     }
 }
-impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeFromHmsWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeWithSerializeDeserialize {
     fn from(value: SqlxTypesTimeTime) -> Self {
         Self {
             hour: value.0.hour(),

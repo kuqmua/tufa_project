@@ -235,11 +235,11 @@ pub use postgresql_crud_common::SqlxPostgresTypesPgTimeTzWithSerializeDeserializ
 
 pub use postgresql_crud_common::SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize;//
+pub use postgresql_crud_common::SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesTimeDateWithSerializeDeserialize;//
+pub use postgresql_crud_common::SqlxTypesTimeDateWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesTimeTimeFromHmsWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesTimeTimeWithSerializeDeserialize;//
 
 pub use postgresql_crud_common::SqlxTypesUuidUuidTryParseWithSerializeDeserialize;
 

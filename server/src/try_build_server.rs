@@ -110,7 +110,7 @@
             postgresql_crud::SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
             postgresql_crud::SqlxTypesTimeDateWithSerializeDeserialize,
-            postgresql_crud::SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
+            postgresql_crud::SqlxTypesTimeTimeWithSerializeDeserialize,
             postgresql_crud::SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
             postgresql_crud::SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
             postgresql_crud::StdNetIpAddrWithSerializeDeserialize,
