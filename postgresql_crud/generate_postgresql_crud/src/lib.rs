@@ -7582,11 +7582,12 @@ fn generate_common_middlewares_error_syn_variants_from_impls(
 fn generate_not_unique_field_vec_upper_camel_stringified(
     field_ident: &syn::Ident,
 ) -> std::string::String {
-    format!("NotUnique{}Vec", {
-        use convert_case::Casing;
-        field_ident
-            .to_string()
-            .to_case(convert_case::Case::UpperCamel)
+    format!("NotUnique{}Vec", {//todo reuse naming
+        convert_case::Casing::to_case(
+            &field_ident
+            .to_string(),
+            convert_case::Case::UpperCamel
+        )
     })
 }
 
