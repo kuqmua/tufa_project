@@ -10,7 +10,7 @@ pub use generate_postgresql_crud::update_many_additional_http_status_codes_error
 pub use generate_postgresql_crud::update_one_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 
-pub use postgresql_crud_common::NumBigintBigIntNewWithSerializeDeserialize;
+pub use postgresql_crud_common::NumBigintBigIntWithSerializeDeserialize;
 pub use postgresql_crud_common::NumBigintSignWithSerializeDeserialize;
 pub use postgresql_crud_common::SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize;
 pub use postgresql_crud_common::TimeMonthWithSerializeDeserialize;
@@ -217,7 +217,7 @@ pub use postgresql_crud_common::SqlxPostgresTypesPgMoneyWithSerializeDeserialize
 
 pub use postgresql_crud_common::SqlxPostgresTypesPgCiTextWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesBigDecimalNewWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesBigDecimalWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesDecimalWithSerializeDeserialize;
 
@@ -233,7 +233,7 @@ pub use postgresql_crud_common::SqlxTypesChronoNaiveTimeWithSerializeDeserialize
 
 pub use postgresql_crud_common::SqlxPostgresTypesPgTimeTzWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize;
 
@@ -247,7 +247,7 @@ pub use postgresql_crud_common::SqlxTypesIpnetworkIpNetworkWithSerializeDeserial
 
 pub use postgresql_crud_common::StdNetIpAddrWithSerializeDeserialize;
 
-pub use postgresql_crud_common::SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize;
+pub use postgresql_crud_common::SqlxTypesMacAddressMacAddressWithSerializeDeserialize;
 
 pub use postgresql_crud_common::SqlxTypesBitVecFromBytesWithSerializeDeserialize;
 

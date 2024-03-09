@@ -1152,8 +1152,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => std::string::String::from("SqlxPostgresTypesPgCiTextWithSerializeDeserialize"),
             Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => std::string::String::from("SqlxPostgresTypesPgCiTextWithSerializeDeserialize"),
 
-            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesBigDecimalNewWithSerializeDeserialize"),
-            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesBigDecimalNewWithSerializeDeserialize"),
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesBigDecimalWithSerializeDeserialize"),
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesBigDecimalWithSerializeDeserialize"),
 
             Self::SqlxTypesDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesDecimalWithSerializeDeserialize"),
             Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesDecimalWithSerializeDeserialize"),
@@ -1176,8 +1176,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => std::string::String::from("SqlxPostgresTypesPgTimeTzWithSerializeDeserialize"),
             Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => std::string::String::from("SqlxPostgresTypesPgTimeTzWithSerializeDeserialize"),
 
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize"),
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize"),
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize"),
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize"),
 
             Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize"),
             Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize"),
@@ -1202,8 +1202,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::StdNetIpAddrAsPostgresqlCidr => std::string::String::from("StdNetIpAddrWithSerializeDeserialize"),
             Self::StdNetIpAddrAsPostgresqlCidrNotNull => std::string::String::from("StdNetIpAddrWithSerializeDeserialize"),
 
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize"),
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize"),
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddressWithSerializeDeserialize"),
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddressWithSerializeDeserialize"),
 
             Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVecFromBytesWithSerializeDeserialize"),
             Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVecFromBytesWithSerializeDeserialize"),
@@ -3867,7 +3867,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
         SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize,
     sqlx_postgres_types_pg_money: SqlxPostgresTypesPgMoneyWithSerializeDeserialize,
     sqlx_postgres_types_pg_ci_text: SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
-    sqlx_types_big_decimal: SqlxTypesBigDecimalNewWithSerializeDeserialize,
+    sqlx_types_big_decimal: SqlxTypesBigDecimalWithSerializeDeserialize,
     sqlx_types_decimal: SqlxTypesDecimalWithSerializeDeserialize,
     sqlx_types_chrono_date_time_sqlx_types_chrono_utc:
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
@@ -3877,7 +3877,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_chrono_naive_date: SqlxTypesChronoNaiveDateWithSerializeDeserialize,
     sqlx_types_chrono_naive_time: SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
     sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
-    sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize,
+    sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     sqlx_types_time_offset_date_time:
         SqlxTypesTimeOffsetDateTimeFromUnixTimestampWithSerializeDeserialize,
     sqlx_types_time_date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
@@ -3885,7 +3885,7 @@ pub struct TestNewTypeWithSerializeDeserialize<T> {
     sqlx_types_uuid_uuid: SqlxTypesUuidUuidTryParseWithSerializeDeserialize,
     sqlx_types_ipnetwork_ip_network: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
     std_net_ip_addr: StdNetIpAddrWithSerializeDeserialize,
-    sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize,
+    sqlx_types_mac_address_mac_address: SqlxTypesMacAddressMacAddressWithSerializeDeserialize,
     sqlx_types_bit_vec: SqlxTypesBitVecFromBytesWithSerializeDeserialize,
 
     sqlx_types_json: SqlxTypesJsonWithSerializeDeserialize<T>,
@@ -4304,12 +4304,12 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
 }
 //todo pub or not for all - think
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct NumBigintBigIntNewWithSerializeDeserialize {
+pub struct NumBigintBigIntWithSerializeDeserialize {
     sign: NumBigintSignWithSerializeDeserialize,
     digits: std::vec::Vec<std::primitive::u32>,
 }
-impl std::convert::From<NumBigintBigIntNewWithSerializeDeserialize> for num_bigint::BigInt {
-    fn from(value: NumBigintBigIntNewWithSerializeDeserialize) -> Self {
+impl std::convert::From<NumBigintBigIntWithSerializeDeserialize> for num_bigint::BigInt {
+    fn from(value: NumBigintBigIntWithSerializeDeserialize) -> Self {
         let sign = match value.sign {
             NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
             NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
@@ -4318,7 +4318,7 @@ impl std::convert::From<NumBigintBigIntNewWithSerializeDeserialize> for num_bigi
         Self::new(sign, value.digits)
     }
 }
-impl std::convert::From<num_bigint::BigInt> for NumBigintBigIntNewWithSerializeDeserialize {
+impl std::convert::From<num_bigint::BigInt> for NumBigintBigIntWithSerializeDeserialize {
     fn from(value: num_bigint::BigInt) -> Self {
         let (sign, digits) = value.to_u32_digits();
         Self {
@@ -6600,21 +6600,21 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
+    end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
 }
 #[derive(Debug)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError
 {
     Start {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
+        start: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
     },
     End {
-        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
+        end: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
     },
     StartEnd {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
-        end: SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError,
+        start: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
+        end: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
     },
 }
 impl
@@ -6762,12 +6762,12 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesTimePrimitiveDateTime(*value),
                 ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesTimePrimitiveDateTime(*value),
                 ),
             ),
@@ -6775,12 +6775,12 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => std::ops::Bound::Included(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesTimePrimitiveDateTime(*value),
                 ),
             ),
             std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(
-                SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize::from(
+                SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize::from(
                     SqlxTypesTimePrimitiveDateTime(*value),
                 ),
             ),
@@ -7307,8 +7307,8 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
 );
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
-    start: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
-    end: std::ops::Bound<SqlxTypesBigDecimalNewWithSerializeDeserialize>,
+    start: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
+    end: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
 }
 impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize>
     for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal
@@ -7342,12 +7342,12 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
         use std::ops::RangeBounds;
         let start = match value.0.start_bound() {
             std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                std::ops::Bound::Included(SqlxTypesBigDecimalWithSerializeDeserialize::from(
                     SqlxTypesBigDecimal(value.clone()),
                 ))
             }
             std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                std::ops::Bound::Excluded(SqlxTypesBigDecimalWithSerializeDeserialize::from(
                     SqlxTypesBigDecimal(value.clone()),
                 ))
             }
@@ -7355,12 +7355,12 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
         };
         let end = match value.0.end_bound() {
             std::ops::Bound::Included(value) => {
-                std::ops::Bound::Included(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                std::ops::Bound::Included(SqlxTypesBigDecimalWithSerializeDeserialize::from(
                     SqlxTypesBigDecimal(value.clone()),
                 ))
             }
             std::ops::Bound::Excluded(value) => {
-                std::ops::Bound::Excluded(SqlxTypesBigDecimalNewWithSerializeDeserialize::from(
+                std::ops::Bound::Excluded(SqlxTypesBigDecimalWithSerializeDeserialize::from(
                     SqlxTypesBigDecimal(value.clone()),
                 ))
             }
@@ -7748,23 +7748,23 @@ impl SqlxPostgresTypesPgCiText {
 #[derive(Debug)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesBigDecimalNewWithSerializeDeserialize {
-    digits: NumBigintBigIntNewWithSerializeDeserialize,
+pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
+    digits: NumBigintBigIntWithSerializeDeserialize,
     scale: std::primitive::i64,
 }
-impl std::convert::From<SqlxTypesBigDecimalNewWithSerializeDeserialize> for SqlxTypesBigDecimal {
-    fn from(value: SqlxTypesBigDecimalNewWithSerializeDeserialize) -> Self {
+impl std::convert::From<SqlxTypesBigDecimalWithSerializeDeserialize> for SqlxTypesBigDecimal {
+    fn from(value: SqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
         Self(sqlx::types::BigDecimal::new(
             num_bigint::BigInt::from(value.digits),
             value.scale,
         ))
     }
 }
-impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalNewWithSerializeDeserialize {
+impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalWithSerializeDeserialize {
     fn from(value: SqlxTypesBigDecimal) -> Self {
         let (bigint, exponent) = value.0.into_bigint_and_exponent();
         Self {
-            digits: NumBigintBigIntNewWithSerializeDeserialize::from(bigint),
+            digits: NumBigintBigIntWithSerializeDeserialize::from(bigint),
             scale: exponent, //todo is exponent equal to scale?
         }
     }
@@ -8517,12 +8517,12 @@ impl SqlxPostgresTypesPgTimeTz {
 #[derive(Debug)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize {
+pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     date: SqlxTypesTimeDateFromCalendarDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeFromHmsWithSerializeDeserialize,
 }
 #[derive(Debug)]
-pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
+pub enum SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
     DateTime {
         date: time::error::ComponentRange,
         time: time::error::ComponentRange,
@@ -8534,12 +8534,12 @@ pub enum SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError {
         time: time::error::ComponentRange,
     },
 }
-impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize>
+impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>
     for SqlxTypesTimePrimitiveDateTime
 {
-    type Error = SqlxTypesTimePrimitiveDateTimeTryFromNewWithSerializeDeserializeError;
+    type Error = SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
     fn try_from(
-        value: SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize,
+        value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
         let (date, time) = match (
             SqlxTypesTimeDate::try_from(value.date),
@@ -8565,7 +8565,7 @@ impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeseria
     }
 }
 impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
-    for SqlxTypesTimePrimitiveDateTimeNewWithSerializeDeserialize
+    for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize
 {
     fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
         Self {
@@ -9227,16 +9227,16 @@ impl StdNetIpAddr {
 #[derive(Debug)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize([std::primitive::u8; 6]);
-impl std::convert::From<SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize>
+pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
+impl std::convert::From<SqlxTypesMacAddressMacAddressWithSerializeDeserialize>
     for SqlxTypesMacAddressMacAddress
 {
-    fn from(value: SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize) -> Self {
+    fn from(value: SqlxTypesMacAddressMacAddressWithSerializeDeserialize) -> Self {
         Self(sqlx::types::mac_address::MacAddress::new(value.0))
     }
 }
 impl std::convert::From<SqlxTypesMacAddressMacAddress>
-    for SqlxTypesMacAddressMacAddressNewWithSerializeDeserialize
+    for SqlxTypesMacAddressMacAddressWithSerializeDeserialize
 {
     fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
         Self(value.0.bytes())
