@@ -436,11 +436,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let struct_name_token_stream = {
             let mut struct_name_stringified = format!("{ident}");//todo fold instead of for_each
             variant_columns.iter().for_each(|variant_column| {
-                struct_name_stringified.push_str(
-                    &remove_white_spaces(
-                        convert_case::Casing::to_case(&variant_column.field_ident.to_string(), convert_case::Case::Title)
-                    )
-                );
+                struct_name_stringified.push_str(&convert_case::Casing::to_case(
+                    &variant_column.field_ident.to_string(), 
+                    convert_case::Case::UpperCamel
+                ));
             });
             struct_name_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
