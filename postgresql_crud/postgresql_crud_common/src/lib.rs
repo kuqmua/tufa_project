@@ -562,6 +562,7 @@ impl PostgresqlType {
     strum_macros::Display,
     strum_macros::EnumIter,
     enum_extension::EnumExtension,
+    proc_macro_assistants::ToSnakeCaseStringified,
 )]
 pub enum RustSqlxMapToPostgresTypeVariant {
     StdPrimitiveBoolAsPostgresqlBool,
