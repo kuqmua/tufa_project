@@ -68,6 +68,7 @@ mod type_variants_from_request_response_generator;
 //todo maybe add private generated code in specific mod in case of some compilation error - to show info like "no struct BlaBla found in mod ..." ?
 //todo add ident prefix to public functions structs and other
 //todo maybe generate compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
+//todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
 
 #[proc_macro_attribute]
 pub fn create_many_additional_http_status_codes_error_variants(
