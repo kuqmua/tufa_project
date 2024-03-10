@@ -64,7 +64,7 @@ impl SupportedSqlxPostgresType {
             Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => std::string::String::from(""),
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}:SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed"),
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => std::string::String::from(""),
             Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed"),
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => std::string::String::from(""),
@@ -6215,7 +6215,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeser
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
 }
 #[derive(Debug)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     Start {
         start: time::error::ComponentRange,
     },
@@ -6227,7 +6227,7 @@ pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerialize
         end: time::error::ComponentRange,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError {
+impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Start {
@@ -6249,7 +6249,7 @@ impl
     > for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
 {
     type Error =
-        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeTryFromWithSerializeDeserializeError;
+        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
