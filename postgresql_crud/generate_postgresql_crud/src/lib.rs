@@ -7800,20 +7800,20 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => from_token_stream,
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => try_from_token_stream,
 
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => from_token_stream,
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => try_from_token_stream,
 
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => from_token_stream,
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => try_from_token_stream,
 
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => from_token_stream,
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
@@ -7849,23 +7849,23 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => from_token_stream,
 
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => try_from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => try_from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => try_from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => try_from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDate => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDateNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDate => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDateNotNull => try_from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTime => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTime => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => try_from_token_stream,
 
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => from_token_stream,
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => try_from_token_stream,
 
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => from_token_stream,
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => from_token_stream,
@@ -9018,20 +9018,20 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => no_error_variant_token_stream,
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => no_error_variant_token_stream,
 
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => no_error_variant_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => no_error_variant_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => error_variant_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => error_variant_token_stream,
 
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => no_error_variant_token_stream,
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => no_error_variant_token_stream,
 
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => no_error_variant_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => no_error_variant_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => error_variant_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => error_variant_token_stream,
 
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => no_error_variant_token_stream,
             Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => no_error_variant_token_stream,
 
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => no_error_variant_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => no_error_variant_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => error_variant_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => error_variant_token_stream,
 
             Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => no_error_variant_token_stream,
             Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => no_error_variant_token_stream,
@@ -9069,21 +9069,21 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => error_variant_token_stream,
             Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => no_error_variant_token_stream,
 
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => no_error_variant_token_stream,
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => no_error_variant_token_stream,
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => error_variant_token_stream,
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => error_variant_token_stream,
 
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => no_error_variant_token_stream,
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => no_error_variant_token_stream,
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => error_variant_token_stream,
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => error_variant_token_stream,
 
-            Self::SqlxTypesTimeDateAsPostgresqlDate => no_error_variant_token_stream,
-            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => no_error_variant_token_stream,
+            Self::SqlxTypesTimeDateAsPostgresqlDate => error_variant_token_stream,
+            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => error_variant_token_stream,
 
-            Self::SqlxTypesTimeTimeAsPostgresqlTime => no_error_variant_token_stream,
-            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => no_error_variant_token_stream,
+            Self::SqlxTypesTimeTimeAsPostgresqlTime => error_variant_token_stream,
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => error_variant_token_stream,
 
-            Self::SqlxTypesUuidUuidAsPostgresqlUuid => no_error_variant_token_stream,
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => no_error_variant_token_stream,
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => no_error_variant_token_stream,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => error_variant_token_stream,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => error_variant_token_stream,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => error_variant_token_stream,
 
             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => no_error_variant_token_stream,
             Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => no_error_variant_token_stream,
