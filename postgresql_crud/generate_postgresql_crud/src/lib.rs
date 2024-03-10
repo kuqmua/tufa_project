@@ -8696,10 +8696,22 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
         let no_error_variant_token_stream = proc_macro2::TokenStream::new();
         let error_variant_token_stream = {
             let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(self);
+            let postgresql_crud_common_supported_sqlx_postgres_type_token_stream = {
+                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.to_string();
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common_supported_sqlx_postgres_type
+                );
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
             quote::quote!{
-                SqlxPostgresTypesPgTimeTz {
+                #postgresql_crud_common_supported_sqlx_postgres_type_token_stream {
                     #[eo_display]//todo - maybe need to support not only #[eo_display]
-                    sqlx_postgres_types_pg_time_tz: postgresql_crud::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed,
+                    #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: postgresql_crud::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }
             }
@@ -8874,7 +8886,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
         let from_token_stream = quote::quote!{#from_snake_case_token_stream(#inner_token_stream)};
         let try_from_token_stream = {
             let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(self);
-            let postgresql_crud_common_supported_sqlx_postgres_type_stream = {
+            let postgresql_crud_common_supported_sqlx_postgres_type_token_stream = {
                 let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.to_string();
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -8898,7 +8910,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
                 #try_from_snake_case_token_stream(#inner_token_stream) {
                     Ok(value) => value,
                     Err(e) => {
-                        return Err(Self::Error::#postgresql_crud_common_supported_sqlx_postgres_type_stream {
+                        return Err(Self::Error::#postgresql_crud_common_supported_sqlx_postgres_type_token_stream {
                             #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
                             #field_code_occurence_new_token_stream
                         });
