@@ -8860,175 +8860,185 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
         inner_token_stream: proc_macro2::TokenStream,
         code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: proc_macro2::TokenStream
     ) -> proc_macro2::TokenStream {
-        let from_token_stream = quote::quote!{};//todo reuse
-        match self {
-            Self::StdPrimitiveBoolAsPostgresqlBool => quote::quote!{},
-            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => quote::quote!{},
-
-            Self::StdPrimitiveI16AsPostgresqlSmallInt => quote::quote!{},
-            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => quote::quote!{},
-            Self::StdPrimitiveI16AsPostgresqlSmallSerial => quote::quote!{},
-            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => quote::quote!{},
-            Self::StdPrimitiveI16AsPostgresqlInt2 => quote::quote!{},
-            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => quote::quote!{},
-
-            Self::StdPrimitiveI32AsPostgresqlInt => quote::quote!{},
-            Self::StdPrimitiveI32AsPostgresqlIntNotNull => quote::quote!{},
-            Self::StdPrimitiveI32AsPostgresqlSerial => quote::quote!{},
-            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => quote::quote!{},
-            Self::StdPrimitiveI32AsPostgresqlInt4 => quote::quote!{},
-            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => quote::quote!{},
-
-            Self::StdPrimitiveI64AsPostgresqlBigInt => quote::quote!{},
-            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => quote::quote!{},
-            Self::StdPrimitiveI64AsPostgresqlBigSerial => quote::quote!{},
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => quote::quote!{},
-            Self::StdPrimitiveI64AsPostgresqlInt8 => quote::quote!{},
-            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => quote::quote!{},
-
-            Self::StdPrimitiveF32AsPostgresqlReal => quote::quote!{},
-            Self::StdPrimitiveF32AsPostgresqlRealNotNull => quote::quote!{},
-            Self::StdPrimitiveF32AsPostgresqlFloat4 => quote::quote!{},
-            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => quote::quote!{},
-
-            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => quote::quote!{},
-            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => quote::quote!{},
-            Self::StdPrimitiveF64AsPostgresqlFloat8 => quote::quote!{},
-            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => quote::quote!{},
-
-            Self::StdStringStringAsPostgresqlVarchar => quote::quote!{},
-            Self::StdStringStringAsPostgresqlVarcharNotNull => quote::quote!{},
-            Self::StdStringStringAsPostgresqlCharN => quote::quote!{},
-            Self::StdStringStringAsPostgresqlCharNNotNull => quote::quote!{},
-            Self::StdStringStringAsPostgresqlText => quote::quote!{},
-            Self::StdStringStringAsPostgresqlTextNotNull => quote::quote!{},
-            Self::StdStringStringAsPostgresqlName => quote::quote!{},
-            Self::StdStringStringAsPostgresqlNameNotNull => quote::quote!{},
-            Self::StdStringStringAsPostgresqlCiText => quote::quote!{},
-            Self::StdStringStringAsPostgresqlCiTextNotNull => quote::quote!{},
-
-            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => quote::quote!{},
-            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => quote::quote!{},
-            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => quote::quote!{},
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => quote::quote!{},
-            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => quote::quote!{},
-            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => quote::quote!{},
-
-            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => quote::quote!{},
-            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => quote::quote!{},
-
-            Self::SqlxTypesDecimalAsPostgresqlNumeric => quote::quote!{},
-            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => quote::quote!{},
-
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => quote::quote!{},
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => quote::quote!{},
-
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => quote::quote!{},
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => quote::quote!{},
-
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => quote::quote!{},
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => quote::quote!{},
-
-            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => quote::quote!{},
-            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => quote::quote!{},
-
-            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => quote::quote!{},
-            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => quote::quote!{},
-
-            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => quote::quote!{
-                try_from(#inner_token_stream) {
+        let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
+        let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
+        let from_token_stream = quote::quote!{#from_snake_case_token_stream(#inner_token_stream)};
+        let try_from_token_stream = {
+            let inner_type_token_stream = {
+                let value_stringified = self.get_inner_type_stringified("");
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #try_from_snake_case_token_stream(#inner_token_stream) {
                     Ok(value) => value,
                     Err(e) => {
-                        return Err(Self::Error::SqlxPostgresTypesPgTimeTz {
+                        return Err(Self::Error::#inner_type_token_stream {
                             sqlx_postgres_types_pg_time_tz: e,
                             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
                         });
                     }
                 }
-            },
-            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => quote::quote!{},
+            }
+        };
+        match self {
+            Self::StdPrimitiveBoolAsPostgresqlBool => from_token_stream,
+            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => from_token_stream,
 
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => quote::quote!{},
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => quote::quote!{},
+            Self::StdPrimitiveI16AsPostgresqlSmallInt => from_token_stream,
+            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => from_token_stream,
+            Self::StdPrimitiveI16AsPostgresqlSmallSerial => from_token_stream,
+            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => from_token_stream,
+            Self::StdPrimitiveI16AsPostgresqlInt2 => from_token_stream,
+            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => from_token_stream,
 
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => quote::quote!{},
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => quote::quote!{},
+            Self::StdPrimitiveI32AsPostgresqlInt => from_token_stream,
+            Self::StdPrimitiveI32AsPostgresqlIntNotNull => from_token_stream,
+            Self::StdPrimitiveI32AsPostgresqlSerial => from_token_stream,
+            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => from_token_stream,
+            Self::StdPrimitiveI32AsPostgresqlInt4 => from_token_stream,
+            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => from_token_stream,
 
-            Self::SqlxTypesTimeDateAsPostgresqlDate => quote::quote!{},
-            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => quote::quote!{},
+            Self::StdPrimitiveI64AsPostgresqlBigInt => from_token_stream,
+            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => from_token_stream,
+            Self::StdPrimitiveI64AsPostgresqlBigSerial => from_token_stream,
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => from_token_stream,
+            Self::StdPrimitiveI64AsPostgresqlInt8 => from_token_stream,
+            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => from_token_stream,
 
-            Self::SqlxTypesTimeTimeAsPostgresqlTime => quote::quote!{},
-            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => quote::quote!{},
+            Self::StdPrimitiveF32AsPostgresqlReal => from_token_stream,
+            Self::StdPrimitiveF32AsPostgresqlRealNotNull => from_token_stream,
+            Self::StdPrimitiveF32AsPostgresqlFloat4 => from_token_stream,
+            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => from_token_stream,
 
-            Self::SqlxTypesUuidUuidAsPostgresqlUuid => quote::quote!{},
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => quote::quote!{},
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => quote::quote!{},
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => from_token_stream,
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => from_token_stream,
+            Self::StdPrimitiveF64AsPostgresqlFloat8 => from_token_stream,
+            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => from_token_stream,
 
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => quote::quote!{},
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => quote::quote!{},
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => quote::quote!{},
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => quote::quote!{},
+            Self::StdStringStringAsPostgresqlVarchar => from_token_stream,
+            Self::StdStringStringAsPostgresqlVarcharNotNull => from_token_stream,
+            Self::StdStringStringAsPostgresqlCharN => from_token_stream,
+            Self::StdStringStringAsPostgresqlCharNNotNull => from_token_stream,
+            Self::StdStringStringAsPostgresqlText => from_token_stream,
+            Self::StdStringStringAsPostgresqlTextNotNull => from_token_stream,
+            Self::StdStringStringAsPostgresqlName => from_token_stream,
+            Self::StdStringStringAsPostgresqlNameNotNull => from_token_stream,
+            Self::StdStringStringAsPostgresqlCiText => from_token_stream,
+            Self::StdStringStringAsPostgresqlCiTextNotNull => from_token_stream,
 
-            Self::StdNetIpAddrAsPostgresqlInet => quote::quote!{},
-            Self::StdNetIpAddrAsPostgresqlInetNotNull => quote::quote!{},
-            Self::StdNetIpAddrAsPostgresqlCidr => quote::quote!{},
-            Self::StdNetIpAddrAsPostgresqlCidrNotNull => quote::quote!{},
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => from_token_stream,
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => from_token_stream,
 
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => quote::quote!{},
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => quote::quote!{},
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => from_token_stream,
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => from_token_stream,
 
-            Self::SqlxTypesBitVecAsPostgresqlBit => quote::quote!{},
-            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => quote::quote!{},
-            Self::SqlxTypesBitVecAsPostgresqlVarBit => quote::quote!{},
-            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => quote::quote!{},
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => from_token_stream,
 
-            Self::SqlxTypesJsonTAsPostgresqlJson => quote::quote!{},
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => quote::quote!{},
-            Self::SqlxTypesJsonTAsPostgresqlJsonB => quote::quote!{},
-            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => quote::quote!{},
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => from_token_stream,
 
-            Self::SerdeJsonValueAsPostgresqlJson => quote::quote!{},
-            Self::SerdeJsonValueAsPostgresqlJsonNotNull => quote::quote!{},
-            Self::SerdeJsonValueAsPostgresqlJsonB => quote::quote!{},
-            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => quote::quote!{},
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => from_token_stream,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => from_token_stream,
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => from_token_stream,
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => from_token_stream,
+
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => from_token_stream,
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => from_token_stream,
+
+            Self::SqlxTypesDecimalAsPostgresqlNumeric => from_token_stream,
+            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => from_token_stream,
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => from_token_stream,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => from_token_stream,
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => from_token_stream,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => from_token_stream,
+
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => from_token_stream,
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
+
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => from_token_stream,
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => from_token_stream,
+
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => from_token_stream,
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => from_token_stream,
+
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => try_from_token_stream,
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => from_token_stream,
+
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => from_token_stream,
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
+
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => from_token_stream,
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => from_token_stream,
+
+            Self::SqlxTypesTimeDateAsPostgresqlDate => from_token_stream,
+            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => from_token_stream,
+
+            Self::SqlxTypesTimeTimeAsPostgresqlTime => from_token_stream,
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => from_token_stream,
+
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => from_token_stream,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => from_token_stream,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => from_token_stream,
+
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => from_token_stream,
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => from_token_stream,
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => from_token_stream,
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => from_token_stream,
+
+            Self::StdNetIpAddrAsPostgresqlInet => from_token_stream,
+            Self::StdNetIpAddrAsPostgresqlInetNotNull => from_token_stream,
+            Self::StdNetIpAddrAsPostgresqlCidr => from_token_stream,
+            Self::StdNetIpAddrAsPostgresqlCidrNotNull => from_token_stream,
+
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => from_token_stream,
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => from_token_stream,
+
+            Self::SqlxTypesBitVecAsPostgresqlBit => from_token_stream,
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => from_token_stream,
+            Self::SqlxTypesBitVecAsPostgresqlVarBit => from_token_stream,
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => from_token_stream,
+
+            Self::SqlxTypesJsonTAsPostgresqlJson => from_token_stream,
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => from_token_stream,
+            Self::SqlxTypesJsonTAsPostgresqlJsonB => from_token_stream,
+            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => from_token_stream,
+
+            Self::SerdeJsonValueAsPostgresqlJson => from_token_stream,
+            Self::SerdeJsonValueAsPostgresqlJsonNotNull => from_token_stream,
+            Self::SerdeJsonValueAsPostgresqlJsonB => from_token_stream,
+            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => from_token_stream,
         }
     }
 }

@@ -110,6 +110,11 @@ pub fn from_snake_case_stringified() -> std::string::String {
         &naming_constants::FROM,
     )
 }
+pub fn from_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = from_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 pub fn response_variants_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::RESPONSE_VARIANTS)
 }
@@ -876,6 +881,18 @@ pub fn try_from_upper_camel_case_stringified() -> std::string::String {
         try_upper_camel_case_stringified(),
         from_upper_camel_case_stringified()
     )
+}
+pub fn try_from_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}",
+        try_snake_case_stringified(),
+        from_snake_case_stringified()
+    )
+}
+pub fn try_from_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = try_from_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 pub fn from_str_upper_camel_case_stringified() -> std::string::String {
     format!(
