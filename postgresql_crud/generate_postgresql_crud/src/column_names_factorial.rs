@@ -4,6 +4,7 @@ pub fn column_names_factorial(
     output: &mut [std::vec::Vec<syn::Field>],
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
 ) -> std::vec::Vec<std::vec::Vec<syn::Field>> {
+    //todo optimize
     let len = input.len();
     match len {
         0 => {
