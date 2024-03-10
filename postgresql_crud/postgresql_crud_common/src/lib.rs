@@ -1,4 +1,8 @@
+pub const POSTGRESQL_CRUD_SNAKE_CASE: &str = "postgresql_crud";
+
 #[derive(
+    strum_macros::Display,
+    strum_macros::EnumIter,
     proc_macro_assistants::ToSnakeCaseStringified,
 )]
 pub enum SupportedSqlxPostgresType {
@@ -45,49 +49,49 @@ pub enum SupportedSqlxPostgresType {
     SerdeJsonValue,
 }
 impl SupportedSqlxPostgresType {
-    pub fn get_with_serialize_deserialize_error_named_stringified(&self) -> &str {
+    pub fn get_with_serialize_deserialize_error_named_stringified(&self) -> std::string::String {
         match self {
-            Self::StdPrimitiveBool => "",
-            Self::StdPrimitiveI16 => "",
-            Self::StdPrimitiveI32 => "",
-            Self::StdPrimitiveI64 => "",
-            Self::StdPrimitiveF32 => "",
-            Self::StdPrimitiveF64 => "",
-            Self::StdStringString => "",
-            Self::StdVecVecStdPrimitiveU8 => "",
-            Self::SqlxPostgresTypesPgInterval => "",
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => "",
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => "",
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => "",
-            Self::SqlxPostgresTypesPgMoney => "",
-            Self::SqlxPostgresTypesPgCiText => "",
-            Self::SqlxTypesBigDecimal => "",
-            Self::SqlxTypesDecimal => "",
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => "",
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => "",
-            Self::SqlxTypesChronoNaiveDateTime => "",
-            Self::SqlxTypesChronoNaiveDate => "",
-            Self::SqlxTypesChronoNaiveTime => "",
-            Self::SqlxPostgresTypesPgTimeTz => "",
-            Self::SqlxTypesTimePrimitiveDateTime => "",
-            Self::SqlxTypesTimeOffsetDateTime => "",
-            Self::SqlxTypesTimeDate => "",
-            Self::SqlxTypesTimeTime => "",
-            Self::SqlxTypesUuidUuid => "",
-            Self::SqlxTypesIpnetworkIpNetwork => "",
-            Self::StdNetIpAddr => "",
-            Self::SqlxTypesMacAddressMacAddress => "",
-            Self::SqlxTypesBitVec => "",
-            Self::SqlxTypesJsonT => "",
-            Self::SerdeJsonValue => ""
+            Self::StdPrimitiveBool => std::string::String::from(""),
+            Self::StdPrimitiveI16 => std::string::String::from(""),
+            Self::StdPrimitiveI32 => std::string::String::from(""),
+            Self::StdPrimitiveI64 => std::string::String::from(""),
+            Self::StdPrimitiveF32 => std::string::String::from(""),
+            Self::StdPrimitiveF64 => std::string::String::from(""),
+            Self::StdStringString => std::string::String::from(""),
+            Self::StdVecVecStdPrimitiveU8 => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgInterval => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgMoney => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgCiText => std::string::String::from(""),
+            Self::SqlxTypesBigDecimal => std::string::String::from(""),
+            Self::SqlxTypesDecimal => std::string::String::from(""),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
+            Self::SqlxTypesChronoNaiveDateTime => std::string::String::from(""),
+            Self::SqlxTypesChronoNaiveDate => std::string::String::from(""),
+            Self::SqlxTypesChronoNaiveTime => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgTimeTz => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesTimePrimitiveDateTime => std::string::String::from(""),
+            Self::SqlxTypesTimeOffsetDateTime => std::string::String::from(""),
+            Self::SqlxTypesTimeDate => std::string::String::from(""),
+            Self::SqlxTypesTimeTime => std::string::String::from(""),
+            Self::SqlxTypesUuidUuid => std::string::String::from(""),
+            Self::SqlxTypesIpnetworkIpNetwork => std::string::String::from(""),
+            Self::StdNetIpAddr => std::string::String::from(""),
+            Self::SqlxTypesMacAddressMacAddress => std::string::String::from(""),
+            Self::SqlxTypesBitVec => std::string::String::from(""),
+            Self::SqlxTypesJsonT => std::string::String::from(""),
+            Self::SerdeJsonValue => std::string::String::from("")
         }
     }
 }
@@ -773,8 +777,6 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonB,
     SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
-
-pub const POSTGRESQL_CRUD_SNAKE_CASE: &str = "postgresql_crud";
 
 impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_path_stringified(&self) -> std::string::String {
