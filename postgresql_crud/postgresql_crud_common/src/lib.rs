@@ -44,6 +44,53 @@ pub enum SupportedSqlxPostgresType {
     SqlxTypesJsonT, //todo what to do with generic?
     SerdeJsonValue,
 }
+impl SupportedSqlxPostgresType {
+    pub fn get_with_serialize_deserialize_error_named_stringified(&self) -> &str {
+        match self {
+            Self::StdPrimitiveBool => "",
+            Self::StdPrimitiveI16 => "",
+            Self::StdPrimitiveI32 => "",
+            Self::StdPrimitiveI64 => "",
+            Self::StdPrimitiveF32 => "",
+            Self::StdPrimitiveF64 => "",
+            Self::StdStringString => "",
+            Self::StdVecVecStdPrimitiveU8 => "",
+            Self::SqlxPostgresTypesPgInterval => "",
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => "",
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => "",
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => "",
+            Self::SqlxPostgresTypesPgMoney => "",
+            Self::SqlxPostgresTypesPgCiText => "",
+            Self::SqlxTypesBigDecimal => "",
+            Self::SqlxTypesDecimal => "",
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => "",
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => "",
+            Self::SqlxTypesChronoNaiveDateTime => "",
+            Self::SqlxTypesChronoNaiveDate => "",
+            Self::SqlxTypesChronoNaiveTime => "",
+            Self::SqlxPostgresTypesPgTimeTz => "",
+            Self::SqlxTypesTimePrimitiveDateTime => "",
+            Self::SqlxTypesTimeOffsetDateTime => "",
+            Self::SqlxTypesTimeDate => "",
+            Self::SqlxTypesTimeTime => "",
+            Self::SqlxTypesUuidUuid => "",
+            Self::SqlxTypesIpnetworkIpNetwork => "",
+            Self::StdNetIpAddr => "",
+            Self::SqlxTypesMacAddressMacAddress => "",
+            Self::SqlxTypesBitVec => "",
+            Self::SqlxTypesJsonT => "",
+            Self::SerdeJsonValue => ""
+        }
+    }
+}
 
 impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostgresType {
     fn from(value: &RustSqlxMapToPostgresTypeVariant) -> Self {
@@ -1225,169 +1272,6 @@ impl RustSqlxMapToPostgresTypeVariant {
         };
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
-    //todo maybe generate by new proc macro to snake case or something
-    // pub fn gen_snake_case_naming(&self) -> std::string::String {
-    //     match self {
-    // // std_primitive_bool_as_postgresql_bool: StdPrimitiveBoolAsPostgresqlBool,
-    // // std_primitive_bool_as_postgresql_bool_not_null: StdPrimitiveBoolAsPostgresqlBoolNotNull,
-
-    // // std_primitive_i16_as_postgresql_small_int: StdPrimitiveI16AsPostgresqlSmallInt,
-    // // std_primitive_i16_as_postgresql_small_int_not_null: StdPrimitiveI16AsPostgresqlSmallIntNotNull,
-    // // std_primitive_i16_as_postgresql_small_serial: StdPrimitiveI16AsPostgresqlSmallSerial,
-    // // std_primitive_i16_as_postgresql_small_serial_not_null: StdPrimitiveI16AsPostgresqlSmallSerialNotNull,
-    // // std_primitive_i16_as_postgresql_small_int2: StdPrimitiveI16AsPostgresqlInt2,
-    // // std_primitive_i16_as_postgresql_small_int2_not_null: StdPrimitiveI16AsPostgresqlInt2NotNull,
-
-    // // std_primitive_i32_as_postgresql_int: StdPrimitiveI32AsPostgresqlInt,
-    // // std_primitive_i32_as_postgresql_int_not_null: StdPrimitiveI32AsPostgresqlIntNotNull,
-    // // std_primitive_i32_as_postgresql_serial: StdPrimitiveI32AsPostgresqlSerial,
-    // // std_primitive_i32_as_postgresql_serial_not_null: StdPrimitiveI32AsPostgresqlSerialNotNull,
-    // // std_primitive_i32_as_postgresql_int4: StdPrimitiveI32AsPostgresqlInt4,
-    // // std_primitive_i32_as_postgresql_int4_not_null: StdPrimitiveI32AsPostgresqlInt4NotNull,
-
-    // // std_primitive_i64_as_postgresql_big_int: StdPrimitiveI64AsPostgresqlBigInt,
-    // // std_primitive_i64_as_postgresql_big_int_not_null: StdPrimitiveI64AsPostgresqlBigIntNotNull,
-    // // std_primitive_i64_as_postgresql_big_serial: StdPrimitiveI64AsPostgresqlBigSerial,
-    // // std_primitive_i64_as_postgresql_big_serial_not_null: StdPrimitiveI64AsPostgresqlBigSerialNotNull,
-    // // std_primitive_i64_as_postgresql_big_int8: StdPrimitiveI64AsPostgresqlInt8,
-    // // std_primitive_i64_as_postgresql_big_int8_not_null: StdPrimitiveI64AsPostgresqlInt8NotNull,
-
-    // // std_primitive_f32_as_postgresql_real: StdPrimitiveF32AsPostgresqlReal,
-    // // std_primitive_f32_as_postgresql_real_not_null: StdPrimitiveF32AsPostgresqlRealNotNull,
-    // // std_primitive_f32_as_postgresql_float4: StdPrimitiveF32AsPostgresqlFloat4,
-    // // std_primitive_f32_as_postgresql_float4_not_null: StdPrimitiveF32AsPostgresqlFloat4NotNull,
-
-    // // std_primitive_f64_as_postgresql_double_precision: StdPrimitiveF64AsPostgresqlDoublePrecision,
-    // // std_primitive_f64_as_postgresql_double_precision_not_null: StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull,
-    // // std_primitive_f64_as_postgresql_float8: StdPrimitiveF64AsPostgresqlFloat8,
-    // // std_primitive_f64_as_postgresql_float8_not_null: StdPrimitiveF64AsPostgresqlFloat8NotNull,
-
-    // // std_string_string_as_postgresql_varchar: StdStringStringAsPostgresqlVarchar,
-    // // std_string_string_as_postgresql_varchar_not_null: StdStringStringAsPostgresqlVarcharNotNull,
-    // // std_string_string_as_postgresql_char_n: StdStringStringAsPostgresqlCharN,
-    // // std_string_string_as_postgresql_char_n_not_null: StdStringStringAsPostgresqlCharNNotNull,
-    // // std_string_string_as_postgresql_text: StdStringStringAsPostgresqlText,
-    // // std_string_string_as_postgresql_text_not_null: StdStringStringAsPostgresqlTextNotNull,
-    // // std_string_string_as_postgresql_name: StdStringStringAsPostgresqlName,
-    // // std_string_string_as_postgresql_name_not_null: StdStringStringAsPostgresqlNameNotNull,
-    // // std_string_string_as_postgresql_ci_text: StdStringStringAsPostgresqlCiText,
-    // // std_string_string_as_postgresql_ci_text_not_null: StdStringStringAsPostgresqlCiTextNotNull,
-
-    // // std_vec_vec_std_primitive_u8_as_postgresql_bytea: StdVecVecStdPrimitiveU8AsPostgresqlBytea,
-    // // std_vec_vec_std_primitive_u8_as_postgresql_bytea_not_null: StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull,
-
-    // // sqlx_postgres_types_pg_interval_as_postgresql_interval: SqlxPostgresTypesPgIntervalAsPostgresqlInterval,
-    // // sqlx_postgres_types_pg_interval_as_postgresql_interval_not_null: SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull,
-
-    // // sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range: SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range,
-    // // sqlx_postgres_types_pg_range_std_primitive_i64_as_postgresql_int8_range_not_null: SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range: SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range,
-    // // sqlx_postgres_types_pg_range_std_primitive_i32_as_postgresql_int4_range_not_null: SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_ts_tz_range: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_ts_tz_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_ts_tz_range: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_ts_tz_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_as_postgresql_ts_tz_range: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time_as_postgresql_ts_tz_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_ts_range: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_as_postgresql_ts_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_ts_range: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_as_postgresql_ts_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_as_postgresql_date_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range: SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_time_date_as_postgresql_date_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_big_decimal_as_postgresql_num_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull,
-
-    // // sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range: SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange,
-    // // sqlx_postgres_types_pg_range_sqlx_types_decimal_as_postgresql_num_range_not_null: SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull,
-
-    // // sqlx_postgres_types_pg_money_as_postgresql_money: SqlxPostgresTypesPgMoneyAsPostgresqlMoney,
-    // // sqlx_postgres_types_pg_money_as_postgresql_money_not_null: SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull,
-
-    // // sqlx_postgres_types_pg_ci_text_as_postgresql_ci_text: SqlxPostgresTypesPgCiTextAsPostgresqlCiText,
-    // // sqlx_postgres_types_pg_ci_text_as_postgresql_ci_text_not_null: SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull,
-
-    // // sqlx_types_big_decimal_as_postgresql_numeric: SqlxTypesBigDecimalAsPostgresqlNumeric,
-    // // sqlx_types_big_decimal_as_postgresql_numeric_not_null: SqlxTypesBigDecimalAsPostgresqlNumericNotNull,
-
-    // // sqlx_types_decimal_as_postgresql_numeric: SqlxTypesDecimalAsPostgresqlNumeric,
-    // // sqlx_types_decimal_as_postgresql_numeric_not_null: SqlxTypesDecimalAsPostgresqlNumericNotNull,
-
-    // // sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz: SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
-    // // sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_postgresql_timestamp_tz_not_null: SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull,
-
-    // // sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz: SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
-    // // sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_postgresql_timestamp_tz_not_null: SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull,
-
-    // // sqlx_types_chrono_naive_date_time_as_postgresql_timestamp: SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
-    // // sqlx_types_chrono_naive_date_time_as_postgresql_timestamp_not_null: SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull,
-
-    // // sqlx_types_chrono_naive_date_as_postgresql_date: SqlxTypesChronoNaiveDateAsPostgresqlDate,
-    // // sqlx_types_chrono_naive_date_as_postgresql_date_not_null: SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull,
-
-    // // sqlx_types_chrono_naive_time_as_postgresql_time: SqlxTypesChronoNaiveTimeAsPostgresqlTime,
-    // // sqlx_types_chrono_naive_time_as_postgresql_time_not_null: SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull,
-
-    // // sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz: SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz,
-    // // sqlx_postgres_types_pg_time_tz_as_postgresql_time_tz_not_null: SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull,
-
-    // // sqlx_types_time_primitive_date_time_as_postgresql_timestamp: SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
-    // // sqlx_types_time_primitive_date_time_as_postgresql_timestamp_not_null: SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull,
-
-    // // sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz: SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz,
-    // // sqlx_types_time_offset_date_time_as_postgresql_timestamp_tz_not_null: SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull,
-
-    // // sqlx_types_time_date_as_postgresql_date: SqlxTypesTimeDateAsPostgresqlDate,
-    // // sqlx_types_time_date_as_postgresql_date_not_null: SqlxTypesTimeDateAsPostgresqlDateNotNull,
-
-    // // sqlx_types_time_time_as_postgresql_time: SqlxTypesTimeTimeAsPostgresqlTime,
-    // // sqlx_types_time_time_as_postgresql_time_not_null: SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
-
-    // // sqlx_types_uuid_uuida_as_postgresql_uuid: SqlxTypesUuidUuidAsPostgresqlUuid,
-    // // sqlx_types_uuid_uuida_as_postgresql_uuid_not_null: SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
-    // // sqlx_types_uuid_uuida_as_postgresql_uuid_not_null_primary_key: SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,//todo Primary Key support only for Uuid - its simplification. maybe later support something else but now i think uuid v7 is enough
-
-    // // sqlx_types_ipnetwork_ip_network_as_postgresql_inet: SqlxTypesIpnetworkIpNetworkAsPostgresqlInet,
-    // // sqlx_types_ipnetwork_ip_network_as_postgresql_inet_not_null: SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull,
-    // // sqlx_types_ipnetwork_ip_network_as_postgresql_cidr: SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr,
-    // // sqlx_types_ipnetwork_ip_network_as_postgresql_cidr_not_null: SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull,
-
-    // // std_net_ip_addr_as_postgresql_inet: StdNetIpAddrAsPostgresqlInet,
-    // // std_net_ip_addr_as_postgresql_inet_not_null: StdNetIpAddrAsPostgresqlInetNotNull,
-    // // std_net_ip_addr_as_postgresql_cidr: StdNetIpAddrAsPostgresqlCidr,
-    // // std_net_ip_addr_as_postgresql_cidr_not_null: StdNetIpAddrAsPostgresqlCidrNotNull,
-
-    // // sqlx_types_mac_address_mac_address_as_postgresql_mac_addr: SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr,
-    // // sqlx_types_mac_address_mac_address_as_postgresql_mac_addr_not_null: SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull,
-
-    // // sqlx_types_bit_vec_as_postgresql_bit: SqlxTypesBitVecAsPostgresqlBit,
-    // // sqlx_types_bit_vec_as_postgresql_bit_not_null: SqlxTypesBitVecAsPostgresqlBitNotNull,
-    // // sqlx_types_bit_vec_as_postgresql_var_bit: SqlxTypesBitVecAsPostgresqlVarBit,
-    // // sqlx_types_bit_vec_as_postgresql_var_bit_not_null: SqlxTypesBitVecAsPostgresqlVarBitNotNull,
-
-    // // //todo what to do with generic?
-    // // sqlx_types_json_t_as_postgresql_json: SqlxTypesJsonTAsPostgresqlJson<T>,
-    // // sqlx_types_json_t_as_postgresql_json_not_null: SqlxTypesJsonTAsPostgresqlJsonNotNull<T>,
-    // // sqlx_types_json_t_as_postgresql_json_b: SqlxTypesJsonTAsPostgresqlJsonB<T>,
-    // // sqlx_types_json_t_as_postgresql_json_b_not_null: SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>,
-
-    // // serde_json_value_as_postgresql_json: SerdeJsonValueAsPostgresqlJson,
-    // // serde_json_value_as_postgresql_json_not_null: SerdeJsonValueAsPostgresqlJsonNotNull,
-    // // serde_json_value_as_postgresql_json_b: SerdeJsonValueAsPostgresqlJsonB,
-    // // serde_json_value_as_postgresql_json_b_not_null: SerdeJsonValueAsPostgresqlJsonBNotNull,
-    //     }
-    // }
 }
 //todo rename conversion method
 impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
