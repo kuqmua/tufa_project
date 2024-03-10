@@ -8869,8 +8869,10 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let self_snake_case_token_stream = {
-                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(self);
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common::SupportedSqlxPostgresType::from(self)
+                );
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
@@ -8879,7 +8881,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
                     Ok(value) => value,
                     Err(e) => {
                         return Err(Self::Error::#inner_type_token_stream {
-                            #self_snake_case_token_stream: e,
+                            #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
                             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
                         });
                     }

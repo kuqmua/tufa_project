@@ -1,3 +1,6 @@
+#[derive(
+    proc_macro_assistants::ToSnakeCaseStringified,
+)]
 pub enum SupportedSqlxPostgresType {
     StdPrimitiveBool,
     StdPrimitiveI16,
@@ -42,8 +45,8 @@ pub enum SupportedSqlxPostgresType {
     SerdeJsonValue,
 }
 
-impl std::convert::From<RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostgresType {
-    fn from(value: RustSqlxMapToPostgresTypeVariant) -> Self {
+impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostgresType {
+    fn from(value: &RustSqlxMapToPostgresTypeVariant) -> Self {
         match value {
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => Self::StdPrimitiveBool,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull => Self::StdPrimitiveBool,
@@ -562,7 +565,6 @@ impl PostgresqlType {
     strum_macros::Display,
     strum_macros::EnumIter,
     enum_extension::EnumExtension,
-    proc_macro_assistants::ToSnakeCaseStringified,
 )]
 pub enum RustSqlxMapToPostgresTypeVariant {
     StdPrimitiveBoolAsPostgresqlBool,
