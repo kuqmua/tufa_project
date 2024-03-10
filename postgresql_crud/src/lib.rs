@@ -337,8 +337,13 @@ pub use postgresql_crud_common::SqlxTypesJson;
 
 pub use postgresql_crud_common::SerdeJsonValue;
 /////////////////////////////////////////////////////
-pub use postgresql_crud_common::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
 pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+
+
 
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 
