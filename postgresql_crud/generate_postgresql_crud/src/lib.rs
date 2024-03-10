@@ -7676,12 +7676,200 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
     field_code_occurence_new_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let field_ident = &element.field_ident;
-    let inner_type_token_stream = &element.inner_type_token_stream;
-    let initialization_token_stream = &element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
-        &inner_type_token_stream,
-        &quote::quote! {value.#field_ident},
-        field_code_occurence_new_token_stream,
-    );
+    let inner_token_stream = quote::quote! {value.#field_ident};
+    let initialization_token_stream = {
+        let inner_type_token_stream = &element.inner_type_token_stream;
+        let from_token_stream = {
+            let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
+            quote::quote!{#inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream)}
+        };
+        let try_from_token_stream = {
+            let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
+            let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant);
+            let postgresql_crud_common_supported_sqlx_postgres_type_token_stream = {
+                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.to_string();
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common_supported_sqlx_postgres_type
+                );
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                match #inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
+                    Ok(value) => value,
+                    Err(e) => {
+                        return Err(Self::Error::#postgresql_crud_common_supported_sqlx_postgres_type_token_stream {
+                            #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                            #field_code_occurence_new_token_stream
+                        });
+                    }
+                }
+            }
+        };
+        match element.rust_sqlx_map_to_postgres_type_variant {
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2 => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2NotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlIntNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerialNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4 => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4NotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlReal => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlRealNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4 => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4NotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecision => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8 => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8NotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarchar => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarcharNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharN => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlName => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlNameNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiText => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiTextNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlBytea => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesBigDecimalAsPostgresqlNumeric => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumeric => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumericNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDate => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTime => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => try_from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDate => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDateNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTime => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInet => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInetNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidr => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidrNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBit => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBit => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull => from_token_stream,
+
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonB => from_token_stream,
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonBNotNull => from_token_stream,
+        }
+    };
     quote::quote! {
         let #field_ident = #initialization_token_stream;
     }
@@ -8545,12 +8733,12 @@ trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
         &self,
         code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
     ) -> proc_macro2::TokenStream;
-    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
-        &self,
-        inner_type_token_stream: &proc_macro2::TokenStream,
-        inner_token_stream: &proc_macro2::TokenStream,
-        code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
-    ) -> proc_macro2::TokenStream;
+    // fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
+    //     &self,
+    //     inner_type_token_stream: &proc_macro2::TokenStream,
+    //     inner_token_stream: &proc_macro2::TokenStream,
+    //     code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream,
+    // ) -> proc_macro2::TokenStream;
 }
 impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_crud_common::RustSqlxMapToPostgresTypeVariant {
     //path_token_token_stream
@@ -8908,201 +9096,6 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SerdeJsonValueAsPostgresqlJsonNotNull => no_error_variant_token_stream,
             Self::SerdeJsonValueAsPostgresqlJsonB => no_error_variant_token_stream,
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => no_error_variant_token_stream,
-        }
-    }
-    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
-        &self,
-        inner_type_token_stream: &proc_macro2::TokenStream,
-        inner_token_stream: &proc_macro2::TokenStream,
-        field_code_occurence_new_token_stream: &proc_macro2::TokenStream
-    ) -> proc_macro2::TokenStream {
-        let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
-        let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
-        let from_token_stream = quote::quote!{#inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream)};
-        let try_from_token_stream = {
-            let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(self);
-            let postgresql_crud_common_supported_sqlx_postgres_type_token_stream = {
-                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.to_string();
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
-                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-                    &postgresql_crud_common_supported_sqlx_postgres_type
-                );
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            quote::quote!{
-                match #inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
-                    Ok(value) => value,
-                    Err(e) => {
-                        return Err(Self::Error::#postgresql_crud_common_supported_sqlx_postgres_type_token_stream {
-                            #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
-                            #field_code_occurence_new_token_stream
-                        });
-                    }
-                }
-            }
-        };
-        match self {
-            Self::StdPrimitiveBoolAsPostgresqlBool => from_token_stream,
-            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => from_token_stream,
-
-            Self::StdPrimitiveI16AsPostgresqlSmallInt => from_token_stream,
-            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => from_token_stream,
-            Self::StdPrimitiveI16AsPostgresqlSmallSerial => from_token_stream,
-            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => from_token_stream,
-            Self::StdPrimitiveI16AsPostgresqlInt2 => from_token_stream,
-            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => from_token_stream,
-
-            Self::StdPrimitiveI32AsPostgresqlInt => from_token_stream,
-            Self::StdPrimitiveI32AsPostgresqlIntNotNull => from_token_stream,
-            Self::StdPrimitiveI32AsPostgresqlSerial => from_token_stream,
-            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => from_token_stream,
-            Self::StdPrimitiveI32AsPostgresqlInt4 => from_token_stream,
-            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => from_token_stream,
-
-            Self::StdPrimitiveI64AsPostgresqlBigInt => from_token_stream,
-            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => from_token_stream,
-            Self::StdPrimitiveI64AsPostgresqlBigSerial => from_token_stream,
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => from_token_stream,
-            Self::StdPrimitiveI64AsPostgresqlInt8 => from_token_stream,
-            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => from_token_stream,
-
-            Self::StdPrimitiveF32AsPostgresqlReal => from_token_stream,
-            Self::StdPrimitiveF32AsPostgresqlRealNotNull => from_token_stream,
-            Self::StdPrimitiveF32AsPostgresqlFloat4 => from_token_stream,
-            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => from_token_stream,
-
-            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => from_token_stream,
-            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => from_token_stream,
-            Self::StdPrimitiveF64AsPostgresqlFloat8 => from_token_stream,
-            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => from_token_stream,
-
-            Self::StdStringStringAsPostgresqlVarchar => from_token_stream,
-            Self::StdStringStringAsPostgresqlVarcharNotNull => from_token_stream,
-            Self::StdStringStringAsPostgresqlCharN => from_token_stream,
-            Self::StdStringStringAsPostgresqlCharNNotNull => from_token_stream,
-            Self::StdStringStringAsPostgresqlText => from_token_stream,
-            Self::StdStringStringAsPostgresqlTextNotNull => from_token_stream,
-            Self::StdStringStringAsPostgresqlName => from_token_stream,
-            Self::StdStringStringAsPostgresqlNameNotNull => from_token_stream,
-            Self::StdStringStringAsPostgresqlCiText => from_token_stream,
-            Self::StdStringStringAsPostgresqlCiTextNotNull => from_token_stream,
-
-            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => from_token_stream,
-            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => from_token_stream,
-            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => from_token_stream,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => from_token_stream,
-            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => from_token_stream,
-            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => from_token_stream,
-
-            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => from_token_stream,
-            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => from_token_stream,
-
-            Self::SqlxTypesDecimalAsPostgresqlNumeric => from_token_stream,
-            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => from_token_stream,
-
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => from_token_stream,
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => from_token_stream,
-
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => from_token_stream,
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => from_token_stream,
-
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => from_token_stream,
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
-
-            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => from_token_stream,
-            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => from_token_stream,
-
-            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => from_token_stream,
-            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => from_token_stream,
-
-            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => try_from_token_stream,
-            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => from_token_stream,
-
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => from_token_stream,
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => from_token_stream,
-
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => from_token_stream,
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => from_token_stream,
-
-            Self::SqlxTypesTimeDateAsPostgresqlDate => from_token_stream,
-            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => from_token_stream,
-
-            Self::SqlxTypesTimeTimeAsPostgresqlTime => from_token_stream,
-            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => from_token_stream,
-
-            Self::SqlxTypesUuidUuidAsPostgresqlUuid => from_token_stream,
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => from_token_stream,
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => from_token_stream,
-
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => from_token_stream,
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => from_token_stream,
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => from_token_stream,
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => from_token_stream,
-
-            Self::StdNetIpAddrAsPostgresqlInet => from_token_stream,
-            Self::StdNetIpAddrAsPostgresqlInetNotNull => from_token_stream,
-            Self::StdNetIpAddrAsPostgresqlCidr => from_token_stream,
-            Self::StdNetIpAddrAsPostgresqlCidrNotNull => from_token_stream,
-
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => from_token_stream,
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => from_token_stream,
-
-            Self::SqlxTypesBitVecAsPostgresqlBit => from_token_stream,
-            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => from_token_stream,
-            Self::SqlxTypesBitVecAsPostgresqlVarBit => from_token_stream,
-            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => from_token_stream,
-
-            Self::SqlxTypesJsonTAsPostgresqlJson => from_token_stream,
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => from_token_stream,
-            Self::SqlxTypesJsonTAsPostgresqlJsonB => from_token_stream,
-            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => from_token_stream,
-
-            Self::SerdeJsonValueAsPostgresqlJson => from_token_stream,
-            Self::SerdeJsonValueAsPostgresqlJsonNotNull => from_token_stream,
-            Self::SerdeJsonValueAsPostgresqlJsonB => from_token_stream,
-            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => from_token_stream,
         }
     }
 }
