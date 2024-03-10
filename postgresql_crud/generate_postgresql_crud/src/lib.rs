@@ -8689,7 +8689,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
         }
     }
     fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(&self) -> proc_macro2::TokenStream {
-        let no_error_variant_token_stream = quote::quote!{};
+        let no_error_variant_token_stream = proc_macro2::TokenStream::new();
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => no_error_variant_token_stream,
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => no_error_variant_token_stream,
@@ -8805,7 +8805,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => quote::quote!{
                 SqlxPostgresTypesPgTimeTz {
                     #[eo_display]
-                    sqlx_postgres_types_pg_time_tz: postgresql_crud::SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed,
+                    sqlx_postgres_types_pg_time_tz: postgresql_crud::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 }
             },

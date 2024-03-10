@@ -1851,7 +1851,7 @@ pub enum CreateManyPayloadElementTryFromCreateManyPayloadElementWithSerializeDes
     // },
     SqlxPostgresTypesPgTimeTz {
         #[eo_display]
-        sqlx_postgres_types_pg_time_tz: postgresql_crud::SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed,
+        sqlx_postgres_types_pg_time_tz: postgresql_crud::SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }

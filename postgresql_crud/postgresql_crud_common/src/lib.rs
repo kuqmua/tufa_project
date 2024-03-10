@@ -6787,20 +6787,20 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDe
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
 }
 #[derive(Debug)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError
+pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed
 {
     Start {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
+        start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
     },
     End {
-        end: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
+        end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
     },
     StartEnd {
-        start: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
-        end: SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError,
+        start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
+impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Start {
@@ -6822,7 +6822,7 @@ impl
     > for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
 {
     type Error =
-        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
@@ -7248,7 +7248,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     end: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
 }
 #[derive(Debug)]
-pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializeError {
+pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     Start {
         start: time::error::ComponentRange,
     },
@@ -7260,7 +7260,7 @@ pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializ
         end: time::error::ComponentRange,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializeError {
+impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Start {
@@ -7279,7 +7279,7 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithS
 impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize>
     for SqlxPostgresTypesPgRangeSqlxTypesTimeDate
 {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeDateTryFromWithSerializeDeserializeError;
+    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
@@ -8609,7 +8609,7 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
 #[derive(Debug)]
-pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed {
+pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     Time {
         time: time::error::ComponentRange,
     },
@@ -8621,7 +8621,7 @@ pub enum SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed {
         offset: time::error::ComponentRange,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed {
+impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Time {
@@ -8640,7 +8640,7 @@ impl std::fmt::Display for SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserial
 impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize>
     for SqlxPostgresTypesPgTimeTz
 {
-    type Error = SqlxPostgresTypesPgTimeTzTryFromWithSerializeDeserializeErrorNamed;
+    type Error = SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
@@ -8757,7 +8757,7 @@ pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
 }
 #[derive(Debug)]
-pub enum SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
+pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     Date {
         date: time::error::ComponentRange,
     },
@@ -8769,7 +8769,7 @@ pub enum SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
         time: time::error::ComponentRange,
     },
 }
-impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError {
+impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
             Self::Date {
@@ -8788,7 +8788,7 @@ impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDes
 impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>
     for SqlxTypesTimePrimitiveDateTime
 {
-    type Error = SqlxTypesTimePrimitiveDateTimeTryFromWithSerializeDeserializeError;
+    type Error = SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
