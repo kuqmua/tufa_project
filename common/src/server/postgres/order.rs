@@ -9,8 +9,8 @@ pub enum Order {
 impl std::fmt::Display for Order {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            Order::Asc => write!(f, "{}", crate::server::postgres::constants::ASC_NAME),
-            Order::Desc => write!(f, "{}", crate::server::postgres::constants::DESC_NAME),
+            Order::Asc => write!(f, "{}", naming_constants::ASC_NAME),
+            Order::Desc => write!(f, "{}", naming_constants::DESC_NAME),
         }
     }
 }
