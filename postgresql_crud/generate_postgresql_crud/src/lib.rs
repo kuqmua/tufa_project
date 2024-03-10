@@ -460,8 +460,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    let code_occurence_upper_camel_case_token_stream =
-        proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_token_stream();
+    let code_occurence_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_token_stream();
     let code_occurence_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
     let error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote! {error_occurence_lib::#code_occurence_snake_case_token_stream::#code_occurence_upper_camel_case_token_stream};
@@ -7653,6 +7652,7 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
 ) -> proc_macro2::TokenStream {
     let field_ident = &element.field_ident;
     let inner_type_token_stream = &element.inner_type_token_stream;
+    
     quote::quote! {
         //HERE
         let #field_ident = #inner_type_token_stream::from(value.#field_ident);//todo from or try_from
@@ -8513,11 +8513,12 @@ enum FromOrTryFrom {
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
     fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom;
-    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
-        &self,
-    ) -> proc_macro2::TokenStream;
     fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
         &self,
+    ) -> proc_macro2::TokenStream;
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
+        &self,
+        code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: proc_macro2::TokenStream,
     ) -> proc_macro2::TokenStream;
 }
 impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_crud_common::RustSqlxMapToPostgresTypeVariant {
@@ -8853,7 +8854,10 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => quote::quote!{},
         }
     }
-    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_token_stream(
+        &self,
+        code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: proc_macro2::TokenStream
+    ) -> proc_macro2::TokenStream {
         match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => quote::quote!{},
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => quote::quote!{},
@@ -8974,17 +8978,7 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
                     Err(e) => {
                         return Err(Self::Error::SqlxPostgresTypesPgTimeTz {
                             sqlx_postgres_types_pg_time_tz: e,
-                            code_occurence : error_occurence_lib :: code_occurence ::
-                            CodeOccurence ::
-                            new(crate :: global_variables :: compile_time ::
-                            project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
-                            file! ().to_string(), line! (), column! (),
-                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                            {
-                                file : std :: string :: String ::
-                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line : 576, column : 41,
-                            })),
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
                         });
                     }
                 }
