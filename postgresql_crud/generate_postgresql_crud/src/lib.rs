@@ -7718,7 +7718,8 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let field_ident_upper_camel_case_token_stream = {
-                let value_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string());
+                //todo its a temporal naming desicion. maybe it can be better
+                let value_stringified = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
@@ -8745,6 +8746,10 @@ impl Order {
     }
 }
 
+fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())
+}
+
 fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
     value: &std::vec::Vec<SynFieldWithAdditionalInfo>,
     code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
@@ -8767,7 +8772,8 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let field_ident_upper_camel_case_token_stream = {
-                let value_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string());//todo reuse
+                //todo its a temporal naming desicion. maybe it can be better
+                let value_stringified = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
