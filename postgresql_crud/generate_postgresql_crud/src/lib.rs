@@ -2838,23 +2838,46 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
-                    let column_vecs_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
-                        let field_ident_underscore_vec_stringified = {
-                            let field_ident = &element.field_ident;
-                            format!("{field_ident}{underscore_vec_name_stringified}")
+                    let column_vecs_token_stream = {
+                        let column_vecs_handle_token_stream = {
+                            let value = fields_named_wrappers_excluding_primary_key.iter().map(|element| {
+                                let field_ident_underscore_vec_stringified = {
+                                    let field_ident = &element.field_ident;
+                                    format!("{field_ident}{underscore_vec_name_stringified}")
+                                };
+                                field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            });
+                            quote::quote!{#(#value),*}
                         };
-                        field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    });
-                    let column_vecs_with_capacity_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
+                        match fields_named_wrappers_excluding_primary_key_len {
+                            1 => column_vecs_handle_token_stream,
+                            _ => quote::quote!{(#column_vecs_handle_token_stream)}
+                        }
+                    };
+                    let column_vecs_with_capacity_token_stream = {
+                        let column_vecs_with_capacity_handle_token_stream = {
+                            let value = fields_named_wrappers_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
+                            quote::quote!{#(#value),*}
+                        };
+                        match fields_named_wrappers_excluding_primary_key_len {
+                            1 => column_vecs_with_capacity_handle_token_stream,
+                            _ => quote::quote!{(#column_vecs_with_capacity_handle_token_stream)}
+                        }
+                    };
                     let columns_acc_push_elements_token_stream = fields_named_wrappers_excluding_primary_key.iter().enumerate().map(|(index, element)|{
                         let field_ident = &element.field_ident;
-                        let index_token_stream = {
-                            let index_stringified = index.to_string();
-                            index_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        let index_token_stream = match fields_named_wrappers_excluding_primary_key_len {
+                            1 => proc_macro2::TokenStream::new(),
+                            _ => {
+                                let index_stringified = index.to_string();
+                                let value_token_stream = index_stringified.parse::<proc_macro2::TokenStream>()
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                quote::quote!{.#value_token_stream}
+                            }
                         };
-                        quote::quote!{#acc_name_token_stream.#index_token_stream.push(#element_name_token_stream.#field_ident);}//HERE2
+                        //space need to to concat token stream correctly
+                        quote::quote!{#acc_name_token_stream #index_token_stream.push(#element_name_token_stream.#field_ident);}
                     });
                     let column_query_bind_vecs_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
                         let field_ident_underscore_vec_token_stream = {
@@ -2876,11 +2899,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         let mut #query_name_token_stream = #sqlx_query_sqlx_postgres_token_stream(&#query_string_name_token_stream);
                         let #current_vec_len_name_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.len();
-                        let (
-                            #(#column_vecs_token_stream),*
-                        ) = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.into_iter().fold((
-                            #(#column_vecs_with_capacity_token_stream),*
-                        ), |mut #acc_name_token_stream, #element_name_token_stream| {
+                        let #column_vecs_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.into_iter().fold(#column_vecs_with_capacity_token_stream,
+                        |mut #acc_name_token_stream, #element_name_token_stream| {
                             #(#columns_acc_push_elements_token_stream)*
                             #acc_name_token_stream
                         });
@@ -5253,6 +5273,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let binded_query_token_stream = {
+                    //todo remove () if in fields named only one element
                     let column_vecs_token_stream = fields_named.iter().map(|field|{
                         let field_ident_underscore_vec_stringified = {
                             let field_ident = field.ident.as_ref()
