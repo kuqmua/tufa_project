@@ -7710,16 +7710,15 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
         };
         let try_from_token_stream = {
             let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
-            let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant);
-            let postgresql_crud_common_supported_sqlx_postgres_type_token_stream = {
-                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.to_string();
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
+                );
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
-                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-                    &postgresql_crud_common_supported_sqlx_postgres_type
-                );
+            let field_ident_upper_camel_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&element.field_ident.to_string());
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
@@ -7727,7 +7726,7 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
                 match #inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
                     Ok(value) => value,
                     Err(e) => {
-                        return Err(Self::Error::#postgresql_crud_common_supported_sqlx_postgres_type_token_stream {
+                        return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
                             #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
                             #field_code_occurence_new_token_stream
                         });
@@ -8765,11 +8764,6 @@ fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_varia
     let rust_sqlx_map_to_postgres_type_variant = &syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant;
     let error_variant_token_stream = {
         let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(rust_sqlx_map_to_postgres_type_variant);
-        let postgresql_crud_common_supported_sqlx_postgres_type_token_stream = {
-            let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.to_string();
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
         let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
             let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
                 &postgresql_crud_common_supported_sqlx_postgres_type
@@ -8782,8 +8776,13 @@ fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_varia
             value_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
+        let field_ident_upper_camel_case_token_stream = {
+            let value_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&syn_field_with_additional_info.field_ident.to_string());
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
         quote::quote!{
-            #postgresql_crud_common_supported_sqlx_postgres_type_token_stream {
+            #field_ident_upper_camel_case_token_stream {
                 #[eo_display]//todo - maybe need to support not only #[eo_display]
                 #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: #with_serialize_deserialize_error_named_token_stream,
                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
