@@ -298,8 +298,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let sqlx_decode_decode_database_token_stream =
         quote::quote! {sqlx::decode::Decode<'a, R::Database>};
     let sqlx_types_type_database_token_stream = quote::quote! {sqlx::types::Type<R::Database>};
-    let primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream =
-        quote::quote! {primary_key_uuid_wrapper_try_from_sqlx_row};
+    let primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream = quote::quote! {primary_key_uuid_wrapper_try_from_sqlx_row};
     let crate_server_postgres_uuid_wrapper_token_stream =
         quote::quote! {crate::server::postgres::uuid_wrapper};
     let error_named_upper_camel_case_stringified =
@@ -549,7 +548,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #derive_debug_thiserror_error_occurence_token_stream
                         pub enum #ident_try_from_ident_options_error_named_upper_camel_case_token_stream {
-                            #uuid_wrapper_try_from_possible_uuid_wrapper_primary_key_variant_token_stream
+                            //HERE remove
+                            // #uuid_wrapper_try_from_possible_uuid_wrapper_primary_key_variant_token_stream
                             #(#is_none_variant_columns_token_stream),*
                         }
                     }
@@ -1054,15 +1054,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let row_name_token_stream = quote::quote! {row};
         let primary_key_name_token_stream = quote::quote! {primary_key};
+        let type_token_stream = {
+            let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let original_type_token_stream = {
+            let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        //todo rename coz in the future uuid_wrapper will be removed
         quote::quote! {
-            fn #primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream>
+            fn #primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#inner_type_token_stream>
+            //HERE
+            //#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream
             where
                 #std_primitive_str_sqlx_column_index_token_stream
-                #sqlx_types_uuid_token_stream: #sqlx_decode_decode_database_token_stream,
-                #sqlx_types_uuid_token_stream: #sqlx_types_type_database_token_stream,
+                //HERE
+                // #sqlx_types_uuid_token_stream: #sqlx_decode_decode_database_token_stream,
+                // #sqlx_types_uuid_token_stream: #sqlx_types_type_database_token_stream,
+                #original_type_token_stream: #sqlx_decode_decode_database_token_stream,
+                #original_type_token_stream: #sqlx_types_type_database_token_stream,
             {
-                let #primary_key_name_token_stream: #sqlx_types_uuid_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
-                Ok(#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::from(#primary_key_name_token_stream))
+                let #primary_key_name_token_stream: #original_type_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
+                // Ok(#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::from(#primary_key_name_token_stream))
+                Ok(#inner_type_token_stream::from(#primary_key_name_token_stream))
             }
         }
     };
