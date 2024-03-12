@@ -70,7 +70,7 @@ mod type_variants_from_request_response_generator;
 //todo maybe generate compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
 //todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
 //todo sqlx query! macros not in actual api, but just unused function just for compile time query check
-//todo reexport all crates what logic depends on (from crates.io)
+//todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
 
 #[proc_macro_attribute]
 pub fn create_many_additional_http_status_codes_error_variants(
