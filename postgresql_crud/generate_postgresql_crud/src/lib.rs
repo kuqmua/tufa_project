@@ -242,13 +242,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             "{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1"
         );
     }
-    let fields_named_wrappers_excluding_primary_key_len =
-        fields_named_wrappers_excluding_primary_key.len();
-    let primary_key_field_ident_quotes_token_stream =
-        proc_macro_common::generate_quotes::generate_quotes_token_stream(
-            &primary_key_field_ident.to_string(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
+    let fields_named_wrappers_excluding_primary_key_len = fields_named_wrappers_excluding_primary_key.len();
+    let is_fields_named_wrappers_excluding_primary_key_len_equals_one = fields_named_wrappers_excluding_primary_key_len == 1;
+    let primary_key_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        &primary_key_field_ident.to_string(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let debug_token_stream =
         proc_macro_helpers::naming_conventions::debug_upper_camel_case_token_stream();
     let thiserror_error_token_stream = proc_macro_common::thiserror_error_token_stream();
@@ -2850,9 +2849,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             });
                             quote::quote!{#(#value),*}
                         };
-                        match fields_named_wrappers_excluding_primary_key_len {
-                            1 => column_vecs_handle_token_stream,
-                            _ => quote::quote!{(#column_vecs_handle_token_stream)}
+                        match is_fields_named_wrappers_excluding_primary_key_len_equals_one {
+                            true => column_vecs_handle_token_stream,
+                            false => quote::quote!{(#column_vecs_handle_token_stream)}
                         }
                     };
                     let column_vecs_with_capacity_token_stream = {
@@ -2860,16 +2859,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let value = fields_named_wrappers_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
                             quote::quote!{#(#value),*}
                         };
-                        match fields_named_wrappers_excluding_primary_key_len {
-                            1 => column_vecs_with_capacity_handle_token_stream,
-                            _ => quote::quote!{(#column_vecs_with_capacity_handle_token_stream)}
+                        match is_fields_named_wrappers_excluding_primary_key_len_equals_one {
+                            true => column_vecs_with_capacity_handle_token_stream,
+                            false => quote::quote!{(#column_vecs_with_capacity_handle_token_stream)}
                         }
                     };
                     let columns_acc_push_elements_token_stream = fields_named_wrappers_excluding_primary_key.iter().enumerate().map(|(index, element)|{
                         let field_ident = &element.field_ident;
-                        let index_token_stream = match fields_named_wrappers_excluding_primary_key_len {
-                            1 => proc_macro2::TokenStream::new(),
-                            _ => {
+                        let index_token_stream = match is_fields_named_wrappers_excluding_primary_key_len_equals_one {
+                            true => proc_macro2::TokenStream::new(),
+                            false => {
                                 let index_stringified = index.to_string();
                                 let value_token_stream = index_stringified.parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
