@@ -4305,24 +4305,15 @@ pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     minutes: std::primitive::i8,
     seconds: std::primitive::i8,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
+        #[eo_display]
         time_error_component_range: time::error::ComponentRange,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::TimeErrorComponentRange {
-                time_error_component_range,
-            } => write!(f, "time_error_component_range: {time_error_component_range}"),
-        }
-    }
-}
-impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize>
-    for sqlx::types::time::UtcOffset
-{
+impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize> for sqlx::types::time::UtcOffset {
     type Error = SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
@@ -4331,6 +4322,7 @@ impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
             Ok(value) => Ok(value),
             Err(e) => Err(Self::Error::TimeErrorComponentRange {
                 time_error_component_range: e,
+                code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
     }
@@ -6231,39 +6223,29 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeser
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     Start {
+        #[eo_error_occurence]
         start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
     },
     End {
+        #[eo_error_occurence]
         end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
     },
     StartEnd {
+        #[eo_error_occurence]
         start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        // #[eo_error_occurence]
+        // end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::Start {
-                start,
-            } => write!(f, "start: {start}"),
-            Self::End {
-                end,
-            } => write!(f, "end: {end}"),
-            Self::StartEnd {
-                start,
-                end,
-            } => write!(f, "start: {start}, end: {end}")
-        }
-    }
-}
-impl
-    std::convert::TryFrom<
-        SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
-    > for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
+impl std::convert::TryFrom<
+    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
+> for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime
 {
     type Error =
         SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
@@ -6280,15 +6262,20 @@ impl
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
-                        let e = Self::Error::StartEnd {
+                        return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
-                        };
-                        println!("{e}");
-                        return Err(e);
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6301,12 +6288,19 @@ impl
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -6318,7 +6312,10 @@ impl
                         std::ops::Bound::Unbounded,
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6331,12 +6328,19 @@ impl
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -6350,12 +6354,19 @@ impl
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -6367,7 +6378,10 @@ impl
                         std::ops::Bound::Unbounded,
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6378,7 +6392,10 @@ impl
                         std::ops::Bound::Included(value.0),
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6389,7 +6406,10 @@ impl
                         std::ops::Bound::Excluded(value.0),
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6689,43 +6709,32 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDe
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed
 {
     Start {
+        #[eo_error_occurence]
         start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     End {
+        #[eo_error_occurence]
         end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     StartEnd {
+        #[eo_error_occurence]
         start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        // #[eo_error_occurence]
+        // end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::Start {
-                start,
-            } => write!(f, "start: {start}"),
-            Self::End {
-                end,
-            } => write!(f, "end: {end}"),
-            Self::StartEnd {
-                start,
-                end,
-            } => write!(f, "start: {start}, end: {end}")
-        }
-    }
-}
-impl
-    std::convert::TryFrom<
-        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-    > for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
+impl std::convert::TryFrom<
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
+> for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime
 {
-    type Error =
-        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
@@ -6739,15 +6748,20 @@ impl
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
-                        let e = Self::Error::StartEnd {
+                        return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
-                        };
-                        println!("{e}");
-                        return Err(e);
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6760,12 +6774,19 @@ impl
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -6777,7 +6798,10 @@ impl
                         std::ops::Bound::Unbounded,
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6790,12 +6814,19 @@ impl
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -6809,12 +6840,19 @@ impl
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -6826,7 +6864,10 @@ impl
                         std::ops::Bound::Unbounded,
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6837,7 +6878,10 @@ impl
                         std::ops::Bound::Included(value.0),
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -6848,7 +6892,10 @@ impl
                         std::ops::Bound::Excluded(value.0),
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -7150,38 +7197,27 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     Start {
+        #[eo_error_occurence]
         start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     End {
+        #[eo_error_occurence]
         end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     StartEnd {
+        #[eo_error_occurence]
         start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        // #[eo_error_occurence]
+        // end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::Start {
-                start,
-            } => write!(f, "start: {start}"),
-            Self::End {
-                end,
-            } => write!(f, "end: {end}"),
-            Self::StartEnd {
-                start,
-                end,
-            } => write!(f, "start: {start}, end: {end}")
-        }
-    }
-}
-impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize>
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeDate
-{
+impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize> for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
@@ -7196,15 +7232,20 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
-                        let e = Self::Error::StartEnd {
+                        return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
-                        };
-                        println!("{e}");
-                        return Err(e);
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -7217,12 +7258,19 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -7234,7 +7282,10 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Unbounded,
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -7247,12 +7298,19 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -7266,12 +7324,19 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { end: e }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { start: e }),
+                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
+                        end: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
+                        start: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            end: end_error,
+                            // end: end_error,
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
                 }
@@ -7283,7 +7348,10 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Unbounded,
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -7294,7 +7362,10 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Included(value.0),
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -7305,7 +7376,10 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Excluded(value.0),
                     ),
                     Err(e) => {
-                        return Err(Self::Error::Start { start: e });
+                        return Err(Self::Error::Start { 
+                            start: e,
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
                 }
             }
@@ -8511,38 +8585,27 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     Time {
+        #[eo_error_occurence]
         time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Offset {
+        #[eo_error_occurence]
         offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     TimeOffset {
+        #[eo_error_occurence]
         time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
+        // #[eo_error_occurence]
+        // offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::Time {
-                time,
-            } => write!(f, "time: {time}"),
-            Self::Offset {
-                offset,
-            } => write!(f, "offset: {offset}"),
-            Self::TimeOffset {
-                time,
-                offset,
-            } => write!(f, "time: {time}, offset: {offset}"),
-        }
-    }
-}
-impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize>
-    for SqlxPostgresTypesPgTimeTz
-{
+impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for SqlxPostgresTypesPgTimeTz {
     type Error = SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
@@ -8553,15 +8616,22 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize>
         ) {
             (Ok(time), Ok(offset)) => (time.0, offset),
             (Err(e), Ok(_)) => {
-                return Err(Self::Error::Time { time: e });
+                return Err(Self::Error::Time { 
+                    time: e,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
             }
             (Ok(_), Err(e)) => {
-                return Err(Self::Error::Offset { offset: e });
+                return Err(Self::Error::Offset { 
+                    offset: e,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
             }
             (Err(time_error), Err(offset_error)) => {
                 return Err(Self::Error::TimeOffset {
                     time: time_error,
-                    offset: offset_error,
+                    // offset: offset_error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
         };
@@ -8659,38 +8729,27 @@ pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     date: SqlxTypesTimeDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     Date {
+        #[eo_error_occurence]
         date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Time {
+        #[eo_error_occurence]
         time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     DateTime {
+        #[eo_error_occurence]
         date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        // #[eo_error_occurence]
+        // time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::Date {
-                date,
-            } => write!(f, "date: {date}"),
-            Self::Time {
-                time,
-            } => write!(f, "time: {time}"),
-            Self::DateTime {
-                date,
-                time,
-            } => write!(f, "date: {date}, time: {time}")
-        }
-    }
-}
-impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>
-    for SqlxTypesTimePrimitiveDateTime
-{
+impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for SqlxTypesTimePrimitiveDateTime {
     type Error = SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
@@ -8701,17 +8760,22 @@ impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializ
         ) {
             (Ok(date), Ok(time)) => (date, time),
             (Err(e), Ok(_)) => {
-                let e = Self::Error::Date { date: e };
-                println!("{e}");
-                return Err(e);
+                return Err(Self::Error::Date { 
+                    date: e,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
             }
             (Ok(_), Err(e)) => {
-                return Err(Self::Error::Time { time: e });
+                return Err(Self::Error::Time { 
+                    time: e,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
             }
             (Err(date_error), Err(time_error)) => {
                 return Err(Self::Error::DateTime {
                     date: date_error,
-                    time: time_error,
+                    // time: time_error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
         };
@@ -8813,20 +8877,13 @@ pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
     std::primitive::i64,
 );
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
+        #[eo_display]
         time_error_component_range: time::error::ComponentRange,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-}
-impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::TimeErrorComponentRange {
-                time_error_component_range,
-            } => write!(f, "time_error_component_range: {time_error_component_range}"),
-        }
-    }
 }
 impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for SqlxTypesTimeOffsetDateTime {
     type Error = SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
@@ -8837,6 +8894,7 @@ impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> 
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(Self::Error::TimeErrorComponentRange {
                 time_error_component_range: e,
+                code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
     }
@@ -8927,24 +8985,15 @@ pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     month: TimeMonthWithSerializeDeserialize,
     day: std::primitive::u8,
 }
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
+        #[eo_display]
         time_error_component_range: time::error::ComponentRange,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for SqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::TimeErrorComponentRange {
-                time_error_component_range,
-            } => write!(f, "time_error_component_range: {time_error_component_range}"),
-        }
-    }
-}
-impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize>
-    for SqlxTypesTimeDate
-{
+impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize> for SqlxTypesTimeDate {
     type Error = SqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimeDateWithSerializeDeserialize,
@@ -8957,6 +9006,7 @@ impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize>
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(Self::Error::TimeErrorComponentRange {
                 time_error_component_range: e,
+                code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
     }
@@ -9160,20 +9210,13 @@ impl SqlxTypesTimeTime {
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
     SqlxTypesUuidError {
+        #[eo_display]
         sqlx_types_uuid_error: sqlx::types::uuid::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-}
-impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            Self::SqlxTypesUuidError {
-                sqlx_types_uuid_error,
-            } => write!(f, "sqlx_types_uuid_error: {sqlx_types_uuid_error}"),
-        }
-    }
 }
 impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize> for SqlxTypesUuidUuid {
     type Error = SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
@@ -9183,7 +9226,8 @@ impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize> for SqlxTy
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(Self::Error::SqlxTypesUuidError{
-                sqlx_types_uuid_error: e
+                sqlx_types_uuid_error: e,
+                code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
     }
