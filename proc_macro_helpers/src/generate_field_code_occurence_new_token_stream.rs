@@ -26,7 +26,6 @@ pub fn generate_field_code_occurence_new_token_stream(
         };
         quote::quote! {
             error_occurence_lib::code_occurence::CodeOccurence::new(
-                git_info::PROJECT_GIT_INFO.commit.to_string(),
                 file!().to_string(),
                 line!(),
                 column!(),

@@ -19,7 +19,6 @@ pub struct CodeOccurence {
 impl CodeOccurence {
     #[must_use]
     pub fn new(
-        commit: std::string::String,
         file: std::string::String,
         line: u32,
         column: u32,
@@ -29,7 +28,7 @@ impl CodeOccurence {
             file,
             line,
             column,
-            commit,
+            commit: git_info::PROJECT_GIT_INFO.commit.to_string(),
             duration: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap_or_default(),
