@@ -2514,7 +2514,7 @@ impl axum::response::IntoResponse for TryCreateManyResponseVariants {
         }
     }
 }
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+#[derive(Debug, thiserror :: Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryCreateManyErrorNamed {
     SerdeJsonToString {
         #[eo_display]

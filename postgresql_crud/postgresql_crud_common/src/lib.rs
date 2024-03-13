@@ -4305,16 +4305,33 @@ pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     minutes: std::primitive::i8,
     seconds: std::primitive::i8,
 }
+#[derive(Debug)]
+pub enum SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed {
+    TimeErrorComponentRange {
+        time_error_component_range: time::error::ComponentRange,
+    },
+}
+impl std::fmt::Display for SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::TimeErrorComponentRange {
+                time_error_component_range,
+            } => write!(f, "time_error_component_range: {time_error_component_range}"),
+        }
+    }
+}
 impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize>
     for sqlx::types::time::UtcOffset
 {
-    type Error = time::error::ComponentRange; //todo
+    type Error = SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::UtcOffset::from_hms(value.hours, value.minutes, value.seconds) {
             Ok(value) => Ok(value),
-            Err(e) => Err(e),
+            Err(e) => Err(Self::Error::TimeErrorComponentRange {
+                time_error_component_range: e,
+            }),
         }
     }
 }
@@ -6217,14 +6234,14 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeser
 #[derive(Debug)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     Start {
-        start: time::error::ComponentRange,
+        start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
     },
     End {
-        end: time::error::ComponentRange,
+        end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
     },
     StartEnd {
-        start: time::error::ComponentRange,
-        end: time::error::ComponentRange,
+        start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
     },
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
@@ -7136,14 +7153,14 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
 #[derive(Debug)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     Start {
-        start: time::error::ComponentRange,
+        start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
     },
     End {
-        end: time::error::ComponentRange,
+        end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
     },
     StartEnd {
-        start: time::error::ComponentRange,
-        end: time::error::ComponentRange,
+        start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
     },
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
@@ -8497,14 +8514,14 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
 #[derive(Debug)]
 pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     Time {
-        time: time::error::ComponentRange,
+        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
     },
     Offset {
-        offset: time::error::ComponentRange,
+        offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
     },
     TimeOffset {
-        time: time::error::ComponentRange,
-        offset: time::error::ComponentRange,
+        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
     },
 }
 impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
@@ -8645,14 +8662,14 @@ pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
 #[derive(Debug)]
 pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     Date {
-        date: time::error::ComponentRange,
+        date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
     },
     Time {
-        time: time::error::ComponentRange,
+        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
     },
     DateTime {
-        date: time::error::ComponentRange,
-        time: time::error::ComponentRange,
+        date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
     },
 }
 impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
@@ -8796,19 +8813,31 @@ pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
     std::primitive::i64,
 );
-impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>
-    for SqlxTypesTimeOffsetDateTime
-{
-    type Error = time::error::ComponentRange;
+#[derive(Debug)]
+pub enum SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
+    TimeErrorComponentRange {
+        time_error_component_range: time::error::ComponentRange,
+    },
+}
+impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::TimeErrorComponentRange {
+                time_error_component_range,
+            } => write!(f, "time_error_component_range: {time_error_component_range}"),
+        }
+    }
+}
+impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for SqlxTypesTimeOffsetDateTime {
+    type Error = SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::OffsetDateTime::from_unix_timestamp(value.0) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => {
-                println!("{e}");
-                Err(e)
-            },
+            Err(e) => Err(Self::Error::TimeErrorComponentRange {
+                time_error_component_range: e,
+            }),
         }
     }
 }
@@ -8898,10 +8927,25 @@ pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     month: TimeMonthWithSerializeDeserialize,
     day: std::primitive::u8,
 }
+#[derive(Debug)]
+pub enum SqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
+    TimeErrorComponentRange {
+        time_error_component_range: time::error::ComponentRange,
+    },
+}
+impl std::fmt::Display for SqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::TimeErrorComponentRange {
+                time_error_component_range,
+            } => write!(f, "time_error_component_range: {time_error_component_range}"),
+        }
+    }
+}
 impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize>
     for SqlxTypesTimeDate
 {
-    type Error = time::error::ComponentRange;
+    type Error = SqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimeDateWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {//todo maybe use better initialize function (not ony for what)
@@ -8911,10 +8955,9 @@ impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize>
             value.day,
         ) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => {
-                println!("{e}");
-                Err(e)
-            },
+            Err(e) => Err(Self::Error::TimeErrorComponentRange {
+                time_error_component_range: e,
+            }),
         }
     }
 }
@@ -9009,18 +9052,53 @@ pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
     minute: std::primitive::u8,
     second: std::primitive::u8,
 }
+// #[derive(Debug)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
+    TimeErrorComponentRange {
+        #[eo_display]
+        time_error_component_range: time::error::ComponentRange,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+// impl std::fmt::Display for SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         match self {
+//             Self::TimeErrorComponentRange {
+//                 time_error_component_range,
+//                 code_occurence,
+//             } => write!(f, "time_error_component_range: {time_error_component_range}"),
+//         }
+//     }
+// }
 //todo different init methods support
 impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTypesTimeTime {
-    type Error = time::error::ComponentRange;
+    type Error = SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesTimeTimeWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::Time::from_hms(value.hour, value.minute, value.second) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => {
-                println!("{e}");
-                Err(e)
-            },
+            Err(e) => Err(Self::Error::TimeErrorComponentRange{
+                time_error_component_range: e,
+                //
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                        .commit
+                        .to_string(),
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1645,
+                        column: 13,
+                    }),
+                ),
+                //
+            }),
         }
     }
 }
@@ -9131,12 +9209,9 @@ impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize> for SqlxTy
     ) -> Result<Self, Self::Error> {
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => {
-                println!("{e}");
-                Err(Self::Error::SqlxTypesUuidError{
-                    sqlx_types_uuid_error: e
-                })
-            },
+            Err(e) => Err(Self::Error::SqlxTypesUuidError{
+                sqlx_types_uuid_error: e
+            }),
         }
     }
 }
