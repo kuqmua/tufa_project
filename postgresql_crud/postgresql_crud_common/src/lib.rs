@@ -6238,8 +6238,8 @@ pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeseria
     StartEnd {
         #[eo_error_occurence]
         start: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        // #[eo_error_occurence]
-        // end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        #[eo_error_occurence]
+        end: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence
     },
 }
@@ -6273,7 +6273,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -6299,7 +6299,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -6339,7 +6339,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -6365,7 +6365,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -6725,8 +6725,8 @@ pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDese
     StartEnd {
         #[eo_error_occurence]
         start: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        // #[eo_error_occurence]
-        // end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        #[eo_error_occurence]
+        end: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -6759,7 +6759,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -6785,7 +6785,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -6825,7 +6825,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -6851,7 +6851,7 @@ impl std::convert::TryFrom<
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -7212,8 +7212,8 @@ pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorN
     StartEnd {
         #[eo_error_occurence]
         start: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        // #[eo_error_occurence]
-        // end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        #[eo_error_occurence]
+        end: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -7243,7 +7243,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -7269,7 +7269,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -7309,7 +7309,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -7335,7 +7335,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                     (Err(start_error), Err(end_error)) => {
                         return Err(Self::Error::StartEnd {
                             start: start_error,
-                            // end: end_error,
+                            end: end_error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     }
@@ -8600,8 +8600,8 @@ pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     TimeOffset {
         #[eo_error_occurence]
         time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        // #[eo_error_occurence]
-        // offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
+        #[eo_error_occurence]
+        offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -8630,7 +8630,7 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> fo
             (Err(time_error), Err(offset_error)) => {
                 return Err(Self::Error::TimeOffset {
                     time: time_error,
-                    // offset: offset_error,
+                    offset: offset_error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
@@ -8744,8 +8744,8 @@ pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     DateTime {
         #[eo_error_occurence]
         date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        // #[eo_error_occurence]
-        // time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        #[eo_error_occurence]
+        time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -8774,7 +8774,7 @@ impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializ
             (Err(date_error), Err(time_error)) => {
                 return Err(Self::Error::DateTime {
                     date: date_error,
-                    // time: time_error,
+                    time: time_error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }

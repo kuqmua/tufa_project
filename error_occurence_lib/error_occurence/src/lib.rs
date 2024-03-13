@@ -3744,7 +3744,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 #field_ident: #logic_for_into_serialize_deserialize_version_for_attribute
                             });
                             fields_logic_for_compile_time_check_error_occurence_members_for_attribute.push(quote::quote!{
-                                #logic_for_compile_time_check_error_occurence_members_for_attribute
+                                #logic_for_compile_time_check_error_occurence_members_for_attribute;
                             });
                         },
                         proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
@@ -4074,7 +4074,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 });
                 logic_for_compile_time_check_error_occurence_members.push(quote::quote!{
                      #ident::#variant_ident(i) => {
-                        #error_occurence_lib_error_occurence_named_error_occurence_named_token_stream::#error_occurence_named_token_stream(i)
+                        #error_occurence_lib_error_occurence_named_error_occurence_named_token_stream::#error_occurence_named_token_stream(i);
                      }
                 });
             });
