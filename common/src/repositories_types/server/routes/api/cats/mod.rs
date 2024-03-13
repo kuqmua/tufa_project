@@ -272,8 +272,7 @@ impl std::convert::TryFrom<DogOptions> for DogId {
                     id_is_none : std :: string :: String :: from("id is None"),
                     code_occurence : error_occurence_lib :: code_occurence ::
                     CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -308,8 +307,7 @@ impl std::convert::TryFrom<DogOptions> for DogName {
                     name_is_none : std :: string :: String ::
                     from("name is None"), code_occurence : error_occurence_lib
                     :: code_occurence :: CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -356,8 +354,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
                     id_is_none : std :: string :: String :: from("id is None"),
                     code_occurence : error_occurence_lib :: code_occurence ::
                     CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -378,8 +375,7 @@ impl std::convert::TryFrom<DogOptions> for DogIdName {
                     name_is_none : std :: string :: String ::
                     from("name is None"), code_occurence : error_occurence_lib
                     :: code_occurence :: CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -471,7 +467,7 @@ impl std::str::FromStr for DogColumnSelect {
                 not_correct_value: std::string::String::from(value),
                 supported_values: std::string::String::from("\"Id\",\"Name\",\"IdName\""),
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                    git_info::PROJECT_GIT_INFO
                         .commit
                         .to_string(),
                     file!().to_string(),
@@ -786,8 +782,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         {
                                             column_from_str : e, code_occurence : error_occurence_lib ::
                                             code_occurence :: CodeOccurence ::
-                                            new(crate :: global_variables :: compile_time ::
-                                            project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                            new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                             file! ().to_string(), line! (), column! (),
                                             Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                             {
@@ -806,8 +801,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         column_no_offset_value : std :: string :: String ::
                                         from("no offset value"), code_occurence :
                                         error_occurence_lib :: code_occurence :: CodeOccurence ::
-                                        new(crate :: global_variables :: compile_time ::
-                                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                         file! ().to_string(), line! (), column! (),
                                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                         {
@@ -829,8 +823,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                     {
                                         column_from_str : e, code_occurence : error_occurence_lib ::
                                         code_occurence :: CodeOccurence ::
-                                        new(crate :: global_variables :: compile_time ::
-                                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                         file! ().to_string(), line! (), column! (),
                                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                         {
@@ -848,8 +841,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                     column_offset_slice_get : std :: string :: String ::
                                     from("offset_slice_get"), code_occurence :
                                     error_occurence_lib :: code_occurence :: CodeOccurence ::
-                                    new(crate :: global_variables :: compile_time ::
-                                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                     file! ().to_string(), line! (), column! (),
                                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                     {
@@ -869,8 +861,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                             column_string_deserialized_get : std :: string :: String ::
                             from("string_deserialized_get"), code_occurence :
                             error_occurence_lib :: code_occurence :: CodeOccurence ::
-                            new(crate :: global_variables :: compile_time ::
-                            project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                            new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                             file! ().to_string(), line! (), column! (),
                             Some(error_occurence_lib :: code_occurence :: MacroOccurence
                             {
@@ -888,8 +879,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                         column_index_checked_add : std :: string :: String ::
                         from("index_checked_add"), code_occurence :
                         error_occurence_lib :: code_occurence :: CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                         file! ().to_string(), line! (), column! (),
                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                         {
@@ -906,7 +896,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                         "string_deserialized_find",
                     ),
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                        git_info::PROJECT_GIT_INFO
                             .commit
                             .to_string(),
                         file!().to_string(),
@@ -941,8 +931,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         {
                                             order_from_str : e, code_occurence : error_occurence_lib ::
                                             code_occurence :: CodeOccurence ::
-                                            new(crate :: global_variables :: compile_time ::
-                                            project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                            new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                             file! ().to_string(), line! (), column! (),
                                             Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                             {
@@ -961,8 +950,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                         order_offset_slice_get_none : std :: string :: String ::
                                         from("order_offset_slice_get_none"), code_occurence :
                                         error_occurence_lib :: code_occurence :: CodeOccurence ::
-                                        new(crate :: global_variables :: compile_time ::
-                                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                         file! ().to_string(), line! (), column! (),
                                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                         {
@@ -986,8 +974,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                     {
                                         order_from_str : e, code_occurence : error_occurence_lib ::
                                         code_occurence :: CodeOccurence ::
-                                        new(crate :: global_variables :: compile_time ::
-                                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                         file! ().to_string(), line! (), column! (),
                                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                         {
@@ -1006,8 +993,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                                     order_offset_slice_get_none : std :: string :: String ::
                                     from("order_offset_slice_get_none"), code_occurence :
                                     error_occurence_lib :: code_occurence :: CodeOccurence ::
-                                    new(crate :: global_variables :: compile_time ::
-                                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                     file! ().to_string(), line! (), column! (),
                                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                     {
@@ -1027,8 +1013,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                             order_string_deserialized_get_none : std :: string :: String
                             :: from("string_deserialized_get_none"), code_occurence :
                             error_occurence_lib :: code_occurence :: CodeOccurence ::
-                            new(crate :: global_variables :: compile_time ::
-                            project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                            new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                             file! ().to_string(), line! (), column! (),
                             Some(error_occurence_lib :: code_occurence :: MacroOccurence
                             {
@@ -1046,8 +1031,7 @@ impl std::str::FromStr for DogOrderByWrapper {
                         order_index_checked_add : std :: string :: String ::
                         from("order_index_checked_add"), code_occurence :
                         error_occurence_lib :: code_occurence :: CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                         file! ().to_string(), line! (), column! (),
                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                         {
@@ -1443,8 +1427,8 @@ pub enum OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum Something {
     OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient{
-        #[eo_display]
-        configuration: sqlx::types::uuid::Error,
+        #[eo_display_with_serialize_deserialize]
+        configuration: std::string::String,//HERE
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -2585,7 +2569,7 @@ pub async fn try_create_many<'a>(
             return Err(TryCreateManyErrorNamed::SerdeJsonToString {
                 serde_json_to_string: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                    git_info::PROJECT_GIT_INFO
                         .commit
                         .to_string(),
                     file!().to_string(),
@@ -2607,7 +2591,7 @@ pub async fn try_create_many<'a>(
         .post(&url)
         .header(
             postgresql_crud::COMMIT,
-            crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit,
+            git_info::PROJECT_GIT_INFO.commit,
         )
         .header(reqwest::header::CONTENT_TYPE, "application/json")
         .body(payload)
@@ -2618,7 +2602,7 @@ pub async fn try_create_many<'a>(
             return Err(TryCreateManyErrorNamed::Reqwest {
                 reqwest: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                    git_info::PROJECT_GIT_INFO
                         .commit
                         .to_string(),
                     file!().to_string(),
@@ -2645,7 +2629,7 @@ pub async fn try_create_many<'a>(
                 status_code,
                 headers,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                    git_info::PROJECT_GIT_INFO
                         .commit
                         .to_string(),
                     file!().to_string(),
@@ -2675,8 +2659,7 @@ pub async fn try_create_many<'a>(
                     serde : e, status_code, headers, response_text,
                     code_occurence : error_occurence_lib :: code_occurence ::
                     CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -2699,8 +2682,7 @@ pub async fn try_create_many<'a>(
                     serde : e, status_code, headers, response_text,
                     code_occurence : error_occurence_lib :: code_occurence ::
                     CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -2723,8 +2705,7 @@ pub async fn try_create_many<'a>(
                     serde : e, status_code, headers, response_text,
                     code_occurence : error_occurence_lib :: code_occurence ::
                     CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -2747,8 +2728,7 @@ pub async fn try_create_many<'a>(
                     serde : e, status_code, headers, response_text,
                     code_occurence : error_occurence_lib :: code_occurence ::
                     CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -2768,7 +2748,7 @@ pub async fn try_create_many<'a>(
                         response_text,
                     ),
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                    git_info::PROJECT_GIT_INFO
                         .commit
                         .to_string(),
                     file!().to_string(),
@@ -2803,10 +2783,9 @@ pub async fn try_create_many<'a>(
                         vec_errors.push(
                             OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(
                                 Something::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
-                                configuration: e,
+                                configuration: e.to_string(),
                                 code_occurence : error_occurence_lib :: code_occurence :: CodeOccurence ::
-                                new(crate :: global_variables :: compile_time ::
-                                project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                                new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                                 file! ().to_string(), line! (), column! (),
                                 Some(error_occurence_lib :: code_occurence :: MacroOccurence
                                 {
@@ -2832,8 +2811,7 @@ pub async fn try_create_many<'a>(
                     : vec_errors, 
                     code_occurence : error_occurence_lib ::
                     code_occurence :: CodeOccurence ::
-                    new(crate :: global_variables :: compile_time ::
-                    project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                    new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                     file! ().to_string(), line! (), column! (),
                     Some(error_occurence_lib :: code_occurence :: MacroOccurence
                     {
@@ -2849,7 +2827,7 @@ pub async fn try_create_many<'a>(
             return Err(TryCreateManyErrorNamed::ExpectedType {
                 expected_type: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                    git_info::PROJECT_GIT_INFO
                         .commit
                         .to_string(),
                     file!().to_string(),
@@ -2912,8 +2890,7 @@ pub async fn create_many(
                         create_many_payload_try_from_create_many_payload_with_serialize_deserialize
                         : e, code_occurence : error_occurence_lib :: code_occurence
                         :: CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                         file! ().to_string(), line! (), column! (),
                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                         {
@@ -3005,8 +2982,7 @@ pub async fn create_many(
                         operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server
                         : e, code_occurence : error_occurence_lib :: code_occurence
                         :: CodeOccurence ::
-                        new(crate :: global_variables :: compile_time ::
-                        project_git_info :: PROJECT_GIT_INFO.commit.to_string(),
+                        new(git_info :: PROJECT_GIT_INFO.commit.to_string(),
                         file! ().to_string(), line! (), column! (),
                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
                         {

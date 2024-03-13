@@ -27,8 +27,6 @@
 
 ## git_sync_command <a name="heading1"/>
 
-## compile_time_git_info <a name="heading2"/>
-
 ## enum_extension <a name="heading3"/>
 
 ## generate_getter_traits_for_struct_fields <a name="heading7"/>

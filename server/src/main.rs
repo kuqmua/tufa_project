@@ -24,7 +24,7 @@ pub mod dev;
 fn main() {
     println!(
         "commit {}",
-        common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.commit
+        git_info::PROJECT_GIT_INFO.commit
     );
     crate::entry::entry(
         crate::global_variables::runtime::config::CONFIG.get_or_init(|| {

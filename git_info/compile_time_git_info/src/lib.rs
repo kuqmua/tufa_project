@@ -34,7 +34,8 @@ pub fn compile_time_project_git_info(
         .parse::<proc_macro2::TokenStream>()
         .expect("commit_id parse failed");
     let gen = quote::quote! {
-        crate::common::git::project_git_info::ProjectGitInfo {
+        //crate::common::git::project_git_info::
+        ProjectGitInfo {
             commit: #commit_id_token_stream,
         }
     };

@@ -9083,9 +9083,7 @@ impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTy
                 time_error_component_range: e,
                 //
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
-                        .commit
-                        .to_string(),
+                    git_info::PROJECT_GIT_INFO.commit.to_string(),
                     file!().to_string(),
                     line!(),
                     column!(),

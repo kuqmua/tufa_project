@@ -1,7 +1,7 @@
 pub struct AppState<'a> {
     pub postgres_pool: sqlx::PgPool,
     pub config: &'a crate::repositories_types::server::config::config_struct::Config,
-    pub project_git_info: &'a crate::common::git::project_git_info::ProjectGitInfo<'a>,
+    pub project_git_info: &'a git_info::ProjectGitInfo<'a>,
 }
 
 pub trait AppStatePossibilities:

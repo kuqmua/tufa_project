@@ -210,8 +210,7 @@ pub async fn try_build_server<'a>(
         common::repositories_types::server::routes::app_state::AppState {
             postgres_pool,
             config,
-            project_git_info:
-                &common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
+            project_git_info: &git_info::PROJECT_GIT_INFO,
         },
     );
     let shared_data = SharedData {

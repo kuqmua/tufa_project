@@ -65,8 +65,8 @@ validator = {version = "=0.16.0"}
 valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
+git_info = {path = "../git_info"}
 common = {path = "../common"}# local dev test without commits version
-compile_time_git_info = {path = "../compile_time_git_info"}
 enum_extension = {path = "../enum_extension"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_for_struct_fields"}

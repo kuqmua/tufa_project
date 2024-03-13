@@ -14,7 +14,7 @@ pub async fn commit_checker(
             .and_then(|header| header.to_str().ok())
         {
             Some(commit_checker_header) => match commit_checker_header
-                == crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                == git_info::PROJECT_GIT_INFO
                     .commit
             {
                 true => Ok(next.run(req).await),
@@ -23,7 +23,7 @@ pub async fn commit_checker(
                     axum::Json(
                         crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed::CommitExtractorNotEqual {
                             commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
-                            commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO),
+                            commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
                             code_occurence: crate::code_occurence!(),
                         }.into_serialize_deserialize_version()
                     ),

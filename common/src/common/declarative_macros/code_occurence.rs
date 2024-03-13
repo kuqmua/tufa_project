@@ -2,7 +2,7 @@
 macro_rules! code_occurence {
     ( $( $x:expr ),* ) => {{
         error_occurence_lib::code_occurence::CodeOccurence::new(
-            $crate::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+            git_info::PROJECT_GIT_INFO
                 .commit
                 .to_string(), //todo maybe put struct, but dont want to deal with lifetimes
             file!().to_string(),
@@ -12,3 +12,4 @@ macro_rules! code_occurence {
         )
     }};
 }
+//crate::global_variables::compile_time::project_
