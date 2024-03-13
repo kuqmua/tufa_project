@@ -9070,20 +9070,7 @@ impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTy
             Ok(value) => Ok(Self(value)),
             Err(e) => Err(Self::Error::TimeErrorComponentRange{
                 time_error_component_range: e,
-                //
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1645,
-                        column: 13,
-                    }),
-                ),
-                //
+                code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
     }
