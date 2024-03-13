@@ -1428,6 +1428,16 @@ pub enum OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient
     OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(
         Something,
     ),
+    // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient{
+    //     #[eo_display]
+    //     configuration: sqlx::types::uuid::Error,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient{
+    //     #[eo_display]
+    //     configuration: sqlx::types::uuid::Error,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
 }
 //HERE
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
@@ -2806,6 +2816,7 @@ pub async fn try_create_many<'a>(
                                 }))
                             }
                             )
+                            // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(e)
                         );
 
                         //

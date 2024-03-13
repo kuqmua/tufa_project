@@ -9109,10 +9109,23 @@ impl SqlxTypesTimeTime {
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
-impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize>
-    for SqlxTypesUuidUuid
-{
-    type Error = sqlx::types::uuid::Error;
+#[derive(Debug)]
+pub enum SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
+    SqlxTypesUuidError {
+        sqlx_types_uuid_error: sqlx::types::uuid::Error,
+    },
+}
+impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::SqlxTypesUuidError {
+                sqlx_types_uuid_error,
+            } => write!(f, "sqlx_types_uuid_error: {sqlx_types_uuid_error}"),
+        }
+    }
+}
+impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize> for SqlxTypesUuidUuid {
+    type Error = SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
     fn try_from(
         value: SqlxTypesUuidUuidWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
@@ -9120,7 +9133,9 @@ impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize>
             Ok(value) => Ok(Self(value)),
             Err(e) => {
                 println!("{e}");
-                Err(e)
+                Err(Self::Error::SqlxTypesUuidError{
+                    sqlx_types_uuid_error: e
+                })
             },
         }
     }
