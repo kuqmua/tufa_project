@@ -60,7 +60,7 @@
 //         return Err(Box::new(
 //             GetLocalProvidersLinkPartsErrorNamed::GetLinkPartsFromLocalJsonFile {
 //                 get_link_parts_from_local_json_file: errors_hashmap,
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }
 //         ));
 //     }

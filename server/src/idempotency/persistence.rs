@@ -25,7 +25,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::PostgresSelect {
 //                 postgres_select: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
 //         Ok(option_record) => option_record,
@@ -34,12 +34,12 @@
 //         match r.response_status_code.try_into() {
 //             Err(e) => Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::TryFromIntError {
 //                 try_from_int_error: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //             Ok(status_code_as_u16) => match actix_web::http::StatusCode::from_u16(status_code_as_u16) {
 //                 Err(e) => Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::InvalidStatusCode {
 //                     invalid_status_code: e,
-//                     code_occurence: common::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }),
 //                 Ok(status_code) => {
 //                     let mut response = actix_web::HttpResponse::build(status_code);
@@ -72,7 +72,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed::BodyToBytes {
 //                 body_to_bytes: e.into(),
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
 //         Ok(bytes) => bytes,
@@ -109,13 +109,13 @@
 //     {
 //         return Err(common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed::PostgtesUpdate {
 //             postgres_update: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     };
 //     if let Err(e) = transaction.commit().await {
 //         return Err(common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed::PostgtesTransactionCommit {
 //             postgres_transaction_commit: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     // We need `.map_into_boxed_body` to go from
@@ -138,7 +138,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::PostgresPoolBegin {
 //                 pool_begin_error: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
 //         Ok(transaction) => transaction,
@@ -162,7 +162,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::PostgresInsert {
 //                 insert: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
 //         Ok(pg_query_result) => pg_query_result.rows_affected(),
@@ -178,13 +178,13 @@
 //             Err(e) => {
 //                 return Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::GetSavedResponse {
 //                     get_saved_response: e,
-//                     code_occurence: common::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 });
 //             },
 //             Ok(option_http_response) => match option_http_response {
 //                 None => Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::SavedResponseIsNone {
 //                     message: "We expected a saved response, we didn't find it",
-//                     code_occurence: common::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }),
 //                 Some(saved_response) => Ok(common::repositories_types::server::idempotency::NextAction::ReturnSavedResponse(saved_response)),
 //             },

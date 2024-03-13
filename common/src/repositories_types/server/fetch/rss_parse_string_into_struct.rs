@@ -217,7 +217,7 @@
 //                                     } else {
 //                                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                                             tag: fetch_result_string,
-//                                             code_occurence: crate::code_occurence!()
+//                                             code_occurence: error_occurence_lib::code_occurence!()
 //                                         })
 //                                     }
 //                                 }
@@ -225,7 +225,7 @@
 //                                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                                         string: fetch_result_string,
 //                                         error: e.to_string(),
-//                                         code_occurence: crate::code_occurence!()
+//                                         code_occurence: error_occurence_lib::code_occurence!()
 //                                     })
 //                                 }
 //                             }
@@ -339,7 +339,7 @@
 //                                     } else {
 //                                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                                             tag: fetch_result_string,
-//                                             code_occurence: crate::code_occurence!()
+//                                             code_occurence: error_occurence_lib::code_occurence!()
 //                                         })
 //                                     }
 //                                 }
@@ -347,7 +347,7 @@
 //                                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                                         string: fetch_result_string,
 //                                         error: e.to_string(),
-//                                         code_occurence: crate::code_occurence!()
+//                                         code_occurence: error_occurence_lib::code_occurence!()
 //                                     })
 //                                 }
 //                             }
@@ -463,7 +463,7 @@
 //                                     } else {
 //                                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                                             tag: fetch_result_string,
-//                                             code_occurence: crate::code_occurence!()
+//                                             code_occurence: error_occurence_lib::code_occurence!()
 //                                         })
 //                                     }
 //                                 }
@@ -471,7 +471,7 @@
 //                                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                                         string: fetch_result_string,
 //                                         error: e.to_string(),
-//                                         code_occurence: crate::code_occurence!()
+//                                         code_occurence: error_occurence_lib::code_occurence!()
 //                                     })
 //                                 }
 //                             }
@@ -583,7 +583,7 @@
 //                                     } else {
 //                                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                                             tag: fetch_result_string,
-//                                             code_occurence: crate::code_occurence!()
+//                                             code_occurence: error_occurence_lib::code_occurence!()
 //                                         })
 //                                     }
 //                                 }
@@ -591,7 +591,7 @@
 //                                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                                         string: fetch_result_string,
 //                                         error: e.to_string(),
-//                                         code_occurence: crate::code_occurence!()
+//                                         code_occurence: error_occurence_lib::code_occurence!()
 //                                     })
 //                                 }
 //                             }
@@ -705,7 +705,7 @@
 //                                     } else {
 //                                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                                             tag: fetch_result_string,
-//                                             code_occurence: crate::code_occurence!()
+//                                             code_occurence: error_occurence_lib::code_occurence!()
 //                                         })
 //                                     }
 //                                 }
@@ -713,7 +713,7 @@
 //                                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                                         string: fetch_result_string,
 //                                         error: e.to_string(),
-//                                         code_occurence: crate::code_occurence!()
+//                                         code_occurence: error_occurence_lib::code_occurence!()
 //                                     })
 //                                 }
 //                             }
@@ -828,7 +828,7 @@
 //                                     } else {
 //                                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                                             tag: fetch_result_string,
-//                                             code_occurence: crate::code_occurence!()
+//                                             code_occurence: error_occurence_lib::code_occurence!()
 //                                         })
 //                                     }
 //                                 }
@@ -836,7 +836,7 @@
 //                                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                                         string: fetch_result_string,
 //                                         error: e.to_string(),
-//                                         code_occurence: crate::code_occurence!()
+//                                         code_occurence: error_occurence_lib::code_occurence!()
 //                                     })
 //                                 }
 //                             }
@@ -847,7 +847,7 @@
 //                     let warning_message = format!("cannot find {what_should_find_in_fetch_result_string} for {pk:#?} in fetch_result_string");
 //                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::NoTag{
 //                         no_tag: what_should_find_in_fetch_result_string.to_string(),
-//                         code_occurence: crate::code_occurence!()
+//                         code_occurence: error_occurence_lib::code_occurence!()
 //                     })
 //                 }
 //             }
@@ -963,7 +963,7 @@
 //                     } else {
 //                         Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ThereIsTag{
 //                             tag: fetch_result_string,
-//                             code_occurence: crate::code_occurence!()
+//                             code_occurence: error_occurence_lib::code_occurence!()
 //                         })
 //                     }
 //                 }
@@ -971,7 +971,7 @@
 //                     Err(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed::ConversionFromStrError{
 //                         string: fetch_result_string,
 //                         error: e.to_string(),
-//                         code_occurence: crate::code_occurence!()
+//                         code_occurence: error_occurence_lib::code_occurence!()
 //                     })
 //                 }
 //             }

@@ -36,18 +36,18 @@
 //                 failed_to_deserialize_path_params,
 //             ) => Self::FailedToDeserializePathParams {
 //                 failed_to_deserialize_path_params: failed_to_deserialize_path_params.body_text(),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             axum::extract::rejection::PathRejection::MissingPathParams(missing_path_params) => {
 //                 Self::MissingPathParams {
 //                     missing_path_params: missing_path_params.body_text(),
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }
 //             }
 //             _ => Self::UnexpectedCase {
 //                 unexpected_case: crate::server::routes::helpers::hardcode::UNKNOWN_ERROR
 //                     .to_string(),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //         }
 //     }

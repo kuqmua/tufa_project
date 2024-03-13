@@ -44,7 +44,7 @@
 //         return Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::CreateTableQueries {
 //                 create_table_queries: *e,
-//                 code_occurence: crate::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         ));
 //     }
@@ -57,7 +57,7 @@
 //         return Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::CheckProviderLinksTablesAreEmpty {
 //                 check_provider_links_tables_are_empty: *e,
-//                 code_occurence: crate::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         ));
 //     }
@@ -70,7 +70,7 @@
 //         return Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::DeleteAllFromProvidersTables {
 //                 delete_all_from_providers_tables: *e,
-//                 code_occurence: crate::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         ));
 //     }
@@ -82,7 +82,7 @@
 //         return Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {
 //                 check_providers_links_tables_length_rows_equal_initialization_data_length: *e,
-//                 code_occurence: crate::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //     ));
 //     }
@@ -95,7 +95,7 @@
 //         return Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::InsertLinkPartsIntoProvidersTables {
 //                 insert_link_parts_into_providers_tables: *e,
-//                 code_occurence: crate::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         ));
 //     }

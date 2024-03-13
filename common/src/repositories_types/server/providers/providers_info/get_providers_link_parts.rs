@@ -38,7 +38,7 @@
 //             Err(error_hashmap) => Err(Box::new(
 //                 GetProvidersLinkPartsErrorNamed::GetLocalProvidersLinkParts {
 //                     get_local_providers_link_parts: *error_hashmap,
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }
 //             )),
 //             Ok(success_hashmap) => Ok(success_hashmap),
@@ -48,7 +48,7 @@
 
 //                 GetProvidersLinkPartsErrorNamed::MongoGetProvidersLinkParts {
 //                     mongo_get_providers_link_parts: e,
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 },
 //             )),
 //             Ok(success_hashmap) => Ok(success_hashmap),

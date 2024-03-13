@@ -16,7 +16,7 @@ pub async fn write_bytes_into_file_async_tokio<'a>(
             return Err(Box::new(
                 WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
                     std_io_error: e,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 },
             ));
         }
@@ -25,7 +25,7 @@ pub async fn write_bytes_into_file_async_tokio<'a>(
         Err(e) => Err(Box::new(
             WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
                 std_io_error: e,
-                code_occurence: crate::code_occurence!(),
+                code_occurence: error_occurence_lib::code_occurence!(),
             },
         )),
         Ok(mut file) => {
@@ -33,7 +33,7 @@ pub async fn write_bytes_into_file_async_tokio<'a>(
                 return Err(Box::new(
                     WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
                         std_io_error: e,
-                        code_occurence: crate::code_occurence!(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
                     },
                 ));
             }

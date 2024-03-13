@@ -27,7 +27,7 @@ impl std::fmt::Display for RegexFilter {
 //             },
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -45,7 +45,7 @@ impl std::fmt::Display for RegexFilter {
 //             },
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -71,7 +71,7 @@ impl std::fmt::Display for RegexFilter {
 //                 None => {
 //                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                         checked_add: std::string::String::from("checked_add is None"),
-//                         code_occurence: crate::code_occurence!(),
+//                         code_occurence: error_occurence_lib::code_occurence!(),
 //                     });
 //                 }
 //             }
@@ -95,7 +95,7 @@ impl std::fmt::Display for RegexFilter {
 //                 None => {
 //                     return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                         checked_add: std::string::String::from("checked_add is None"),
-//                         code_occurence: crate::code_occurence!(),
+//                         code_occurence: error_occurence_lib::code_occurence!(),
 //                     });
 //                 }
 //             }

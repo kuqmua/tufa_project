@@ -36,14 +36,14 @@
 //         Err(e) => Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed::ClientOptionsParse {
 //                 client_options_parse: *e,
-//                 code_occurence: crate::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         )),
 //         Ok(client_options) => match crate::server::mongo::mongo_client_with_options::mongo_client_with_options(client_options) {
 //             Err(e) => Err(Box::new(
 //                 crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed::ClientWithOptions {
 //                     client_with_options: *e,
-//                     code_occurence: crate::code_occurence!()
+//                     code_occurence: error_occurence_lib::code_occurence!()
 //                 }
 //             )),
 //             Ok(client) => {
@@ -57,7 +57,7 @@
 //                     return Err(Box::new(
 //                         crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed::CollectionIsNotEmpty {
 //                             collection_is_not_empty: *e,
-//                             code_occurence: crate::code_occurence!()
+//                             code_occurence: error_occurence_lib::code_occurence!()
 //                         }
 //                     ));
 //                 }
@@ -67,7 +67,7 @@
 //                     return Err(Box::new(
 //                         crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed::InsertMany {
 //                             insert_many: *e,
-//                             code_occurence: crate::code_occurence!()
+//                             code_occurence: error_occurence_lib::code_occurence!()
 //                         }
 //                     ));
 //                 }

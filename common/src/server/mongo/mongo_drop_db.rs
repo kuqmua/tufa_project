@@ -15,7 +15,7 @@ pub async fn mongo_drop_db<'a>(
         return Err(Box::new(
             crate::server::mongo::mongo_drop_db::MongoDropDbErrorNamed::MongoDB {
                 mongodb: e,
-                code_occurence: crate::code_occurence!(),
+                code_occurence: error_occurence_lib::code_occurence!(),
             },
         ));
     }

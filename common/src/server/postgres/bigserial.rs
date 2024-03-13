@@ -73,7 +73,7 @@
 //             true => Ok(Self(value)),
 //             false => Err(Self::Error::NotPositive {
 //                 not_positive: value,
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -103,13 +103,13 @@
 //                 Ok(bigserial) => Ok(bigserial),
 //                 Err(bigserial_try_from_i64_error) => Err(Self::Err::NotPositive {
 //                     not_positive: bigserial_try_from_i64_error,
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }),
 //             },
 //             Err(parse_int_error) => Err(Self::Err::ParseIntError {
 //                 parse_int_error,
 //                 str_value: value.to_string(),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -123,13 +123,13 @@
 //                 Ok(bigserial) => Ok(bigserial),
 //                 Err(bigserial_try_from_i64_error) => Err(Self::Error::NotPositive {
 //                     not_positive: bigserial_try_from_i64_error,
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }),
 //             },
 //             Err(parse_int_error) => Err(Self::Error::ParseIntError {
 //                 parse_int_error,
 //                 str_value: value.to_string(),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -147,7 +147,7 @@
 //             }
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             })
 //         }
 //     }
@@ -165,7 +165,7 @@
 //             },
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"), 
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }

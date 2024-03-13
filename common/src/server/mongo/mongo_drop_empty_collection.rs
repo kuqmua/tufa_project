@@ -33,7 +33,7 @@ pub async fn mongo_drop_empty_collection<'a>(
         Err(e) => Err(Box::new(
             crate::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
                 mongodb: e,
-                code_occurence: crate::code_occurence!(),
+                code_occurence: error_occurence_lib::code_occurence!(),
             }
         )),
         Ok(documents_number) => {
@@ -42,7 +42,7 @@ pub async fn mongo_drop_empty_collection<'a>(
                     crate::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::CollectionIsNotEmpty {
                         collection_name: db_collection_name,
                         collection_len: documents_number,
-                        code_occurence: crate::code_occurence!(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
                     }
                 ))
             } else {
@@ -50,7 +50,7 @@ pub async fn mongo_drop_empty_collection<'a>(
                     return Err(Box::new(
                         crate::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
                             mongodb: e,
-                            code_occurence: crate::code_occurence!(),
+                            code_occurence: error_occurence_lib::code_occurence!(),
                         }
                     ));
                 }

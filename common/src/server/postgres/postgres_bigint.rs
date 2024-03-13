@@ -20,7 +20,7 @@
 //             },
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -38,7 +38,7 @@
 //             },
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -73,7 +73,7 @@
 //             Ok(value) => Ok(Self(value)),
 //             Err(e) => Err(Self::Err::NotCorrectValue {
 //                 not_correct_value: format!("wrong rust i64 value: {value}, error: {e}"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }

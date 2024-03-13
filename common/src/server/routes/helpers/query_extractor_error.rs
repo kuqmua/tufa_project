@@ -30,12 +30,12 @@
 //                 failed_to_deserialize_query_string,
 //             ) => QueryExtractorErrorNamed::FailedToDeserializeQueryString {
 //                 failed_to_deserialize_query_string: failed_to_deserialize_query_string.body_text(),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             _ => Self::UnexpectedCase {
 //                 unexpected_case: crate::server::routes::helpers::hardcode::UNKNOWN_ERROR
 //                     .to_string(),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //         }
 //     }

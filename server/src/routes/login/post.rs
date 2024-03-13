@@ -25,7 +25,7 @@
 //                 .insert_user_id(user_id)
 //                 .map_err(|e| login_redirect(common::repositories_types::server::routes::login::post::LoginErrorNamed::SessionInsert{
 //                     session_insert: e,
-//                     code_occurence: common::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }))?;
 //             Ok(actix_web::HttpResponse::SeeOther()
 //                 .insert_header((actix_web::http::header::LOCATION, "/admin/dashboard"))
@@ -34,7 +34,7 @@
 //         Err(e) => {
 //             Err(login_redirect(common::repositories_types::server::routes::login::post::LoginErrorNamed::AuthError{
 //                 validate_credentials: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }))
 //         }
 //     }

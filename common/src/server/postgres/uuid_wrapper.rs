@@ -56,7 +56,7 @@
 //             Ok(value) => Ok(Self(value)),
 //             Err(e) => Err(Self::Error::NotUuid {
 //                 not_uuid: e,
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }
@@ -74,7 +74,7 @@
 //             }
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             })
 //         }
 //     }
@@ -92,7 +92,7 @@
 //             },
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //         }
 //     }

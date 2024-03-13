@@ -16,7 +16,7 @@
 //             Err(e) => {
 //                 return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::TryIntoNewSubscriber {
 //                 try_into_new_subscriber: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //             }
 //             Ok(new_subscriber) => new_subscriber,
@@ -26,7 +26,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::PostgresPoolBegin {
 //                 postgres_pool_begin: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
 //         Ok(transaction) => transaction,
@@ -36,7 +36,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::InsertSubscriber {
 //                 insert_subscriber: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
 //         Ok(subscriber_id) => subscriber_id,
@@ -46,14 +46,14 @@
 //     if let Err(e) = store_token(&mut transaction, subscriber_id, &subscription_token).await {
 //         return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::StoreToken {
 //             store_token: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     //"Failed to commit SQL transaction to store a new subscriber."
 //     if let Err(e) = transaction.commit().await {
 //         return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::PostgresTransactionCommit {
 //             postgres_transaction_commit: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     //"Failed to send a confirmation email."
@@ -67,7 +67,7 @@
 //     {
 //         return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::SendConfirmationEmail {
 //             send_confirmation_email: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     Ok(actix_web::HttpResponse::Ok().finish())

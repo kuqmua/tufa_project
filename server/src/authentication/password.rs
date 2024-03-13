@@ -16,7 +16,7 @@ async fn get_stored_credentials<'a>(
     {
         Err(e) => Err(common::repositories_types::server::authentication::password::GetStoredCredentialsErrorNamed::FetchOptional {
             fetch_optional: e,
-            code_occurence: common::code_occurence!()
+            code_occurence: error_occurence_lib::code_occurence!()
         }),
         Ok(option_record) => Ok(option_record.map(|row| (row.user_id, secrecy::Secret::new(row.password_hash)))),
     }
@@ -37,7 +37,7 @@ pub async fn validate_credentials<'a>(
         Err(e) => {
             return Err(common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::GetStoredCredentials {
                 get_stored_credentials: e,
-                code_occurence: common::code_occurence!()
+                code_occurence: error_occurence_lib::code_occurence!()
             });
         }
         Ok(option) => {
@@ -54,17 +54,17 @@ pub async fn validate_credentials<'a>(
     ).await {
         Err(e) => Err(common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::SpawnBlockingWithTracing {
             spawn_blocking_with_tracing: e,
-            code_occurence: common::code_occurence!()
+            code_occurence: error_occurence_lib::code_occurence!()
         }),
         Ok(result) => match result {
             Err(e) => Err(common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::VerifyPasswordHash {
                 spawn_blocking_with_tracing: e,
-                code_occurence: common::code_occurence!()
+                code_occurence: error_occurence_lib::code_occurence!()
             }),
             Ok(_) => match user_id {
                 None => Err(common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::UnknownUsername {
                     message: "Unknown username".to_string(),
-                    code_occurence: common::code_occurence!()
+                    code_occurence: error_occurence_lib::code_occurence!()
                 }),
                 Some(uuid) => Ok(uuid),
             },
@@ -83,7 +83,7 @@ fn verify_password_hash<'a>(
     match argon2::PasswordHash::new(secrecy::ExposeSecret::expose_secret(&expected_password_hash)) {
         Err(e) => Err(common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed::ExposeSecret {
             expose_secret: e,
-            code_occurence: common::code_occurence!()
+            code_occurence: error_occurence_lib::code_occurence!()
         }),
         Ok(expected_password_hash) => match argon2::PasswordVerifier::verify_password(
                 &argon2::Argon2::default(), 
@@ -92,7 +92,7 @@ fn verify_password_hash<'a>(
             ) {
             Err(e) => Err(common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed::InvalidPassword {
                 invalid_password: e,
-                code_occurence: common::code_occurence!()
+                code_occurence: error_occurence_lib::code_occurence!()
             }),
             Ok(_) => Ok(())
         }
@@ -109,12 +109,12 @@ pub async fn change_password<'a>(
     ).await {
         Err(e) => Err(common::repositories_types::server::authentication::password::ChangePasswordErrorNamed::SpawnBlockingWithTracing {
             spawn_blocking_with_tracing: e,
-            code_occurence: common::code_occurence!()
+            code_occurence: error_occurence_lib::code_occurence!()
         }),
         Ok(res) => match res {
             Err(e) => Err(common::repositories_types::server::authentication::password::ChangePasswordErrorNamed::ComputePasswordHash {
                 compute_password_hash: e,
-                code_occurence: common::code_occurence!()
+                code_occurence: error_occurence_lib::code_occurence!()
             }),
             Ok(password_hash) => match sqlx::query!(
                 r#"
@@ -129,7 +129,7 @@ pub async fn change_password<'a>(
             .await {
                 Err(e) => Err(common::repositories_types::server::authentication::password::ChangePasswordErrorNamed::PostgresQuery {
                     query_error: e,
-                    code_occurence: common::code_occurence!()
+                    code_occurence: error_occurence_lib::code_occurence!()
                 }),
                 Ok(_) => Ok(()),
             }
@@ -151,7 +151,7 @@ fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrec
         Err(e) => Err(
             common::repositories_types::server::authentication::password::ComputePasswordHashErrorNamed::PasswordHash {
                 argon2_password_hash_error: e,
-                code_occurence: common::code_occurence!(),
+                code_occurence: error_occurence_lib::code_occurence!(),
             }
         ),
     }

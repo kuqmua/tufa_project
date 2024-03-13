@@ -86,7 +86,7 @@
 //     //     Err(e) => Err(Box::new(
 //     //         GetProviderPostsErrorNamed::GetLocalProvidersLinkParts {
 //     //             get_providers_link_parts: *e,
-//     //             code_occurence: crate::code_occurence!()
+//     //             code_occurence: error_occurence_lib::code_occurence!()
 //     //         },
 //     //     )),
 //     //     Ok(providers_link_parts) => {
@@ -95,7 +95,7 @@
 //     //                 return Err(Box::new(
 //     //                     GetProviderPostsErrorNamed::CheckProvidersLinkPartsEmpty {
 //     //                         check_providers_link_parts_empty: *e,
-//     //                         code_occurence: crate::code_occurence!()
+//     //                         code_occurence: error_occurence_lib::code_occurence!()
 //     //                     },
 //     //                 ));
 //     //             }
@@ -116,7 +116,7 @@
 //     //                 if !error_hashmap.is_empty() {
 //     //                     return Err(Box::new(GetProviderPostsErrorNamed::GetNewProvidersPosts {
 //     //                         hashmap_provider_kind_rss_part: error_hashmap,
-//     //                         code_occurence: crate::code_occurence!()
+//     //                         code_occurence: error_occurence_lib::code_occurence!()
 //     //                     }));
 //     //                 }
 //     //                 Ok(())

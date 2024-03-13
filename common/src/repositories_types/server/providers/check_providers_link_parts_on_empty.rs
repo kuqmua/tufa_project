@@ -19,7 +19,7 @@
 //         return Err(Box::new(
 //             CheckProvidersLinkPartsEmptyErrorNamed::Full {
 //                 message: "providers link parts is empty",
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }
 //         ));
 //     }
@@ -40,7 +40,7 @@
 //         return Err(Box::new(
 //             CheckProvidersLinkPartsEmptyErrorNamed::Partially {
 //                 provider_kind_vec: pk_vec,
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }
 //         ));
 //     }

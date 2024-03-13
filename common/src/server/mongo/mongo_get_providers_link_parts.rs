@@ -44,7 +44,7 @@
 //             Err(e) => Err(
 //                 crate::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
 //                     mongodb: e,
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }
 //             ),
 //             Ok(vec_collection_names) => {
@@ -65,7 +65,7 @@
 //                     return Err(
 //                         crate::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::NoSuchCollections {
 //                             no_such_collections: no_collection_error_hashmap,
-//                             code_occurence: crate::code_occurence!(),
+//                             code_occurence: error_occurence_lib::code_occurence!(),
 //                         }
 //                     );
 //                 }
@@ -108,7 +108,7 @@
 //                     return Err(
 //                         crate::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::GetDocuments {
 //                             get_documents: error_hashmap,
-//                             code_occurence: crate::code_occurence!(),
+//                             code_occurence: error_occurence_lib::code_occurence!(),
 //                         }
 //                     );
 //                 }

@@ -31,7 +31,7 @@ where
             Err(e) => {
                 Err(Box::new(crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed::TcpListenerBind {
                     tcp_listener_bind: e,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 }))
             }
         }

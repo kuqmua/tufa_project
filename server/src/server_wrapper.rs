@@ -7,7 +7,7 @@ pub async fn server_wrapper<'a>(
             return Err(Box::new(
                 common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::TryGetPostgresPool {
                     try_get_postgres_pool: e,
-                    code_occurence: common::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 }
             ))
         },
@@ -22,7 +22,7 @@ pub async fn server_wrapper<'a>(
     //         return Err(Box::new(
     //             common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
     //                 try_get_redis_session_storage: e,
-    //                 code_occurence: common::code_occurence!(),
+    //                 code_occurence: error_occurence_lib::code_occurence!(),
     //             }
     //         ))
     //     },
@@ -37,7 +37,7 @@ pub async fn server_wrapper<'a>(
     {
         return Err(Box::new(common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::BuildServer {
             build_server: *e,
-            code_occurence: common::code_occurence!(),
+            code_occurence: error_occurence_lib::code_occurence!(),
         }));
     }
     println!("server running!");

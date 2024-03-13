@@ -9052,7 +9052,6 @@ pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
     minute: std::primitive::u8,
     second: std::primitive::u8,
 }
-// #[derive(Debug)]
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
@@ -9061,16 +9060,6 @@ pub enum SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-// impl std::fmt::Display for SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
-//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-//         match self {
-//             Self::TimeErrorComponentRange {
-//                 time_error_component_range,
-//                 code_occurence,
-//             } => write!(f, "time_error_component_range: {time_error_component_range}"),
-//         }
-//     }
-// }
 //todo different init methods support
 impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTypesTimeTime {
     type Error = SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed;
@@ -9971,7 +9960,7 @@ pub trait BindQuery {
 //             }
 //             None => Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                 checked_add: std::string::String::from("checked_add is None"),
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             })
 //         }
 //     }
@@ -9991,7 +9980,7 @@ pub trait BindQuery {
 //             None => {
 //                 return Err(crate::server::postgres::bind_query::TryGenerateBindIncrementsErrorNamed::CheckedAdd {
 //                     checked_add: std::string::String::from("checked_add is None"),
-//                     code_occurence: crate::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 });
 //             }
 //         }

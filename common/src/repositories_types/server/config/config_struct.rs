@@ -62,7 +62,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             Err(e) => {
                 return Err(Self::Error::ServerPort {
                     server_port: e,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
         };
@@ -71,7 +71,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::HmacSecret {
                     hmac_secret: value.hmac_secret,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => secrecy::Secret::new(value.hmac_secret),
@@ -80,7 +80,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::BaseUrl {
                     base_url: value.base_url,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => value.base_url,
@@ -90,7 +90,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::AccessControlAllowOrigin {
                     access_control_allow_origin: value.access_control_allow_origin,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 }); //todo - maybe add check if its uri\url
             }
             false => value.access_control_allow_origin,
@@ -100,7 +100,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::GithubName {
                     github_name: value.github_name,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => value.github_name,
@@ -109,7 +109,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::GithubToken {
                     github_token: value.github_token,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => value.github_token,
@@ -120,7 +120,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             None => {
                 return Err(Self::Error::Timezone {
                     timezone: value.timezone,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
         };
@@ -129,7 +129,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::RedisUrl {
                     redis_url: value.redis_url,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => secrecy::Secret::new(value.redis_url),
@@ -139,7 +139,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::MongoUrl {
                     mongo_url: value.mongo_url,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => secrecy::Secret::new(value.mongo_url),
@@ -149,7 +149,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::DatabaseUrl {
                     database_url: value.database_url,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => secrecy::Secret::new(value.database_url),
@@ -159,7 +159,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             true => {
                 return Err(Self::Error::StartingCheckLink {
                     starting_check_link: value.starting_check_link,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             false => value.starting_check_link,

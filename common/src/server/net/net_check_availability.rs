@@ -20,22 +20,22 @@ pub async fn net_check_availability<'a>(
     match reqwest::get(config.get_starting_check_link()).await {
         Err(e) => Err(Box::new(NetCheckAvailabilityErrorNamed::ReqwestGet {
             reqwest_get: e,
-            code_occurence: crate::code_occurence!(),
+            code_occurence: error_occurence_lib::code_occurence!(),
         })),
         Ok(res) => {
             let status = res.status();
             match (status.is_client_error(), status.is_server_error()) {
                 (true, true) => Err(Box::new(NetCheckAvailabilityErrorNamed::ResponseStatus {
                     status,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 })),
                 (true, false) => Err(Box::new(NetCheckAvailabilityErrorNamed::ResponseStatus {
                     status,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 })),
                 (false, true) => Err(Box::new(NetCheckAvailabilityErrorNamed::ResponseStatus {
                     status,
-                    code_occurence: crate::code_occurence!(),
+                    code_occurence: error_occurence_lib::code_occurence!(),
                 })),
                 (false, false) => Ok(()),
             }

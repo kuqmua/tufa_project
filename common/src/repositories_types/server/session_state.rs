@@ -21,7 +21,7 @@
 //         match self.0.insert(Self::USER_ID_KEY, user_id) {
 //             Err(e) => Err(InsertUserIdErrorNamed::SessionInsert {
 //                 session_insert: e,
-//                 code_occurence: crate::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //             Ok(_) => Ok(()),
 //         }

@@ -64,7 +64,7 @@
 //         Err(e) => Err(
 //             common::repositories_types::server::routes::admin::dashboard::GetUsernameErrorNamed::PostgresQuery {
 //                 get_username: e,
-//                 code_occurence: common::code_occurence!()
+//                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         ),
 //     }

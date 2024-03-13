@@ -38,7 +38,7 @@
 //         Err(e) => {
 //             return Err(common::repositories_types::server::issue_delivery_worker::TryExecuteTaskErrorNamed::DequeueTask {
 //                 dequeue_task: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         },
 //         Ok(option_task) => option_task,
@@ -56,7 +56,7 @@
 //                         Err(e) => {
 //                             return Err(common::repositories_types::server::issue_delivery_worker::TryExecuteTaskErrorNamed::GetIssue {
 //                                 get_issue: e,
-//                                 code_occurence: common::code_occurence!(),
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
 //                             });
 //                         },
 //                         Ok(newletter_issue) => newletter_issue,
@@ -90,7 +90,7 @@
 //             if let Err(e) = delete_task(transaction, issue_id, &email).await {
 //                 return Err(common::repositories_types::server::issue_delivery_worker::TryExecuteTaskErrorNamed::DeleteTask {
 //                     delete_task: e,
-//                     code_occurence: common::code_occurence!(),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 });
 //             }
 //             Ok(common::repositories_types::server::issue_delivery_worker::ExecutionOutcome::TaskCompleted)
@@ -104,7 +104,7 @@
 //     match pool.begin().await {
 //         Err(e) => Err(common::repositories_types::server::issue_delivery_worker::DequeueTaskErrorNamed::PostgresPoolBegin {
 //             postgres_pool_begin: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         }),
 //         Ok(mut transaction) => match sqlx::query!(
 //             r#"
@@ -119,7 +119,7 @@
 //         .await {
 //             Err(e) => Err(common::repositories_types::server::issue_delivery_worker::DequeueTaskErrorNamed::PostgresSelect {
 //                 postgres_select: e,
-//                 code_occurence: common::code_occurence!(),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //             Ok(option_record) => match option_record {
 //                 Some(record) => Ok(Some((
@@ -154,13 +154,13 @@
 //     .await {
 //         return Err(common::repositories_types::server::issue_delivery_worker::DeleteTaskErrorNamed::PostgresDeleteTask {
 //             postgres_delete_task: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     if let Err(e) = transaction.commit().await {
 //         return Err(common::repositories_types::server::issue_delivery_worker::DeleteTaskErrorNamed::PostgresTransactionCommit {
 //             postgres_transaction_commit: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     Ok(())
@@ -182,7 +182,7 @@
 //     .await {
 //         Err(e) => Err(common::repositories_types::server::issue_delivery_worker::GetIssueErrorNamed::PostgresSelectNewsletterIssues {
 //             postgres_select_newsletter_issues: e,
-//             code_occurence: common::code_occurence!(),
+//             code_occurence: error_occurence_lib::code_occurence!(),
 //         }),
 //         Ok(issue) => Ok(issue)
 //     }
