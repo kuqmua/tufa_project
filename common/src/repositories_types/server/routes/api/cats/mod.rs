@@ -1404,27 +1404,9 @@ pub struct CreateManyParameters {
 pub enum OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed {
     //HERE
     OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(
-        Something,
+        // Somethings,
+        postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed
     ),
-    // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient{
-    //     #[eo_display]
-    //     configuration: sqlx::types::uuid::Error,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient{
-    //     #[eo_display]
-    //     configuration: sqlx::types::uuid::Error,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-}
-//HERE
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum Something {
-    OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient{
-        #[eo_display_with_serialize_deserialize]
-        configuration: std::string::String,//HERE
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 
 #[derive(
@@ -2759,26 +2741,26 @@ pub async fn try_create_many<'a>(
                         vec_values.push(value);
                     }
                     Err(e) => {
-                        // vec_errors.push(
-                        //     OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(e)
-                        // );
                         vec_errors.push(
-                            OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(
-                                Something::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
-                                configuration: e.to_string(),
-                                code_occurence : error_occurence_lib :: code_occurence :: CodeOccurence ::
-                                new(
-                                file! ().to_string(), line! (), column! (),
-                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                                {
-                                    file : std :: string :: String ::
-                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1952, column : 13,
-                                }))
-                            }
-                            )
-                            // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(e)
+                            OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(e)
                         );
+                        // vec_errors.push(
+                        //     OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(
+                        //         Something::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
+                        //         configuration: e.to_string(),
+                        //         code_occurence : error_occurence_lib :: code_occurence :: CodeOccurence ::
+                        //         new(
+                        //         file! ().to_string(), line! (), column! (),
+                        //         Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        //         {
+                        //             file : std :: string :: String ::
+                        //             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        //             line : 1952, column : 13,
+                        //         }))
+                        //     }
+                        //     )
+                        //     // OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClientErrorUnnamed::OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient(e)
+                        // );
 
                         //
                     }
