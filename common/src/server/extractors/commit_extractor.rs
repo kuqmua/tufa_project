@@ -5,9 +5,9 @@
     type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
 )]
 #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
-    crate::repositories_types::server::routes::api::cats::TryCreateMany
+    crate::repositories_types::server::routes::api::cats::TryCreateMany,
+    crate::repositories_types::server::routes::api::cats::TryCreateOne
     // ,
-    // crate::repositories_types::server::routes::api::cats::TryCreateOne,
     // crate::repositories_types::server::routes::api::cats::TryReadMany,
     // crate::repositories_types::server::routes::api::cats::TryReadOne,
     // crate::repositories_types::server::routes::api::cats::TryUpdateMany,

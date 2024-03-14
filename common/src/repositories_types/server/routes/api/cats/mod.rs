@@ -896,28 +896,6 @@ impl std::convert::From<TryCreateOneResponseVariantsTvfrr400BadRequest>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateOneResponseVariantsTvfrr408RequestTimeout>
-    for TryCreateOneResponseVariants
-{
-    fn from(value: TryCreateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryCreateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryCreateOneResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -934,6 +912,28 @@ impl std::convert::From<TryCreateOneResponseVariantsTvfrr404NotFound>
                 code_occurence,
             } => Self::RowNotFound {
                 row_not_found,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateOneResponseVariantsTvfrr408RequestTimeout>
+    for TryCreateOneResponseVariants
+{
+    fn from(value: TryCreateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryCreateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
                 code_occurence,
             },
         }
@@ -1277,7 +1277,7 @@ pub enum TryCreateOneErrorNamed {
     OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInClient {
         #[eo_error_occurence]
         uuid_wrapper_try_from_possible_uuid_wrapper_in_client:
-            crate::server::postgres::uuid_wrapper::UuidWrapperTryFromPossibleUuidWrapperErrorNamed,
+            postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ExpectedType {
@@ -1366,7 +1366,7 @@ pub async fn try_create_one<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2359,
+                        line: 2368,
                         column: 13,
                     }),
                 ),
@@ -1390,7 +1390,7 @@ pub async fn try_create_one<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2288,
+                        line: 2297,
                         column: 13,
                     }),
                 ),
@@ -1414,7 +1414,7 @@ pub async fn try_create_one<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2325,
+                            line: 2334,
                             column: 13,
                         }),
                     ),
@@ -1440,7 +1440,7 @@ pub async fn try_create_one<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2325,
+                            line: 2334,
                             column: 13,
                         }),
                     ),
@@ -1466,7 +1466,7 @@ pub async fn try_create_one<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2325,
+                            line: 2334,
                             column: 13,
                         }),
                     ),
@@ -1490,7 +1490,7 @@ pub async fn try_create_one<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2325,
+                            line: 2334,
                             column: 13,
                         }),
                     ),
@@ -1513,7 +1513,7 @@ pub async fn try_create_one<'a>(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 2253,
+                    line: 2262,
                     column: 13,
                 }),
             ),
@@ -1537,7 +1537,7 @@ pub async fn try_create_one<'a>(
                 {
                     file : std :: string :: String ::
                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line : 1993, column : 13,
+                    line : 2002, column : 13,
                 })),
             })
         }, Err(e) =>
@@ -1552,7 +1552,7 @@ pub async fn try_create_one<'a>(
                 {
                     file : std :: string :: String ::
                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line : 2215, column : 13,
+                    line : 2224, column : 13,
                 }))
             }) ;
         },
@@ -1608,7 +1608,7 @@ pub async fn create_one(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 3550, column : 17,
+                            line : 3559, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -1652,7 +1652,7 @@ pub async fn create_one(
             } {
                 Ok(value) => TryCreateOneResponseVariants::Desirable(
                     postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
-                        postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize(value),
+                        postgresql_crud::SqlxTypesUuidUuid(value),
                     ),
                 ),
                 Err(e) => {

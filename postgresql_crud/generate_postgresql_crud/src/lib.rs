@@ -1980,11 +1980,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream =
         quote::quote! {uuid_wrapper_try_from_possible_uuid_wrapper_in_client};
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = quote::quote! {
-        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-            #eo_error_occurence_attribute_token_stream
-            #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = {
+        //todo maybe first convert to type what can be primary key ?
+        let primary_key_inner_type_with_serialize_deserialize_error_named_token_stream = {
+            //todo it can be empty. solve it
+            let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified();
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        quote::quote! {
+            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+                #eo_error_occurence_attribute_token_stream
+                #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,//#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+            }
         }
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = {
@@ -3521,7 +3530,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
                                 // #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)
                                 #primary_key_inner_type_with_serialize_deserialize_token_stream::from(
-                                    #primary_key_inner_type_with_serialize_deserialize_token_stream(value)
+                                    #primary_key_inner_type_token_stream(value)
                                 )
                             ),
                             Err(#error_value_snake_case_token_stream) => {
