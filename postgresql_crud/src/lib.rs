@@ -355,7 +355,8 @@ pub use postgresql_crud_common::SqlxTypesTimeTimeWithSerializeDeserializeErrorNa
 pub use postgresql_crud_common::SqlxTypesTimeTimeWithSerializeDeserializeErrorNamedWithSerializeDeserialize;
 pub use postgresql_crud_common::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
 pub use postgresql_crud_common::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamedWithSerializeDeserialize;
-
+///////////////////
+pub use postgresql_crud_common::BindQuery;
 
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 
