@@ -2615,7 +2615,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 //todo remove useless variant and add later protentian errors from conversion from with serialize_deserialize
                                 #not_uuid_token_upper_camel_case_stream {
                                     #eo_display_with_serialize_deserialize_token_stream
-                                    #not_uuid_token_snake_case_stream: std::string::Stringa,//HERE//#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+                                    #not_uuid_token_snake_case_stream: std::string::String,//HERE//#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
                                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                                 },
                             }
