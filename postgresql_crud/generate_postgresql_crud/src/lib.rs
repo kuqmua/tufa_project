@@ -1727,7 +1727,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![(
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
                 &variant_name_snake_case_stringified,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     // &["crate","server","postgres","bind_query","TryGenerateBindIncrementsErrorNamed"],//HERE
