@@ -1079,7 +1079,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             {
                 let #primary_key_name_token_stream: #original_type_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
                 // Ok(#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::from(#primary_key_name_token_stream))
-                Ok(#inner_type_token_stream::from(#primary_key_name_token_stream))
+                Ok(#inner_type_token_stream(#primary_key_name_token_stream))
             }
         }
     };
@@ -2965,6 +2965,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
+                let primary_key_inner_type_token_stream = {
+                    let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
+                    value_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
                 quote::quote! {
                     let #query_string_name_token_stream = {
                         #query_string_token_stream
@@ -2998,7 +3003,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             Ok(value) => {
                                 vec_values.push(
                                     // #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream //HERE
-                                    #primary_key_inner_type_with_serialize_deserialize_token_stream::from(value),
+                                    #primary_key_inner_type_with_serialize_deserialize_token_stream::from(
+                                        #primary_key_inner_type_token_stream(value)
+                                    ),
                                 );
                             }
                             Err(#error_value_snake_case_token_stream) => {
@@ -7452,9 +7459,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream//+
+            #common_token_stream//+
 
-            // #create_many_token_stream//+
+            #create_many_token_stream//+
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
