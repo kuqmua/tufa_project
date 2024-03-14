@@ -1272,7 +1272,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         };
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
-    fn get_inner_type_with_serialize_deserialize_error_named_stringified(&self) -> std::string::String {
+    pub fn get_inner_type_with_serialize_deserialize_error_named_stringified(&self) -> std::string::String {
         let value = match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from(""),
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from(""),
