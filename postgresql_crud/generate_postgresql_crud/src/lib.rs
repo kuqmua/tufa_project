@@ -71,6 +71,7 @@ mod type_variants_from_request_response_generator;
 //todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
 //todo sqlx query! macros not in actual api, but just unused function just for compile time query check
 //todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
+//todo write checks on fields one by one with early return. not need to check all and create combinatorial complexity
 
 #[proc_macro_attribute]
 pub fn create_many_additional_http_status_codes_error_variants(
