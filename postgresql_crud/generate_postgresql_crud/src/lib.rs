@@ -227,6 +227,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
     let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
     let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
+    let primary_key_inner_type_with_serialize_deserialize_error_named_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_error_named_token_stream;
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
@@ -1058,14 +1059,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let row_name_token_stream = quote::quote! {row};
         let primary_key_name_token_stream = quote::quote! {primary_key};
-        let inner_type_token_stream = {
-            let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");//todo generic
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
         //todo rename coz in the future uuid_wrapper will be removed
         quote::quote! {
-            fn #primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#inner_type_token_stream>
+            fn #primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
             //HERE
             //#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream
             where
@@ -1078,7 +1074,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             {
                 let #primary_key_name_token_stream: #primary_key_original_type_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
                 // Ok(#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::from(#primary_key_name_token_stream))
-                Ok(#inner_type_token_stream(#primary_key_name_token_stream))
+                Ok(#primary_key_inner_type_token_stream(#primary_key_name_token_stream))
             }
         }
     };
@@ -1979,20 +1975,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream =
         quote::quote! {uuid_wrapper_try_from_possible_uuid_wrapper_in_client};
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = {
-        //todo maybe first convert to type what can be primary key ?
-        let primary_key_inner_type_with_serialize_deserialize_error_named_token_stream = {
-            //todo it can be empty. solve it
-            let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified();
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        quote::quote! {
-            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-                #eo_error_occurence_attribute_token_stream
-                #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,//#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
-                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-            }
+    //todo maybe first convert to type what can be primary key ?
+    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = quote::quote! {
+        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+            #eo_error_occurence_attribute_token_stream
+            #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,//#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = {
@@ -2709,45 +2697,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_token_stream = {
-            let inner_type_with_serialize_deserialize_error_named_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified();
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            quote::quote! {
-                #derive_debug_thiserror_error_occurence_token_stream
-                pub enum #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream {
-                    #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream(
-                        // #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
-                        #inner_type_with_serialize_deserialize_error_named_token_stream
-                    ),
-                }
+        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_token_stream = quote::quote! {
+            #derive_debug_thiserror_error_occurence_token_stream
+            pub enum #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream {
+                #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream(
+                    // #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+                    #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
+                ),
             }
         };
         // println!("{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_token_stream}");
-        let try_operation_error_with_middleware_error_variants_token_stream = {
-            let inner_type_with_serialize_deserialize_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-                &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#inner_type_with_serialize_deserialize_token_stream>},//HERE #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream 
-                &derive_debug_thiserror_error_occurence_token_stream,
-                &derive_debug_serialize_deserialize_token_stream,
-                &derive_debug_serialize_deserialize_to_schema_token_stream,
-                &type_variants_from_request_response_syn_variants,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-                &operation,
-                &generate_expected_type_declaration_token_stream,
-                &unexpected_status_code_declaration_token_stream,
-                &failed_to_get_response_text_declaration_token_stream,
-                &deserialize_response_declaration_token_stream,
-                &reqwest_declaration_token_stream,
-            )
-        };
+        let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
+            &desirable_status_code,
+            &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},//HERE #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream 
+            &derive_debug_thiserror_error_occurence_token_stream,
+            &derive_debug_serialize_deserialize_token_stream,
+            &derive_debug_serialize_deserialize_to_schema_token_stream,
+            &type_variants_from_request_response_syn_variants,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+            &operation,
+            &generate_expected_type_declaration_token_stream,
+            &unexpected_status_code_declaration_token_stream,
+            &failed_to_get_response_text_declaration_token_stream,
+            &deserialize_response_declaration_token_stream,
+            &reqwest_declaration_token_stream,
+        );
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
         let (http_request_token_stream, http_request_test_token_stream) = {
             let try_operation_error_named_token_stream = {
@@ -2769,16 +2743,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let primary_key_inner_type_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let primary_key_inner_type_with_serialize_deserialize_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
@@ -2969,16 +2933,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &from_log_and_return_error_token_stream,
                         &pg_connection_token_stream,
                     );
-                let primary_key_inner_type_with_serialize_deserialize_token_stream = {
-                    let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let primary_key_inner_type_token_stream = {
-                    let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
                 quote::quote! {
                     let #query_string_name_token_stream = {
                         #query_string_token_stream
@@ -3312,28 +3266,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        let try_operation_error_with_middleware_error_variants_token_stream = {
-            let inner_type_with_serialize_deserialize_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-                &desirable_status_code,
-                &inner_type_with_serialize_deserialize_token_stream,//crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream
-                &derive_debug_thiserror_error_occurence_token_stream,
-                &derive_debug_serialize_deserialize_token_stream,
-                &derive_debug_serialize_deserialize_to_schema_token_stream,
-                &type_variants_from_request_response_syn_variants,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-                &operation,
-                &generate_expected_type_declaration_token_stream,
-                &unexpected_status_code_declaration_token_stream,
-                &failed_to_get_response_text_declaration_token_stream,
-                &deserialize_response_declaration_token_stream,
-                &reqwest_declaration_token_stream,
-            )
-        };
+        let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
+            &desirable_status_code,
+            &primary_key_inner_type_with_serialize_deserialize_token_stream,//crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream
+            &derive_debug_thiserror_error_occurence_token_stream,
+            &derive_debug_serialize_deserialize_token_stream,
+            &derive_debug_serialize_deserialize_to_schema_token_stream,
+            &type_variants_from_request_response_syn_variants,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+            &operation,
+            &generate_expected_type_declaration_token_stream,
+            &unexpected_status_code_declaration_token_stream,
+            &failed_to_get_response_text_declaration_token_stream,
+            &deserialize_response_declaration_token_stream,
+            &reqwest_declaration_token_stream,
+        );
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
         let (http_request_token_stream, http_request_test_token_stream) = {
             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
@@ -3354,16 +3301,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
-            let primary_key_inner_type_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let primary_key_inner_type_with_serialize_deserialize_token_stream = {
-                let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
             let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
@@ -3486,27 +3423,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{binded_query_token_stream}");
-                let from_log_and_return_error_token_stream =
-                    crate::from_log_and_return_error::from_log_and_return_error(
-                        &try_operation_upper_camel_case_token_stream,
-                        &error_log_call_token_stream,
-                        &try_operation_response_variants_token_stream,
-                    );
-                let acquire_pool_and_connection_token_stream =
-                    crate::acquire_pool_and_connection::acquire_pool_and_connection(
-                        &from_log_and_return_error_token_stream,
-                        &pg_connection_token_stream,
-                    );
-                let primary_key_inner_type_token_stream = {
-                    let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let primary_key_inner_type_with_serialize_deserialize_token_stream = {
-                    let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
+                let from_log_and_return_error_token_stream = crate::from_log_and_return_error::from_log_and_return_error(
+                    &try_operation_upper_camel_case_token_stream,
+                    &error_log_call_token_stream,
+                    &try_operation_response_variants_token_stream,
+                );
+                let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
+                    &from_log_and_return_error_token_stream,
+                    &pg_connection_token_stream,
+                );
                 quote::quote! {
                     let #query_string_name_token_stream = {
                         #query_string_token_stream
@@ -8270,11 +8195,7 @@ fn generate_http_request_many_token_stream(
         }
         status_code_enums_try_from_variants
     };
-    let inner_type_token_stream = {
-        let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}",proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
     quote::quote! {
         pub async fn #try_operation_snake_case_token_stream<'a>(
             #server_location_name_token_stream: #str_ref_token_stream,
@@ -8320,7 +8241,7 @@ fn generate_http_request_many_token_stream(
                     let mut vec_errors = std::vec::Vec::with_capacity(value.len());
                     for element in value {
                         //HERE  #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream
-                        match #inner_type_token_stream::try_from(element) {
+                        match #primary_key_inner_type_token_stream::try_from(element) {
                             Ok(value) => {
                                 vec_values.push(value);
                             }
