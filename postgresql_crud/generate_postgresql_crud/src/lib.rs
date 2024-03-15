@@ -7427,7 +7427,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream//+
 
             #create_many_token_stream//+
-            // #create_one_token_stream
+            #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
@@ -7547,15 +7547,13 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             syn::Type::Path(value) => {
                 match value.path.segments.len() == 2 {
                     true => {
-                        if value.path.segments[0].ident
-                            != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
-                        {
+                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
                             panic!("{name} field_type is not syn::Type::Path");
                         }
                         match value.path.segments[0].arguments {
-                        syn::PathArguments::None => (),
-                        _ => panic!("{name} value.path.segments[0].arguments != syn::PathArguments::None")
-                    }
+                            syn::PathArguments::None => (),
+                            _ => panic!("{name} value.path.segments[0].arguments != syn::PathArguments::None")
+                        }
                         let rust_sqlx_map_to_postgres_type_variant =
                             match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(
                                 &value.path.segments[1].ident.to_string() as &str,
