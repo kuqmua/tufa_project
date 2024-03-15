@@ -228,6 +228,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
     let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
     let primary_key_inner_type_with_serialize_deserialize_error_named_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_error_named_token_stream;
+    let crate_path_stringified = "postgresql_crud";
+    let crate_path_std_primitive_i64_token_stream = {
+        let value_stringified = format!("{crate_path_stringified}::StdPrimitiveI64");
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let limit_type_token_stream = &crate_path_std_primitive_i64_token_stream;
+    let offset_type_token_stream = &crate_path_std_primitive_i64_token_stream;
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
@@ -1680,16 +1688,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &["sqlx","Error"],
         &proc_macro_name_upper_camel_case_ident_stringified
     );
-    let std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated =
-        generate_std_vec_vec_syn_punctuated_punctuated(
-            &["crate", "server", "postgres", "uuid_wrapper", "UuidWrapper"],
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
-    let std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated =
-        generate_std_vec_vec_syn_punctuated_punctuated(
-            &["crate", "server", "postgres", "regex_filter", "RegexFilter"],
-            &proc_macro_name_upper_camel_case_ident_stringified,
-        );
+    let std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated = generate_std_vec_vec_syn_punctuated_punctuated(
+        &["crate", "server", "postgres", "uuid_wrapper", "UuidWrapper"],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.std_vec_vec_inner_type_punctuated(&proc_macro_name_upper_camel_case_ident_stringified);
+    let std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated = generate_std_vec_vec_syn_punctuated_punctuated(
+        &["crate", "server", "postgres", "regex_filter", "RegexFilter"],
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let code_occurence_field = syn::Field {
         attrs: vec![],
         vis: syn::Visibility::Inherited,
@@ -1821,9 +1828,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence,
                     &variant_name_snake_case_stringified,
-                    std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
+                    primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
                 )
             ]
         )
@@ -1869,9 +1876,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence,
                     &variant_name_snake_case_stringified,
-                    std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
+                    primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
                 )
             ]
         )
@@ -3632,12 +3639,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {
                     #derive_debug_to_schema_token_stream
                     pub struct #operation_payload_upper_camel_case_token_stream {
-                        pub #primary_key_field_ident: std::option::Option<#std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream>,
+                        pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
                         pub #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         pub #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-                        pub #limit_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
-                        pub #offset_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
+                        pub #limit_token_stream: #limit_type_token_stream,
+                        pub #offset_token_stream: #offset_type_token_stream,
                     }
                 }
             };
@@ -3656,8 +3663,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #(#fields_with_excluded_primary_key_token_stream)*
                         #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-                        #limit_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
-                        #offset_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream,
+                        #limit_token_stream: #limit_type_token_stream,
+                        #offset_token_stream: #offset_type_token_stream,
                     }
                 }
             };
@@ -3674,7 +3681,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
                             #not_uuid_token_upper_camel_case_stream {
                                 #eo_error_occurence_attribute_token_stream
-                                #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
+                                #not_uuid_token_snake_case_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,
+                                //#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
                                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
@@ -3693,10 +3701,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote! {
                             let #primary_key_field_ident = match value.#primary_key_field_ident {
                                 Some(value) => match value.into_iter()
-                                    .map(|element|#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(element)))
+                                    .map(|element|#primary_key_inner_type_token_stream::try_from(#primary_key_inner_type_with_serialize_deserialize_token_stream::from(element)))
                                     .collect::<Result<
-                                        #std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
-                                        #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+                                        std::vec::Vec<#primary_key_inner_type_token_stream>,
+                                        #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
                                     >>()
                                 {
                                     Ok(value) => Some(value),
@@ -9001,6 +9009,7 @@ enum FromOrTryFrom {
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
     fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom;
+    fn std_vec_vec_inner_type_punctuated(&self, proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2>;
 }
 impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_crud_common::RustSqlxMapToPostgresTypeVariant {
     fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
@@ -9162,6 +9171,172 @@ impl RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream for postgresql_cru
             Self::SerdeJsonValueAsPostgresqlJsonNotNull => FromOrTryFrom::From,
             Self::SerdeJsonValueAsPostgresqlJsonB => FromOrTryFrom::From,
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => FromOrTryFrom::From,
+        }
+    }
+    fn std_vec_vec_inner_type_punctuated(&self, proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2> {
+        let crate_path_stringified = "postgresql_crud";//todo reusage
+        let panic_message = format!("primary key functionality is not implemented for {self} in {proc_macro_name_upper_camel_case_ident_stringified} logic");
+        match self {
+            Self::StdPrimitiveBoolAsPostgresqlBool => panic!("{panic_message}"),
+            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => panic!("{panic_message}"),
+
+            Self::StdPrimitiveI16AsPostgresqlSmallInt => panic!("{panic_message}"),
+            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveI16AsPostgresqlSmallSerial => panic!("{panic_message}"),
+            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveI16AsPostgresqlInt2 => panic!("{panic_message}"),
+            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => panic!("{panic_message}"),
+
+            Self::StdPrimitiveI32AsPostgresqlInt => panic!("{panic_message}"),
+            Self::StdPrimitiveI32AsPostgresqlIntNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveI32AsPostgresqlSerial => panic!("{panic_message}"),
+            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveI32AsPostgresqlInt4 => panic!("{panic_message}"),
+            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => panic!("{panic_message}"),
+
+            Self::StdPrimitiveI64AsPostgresqlBigInt => panic!("{panic_message}"),
+            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveI64AsPostgresqlBigSerial => panic!("{panic_message}"),
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveI64AsPostgresqlInt8 => panic!("{panic_message}"),
+            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => panic!("{panic_message}"),
+
+            Self::StdPrimitiveF32AsPostgresqlReal => panic!("{panic_message}"),
+            Self::StdPrimitiveF32AsPostgresqlRealNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveF32AsPostgresqlFloat4 => panic!("{panic_message}"),
+            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => panic!("{panic_message}"),
+
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => panic!("{panic_message}"),
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => panic!("{panic_message}"),
+            Self::StdPrimitiveF64AsPostgresqlFloat8 => panic!("{panic_message}"),
+            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => panic!("{panic_message}"),
+
+            Self::StdStringStringAsPostgresqlVarchar => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlVarcharNotNull => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlCharN => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlCharNNotNull => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlText => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlTextNotNull => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlName => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlNameNotNull => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlCiText => panic!("{panic_message}"),
+            Self::StdStringStringAsPostgresqlCiTextNotNull => panic!("{panic_message}"),
+
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => panic!("{panic_message}"),
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => panic!("{panic_message}"),
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesDecimalAsPostgresqlNumeric => panic!("{panic_message}"),
+            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => panic!("{panic_message}"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => panic!("{panic_message}"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => panic!("{panic_message}"),
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => panic!("{panic_message}"),
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => panic!("{panic_message}"),
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => panic!("{panic_message}"),
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => panic!("{panic_message}"),
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => panic!("{panic_message}"),
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesTimeDateAsPostgresqlDate => panic!("{panic_message}"),
+            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesTimeTimeAsPostgresqlTime => panic!("{panic_message}"),
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => panic!("{panic_message}"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => panic!("{panic_message}"),
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => generate_std_vec_vec_syn_punctuated_punctuated(
+                &[crate_path_stringified, "SqlxTypesUuidUuid"],
+                proc_macro_name_upper_camel_case_ident_stringified,
+            ),
+
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => panic!("{panic_message}"),
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => panic!("{panic_message}"),
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => panic!("{panic_message}"),
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => panic!("{panic_message}"),
+
+            Self::StdNetIpAddrAsPostgresqlInet => panic!("{panic_message}"),
+            Self::StdNetIpAddrAsPostgresqlInetNotNull => panic!("{panic_message}"),
+            Self::StdNetIpAddrAsPostgresqlCidr => panic!("{panic_message}"),
+            Self::StdNetIpAddrAsPostgresqlCidrNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => panic!("{panic_message}"),
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesBitVecAsPostgresqlBit => panic!("{panic_message}"),
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => panic!("{panic_message}"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBit => panic!("{panic_message}"),
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => panic!("{panic_message}"),
+
+            Self::SqlxTypesJsonTAsPostgresqlJson => panic!("{panic_message}"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => panic!("{panic_message}"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonB => panic!("{panic_message}"),
+            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => panic!("{panic_message}"),
+
+            Self::SerdeJsonValueAsPostgresqlJson => panic!("{panic_message}"),
+            Self::SerdeJsonValueAsPostgresqlJsonNotNull => panic!("{panic_message}"),
+            Self::SerdeJsonValueAsPostgresqlJsonB => panic!("{panic_message}"),
+            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => panic!("{panic_message}"),
         }
     }
 }
