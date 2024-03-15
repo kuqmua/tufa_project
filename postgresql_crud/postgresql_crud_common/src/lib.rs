@@ -5004,7 +5004,7 @@ impl StdPrimitiveBool {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI16WithSerializeDeserialize(std::primitive::i16);
@@ -5085,7 +5085,7 @@ impl StdPrimitiveI16 {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI32WithSerializeDeserialize(std::primitive::i32);
@@ -5171,7 +5171,7 @@ impl StdPrimitiveI32 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI64WithSerializeDeserialize(std::primitive::i64);
@@ -5257,7 +5257,7 @@ impl StdPrimitiveI64 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF32WithSerializeDeserialize(std::primitive::f32);
@@ -5342,7 +5342,7 @@ impl StdPrimitiveF32 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF64WithSerializeDeserialize(std::primitive::f64);
@@ -5516,7 +5516,7 @@ impl StdStringString {
 // }
 //
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdVecVecStdPrimitiveU8WithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
@@ -5605,7 +5605,7 @@ impl StdVecVecStdPrimitiveU8 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
@@ -5707,7 +5707,7 @@ impl SqlxPostgresTypesPgInterval {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
@@ -5809,7 +5809,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
@@ -5911,7 +5911,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
@@ -6154,7 +6154,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
@@ -6374,7 +6374,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
@@ -6693,7 +6693,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>,
 );
@@ -6860,7 +6860,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
@@ -7181,7 +7181,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
@@ -7348,7 +7348,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
@@ -7657,7 +7657,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
@@ -7798,7 +7798,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
@@ -7923,7 +7923,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
@@ -8012,7 +8012,7 @@ impl SqlxPostgresTypesPgMoney {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
@@ -8101,7 +8101,7 @@ impl SqlxPostgresTypesPgCiText {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
@@ -8197,7 +8197,7 @@ impl SqlxTypesBigDecimal {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesDecimalWithSerializeDeserialize(sqlx::types::Decimal);
@@ -8280,7 +8280,7 @@ impl SqlxTypesDecimal {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
@@ -8371,7 +8371,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
@@ -8462,7 +8462,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize(
@@ -8554,7 +8554,7 @@ impl SqlxTypesChronoNaiveDateTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveDateWithSerializeDeserialize(
@@ -8646,7 +8646,7 @@ impl SqlxTypesChronoNaiveDate {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveTimeWithSerializeDeserialize(
@@ -8738,7 +8738,7 @@ impl SqlxTypesChronoNaiveTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
@@ -8882,7 +8882,7 @@ impl SqlxPostgresTypesPgTimeTz {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
@@ -9031,7 +9031,7 @@ impl SqlxTypesTimePrimitiveDateTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
@@ -9137,7 +9137,7 @@ impl SqlxTypesTimeOffsetDateTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateWithSerializeDeserialize {
@@ -9254,7 +9254,7 @@ impl SqlxTypesTimeDate {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
@@ -9366,7 +9366,7 @@ impl SqlxTypesTimeTime {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
@@ -9468,7 +9468,7 @@ impl SqlxTypesUuidUuid {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize(sqlx::types::ipnetwork::IpNetwork);
@@ -9558,7 +9558,7 @@ impl SqlxTypesIpnetworkIpNetwork {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdNetIpAddrWithSerializeDeserialize(std::net::IpAddr);
@@ -9642,7 +9642,7 @@ impl StdNetIpAddr {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
@@ -9731,7 +9731,7 @@ impl SqlxTypesMacAddressMacAddress {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBitVecWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
@@ -9935,8 +9935,45 @@ impl<T> SqlxTypesJson<T> {
 //         value.0
 //     }
 // }
+//todo impl for bind query
+// impl<T: serde::Serialize + std::marker::Send> BindQuery for SqlxTypesJson<T> {
+//     fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(())
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             })
+//         }
+//     }
+//     fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+//         let mut increments = std::string::String::default();
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 increments.push_str(&format!("${increment}"));
+//             }
+//             None => {
+//                 return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                     checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             }
+//         }
+//         Ok(increments)
+//     }
+//     fn bind_value_to_query<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> 
+//     where T: 'a 
+//     {
+//         query = query.bind(self.0);
+//         query
+//     }
+// }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SerdeJsonValue(pub serde_json::Value);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValueWithSerializeDeserialize(serde_json::Value);
