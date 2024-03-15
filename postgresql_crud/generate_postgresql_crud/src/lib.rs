@@ -224,10 +224,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let primary_key_field_ident = &primary_key_syn_field_with_additional_info.field_ident;
-    //
-    let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
-    let f_token_stream = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
-    //
+    let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
+    let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+    let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
@@ -1064,11 +1063,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             value_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
-        let original_type_token_stream = {
-            let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
         //todo rename coz in the future uuid_wrapper will be removed
         quote::quote! {
             fn #primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#inner_type_token_stream>
@@ -1079,10 +1073,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //HERE
                 // #sqlx_types_uuid_token_stream: #sqlx_decode_decode_database_token_stream,
                 // #sqlx_types_uuid_token_stream: #sqlx_types_type_database_token_stream,
-                #original_type_token_stream: #sqlx_decode_decode_database_token_stream,
-                #original_type_token_stream: #sqlx_types_type_database_token_stream,
+                #primary_key_original_type_token_stream: #sqlx_decode_decode_database_token_stream,
+                #primary_key_original_type_token_stream: #sqlx_types_type_database_token_stream,
             {
-                let #primary_key_name_token_stream: #original_type_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
+                let #primary_key_name_token_stream: #primary_key_original_type_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
                 // Ok(#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::from(#primary_key_name_token_stream))
                 Ok(#inner_type_token_stream(#primary_key_name_token_stream))
             }
@@ -3503,11 +3497,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &from_log_and_return_error_token_stream,
                         &pg_connection_token_stream,
                     );
-                let primary_key_original_type_token_stream = {
-                    let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
                 let primary_key_inner_type_token_stream = {
                     let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
                     value_stringified.parse::<proc_macro2::TokenStream>()
@@ -7620,6 +7609,7 @@ struct SynFieldWithAdditionalInfo {
     original_type_token_stream: proc_macro2::TokenStream,
     inner_type_token_stream: proc_macro2::TokenStream,
     inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
+    inner_type_with_serialize_deserialize_error_named_token_stream: proc_macro2::TokenStream,
 }
 impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
     fn from(value: syn::Field) -> Self {
@@ -7670,28 +7660,29 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             _ => panic!("{name} field_type is not syn::Type::Path"),
         };
         let path_token_stream = {
-            let path_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified(); //todo generic for json
-            path_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {path_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified(); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let original_type_token_stream = {
-            let original_type_stringified =
-                &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
-            original_type_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {original_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let inner_type_token_stream = {
-            let inner_type_stringified =
-                &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
-            inner_type_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {inner_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let inner_type_with_serialize_deserialize_token_stream = {
-            let inner_type_with_serialize_deserialize_stringified =
-                &rust_sqlx_map_to_postgres_type_variant
-                    .get_inner_type_with_serialize_deserialize_stringified(""); //todo generic for json
-            inner_type_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {inner_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified(""); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let inner_type_with_serialize_deserialize_error_named_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified(); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         Self {
             field,
@@ -7702,6 +7693,7 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             original_type_token_stream,
             inner_type_token_stream,
             inner_type_with_serialize_deserialize_token_stream,
+            inner_type_with_serialize_deserialize_error_named_token_stream,
         }
     }
 }
