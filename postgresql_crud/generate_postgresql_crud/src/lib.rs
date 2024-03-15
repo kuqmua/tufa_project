@@ -224,6 +224,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let primary_key_field_ident = &primary_key_syn_field_with_additional_info.field_ident;
+    //
+    let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
+    let f_token_stream = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified("");
+    //
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
