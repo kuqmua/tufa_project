@@ -4915,7 +4915,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
@@ -5427,7 +5427,7 @@ impl StdPrimitiveF64 {
 //     }
 // }
 
-#[derive(Debug)]
+#[derive(Debug, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdStringString(pub std::string::String);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdStringStringWithSerializeDeserialize(std::string::String);
@@ -10116,6 +10116,7 @@ pub trait AsPostgresqlVarBit {}
 pub trait AsPostgresqlJson {}
 pub trait AsPostgresqlJsonB {}
 
+const CHECKED_ADD_IS_NONE: &str = "checked_add is None";
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
@@ -10124,44 +10125,8 @@ pub enum TryGenerateBindIncrementsErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-
-const CHECKED_ADD_IS_NONE: &str = "checked_add is None";
 pub trait BindQuery {
     fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
     fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
     fn bind_value_to_query(self, query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>;
-}
-impl BindQuery for StdStringString {
-    fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(())
-            }
-            None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::default();
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("${increment}"));
-            }
-            None => {
-                return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        Ok(increments)
-    }
-    fn bind_value_to_query(self, mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.0);
-        query
-    }
 }
