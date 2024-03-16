@@ -1773,7 +1773,8 @@ pub async fn read_many(
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
-    let parameters = ReadManyParameters {
+    //HERE
+    let mut parameters = ReadManyParameters {
         payload:
             match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
                 ReadManyPayloadWithSerializeDeserialize,
@@ -1809,61 +1810,37 @@ pub async fn read_many(
     println!("{:#?}", parameters);
     {
         //HERE
-        if let Some(id) = &parameters.payload.id {
-            let is_not_unique_primary_key_exists = {
-                let mut vec = std::vec::Vec::with_capacity(id.len());
-                let mut value = false;
-                //todo optimize - there are better is unique algorithms
-                for element in id {
-                    let handle = element;
-                    match vec.contains(&handle) {
-                        true => {
-                            value = true;
-                            break;
-                        }
-                        false => {
-                            vec.push(element);
-                        }
+        if let Some(id) = &mut parameters.payload.id {
+            let not_unique_primary_keys = {
+                let mut value = vec![];
+                id.sort_unstable();
+                id.dedup_by(|a, b| match a == b {
+                    true => {
+                        value.push(std::mem::take(a));
+                        true
                     }
-                }
+                    false => false,
+                });
                 value
             };
-            if is_not_unique_primary_key_exists {
-                if let Some(id) = parameters.payload.id {
-                    let not_unique_primary_keys = {
-                        let mut vec = std::vec::Vec::with_capacity(id.len());
-                        let mut not_unique_primary_keys = std::vec::Vec::with_capacity(id.len());
-                        //todo optimize - there better find all not unique algorithms
-                        id.into_iter().for_each(|element|{
-                            match vec.contains(&element) {
-                                true => {
-                                    not_unique_primary_keys.push(element);
-                                }   
-                                false => {
-                                    vec.push(element);
-                                }
-                            }
-                        });
-                        not_unique_primary_keys
-                    };
-                    let e = TryReadMany::NotUniquePrimaryKeys {
-                        not_unique_primary_keys,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1908,
-                                column: 13,
-                            }),
-                        ),
-                    };
-                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                    return TryReadManyResponseVariants::from(e);
-                }
+            if !not_unique_primary_keys.is_empty() {
+                let e = TryReadMany::NotUniquePrimaryKeys {
+                    not_unique_primary_keys,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 1908,
+                            column: 13,
+                        }),
+                    ),
+                };
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                return TryReadManyResponseVariants::from(e);
             }
         }
         //HERE

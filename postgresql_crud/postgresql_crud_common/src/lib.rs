@@ -9366,7 +9366,7 @@ impl SqlxTypesTimeTime {
 //     }
 // }
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
