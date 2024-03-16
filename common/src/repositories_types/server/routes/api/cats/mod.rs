@@ -1813,6 +1813,7 @@ pub async fn read_many(
             let is_not_unique_primary_key_exists = {
                 let mut vec = std::vec::Vec::with_capacity(id.len());
                 let mut value = false;
+                //todo optimize - there are better is unique algorithms
                 for element in id {
                     let handle = element;
                     match vec.contains(&handle) {
@@ -1832,10 +1833,11 @@ pub async fn read_many(
                     let not_unique_primary_keys = {
                         let mut vec = std::vec::Vec::with_capacity(id.len());
                         let mut not_unique_primary_keys = std::vec::Vec::with_capacity(id.len());
+                        //todo optimize - there better find all not unique algorithms
                         id.into_iter().for_each(|element|{
                             match vec.contains(&element) {
                                 true => {
-                                    not_unique_primary_keys.push(element);//HERE
+                                    not_unique_primary_keys.push(element);
                                 }   
                                 false => {
                                     vec.push(element);
