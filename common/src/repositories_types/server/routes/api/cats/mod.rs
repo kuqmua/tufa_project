@@ -265,7 +265,7 @@ impl std::convert::TryFrom<ReadManyPayloadWithSerializeDeserialize> for ReadMany
                                 file: std::string::String::from(
                                     "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                 ),
-                                line: 3717,
+                                line: 3788,
                                 column: 29,
                             }),
                         ),
@@ -447,7 +447,7 @@ pub enum TryReadMany {
     },
     BindQuery {
         #[eo_error_occurence]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUuid {
@@ -578,7 +578,7 @@ pub enum TryReadManyResponseVariants {
     }, BindQuery
     {
         bind_query :
-        postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserializeWithSerializeDeserialize,
+        postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
         code_occurence : error_occurence_lib::code_occurence::CodeOccurence
     }, NotUuid
     {
@@ -795,65 +795,64 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr200Ok> for TryReadManyRe
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryReadManyResponseVariantsTvfrr500InternalServerError {
-    Configuration
-    {
-        configuration : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Database
-    {
-        database : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Io
-    {
-        io : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Tls
-    {
-        tls : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Protocol
-    {
-        protocol : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnIndexOutOfBounds
-    {
-        column_index_out_of_bounds : usize<>, len : usize<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnDecode
-    {
-        column_decode_index : std::string::String<>, source_handle :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Decode
-    {
-        decode : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, PoolClosed
-    {
-        pool_closed : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, WorkerCrashed
-    {
-        worker_crashed : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Migrate
-    {
-        migrate : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, BytesRejection
-    {
-        bytes_rejection : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, UnexpectedCase
-    {
-        unexpected_case : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, BindQuery
-    {
-        bind_query :
-        postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserializeWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }
+    Configuration {
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        column_index_out_of_bounds: usize,
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        column_decode_index: std::string::String,
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl std::convert::From<TryReadManyResponseVariantsTvfrr500InternalServerError>
     for TryReadManyResponseVariants
@@ -962,22 +961,22 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr500InternalServerError>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadManyResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
+pub enum TryReadManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::convert::From<TryReadManyResponseVariantsTvfrr404NotFound>
+impl std::convert::From<TryReadManyResponseVariantsTvfrr408RequestTimeout>
     for TryReadManyResponseVariants
 {
-    fn from(value: TryReadManyResponseVariantsTvfrr404NotFound) -> Self {
+    fn from(value: TryReadManyResponseVariantsTvfrr408RequestTimeout) -> Self {
         match value {
-            TryReadManyResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
+            TryReadManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
                 code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
                 code_occurence,
             },
         }
@@ -1107,22 +1106,22 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr400BadRequest>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
+pub enum TryReadManyResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::convert::From<TryReadManyResponseVariantsTvfrr408RequestTimeout>
+impl std::convert::From<TryReadManyResponseVariantsTvfrr404NotFound>
     for TryReadManyResponseVariants
 {
-    fn from(value: TryReadManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+    fn from(value: TryReadManyResponseVariantsTvfrr404NotFound) -> Self {
         match value {
-            TryReadManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
+            TryReadManyResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
                 code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
+            } => Self::RowNotFound {
+                row_not_found,
                 code_occurence,
             },
         }
@@ -1652,10 +1651,9 @@ pub async fn try_read_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr400BadRequest>(&response_text)
+        {
             Ok(value) => TryReadManyResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadManyErrorNamed::DeserializeResponse {
@@ -1678,8 +1676,8 @@ pub async fn try_read_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr408RequestTimeout>(
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
             Ok(value) => TryReadManyResponseVariants::from(value),
@@ -1796,7 +1794,7 @@ pub async fn read_many(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 4348, column : 17,
+                            line : 4420, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -1893,7 +1891,7 @@ pub async fn read_many(
                                     file: std::string::String::from(
                                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                     ),
-                                    line: 4001,
+                                    line: 4073,
                                     column: 29,
                                 }),
                             ),

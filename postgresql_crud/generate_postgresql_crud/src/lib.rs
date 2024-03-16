@@ -1728,7 +1728,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![(
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                 &variant_name_snake_case_stringified,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                     &["postgresql_crud","TryGenerateBindIncrementsErrorNamed"],//HERE
@@ -1738,26 +1738,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )]
         )
     };
-//
-    let bind_query_with_serialize_deserialize_syn_variant = {
-        let variant_name_upper_camel_case_stringified = "BindQuery";
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        crate::type_variants_from_request_response_generator::construct_syn_variant(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
-            &code_occurence_field,
-            vec![(
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
-                &variant_name_snake_case_stringified,
-                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["postgresql_crud","TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize"],//HERE
-                    // &["std","string","String"],
-                    &proc_macro_name_upper_camel_case_ident_stringified
-                ),
-            )]
-        )
-    };
-//
     let bind_query_variant_initialization_token_stream = {
         let field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
@@ -3703,7 +3683,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     type_variants_from_request_response.push(element);
                 }
                 type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
-                type_variants_from_request_response.push(&bind_query_with_serialize_deserialize_syn_variant);//HERE
+                type_variants_from_request_response.push(&bind_query_syn_variant);//HERE
                 type_variants_from_request_response.push(&not_uuid_syn_variant);
                 type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 type_variants_from_request_response
