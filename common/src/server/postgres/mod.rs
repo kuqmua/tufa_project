@@ -1,7 +1,6 @@
 pub mod bigserial;
 pub mod bigserial_ids;
 pub mod bind_query;
-pub mod conjuctive_operator;
 pub mod generate_query;
 pub mod order;
 pub mod order_by;
@@ -11,6 +10,5 @@ pub mod postgres_check_providers_links_tables_length_rows_equal_initialization_d
 pub mod postgres_create_providers_tables_if_not_exists;
 pub mod postgres_delete_all_from_providers_link_parts_tables;
 pub mod postgres_insert_link_parts_into_providers_tables;
-pub mod regex_filter;
 pub mod sqlx_postgres_error;
 pub mod uuid_wrapper;
