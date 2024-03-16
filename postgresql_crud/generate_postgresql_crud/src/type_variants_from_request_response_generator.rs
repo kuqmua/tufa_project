@@ -6,7 +6,6 @@ pub fn type_variants_from_request_response_generator(
     derive_debug_serialize_deserialize_token_stream: &proc_macro2::TokenStream,
     derive_debug_serialize_deserialize_to_schema_token_stream: &proc_macro2::TokenStream,
     type_variants_from_request_response_syn_variants: &std::vec::Vec<&syn::Variant>,
-    type_variants_from_request_response_syn_variants_with_serialize_deserialize: &std::vec::Vec<&syn::Variant>,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     operation: &crate::Operation,
     generate_expected_type_declaration_token_stream: &dyn Fn(
