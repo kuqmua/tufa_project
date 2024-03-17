@@ -8006,12 +8006,29 @@ pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializ
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
+    SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+        #[eo_error_occurence]
+        sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+    type Error = WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxPostgresTypesPgRangeSqlxTypesTimeDate::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
+                        sqlx_postgres_types_pg_range_sqlx_types_time_date: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
@@ -9447,12 +9464,29 @@ pub struct WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for WhereSqlxPostgresTypesPgTimeTz {
-    fn from(value: WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgTimeTz::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
+    SqlxPostgresTypesPgTimeTz {
+        #[eo_error_occurence]
+        sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for WhereSqlxPostgresTypesPgTimeTz {
+    type Error = WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxPostgresTypesPgTimeTz::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxPostgresTypesPgTimeTz {
+                        sqlx_postgres_types_pg_time_tz: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
@@ -9614,12 +9648,29 @@ pub struct WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     pub value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for WhereSqlxTypesTimePrimitiveDateTime {
-    fn from(value: WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesTimePrimitiveDateTime::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
+    SqlxTypesTimePrimitiveDateTime {
+        #[eo_error_occurence]
+        sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for WhereSqlxTypesTimePrimitiveDateTime {
+    type Error = WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxTypesTimePrimitiveDateTime::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxTypesTimePrimitiveDateTime {
+                        sqlx_types_time_primitive_date_time: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
@@ -9738,12 +9789,29 @@ pub struct WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     pub value: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereSqlxTypesTimeOffsetDateTime {
-    fn from(value: WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesTimeOffsetDateTime::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
+    SqlxTypesTimeOffsetDateTime {
+        #[eo_error_occurence]
+        sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereSqlxTypesTimeOffsetDateTime {
+    type Error = WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxTypesTimeOffsetDateTime::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxTypesTimeOffsetDateTime {
+                        sqlx_types_time_offset_date_time: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
@@ -9873,12 +9941,29 @@ pub struct WhereSqlxTypesTimeDateWithSerializeDeserialize {
     pub value: SqlxTypesTimeDateWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxTypesTimeDateWithSerializeDeserialize> for WhereSqlxTypesTimeDate {
-    fn from(value: WhereSqlxTypesTimeDateWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesTimeDate::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
+    SqlxTypesTimeDate {
+        #[eo_error_occurence]
+        sqlx_types_time_date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxTypesTimeDateWithSerializeDeserialize> for WhereSqlxTypesTimeDate {
+    type Error = WhereSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxTypesTimeDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxTypesTimeDate::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxTypesTimeDate {
+                        sqlx_types_time_date: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
@@ -10003,12 +10088,29 @@ pub struct WhereSqlxTypesTimeTimeWithSerializeDeserialize {
     pub value: SqlxTypesTimeTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxTypesTimeTimeWithSerializeDeserialize> for WhereSqlxTypesTimeTime {
-    fn from(value: WhereSqlxTypesTimeTimeWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesTimeTime::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
+    SqlxTypesTimeTime {
+        #[eo_error_occurence]
+        sqlx_types_time_time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxTypesTimeTimeWithSerializeDeserialize> for WhereSqlxTypesTimeTime {
+    type Error = WhereSqlxTypesTimeTimeWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxTypesTimeTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxTypesTimeTime::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxTypesTimeTime {
+                        sqlx_types_time_time: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
@@ -10123,12 +10225,29 @@ pub struct WhereSqlxTypesUuidUuidWithSerializeDeserialize {
     pub value: SqlxTypesUuidUuidWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxTypesUuidUuidWithSerializeDeserialize> for WhereSqlxTypesUuidUuid {
-    fn from(value: WhereSqlxTypesUuidUuidWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesUuidUuid::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
+    SqlxTypesUuidUuid {
+        #[eo_error_occurence]
+        sqlx_types_uuid_uuid: SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxTypesUuidUuidWithSerializeDeserialize> for WhereSqlxTypesUuidUuid {
+    type Error = WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxTypesUuidUuidWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxTypesUuidUuid::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxTypesUuidUuid {
+                        sqlx_types_uuid_uuid: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
