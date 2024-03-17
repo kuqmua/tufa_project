@@ -5003,6 +5003,25 @@ impl StdPrimitiveBool {
 //         value.0
 //     }
 // }
+#[derive(Debug)]
+pub struct WhereStdPrimitiveBool {
+    pub value: StdPrimitiveBool,
+    pub conjuctive_operator: ConjunctiveOperator,
+}
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct WhereStdPrimitiveBoolWithSerializeDeserialize {
+    pub value: StdPrimitiveBoolWithSerializeDeserialize,
+    pub conjuctive_operator: ConjunctiveOperator,
+}
+impl std::convert::From<WhereStdPrimitiveBoolWithSerializeDeserialize> for WhereStdPrimitiveBool {
+    fn from(value: WhereStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+        Self {
+            value: StdPrimitiveBool::from(value.value),
+            conjuctive_operator: value.conjuctive_operator
+        }
+    }
+}
+
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
