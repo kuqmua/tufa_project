@@ -3934,24 +3934,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = {
                 let filter_unique_parameters_token_stream = {
                     let filter_unique_parameters_primary_key_token_stream = quote::quote! {
-                        if let Some(#primary_key_field_ident) = &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#primary_key_field_ident {
+                        if let Some(#primary_key_field_ident) = &mut #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#primary_key_field_ident {
                             let #not_unique_primary_keys_name_token_stream = {
-                                let mut vec = std::vec::Vec::with_capacity(#primary_key_field_ident.len());
-                                let mut #not_unique_primary_keys_name_token_stream = std::vec::Vec::with_capacity(#primary_key_field_ident.len());
-                                for element in #primary_key_field_ident {
-                                    let handle = element;
-                                    match vec.contains(&handle) {
-                                        true => {
-                                            #not_unique_primary_keys_name_token_stream.push(*element.clone());
-                                        },
-                                        false => {
-                                            vec.push(element);
-                                        }
+                                let mut value = vec![];
+                                #primary_key_field_ident.sort_unstable();
+                                #primary_key_field_ident.dedup_by(|a, b| match a == b {
+                                    true => {
+                                        value.push(std::mem::take(a));
+                                        true
                                     }
-                                }
-                                #not_unique_primary_keys_name_token_stream
+                                    false => false,
+                                });
+                                value
                             };
-                            if let false = #not_unique_primary_keys_name_token_stream.is_empty() {
+                            if !#not_unique_primary_keys_name_token_stream.is_empty() {
                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_primary_key_variant_initialization_token_stream;
                                 #error_log_call_token_stream
                                 return #try_operation_response_variants_token_stream::from(#error_value_snake_case_token_stream);
@@ -4262,17 +4258,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         query
                     }
                 };
-                let from_log_and_return_error_token_stream =
-                    crate::from_log_and_return_error::from_log_and_return_error(
-                        &try_operation_upper_camel_case_token_stream,
-                        &error_log_call_token_stream,
-                        &try_operation_response_variants_token_stream,
-                    );
-                let acquire_pool_and_connection_token_stream =
-                    crate::acquire_pool_and_connection::acquire_pool_and_connection(
-                        &from_log_and_return_error_token_stream,
-                        &pg_connection_token_stream,
-                    );
+                let from_log_and_return_error_token_stream = crate::from_log_and_return_error::from_log_and_return_error(
+                    &try_operation_upper_camel_case_token_stream,
+                    &error_log_call_token_stream,
+                    &try_operation_response_variants_token_stream,
+                );
+                let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
+                    &from_log_and_return_error_token_stream,
+                    &pg_connection_token_stream,
+                );
                 quote::quote! {
                     #filter_unique_parameters_token_stream
                     let #query_string_name_token_stream = {
@@ -4337,7 +4331,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
                 ) -> impl #axum_response_into_response_token_stream {
-                    let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                    let mut #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
                             #try_operation_response_variants_token_stream,
@@ -6529,28 +6523,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         );
                         query
                     };
-                    let generate_postgres_transaction_token_stream =
-                        crate::generate_postgres_transaction::generate_postgres_transaction(
-                            &expected_updated_primary_keys_token_stream,
-                            &query_string_name_token_stream,
-                            &query_string_primary_key_some_other_none_token_stream,
-                            &binded_query_primary_key_some_other_none_token_stream,
-                            &acquire_pool_and_connection_token_stream,
-                            &pg_connection_token_stream,
-                            &binded_query_name_token_stream,
-                            &use_futures_try_stream_ext_token_stream,
-                            &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
-                            &from_log_and_return_error_token_stream,
-                            &rollback_error_name_token_stream,
-                            &non_existing_primary_keys_name_token_stream,
-                            &rollback_snake_case_token_stream,
-                            &try_operation_response_variants_token_stream,
-                            &desirable_upper_camel_case_token_stream,
-                            &try_operation_upper_camel_case_token_stream,
-                            &error_log_call_token_stream,
-                            &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
+                    let generate_postgres_transaction_token_stream = crate::generate_postgres_transaction::generate_postgres_transaction(
+                        &expected_updated_primary_keys_token_stream,
+                        &query_string_name_token_stream,
+                        &query_string_primary_key_some_other_none_token_stream,
+                        &binded_query_primary_key_some_other_none_token_stream,
+                        &acquire_pool_and_connection_token_stream,
+                        &pg_connection_token_stream,
+                        &binded_query_name_token_stream,
+                        &use_futures_try_stream_ext_token_stream,
+                        &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
+                        &from_log_and_return_error_token_stream,
+                        &rollback_error_name_token_stream,
+                        &non_existing_primary_keys_name_token_stream,
+                        &rollback_snake_case_token_stream,
+                        &try_operation_response_variants_token_stream,
+                        &desirable_upper_camel_case_token_stream,
+                        &try_operation_upper_camel_case_token_stream,
+                        &error_log_call_token_stream,
+                        &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
                     quote::quote! {
                         #filter_unique_parameters_token_stream
                         #generate_postgres_transaction_token_stream
@@ -7086,23 +7079,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        let try_operation_error_with_middleware_error_variants_token_stream = {
-            crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-                &desirable_status_code,
-                &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
-                &derive_debug_thiserror_error_occurence_token_stream,
-                &derive_debug_serialize_deserialize_token_stream,
-                &derive_debug_serialize_deserialize_to_schema_token_stream,
-                &type_variants_from_request_response_syn_variants,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-                &operation,
-                &generate_expected_type_declaration_token_stream,
-                &unexpected_status_code_declaration_token_stream,
-                &failed_to_get_response_text_declaration_token_stream,
-                &deserialize_response_declaration_token_stream,
-                &reqwest_declaration_token_stream,
-            )
-        };
+        let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
+            &desirable_status_code,
+            &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+            &derive_debug_thiserror_error_occurence_token_stream,
+            &derive_debug_serialize_deserialize_token_stream,
+            &derive_debug_serialize_deserialize_to_schema_token_stream,
+            &type_variants_from_request_response_syn_variants,
+            &proc_macro_name_upper_camel_case_ident_stringified,
+            &operation,
+            &generate_expected_type_declaration_token_stream,
+            &unexpected_status_code_declaration_token_stream,
+            &failed_to_get_response_text_declaration_token_stream,
+            &deserialize_response_declaration_token_stream,
+            &reqwest_declaration_token_stream,
+        );
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
         let (http_request_token_stream, http_request_test_token_stream) = {
             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
