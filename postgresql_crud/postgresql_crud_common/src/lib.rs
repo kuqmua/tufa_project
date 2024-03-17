@@ -6936,12 +6936,29 @@ pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerialize
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
+    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+        #[eo_error_occurence]
+        sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    type Error = WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+                        sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
