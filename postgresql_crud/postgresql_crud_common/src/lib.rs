@@ -7477,12 +7477,29 @@ pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerial
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::from(value.value),
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
+    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+        #[eo_error_occurence]
+        sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
+    },
+}
+impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+    type Error = WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        Ok(Self {
+            value: match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(value.value) {
+                Ok(value) => value,
+                Err(e) => {
+                    return Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
+                        sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: e,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }  
+            },
             conjuctive_operator: value.conjuctive_operator
-        }
+        })
     }
 }
 
