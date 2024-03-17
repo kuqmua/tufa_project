@@ -1106,12 +1106,11 @@ impl RustSqlxMapToPostgresTypeVariant {
         };
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
-    //todo maybe refactor it later(coz json generic)
-    pub fn get_inner_type_with_serialize_deserialize_stringified(
+    fn get_inner_type_with_serialize_deserialize_handle_stringified(
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
-        let value = match self {
+        match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("StdPrimitiveBoolWithSerializeDeserialize"),
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("StdPrimitiveBoolWithSerializeDeserialize"),
 
@@ -1269,7 +1268,14 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SerdeJsonValueAsPostgresqlJsonNotNull => std::string::String::from("SerdeJsonValueWithSerializeDeserialize"),
             Self::SerdeJsonValueAsPostgresqlJsonB => std::string::String::from("SerdeJsonValueWithSerializeDeserialize"),
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from("SerdeJsonValueWithSerializeDeserialize"),
-        };
+        }
+    }
+    //todo maybe refactor it later(coz json generic)
+    pub fn get_inner_type_with_serialize_deserialize_stringified(
+        &self,
+        generic_type_str: &str,
+    ) -> std::string::String {
+        let value = self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str);
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
     pub fn get_inner_type_with_serialize_deserialize_error_named_stringified(&self) -> std::string::String {
@@ -1433,6 +1439,17 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from(""),
         };
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+    }
+    pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
+        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::Where{}", self.get_inner_type_stringified(generic_type_str))
+    }
+    pub fn get_where_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
+        format!(
+            "{POSTGRESQL_CRUD_SNAKE_CASE}::Where{}", 
+            self.get_inner_type_with_serialize_deserialize_handle_stringified(
+                generic_type_str,
+            )
+        )
     }
 }
 //todo rename conversion method
