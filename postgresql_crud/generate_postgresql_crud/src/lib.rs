@@ -236,6 +236,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let limit_type_token_stream = &crate_path_std_primitive_i64_token_stream;
     let offset_type_token_stream = &crate_path_std_primitive_i64_token_stream;
+    let crate_path_std_primitive_i64_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!("{crate_path_stringified}::StdPrimitiveI64WithSerializeDeserialize");
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let limit_type_with_serialize_deserialize_token_stream = &crate_path_std_primitive_i64_with_serialize_deserialize_token_stream;
+    let offset_type_with_serialize_deserialize_token_stream = &crate_path_std_primitive_i64_with_serialize_deserialize_token_stream;
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
@@ -3662,8 +3669,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #(#fields_with_excluded_primary_key_token_stream)*
                         #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-                        #limit_token_stream: #limit_type_token_stream,
-                        #offset_token_stream: #offset_type_token_stream,
+                        #limit_token_stream: #limit_type_with_serialize_deserialize_token_stream,
+                        #offset_token_stream: #offset_type_with_serialize_deserialize_token_stream,
                     }
                 }
             };
