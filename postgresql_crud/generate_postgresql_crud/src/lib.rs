@@ -159,8 +159,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
             &ident.to_string(),
         );
-    let proc_macro_name_upper_camel_case_ident_stringified =
-        format!("{proc_macro_name_upper_camel_case} {ident}");
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
     let table_name_quotes_token_stream =
         proc_macro_common::generate_quotes::generate_quotes_token_stream(

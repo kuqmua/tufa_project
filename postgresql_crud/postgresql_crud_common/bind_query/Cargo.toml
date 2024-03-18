@@ -1,5 +1,5 @@
 [package]
-name = "bind_query"
+name = "bind_query" #todo rename
 version = "0.1.0"
 edition = "2021"
 
@@ -13,3 +13,4 @@ proc-macro2 = {version = "=1.0.67"}
 quote = {version = "=1.0.33"}
 syn = {version = "=1.0.107"}
 proc_macro_common = {path = "../../../proc_macro_common"}
+proc_macro_helpers = {path = "../../../proc_macro_helpers"}

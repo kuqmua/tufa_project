@@ -4948,15 +4948,15 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType, bind_query::PostgresqlTypeLogicUsingFromSerializeDeserialize)]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
-impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
-    fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self(value.0)
-    }
-}
+// #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+// pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
+// impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
+//     fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
+//         Self(value.0)
+//     }
+// }
 impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
     fn from(value: StdPrimitiveBool) -> Self {
         Self(value.0)
@@ -5054,6 +5054,9 @@ impl std::convert::From<WhereStdPrimitiveBoolWithSerializeDeserialize> for Where
         }
     }
 }
+//
+// `From<std::option::Option<Vec<WhereStdPrimitiveBoolWithSerializeDeserialize>>>` is not implemented for `std::option::Option<std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool>>`
+//
 
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
