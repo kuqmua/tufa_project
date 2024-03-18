@@ -4433,7 +4433,7 @@ pub struct Something {
     something: std::string::String,
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum TimeMonthWithSerializeDeserialize {
     January,   // = 1,
     February,  // = 2,
@@ -4484,7 +4484,7 @@ impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
         }
     }
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     hours: std::primitive::i8,
     minutes: std::primitive::i8,
@@ -4523,7 +4523,7 @@ impl std::convert::From<sqlx::types::time::UtcOffset>
         }
     }
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum NumBigintSignWithSerializeDeserialize {
     Minus,
     NoSign,
@@ -4548,7 +4548,7 @@ impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserial
     }
 }
 //todo pub or not for all - think
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct NumBigintBigIntWithSerializeDeserialize {
     sign: NumBigintSignWithSerializeDeserialize,
     digits: std::vec::Vec<std::primitive::u32>,
@@ -4942,7 +4942,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
 impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
     fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
@@ -5028,12 +5028,12 @@ impl StdPrimitiveBool {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdPrimitiveBool {
     pub value: StdPrimitiveBool,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdPrimitiveBoolWithSerializeDeserialize {
     pub value: StdPrimitiveBoolWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5050,7 +5050,7 @@ impl std::convert::From<WhereStdPrimitiveBoolWithSerializeDeserialize> for Where
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI16WithSerializeDeserialize(std::primitive::i16);
 impl std::convert::From<StdPrimitiveI16WithSerializeDeserialize> for StdPrimitiveI16 {
     fn from(value: StdPrimitiveI16WithSerializeDeserialize) -> Self {
@@ -5128,12 +5128,12 @@ impl StdPrimitiveI16 {
             .collect()
     }
 }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdPrimitiveI16 {
     pub value: StdPrimitiveI16,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdPrimitiveI16WithSerializeDeserialize {
     pub value: StdPrimitiveI16WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5149,7 +5149,7 @@ impl std::convert::From<WhereStdPrimitiveI16WithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI32WithSerializeDeserialize(std::primitive::i32);
 impl std::convert::From<StdPrimitiveI32WithSerializeDeserialize> for StdPrimitiveI32 {
     fn from(value: StdPrimitiveI32WithSerializeDeserialize) -> Self {
@@ -5232,12 +5232,12 @@ impl StdPrimitiveI32 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdPrimitiveI32 {
     pub value: StdPrimitiveI32,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdPrimitiveI32WithSerializeDeserialize {
     pub value: StdPrimitiveI32WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5253,7 +5253,7 @@ impl std::convert::From<WhereStdPrimitiveI32WithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveI64WithSerializeDeserialize(std::primitive::i64);
 impl std::convert::From<StdPrimitiveI64WithSerializeDeserialize> for StdPrimitiveI64 {
     fn from(value: StdPrimitiveI64WithSerializeDeserialize) -> Self {
@@ -5336,12 +5336,12 @@ impl StdPrimitiveI64 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdPrimitiveI64 {
     pub value: StdPrimitiveI64,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdPrimitiveI64WithSerializeDeserialize {
     pub value: StdPrimitiveI64WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5357,7 +5357,7 @@ impl std::convert::From<WhereStdPrimitiveI64WithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF32WithSerializeDeserialize(std::primitive::f32);
 impl std::convert::From<StdPrimitiveF32WithSerializeDeserialize> for StdPrimitiveF32 {
     fn from(value: StdPrimitiveF32WithSerializeDeserialize) -> Self {
@@ -5439,12 +5439,12 @@ impl StdPrimitiveF32 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdPrimitiveF32 {
     pub value: StdPrimitiveF32,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdPrimitiveF32WithSerializeDeserialize {
     pub value: StdPrimitiveF32WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5460,7 +5460,7 @@ impl std::convert::From<WhereStdPrimitiveF32WithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdPrimitiveF64WithSerializeDeserialize(std::primitive::f64);
 impl std::convert::From<StdPrimitiveF64WithSerializeDeserialize> for StdPrimitiveF64 {
     fn from(value: StdPrimitiveF64WithSerializeDeserialize) -> Self {
@@ -5542,12 +5542,12 @@ impl StdPrimitiveF64 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdPrimitiveF64 {
     pub value: StdPrimitiveF64,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdPrimitiveF64WithSerializeDeserialize {
     pub value: StdPrimitiveF64WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5673,7 +5673,7 @@ impl std::convert::From<WhereStdStringStringWithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdVecVecStdPrimitiveU8WithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
 impl std::convert::From<StdVecVecStdPrimitiveU8WithSerializeDeserialize>
     for StdVecVecStdPrimitiveU8
@@ -5759,12 +5759,12 @@ impl StdVecVecStdPrimitiveU8 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdVecVecStdPrimitiveU8 {
     pub value: StdVecVecStdPrimitiveU8,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdVecVecStdPrimitiveU8WithSerializeDeserialize {
     pub value: StdVecVecStdPrimitiveU8WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5780,7 +5780,7 @@ impl std::convert::From<WhereStdVecVecStdPrimitiveU8WithSerializeDeserialize> fo
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     months: std::primitive::i32,
     days: std::primitive::i32,
@@ -5879,12 +5879,12 @@ impl SqlxPostgresTypesPgInterval {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgInterval {
     pub value: SqlxPostgresTypesPgInterval,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgIntervalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5902,7 +5902,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgIntervalWithSerializeDeserialize
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i64>,
     end: std::ops::Bound<std::primitive::i64>,
@@ -5999,12 +5999,12 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeStdPrimitiveI64 {
     pub value: SqlxPostgresTypesPgRangeStdPrimitiveI64,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6022,7 +6022,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializ
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i32>,
     end: std::ops::Bound<std::primitive::i32>,
@@ -6119,12 +6119,12 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub value: SqlxPostgresTypesPgRangeStdPrimitiveI32,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6142,7 +6142,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializ
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize
 {
     start: std::ops::Bound<
@@ -6380,12 +6380,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6403,7 +6403,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlx
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
 {
     start: std::ops::Bound<
@@ -6618,12 +6618,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6641,7 +6641,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlx
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
@@ -6955,12 +6955,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6995,7 +6995,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateT
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
@@ -7157,12 +7157,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -7180,7 +7180,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTim
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
@@ -7496,12 +7496,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -7536,7 +7536,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDa
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesChronoNaiveDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateWithSerializeDeserialize>,
@@ -7698,12 +7698,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -7721,7 +7721,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWit
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
@@ -8025,12 +8025,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8065,7 +8065,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSer
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
@@ -8201,12 +8201,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8224,7 +8224,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSeri
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
@@ -8344,12 +8344,12 @@ impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesDecimal {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8365,7 +8365,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSeriali
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
 impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize>
     for SqlxPostgresTypesPgMoney
@@ -8451,12 +8451,12 @@ impl SqlxPostgresTypesPgMoney {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgMoney {
     pub value: SqlxPostgresTypesPgMoney,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgMoneyWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8472,7 +8472,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize> f
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
 impl std::convert::From<SqlxPostgresTypesPgCiTextWithSerializeDeserialize>
     for SqlxPostgresTypesPgCiText
@@ -8558,12 +8558,12 @@ impl SqlxPostgresTypesPgCiText {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgCiText {
     pub value: SqlxPostgresTypesPgCiText,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8579,7 +8579,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize> 
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
     digits: NumBigintBigIntWithSerializeDeserialize,
     scale: std::primitive::i64,
@@ -8672,12 +8672,12 @@ impl SqlxTypesBigDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesBigDecimal {
     pub value: SqlxTypesBigDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesBigDecimalWithSerializeDeserialize {
     pub value: SqlxTypesBigDecimalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8693,7 +8693,7 @@ impl std::convert::From<WhereSqlxTypesBigDecimalWithSerializeDeserialize> for Wh
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesDecimalWithSerializeDeserialize(sqlx::types::Decimal);
 impl std::convert::From<SqlxTypesDecimalWithSerializeDeserialize> for SqlxTypesDecimal {
     fn from(value: SqlxTypesDecimalWithSerializeDeserialize) -> Self {
@@ -8773,12 +8773,12 @@ impl SqlxTypesDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesDecimal {
     pub value: SqlxTypesDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesDecimalWithSerializeDeserialize {
     pub value: SqlxTypesDecimalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8796,7 +8796,7 @@ impl std::convert::From<WhereSqlxTypesDecimalWithSerializeDeserialize> for Where
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize(
     sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
@@ -8882,12 +8882,12 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
     pub value: SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8905,7 +8905,7 @@ impl std::convert::From<WhereSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerial
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize(
     sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>
 );
@@ -8991,12 +8991,12 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
     pub value: SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9012,7 +9012,7 @@ impl std::convert::From<WhereSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSeri
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize(
     sqlx::types::chrono::NaiveDateTime
 );
@@ -9101,12 +9101,12 @@ impl SqlxTypesChronoNaiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesChronoNaiveDateTime {
     pub value: SqlxTypesChronoNaiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
     pub value: SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9122,7 +9122,7 @@ impl std::convert::From<WhereSqlxTypesChronoNaiveDateTimeWithSerializeDeserializ
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveDateWithSerializeDeserialize(
     sqlx::types::chrono::NaiveDate
 );
@@ -9211,12 +9211,12 @@ impl SqlxTypesChronoNaiveDate {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesChronoNaiveDate {
     pub value: SqlxTypesChronoNaiveDate,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesChronoNaiveDateWithSerializeDeserialize {
     pub value: SqlxTypesChronoNaiveDateWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9232,7 +9232,7 @@ impl std::convert::From<WhereSqlxTypesChronoNaiveDateWithSerializeDeserialize> f
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesChronoNaiveTimeWithSerializeDeserialize(
     sqlx::types::chrono::NaiveTime
 );
@@ -9321,12 +9321,12 @@ impl SqlxTypesChronoNaiveTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesChronoNaiveTime {
     pub value: SqlxTypesChronoNaiveTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesChronoNaiveTimeWithSerializeDeserialize {
     pub value: SqlxTypesChronoNaiveTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9342,7 +9342,7 @@ impl std::convert::From<WhereSqlxTypesChronoNaiveTimeWithSerializeDeserialize> f
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
@@ -9483,12 +9483,12 @@ impl SqlxPostgresTypesPgTimeTz {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxPostgresTypesPgTimeTz {
     pub value: SqlxPostgresTypesPgTimeTz,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     pub value: SqlxPostgresTypesPgTimeTzWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9521,7 +9521,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializ
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     date: SqlxTypesTimeDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
@@ -9667,12 +9667,12 @@ impl SqlxTypesTimePrimitiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesTimePrimitiveDateTime {
     pub value: SqlxTypesTimePrimitiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     pub value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9705,7 +9705,7 @@ impl std::convert::TryFrom<WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeser
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
     std::primitive::i64,
 );
@@ -9808,12 +9808,12 @@ impl SqlxTypesTimeOffsetDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesTimeOffsetDateTime {
     pub value: SqlxTypesTimeOffsetDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     pub value: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9846,7 +9846,7 @@ impl std::convert::TryFrom<WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserial
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     year: std::primitive::i32,
     month: TimeMonthWithSerializeDeserialize,
@@ -9960,12 +9960,12 @@ impl SqlxTypesTimeDate {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesTimeDate {
     pub value: SqlxTypesTimeDate,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesTimeDateWithSerializeDeserialize {
     pub value: SqlxTypesTimeDateWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9998,7 +9998,7 @@ impl std::convert::TryFrom<WhereSqlxTypesTimeDateWithSerializeDeserialize> for W
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
     hour: std::primitive::u8,
     minute: std::primitive::u8,
@@ -10107,12 +10107,12 @@ impl SqlxTypesTimeTime {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesTimeTime {
     pub value: SqlxTypesTimeTime,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesTimeTimeWithSerializeDeserialize {
     pub value: SqlxTypesTimeTimeWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10145,7 +10145,7 @@ impl std::convert::TryFrom<WhereSqlxTypesTimeTimeWithSerializeDeserialize> for W
 
 #[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
@@ -10244,12 +10244,12 @@ impl SqlxTypesUuidUuid {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesUuidUuid {
     pub value: SqlxTypesUuidUuid,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesUuidUuidWithSerializeDeserialize {
     pub value: SqlxTypesUuidUuidWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10282,7 +10282,7 @@ impl std::convert::TryFrom<WhereSqlxTypesUuidUuidWithSerializeDeserialize> for W
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize(sqlx::types::ipnetwork::IpNetwork);
 impl std::convert::From<SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize>
     for SqlxTypesIpnetworkIpNetwork
@@ -10369,12 +10369,12 @@ impl SqlxTypesIpnetworkIpNetwork {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesIpnetworkIpNetwork {
     pub value: SqlxTypesIpnetworkIpNetwork,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesIpnetworkIpNetworkWithSerializeDeserialize {
     pub value: SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10390,7 +10390,7 @@ impl std::convert::From<WhereSqlxTypesIpnetworkIpNetworkWithSerializeDeserialize
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdNetIpAddrWithSerializeDeserialize(std::net::IpAddr);
 impl std::convert::From<StdNetIpAddrWithSerializeDeserialize> for StdNetIpAddr {
     fn from(value: StdNetIpAddrWithSerializeDeserialize) -> Self {
@@ -10471,12 +10471,12 @@ impl StdNetIpAddr {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdNetIpAddr {
     pub value: StdNetIpAddr,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdNetIpAddrWithSerializeDeserialize {
     pub value: StdNetIpAddrWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10492,7 +10492,7 @@ impl std::convert::From<WhereStdNetIpAddrWithSerializeDeserialize> for WhereStdN
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
 impl std::convert::From<SqlxTypesMacAddressMacAddressWithSerializeDeserialize>
     for SqlxTypesMacAddressMacAddress
@@ -10578,12 +10578,12 @@ impl SqlxTypesMacAddressMacAddress {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesMacAddressMacAddress {
     pub value: SqlxTypesMacAddressMacAddress,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesMacAddressMacAddressWithSerializeDeserialize {
     pub value: SqlxTypesMacAddressMacAddressWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10599,7 +10599,7 @@ impl std::convert::From<WhereSqlxTypesMacAddressMacAddressWithSerializeDeseriali
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBitVecWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
 impl std::convert::From<SqlxTypesBitVecWithSerializeDeserialize> for SqlxTypesBitVec {
     fn from(value: SqlxTypesBitVecWithSerializeDeserialize) -> Self {
@@ -10687,12 +10687,12 @@ impl SqlxTypesBitVec {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSqlxTypesBitVec {
     pub value: SqlxTypesBitVec,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSqlxTypesBitVecWithSerializeDeserialize {
     pub value: SqlxTypesBitVecWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10708,7 +10708,7 @@ impl std::convert::From<WhereSqlxTypesBitVecWithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesJsonWithSerializeDeserialize<T>(sqlx::types::Json<T>);
 impl<T> std::convert::From<SqlxTypesJsonWithSerializeDeserialize<T>> for SqlxTypesJson<T> {
     fn from(value: SqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
@@ -10878,7 +10878,7 @@ impl<T> SqlxTypesJson<T> {
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct SerdeJsonValue(pub serde_json::Value);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SerdeJsonValueWithSerializeDeserialize(serde_json::Value);
 impl std::convert::From<SerdeJsonValueWithSerializeDeserialize> for SerdeJsonValue {
     fn from(value: SerdeJsonValueWithSerializeDeserialize) -> Self {
@@ -10959,12 +10959,12 @@ impl SerdeJsonValue {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereSerdeJsonValue {
     pub value: SerdeJsonValue,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereSerdeJsonValueWithSerializeDeserialize {
     pub value: SerdeJsonValueWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
