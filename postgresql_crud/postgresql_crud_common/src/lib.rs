@@ -5036,7 +5036,7 @@ impl StdPrimitiveBool {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdPrimitiveBool {
     pub value: StdPrimitiveBool,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5136,7 +5136,7 @@ impl StdPrimitiveI16 {
             .collect()
     }
 }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdPrimitiveI16 {
     pub value: StdPrimitiveI16,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5240,7 +5240,7 @@ impl StdPrimitiveI32 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdPrimitiveI32 {
     pub value: StdPrimitiveI32,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5344,7 +5344,7 @@ impl StdPrimitiveI64 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdPrimitiveI64 {
     pub value: StdPrimitiveI64,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5447,7 +5447,7 @@ impl StdPrimitiveF32 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdPrimitiveF32 {
     pub value: StdPrimitiveF32,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5550,7 +5550,7 @@ impl StdPrimitiveF64 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdPrimitiveF64 {
     pub value: StdPrimitiveF64,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5656,7 +5656,7 @@ impl StdStringString {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdStringString {
     pub value: StdStringString,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5767,7 +5767,7 @@ impl StdVecVecStdPrimitiveU8 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdVecVecStdPrimitiveU8 {
     pub value: StdVecVecStdPrimitiveU8,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -5887,7 +5887,7 @@ impl SqlxPostgresTypesPgInterval {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgInterval {
     pub value: SqlxPostgresTypesPgInterval,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6007,7 +6007,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI64 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeStdPrimitiveI64 {
     pub value: SqlxPostgresTypesPgRangeStdPrimitiveI64,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6127,7 +6127,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub value: SqlxPostgresTypesPgRangeStdPrimitiveI32,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6388,7 +6388,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6626,7 +6626,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -6963,7 +6963,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -7165,7 +7165,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -7504,7 +7504,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -7706,7 +7706,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8033,7 +8033,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDate {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8209,7 +8209,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8352,7 +8352,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesDecimal {
     pub value: SqlxPostgresTypesPgRangeSqlxTypesDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8459,7 +8459,7 @@ impl SqlxPostgresTypesPgMoney {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgMoney {
     pub value: SqlxPostgresTypesPgMoney,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8566,7 +8566,7 @@ impl SqlxPostgresTypesPgCiText {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgCiText {
     pub value: SqlxPostgresTypesPgCiText,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8680,7 +8680,7 @@ impl SqlxTypesBigDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesBigDecimal {
     pub value: SqlxTypesBigDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8781,7 +8781,7 @@ impl SqlxTypesDecimal {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesDecimal {
     pub value: SqlxTypesDecimal,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8890,7 +8890,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
     pub value: SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -8999,7 +8999,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoLocal {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
     pub value: SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9109,7 +9109,7 @@ impl SqlxTypesChronoNaiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesChronoNaiveDateTime {
     pub value: SqlxTypesChronoNaiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9219,7 +9219,7 @@ impl SqlxTypesChronoNaiveDate {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesChronoNaiveDate {
     pub value: SqlxTypesChronoNaiveDate,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9329,7 +9329,7 @@ impl SqlxTypesChronoNaiveTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesChronoNaiveTime {
     pub value: SqlxTypesChronoNaiveTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9491,7 +9491,7 @@ impl SqlxPostgresTypesPgTimeTz {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxPostgresTypesPgTimeTz {
     pub value: SqlxPostgresTypesPgTimeTz,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9675,7 +9675,7 @@ impl SqlxTypesTimePrimitiveDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesTimePrimitiveDateTime {
     pub value: SqlxTypesTimePrimitiveDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9816,7 +9816,7 @@ impl SqlxTypesTimeOffsetDateTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesTimeOffsetDateTime {
     pub value: SqlxTypesTimeOffsetDateTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -9968,7 +9968,7 @@ impl SqlxTypesTimeDate {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesTimeDate {
     pub value: SqlxTypesTimeDate,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10115,7 +10115,7 @@ impl SqlxTypesTimeTime {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesTimeTime {
     pub value: SqlxTypesTimeTime,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10252,7 +10252,7 @@ impl SqlxTypesUuidUuid {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesUuidUuid {
     pub value: SqlxTypesUuidUuid,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10377,7 +10377,7 @@ impl SqlxTypesIpnetworkIpNetwork {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesIpnetworkIpNetwork {
     pub value: SqlxTypesIpnetworkIpNetwork,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10479,7 +10479,7 @@ impl StdNetIpAddr {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereStdNetIpAddr {
     pub value: StdNetIpAddr,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10586,7 +10586,7 @@ impl SqlxTypesMacAddressMacAddress {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesMacAddressMacAddress {
     pub value: SqlxTypesMacAddressMacAddress,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10695,7 +10695,7 @@ impl SqlxTypesBitVec {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSqlxTypesBitVec {
     pub value: SqlxTypesBitVec,
     pub conjuctive_operator: ConjunctiveOperator,
@@ -10967,7 +10967,7 @@ impl SerdeJsonValue {
 //         value.0
 //     }
 // }
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
 pub struct WhereSerdeJsonValue {
     pub value: SerdeJsonValue,
     pub conjuctive_operator: ConjunctiveOperator,
