@@ -944,8 +944,8 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from("serde_json::Value"),
         }
     }
-    pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        let value = match self {
+    fn get_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+        match self {
             Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("StdPrimitiveBool"),
             Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("StdPrimitiveBool"),
 
@@ -1103,8 +1103,10 @@ impl RustSqlxMapToPostgresTypeVariant {
             Self::SerdeJsonValueAsPostgresqlJsonNotNull => std::string::String::from("SerdeJsonValue"),
             Self::SerdeJsonValueAsPostgresqlJsonB => std::string::String::from("SerdeJsonValue"),
             Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from("SerdeJsonValue"),
-        };
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+        }
+    }
+    pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
+        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{}", self.get_inner_type_handle_stringified(generic_type_str))
     }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
         &self,
@@ -1441,7 +1443,8 @@ impl RustSqlxMapToPostgresTypeVariant {
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::Where{}", self.get_inner_type_stringified(generic_type_str))
+        //todo reuse
+        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::Where{}", self.get_inner_type_handle_stringified(generic_type_str))
     }
     pub fn get_where_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!(
@@ -5658,6 +5661,10 @@ impl std::convert::From<WhereStdStringStringWithSerializeDeserialize> for WhereS
         }
     }
 }
+//
+// pub name: std::option::Option<std::vec::Vec<postgresql_crud::RegexFilter>>,
+// name: std::option::Option<std::vec::Vec<postgresql_crud::StdStringStringWithSerializeDeserialize>>,//HERE postgresql_crud::RegexFilter
+//
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
