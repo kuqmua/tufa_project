@@ -613,6 +613,7 @@ impl PostgresqlType {
     Debug,
     PartialEq,
     Eq,
+    Clone,
     strum_macros::Display,
     strum_macros::EnumIter,
     enum_extension::EnumExtension,

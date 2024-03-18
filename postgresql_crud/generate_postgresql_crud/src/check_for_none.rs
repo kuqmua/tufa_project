@@ -1,5 +1,5 @@
 pub fn check_for_none(
-    fields_named: &syn::punctuated::Punctuated<syn::Field, syn::token::Comma>,
+    fields_named: std::vec::Vec<&syn::Field>,//&syn::punctuated::Punctuated<syn::Field, syn::token::Comma>
     id_field: &syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
     dot_space: &str,
@@ -10,9 +10,9 @@ pub fn check_for_none(
         let fields_named_handle = match should_exclude_primary_key {
             true => fields_named
                 .iter()
-                .filter(|field| *field != id_field)
-                .collect::<Vec<&syn::Field>>(),
-            false => fields_named.iter().collect::<Vec<&syn::Field>>(),
+                .filter(|field| **field != id_field)
+                .collect::<Vec<&&syn::Field>>(),
+            false => fields_named.iter().collect::<Vec<&&syn::Field>>(),
         };
         let fields_named_handle_len = fields_named_handle.len();
         fields_named_handle.iter().enumerate().fold(
