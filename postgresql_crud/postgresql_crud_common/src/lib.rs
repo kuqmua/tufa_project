@@ -5563,7 +5563,7 @@ impl std::convert::From<WhereStdPrimitiveF64WithSerializeDeserialize> for WhereS
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdStringString(pub std::string::String);
-#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct StdStringStringWithSerializeDeserialize(std::string::String);
 impl std::convert::From<StdStringStringWithSerializeDeserialize> for StdStringString {
     fn from(value: StdStringStringWithSerializeDeserialize) -> Self {
@@ -5648,12 +5648,12 @@ impl StdStringString {
 //         value.0
 //     }
 // }
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct WhereStdStringString {
     pub value: StdStringString,
     pub conjuctive_operator: ConjunctiveOperator,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WhereStdStringStringWithSerializeDeserialize {
     pub value: StdStringStringWithSerializeDeserialize,
     pub conjuctive_operator: ConjunctiveOperator,
