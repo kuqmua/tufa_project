@@ -4948,110 +4948,13 @@ pub trait CheckSupportedPostgresqlColumnType {
 }
 //new type pattern
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType, bind_query::PostgresqlTypeLogicUsingFromSerializeDeserialize)]
+#[derive(Debug, PartialEq, bind_query::PostgresqlTypeLogicUsingFromSerializeDeserialize)]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
-// #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-// pub struct StdPrimitiveBoolWithSerializeDeserialize(std::primitive::bool);
-// impl std::convert::From<StdPrimitiveBoolWithSerializeDeserialize> for StdPrimitiveBool {
-//     fn from(value: StdPrimitiveBoolWithSerializeDeserialize) -> Self {
-//         Self(value.0)
-//     }
-// }
-// impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
-//     fn from(value: StdPrimitiveBool) -> Self {
-//         Self(value.0)
-//     }
-// }
-// impl StdPrimitiveBool {
-//     pub fn into_inner(self) -> std::primitive::bool {
-//         self.0
-//     }
-// }
-// impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
-//     fn from(value: StdPrimitiveBool) -> Self {
-//         value.0
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-//         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBool {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for StdPrimitiveBool {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlBool for StdPrimitiveBool {}
 impl PostgresqlOrder for StdPrimitiveBool {}
-impl std::convert::From<StdPrimitiveBool> for SupportedSqlxPostgresType {
-    fn from(_value: StdPrimitiveBool) -> Self {
-        SupportedSqlxPostgresType::StdPrimitiveBool
-    }
-}
 impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
     fn from(value: StdPrimitiveBoolAsPostgresqlBool) -> Self {
         value.0
-    }
-}
-impl StdPrimitiveBool {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereStdPrimitiveBool {
-    pub value: StdPrimitiveBool,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereStdPrimitiveBoolWithSerializeDeserialize {
-    pub value: StdPrimitiveBoolWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-impl std::convert::From<WhereStdPrimitiveBoolWithSerializeDeserialize> for WhereStdPrimitiveBool {
-    fn from(value: WhereStdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self {
-            value: StdPrimitiveBool::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
     }
 }
 //
