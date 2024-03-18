@@ -4962,104 +4962,12 @@ impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
 //
 
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::PostgresqlTypeLogicUsingFromSerializeDeserialize)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct StdPrimitiveI16WithSerializeDeserialize(std::primitive::i16);
-impl std::convert::From<StdPrimitiveI16WithSerializeDeserialize> for StdPrimitiveI16 {
-    fn from(value: StdPrimitiveI16WithSerializeDeserialize) -> Self {
-        Self(value.0)
-    }
-}
-impl std::convert::From<StdPrimitiveI16> for StdPrimitiveI16WithSerializeDeserialize {
-    fn from(value: StdPrimitiveI16) -> Self {
-        Self(value.0)
-    }
-}
-impl StdPrimitiveI16 {
-    pub fn into_inner(self) -> std::primitive::i16 {
-        self.0
-    }
-}
-impl std::convert::From<StdPrimitiveI16> for std::primitive::i16 {
-    fn from(value: StdPrimitiveI16) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveI16 {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveI16 {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveI16 {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for StdPrimitiveI16 {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlSmallInt for StdPrimitiveI16 {}
 impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
 impl PostgresqlOrder for StdPrimitiveI16 {}
-impl std::convert::From<StdPrimitiveI16> for SupportedSqlxPostgresType {
-    fn from(_value: StdPrimitiveI16) -> Self {
-        SupportedSqlxPostgresType::StdPrimitiveI16
-    }
-}
-impl StdPrimitiveI16 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereStdPrimitiveI16 {
-    pub value: StdPrimitiveI16,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereStdPrimitiveI16WithSerializeDeserialize {
-    pub value: StdPrimitiveI16WithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-impl std::convert::From<WhereStdPrimitiveI16WithSerializeDeserialize> for WhereStdPrimitiveI16 {
-    fn from(value: WhereStdPrimitiveI16WithSerializeDeserialize) -> Self {
-        Self {
-            value: StdPrimitiveI16::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);

@@ -184,7 +184,7 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
                 <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
             }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> #field_type {
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
                 <#field_type as sqlx::Type<sqlx::Postgres>>::compatible(ty)
             }
         }
@@ -290,11 +290,14 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
         impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
             fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
                 Self {
-                    value: StdPrimitiveBool::from(value.value),
+                    value: #ident::from(value.value),
                     conjuctive_operator: value.conjuctive_operator
                 }
             }
         }
     };
+    // if ident == "" {
+    //     println!("{gen}");
+    // }
     gen.into()
 }
