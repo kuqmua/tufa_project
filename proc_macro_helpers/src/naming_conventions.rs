@@ -587,9 +587,9 @@ pub fn delete_snake_case_stringified() -> std::string::String {
         &naming_constants::DELETE,
     )
 }
-// pub fn where_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::WHERE)
-// }
+pub fn where_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::WHERE)
+}
 pub fn where_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::WHERE,

@@ -24,6 +24,7 @@ config_lib = {path = "../../config_lib"}#todo remove config_lib dependency. must
 enum_extension = {path = "../../enum_extension"}
 proc_macro_common = {path = "../../proc_macro_common"}
 proc_macro_assistants = {path = "../../proc_macro_assistants"}
+proc_macro_helpers = {path = "../../proc_macro_helpers"}
 naming_constants = {path = "../../naming_constants"}
 
 [lints]
