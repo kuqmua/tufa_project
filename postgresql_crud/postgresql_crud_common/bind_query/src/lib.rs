@@ -145,7 +145,6 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
     };
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
-        //
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
         pub struct #ident_with_serialize_deserialize_token_stream(#field_type);
         impl std::convert::From<#ident_with_serialize_deserialize_token_stream> for #ident {
@@ -153,29 +152,29 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
                 Self(value.0)
             }
         }
-        // impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
-        //     fn from(value: StdPrimitiveBool) -> Self {
-        //         Self(value.0)
-        //     }
-        // }
-        // impl StdPrimitiveBool {
-        //     pub fn into_inner(self) -> std::primitive::bool {
-        //         self.0
-        //     }
-        // }
-        // impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
-        //     fn from(value: StdPrimitiveBool) -> Self {
-        //         value.0
-        //     }
-        // }
-        // impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
-        //     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        //         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
-        //     }
-        //     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        //         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-        //     }
-        // }
+        impl std::convert::From<#ident> for #ident_with_serialize_deserialize_token_stream {
+            fn from(value: #ident) -> Self {
+                Self(value.0)
+            }
+        }
+        impl #ident {
+            pub fn into_inner(self) -> #field_type {
+                self.0
+            }
+        }
+        impl std::convert::From<#ident> for #field_type {
+            fn from(value: #ident) -> Self {
+                value.0
+            }
+        }
+        impl sqlx::Type<sqlx::Postgres> for #ident {
+            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                <#field_type as sqlx::Type<sqlx::Postgres>>::type_info()
+            }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> #field_type {
+                <#field_type as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
+        }
         // // impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
         // //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
         // //         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)

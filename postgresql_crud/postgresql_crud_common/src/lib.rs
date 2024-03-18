@@ -4957,29 +4957,29 @@ pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it priv
 //         Self(value.0)
 //     }
 // }
-impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
-    fn from(value: StdPrimitiveBool) -> Self {
-        Self(value.0)
-    }
-}
-impl StdPrimitiveBool {
-    pub fn into_inner(self) -> std::primitive::bool {
-        self.0
-    }
-}
-impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
-    fn from(value: StdPrimitiveBool) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
+// impl std::convert::From<StdPrimitiveBool> for StdPrimitiveBoolWithSerializeDeserialize {
+//     fn from(value: StdPrimitiveBool) -> Self {
+//         Self(value.0)
+//     }
+// }
+// impl StdPrimitiveBool {
+//     pub fn into_inner(self) -> std::primitive::bool {
+//         self.0
+//     }
+// }
+// impl std::convert::From<StdPrimitiveBool> for std::primitive::bool {
+//     fn from(value: StdPrimitiveBool) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for StdPrimitiveBool {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+//         <std::primitive::bool as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
 // impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
 //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
 //         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
