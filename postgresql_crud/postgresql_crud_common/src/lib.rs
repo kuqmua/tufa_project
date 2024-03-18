@@ -1443,6 +1443,13 @@ impl RustSqlxMapToPostgresTypeVariant {
         };
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
+    pub fn get_where_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+        format!(
+            "{}{}", 
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(), 
+            self.get_inner_type_handle_stringified(generic_type_str)
+        )
+    }
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         //todo reuse
         format!(

@@ -2023,7 +2023,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         });
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
         let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
-        // let f = element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
+        let where_inner_type_handle_stringified = element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_handle_stringified("");
         acc.push(crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &not_unique_field_vec_upper_camel_stringified,
@@ -2032,7 +2032,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize,
                     &not_unique_field_vec_snake_case_stringified,
-                    std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated.clone()
+                    generate_std_vec_vec_syn_punctuated_punctuated(
+                        //todo reuse
+                        &["postgresql_crud", &where_inner_type_handle_stringified],
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    )//todo its dont work with json generic
                 )
             ]
         ));
