@@ -170,14 +170,14 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
                 Self(value.0)
             }
         }
-        impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
-            fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
-                Self {
-                    value: #ident::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator
-                }
-            }
-        }
+        // impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
+        //     fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
+        //         Self {
+        //             value: #ident::from(value.value),
+        //             conjuctive_operator: value.conjuctive_operator
+        //         }
+        //     }
+        // }
     };
     // if ident == "" {
     //     println!("{gen}");
@@ -350,3 +350,69 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     gen.into()
 }
+//
+#[proc_macro_derive(CommonFrom)]
+pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "PostgresqlTypeLogicUsingFromSerializeDeserialize";
+    let proc_macro_name_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &proc_macro_name_upper_camel_case,
+    );
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {e}",
+            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+        )
+    });
+    let ident = &ast.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let field = if let syn::Data::Struct(data_struct) = &ast.data {
+        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
+            match fields_unnamed.unnamed.len() {
+                1 => &fields_unnamed.unnamed[0],
+                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed with one field")
+            }
+        } else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed");
+        }
+    } else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+    };
+    let field_type = &field.ty;
+    let ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_token_stream = {
+        let value_stringified = format!("{}{ident}", proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}{}", 
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    //WhereStdPrimitiveBoolWithSerializeDeserialize
+    let gen = quote::quote!{
+        impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
+            fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
+                Self {
+                    value: #ident::from(value.value),
+                    conjuctive_operator: value.conjuctive_operator
+                }
+            }
+        }
+    };
+    // if ident == "" {
+    //     println!("{gen}");
+    // }
+    gen.into()
+}
+//
