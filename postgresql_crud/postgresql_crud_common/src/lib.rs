@@ -779,6 +779,12 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     SerdeJsonValueAsPostgresqlJsonBNotNull,
 }
 
+#[derive(Debug)]
+pub enum FromOrTryFrom {
+    From,
+    TryFrom,
+}
+
 impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_path_stringified(&self) -> std::string::String {
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{self}")
@@ -1467,7 +1473,169 @@ impl RustSqlxMapToPostgresTypeVariant {
             )
         )
     }
+    pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
+        match self {
+            Self::StdPrimitiveBoolAsPostgresqlBool => FromOrTryFrom::From,
+            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => FromOrTryFrom::From,
+
+            Self::StdPrimitiveI16AsPostgresqlSmallInt => FromOrTryFrom::From,
+            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveI16AsPostgresqlSmallSerial => FromOrTryFrom::From,
+            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveI16AsPostgresqlInt2 => FromOrTryFrom::From,
+            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => FromOrTryFrom::From,
+
+            Self::StdPrimitiveI32AsPostgresqlInt => FromOrTryFrom::From,
+            Self::StdPrimitiveI32AsPostgresqlIntNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveI32AsPostgresqlSerial => FromOrTryFrom::From,
+            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveI32AsPostgresqlInt4 => FromOrTryFrom::From,
+            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => FromOrTryFrom::From,
+
+            Self::StdPrimitiveI64AsPostgresqlBigInt => FromOrTryFrom::From,
+            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveI64AsPostgresqlBigSerial => FromOrTryFrom::From,
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveI64AsPostgresqlInt8 => FromOrTryFrom::From,
+            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => FromOrTryFrom::From,
+
+            Self::StdPrimitiveF32AsPostgresqlReal => FromOrTryFrom::From,
+            Self::StdPrimitiveF32AsPostgresqlRealNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveF32AsPostgresqlFloat4 => FromOrTryFrom::From,
+            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => FromOrTryFrom::From,
+
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => FromOrTryFrom::From,
+            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => FromOrTryFrom::From,
+            Self::StdPrimitiveF64AsPostgresqlFloat8 => FromOrTryFrom::From,
+            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => FromOrTryFrom::From,
+
+            Self::StdStringStringAsPostgresqlVarchar => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlVarcharNotNull => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlCharN => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlCharNNotNull => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlText => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlTextNotNull => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlName => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlNameNotNull => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlCiText => FromOrTryFrom::From,
+            Self::StdStringStringAsPostgresqlCiTextNotNull => FromOrTryFrom::From,
+
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => FromOrTryFrom::From,
+            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => FromOrTryFrom::From,
+            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesDecimalAsPostgresqlNumeric => FromOrTryFrom::From,
+            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => FromOrTryFrom::From,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => FromOrTryFrom::From,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => FromOrTryFrom::From,
+            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => FromOrTryFrom::From,
+            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => FromOrTryFrom::From,
+            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxTypesTimeDateAsPostgresqlDate => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxTypesTimeTimeAsPostgresqlTime => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => FromOrTryFrom::TryFrom,
+
+            Self::SqlxTypesUuidUuidAsPostgresqlUuid => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => FromOrTryFrom::TryFrom,
+
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => FromOrTryFrom::From,
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => FromOrTryFrom::From,
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => FromOrTryFrom::From,
+            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => FromOrTryFrom::From,
+
+            Self::StdNetIpAddrAsPostgresqlInet => FromOrTryFrom::From,
+            Self::StdNetIpAddrAsPostgresqlInetNotNull => FromOrTryFrom::From,
+            Self::StdNetIpAddrAsPostgresqlCidr => FromOrTryFrom::From,
+            Self::StdNetIpAddrAsPostgresqlCidrNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => FromOrTryFrom::From,
+            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesBitVecAsPostgresqlBit => FromOrTryFrom::From,
+            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => FromOrTryFrom::From,
+            Self::SqlxTypesBitVecAsPostgresqlVarBit => FromOrTryFrom::From,
+            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => FromOrTryFrom::From,
+
+            Self::SqlxTypesJsonTAsPostgresqlJson => FromOrTryFrom::From,//todo
+            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => FromOrTryFrom::From,//todo
+            Self::SqlxTypesJsonTAsPostgresqlJsonB => FromOrTryFrom::From,//todo
+            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => FromOrTryFrom::From,//todo
+
+            Self::SerdeJsonValueAsPostgresqlJson => FromOrTryFrom::From,
+            Self::SerdeJsonValueAsPostgresqlJsonNotNull => FromOrTryFrom::From,
+            Self::SerdeJsonValueAsPostgresqlJsonB => FromOrTryFrom::From,
+            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => FromOrTryFrom::From,
+        }
+    }
 }
+
 //todo rename conversion method
 impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
     type Error = std::string::String;
