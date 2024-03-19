@@ -7167,7 +7167,7 @@ pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
@@ -7185,86 +7185,7 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress>
         Self(value.0.bytes())
     }
 }
-impl SqlxTypesMacAddressMacAddress {
-    pub fn into_inner(self) -> sqlx::types::mac_address::MacAddress {
-        self.0
-    }
-}
-impl std::convert::From<SqlxTypesMacAddressMacAddress> for sqlx::types::mac_address::MacAddress {
-    fn from(value: SqlxTypesMacAddressMacAddress) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::mac_address::MacAddress as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesMacAddressMacAddress {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxTypesMacAddressMacAddress {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
-impl std::convert::From<SqlxTypesMacAddressMacAddress> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxTypesMacAddressMacAddress) -> Self {
-        SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress
-    }
-}
-impl SqlxTypesMacAddressMacAddress {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxTypesMacAddressMacAddress {
-    pub value: SqlxTypesMacAddressMacAddress,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxTypesMacAddressMacAddressWithSerializeDeserialize {
-    pub value: SqlxTypesMacAddressMacAddressWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 impl std::convert::From<WhereSqlxTypesMacAddressMacAddressWithSerializeDeserialize> for WhereSqlxTypesMacAddressMacAddress {
     fn from(value: WhereSqlxTypesMacAddressMacAddressWithSerializeDeserialize) -> Self {
         Self {
