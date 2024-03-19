@@ -6896,7 +6896,7 @@ impl std::convert::TryFrom<WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeser
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
@@ -6931,86 +6931,7 @@ impl std::convert::From<SqlxTypesTimeOffsetDateTime>
         Self(value.0.unix_timestamp())
     }
 }
-impl SqlxTypesTimeOffsetDateTime {
-    pub fn into_inner(self) -> sqlx::types::time::OffsetDateTime {
-        self.0
-    }
-}
-impl std::convert::From<SqlxTypesTimeOffsetDateTime> for sqlx::types::time::OffsetDateTime {
-    fn from(value: SqlxTypesTimeOffsetDateTime) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::time::OffsetDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimeOffsetDateTime {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxTypesTimeOffsetDateTime {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
-impl std::convert::From<SqlxTypesTimeOffsetDateTime> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxTypesTimeOffsetDateTime) -> Self {
-        SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime
-    }
-}
-impl SqlxTypesTimeOffsetDateTime {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxTypesTimeOffsetDateTime {
-    pub value: SqlxTypesTimeOffsetDateTime,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    pub value: SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     SqlxTypesTimeOffsetDateTime {
