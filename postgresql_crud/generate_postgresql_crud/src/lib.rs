@@ -8700,28 +8700,26 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
 }
 
 fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
-    value: &std::vec::Vec<SynFieldWithAdditionalInfo>,
+    value: &SynFieldWithAdditionalInfo,
     code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
-) -> std::vec::Vec<proc_macro2::TokenStream> {
-    value.iter().map(|element| {
-        let field_ident = &element.field_ident;
-        let where_inner_type_token_stream = {
-            let value_stringified = &element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");//todo
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-            postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
-                let #field_ident = match value.#field_ident {
-                    Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::from(element)).collect()),
-                    None => None,
-                };
-            },
-            postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
+) -> proc_macro2::TokenStream {
+    let field_ident = &value.field_ident;
+    let where_inner_type_token_stream = {
+        let value_stringified = &value.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");//todo
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+        postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
+            let #field_ident = match value.#field_ident {
+                Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::from(element)).collect()),
+                None => None,
+            };
+        },
+        postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{//todo
 
-            }
         }
-    }).collect()
+    }
 }
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
