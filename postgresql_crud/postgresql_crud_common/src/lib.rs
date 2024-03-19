@@ -6791,7 +6791,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializ
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
@@ -6868,87 +6868,8 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
         }
     }
 }
-impl SqlxTypesTimePrimitiveDateTime {
-    pub fn into_inner(self) -> sqlx::types::time::PrimitiveDateTime {
-        self.0
-    }
-}
-impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for sqlx::types::time::PrimitiveDateTime {
-    fn from(value: SqlxTypesTimePrimitiveDateTime) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxTypesTimePrimitiveDateTime {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
-impl std::convert::From<SqlxTypesTimePrimitiveDateTime> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxTypesTimePrimitiveDateTime) -> Self {
-        SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime
-    }
-}
-impl SqlxTypesTimePrimitiveDateTime {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxTypesTimePrimitiveDateTime {
-    pub value: SqlxTypesTimePrimitiveDateTime,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    pub value: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     SqlxTypesTimePrimitiveDateTime {
