@@ -46,7 +46,7 @@ pub struct Dog {
     // pub name: postgresql_crud::StdStringStringAsPostgresqlVarcharNotNull,
     // pub color: postgresql_crud::StdStringStringAsPostgresqlVarcharNotNull,
 
-    pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
+    // pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
     // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
     // pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt,
@@ -170,7 +170,7 @@ pub struct Dog {
     // pub sqlx_types_time_date_as_postgresql_date_not_null: postgresql_crud::SqlxTypesTimeDateAsPostgresqlDateNotNull,
 
     // pub sqlx_types_time_time_as_postgresql_time: postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTime,
-    // pub sqlx_types_time_time_as_postgresql_time_not_null: postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
+    pub sqlx_types_time_time_as_postgresql_time_not_null: postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTimeNotNull,
 
     // pub sqlx_types_uuid_uuid_as_postgresql_uuid: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuid,
     // pub sqlx_types_uuid_uuid_as_postgresql_uuid_not_null: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNull,
@@ -215,8 +215,8 @@ pub struct Dog {
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct ReadManyPayload {
     pub id: std::option::Option<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>>,
-    pub std_primitive_bool_as_postgresql_bool:
-        std::option::Option<std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool>>,
+    pub sqlx_types_time_time_as_postgresql_time_not_null:
+        std::option::Option<std::vec::Vec<postgresql_crud::WhereSqlxTypesTimeTime>>,
     pub select: DogColumnSelect,
     pub order_by: crate::server::postgres::order_by::OrderBy<DogColumn>,
     pub limit: postgresql_crud::StdPrimitiveI64,
@@ -227,8 +227,8 @@ pub struct ReadManyPayloadWithSerializeDeserialize {
     id: std::option::Option<
         std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize>,
     >,
-    std_primitive_bool_as_postgresql_bool: std::option::Option<
-        std::vec::Vec<postgresql_crud::WhereStdPrimitiveBoolWithSerializeDeserialize>,
+    sqlx_types_time_time_as_postgresql_time_not_null: std::option::Option<
+        std::vec::Vec<postgresql_crud::WhereSqlxTypesTimeTimeWithSerializeDeserialize>,
     >,
     select: DogColumnSelect,
     order_by: crate::server::postgres::order_by::OrderBy<DogColumn>,
@@ -240,6 +240,11 @@ pub enum ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserializeErrorNamed
     NotUuid {
         #[eo_error_occurence]
         not_uuid: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
+        #[eo_display]
+        sqlx_types_time_time: time::error::ComponentRange,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -279,14 +284,35 @@ impl std::convert::TryFrom<ReadManyPayloadWithSerializeDeserialize> for ReadMany
             },
             None => None,
         };
-        let std_primitive_bool_as_postgresql_bool =
-            match value.std_primitive_bool_as_postgresql_bool {
-                Some(value) => Some(
-                    value
-                        .into_iter()
-                        .map(|element| postgresql_crud::WhereStdPrimitiveBool::from(element))
-                        .collect(),
-                ),
+        let sqlx_types_time_time_as_postgresql_time_not_null =
+            match value.sqlx_types_time_time_as_postgresql_time_not_null {
+                Some(value) => {
+                    let mut values = std::vec::Vec::with_capacity(value.len());
+                    for element in value {
+                        match postgresql_crud::WhereSqlxTypesTimeTime::try_from(element) {
+                            Ok(value) => {
+                                values.push(value);
+                            }
+                            Err(e) => {
+                                return
+                            Err(Self :: Error ::
+                            SqlxTypesTimeTimeAsPostgresqlTimeNotNull
+                            {
+                                sqlx_types_time_time : e, code_occurence :
+                                error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                new(file! ().to_string(), line! (), column! (),
+                                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                {
+                                    file : std :: string :: String ::
+                                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line : 7830, column : 17,
+                                })),
+                            }) ;
+                            }
+                        }
+                    }
+                    Some(values)
+                }
                 None => None,
             };
         let select = value.select;
@@ -295,7 +321,7 @@ impl std::convert::TryFrom<ReadManyPayloadWithSerializeDeserialize> for ReadMany
         let offset = value.offset;
         Ok(Self {
             id,
-            std_primitive_bool_as_postgresql_bool,
+            sqlx_types_time_time_as_postgresql_time_not_null,
             select,
             order_by,
             limit,
@@ -314,9 +340,9 @@ impl std::convert::From<ReadManyPayload> for ReadManyPayloadWithSerializeDeseria
             ),
             None => None,
         };
-        let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize::from(
-                value.std_primitive_bool_as_postgresql_bool,
+        let sqlx_types_time_time_as_postgresql_time_not_null =
+            postgresql_crud::SqlxTypesTimeTimeWithSerializeDeserialize::from(
+                value.sqlx_types_time_time_as_postgresql_time_not_null,
             );
         let select = value.select;
         let order_by = value.order_by;
@@ -324,7 +350,7 @@ impl std::convert::From<ReadManyPayload> for ReadManyPayloadWithSerializeDeseria
         let offset = value.offset;
         Self {
             id,
-            std_primitive_bool_as_postgresql_bool,
+            sqlx_types_time_time_as_postgresql_time_not_null,
             select,
             order_by,
             limit,
@@ -452,10 +478,10 @@ pub enum TryReadMany {
         not_unique_id_vec: std::vec::Vec<postgresql_crud::WhereSqlxTypesUuidUuid>,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec {
+    NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec {
         #[eo_vec_display_with_serialize_deserialize]
-        not_unique_std_primitive_bool_as_postgresql_bool_vec:
-            std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool>,
+        not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec:
+            std::vec::Vec<postgresql_crud::WhereSqlxTypesTimeTime>,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUniquePrimaryKeys {
@@ -585,10 +611,10 @@ pub enum TryReadManyResponseVariants {
         not_unique_id_vec :
         std::vec::Vec<postgresql_crud::WhereSqlxTypesUuidUuid<>>,
         code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+    }, NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
     {
-        not_unique_std_primitive_bool_as_postgresql_bool_vec :
-        std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool<>>,
+        not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec :
+        std::vec::Vec<postgresql_crud::WhereSqlxTypesTimeTime<>>,
         code_occurence : error_occurence_lib::code_occurence::CodeOccurence
     }, NotUniquePrimaryKeys
     {
@@ -690,13 +716,13 @@ impl std::convert::From<TryReadMany> for TryReadManyResponseVariants {
             { not_unique_id_vec, code_occurence } => Self :: NotUniqueIdVec
             { not_unique_id_vec, code_occurence },
             TryReadManyWithSerializeDeserialize ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                 code_occurence
-            } => Self :: NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            } => Self :: NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                 code_occurence
             }, TryReadManyWithSerializeDeserialize :: NotUniquePrimaryKeys
             { not_unique_primary_keys, code_occurence } => Self ::
@@ -782,10 +808,10 @@ impl std::convert::From<&TryReadManyResponseVariants> for axum::http::StatusCode
             :: http :: StatusCode :: OK, TryReadManyResponseVariants ::
             NotUniqueIdVec { not_unique_id_vec : _, code_occurence : _ } =>
             axum :: http :: StatusCode :: OK, TryReadManyResponseVariants ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec : _,
-                code_occurence : _
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec
+                : _, code_occurence : _
             } => axum :: http :: StatusCode :: OK, TryReadManyResponseVariants
             :: NotUniquePrimaryKeys
             { not_unique_primary_keys : _, code_occurence : _ } => axum ::
@@ -823,6 +849,28 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr200Ok> for TryReadManyRe
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadManyResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadManyResponseVariantsTvfrr404NotFound>
+    for TryReadManyResponseVariants
+{
+    fn from(value: TryReadManyResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryReadManyResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryReadManyResponseVariantsTvfrr400BadRequest {
     TypeNotFound
     {
@@ -849,10 +897,10 @@ pub enum TryReadManyResponseVariantsTvfrr400BadRequest {
         not_unique_id_vec :
         std::vec::Vec<postgresql_crud::WhereSqlxTypesUuidUuid<>>,
         code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+    }, NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
     {
-        not_unique_std_primitive_bool_as_postgresql_bool_vec :
-        std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool<>>,
+        not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec :
+        std::vec::Vec<postgresql_crud::WhereSqlxTypesTimeTime<>>,
         code_occurence : error_occurence_lib::code_occurence::CodeOccurence
     }, NotUniquePrimaryKeys
     {
@@ -911,13 +959,13 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr400BadRequest>
             { not_unique_id_vec, code_occurence } => Self :: NotUniqueIdVec
             { not_unique_id_vec, code_occurence },
             TryReadManyResponseVariantsTvfrr400BadRequest ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                 code_occurence
-            } => Self :: NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            } => Self :: NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                 code_occurence
             }, TryReadManyResponseVariantsTvfrr400BadRequest ::
             NotUniquePrimaryKeys { not_unique_primary_keys, code_occurence }
@@ -1142,28 +1190,6 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr408RequestTimeout>
         }
     }
 }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadManyResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryReadManyResponseVariantsTvfrr404NotFound>
-    for TryReadManyResponseVariants
-{
-    fn from(value: TryReadManyResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryReadManyResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
 impl TryFrom<TryReadManyResponseVariants> for std::vec::Vec<DogOptions> {
     type Error = TryReadManyWithSerializeDeserialize;
     fn try_from(value: TryReadManyResponseVariants) -> Result<Self, Self::Error> {
@@ -1241,15 +1267,15 @@ impl TryFrom<TryReadManyResponseVariants> for std::vec::Vec<DogOptions> {
             Err(TryReadManyWithSerializeDeserialize :: NotUniqueIdVec
             { not_unique_id_vec, code_occurence }),
             TryReadManyResponseVariants ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                 code_occurence
             } =>
             Err(TryReadManyWithSerializeDeserialize ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                 code_occurence
             }), TryReadManyResponseVariants :: NotUniquePrimaryKeys
             { not_unique_primary_keys, code_occurence } =>
@@ -1352,7 +1378,7 @@ pub enum TryReadManyStatusCodesChecker {
     BytesRejectionTvfrr500InternalServerError,
     UnexpectedCaseTvfrr500InternalServerError,
     NotUniqueIdVecTvfrr400BadRequest,
-    NotUniqueStdPrimitiveBoolAsPostgresqlBoolVecTvfrr400BadRequest,
+    NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVecTvfrr400BadRequest,
     NotUniquePrimaryKeysTvfrr400BadRequest,
     BindQueryTvfrr500InternalServerError,
     NotUuidTvfrr400BadRequest,
@@ -1476,10 +1502,10 @@ impl axum::response::IntoResponse for TryReadManyResponseVariants {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: OK ; res
             }, TryReadManyResponseVariants ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
             {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec : _,
-                code_occurence : _
+                not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec
+                : _, code_occurence : _
             } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
@@ -1843,7 +1869,7 @@ pub async fn read_many(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 4351, column : 17,
+                            line : 4345, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -1890,9 +1916,9 @@ pub async fn read_many(
                 return TryReadManyResponseVariants::from(e);
             }
         }
-        let std_primitive_bool_as_postgresql_bool_handle = match parameters
+        let sqlx_types_time_time_as_postgresql_time_not_null_handle = match parameters
             .payload
-            .std_primitive_bool_as_postgresql_bool
+            .sqlx_types_time_time_as_postgresql_time_not_null
         {
             Some(value) => {
                 let is_unique = {
@@ -1914,25 +1940,25 @@ pub async fn read_many(
                 match is_unique {
                     true => Some(value),
                     false => {
-                        let not_unique_std_primitive_bool_as_postgresql_bool_vec = {
+                        let not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec = {
                             let mut vec = std::vec::Vec::with_capacity(value.len());
-                            let mut not_unique_std_primitive_bool_as_postgresql_bool_vec =
+                            let mut not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec =
                                 std::vec::Vec::with_capacity(value.len());
                             for element in value {
                                 match vec.contains(&element) {
                                     true => {
-                                        not_unique_std_primitive_bool_as_postgresql_bool_vec
-                                            .push(element);
+                                        not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec.push(element)
+                                        ;
                                     }
                                     false => {
                                         vec.push(element);
                                     }
                                 }
                             }
-                            not_unique_std_primitive_bool_as_postgresql_bool_vec
+                            not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec
                         };
-                        let e = TryReadMany::NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec {
-                            not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                        let e = TryReadMany::NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec {
+                            not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                 file!().to_string(),
                                 line!(),
@@ -1941,7 +1967,7 @@ pub async fn read_many(
                                     file: std::string::String::from(
                                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                     ),
-                                    line: 4006,
+                                    line: 4000,
                                     column: 29,
                                 }),
                             ),
@@ -2004,7 +2030,7 @@ pub async fn read_many(
                         additional_parameters
                             .push_str(&format!("{} id in (select unnest(${}))", prefix, increment));
                     }
-                    if let Some(value) = &std_primitive_bool_as_postgresql_bool_handle {
+                    if let Some(value) = &sqlx_types_time_time_as_postgresql_time_not_null_handle {
                         let prefix = match additional_parameters.is_empty() {
                             true => "where",
                             false => " and",
@@ -2017,9 +2043,8 @@ pub async fn read_many(
                                     &mut increment,
                                 ) {
                                     Ok(value) => {
-                                        let handle = format!(
-                                            "std_primitive_bool_as_postgresql_bool ~ {value} "
-                                        );
+                                        let handle = format!
+                                    ("sqlx_types_time_time_as_postgresql_time_not_null ~ {value} ");
                                         match index == 0 {
                                             true => {
                                                 bind_increments.push_str(&handle);
@@ -2142,7 +2167,7 @@ pub async fn read_many(
                         .collect::<std::vec::Vec<sqlx::types::Uuid>>(),
                 );
             }
-            if let Some(values) = std_primitive_bool_as_postgresql_bool_handle {
+            if let Some(values) = sqlx_types_time_time_as_postgresql_time_not_null_handle {
                 for value in values {
                     query = postgresql_crud::BindQuery::bind_value_to_query(value, query);
                 }
