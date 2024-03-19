@@ -270,7 +270,7 @@ impl std::convert::TryFrom<ReadManyPayloadWithSerializeDeserialize> for ReadMany
                                 file: std::string::String::from(
                                     "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                 ),
-                                line: 3722,
+                                line: 3721,
                                 column: 29,
                             }),
                         ),
@@ -279,14 +279,16 @@ impl std::convert::TryFrom<ReadManyPayloadWithSerializeDeserialize> for ReadMany
             },
             None => None,
         };
-        //HERE
-        // let std_primitive_bool_as_postgresql_bool = postgresql_crud::StdPrimitiveBool::from(value.std_primitive_bool_as_postgresql_bool);
-        //the trait `From<std::option::Option<Vec<WhereStdPrimitiveBoolWithSerializeDeserialize>>>` is not implemented for `std::option::Option<std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool>>`
-        let std_primitive_bool_as_postgresql_bool = match value.std_primitive_bool_as_postgresql_bool {
-            Some(value) => Some(value.into_iter().map(|element|postgresql_crud::WhereStdPrimitiveBool::from(element)).collect()),
-            None => None,
-        };
-        //END HERE
+        let std_primitive_bool_as_postgresql_bool =
+            match value.std_primitive_bool_as_postgresql_bool {
+                Some(value) => Some(
+                    value
+                        .into_iter()
+                        .map(|element| postgresql_crud::WhereStdPrimitiveBool::from(element))
+                        .collect(),
+                ),
+                None => None,
+            };
         let select = value.select;
         let order_by = value.order_by;
         let limit = value.limit;
@@ -821,6 +823,137 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr200Ok> for TryReadManyRe
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadManyResponseVariantsTvfrr400BadRequest {
+    TypeNotFound
+    {
+        type_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnNotFound
+    {
+        column_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonDataError
+    {
+        json_data_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonSyntaxError
+    {
+        json_syntax_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, MissingJsonContentType
+    {
+        missing_json_content_type : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NotUniqueIdVec
+    {
+        not_unique_id_vec :
+        std::vec::Vec<postgresql_crud::WhereSqlxTypesUuidUuid<>>,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+    {
+        not_unique_std_primitive_bool_as_postgresql_bool_vec :
+        std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool<>>,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, NotUniquePrimaryKeys
+    {
+        not_unique_primary_keys :
+        std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize<>>,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, NotUuid
+    {
+        not_uuid : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserialize
+    {
+        read_many_payload_try_from_read_many_payload_with_serialize_deserialize
+        :
+        ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorNotEqual
+    {
+        commit_not_equal : std::string::String<>, commit_to_use :
+        std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorToStrConversion
+    {
+        commit_to_str_conversion : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NoCommitExtractorHeader
+    {
+        no_commit_header : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+}
+impl std::convert::From<TryReadManyResponseVariantsTvfrr400BadRequest>
+    for TryReadManyResponseVariants
+{
+    fn from(value: TryReadManyResponseVariantsTvfrr400BadRequest) -> Self {
+        match value
+        {
+            TryReadManyResponseVariantsTvfrr400BadRequest :: TypeNotFound
+            { type_not_found, code_occurence } => Self :: TypeNotFound
+            { type_not_found, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest :: ColumnNotFound
+            { column_not_found, code_occurence } => Self :: ColumnNotFound
+            { column_not_found, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest :: JsonDataError
+            { json_data_error, code_occurence } => Self :: JsonDataError
+            { json_data_error, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
+            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            { json_syntax_error, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence } => Self ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest :: NotUniqueIdVec
+            { not_unique_id_vec, code_occurence } => Self :: NotUniqueIdVec
+            { not_unique_id_vec, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest ::
+            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            {
+                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                code_occurence
+            } => Self :: NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
+            {
+                not_unique_std_primitive_bool_as_postgresql_bool_vec,
+                code_occurence
+            }, TryReadManyResponseVariantsTvfrr400BadRequest ::
+            NotUniquePrimaryKeys { not_unique_primary_keys, code_occurence }
+            => Self :: NotUniquePrimaryKeys
+            { not_unique_primary_keys, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest :: NotUuid
+            { not_uuid, code_occurence } => Self :: NotUuid
+            { not_uuid, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest ::
+            ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserialize
+            {
+                read_many_payload_try_from_read_many_payload_with_serialize_deserialize,
+                code_occurence
+            } => Self ::
+            ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserialize
+            {
+                read_many_payload_try_from_read_many_payload_with_serialize_deserialize,
+                code_occurence
+            }, TryReadManyResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence } => Self ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence } => Self ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence },
+            TryReadManyResponseVariantsTvfrr400BadRequest ::
+            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
+            Self :: NoCommitExtractorHeader
+            { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryReadManyResponseVariantsTvfrr500InternalServerError {
     Configuration {
         configuration: std::string::String,
@@ -988,28 +1121,6 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr500InternalServerError>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadManyResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryReadManyResponseVariantsTvfrr404NotFound>
-    for TryReadManyResponseVariants
-{
-    fn from(value: TryReadManyResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryReadManyResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryReadManyResponseVariantsTvfrr408RequestTimeout {
     PoolTimedOut {
         pool_timed_out: std::string::String,
@@ -1032,133 +1143,24 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr408RequestTimeout>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadManyResponseVariantsTvfrr400BadRequest {
-    TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniqueIdVec
-    {
-        not_unique_id_vec :
-        std::vec::Vec<postgresql_crud::WhereSqlxTypesUuidUuid<>>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
-    {
-        not_unique_std_primitive_bool_as_postgresql_bool_vec :
-        std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool<>>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniquePrimaryKeys
-    {
-        not_unique_primary_keys :
-        std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize<>>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUuid
-    {
-        not_uuid : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserialize
-    {
-        read_many_payload_try_from_read_many_payload_with_serialize_deserialize
-        :
-        ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }
+pub enum TryReadManyResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
-impl std::convert::From<TryReadManyResponseVariantsTvfrr400BadRequest>
+impl std::convert::From<TryReadManyResponseVariantsTvfrr404NotFound>
     for TryReadManyResponseVariants
 {
-    fn from(value: TryReadManyResponseVariantsTvfrr400BadRequest) -> Self {
-        match value
-        {
-            TryReadManyResponseVariantsTvfrr400BadRequest :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest :: JsonDataError
-            { json_data_error, code_occurence } => Self :: JsonDataError
-            { json_data_error, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest :: NotUniqueIdVec
-            { not_unique_id_vec, code_occurence } => Self :: NotUniqueIdVec
-            { not_unique_id_vec, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest ::
-            NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
-            {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
-                code_occurence
-            } => Self :: NotUniqueStdPrimitiveBoolAsPostgresqlBoolVec
-            {
-                not_unique_std_primitive_bool_as_postgresql_bool_vec,
-                code_occurence
-            }, TryReadManyResponseVariantsTvfrr400BadRequest ::
-            NotUniquePrimaryKeys { not_unique_primary_keys, code_occurence }
-            => Self :: NotUniquePrimaryKeys
-            { not_unique_primary_keys, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest :: NotUuid
-            { not_uuid, code_occurence } => Self :: NotUuid
-            { not_uuid, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest ::
-            ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserialize
-            {
-                read_many_payload_try_from_read_many_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserialize
-            {
-                read_many_payload_try_from_read_many_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryReadManyResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } => Self ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } => Self ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence },
-            TryReadManyResponseVariantsTvfrr400BadRequest ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
-            Self :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence }
+    fn from(value: TryReadManyResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryReadManyResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
         }
     }
 }
@@ -1591,7 +1593,7 @@ pub async fn try_read_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 1675,
+                        line: 1674,
                         column: 13,
                     }),
                 ),
@@ -1618,7 +1620,7 @@ pub async fn try_read_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2377,
+                        line: 2376,
                         column: 13,
                     }),
                 ),
@@ -1642,7 +1644,7 @@ pub async fn try_read_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2306,
+                        line: 2305,
                         column: 13,
                     }),
                 ),
@@ -1666,7 +1668,31 @@ pub async fn try_read_many<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2343,
+                            line: 2342,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr404NotFound>(&response_text) {
+            Ok(value) => TryReadManyResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryReadManyErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2342,
                             column: 13,
                         }),
                     ),
@@ -1692,7 +1718,7 @@ pub async fn try_read_many<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2343,
+                            line: 2342,
                             column: 13,
                         }),
                     ),
@@ -1718,31 +1744,7 @@ pub async fn try_read_many<'a>(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 2343,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr404NotFound>(&response_text) {
-            Ok(value) => TryReadManyResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryReadManyErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2343,
+                            line: 2342,
                             column: 13,
                         }),
                     ),
@@ -1765,7 +1767,7 @@ pub async fn try_read_many<'a>(
                     file: std::string::String::from(
                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                     ),
-                    line: 2271,
+                    line: 2270,
                     column: 13,
                 }),
             ),
@@ -1784,7 +1786,7 @@ pub async fn try_read_many<'a>(
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 2233,
+                        line: 2232,
                         column: 13,
                     }),
                 ),
@@ -1841,7 +1843,7 @@ pub async fn read_many(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 4347, column : 17,
+                            line : 4351, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -1879,7 +1881,7 @@ pub async fn read_many(
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 1899,
+                            line: 1898,
                             column: 13,
                         }),
                     ),
@@ -1939,7 +1941,7 @@ pub async fn read_many(
                                     file: std::string::String::from(
                                         "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                                     ),
-                                    line: 4002,
+                                    line: 4006,
                                     column: 29,
                                 }),
                             ),
@@ -1981,7 +1983,7 @@ pub async fn read_many(
                                 {
                                     file : std :: string :: String ::
                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1785, column : 13,
+                                    line : 1784, column : 13,
                                 })),
                             } ;
                                 return TryReadManyResponseVariants :: BindQuery
@@ -1994,7 +1996,7 @@ pub async fn read_many(
                                 {
                                     file : std :: string :: String ::
                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1755, column : 13,
+                                    line : 1754, column : 13,
                                 }))
                             } ;
                             }
@@ -2041,7 +2043,7 @@ pub async fn read_many(
                                         {
                                             file : std :: string :: String ::
                                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1755, column : 13,
+                                            line : 1754, column : 13,
                                         }))
                                     } ;
                                     }
@@ -2090,7 +2092,7 @@ pub async fn read_many(
                                 {
                                     file : std :: string :: String ::
                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1755, column : 13,
+                                    line : 1754, column : 13,
                                 }))
                             } ;
                             }
@@ -2118,7 +2120,7 @@ pub async fn read_many(
                                 {
                                     file : std :: string :: String ::
                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 1755, column : 13,
+                                    line : 1754, column : 13,
                                 }))
                             } ;
                             }

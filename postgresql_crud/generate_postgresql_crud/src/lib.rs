@@ -3750,10 +3750,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter()
-                        .map(|element| generate_let_field_ident_value_field_ident_try_from_token_stream(
-                            element,
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                            &field_code_occurence_new_5ad5fc24_5f04_4749_bf9e_17f74223d293_token_stream,
+                        .map(|element| generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
+                            element
                         ));
                     quote::quote! {
                         impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
@@ -7807,6 +7805,29 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(
     }
 }
 
+fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
+    value: &SynFieldWithAdditionalInfo
+) -> proc_macro2::TokenStream {
+    let field_ident = &value.field_ident;
+    let where_inner_type_token_stream = {
+        let value_stringified = &value.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");//todo
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+        postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
+            let #field_ident = match value.#field_ident {
+                Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::from(element)).collect()),
+                None => None,
+            };
+        },
+        postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{//todo
+
+        }
+    }
+}
+
+
 fn generate_let_field_ident_value_field_ident_from_token_stream(
     element: &SynFieldWithAdditionalInfo,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -8697,29 +8718,6 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
             }
         }
     }).collect()
-}
-
-fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
-    value: &SynFieldWithAdditionalInfo,
-    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
-) -> proc_macro2::TokenStream {
-    let field_ident = &value.field_ident;
-    let where_inner_type_token_stream = {
-        let value_stringified = &value.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");//todo
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-        postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
-            let #field_ident = match value.#field_ident {
-                Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::from(element)).collect()),
-                None => None,
-            };
-        },
-        postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{//todo
-
-        }
-    }
 }
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
