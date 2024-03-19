@@ -283,14 +283,7 @@ impl std::convert::TryFrom<ReadManyPayloadWithSerializeDeserialize> for ReadMany
         // let std_primitive_bool_as_postgresql_bool = postgresql_crud::StdPrimitiveBool::from(value.std_primitive_bool_as_postgresql_bool);
         //the trait `From<std::option::Option<Vec<WhereStdPrimitiveBoolWithSerializeDeserialize>>>` is not implemented for `std::option::Option<std::vec::Vec<postgresql_crud::WhereStdPrimitiveBool>>`
         let std_primitive_bool_as_postgresql_bool = match value.std_primitive_bool_as_postgresql_bool {
-            Some(value) => {
-                let mut values = std::vec::Vec::with_capacity(value.len());
-                for element in value {
-                    let element_handle = postgresql_crud::WhereStdPrimitiveBool::from(element);
-                    values.push(element_handle);
-                }
-                Some(values)
-            },
+            Some(value) => Some(value.into_iter().map(|element|postgresql_crud::WhereStdPrimitiveBool::from(element)).collect()),
             None => None,
         };
         //END HERE
