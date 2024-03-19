@@ -17,7 +17,7 @@ members = [
   "postgresql_crud",
   "postgresql_crud/generate_postgresql_crud",
   "postgresql_crud/postgresql_crud_common",
-  "postgresql_crud/postgresql_crud_common/bind_query",
+  "postgresql_crud/postgresql_crud_common/postgresql_crud_types_macro_logic_reuse",
   "proc_macro_assistants",
   "proc_macro_common",
   "proc_macro_helpers",
