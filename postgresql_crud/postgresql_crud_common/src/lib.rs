@@ -7099,7 +7099,7 @@ impl std::convert::TryFrom<WhereSqlxTypesTimeTimeWithSerializeDeserialize> for W
     }
 }
 
-#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, bind_query::Common)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
@@ -7130,86 +7130,7 @@ impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidWithSerializeDes
         Self(value.0.to_string())
     }
 }
-impl SqlxTypesUuidUuid {
-    pub fn into_inner(self) -> sqlx::types::uuid::Uuid {
-        self.0
-    }
-}
-impl std::convert::From<SqlxTypesUuidUuid> for sqlx::types::uuid::Uuid {
-    fn from(value: SqlxTypesUuidUuid) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxTypesUuidUuid {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::uuid::Uuid as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesUuidUuid {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxTypesUuidUuid {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
-impl std::convert::From<SqlxTypesUuidUuid> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxTypesUuidUuid) -> Self {
-        SupportedSqlxPostgresType::SqlxTypesUuidUuid
-    }
-}
-impl SqlxTypesUuidUuid {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxTypesUuidUuid {
-    pub value: SqlxTypesUuidUuid,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxTypesUuidUuidWithSerializeDeserialize {
-    pub value: SqlxTypesUuidUuidWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
     SqlxTypesUuidUuid {
