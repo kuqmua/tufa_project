@@ -155,7 +155,6 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    //WhereStdPrimitiveBoolWithSerializeDeserialize
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -347,7 +346,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "PostgresqlTypeLogicUsingFromSerializeDeserialize";
+    let proc_macro_name_upper_camel_case = "CommonFrom";
     let proc_macro_name_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &proc_macro_name_upper_camel_case,
     );
@@ -391,7 +390,6 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    //WhereStdPrimitiveBoolWithSerializeDeserialize
     let gen = quote::quote!{
         impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
             fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
@@ -407,4 +405,108 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     // }
     gen.into()
 }
-//
+
+#[proc_macro_derive(CommonTryFrom)]
+pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "CommonTryFrom";
+    let proc_macro_name_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &proc_macro_name_upper_camel_case,
+    );
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {e}",
+            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+        )
+    });
+    let ident = &ast.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let field = if let syn::Data::Struct(data_struct) = &ast.data {
+        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
+            match fields_unnamed.unnamed.len() {
+                1 => &fields_unnamed.unnamed[0],
+                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed with one field")
+            }
+        } else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed");
+        }
+    } else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+    };
+    let field_type = &field.ty;
+    let ident_snake_case_token_stream = {
+        let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let ident_with_serialize_deserialize_error_named_token_stream = {
+        let value_stringified = format!(
+            "{ident}{}{}", 
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_token_stream = {
+        let value_stringified = format!("{}{ident}", proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}{}", 
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_with_serialize_deserialize_error_named_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}{}{}", 
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let gen = quote::quote!{
+        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+        pub enum #where_ident_with_serialize_deserialize_error_named_token_stream {
+            #ident {
+                #[eo_error_occurence]
+                #ident_snake_case_token_stream: #ident_with_serialize_deserialize_error_named_token_stream,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
+            },
+        }
+        impl std::convert::TryFrom<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
+            type Error = #where_ident_with_serialize_deserialize_error_named_token_stream;
+            fn try_from(value: #where_ident_with_serialize_deserialize_token_stream) -> Result<Self, Self::Error> {
+                Ok(Self {
+                    value: match #ident::try_from(value.value) {
+                        Ok(value) => value,
+                        Err(e) => {
+                            return Err(Self::Error::#ident {
+                                #ident_snake_case_token_stream: e,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }  
+                    },
+                    conjuctive_operator: value.conjuctive_operator
+                })
+            }
+        }
+    };
+    // if ident == "" {
+        // println!("{gen}");
+    // }
+    gen.into()
+}

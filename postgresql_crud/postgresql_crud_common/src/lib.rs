@@ -5398,7 +5398,7 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
@@ -5639,31 +5639,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-        #[eo_error_occurence]
-        sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    type Error = WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-                        sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
@@ -5755,7 +5730,7 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
@@ -5996,31 +5971,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
     }
 }
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
-    SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-        #[eo_error_occurence]
-        sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-    type Error = WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {
-                        sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
@@ -6112,7 +6062,7 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
@@ -6349,31 +6299,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
-    SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-        #[eo_error_occurence]
-        sqlx_postgres_types_pg_range_sqlx_types_time_date: SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-    type Error = WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxPostgresTypesPgRangeSqlxTypesTimeDate::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimeDate {
-                        sqlx_postgres_types_pg_range_sqlx_types_time_date: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
@@ -6595,7 +6520,7 @@ pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
@@ -6669,33 +6594,8 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz>
     }
 }
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
-    SqlxPostgresTypesPgTimeTz {
-        #[eo_error_occurence]
-        sqlx_postgres_types_pg_time_tz: SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize> for WhereSqlxPostgresTypesPgTimeTz {
-    type Error = WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxPostgresTypesPgTimeTz::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxPostgresTypesPgTimeTz {
-                        sqlx_postgres_types_pg_time_tz: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
@@ -6774,33 +6674,8 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
-    SqlxTypesTimePrimitiveDateTime {
-        #[eo_error_occurence]
-        sqlx_types_time_primitive_date_time: SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize> for WhereSqlxTypesTimePrimitiveDateTime {
-    type Error = WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxTypesTimePrimitiveDateTime::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxTypesTimePrimitiveDateTime {
-                        sqlx_types_time_primitive_date_time: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
@@ -6836,33 +6711,8 @@ impl std::convert::From<SqlxTypesTimeOffsetDateTime>
     }
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    SqlxTypesTimeOffsetDateTime {
-        #[eo_error_occurence]
-        sqlx_types_time_offset_date_time: SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereSqlxTypesTimeOffsetDateTime {
-    type Error = WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxTypesTimeOffsetDateTime::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxTypesTimeOffsetDateTime {
-                        sqlx_types_time_offset_date_time: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateWithSerializeDeserialize {
@@ -6909,33 +6759,8 @@ impl std::convert::From<SqlxTypesTimeDate>
 }
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
-    SqlxTypesTimeDate {
-        #[eo_error_occurence]
-        sqlx_types_time_date: SqlxTypesTimeDateWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxTypesTimeDateWithSerializeDeserialize> for WhereSqlxTypesTimeDate {
-    type Error = WhereSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxTypesTimeDateWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxTypesTimeDate::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxTypesTimeDate {
-                        sqlx_types_time_date: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
@@ -6977,33 +6802,8 @@ impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeWithSerializeDes
 }
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
-    SqlxTypesTimeTime {
-        #[eo_error_occurence]
-        sqlx_types_time_time: SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxTypesTimeTimeWithSerializeDeserialize> for WhereSqlxTypesTimeTime {
-    type Error = WhereSqlxTypesTimeTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxTypesTimeTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxTypesTimeTime::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxTypesTimeTime {
-                        sqlx_types_time_time: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
-#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, bind_query::Common)]
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, bind_query::Common, bind_query::CommonTryFrom)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
@@ -7035,31 +6835,6 @@ impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidWithSerializeDes
     }
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
-    SqlxTypesUuidUuid {
-        #[eo_error_occurence]
-        sqlx_types_uuid_uuid: SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence
-    },
-}
-impl std::convert::TryFrom<WhereSqlxTypesUuidUuidWithSerializeDeserialize> for WhereSqlxTypesUuidUuid {
-    type Error = WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereSqlxTypesUuidUuidWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
-            value: match SqlxTypesUuidUuid::try_from(value.value) {
-                Ok(value) => value,
-                Err(e) => {
-                    return Err(Self::Error::SqlxTypesUuidUuid {
-                        sqlx_types_uuid_uuid: e,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }  
-            },
-            conjuctive_operator: value.conjuctive_operator
-        })
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::PostgresqlTypeLogicUsingFromSerializeDeserialize, bind_query::CommonFrom, bind_query::Common)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
