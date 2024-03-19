@@ -6509,7 +6509,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSeri
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
@@ -6561,88 +6561,7 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
         Self { start, end }
     }
 }
-impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgRange<sqlx::types::Decimal> {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
-    for sqlx::postgres::types::PgRange<sqlx::types::Decimal>
-{
-    fn from(value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::postgres::types::PgRange<sqlx::types::Decimal> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
-impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxPostgresTypesPgRangeSqlxTypesDecimal) -> Self {
-        SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal
-    }
-}
-impl SqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    pub value: SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
-    pub value: SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesDecimal {
     fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Self {
         Self {
@@ -6652,7 +6571,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSeriali
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
@@ -6670,86 +6589,7 @@ impl std::convert::From<SqlxPostgresTypesPgMoney>
         Self(value.0 .0)
     }
 }
-impl SqlxPostgresTypesPgMoney {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgMoney {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgMoney> for sqlx::postgres::types::PgMoney {
-    fn from(value: SqlxPostgresTypesPgMoney) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::postgres::types::PgMoney as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgMoney {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgMoney {
-    fn check_supported_postgresql_column_type() {}
-}
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
-impl std::convert::From<SqlxPostgresTypesPgMoney> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxPostgresTypesPgMoney) -> Self {
-        SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney
-    }
-}
-impl SqlxPostgresTypesPgMoney {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxPostgresTypesPgMoney {
-    pub value: SqlxPostgresTypesPgMoney,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize {
-    pub value: SqlxPostgresTypesPgMoneyWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 impl std::convert::From<WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize> for WhereSqlxPostgresTypesPgMoney {
     fn from(value: WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize) -> Self {
         Self {
@@ -6759,7 +6599,7 @@ impl std::convert::From<WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize> f
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::BindQueryForRustSqlxPostgresqlWrapperType)]
+#[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
@@ -6774,89 +6614,10 @@ impl std::convert::From<SqlxPostgresTypesPgCiText>
     for SqlxPostgresTypesPgCiTextWithSerializeDeserialize
 {
     fn from(value: SqlxPostgresTypesPgCiText) -> Self {
-        Self(value.0 .0)
+        Self(value.0.0)
     }
-}
-impl SqlxPostgresTypesPgCiText {
-    pub fn into_inner(self) -> sqlx::postgres::types::PgCiText {
-        self.0
-    }
-}
-impl std::convert::From<SqlxPostgresTypesPgCiText> for sqlx::postgres::types::PgCiText {
-    fn from(value: SqlxPostgresTypesPgCiText) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::postgres::types::PgCiText as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-//     fn encode(
-//         self,
-//         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-//     ) -> sqlx::encode::IsNull
-//     where
-//         Self: Sized,
-//     {
-//         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-//     }
-//     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-//         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-//     }
-//     fn size_hint(&self) -> std::primitive::usize {
-//         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgCiText {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-//             Ok(value) => Ok(Self(value)),
-//             Err(e) => Err(e),
-//         }
-//     }
-// }
-impl CheckSupportedPostgresqlColumnType for SqlxPostgresTypesPgCiText {
-    fn check_supported_postgresql_column_type() {}
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
-impl std::convert::From<SqlxPostgresTypesPgCiText> for SupportedSqlxPostgresType {
-    fn from(_value: SqlxPostgresTypesPgCiText) -> Self {
-        SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText
-    }
-}
-impl SqlxPostgresTypesPgCiText {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-// impl std::convert::From<> for {
-//     fn from(value: ) -> Self {
-//         value.0
-//     }
-// }
-#[derive(Debug, PartialEq, bind_query::BindQueryForWhere)]
-pub struct WhereSqlxPostgresTypesPgCiText {
-    pub value: SqlxPostgresTypesPgCiText,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize {
-    pub value: SqlxPostgresTypesPgCiTextWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
 impl std::convert::From<WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize> for WhereSqlxPostgresTypesPgCiText {
     fn from(value: WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize) -> Self {
         Self {
