@@ -170,6 +170,72 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
                 Self(value.0)
             }
         }
+        impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
+            fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
+                Self {
+                    value: #ident::from(value.value),
+                    conjuctive_operator: value.conjuctive_operator
+                }
+            }
+        }
+    };
+    // if ident == "" {
+    //     println!("{gen}");
+    // }
+    gen.into()
+}
+
+
+#[proc_macro_derive(Common)] //todo check on postgresql max length value of type
+pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "Common";
+    let proc_macro_name_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &proc_macro_name_upper_camel_case,
+    );
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {e}",
+            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+        )
+    });
+    // println!("{:#?}", ast.data);
+    let ident = &ast.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let field = if let syn::Data::Struct(data_struct) = &ast.data {
+        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
+            match fields_unnamed.unnamed.len() {
+                1 => &fields_unnamed.unnamed[0],
+                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed with one field")
+            }
+        } else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Unnamed");
+        }
+    } else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+    };
+    let field_type = &field.ty;
+    let ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_token_stream = {
+        let value_stringified = format!("{}{ident}", proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}{}", 
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let gen = quote::quote!{
         impl #ident {
             pub fn into_inner(self) -> #field_type {
                 self.0
@@ -188,49 +254,43 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
                 <#field_type as sqlx::Type<sqlx::Postgres>>::compatible(ty)
             }
         }
-        // // impl sqlx::Encode<'_, sqlx::Postgres> for StdPrimitiveBool {
-        // //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
-        // //         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-        // //     }
-        // //     fn encode(
-        // //         self,
-        // //         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
-        // //     ) -> sqlx::encode::IsNull
-        // //     where
-        // //         Self: Sized,
-        // //     {
-        // //         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
-        // //     }
-        // //     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
-        // //         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
-        // //     }
-        // //     fn size_hint(&self) -> std::primitive::usize {
-        // //         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
-        // //     }
-        // // }
-        // // impl sqlx::Decode<'_, sqlx::Postgres> for StdPrimitiveBool {
-        // //     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        // //         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
-        // //             Ok(value) => Ok(Self(value)),
-        // //             Err(e) => Err(e),
-        // //         }
-        // //     }
-        // // }
+        // impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+        //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+        //         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+        //     }
+        //     fn encode(
+        //         self,
+        //         buf: &mut <sqlx::Postgres as sqlx::database::HasArguments<'_>>::ArgumentBuffer,
+        //     ) -> sqlx::encode::IsNull
+        //     where
+        //         Self: Sized,
+        //     {
+        //         sqlx::Encode::<sqlx::Postgres>::encode(self.0, buf)
+        //     }
+        //     fn produces(&self) -> Option<<sqlx::Postgres as sqlx::Database>::TypeInfo> {
+        //         sqlx::Encode::<sqlx::Postgres>::produces(&self.0)
+        //     }
+        //     fn size_hint(&self) -> std::primitive::usize {
+        //         sqlx::Encode::<sqlx::Postgres>::size_hint(&self.0)
+        //     }
+        // }
+        // impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
+        //     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        //         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
+        //             Ok(value) => Ok(Self(value)),
+        //             Err(e) => Err(e),
+        //         }
+        //     }
+        // }
         impl CheckSupportedPostgresqlColumnType for #ident {
             fn check_supported_postgresql_column_type() {}
         }
-        // impl AsPostgresqlBool for StdPrimitiveBool {}
-        // impl PostgresqlOrder for StdPrimitiveBool {}
+        // impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
         impl std::convert::From<#ident> for SupportedSqlxPostgresType {
             fn from(_value: #ident) -> Self {
                 SupportedSqlxPostgresType::#ident
             }
         }
-        // impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
-        //     fn from(value: StdPrimitiveBoolAsPostgresqlBool) -> Self {
-        //         value.0
-        //     }
-        // }
         impl #ident {
             pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
                 value
@@ -239,11 +299,11 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
                     .collect()
             }
         }
-        // // impl std::convert::From<> for {
-        // //     fn from(value: ) -> Self {
-        // //         value.0
-        // //     }
-        // // }
+        // impl std::convert::From<> for {
+        //     fn from(value: ) -> Self {
+        //         value.0
+        //     }
+        // }
         #[derive(Debug, PartialEq)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
@@ -287,17 +347,6 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
             pub value: #ident_with_serialize_deserialize_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
         }
-        impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
-            fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
-                Self {
-                    value: #ident::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator
-                }
-            }
-        }
     };
-    // if ident == "" {
-    //     println!("{gen}");
-    // }
     gen.into()
 }
