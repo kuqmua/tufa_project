@@ -5012,7 +5012,7 @@ impl PostgresqlOrder for StdStringString {}
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
@@ -5044,16 +5044,8 @@ impl std::convert::From<SqlxPostgresTypesPgInterval>
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
-impl std::convert::From<WhereSqlxPostgresTypesPgIntervalWithSerializeDeserialize> for WhereSqlxPostgresTypesPgInterval {
-    fn from(value: WhereSqlxPostgresTypesPgIntervalWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgInterval::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
@@ -5083,16 +5075,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64>
     }
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    fn from(value: WhereSqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeStdPrimitiveI64::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
@@ -5122,16 +5106,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
     }
 }
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeStdPrimitiveI32 {
-    fn from(value: WhereSqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeStdPrimitiveI32::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
@@ -5287,16 +5263,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
@@ -5429,14 +5397,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
@@ -5705,7 +5665,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateT
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>,
 );
@@ -5794,14 +5754,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
@@ -6070,7 +6022,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDa
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
@@ -6159,14 +6111,6 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::Common)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
@@ -6431,7 +6375,7 @@ impl std::convert::TryFrom<WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSer
     }
 }
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
@@ -6500,16 +6444,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimal {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesBigDecimal::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
@@ -6562,16 +6498,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
-impl std::convert::From<WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize> for WhereSqlxPostgresTypesPgRangeSqlxTypesDecimal {
-    fn from(value: WhereSqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgRangeSqlxTypesDecimal::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
@@ -6590,16 +6518,8 @@ impl std::convert::From<SqlxPostgresTypesPgMoney>
     }
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
-impl std::convert::From<WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize> for WhereSqlxPostgresTypesPgMoney {
-    fn from(value: WhereSqlxPostgresTypesPgMoneyWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgMoney::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
@@ -6618,16 +6538,8 @@ impl std::convert::From<SqlxPostgresTypesPgCiText>
     }
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
-impl std::convert::From<WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize> for WhereSqlxPostgresTypesPgCiText {
-    fn from(value: WhereSqlxPostgresTypesPgCiTextWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxPostgresTypesPgCiText::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
@@ -6653,14 +6565,6 @@ impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalWithSerializ
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
-impl std::convert::From<WhereSqlxTypesBigDecimalWithSerializeDeserialize> for WhereSqlxTypesBigDecimal {
-    fn from(value: WhereSqlxTypesBigDecimalWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesBigDecimal::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
 #[derive(Debug, PartialEq, bind_query::PostgresqlTypeLogicUsingFromSerializeDeserialize, bind_query::CommonFrom, bind_query::Common)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
@@ -7167,7 +7071,7 @@ pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
@@ -7186,16 +7090,8 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress>
     }
 }
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
-impl std::convert::From<WhereSqlxTypesMacAddressMacAddressWithSerializeDeserialize> for WhereSqlxTypesMacAddressMacAddress {
-    fn from(value: WhereSqlxTypesMacAddressMacAddressWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesMacAddressMacAddress::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
-#[derive(Debug, PartialEq, bind_query::Common)]
+#[derive(Debug, PartialEq, bind_query::Common, bind_query::CommonFrom)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBitVecWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
@@ -7218,14 +7114,6 @@ impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecWithSerializeDeseria
 impl AsPostgresqlBit for SqlxTypesBitVec {}
 impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
-impl std::convert::From<WhereSqlxTypesBitVecWithSerializeDeserialize> for WhereSqlxTypesBitVec {
-    fn from(value: WhereSqlxTypesBitVecWithSerializeDeserialize) -> Self {
-        Self {
-            value: SqlxTypesBitVec::from(value.value),
-            conjuctive_operator: value.conjuctive_operator
-        }
-    }
-}
 
 #[derive(Debug, PartialEq)]
 pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);

@@ -170,14 +170,6 @@ pub fn std_convert_from_where_ident_serialize_deserialize_for_where_ident(input:
                 Self(value.0)
             }
         }
-        // impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
-        //     fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
-        //         Self {
-        //             value: #ident::from(value.value),
-        //             conjuctive_operator: value.conjuctive_operator
-        //         }
-        //     }
-        // }
     };
     // if ident == "" {
     //     println!("{gen}");
@@ -350,7 +342,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     gen.into()
 }
-//
+
 #[proc_macro_derive(CommonFrom)]
 pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
