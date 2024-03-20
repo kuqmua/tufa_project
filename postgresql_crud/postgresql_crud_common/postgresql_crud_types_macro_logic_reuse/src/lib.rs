@@ -191,7 +191,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
         }
         impl BindQuery for #ident {
-            fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+            fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
                 match increment.checked_add(1) {
                     Some(incr) => {
                         *increment = incr;
@@ -203,7 +203,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     })
                 }
             }
-            fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+            fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
                 let mut increments = std::string::String::default();
                 match increment.checked_add(1) {
                     Some(incr) => {
@@ -229,13 +229,13 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
         }
-        // impl std::fmt::Display for #where_ident_token_stream {
-        //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        //         write!(f, "todo")//todo postgresql_crud TryReadMany problem with error variant
-        //     }
-        // }
+        impl std::fmt::Display for #where_ident_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+            }
+        }
         impl BindQuery for #where_ident_token_stream {
-            fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+            fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
                 match increment.checked_add(1) {
                     Some(incr) => {
                         *increment = incr;
@@ -247,7 +247,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     }),
                 }
             }
-            fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<
+            fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<
                 std::string::String,
                 TryGenerateBindIncrementsErrorNamed,
             > {
@@ -271,6 +271,11 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         pub struct #where_ident_with_serialize_deserialize_token_stream {
             pub value: #ident_with_serialize_deserialize_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
+        }
+        impl std::fmt::Display for #where_ident_with_serialize_deserialize_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+            }
         }
         impl std::convert::From<#where_ident_token_stream> for #where_ident_with_serialize_deserialize_token_stream {
             fn from(value: #where_ident_token_stream) -> Self {
