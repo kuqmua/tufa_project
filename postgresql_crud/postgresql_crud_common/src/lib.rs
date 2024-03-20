@@ -5264,6 +5264,16 @@ impl std::convert::From<SqlxPostgresTypesPgInterval>
         }
     }
 }
+impl std::fmt::Display for SqlxPostgresTypesPgInterval {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
+impl std::fmt::Display for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
+    }
+}
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 
