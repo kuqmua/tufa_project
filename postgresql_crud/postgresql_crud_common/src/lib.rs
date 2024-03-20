@@ -5222,6 +5222,16 @@ impl std::convert::From<StdVecVecStdPrimitiveU8> for StdVecVecStdPrimitiveU8With
         Self(value.0)
     }
 }
+impl std::fmt::Display for StdVecVecStdPrimitiveU8 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
+impl std::fmt::Display for StdVecVecStdPrimitiveU8WithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
