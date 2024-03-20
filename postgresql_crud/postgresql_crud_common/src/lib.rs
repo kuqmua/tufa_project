@@ -6925,6 +6925,11 @@ impl std::convert::From<SqlxTypesTimeOffsetDateTime>
         Self(value.0.unix_timestamp())
     }
 }
+impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonTryFrom)]
@@ -6972,6 +6977,11 @@ impl std::convert::From<SqlxTypesTimeDate>
         }
     }
 }
+impl std::fmt::Display for SqlxTypesTimeDateWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "year: {}, month: {:?}, day: {}", self.year, self.month, self.day)
+    }
+}
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
 impl PostgresqlOrder for SqlxTypesTimeDate {}
 
@@ -7015,6 +7025,11 @@ impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeWithSerializeDes
         }
     }
 }
+impl std::fmt::Display for SqlxTypesTimeTimeWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "hour: {}, minute: {}, second: {}", self.hour, self.minute, self.second)
+    }
+}
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
 impl PostgresqlOrder for SqlxTypesTimeTime {}
 
@@ -7049,6 +7064,11 @@ impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidWithSerializeDes
         Self(value.0.to_string())
     }
 }
+impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
@@ -7079,6 +7099,11 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress>
         Self(value.0.bytes())
     }
 }
+impl std::fmt::Display for SqlxTypesMacAddressMacAddressWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -7099,6 +7124,11 @@ impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecWithSerializeDeseria
                 .map(|element| Into::into(element))
                 .collect::<std::vec::Vec<std::primitive::u8>>(),
         )
+    }
+}
+impl std::fmt::Display for SqlxTypesBitVecWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
     }
 }
 impl AsPostgresqlBit for SqlxTypesBitVec {}
@@ -7198,6 +7228,11 @@ where
 impl<T> CheckSupportedPostgresqlColumnType for SqlxTypesJson<T> {
     fn check_supported_postgresql_column_type() {}
 }
+// impl std::fmt::Display for  SqlxTypesJson<T> {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{:?}", self.0)
+//     }
+// }
 impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
 impl<T> AsPostgresqlJsonB for SqlxTypesJson<T> {}
 impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
