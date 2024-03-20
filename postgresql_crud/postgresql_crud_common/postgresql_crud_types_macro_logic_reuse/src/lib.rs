@@ -60,6 +60,11 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
                 Self(value.0)
             }
         }
+        impl std::fmt::Display for #ident {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
     };
     // if ident == "" {
     //     println!("{gen}");
@@ -218,6 +223,11 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         pub struct #where_ident_token_stream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
+        }
+        impl std::fmt::Display for #where_ident_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "todo")//todo postgresql_crud TryReadMany problem with error variant
+            }
         }
         impl BindQuery for #where_ident_token_stream {
             fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {

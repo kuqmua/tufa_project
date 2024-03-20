@@ -5165,21 +5165,6 @@ pub trait CheckSupportedPostgresqlColumnType {
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
 impl AsPostgresqlBool for StdPrimitiveBool {}
 impl PostgresqlOrder for StdPrimitiveBool {}
-impl std::convert::From<StdPrimitiveBoolAsPostgresqlBool> for StdPrimitiveBool {
-    fn from(value: StdPrimitiveBoolAsPostgresqlBool) -> Self {
-        value.0
-    }
-}
-//
-// impl std::convert::From<std::option::Option<std::vec::Vec<WhereStdPrimitiveBoolWithSerializeDeserialize>>> for std::option::Option<std::vec::Vec<WhereStdPrimitiveBool>> {
-//     fn from(value: std::option::Option<std::vec::Vec<WhereStdPrimitiveBoolWithSerializeDeserialize>>) -> Self {
-//         match value {
-//             Some(value) => Some(value.into_iter().map(|element|WhereStdPrimitiveBool::from(element)).collect()),
-//             None => None
-//         }
-//     }
-// }
-
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
@@ -5222,13 +5207,21 @@ impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlName for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
-//
-// pub name: std::option::Option<std::vec::Vec<postgresql_crud::RegexFilter>>,
-// name: std::option::Option<std::vec::Vec<postgresql_crud::StdStringStringWithSerializeDeserialize>>,//HERE postgresql_crud::RegexFilter
-//
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+pub struct StdVecVecStdPrimitiveU8WithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
+impl std::convert::From<StdVecVecStdPrimitiveU8WithSerializeDeserialize> for StdVecVecStdPrimitiveU8 {
+    fn from(value: StdVecVecStdPrimitiveU8WithSerializeDeserialize) -> Self {
+        Self(value.0)
+    }
+}
+impl std::convert::From<StdVecVecStdPrimitiveU8> for StdVecVecStdPrimitiveU8WithSerializeDeserialize {
+    fn from(value: StdVecVecStdPrimitiveU8) -> Self {
+        Self(value.0)
+    }
+}
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
