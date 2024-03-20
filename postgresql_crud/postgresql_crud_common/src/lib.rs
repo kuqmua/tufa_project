@@ -6637,6 +6637,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
         Self { start, end }
     }
 }
+impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    }
+}
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -6657,6 +6662,11 @@ impl std::convert::From<SqlxPostgresTypesPgMoney>
         Self(value.0 .0)
     }
 }
+impl std::fmt::Display for SqlxPostgresTypesPgMoneyWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -6675,6 +6685,11 @@ impl std::convert::From<SqlxPostgresTypesPgCiText>
 {
     fn from(value: SqlxPostgresTypesPgCiText) -> Self {
         Self(value.0.0)
+    }
+}
+impl std::fmt::Display for SqlxPostgresTypesPgCiTextWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
     }
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
