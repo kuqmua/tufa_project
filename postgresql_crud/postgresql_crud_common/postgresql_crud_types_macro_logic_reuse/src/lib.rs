@@ -180,11 +180,6 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     .collect()
             }
         }
-        #[derive(Debug, PartialEq)]
-        pub struct #where_ident_token_stream {
-            pub value: #ident,
-            pub conjuctive_operator: ConjunctiveOperator,
-        }
         impl BindQuery for #ident {
             fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
                 match increment.checked_add(1) {
@@ -218,6 +213,11 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 query = query.bind(self.0);
                 query
             }
+        }
+        #[derive(Debug, PartialEq)]
+        pub struct #where_ident_token_stream {
+            pub value: #ident,
+            pub conjuctive_operator: ConjunctiveOperator,
         }
         impl BindQuery for #where_ident_token_stream {
             fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
@@ -256,6 +256,14 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         pub struct #where_ident_with_serialize_deserialize_token_stream {
             pub value: #ident_with_serialize_deserialize_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
+        }
+        impl std::convert::From<#where_ident_token_stream> for #where_ident_with_serialize_deserialize_token_stream {
+            fn from(value: #where_ident_token_stream) -> Self {
+                Self {
+                    value: #ident_with_serialize_deserialize_token_stream::from(value.value),
+                    conjuctive_operator: value.conjuctive_operator,
+                }
+            }
         }
     };
     gen.into()
