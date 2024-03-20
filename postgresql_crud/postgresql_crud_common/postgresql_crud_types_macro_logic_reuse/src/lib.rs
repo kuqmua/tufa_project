@@ -48,8 +48,18 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
     };
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
+        impl std::fmt::Display for #ident {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
         pub struct #ident_with_serialize_deserialize_token_stream(#field_type);
+        impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
         impl std::convert::From<#ident_with_serialize_deserialize_token_stream> for #ident {
             fn from(value: #ident_with_serialize_deserialize_token_stream) -> Self {
                 Self(value.0)
@@ -58,11 +68,6 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
         impl std::convert::From<#ident> for #ident_with_serialize_deserialize_token_stream {
             fn from(value: #ident) -> Self {
                 Self(value.0)
-            }
-        }
-        impl std::fmt::Display for #ident {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{}", self.0)
             }
         }
     };
