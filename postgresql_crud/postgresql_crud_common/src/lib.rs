@@ -6703,6 +6703,11 @@ impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalWithSerializ
         }
     }
 }
+impl std::fmt::Display for SqlxTypesBigDecimalWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "digits: {:?}, scale: {:?}", self.digits, self.scale)
+    }
+}
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
 
@@ -6808,6 +6813,11 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz>
         }
     }
 }
+impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "time: {}, offset: {:?}", self.time, self.offset)
+    }
+}
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonTryFrom)]
@@ -6885,6 +6895,11 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
                 value.0.time(),
             )),
         }
+    }
+}
+impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "date: {}, time: {}", self.date, self.time)
     }
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
