@@ -212,6 +212,7 @@ pub struct Dog {
 // }
 //////////////
 
+
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct ReadManyPayload {
     pub id: std::option::Option<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>>,
@@ -244,7 +245,7 @@ pub enum ReadManyPayloadTryFromReadManyPayloadWithSerializeDeserializeErrorNamed
     },
     SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
         #[eo_display]
-        sqlx_types_time_time: time::error::ComponentRange,
+        sqlx_types_time_time: postgresql_crud::SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -849,6 +850,28 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr200Ok> for TryReadManyRe
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadManyResponseVariantsTvfrr408RequestTimeout>
+    for TryReadManyResponseVariants
+{
+    fn from(value: TryReadManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryReadManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryReadManyResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -1163,28 +1186,6 @@ impl std::convert::From<TryReadManyResponseVariantsTvfrr500InternalServerError>
                 code_occurence,
             } => Self::BindQuery {
                 bind_query,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryReadManyResponseVariantsTvfrr408RequestTimeout>
-    for TryReadManyResponseVariants
-{
-    fn from(value: TryReadManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryReadManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
                 code_occurence,
             },
         }
@@ -1701,8 +1702,9 @@ pub async fn try_read_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr404NotFound>(&response_text) {
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr400BadRequest>(&response_text)
+        {
             Ok(value) => TryReadManyResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadManyErrorNamed::DeserializeResponse {
@@ -1725,10 +1727,8 @@ pub async fn try_read_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr408RequestTimeout>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryReadManyResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryReadManyResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadManyErrorNamed::DeserializeResponse {
