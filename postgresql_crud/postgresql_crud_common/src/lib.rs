@@ -5208,30 +5208,8 @@ impl AsPostgresqlName for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-pub struct StdVecVecStdPrimitiveU8WithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
-impl std::convert::From<StdVecVecStdPrimitiveU8WithSerializeDeserialize> for StdVecVecStdPrimitiveU8 {
-    fn from(value: StdVecVecStdPrimitiveU8WithSerializeDeserialize) -> Self {
-        Self(value.0)
-    }
-}
-impl std::convert::From<StdVecVecStdPrimitiveU8> for StdVecVecStdPrimitiveU8WithSerializeDeserialize {
-    fn from(value: StdVecVecStdPrimitiveU8) -> Self {
-        Self(value.0)
-    }
-}
-impl std::fmt::Display for StdVecVecStdPrimitiveU8 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
-impl std::fmt::Display for StdVecVecStdPrimitiveU8WithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -5262,11 +5240,6 @@ impl std::convert::From<SqlxPostgresTypesPgInterval>
             days: value.0.days,
             microseconds: value.0.microseconds,
         }
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgInterval {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
@@ -5306,16 +5279,16 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64>
         }
     }
 }
-impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
-impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
-    }
-}
+// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{:?}", self.0)
+//     }
+// }
+// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+//     }
+// }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -5347,6 +5320,16 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
         }
     }
 }
+// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{:?}", self.0)
+//     }
+// }
+// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+//     }
+// }
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]

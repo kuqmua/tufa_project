@@ -48,16 +48,11 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
     };
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
-        impl std::fmt::Display for #ident {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{}", self.0)
-            }
-        }
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
         pub struct #ident_with_serialize_deserialize_token_stream(#field_type);
         impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{}", self.0)
+                write!(f, "{:?}", self.0)
             }
         }
         impl std::convert::From<#ident_with_serialize_deserialize_token_stream> for #ident {
@@ -127,6 +122,11 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let gen = quote::quote!{
+        impl std::fmt::Display for #ident {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{:?}", self.0)
+            }
+        }
         impl #ident {
             pub fn into_inner(self) -> #field_type {
                 self.0
@@ -229,11 +229,11 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
         }
-        impl std::fmt::Display for #where_ident_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "todo")//todo postgresql_crud TryReadMany problem with error variant
-            }
-        }
+        // impl std::fmt::Display for #where_ident_token_stream {
+        //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        //         write!(f, "todo")//todo postgresql_crud TryReadMany problem with error variant
+        //     }
+        // }
         impl BindQuery for #where_ident_token_stream {
             fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
                 match increment.checked_add(1) {
