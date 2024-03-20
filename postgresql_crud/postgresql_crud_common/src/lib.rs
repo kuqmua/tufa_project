@@ -94,6 +94,51 @@ impl SupportedSqlxPostgresType {
             Self::SerdeJsonValue => std::string::String::from("")
         }
     }
+    pub fn get_where_with_serialize_deserialize_error_named_stringified(&self) -> std::string::String {
+        match self {
+            Self::StdPrimitiveBool => std::string::String::from(""),
+            Self::StdPrimitiveI16 => std::string::String::from(""),
+            Self::StdPrimitiveI32 => std::string::String::from(""),
+            Self::StdPrimitiveI64 => std::string::String::from(""),
+            Self::StdPrimitiveF32 => std::string::String::from(""),
+            Self::StdPrimitiveF64 => std::string::String::from(""),
+            Self::StdStringString => std::string::String::from(""),
+            Self::StdVecVecStdPrimitiveU8 => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgInterval => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgMoney => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgCiText => std::string::String::from(""),
+            Self::SqlxTypesBigDecimal => std::string::String::from(""),
+            Self::SqlxTypesDecimal => std::string::String::from(""),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
+            Self::SqlxTypesChronoNaiveDateTime => std::string::String::from(""),
+            Self::SqlxTypesChronoNaiveDate => std::string::String::from(""),
+            Self::SqlxTypesChronoNaiveTime => std::string::String::from(""),
+            Self::SqlxPostgresTypesPgTimeTz => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesTimePrimitiveDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesTimeOffsetDateTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesTimeDate => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxTypesTimeDateWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesTimeTime => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxTypesTimeTimeWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesUuidUuid => format!("{POSTGRESQL_CRUD_SNAKE_CASE}::WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed"),
+            Self::SqlxTypesIpnetworkIpNetwork => std::string::String::from(""),
+            Self::StdNetIpAddr => std::string::String::from(""),
+            Self::SqlxTypesMacAddressMacAddress => std::string::String::from(""),
+            Self::SqlxTypesBitVec => std::string::String::from(""),
+            Self::SqlxTypesJsonT => std::string::String::from(""),
+            Self::SerdeJsonValue => std::string::String::from("")
+        }
+    }
 }
 
 impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostgresType {

@@ -520,6 +520,16 @@ pub use postgresql_crud_common::WhereSqlxTypesBitVecWithSerializeDeserialize;
 
 pub use postgresql_crud_common::WhereSerdeJsonValueWithSerializeDeserialize;
 ///////////////////
+pub use postgresql_crud_common::WhereSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxTypesTimeDateWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxTypesTimeTimeWithSerializeDeserializeErrorNamed;
+pub use postgresql_crud_common::WhereSqlxTypesUuidUuidWithSerializeDeserializeErrorNamed;
+///////////////////
 pub use postgresql_crud_common::BindQuery;
 pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamed;
 pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
