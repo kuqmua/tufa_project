@@ -3762,8 +3762,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#fields_assignment_excluding_primary_key_token_stream)*
                                 let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                                 let #order_by_snake_case_token_stream = value.#order_by_snake_case_token_stream;
-                                let #limit_snake_case_token_stream = value.#limit_snake_case_token_stream;
-                                let #offset_snake_case_token_stream = value.#offset_snake_case_token_stream;
+                                let #limit_snake_case_token_stream = postgresql_crud::StdPrimitiveI64::from(value.#limit_snake_case_token_stream);//todo reuse
+                                let #offset_snake_case_token_stream = postgresql_crud::StdPrimitiveI64::from(value.#offset_snake_case_token_stream);//todo reuse
                                 Ok(Self {
                                     #(#fields_named_idents_comma_token_stream)*
                                     #select_snake_case_token_stream,
@@ -7444,11 +7444,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream//+
+            // #common_token_stream//+
 
             #create_many_token_stream//+
             #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
             // #update_one_token_stream
@@ -7872,7 +7872,6 @@ fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_
         let #field_ident = #initialization_token_stream;
     }
 }
-
 
 fn generate_let_field_ident_value_field_ident_from_token_stream(
     element: &SynFieldWithAdditionalInfo,
