@@ -5279,16 +5279,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64>
         }
     }
 }
-// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "{:?}", self.0)
-//     }
-// }
-// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "start: {:?}, end: {:?}", self.start, self.end)
-//     }
-// }
+impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    }
+}
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -5320,16 +5315,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
         }
     }
 }
-// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64 {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "{:?}", self.0)
-//     }
-// }
-// impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "start: {:?}, end: {:?}", self.start, self.end)
-//     }
-// }
+impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    }
+}
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
