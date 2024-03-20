@@ -3783,10 +3783,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
                 let primary_key_field_assignment_token_stream = {
+                    let primary_key_inner_type_with_serialize_deserialize_token_stream = {
+                        let value_stringified = primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified("");
+                        value_stringified.parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    };
                     quote::quote! {
                         let #primary_key_field_ident = match value.#primary_key_field_ident {
-                            Some(value) => Some(value.into_iter().map(|element|element.to_string()).collect::<std::vec::Vec<#std_string_string_token_stream>>()),
-                            None => None
+                            Some(value) => Some(
+                                value
+                                    .into_iter()
+                                    .map(|element| #primary_key_inner_type_with_serialize_deserialize_token_stream::from(element))
+                                    .collect::<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>(),
+                            ),
+                            None => None,
                         };
                     }
                 };
