@@ -6513,6 +6513,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
         Self { start, end }
     }
 }
+impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    }
+}
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
@@ -6581,6 +6586,11 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
         };
         Self { start, end }
+    }
+}
+impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
