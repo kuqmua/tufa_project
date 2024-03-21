@@ -1850,9 +1850,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &code_occurence_field,
         vec![
             (
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence,
                 "non_existing_primary_keys", 
-                std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_syn_punctuated_punctuated.clone()
+                primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
             ),
             (
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
