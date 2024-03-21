@@ -5393,7 +5393,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        quote::quote!{#query_name_token_stream = #query_name_token_stream.bind(#field_ident_underscore_vec_token_stream);}
+                        let original_type_token_stream = &element.original_type_token_stream;
+                        quote::quote!{
+                            #query_name_token_stream = #query_name_token_stream.bind(
+                                #field_ident_underscore_vec_token_stream
+                                    .into_iter()
+                                    .map(|element| element.into_inner())
+                                    .collect::<std::vec::Vec<#original_type_token_stream>>(),
+                            );
+                        }
                     });
                     quote::quote! {
                         let mut #query_name_token_stream = #sqlx_query_sqlx_postgres_token_stream(&#query_string_name_token_stream);
