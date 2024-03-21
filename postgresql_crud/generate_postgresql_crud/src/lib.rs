@@ -3667,11 +3667,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let payload_with_serialize_deserialize_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
                     let field_ident = &element.field_ident;
-                    let where_inner_type_with_serialize_deserialize_token_stream = {
-                        let value_stringified = element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");//todo json generics
-                        value_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    };
+                    let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
                     quote::quote!{
                         #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,//#crate_server_postgres_regex_filter_regex_filter_token_stream
                     }
@@ -4003,11 +3999,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             column!(),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
-                        let where_inner_type_with_serialize_deserialize_token_stream = {
-                            let value_stringified = element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");//todo json generic
-                            value_stringified.parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
                         quote::quote!{
                             let #field_handle_token_stream = match #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#field_ident {
                                 Some(value) => {
@@ -7564,6 +7556,7 @@ struct SynFieldWithAdditionalInfo {
     inner_type_with_serialize_deserialize_error_named_token_stream: proc_macro2::TokenStream,
     where_inner_type_with_serialize_deserialize_handle_stringified: std::string::String,
     where_inner_type_token_stream: proc_macro2::TokenStream,
+    where_inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
 }
 impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
     fn from(value: syn::Field) -> Self {
@@ -7642,6 +7635,11 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             value_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
+        let where_inner_type_with_serialize_deserialize_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");//todo json generics
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
         Self {
             field,
             field_ident,
@@ -7653,7 +7651,8 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             inner_type_with_serialize_deserialize_token_stream,
             inner_type_with_serialize_deserialize_error_named_token_stream,
             where_inner_type_with_serialize_deserialize_handle_stringified,
-            where_inner_type_token_stream
+            where_inner_type_token_stream,
+            where_inner_type_with_serialize_deserialize_token_stream,
         }
     }
 }
@@ -7903,11 +7902,7 @@ fn generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_st
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
     let field_ident = &element.field_ident;
-    let where_inner_type_with_serialize_deserialize_token_stream = {//todo move it to SynFieldWithAdditionalInfo
-        let value_stringified = element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
     quote::quote! {
         let #field_ident = match value.#field_ident {
             Some(value) => Some(value.into_iter().map(|element|#where_inner_type_with_serialize_deserialize_token_stream::from(element)).collect()),
