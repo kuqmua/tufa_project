@@ -2022,7 +2022,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         });
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
         let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
-        let where_inner_type_with_serialize_deserialize_handle_stringified = element.rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_handle_stringified("");//todo add to struct(type of element in here)
+        let where_inner_type_with_serialize_deserialize_handle_stringified = &element.where_inner_type_with_serialize_deserialize_handle_stringified;
         acc.push(crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
             &not_unique_field_vec_upper_camel_stringified,
@@ -7566,6 +7566,7 @@ struct SynFieldWithAdditionalInfo {
     inner_type_token_stream: proc_macro2::TokenStream,
     inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
     inner_type_with_serialize_deserialize_error_named_token_stream: proc_macro2::TokenStream,
+    where_inner_type_with_serialize_deserialize_handle_stringified: std::string::String,
 }
 impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
     fn from(value: syn::Field) -> Self {
@@ -7638,6 +7639,7 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             value_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
+        let where_inner_type_with_serialize_deserialize_handle_stringified = rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_handle_stringified("");
         Self {
             field,
             field_ident,
@@ -7648,6 +7650,7 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             inner_type_token_stream,
             inner_type_with_serialize_deserialize_token_stream,
             inner_type_with_serialize_deserialize_error_named_token_stream,
+            where_inner_type_with_serialize_deserialize_handle_stringified,
         }
     }
 }
