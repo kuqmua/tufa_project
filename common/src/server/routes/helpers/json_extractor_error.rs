@@ -11,8 +11,9 @@
     crate::repositories_types::server::routes::api::cats::TryReadMany
     ,
     crate::repositories_types::server::routes::api::cats::TryReadOne
+    ,
+    crate::repositories_types::server::routes::api::cats::TryUpdateMany
     // ,
-    // crate::repositories_types::server::routes::api::cats::TryUpdateMany,
     // crate::repositories_types::server::routes::api::cats::TryUpdateOne,
     // crate::repositories_types::server::routes::api::cats::TryDeleteMany,
     // crate::repositories_types::server::routes::api::cats::TryDeleteOne

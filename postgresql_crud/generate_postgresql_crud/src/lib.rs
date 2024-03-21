@@ -5291,13 +5291,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let try_operation_token_stream = {
-                let expected_updated_primary_keys_token_stream = quote::quote! {
-                    #parameters_snake_case_token_stream
-                    .#payload_snake_case_token_stream
-                    .0
-                    .iter()
-                    .map(|element| element.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-                    .collect::<#std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream>()
+                let expected_updated_primary_keys_token_stream = {
+                    let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+                    quote::quote! {
+                        #parameters_snake_case_token_stream
+                        .#payload_snake_case_token_stream
+                        .0
+                        .iter()
+                        .map(|element| element.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
+                        .collect::<std::vec::Vec<#primary_key_inner_type_token_stream>>()
+                    }
                 };
                 let query_string_token_stream = {
                     let column_names = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
