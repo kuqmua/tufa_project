@@ -230,15 +230,20 @@ pub enum ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
             crate::server::postgres::uuid_wrapper::UuidWrapperTryFromPossibleUuidWrapperErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    Id {
+        #[eo_error_occurence]
+        sqlx_types_uuid_uuid: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl std::convert::TryFrom<ReadOnePayloadWithSerializeDeserialize> for ReadOnePayload {
     type Error = ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed;
     fn try_from(value: ReadOnePayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let id = match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value.id) {
+        let id = match postgresql_crud::SqlxTypesUuidUuid::try_from(value.id) {
             Ok(value) => value,
             Err(e) => {
-                return Err(Self::Error::NotUuid {
-                    not_uuid: e,
+                return Err(Self::Error::Id {
+                    sqlx_types_uuid_uuid: e,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                         file!().to_string(),
                         line!(),
@@ -247,7 +252,7 @@ impl std::convert::TryFrom<ReadOnePayloadWithSerializeDeserialize> for ReadOnePa
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 4528,
+                            line: 4533,
                             column: 25,
                         }),
                     ),
@@ -672,6 +677,28 @@ impl std::convert::From<TryReadOneResponseVariantsTvfrr200Ok> for TryReadOneResp
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr408RequestTimeout>
+    for TryReadOneResponseVariants
+{
+    fn from(value: TryReadOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryReadOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryReadOneResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -937,28 +964,6 @@ impl std::convert::From<TryReadOneResponseVariantsTvfrr400BadRequest>
             NoCommitExtractorHeader { no_commit_header, code_occurence } =>
             Self :: NoCommitExtractorHeader
             { no_commit_header, code_occurence }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryReadOneResponseVariantsTvfrr408RequestTimeout>
-    for TryReadOneResponseVariants
-{
-    fn from(value: TryReadOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryReadOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
         }
     }
 }
@@ -1413,34 +1418,8 @@ pub async fn try_read_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr408RequestTimeout>(
-            &response_text,
-        ) {
-            Ok(value) => TryReadOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryReadOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2342,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr400BadRequest>(&response_text) {
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryReadOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadOneErrorNamed::DeserializeResponse {
@@ -1467,6 +1446,30 @@ pub async fn try_read_one<'a>(
         match serde_json::from_str::<TryReadOneResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
+            Ok(value) => TryReadOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryReadOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2342,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr400BadRequest>(&response_text) {
             Ok(value) => TryReadOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadOneErrorNamed::DeserializeResponse {
@@ -1581,7 +1584,7 @@ pub async fn read_one(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 4779, column : 17,
+                            line : 4841, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());

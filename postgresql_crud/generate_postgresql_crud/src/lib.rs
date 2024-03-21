@@ -4510,6 +4510,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
                 let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::PayloadTryFromPayloadWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
                 let operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = {
+                    let primary_key_variant_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
+                        &primary_key_syn_field_with_additional_info,
+                        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
+                    );
                     quote::quote! {
                         #derive_debug_thiserror_error_occurence_token_stream
                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
@@ -4518,6 +4522,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
                                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                             },
+                            #primary_key_variant_token_stream
                         }
                     }
                 };
@@ -4529,19 +4534,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let primary_key_let_field_ident_value_field_ident_try_from_token_stream = generate_let_field_ident_value_field_ident_try_from_token_stream(
+                        &primary_key_syn_field_with_additional_info,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                        &field_code_occurence_new_3b778bbe_aec5_4ebe_af05_11074800c690_token_stream,
+                    );
                     quote::quote! {
                         impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
                             type Error = #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
                             fn try_from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
-                                let #primary_key_field_ident = match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value.#primary_key_field_ident) {
-                                    Ok(value) => value,
-                                    Err(#error_value_snake_case_token_stream) => {
-                                        return Err(Self::Error::#not_uuid_token_upper_camel_case_stream {
-                                            #not_uuid_token_snake_case_stream: #error_value_snake_case_token_stream,
-                                            #field_code_occurence_new_3b778bbe_aec5_4ebe_af05_11074800c690_token_stream,
-                                        });
-                                    }
-                                };
+                                #primary_key_let_field_ident_value_field_ident_try_from_token_stream
                                 let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                                 Ok(Self {
                                     #primary_key_field_ident,
@@ -7544,121 +7546,6 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
     }
 }
 
-#[derive(Debug, Clone)]
-struct SynFieldWithAdditionalInfo {
-    field: syn::Field,
-    field_ident: syn::Ident,
-    rust_sqlx_map_to_postgres_type_variant:
-        postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
-    maybe_generic_token_stream: proc_macro2::TokenStream, //todo maybe not need to add here
-    path_token_stream: proc_macro2::TokenStream,
-    original_type_token_stream: proc_macro2::TokenStream,
-    inner_type_token_stream: proc_macro2::TokenStream,
-    inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
-    inner_type_with_serialize_deserialize_error_named_token_stream: proc_macro2::TokenStream,
-    where_inner_type_with_serialize_deserialize_handle_stringified: std::string::String,
-    where_inner_type_token_stream: proc_macro2::TokenStream,
-    where_inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
-}
-impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
-    fn from(value: syn::Field) -> Self {
-        let name = "SynFieldWithAdditionalInfo from syn::Field error";
-        let field = value.clone();
-        let field_ident = value
-            .ident
-            .unwrap_or_else(|| panic!("{name} field ident is none"));
-        let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
-            syn::Type::Path(value) => {
-                match value.path.segments.len() == 2 {
-                    true => {
-                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                            panic!("{name} field_type is not syn::Type::Path");
-                        }
-                        match value.path.segments[0].arguments {
-                            syn::PathArguments::None => (),
-                            _ => panic!("{name} value.path.segments[0].arguments != syn::PathArguments::None")
-                        }
-                        let rust_sqlx_map_to_postgres_type_variant =
-                            match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(
-                                &value.path.segments[1].ident.to_string() as &str,
-                            ) {
-                                Ok(value) => value,
-                                Err(e) => panic!(
-                                    "{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"
-                                ),
-                            };
-                        let maybe_generic_token_stream = match &value.path.segments[1].arguments {
-                            syn::PathArguments::None => quote::quote! {},
-                            syn::PathArguments::AngleBracketed(value) => {
-                                quote::quote! {#value} //< test_mod :: Something >
-                            }
-                            syn::PathArguments::Parenthesized(_) => {
-                                panic!("{name} does not support syn::PathArguments::Parenthesized")
-                            }
-                        };
-                        (
-                            rust_sqlx_map_to_postgres_type_variant,
-                            maybe_generic_token_stream,
-                        )
-                    }
-                    false => panic!("{name} field_type is not syn::Type::Path"),
-                }
-            }
-            _ => panic!("{name} field_type is not syn::Type::Path"),
-        };
-        let path_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified(); //todo generic for json
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let original_type_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let inner_type_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let inner_type_with_serialize_deserialize_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified(""); //todo generic for json
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let inner_type_with_serialize_deserialize_error_named_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified(); //todo generic for json
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let where_inner_type_with_serialize_deserialize_handle_stringified = rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_handle_stringified("");
-        let where_inner_type_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let where_inner_type_with_serialize_deserialize_token_stream = {
-            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");//todo json generics
-            value_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        Self {
-            field,
-            field_ident,
-            rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
-            maybe_generic_token_stream,             //todo maybe not need to add here
-            path_token_stream,
-            original_type_token_stream,
-            inner_type_token_stream,
-            inner_type_with_serialize_deserialize_token_stream,
-            inner_type_with_serialize_deserialize_error_named_token_stream,
-            where_inner_type_with_serialize_deserialize_handle_stringified,
-            where_inner_type_token_stream,
-            where_inner_type_with_serialize_deserialize_token_stream,
-        }
-    }
-}
-
 fn generate_common_middlewares_error_syn_variants_from_impls(
     common_middlewares_error_syn_variants: std::vec::Vec<&(
         syn::Ident,
@@ -7749,168 +7636,6 @@ fn generate_self_fields_token_stream<'a>(
             })
         })
         .collect()
-}
-
-fn generate_pub_field_ident_field_type_token_stream(
-    element: &SynFieldWithAdditionalInfo,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let field_type = &element.field.ty;
-    let inner_type_token_stream = &element.inner_type_token_stream;
-    quote::quote! {
-        pub #field_ident: #inner_type_token_stream
-    }
-}
-
-fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(
-    element: &SynFieldWithAdditionalInfo,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let field_type = &element.field.ty;
-    let inner_type_with_serialize_deserialize_token_stream =
-        &element.inner_type_with_serialize_deserialize_token_stream;
-    quote::quote! {
-        pub #field_ident: #inner_type_with_serialize_deserialize_token_stream
-    }
-}
-
-fn generate_let_field_ident_value_field_ident_try_from_token_stream(
-    element: &SynFieldWithAdditionalInfo,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-    field_code_occurence_new_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let inner_token_stream = quote::quote! {value.#field_ident};
-    let initialization_token_stream = {
-        let inner_type_token_stream = &element.inner_type_token_stream;
-        match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-            postgresql_crud_common::FromOrTryFrom::From => {
-                let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
-                quote::quote!{#inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream)}
-            },
-            postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
-                let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
-                    let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-                        &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
-                    );
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let field_ident_upper_camel_case_token_stream = {
-                    //todo its a temporal naming desicion. maybe it can be better
-                    let value_stringified = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                quote::quote!{
-                    match #inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
-                        Ok(value) => value,
-                        Err(e) => {
-                            return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
-                                #field_code_occurence_new_token_stream
-                            });
-                        }
-                    }
-                }
-            }
-        }
-    };
-    quote::quote! {
-        let #field_ident = #initialization_token_stream;
-    }
-}
-
-fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
-    value: &SynFieldWithAdditionalInfo,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let field_ident = &value.field_ident;
-    let inner_token_stream = quote::quote! {value.#field_ident};
-    let where_inner_type_token_stream = &value.where_inner_type_token_stream;
-    let initialization_token_stream = match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-        postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
-            match #inner_token_stream {
-                Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::from(element)).collect()),
-                None => None,
-            }
-        },
-        postgresql_crud_common::FromOrTryFrom::TryFrom => {
-            let field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                file!(),
-                line!(),
-                column!(),
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            let field_ident_upper_camel_case_token_stream = {
-                //todo its a temporal naming desicion. maybe it can be better
-                let value_stringified = syn_ident_to_upper_camel_case_stringified(&value.field_ident);
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
-                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-                    &postgresql_crud_common::SupportedSqlxPostgresType::from(&value.rust_sqlx_map_to_postgres_type_variant)
-                );
-                value_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            quote::quote!{
-                match #inner_token_stream {
-                    Some(value) => {
-                        let mut values = std::vec::Vec::with_capacity(value.len());
-                        for element in value {
-                            match #where_inner_type_token_stream::try_from(element) {
-                                Ok(value) => {
-                                    values.push(value);
-                                }
-                                Err(e) => {
-                                    return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                        #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
-                                        #field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream,
-                                    });
-                                }
-                            }
-                        }
-                        Some(values)
-                    }
-                    None => None,
-                }
-            }
-        }
-    };
-    quote::quote! {
-        let #field_ident = #initialization_token_stream;
-    }
-}
-
-fn generate_let_field_ident_value_field_ident_from_token_stream(
-    element: &SynFieldWithAdditionalInfo,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let inner_type_with_serialize_deserialize_token_stream =
-        &element.inner_type_with_serialize_deserialize_token_stream;
-    quote::quote! {
-        let #field_ident = #inner_type_with_serialize_deserialize_token_stream::from(value.#field_ident);//todo from or try_from
-    }
-}
-
-fn generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_stream(
-    element: &SynFieldWithAdditionalInfo,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let field_ident = &element.field_ident;
-    let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
-    quote::quote! {
-        let #field_ident = match value.#field_ident {
-            Some(value) => Some(value.into_iter().map(|element|#where_inner_type_with_serialize_deserialize_token_stream::from(element)).collect()),
-            None => None
-        };
-    }
 }
 
 fn generate_http_request_many_token_stream(
@@ -8754,84 +8479,376 @@ fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string:
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value.to_string())
 }
 
+#[derive(Debug, Clone)]
+struct SynFieldWithAdditionalInfo {
+    field: syn::Field,
+    field_ident: syn::Ident,
+    rust_sqlx_map_to_postgres_type_variant:
+        postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
+    maybe_generic_token_stream: proc_macro2::TokenStream, //todo maybe not need to add here
+    path_token_stream: proc_macro2::TokenStream,
+    original_type_token_stream: proc_macro2::TokenStream,
+    inner_type_token_stream: proc_macro2::TokenStream,
+    inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
+    inner_type_with_serialize_deserialize_error_named_token_stream: proc_macro2::TokenStream,
+    where_inner_type_with_serialize_deserialize_handle_stringified: std::string::String,
+    where_inner_type_token_stream: proc_macro2::TokenStream,
+    where_inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
+}
+impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
+    fn from(value: syn::Field) -> Self {
+        let name = "SynFieldWithAdditionalInfo from syn::Field error";
+        let field = value.clone();
+        let field_ident = value
+            .ident
+            .unwrap_or_else(|| panic!("{name} field ident is none"));
+        let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
+            syn::Type::Path(value) => {
+                match value.path.segments.len() == 2 {
+                    true => {
+                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                            panic!("{name} field_type is not syn::Type::Path");
+                        }
+                        match value.path.segments[0].arguments {
+                            syn::PathArguments::None => (),
+                            _ => panic!("{name} value.path.segments[0].arguments != syn::PathArguments::None")
+                        }
+                        let rust_sqlx_map_to_postgres_type_variant =
+                            match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(
+                                &value.path.segments[1].ident.to_string() as &str,
+                            ) {
+                                Ok(value) => value,
+                                Err(e) => panic!(
+                                    "{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"
+                                ),
+                            };
+                        let maybe_generic_token_stream = match &value.path.segments[1].arguments {
+                            syn::PathArguments::None => quote::quote! {},
+                            syn::PathArguments::AngleBracketed(value) => {
+                                quote::quote! {#value} //< test_mod :: Something >
+                            }
+                            syn::PathArguments::Parenthesized(_) => {
+                                panic!("{name} does not support syn::PathArguments::Parenthesized")
+                            }
+                        };
+                        (
+                            rust_sqlx_map_to_postgres_type_variant,
+                            maybe_generic_token_stream,
+                        )
+                    }
+                    false => panic!("{name} field_type is not syn::Type::Path"),
+                }
+            }
+            _ => panic!("{name} field_type is not syn::Type::Path"),
+        };
+        let path_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_path_stringified(); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let original_type_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let inner_type_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let inner_type_with_serialize_deserialize_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified(""); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let inner_type_with_serialize_deserialize_error_named_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified(); //todo generic for json
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let where_inner_type_with_serialize_deserialize_handle_stringified = rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_handle_stringified("");
+        let where_inner_type_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let where_inner_type_with_serialize_deserialize_token_stream = {
+            let value_stringified = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");//todo json generics
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        Self {
+            field,
+            field_ident,
+            rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
+            maybe_generic_token_stream,             //todo maybe not need to add here
+            path_token_stream,
+            original_type_token_stream,
+            inner_type_token_stream,
+            inner_type_with_serialize_deserialize_token_stream,
+            inner_type_with_serialize_deserialize_error_named_token_stream,
+            where_inner_type_with_serialize_deserialize_handle_stringified,
+            where_inner_type_token_stream,
+            where_inner_type_with_serialize_deserialize_token_stream,
+        }
+    }
+}
+
+fn generate_pub_field_ident_field_type_token_stream(
+    element: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_ident = &element.field_ident;
+    let field_type = &element.field.ty;
+    let inner_type_token_stream = &element.inner_type_token_stream;
+    quote::quote! {
+        pub #field_ident: #inner_type_token_stream
+    }
+}
+
+fn generate_field_ident_field_type_with_serialize_deserialize_token_stream(
+    element: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_ident = &element.field_ident;
+    let field_type = &element.field.ty;
+    let inner_type_with_serialize_deserialize_token_stream =
+        &element.inner_type_with_serialize_deserialize_token_stream;
+    quote::quote! {
+        pub #field_ident: #inner_type_with_serialize_deserialize_token_stream
+    }
+}
+
+fn generate_let_field_ident_value_field_ident_try_from_token_stream(//todo rename
+    element: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+    field_code_occurence_new_token_stream: &proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    let field_ident = &element.field_ident;
+    let inner_token_stream = quote::quote! {value.#field_ident};
+    let initialization_token_stream = {
+        let inner_type_token_stream = &element.inner_type_token_stream;
+        match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+            postgresql_crud_common::FromOrTryFrom::From => {
+                let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
+                quote::quote!{#inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream)}
+            },
+            postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
+                let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                    let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                        &postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)
+                    );
+                    value_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let field_ident_upper_camel_case_token_stream = {
+                    //todo its a temporal naming desicion. maybe it can be better
+                    let value_stringified = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
+                    value_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                quote::quote!{
+                    match #inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
+                        Ok(value) => value,
+                        Err(e) => {
+                            return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
+                                #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                                #field_code_occurence_new_token_stream
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    };
+    quote::quote! {
+        let #field_ident = #initialization_token_stream;
+    }
+}
+
+fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
+    value: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_ident = &value.field_ident;
+    let inner_token_stream = quote::quote! {value.#field_ident};
+    let where_inner_type_token_stream = &value.where_inner_type_token_stream;
+    let initialization_token_stream = match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+        postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
+            match #inner_token_stream {
+                Some(value) => Some(value.into_iter().map(|element|#where_inner_type_token_stream::from(element)).collect()),
+                None => None,
+            }
+        },
+        postgresql_crud_common::FromOrTryFrom::TryFrom => {
+            let field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                file!(),
+                line!(),
+                column!(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            let field_ident_upper_camel_case_token_stream = {
+                //todo its a temporal naming desicion. maybe it can be better
+                let value_stringified = syn_ident_to_upper_camel_case_stringified(&value.field_ident);
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common::SupportedSqlxPostgresType::from(&value.rust_sqlx_map_to_postgres_type_variant)
+                );
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                match #inner_token_stream {
+                    Some(value) => {
+                        let mut values = std::vec::Vec::with_capacity(value.len());
+                        for element in value {
+                            match #where_inner_type_token_stream::try_from(element) {
+                                Ok(value) => {
+                                    values.push(value);
+                                }
+                                Err(e) => {
+                                    return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
+                                        #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                                        #field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream,
+                                    });
+                                }
+                            }
+                        }
+                        Some(values)
+                    }
+                    None => None,
+                }
+            }
+        }
+    };
+    quote::quote! {
+        let #field_ident = #initialization_token_stream;
+    }
+}
+
+fn generate_let_field_ident_value_field_ident_from_token_stream(
+    element: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_ident = &element.field_ident;
+    let inner_type_with_serialize_deserialize_token_stream =
+        &element.inner_type_with_serialize_deserialize_token_stream;
+    quote::quote! {
+        let #field_ident = #inner_type_with_serialize_deserialize_token_stream::from(value.#field_ident);//todo from or try_from
+    }
+}
+
+fn generate_let_field_ident_value_option_vec_with_serialize_deserialize_token_stream(
+    element: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_ident = &element.field_ident;
+    let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
+    quote::quote! {
+        let #field_ident = match value.#field_ident {
+            Some(value) => Some(value.into_iter().map(|element|#where_inner_type_with_serialize_deserialize_token_stream::from(element)).collect()),
+            None => None
+        };
+    }
+}
+
+fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
+    value: &SynFieldWithAdditionalInfo,
+    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
+) -> proc_macro2::TokenStream {
+    match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+        postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
+        postgresql_crud_common::FromOrTryFrom::TryFrom => {
+            let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(&value.rust_sqlx_map_to_postgres_type_variant);
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common_supported_sqlx_postgres_type
+                );
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let with_serialize_deserialize_error_named_token_stream = {
+                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.get_with_serialize_deserialize_error_named_stringified();
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_ident_upper_camel_case_token_stream = {
+                //todo its a temporal naming desicion. maybe it can be better
+                let value_stringified = syn_ident_to_upper_camel_case_stringified(&value.field_ident);
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #field_ident_upper_camel_case_token_stream {
+                    #[eo_error_occurence]
+                    #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: #with_serialize_deserialize_error_named_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                },//must use comma here
+            }
+        }
+    }
+}
+
 fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
     value: &std::vec::Vec<SynFieldWithAdditionalInfo>,
     code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
 ) -> std::vec::Vec<proc_macro2::TokenStream> {
-    value.iter().map(|element| {
-        match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-            postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
-            postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant);
-                let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
-                    let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-                        &postgresql_crud_common_supported_sqlx_postgres_type
-                    );
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let with_serialize_deserialize_error_named_token_stream = {
-                    let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.get_with_serialize_deserialize_error_named_stringified();
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let field_ident_upper_camel_case_token_stream = {
-                    //todo its a temporal naming desicion. maybe it can be better
-                    let value_stringified = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                quote::quote!{
-                    #field_ident_upper_camel_case_token_stream {
-                        #[eo_error_occurence]
-                        #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: #with_serialize_deserialize_error_named_token_stream,
-                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                    },//must use comma here
-                }
+    value.iter().map(|element| generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
+        &element,
+        code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
+    )).collect()
+}
+
+fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_token_stream(
+    value: &SynFieldWithAdditionalInfo,
+    code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
+) -> proc_macro2::TokenStream {
+    match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+        postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
+        postgresql_crud_common::FromOrTryFrom::TryFrom => {
+            let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(&value.rust_sqlx_map_to_postgres_type_variant);
+            let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
+                let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+                    &postgresql_crud_common_supported_sqlx_postgres_type
+                );
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let where_with_serialize_deserialize_error_named_token_stream = {
+                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.get_where_with_serialize_deserialize_error_named_stringified();
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_ident_upper_camel_case_token_stream = {
+                //todo its a temporal naming desicion. maybe it can be better
+                let value_stringified = syn_ident_to_upper_camel_case_stringified(&value.field_ident);
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #field_ident_upper_camel_case_token_stream {
+                    #[eo_error_occurence]//todo reuse
+                    #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: #where_with_serialize_deserialize_error_named_token_stream,
+                    #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                },//must use comma here
             }
         }
-    }).collect()
+    }
 }
-//
+
 fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
     value: &std::vec::Vec<SynFieldWithAdditionalInfo>,
     code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream: &proc_macro2::TokenStream
 ) -> std::vec::Vec<proc_macro2::TokenStream> {
-    value.iter().map(|element| {
-        match element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-            postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
-            postgresql_crud_common::FromOrTryFrom::TryFrom => {
-                let postgresql_crud_common_supported_sqlx_postgres_type = postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant);
-                let postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream = {
-                    let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-                        &postgresql_crud_common_supported_sqlx_postgres_type
-                    );
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let where_with_serialize_deserialize_error_named_token_stream = {
-                    let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.get_where_with_serialize_deserialize_error_named_stringified();
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let field_ident_upper_camel_case_token_stream = {
-                    //todo its a temporal naming desicion. maybe it can be better
-                    let value_stringified = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
-                    value_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                quote::quote!{
-                    #field_ident_upper_camel_case_token_stream {
-                        #[eo_error_occurence]
-                        #postgresql_crud_common_supported_sqlx_postgres_type_snake_case_token_stream: #where_with_serialize_deserialize_error_named_token_stream,
-                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                    },//must use comma here
-                }
-            }
-        }
-    }).collect()
+    value.iter().map(|element| generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_token_stream(
+        &element,
+        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
+    )).collect()
 }
-//
 
 trait RustSqlxMapToPostgresTypeVariantFromOrTryFromTokenStream {
     fn std_vec_vec_inner_type_punctuated(&self, proc_macro_name_upper_camel_case_ident_stringified: &str) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2>;
