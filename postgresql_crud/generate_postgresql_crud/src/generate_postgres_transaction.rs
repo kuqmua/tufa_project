@@ -19,6 +19,7 @@ pub fn generate_postgres_transaction(
     error_log_call_token_stream: &proc_macro2::TokenStream,
     crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
+    primary_key_syn_field_with_additional_info: &crate::SynFieldWithAdditionalInfo,
 ) -> proc_macro2::TokenStream {
     let error_value_snake_case_token_stream =
         proc_macro_common::error_value_snake_case_token_stream();
@@ -104,6 +105,7 @@ pub fn generate_postgres_transaction(
             }
         }
     };
+    let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
     quote::quote! {
         let #expected_updated_primary_keys_name_token_stream = {
             #expected_updated_primary_keys_token_stream
@@ -213,7 +215,7 @@ pub fn generate_postgres_transaction(
         }
         match #postgres_transaction_token_stream.#commit_token_stream().await {
             Ok(_) => #response_variants_token_stream::#desirable_token_stream(#primary_key_vec_name_token_stream.into_iter().map(
-                |element|#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(element)
+                |element|#primary_key_inner_type_with_serialize_deserialize_token_stream::from(element)
             ).collect()),
             Err(#error_value_snake_case_token_stream) => {
                 let #error_value_snake_case_token_stream = #try_ident_upper_camel_case_token_stream::#commit_failed_variant_initialization_token_stream;

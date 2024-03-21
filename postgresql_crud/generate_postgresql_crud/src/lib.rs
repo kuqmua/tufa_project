@@ -5211,6 +5211,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
             // println!("{try_operation_error_named_token_stream}");
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &server_location_name_token_stream,
@@ -5230,7 +5231,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
+                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},//todo reuse
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
                 &reqwest_initialization_token_stream,
@@ -5433,6 +5434,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &error_log_call_token_stream,
                         &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                         &proc_macro_name_upper_camel_case_ident_stringified,
+                        &primary_key_syn_field_with_additional_info,
                     );
                 quote::quote! {
                     {
@@ -6584,6 +6586,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &error_log_call_token_stream,
                         &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
                         &proc_macro_name_upper_camel_case_ident_stringified,
+                        &primary_key_syn_field_with_additional_info,
                     );
                     quote::quote! {
                         #filter_unique_parameters_token_stream
