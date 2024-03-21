@@ -5218,7 +5218,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                &std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
+                // &std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
+                &quote::quote! {std::vec::Vec<#primary_key_inner_type_token_stream>},
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
@@ -5437,7 +5438,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &desirable_upper_camel_case_token_stream,
                         &try_operation_upper_camel_case_token_stream,
                         &error_log_call_token_stream,
-                        &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        // &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
                         &proc_macro_name_upper_camel_case_ident_stringified,
                         &primary_key_syn_field_with_additional_info,
                     );

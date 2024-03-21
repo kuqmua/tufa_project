@@ -931,28 +931,6 @@ impl std::convert::From<TryUpdateManyResponseVariantsTvfrr200Ok> for TryUpdateMa
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateManyResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateManyResponseVariantsTvfrr404NotFound>
-    for TryUpdateManyResponseVariants
-{
-    fn from(value: TryUpdateManyResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryUpdateManyResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryUpdateManyResponseVariantsTvfrr400BadRequest {
     TypeNotFound
     {
@@ -1078,28 +1056,6 @@ impl std::convert::From<TryUpdateManyResponseVariantsTvfrr400BadRequest>
             NoCommitExtractorHeader { no_commit_header, code_occurence } =>
             Self :: NoCommitExtractorHeader
             { no_commit_header, code_occurence }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateManyResponseVariantsTvfrr408RequestTimeout>
-    for TryUpdateManyResponseVariants
-{
-    fn from(value: TryUpdateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryUpdateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
         }
     }
 }
@@ -1248,6 +1204,50 @@ impl std::convert::From<TryUpdateManyResponseVariantsTvfrr500InternalServerError
             { query_error, rollback_error, code_occurence } => Self ::
             QueryAndRollbackFailed
             { query_error, rollback_error, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateManyResponseVariantsTvfrr408RequestTimeout>
+    for TryUpdateManyResponseVariants
+{
+    fn from(value: TryUpdateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryUpdateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateManyResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateManyResponseVariantsTvfrr404NotFound>
+    for TryUpdateManyResponseVariants
+{
+    fn from(value: TryUpdateManyResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryUpdateManyResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
         }
     }
 }
@@ -1723,10 +1723,7 @@ pub enum TryUpdateManyErrorNamed {
 pub async fn try_update_many<'a>(
     server_location: &str,
     parameters: UpdateManyParameters,
-) -> Result<
-    std::vec::Vec<crate::server::postgres::uuid_wrapper::UuidWrapper>,
-    TryUpdateManyErrorNamed,
-> {
+) -> Result<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>, TryUpdateManyErrorNamed> {
     let payload = match serde_json::to_string(&UpdateManyPayloadWithSerializeDeserialize::from(
         parameters.payload,
     )) {
@@ -1824,32 +1821,6 @@ pub async fn try_update_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
-            Ok(value) => TryUpdateManyResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateManyErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2342,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
     } else if status_code == http::StatusCode::NOT_FOUND {
         match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr404NotFound>(&response_text)
         {
@@ -1877,6 +1848,32 @@ pub async fn try_update_many<'a>(
         }
     } else if status_code == http::StatusCode::BAD_REQUEST {
         match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr400BadRequest>(
+            &response_text,
+        ) {
+            Ok(value) => TryUpdateManyResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryUpdateManyErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2342,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
             Ok(value) => TryUpdateManyResponseVariants::from(value),
@@ -2029,7 +2026,7 @@ pub async fn update_many<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 5482, column : 17,
+                            line : 5484, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
