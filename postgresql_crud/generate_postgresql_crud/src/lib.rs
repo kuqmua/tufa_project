@@ -4485,21 +4485,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         let parameters_token_stream = {
+            let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
             let payload_token_stream = {
                 quote::quote! {
                     #derive_debug_to_schema_token_stream
                     pub struct #operation_payload_upper_camel_case_token_stream {
-                        pub #primary_key_field_ident: #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
+                        pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
                         pub #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                     }
                 }
             };
             // println!("{payload_token_stream}");
             let payload_with_serialize_deserialize_token_stream = {
+                let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
                 quote::quote! {
                     #derive_debug_serialize_deserialize_token_stream
                     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-                        #primary_key_field_ident: #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
                         #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                     }
                 }

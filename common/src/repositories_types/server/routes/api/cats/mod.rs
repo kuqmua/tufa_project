@@ -212,15 +212,14 @@ pub struct Dog {
 // }
 //////////////
 
-
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct ReadOnePayload {
-    pub id: crate::server::postgres::uuid_wrapper::UuidWrapper,
+    pub id: postgresql_crud::SqlxTypesUuidUuid,
     pub select: DogColumnSelect,
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct ReadOnePayloadWithSerializeDeserialize {
-    id: crate::server::postgres::uuid_wrapper::PossibleUuidWrapper,
+    id: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize,
     select: DogColumnSelect,
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
@@ -248,7 +247,7 @@ impl std::convert::TryFrom<ReadOnePayloadWithSerializeDeserialize> for ReadOnePa
                             file: std::string::String::from(
                                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                             ),
-                            line: 4526,
+                            line: 4528,
                             column: 25,
                         }),
                     ),
@@ -673,115 +672,20 @@ impl std::convert::From<TryReadOneResponseVariantsTvfrr200Ok> for TryReadOneResp
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadOneResponseVariantsTvfrr400BadRequest {
-    TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize
-    {
-        read_one_payload_try_from_read_one_payload_with_serialize_deserialize
-        :
-        ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }
-}
-impl std::convert::From<TryReadOneResponseVariantsTvfrr400BadRequest>
-    for TryReadOneResponseVariants
-{
-    fn from(value: TryReadOneResponseVariantsTvfrr400BadRequest) -> Self {
-        match value
-        {
-            TryReadOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest :: JsonDataError
-            { json_data_error, code_occurence } => Self :: JsonDataError
-            { json_data_error, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest ::
-            ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize
-            {
-                read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize
-            {
-                read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryReadOneResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } => Self ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } => Self ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence },
-            TryReadOneResponseVariantsTvfrr400BadRequest ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
-            Self :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
+pub enum TryReadOneResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::convert::From<TryReadOneResponseVariantsTvfrr408RequestTimeout>
-    for TryReadOneResponseVariants
-{
-    fn from(value: TryReadOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+impl std::convert::From<TryReadOneResponseVariantsTvfrr404NotFound> for TryReadOneResponseVariants {
+    fn from(value: TryReadOneResponseVariantsTvfrr404NotFound) -> Self {
         match value {
-            TryReadOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
+            TryReadOneResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
                 code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
+            } => Self::RowNotFound {
+                row_not_found,
                 code_occurence,
             },
         }
@@ -944,20 +848,115 @@ impl std::convert::From<TryReadOneResponseVariantsTvfrr500InternalServerError>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryReadOneResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
+pub enum TryReadOneResponseVariantsTvfrr400BadRequest {
+    TypeNotFound
+    {
+        type_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnNotFound
+    {
+        column_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonDataError
+    {
+        json_data_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonSyntaxError
+    {
+        json_syntax_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, MissingJsonContentType
+    {
+        missing_json_content_type : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize
+    {
+        read_one_payload_try_from_read_one_payload_with_serialize_deserialize
+        :
+        ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorNotEqual
+    {
+        commit_not_equal : std::string::String<>, commit_to_use :
+        std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorToStrConversion
+    {
+        commit_to_str_conversion : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NoCommitExtractorHeader
+    {
+        no_commit_header : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr400BadRequest>
+    for TryReadOneResponseVariants
+{
+    fn from(value: TryReadOneResponseVariantsTvfrr400BadRequest) -> Self {
+        match value
+        {
+            TryReadOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
+            { type_not_found, code_occurence } => Self :: TypeNotFound
+            { type_not_found, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest :: ColumnNotFound
+            { column_not_found, code_occurence } => Self :: ColumnNotFound
+            { column_not_found, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest :: JsonDataError
+            { json_data_error, code_occurence } => Self :: JsonDataError
+            { json_data_error, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
+            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            { json_syntax_error, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence } => Self ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest ::
+            ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize
+            {
+                read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
+                code_occurence
+            } => Self ::
+            ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize
+            {
+                read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
+                code_occurence
+            }, TryReadOneResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence } => Self ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence } => Self ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence },
+            TryReadOneResponseVariantsTvfrr400BadRequest ::
+            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
+            Self :: NoCommitExtractorHeader
+            { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::convert::From<TryReadOneResponseVariantsTvfrr404NotFound> for TryReadOneResponseVariants {
-    fn from(value: TryReadOneResponseVariantsTvfrr404NotFound) -> Self {
+impl std::convert::From<TryReadOneResponseVariantsTvfrr408RequestTimeout>
+    for TryReadOneResponseVariants
+{
+    fn from(value: TryReadOneResponseVariantsTvfrr408RequestTimeout) -> Self {
         match value {
-            TryReadOneResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
+            TryReadOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
                 code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
                 code_occurence,
             },
         }
@@ -1582,7 +1581,7 @@ pub async fn read_one(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 4777, column : 17,
+                            line : 4779, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
