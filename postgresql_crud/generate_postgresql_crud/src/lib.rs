@@ -5654,9 +5654,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .iter()
                         .map(|element| {
                             let field_ident = &element.field_ident;
-                            let field_type = &element.field.ty;
+                            let inner_type_token_stream = &element.inner_type_token_stream;
                             quote::quote! {
-                                pub #field_ident: std::option::Option<#field_type>
+                                pub #field_ident: std::option::Option<#inner_type_token_stream>
                             }
                         });
                 let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
@@ -5675,9 +5675,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .iter()
                         .map(|element| {
                             let field_ident = &element.field_ident;
-                            let field_type = &element.field.ty;
+                            let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
                             quote::quote! {
-                                #field_ident: std::option::Option<#field_type>
+                                #field_ident: std::option::Option<#inner_type_with_serialize_deserialize_token_stream>
                             }
                         });
                 let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
