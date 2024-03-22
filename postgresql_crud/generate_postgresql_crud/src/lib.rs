@@ -1837,7 +1837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &code_occurence_field,
             vec![
                 (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence,
+                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,//todo display with serialize deserialize
                     &variant_name_snake_case_stringified,
                     primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
                 )
@@ -1850,7 +1850,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &code_occurence_field,
         vec![
             (
-                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence,
+                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,//todo display with serialize deserialize
                 "non_existing_primary_keys", 
                 primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
             ),
@@ -7500,7 +7500,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
