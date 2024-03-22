@@ -5737,19 +5737,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
+                    let primary_key_let_field_ident_value_field_ident_try_from_token_stream = generate_let_field_ident_value_field_ident_try_from_token_stream(
+                        &primary_key_syn_field_with_additional_info,
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                        &field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream,
+                    );
                     quote::quote! {
                         impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
                             type Error = #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
                             fn try_from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Result<Self, Self::Error> {
-                                let #primary_key_field_ident = match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value.#primary_key_field_ident) {
-                                    Ok(value) => value,
-                                    Err(#error_value_snake_case_token_stream) => {
-                                        return Err(Self::Error::#not_uuid_token_upper_camel_case_stream {
-                                            #not_uuid_token_snake_case_stream: #error_value_snake_case_token_stream,
-                                            #field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream,
-                                        });
-                                    }
-                                };
+                                #primary_key_let_field_ident_value_field_ident_try_from_token_stream
                                 //todo with_serialize_deserialize
                                 #(#fields_assignment_excluding_primary_key_token_stream)*
                                 Ok(Self {

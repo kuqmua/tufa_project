@@ -212,7 +212,6 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct UpdateOnePayload {
     pub id: postgresql_crud::SqlxTypesUuidUuid,
@@ -241,11 +240,11 @@ pub enum UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNam
 impl std::convert::TryFrom<UpdateOnePayloadWithSerializeDeserialize> for UpdateOnePayload {
     type Error = UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNamed;
     fn try_from(value: UpdateOnePayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let id = match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value.id) {
+        let id = match postgresql_crud::SqlxTypesUuidUuid::try_from(value.id) {
             Ok(value) => value,
             Err(e) => {
-                return Err(Self::Error::NotUuid {
-                    not_uuid: e,
+                return Err(Self::Error::Id {
+                    sqlx_types_uuid_uuid: e,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                         file!().to_string(),
                         line!(),
@@ -889,6 +888,28 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>
+    for TryUpdateOneResponseVariants
+{
+    fn from(value: TryUpdateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryUpdateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryUpdateOneResponseVariantsTvfrr500InternalServerError {
     Configuration {
         configuration: std::string::String,
@@ -1015,28 +1036,6 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr500InternalServerError>
                 operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
                 code_occurence
             }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>
-    for TryUpdateOneResponseVariants
-{
-    fn from(value: TryUpdateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
         }
     }
 }
@@ -1541,10 +1540,8 @@ pub async fn try_update_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryUpdateOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryUpdateOneErrorNamed::DeserializeResponse {
@@ -1592,8 +1589,8 @@ pub async fn try_update_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>(
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
             Ok(value) => TryUpdateOneResponseVariants::from(value),
@@ -1728,7 +1725,7 @@ pub async fn update_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6075, column : 17,
+                            line : 6072, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
