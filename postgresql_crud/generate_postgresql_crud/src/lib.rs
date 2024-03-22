@@ -5659,10 +5659,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 pub #field_ident: std::option::Option<#field_type>
                             }
                         });
+                let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
                 quote::quote! {
                     #derive_debug_to_schema_token_stream
                     pub struct #operation_payload_upper_camel_case_token_stream {
-                        pub #primary_key_field_ident: #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
+                        pub #primary_key_field_ident: #primary_key_inner_type_token_stream,
                         #(#fields_with_excluded_primary_key_token_stream),*
                     }
                 }
@@ -5679,10 +5680,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #field_ident: std::option::Option<#field_type>
                             }
                         });
+                let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
                 quote::quote! {
                     #derive_debug_serialize_deserialize_to_schema_token_stream
                     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-                        #primary_key_field_ident: #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
                         #(#fields_with_excluded_primary_key_token_stream),*
                     }
                 }
@@ -5695,14 +5697,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &fields_named_wrappers_excluding_primary_key,
                         &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
                     );
+                    let primary_key_variant_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_token_stream(
+                        &primary_key_syn_field_with_additional_info,
+                        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
+                    );
+                    let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
+                        &fields_named_wrappers_excluding_primary_key,
+                        &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
+                    );
                     quote::quote! {
                         #derive_debug_thiserror_error_occurence_token_stream
                         pub enum #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
-                            #not_uuid_token_upper_camel_case_stream {
-                                #eo_error_occurence_attribute_token_stream
-                                #not_uuid_token_snake_case_stream: #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                            },
+                            #primary_key_variant_token_stream
                             #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
                         }
                     }
