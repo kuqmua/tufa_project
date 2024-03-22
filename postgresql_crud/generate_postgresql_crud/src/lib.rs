@@ -5777,10 +5777,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     fields_named_wrappers_excluding_primary_key
                         .iter()
                         .map(|element| &element.field_ident);
+                let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
                 quote::quote! {
                     impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
-                            let #primary_key_field_ident = #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value.#primary_key_field_ident);
+                            let #primary_key_field_ident = #primary_key_inner_type_with_serialize_deserialize_token_stream::from(value.#primary_key_field_ident);
                             #(#fields_assignment_excluding_primary_key_token_stream)*
                             Self{
                                 #primary_key_field_ident,

@@ -212,6 +212,7 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
+
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct UpdateOnePayload {
     pub id: postgresql_crud::SqlxTypesUuidUuid,
@@ -291,7 +292,7 @@ impl std::convert::TryFrom<UpdateOnePayloadWithSerializeDeserialize> for UpdateO
 }
 impl std::convert::From<UpdateOnePayload> for UpdateOnePayloadWithSerializeDeserialize {
     fn from(value: UpdateOnePayload) -> Self {
-        let id = crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value.id);
+        let id = postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(value.id);
         let sqlx_types_time_time_as_postgresql_time_not_null =
             postgresql_crud::SqlxTypesTimeTimeWithSerializeDeserialize::from(
                 value.sqlx_types_time_time_as_postgresql_time_not_null,
@@ -766,128 +767,6 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr200Ok> for TryUpdateOne
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr404NotFound>
-    for TryUpdateOneResponseVariants
-{
-    fn from(value: TryUpdateOneResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr400BadRequest {
-    TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoPayloadFields
-    {
-        no_payload_fields : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-    {
-        update_one_payload_try_from_update_one_payload_with_serialize_deserialize
-        :
-        UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
-    for TryUpdateOneResponseVariants
-{
-    fn from(value: TryUpdateOneResponseVariantsTvfrr400BadRequest) -> Self {
-        match value
-        {
-            TryUpdateOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest :: JsonDataError
-            { json_data_error, code_occurence } => Self :: JsonDataError
-            { json_data_error, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest :: NoPayloadFields
-            { no_payload_fields, code_occurence } => Self :: NoPayloadFields
-            { no_payload_fields, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryUpdateOneResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } => Self ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } => Self ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence },
-            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
-            Self :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout {
     PoolTimedOut {
         pool_timed_out: std::string::String,
@@ -1036,6 +915,128 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr500InternalServerError>
                 operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
                 code_occurence
             }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr400BadRequest {
+    TypeNotFound
+    {
+        type_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnNotFound
+    {
+        column_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonDataError
+    {
+        json_data_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonSyntaxError
+    {
+        json_syntax_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, MissingJsonContentType
+    {
+        missing_json_content_type : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NoPayloadFields
+    {
+        no_payload_fields : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
+    {
+        update_one_payload_try_from_update_one_payload_with_serialize_deserialize
+        :
+        UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorNotEqual
+    {
+        commit_not_equal : std::string::String<>, commit_to_use :
+        std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorToStrConversion
+    {
+        commit_to_str_conversion : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NoCommitExtractorHeader
+    {
+        no_commit_header : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+}
+impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
+    for TryUpdateOneResponseVariants
+{
+    fn from(value: TryUpdateOneResponseVariantsTvfrr400BadRequest) -> Self {
+        match value
+        {
+            TryUpdateOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
+            { type_not_found, code_occurence } => Self :: TypeNotFound
+            { type_not_found, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest :: ColumnNotFound
+            { column_not_found, code_occurence } => Self :: ColumnNotFound
+            { column_not_found, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest :: JsonDataError
+            { json_data_error, code_occurence } => Self :: JsonDataError
+            { json_data_error, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
+            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            { json_syntax_error, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence } => Self ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest :: NoPayloadFields
+            { no_payload_fields, code_occurence } => Self :: NoPayloadFields
+            { no_payload_fields, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
+            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
+            {
+                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
+                code_occurence
+            } => Self ::
+            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
+            {
+                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
+                code_occurence
+            }, TryUpdateOneResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence } => Self ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence } => Self ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence },
+            TryUpdateOneResponseVariantsTvfrr400BadRequest ::
+            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
+            Self :: NoCommitExtractorHeader
+            { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateOneResponseVariantsTvfrr404NotFound>
+    for TryUpdateOneResponseVariants
+{
+    fn from(value: TryUpdateOneResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryUpdateOneResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
         }
     }
 }
@@ -1564,9 +1565,10 @@ pub async fn try_update_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr400BadRequest>(&response_text)
-        {
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
             Ok(value) => TryUpdateOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryUpdateOneErrorNamed::DeserializeResponse {
@@ -1589,10 +1591,9 @@ pub async fn try_update_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr400BadRequest>(&response_text)
+        {
             Ok(value) => TryUpdateOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryUpdateOneErrorNamed::DeserializeResponse {
@@ -1725,7 +1726,7 @@ pub async fn update_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6072, column : 17,
+                            line : 6073, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
