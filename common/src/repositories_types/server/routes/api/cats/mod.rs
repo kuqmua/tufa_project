@@ -460,8 +460,8 @@ pub enum TryUpdateOne {
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryUpdateOneResponseVariants {
-    Desirable(crate :: server :: postgres :: uuid_wrapper ::
-    PossibleUuidWrapper), Configuration
+    Desirable(postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize),
+    Configuration
     {
         configuration : std::string::String<>, code_occurence :
         error_occurence_lib::code_occurence::CodeOccurence
@@ -757,7 +757,7 @@ impl std::convert::From<&TryUpdateOneResponseVariants> for axum::http::StatusCod
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryUpdateOneResponseVariantsTvfrr200Ok {
-    Desirable(crate::server::postgres::uuid_wrapper::PossibleUuidWrapper),
+    Desirable(postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize),
 }
 impl std::convert::From<TryUpdateOneResponseVariantsTvfrr200Ok> for TryUpdateOneResponseVariants {
     fn from(value: TryUpdateOneResponseVariantsTvfrr200Ok) -> Self {
@@ -863,6 +863,28 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
             NoCommitExtractorHeader { no_commit_header, code_occurence } =>
             Self :: NoCommitExtractorHeader
             { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>
+    for TryUpdateOneResponseVariants
+{
+    fn from(value: TryUpdateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryUpdateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
         }
     }
 }
@@ -1018,30 +1040,8 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr404NotFound>
         }
     }
 }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>
-    for TryUpdateOneResponseVariants
-{
-    fn from(value: TryUpdateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
 impl TryFrom<TryUpdateOneResponseVariants>
-    for crate::server::postgres::uuid_wrapper::PossibleUuidWrapper
+    for postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize
 {
     type Error = TryUpdateOneWithSerializeDeserialize;
     fn try_from(value: TryUpdateOneResponseVariants) -> Result<Self, Self::Error> {
@@ -1726,7 +1726,7 @@ pub async fn update_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6075, column : 17,
+                            line : 6084, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -1849,10 +1849,12 @@ pub async fn update_one<'a>(
         match binded_query.fetch_one(pg_connection.as_mut()).await {
             Ok(value) => match {
                 use sqlx::Row;
-                value.try_get::<sqlx::types::Uuid, &str>("id")
+                value.try_get::<sqlx::types::uuid::Uuid, &str>("id")
             } {
                 Ok(value) => TryUpdateOneResponseVariants::Desirable(
-                    crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value),
+                    postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(
+                        postgresql_crud::SqlxTypesUuidUuid(value),
+                    ),
                 ),
                 Err(e) => {
                     let e = TryUpdateOne ::
