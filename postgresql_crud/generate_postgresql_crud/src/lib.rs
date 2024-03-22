@@ -5767,12 +5767,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let fields_assignment_excluding_primary_key_token_stream =
                     fields_named_wrappers_excluding_primary_key
                         .iter()
-                        .map(|element| {
-                            generate_let_field_ident_value_field_ident_from_token_stream(
-                                element,
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            )
-                        });
+                        .map(|element| generate_let_field_option_ident_value_field_option_ident_from_token_stream(
+                            &element,
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        ));
                 let fields_idents_excluding_primary_key_token_stream =
                     fields_named_wrappers_excluding_primary_key
                         .iter()
@@ -7516,7 +7514,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #read_many_token_stream
             #read_one_token_stream
             #update_many_token_stream
-            // #update_one_token_stream
+            #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
         // }
@@ -8857,6 +8855,20 @@ fn generate_let_field_ident_value_field_ident_from_token_stream(
         &element.inner_type_with_serialize_deserialize_token_stream;
     quote::quote! {
         let #field_ident = #inner_type_with_serialize_deserialize_token_stream::from(value.#field_ident);//todo from or try_from
+    }
+}
+
+fn generate_let_field_option_ident_value_field_option_ident_from_token_stream(
+    element: &SynFieldWithAdditionalInfo,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_ident = &element.field_ident;
+    let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
+    quote::quote! {
+        let #field_ident = match value.#field_ident {
+            Some(value) => Some(#inner_type_with_serialize_deserialize_token_stream::from(value)),
+            None => None,
+        };//todo from or try_from
     }
 }
 
