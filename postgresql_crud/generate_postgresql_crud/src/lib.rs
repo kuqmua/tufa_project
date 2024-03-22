@@ -5842,10 +5842,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
+            let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+            let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
             let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
+                &primary_key_inner_type_token_stream,
                 &quote::quote! {
                     let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(&#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::from(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)) {
                         Ok(value) => value,
@@ -5858,7 +5860,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
                 &quote::quote! {
-                    match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
+                    match #primary_key_inner_type_token_stream::try_from(value) {
                         Ok(value) => Ok(value),
                         Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream )
                     }
@@ -5869,7 +5871,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
-                &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                &primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
                 &reqwest_initialization_token_stream,
