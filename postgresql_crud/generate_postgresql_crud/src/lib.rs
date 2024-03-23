@@ -6281,7 +6281,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &primary_key_syn_field_with_additional_info,
                         &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
                     );
-                    let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
+                    let inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream = generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_deserialize_error_variant_vec_token_stream(
                         &fields_named_wrappers_excluding_primary_key,
                         &code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream
                     );
@@ -6306,7 +6306,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         column!(),
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
-                    //HERE123
                     let fields_assignments_token_stream = fields_named_wrappers_excluding_primary_key.iter()
                         .map(|element| generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_type_with_serialize_deserialize_token_stream(
                             &element,
