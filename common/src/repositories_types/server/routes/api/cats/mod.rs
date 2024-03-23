@@ -254,7 +254,7 @@ impl std::convert::TryFrom<DeleteOnePayloadWithSerializeDeserialize> for DeleteO
 }
 impl std::convert::From<DeleteOnePayload> for DeleteOnePayloadWithSerializeDeserialize {
     fn from(value: DeleteOnePayload) -> Self {
-        let id = crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(value.id);
+        let id = postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize::from(value.id);
         Self { id }
     }
 }
@@ -816,6 +816,50 @@ impl std::convert::From<TryDeleteOneResponseVariantsTvfrr500InternalServerError>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteOneResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryDeleteOneResponseVariantsTvfrr404NotFound>
+    for TryDeleteOneResponseVariants
+{
+    fn from(value: TryDeleteOneResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryDeleteOneResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>
+    for TryDeleteOneResponseVariants
+{
+    fn from(value: TryDeleteOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryDeleteOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryDeleteOneResponseVariantsTvfrr400BadRequest {
     TypeNotFound
     {
@@ -905,50 +949,6 @@ impl std::convert::From<TryDeleteOneResponseVariantsTvfrr400BadRequest>
             NoCommitExtractorHeader { no_commit_header, code_occurence } =>
             Self :: NoCommitExtractorHeader
             { no_commit_header, code_occurence }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>
-    for TryDeleteOneResponseVariants
-{
-    fn from(value: TryDeleteOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryDeleteOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteOneResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryDeleteOneResponseVariantsTvfrr404NotFound>
-    for TryDeleteOneResponseVariants
-{
-    fn from(value: TryDeleteOneResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryDeleteOneResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
         }
     }
 }
@@ -1336,7 +1336,7 @@ pub enum TryDeleteOneErrorNamed {
 pub async fn try_delete_one<'a>(
     server_location: &str,
     parameters: DeleteOneParameters,
-) -> Result<crate::server::postgres::uuid_wrapper::UuidWrapper, TryDeleteOneErrorNamed> {
+) -> Result<postgresql_crud::SqlxTypesUuidUuid, TryDeleteOneErrorNamed> {
     let payload = match serde_json::to_string(&DeleteOnePayloadWithSerializeDeserialize::from(
         parameters.payload,
     )) {
@@ -1434,8 +1434,8 @@ pub async fn try_delete_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
@@ -1460,9 +1460,8 @@ pub async fn try_delete_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr400BadRequest>(&response_text)
-        {
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteOneErrorNamed::DeserializeResponse {
@@ -1485,8 +1484,8 @@ pub async fn try_delete_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(
             &response_text,
         ) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
@@ -1533,11 +1532,11 @@ pub async fn try_delete_one<'a>(
             ),
         });
     };
-    match crate :: server :: postgres :: uuid_wrapper ::
-    PossibleUuidWrapper :: try_from(variants)
+    match postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize ::
+    try_from(variants)
     {
-        Ok(value) => match crate :: server :: postgres :: uuid_wrapper ::
-        UuidWrapper :: try_from(value)
+        Ok(value) => match postgresql_crud::SqlxTypesUuidUuid ::
+        try_from(value)
         {
             Ok(value) => Ok(value), Err(e) =>
             Err(TryDeleteOneErrorNamed ::
@@ -1621,7 +1620,7 @@ pub async fn delete_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 7478, column : 17,
+                            line : 7483, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
