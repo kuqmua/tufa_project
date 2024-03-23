@@ -6606,7 +6606,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #primary_key_field_ident
                             .iter()
                             .map(|element| element.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-                            .collect::<#primary_key_inner_type_token_stream>()
+                            .collect::<std::vec::Vec<#primary_key_inner_type_token_stream>>()
                         }
                     };
                     let query_string_primary_key_some_other_none_token_stream = {
@@ -6702,6 +6702,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 column!(),
                                 &proc_macro_name_upper_camel_case_ident_stringified,
                             );
+                            let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
                             quote::quote!{
                                 let #field_handle_token_stream = match #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#field_ident {
                                     Some(value) => {
@@ -6738,6 +6739,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                         }
                                                     }
                                                     #not_unique_field_vec_snake_case_token_stream
+                                                        .into_iter()
+                                                        .map(|element|#where_inner_type_with_serialize_deserialize_token_stream::from(element))
+                                                        .collect()
                                                 };
                                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#not_unique_field_vec_vec_upper_camel_token_stream {
                                                     #not_unique_field_vec_snake_case_token_stream,

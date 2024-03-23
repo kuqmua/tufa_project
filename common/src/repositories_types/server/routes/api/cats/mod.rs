@@ -263,7 +263,7 @@ impl std::convert::TryFrom<DeleteManyPayloadWithSerializeDeserialize> for Delete
                                 {
                                     file : std :: string :: String ::
                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 8827, column : 17,
+                                    line : 8831, column : 17,
                                 })),
                             }) ;
                         }
@@ -966,163 +966,6 @@ impl std::convert::From<TryDeleteManyResponseVariantsTvfrr200Ok> for TryDeleteMa
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteManyResponseVariantsTvfrr500InternalServerError {
-    Configuration {
-        configuration: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Database {
-        database: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Io {
-        io: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Tls {
-        tls: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Protocol {
-        protocol: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnIndexOutOfBounds {
-        column_index_out_of_bounds: usize,
-        len: usize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnDecode {
-        column_decode_index: std::string::String,
-        source_handle: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Decode {
-        decode: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PoolClosed {
-        pool_closed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    WorkerCrashed {
-        worker_crashed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Migrate {
-        migrate: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PrimaryKeyFromRowAndFailedRollback {
-        primary_key_from_row: std::string::String,
-        rollback_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CommitFailed {
-        commit_failed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    QueryAndRollbackFailed {
-        query_error: std::string::String,
-        rollback_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInServer {
-        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server:
-            std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryDeleteManyResponseVariantsTvfrr500InternalServerError>
-    for TryDeleteManyResponseVariants
-{
-    fn from(value: TryDeleteManyResponseVariantsTvfrr500InternalServerError) -> Self {
-        match value
-        {
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            Configuration { configuration, code_occurence } => Self ::
-            Configuration { configuration, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            Database { database, code_occurence } => Self :: Database
-            { database, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError :: Io
-            { io, code_occurence } => Self :: Io { io, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError :: Tls
-            { tls, code_occurence } => Self :: Tls { tls, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            Protocol { protocol, code_occurence } => Self :: Protocol
-            { protocol, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence } => Self ::
-            ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            ColumnDecode
-            { column_decode_index, source_handle, code_occurence } => Self ::
-            ColumnDecode
-            { column_decode_index, source_handle, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError :: Decode
-            { decode, code_occurence } => Self :: Decode
-            { decode, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            PoolClosed { pool_closed, code_occurence } => Self :: PoolClosed
-            { pool_closed, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            WorkerCrashed { worker_crashed, code_occurence } => Self ::
-            WorkerCrashed { worker_crashed, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            Migrate { migrate, code_occurence } => Self :: Migrate
-            { migrate, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            BytesRejection { bytes_rejection, code_occurence } => Self ::
-            BytesRejection { bytes_rejection, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            UnexpectedCase { unexpected_case, code_occurence } => Self ::
-            UnexpectedCase { unexpected_case, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            BindQuery { bind_query, code_occurence } => Self :: BindQuery
-            { bind_query, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            PrimaryKeyFromRowAndFailedRollback
-            { primary_key_from_row, rollback_error, code_occurence } => Self
-            :: PrimaryKeyFromRowAndFailedRollback
-            { primary_key_from_row, rollback_error, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            CommitFailed { commit_failed, code_occurence } => Self ::
-            CommitFailed { commit_failed, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            QueryAndRollbackFailed
-            { query_error, rollback_error, code_occurence } => Self ::
-            QueryAndRollbackFailed
-            { query_error, rollback_error, code_occurence },
-            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
-            OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInServer
-            {
-                operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
-                code_occurence
-            } => Self ::
-            OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInServer
-            {
-                operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
-                code_occurence
-            }
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryDeleteManyResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -1320,6 +1163,163 @@ impl std::convert::From<TryDeleteManyResponseVariantsTvfrr400BadRequest>
             NoCommitExtractorHeader { no_commit_header, code_occurence } =>
             Self :: NoCommitExtractorHeader
             { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteManyResponseVariantsTvfrr500InternalServerError {
+    Configuration {
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        column_index_out_of_bounds: usize,
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        column_decode_index: std::string::String,
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PrimaryKeyFromRowAndFailedRollback {
+        primary_key_from_row: std::string::String,
+        rollback_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitFailed {
+        commit_failed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryAndRollbackFailed {
+        query_error: std::string::String,
+        rollback_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInServer {
+        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryDeleteManyResponseVariantsTvfrr500InternalServerError>
+    for TryDeleteManyResponseVariants
+{
+    fn from(value: TryDeleteManyResponseVariantsTvfrr500InternalServerError) -> Self {
+        match value
+        {
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            Configuration { configuration, code_occurence } => Self ::
+            Configuration { configuration, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            Database { database, code_occurence } => Self :: Database
+            { database, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError :: Io
+            { io, code_occurence } => Self :: Io { io, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError :: Tls
+            { tls, code_occurence } => Self :: Tls { tls, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            Protocol { protocol, code_occurence } => Self :: Protocol
+            { protocol, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            ColumnIndexOutOfBounds
+            { column_index_out_of_bounds, len, code_occurence } => Self ::
+            ColumnIndexOutOfBounds
+            { column_index_out_of_bounds, len, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            ColumnDecode
+            { column_decode_index, source_handle, code_occurence } => Self ::
+            ColumnDecode
+            { column_decode_index, source_handle, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError :: Decode
+            { decode, code_occurence } => Self :: Decode
+            { decode, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            PoolClosed { pool_closed, code_occurence } => Self :: PoolClosed
+            { pool_closed, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            WorkerCrashed { worker_crashed, code_occurence } => Self ::
+            WorkerCrashed { worker_crashed, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            Migrate { migrate, code_occurence } => Self :: Migrate
+            { migrate, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            BytesRejection { bytes_rejection, code_occurence } => Self ::
+            BytesRejection { bytes_rejection, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            UnexpectedCase { unexpected_case, code_occurence } => Self ::
+            UnexpectedCase { unexpected_case, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            BindQuery { bind_query, code_occurence } => Self :: BindQuery
+            { bind_query, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            PrimaryKeyFromRowAndFailedRollback
+            { primary_key_from_row, rollback_error, code_occurence } => Self
+            :: PrimaryKeyFromRowAndFailedRollback
+            { primary_key_from_row, rollback_error, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            CommitFailed { commit_failed, code_occurence } => Self ::
+            CommitFailed { commit_failed, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            QueryAndRollbackFailed
+            { query_error, rollback_error, code_occurence } => Self ::
+            QueryAndRollbackFailed
+            { query_error, rollback_error, code_occurence },
+            TryDeleteManyResponseVariantsTvfrr500InternalServerError ::
+            OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInServer
+            {
+                operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
+                code_occurence
+            } => Self ::
+            OperationDoneButCannotConvertUuidWrapperFromPossibleUuidWrapperInServer
+            {
+                operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server,
+                code_occurence
+            }
         }
     }
 }
@@ -1946,9 +1946,10 @@ pub async fn try_delete_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr404NotFound>(&response_text)
-        {
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
             Ok(value) => TryDeleteManyResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteManyErrorNamed::DeserializeResponse {
@@ -1997,10 +1998,9 @@ pub async fn try_delete_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr404NotFound>(&response_text)
+        {
             Ok(value) => TryDeleteManyResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteManyErrorNamed::DeserializeResponse {
@@ -2151,7 +2151,7 @@ pub async fn delete_many<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6960, column : 17,
+                            line : 6964, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -2232,7 +2232,7 @@ pub async fn delete_many<'a>(
                 let expected_updated_primary_keys = {
                     id.iter()
                         .map(|element| element.clone())
-                        .collect::<postgresql_crud::SqlxTypesUuidUuid>()
+                        .collect::<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuid>>()
                 };
                 let binded_query = {
                     let query_string =
@@ -2538,7 +2538,10 @@ pub async fn delete_many<'a>(
                                             }
                                         }
                                     }
-                                    not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec
+                                    not_unique_sqlx_types_time_time_as_postgresql_time_not_null_vec.into_iter().map(|
+                                    element |
+                                    postgresql_crud::WhereSqlxTypesTimeTimeWithSerializeDeserialize
+                                    :: from(element)).collect()
                                 };
                                 let e = TryDeleteMany ::
                                 NotUniqueSqlxTypesTimeTimeAsPostgresqlTimeNotNullVec
