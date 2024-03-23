@@ -225,11 +225,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {primary_key_attr_name} attribute"),
         }
     };
+    let primary_key_field = &primary_key_syn_field_with_additional_info.field;
     let primary_key_field_ident = &primary_key_syn_field_with_additional_info.field_ident;
+    let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant; 
+    let primary_key_maybe_generic_token_stream = &primary_key_syn_field_with_additional_info.maybe_generic_token_stream; 
+    let primary_key_path_token_stream = &primary_key_syn_field_with_additional_info.path_token_stream;
     let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
     let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
     let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
     let primary_key_inner_type_with_serialize_deserialize_error_named_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_error_named_token_stream;
+    let primary_key_where_inner_type_with_serialize_deserialize_handle_stringified = &primary_key_syn_field_with_additional_info.where_inner_type_with_serialize_deserialize_handle_stringified;
+    let primary_key_where_inner_type_token_stream = &primary_key_syn_field_with_additional_info.where_inner_type_token_stream;
+    let primary_key_where_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.where_inner_type_with_serialize_deserialize_token_stream;
     let crate_path_stringified = "postgresql_crud";
     let crate_path_std_primitive_i64_token_stream = {
         let value_stringified = format!("{crate_path_stringified}::StdPrimitiveI64");
