@@ -7292,7 +7292,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
             &desirable_status_code,
-            &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+            &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
             &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -7439,6 +7439,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &from_log_and_return_error_token_stream,
                         &pg_connection_token_stream,
                     );
+                let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
+                let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+                let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
                 quote::quote! {
                     let #query_string_name_token_stream = {
                         #query_string_token_stream
@@ -7454,9 +7457,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     {
                         Ok(value) => match {
                             use #sqlx_row_token_stream;
-                            value.try_get::<#sqlx_types_uuid_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
+                            value.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
-                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)),
+                            Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
+                                #primary_key_inner_type_with_serialize_deserialize_token_stream::from(
+                                    #primary_key_inner_type_token_stream(value)
+                                )
+                            ),
                             Err(#error_value_snake_case_token_stream) => {
                                 let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_initialization_token_stream;
                                 #error_log_call_token_stream
@@ -7644,7 +7651,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             #delete_many_token_stream
-            // #delete_one_token_stream
+            #delete_one_token_stream
         // }
     };
     // if ident == "" {
