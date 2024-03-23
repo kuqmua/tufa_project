@@ -215,28 +215,27 @@ pub struct Dog {
 
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct DeleteOnePayload {
-    pub id: crate::server::postgres::uuid_wrapper::UuidWrapper,
+    pub id: postgresql_crud::SqlxTypesUuidUuid,
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct DeleteOnePayloadWithSerializeDeserialize {
-    id: crate::server::postgres::uuid_wrapper::PossibleUuidWrapper,
+    id: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserialize,
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserializeErrorNamed {
-    NotUuid {
+    Id {
         #[eo_error_occurence]
-        not_uuid:
-            crate::server::postgres::uuid_wrapper::UuidWrapperTryFromPossibleUuidWrapperErrorNamed,
+        sqlx_types_uuid_uuid: postgresql_crud::SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 impl std::convert::TryFrom<DeleteOnePayloadWithSerializeDeserialize> for DeleteOnePayload {
     type Error = DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserializeErrorNamed;
     fn try_from(value: DeleteOnePayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(value.id) {
+        match postgresql_crud::SqlxTypesUuidUuid::try_from(value.id) {
             Ok(value) => Ok(Self { id: value }),
-            Err(e) => Err(Self::Error::NotUuid {
-                not_uuid: e,
+            Err(e) => Err(Self::Error::Id {
+                sqlx_types_uuid_uuid: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     file!().to_string(),
                     line!(),
@@ -245,7 +244,7 @@ impl std::convert::TryFrom<DeleteOnePayloadWithSerializeDeserialize> for DeleteO
                         file: std::string::String::from(
                             "postgresql_crud/generate_postgresql_crud/src/lib.rs",
                         ),
-                        line: 7198,
+                        line: 7205,
                         column: 21,
                     }),
                 ),
@@ -1435,32 +1434,6 @@ pub async fn try_delete_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
-            Ok(value) => TryDeleteOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryDeleteOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2342,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
     } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
         match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(
             &response_text,
@@ -1490,6 +1463,32 @@ pub async fn try_delete_one<'a>(
     } else if status_code == http::StatusCode::BAD_REQUEST {
         match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr400BadRequest>(&response_text)
         {
+            Ok(value) => TryDeleteOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryDeleteOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2342,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr500InternalServerError>(
+            &response_text,
+        ) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteOneErrorNamed::DeserializeResponse {
@@ -1622,7 +1621,7 @@ pub async fn delete_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 7436, column : 17,
+                            line : 7478, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
