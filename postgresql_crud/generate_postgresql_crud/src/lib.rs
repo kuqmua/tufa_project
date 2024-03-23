@@ -6395,7 +6395,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream>},//todo reuse
+                &{
+                    let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
+                    quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>}
+                },
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -6434,8 +6437,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &str_ref_token_stream,
                 // &std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
                 &{
-                    let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
-                    quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>}
+                    let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+                    quote::quote!{std::vec::Vec::<#primary_key_inner_type_token_stream>}
                 },
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
@@ -6597,11 +6600,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #filter_unique_parameters_primary_key_token_stream
                         }
                     };
-                    let expected_updated_primary_keys_token_stream = quote::quote! {
-                        #primary_key_field_ident
-                        .iter()
-                        .map(|element| element.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-                        .collect::<#std_vec_vec_crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream>()
+                    let expected_updated_primary_keys_token_stream = {
+                        let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+                        quote::quote! {
+                            #primary_key_field_ident
+                            .iter()
+                            .map(|element| element.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
+                            .collect::<#primary_key_inner_type_token_stream>()
+                        }
                     };
                     let query_string_primary_key_some_other_none_token_stream = {
                         let handle_stringified = format!("\"{delete_name_stringified} {from_name_stringified} {table_name_stringified} {where_name_stringified} {primary_key_field_ident} {in_name_stringified} ({select_name_stringified} {unnest_name_stringified}($1)){returning_primary_key_stringified}\"");
@@ -6636,7 +6642,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &desirable_upper_camel_case_token_stream,
                         &try_operation_upper_camel_case_token_stream,
                         &error_log_call_token_stream,
-                        &crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream,
+                        &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream,
                         &proc_macro_name_upper_camel_case_ident_stringified,
                         &primary_key_syn_field_with_additional_info,
                     );
@@ -6877,6 +6883,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             query
                         }
                     };
+                    let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
+                    let primary_key_inner_type_token_stream = &primary_key_syn_field_with_additional_info.inner_type_token_stream;
+                    let primary_key_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.inner_type_with_serialize_deserialize_token_stream;
                     quote::quote! {
                         #filter_unique_parameters_token_stream
                         let #query_string_name_token_stream = {
@@ -6906,11 +6915,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         } {
                             match {
                                 use #sqlx_row_token_stream;
-                                row.try_get::<#sqlx_types_uuid_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
+                                row.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
                             } {
                                 Ok(value) => {
                                     vec_values.push(
-                                        #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value),
+                                        #primary_key_inner_type_with_serialize_deserialize_token_stream::from(
+                                            #primary_key_inner_type_token_stream(value)
+                                        ),
                                     );
                                 }
                                 Err(#error_value_snake_case_token_stream) => {
