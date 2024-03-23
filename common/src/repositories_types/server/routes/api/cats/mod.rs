@@ -263,7 +263,7 @@ impl std::convert::TryFrom<DeleteManyPayloadWithSerializeDeserialize> for Delete
                                 {
                                     file : std :: string :: String ::
                                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line : 8831, column : 17,
+                                    line : 8835, column : 17,
                                 })),
                             }) ;
                         }
@@ -966,50 +966,6 @@ impl std::convert::From<TryDeleteManyResponseVariantsTvfrr200Ok> for TryDeleteMa
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteManyResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryDeleteManyResponseVariantsTvfrr404NotFound>
-    for TryDeleteManyResponseVariants
-{
-    fn from(value: TryDeleteManyResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryDeleteManyResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryDeleteManyResponseVariantsTvfrr408RequestTimeout>
-    for TryDeleteManyResponseVariants
-{
-    fn from(value: TryDeleteManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryDeleteManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryDeleteManyResponseVariantsTvfrr400BadRequest {
     TypeNotFound
     {
@@ -1163,6 +1119,50 @@ impl std::convert::From<TryDeleteManyResponseVariantsTvfrr400BadRequest>
             NoCommitExtractorHeader { no_commit_header, code_occurence } =>
             Self :: NoCommitExtractorHeader
             { no_commit_header, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteManyResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryDeleteManyResponseVariantsTvfrr404NotFound>
+    for TryDeleteManyResponseVariants
+{
+    fn from(value: TryDeleteManyResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryDeleteManyResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryDeleteManyResponseVariantsTvfrr408RequestTimeout>
+    for TryDeleteManyResponseVariants
+{
+    fn from(value: TryDeleteManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryDeleteManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
         }
     }
 }
@@ -1946,6 +1946,31 @@ pub async fn try_delete_many<'a>(
                 });
             }
         }
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr404NotFound>(&response_text)
+        {
+            Ok(value) => TryDeleteManyResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryDeleteManyErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2342,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
     } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
         match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr408RequestTimeout>(
             &response_text,
@@ -1972,35 +1997,10 @@ pub async fn try_delete_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr400BadRequest>(
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
-            Ok(value) => TryDeleteManyResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryDeleteManyErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2342,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        match serde_json::from_str::<TryDeleteManyResponseVariantsTvfrr404NotFound>(&response_text)
-        {
             Ok(value) => TryDeleteManyResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteManyErrorNamed::DeserializeResponse {
@@ -2151,7 +2151,7 @@ pub async fn delete_many<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6964, column : 17,
+                            line : 6968, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -2574,35 +2574,40 @@ pub async fn delete_many<'a>(
                         if let Some(value) =
                             &sqlx_types_time_time_as_postgresql_time_not_null_handle
                         {
-                            match postgresql_crud::BindQuery::try_increment(value, &mut increment) {
-                                Ok(_) => {
-                                    let handle = format!
-                                    ("sqlx_types_time_time_as_postgresql_time_not_null = ${increment}")
-                                    ;
-                                    match additional_parameters.is_empty() {
-                                        true => {
-                                            additional_parameters.push_str(&handle);
-                                        }
-                                        false => {
-                                            additional_parameters
-                                                .push_str(&format!(" AND {handle}"));
+                            for element in value {
+                                match postgresql_crud::BindQuery::try_increment(
+                                    element,
+                                    &mut increment,
+                                ) {
+                                    Ok(_) => {
+                                        let handle = format!
+                                        ("sqlx_types_time_time_as_postgresql_time_not_null = ${increment}")
+                                        ;
+                                        match additional_parameters.is_empty() {
+                                            true => {
+                                                additional_parameters.push_str(&handle);
+                                            }
+                                            false => {
+                                                additional_parameters
+                                                    .push_str(&format!(" AND {handle}"));
+                                            }
                                         }
                                     }
-                                }
-                                Err(e) => {
-                                    return TryDeleteManyResponseVariants :: BindQuery
-                                    {
-                                        bind_query : e.into_serialize_deserialize_version(),
-                                        code_occurence : error_occurence_lib :: code_occurence ::
-                                        CodeOccurence ::
-                                        new(file! ().to_string(), line! (), column! (),
-                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                    Err(e) => {
+                                        return TryDeleteManyResponseVariants :: BindQuery
                                         {
-                                            file : std :: string :: String ::
-                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line : 1754, column : 13,
-                                        }))
-                                    } ;
+                                            bind_query : e.into_serialize_deserialize_version(),
+                                            code_occurence : error_occurence_lib :: code_occurence ::
+                                            CodeOccurence ::
+                                            new(file! ().to_string(), line! (), column! (),
+                                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                            {
+                                                file : std :: string :: String ::
+                                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                line : 1754, column : 13,
+                                            }))
+                                        } ;
+                                    }
                                 }
                             }
                         }
@@ -2650,7 +2655,9 @@ pub async fn delete_many<'a>(
                 let binded_query = {
                     let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
                     if let Some(value) = sqlx_types_time_time_as_postgresql_time_not_null_handle {
-                        query = postgresql_crud::BindQuery::bind_value_to_query(value, query);
+                        for element in value {
+                            query = postgresql_crud::BindQuery::bind_value_to_query(element, query);
+                        }
                     }
                     if let Some(id) = parameters.payload.id {
                         for element in id {

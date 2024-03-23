@@ -6776,24 +6776,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             quote::quote!{
                                 if let Some(value) = &#field_handle_token_stream {
-                                    match #crate_server_postgres_bind_query_bind_query_try_increment_token_stream(
-                                        value,
-                                        &mut increment
-                                    ) {
-                                        Ok(_) => {
-                                            let handle = format!(#handle_token_stream);
-                                            match additional_parameters.is_empty() {
-                                                true => {
-                                                    additional_parameters.push_str(&handle);
-                                                },
-                                                false => {
-                                                    additional_parameters.push_str(&format!(" AND {handle}"));
-                                                },
-                                            }
-                                        },
-                                        Err(#error_value_snake_case_token_stream) => {
-                                            return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
-                                        },
+                                    for element in value {
+                                        match #crate_server_postgres_bind_query_bind_query_try_increment_token_stream(
+                                            element,
+                                            &mut increment
+                                        ) {
+                                            Ok(_) => {
+                                                let handle = format!(#handle_token_stream);
+                                                match additional_parameters.is_empty() {
+                                                    true => {
+                                                        additional_parameters.push_str(&handle);
+                                                    },
+                                                    false => {
+                                                        additional_parameters.push_str(&format!(" AND {handle}"));//todo
+                                                    },
+                                                }
+                                            },
+                                            Err(#error_value_snake_case_token_stream) => {
+                                                return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
+                                            },
+                                        }
                                     }
                                 }
                             }
@@ -6869,7 +6871,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             quote::quote!{
                                 if let Some(value) = #field_handle_token_stream {
-                                    query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(value, query);
+                                    for element in value {
+                                        query = #crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream(element, query);
+                                    }
                                 }
                             }
                         });
