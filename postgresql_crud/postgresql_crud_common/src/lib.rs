@@ -734,31 +734,17 @@ impl RustSqlxMapToPostgresTypeVariant {
     ) -> std::string::String {
         SupportedSqlxPostgresType::from(self).get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str)
     }
-    //todo maybe refactor it later(coz json generic)
     pub fn get_inner_type_with_serialize_deserialize_stringified(
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
         add_path(&self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
-    pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(
-        &self,
-        generic_type_str: &str,
-    ) -> std::string::String {
-        SupportedSqlxPostgresType::from(self).get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str)
-    }
     pub fn get_inner_type_with_serialize_deserialize_error_named_stringified(
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
-        add_path(&self.get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
-    }
-    fn get_where_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
-        format!(
-            "{}{}", 
-            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(), 
-            self.get_inner_type_handle_stringified(generic_type_str)
-        )
+        add_path(&SupportedSqlxPostgresType::from(self).get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
     }
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&format!(
@@ -766,7 +752,6 @@ impl RustSqlxMapToPostgresTypeVariant {
             proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(), 
             self.get_inner_type_handle_stringified(generic_type_str)
         ))
-        
     }
     pub fn get_where_inner_type_with_serialize_deserialize_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!(
