@@ -762,7 +762,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ident_column_select_from_str_error_named_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_from_str_error_named_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_token_stream = {//postgresql_crud
+    let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_token_stream = {//todo rename variable
         let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified = format!(
             "{}::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}",
             postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
@@ -1662,9 +1662,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &returning_primary_key_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-    // let path_to_crud = "crate::repositories_types::server::routes::api::cats::";
-    let app_state_path =
-        quote::quote! {postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
+    let postgresql_crud_token_stream = {
+        let value_stringified = postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE;
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let app_state_path = quote::quote! {#postgresql_crud_token_stream::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
     let app_state_name_token_stream = quote::quote! {app_state};
     let error_log_call_token_stream = quote::quote! {
         error_occurence_lib::error_log::ErrorLog::error_log(
@@ -2302,11 +2305,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_json_token_stream = quote::quote! {axum::Json};
     let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote! {crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
     //todo reuse BindQuery path
-    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream =
-        quote::quote! {postgresql_crud::BindQuery::bind_value_to_query}; //todo move trait to own crate to reuse in postgresql_crud and common
-    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {postgresql_crud::BindQuery::try_generate_bind_increments};
-    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream =
-        quote::quote! {postgresql_crud::BindQuery::try_increment};
+    let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_token_stream::BindQuery::bind_value_to_query};
+    let crate_server_postgres_bind_query_bind_query_try_generate_bind_increments_token_stream = quote::quote! {#postgresql_crud_token_stream::BindQuery::try_generate_bind_increments};
+    let crate_server_postgres_bind_query_bind_query_try_increment_token_stream = quote::quote! {#postgresql_crud_token_stream::BindQuery::try_increment};
     let increment_initialization_token_stream = quote::quote! {let mut increment: u64 = 0;};
     let http_status_code_token_stream = proc_macro_common::http_status_code_token_stream();
     let reqwest_header_header_map_token_stream =
@@ -3926,8 +3927,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#fields_assignment_excluding_primary_key_token_stream)*
                                 let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                                 let #order_by_snake_case_token_stream = value.#order_by_snake_case_token_stream;
-                                let #limit_snake_case_token_stream = postgresql_crud::StdPrimitiveI64::from(value.#limit_snake_case_token_stream);//todo reuse
-                                let #offset_snake_case_token_stream = postgresql_crud::StdPrimitiveI64::from(value.#offset_snake_case_token_stream);//todo reuse
+                                let #limit_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64::from(value.#limit_snake_case_token_stream);//todo reuse
+                                let #offset_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64::from(value.#offset_snake_case_token_stream);//todo reuse
                                 Ok(Self {
                                     #(#fields_named_idents_comma_token_stream)*
                                     #select_snake_case_token_stream,
@@ -3971,8 +3972,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #(#fields_assignment_excluding_primary_key_token_stream)*
                             let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                             let #order_by_snake_case_token_stream = value.#order_by_snake_case_token_stream;
-                            let #limit_snake_case_token_stream = postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(value.#limit_snake_case_token_stream);//todo reuse
-                            let #offset_snake_case_token_stream = postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(value.#offset_snake_case_token_stream);//todo reuse
+                            let #limit_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64WithSerializeDeserialize::from(value.#limit_snake_case_token_stream);//todo reuse
+                            let #offset_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64WithSerializeDeserialize::from(value.#offset_snake_case_token_stream);//todo reuse
                             Self{
                                 #(#fields_named_idents_comma_token_stream)*
                                 #select_snake_case_token_stream,
