@@ -48,8 +48,11 @@ pub enum SupportedSqlxPostgresType {
     SqlxTypesJsonT, //todo what to do with generic?
     SerdeJsonValue,
 }
+fn add_path(value: &str) -> std::string::String {
+    format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+}
 impl SupportedSqlxPostgresType {
-    pub fn get_where_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_where_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
@@ -62,8 +65,7 @@ impl SupportedSqlxPostgresType {
         }
     }
     pub fn get_where_with_serialize_deserialize_error_named_stringified(&self, generic_type_str: &str) -> std::string::String {
-        let value = self.get_where_with_serialize_deserialize_error_named_handle_stringified(generic_type_str);
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+        add_path(&self.get_where_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
     }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
         &self,
@@ -84,8 +86,7 @@ impl SupportedSqlxPostgresType {
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
-        let value = self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str);
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+        add_path(&self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
     pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self {
@@ -887,7 +888,7 @@ pub enum FromOrTryFrom {
 
 impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_path_stringified(&self) -> std::string::String {
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{self}")
+        add_path(&self.to_string())
     }
     //todo maybe move to generate_postgresql_crud macro
     pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
@@ -897,7 +898,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         SupportedSqlxPostgresType::from(self).get_inner_type_handle_stringified(generic_type_str)
     }
     pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{}", self.get_inner_type_handle_stringified(generic_type_str))
+        add_path(&self.get_inner_type_handle_stringified(generic_type_str))
     }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
         &self,
@@ -910,8 +911,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
-        let value = self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str);
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
+        add_path(&self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
     pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(
         &self,
@@ -923,7 +923,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{}", self.get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
+        add_path(&self.get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
     }
     pub fn get_where_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!(
@@ -933,12 +933,12 @@ impl RustSqlxMapToPostgresTypeVariant {
         )
     }
     pub fn get_where_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        //todo reuse
-        format!(
-            "{POSTGRESQL_CRUD_SNAKE_CASE}::{}{}", 
+        add_path(&format!(
+            "{}{}", 
             proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(), 
             self.get_inner_type_handle_stringified(generic_type_str)
-        )
+        ))
+        
     }
     pub fn get_where_inner_type_with_serialize_deserialize_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!(
@@ -950,10 +950,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         )
     }
     pub fn get_where_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
-        format!(
-            "{POSTGRESQL_CRUD_SNAKE_CASE}::{}",
-            self.get_where_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str)
-        )
+        add_path(&self.get_where_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
     pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         SupportedSqlxPostgresType::from(self).inner_type_from_or_try_from_inner_type_with_serialize_deserialize()
