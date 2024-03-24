@@ -1310,7 +1310,7 @@ pub trait CheckSupportedRustAndPostgresqlColumnType {
 }
 
 //todo maybe inner value must be pub
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdPrimitiveBool);
 //todo maybe make it a trait, but need to specify generics
 impl StdPrimitiveBoolAsPostgresqlBool {
@@ -1321,10 +1321,7 @@ impl StdPrimitiveBoolAsPostgresqlBool {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBool {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
 impl StdPrimitiveBoolAsPostgresqlBoolNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
@@ -1334,10 +1331,7 @@ impl StdPrimitiveBoolAsPostgresqlBoolNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallInt {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
@@ -1347,10 +1341,7 @@ impl StdPrimitiveI16AsPostgresqlSmallInt {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallInt {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallIntNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
@@ -1360,10 +1351,7 @@ impl StdPrimitiveI16AsPostgresqlSmallIntNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallIntNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallSerial {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
@@ -1373,10 +1361,7 @@ impl StdPrimitiveI16AsPostgresqlSmallSerial {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallSerial {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
@@ -1386,10 +1371,7 @@ impl StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlInt2(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlInt2 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
@@ -1399,10 +1381,7 @@ impl StdPrimitiveI16AsPostgresqlInt2 {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlInt2 {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(pub StdPrimitiveI16);
 impl StdPrimitiveI16AsPostgresqlInt2NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
@@ -1412,10 +1391,7 @@ impl StdPrimitiveI16AsPostgresqlInt2NotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI16AsPostgresqlInt2NotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlInt(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
@@ -1425,10 +1401,7 @@ impl StdPrimitiveI32AsPostgresqlInt {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlIntNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
@@ -1438,10 +1411,7 @@ impl StdPrimitiveI32AsPostgresqlIntNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlIntNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlSerial(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlSerial {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
@@ -1451,10 +1421,7 @@ impl StdPrimitiveI32AsPostgresqlSerial {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSerial {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlSerialNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
@@ -1464,10 +1431,7 @@ impl StdPrimitiveI32AsPostgresqlSerialNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlSerialNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlInt4(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt4 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
@@ -1477,10 +1441,7 @@ impl StdPrimitiveI32AsPostgresqlInt4 {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt4 {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(pub StdPrimitiveI32);
 impl StdPrimitiveI32AsPostgresqlInt4NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
@@ -1490,10 +1451,7 @@ impl StdPrimitiveI32AsPostgresqlInt4NotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI32AsPostgresqlInt4NotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigInt(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigInt {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
@@ -1503,10 +1461,7 @@ impl StdPrimitiveI64AsPostgresqlBigInt {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigInt {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigIntNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
@@ -1516,10 +1471,7 @@ impl StdPrimitiveI64AsPostgresqlBigIntNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigIntNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigSerial {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
@@ -1529,10 +1481,7 @@ impl StdPrimitiveI64AsPostgresqlBigSerial {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerial {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlBigSerialNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
@@ -1542,10 +1491,7 @@ impl StdPrimitiveI64AsPostgresqlBigSerialNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlInt8(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlInt8 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
@@ -1555,10 +1501,7 @@ impl StdPrimitiveI64AsPostgresqlInt8 {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlInt8 {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(pub StdPrimitiveI64);
 impl StdPrimitiveI64AsPostgresqlInt8NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
@@ -1568,10 +1511,7 @@ impl StdPrimitiveI64AsPostgresqlInt8NotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveI64AsPostgresqlInt8NotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlReal(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlReal {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
@@ -1581,10 +1521,7 @@ impl StdPrimitiveF32AsPostgresqlReal {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlReal {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlRealNotNull(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlRealNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
@@ -1594,10 +1531,7 @@ impl StdPrimitiveF32AsPostgresqlRealNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlRealNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlFloat4(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlFloat4 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
@@ -1607,10 +1541,7 @@ impl StdPrimitiveF32AsPostgresqlFloat4 {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFloat4 {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(pub StdPrimitiveF32);
 impl StdPrimitiveF32AsPostgresqlFloat4NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
@@ -1620,10 +1551,7 @@ impl StdPrimitiveF32AsPostgresqlFloat4NotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF32AsPostgresqlFloat4NotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlDoublePrecision {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
@@ -1633,10 +1561,7 @@ impl StdPrimitiveF64AsPostgresqlDoublePrecision {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlDoublePrecision {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
@@ -1646,12 +1571,7 @@ impl StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlFloat8 {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
@@ -1661,10 +1581,7 @@ impl StdPrimitiveF64AsPostgresqlFloat8 {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFloat8 {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(pub StdPrimitiveF64);
 impl StdPrimitiveF64AsPostgresqlFloat8NotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
@@ -1674,10 +1591,7 @@ impl StdPrimitiveF64AsPostgresqlFloat8NotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdPrimitiveF64AsPostgresqlFloat8NotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlVarchar(pub StdStringString);
 impl StdStringStringAsPostgresqlVarchar {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1687,10 +1601,7 @@ impl StdStringStringAsPostgresqlVarchar {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarchar {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlVarcharNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlVarcharNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1700,10 +1611,7 @@ impl StdStringStringAsPostgresqlVarcharNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlVarcharNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCharN(pub StdStringString);
 impl StdStringStringAsPostgresqlCharN {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1713,10 +1621,7 @@ impl StdStringStringAsPostgresqlCharN {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCharN {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCharNNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlCharNNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1726,10 +1631,7 @@ impl StdStringStringAsPostgresqlCharNNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCharNNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlText(pub StdStringString);
 impl StdStringStringAsPostgresqlText {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1739,10 +1641,7 @@ impl StdStringStringAsPostgresqlText {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlText {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlTextNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1752,10 +1651,7 @@ impl StdStringStringAsPostgresqlTextNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlTextNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlName(pub StdStringString);
 impl StdStringStringAsPostgresqlName {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1765,10 +1661,7 @@ impl StdStringStringAsPostgresqlName {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlName {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlNameNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlNameNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1778,10 +1671,7 @@ impl StdStringStringAsPostgresqlNameNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlNameNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCiText(pub StdStringString);
 impl StdStringStringAsPostgresqlCiText {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1791,10 +1681,7 @@ impl StdStringStringAsPostgresqlCiText {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCiText {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCiTextNotNull(pub StdStringString);
 impl StdStringStringAsPostgresqlCiTextNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
@@ -1804,10 +1691,7 @@ impl StdStringStringAsPostgresqlCiTextNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdStringStringAsPostgresqlCiTextNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdVecVecStdPrimitiveU8);
 impl StdVecVecStdPrimitiveU8AsPostgresqlBytea {
     pub fn into_inner_type_vec(
@@ -1819,10 +1703,7 @@ impl StdVecVecStdPrimitiveU8AsPostgresqlBytea {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPostgresqlBytea {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
 impl StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
     pub fn into_inner_type_vec(
@@ -1834,10 +1715,7 @@ impl StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(pub SqlxPostgresTypesPgInterval);
 impl SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
     pub fn into_inner_type_vec(
@@ -1849,10 +1727,7 @@ impl SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull(pub SqlxPostgresTypesPgInterval);
 impl SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
     pub fn into_inner_type_vec(
@@ -1864,12 +1739,7 @@ impl SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI64,
 );
@@ -1883,12 +1753,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI64,
 );
@@ -1902,12 +1767,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI32,
 );
@@ -1921,12 +1781,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI32,
 );
@@ -1940,12 +1795,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
@@ -1961,12 +1811,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgres
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
@@ -1982,10 +1827,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgres
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
@@ -2001,12 +1843,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgr
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
@@ -2024,10 +1861,7 @@ impl
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
 );
@@ -2041,12 +1875,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
 );
@@ -2060,12 +1889,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNot
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
 );
@@ -2079,12 +1903,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
 );
@@ -2098,12 +1917,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotN
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
 );
@@ -2117,12 +1931,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
 );
@@ -2136,12 +1945,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNo
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
 );
@@ -2155,12 +1959,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
 );
@@ -2174,12 +1973,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNul
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
 );
@@ -2193,12 +1987,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
 );
@@ -2212,12 +2001,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
 );
@@ -2231,12 +2015,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
 );
@@ -2250,12 +2029,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesDecimal,
 );
@@ -2269,12 +2043,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesDecimal,
 );
@@ -2288,12 +2057,7 @@ impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(pub SqlxPostgresTypesPgMoney);
 impl SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
     pub fn into_inner_type_vec(
@@ -2305,10 +2069,7 @@ impl SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(pub SqlxPostgresTypesPgMoney);
 impl SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
     pub fn into_inner_type_vec(
@@ -2320,12 +2081,7 @@ impl SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiText(pub SqlxPostgresTypesPgCiText);
 impl SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
     pub fn into_inner_type_vec(
@@ -2337,10 +2093,7 @@ impl SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull(pub SqlxPostgresTypesPgCiText);
 impl SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
     pub fn into_inner_type_vec(
@@ -2352,12 +2105,7 @@ impl SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(pub SqlxTypesBigDecimal);
 impl SqlxTypesBigDecimalAsPostgresqlNumeric {
     pub fn into_inner_type_vec(
@@ -2369,10 +2117,7 @@ impl SqlxTypesBigDecimalAsPostgresqlNumeric {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgresqlNumeric {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(pub SqlxTypesBigDecimal);
 impl SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
     pub fn into_inner_type_vec(
@@ -2384,10 +2129,7 @@ impl SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesDecimalAsPostgresqlNumeric(pub SqlxTypesDecimal);
 impl SqlxTypesDecimalAsPostgresqlNumeric {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
@@ -2397,10 +2139,7 @@ impl SqlxTypesDecimalAsPostgresqlNumeric {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlNumeric {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(pub SqlxTypesDecimal);
 impl SqlxTypesDecimalAsPostgresqlNumericNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
@@ -2410,10 +2149,7 @@ impl SqlxTypesDecimalAsPostgresqlNumericNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesDecimalAsPostgresqlNumericNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
@@ -2427,12 +2163,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
@@ -2446,12 +2177,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
@@ -2465,12 +2191,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
@@ -2484,12 +2205,7 @@ impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesChronoNaiveDateTime);
 impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
     pub fn into_inner_type_vec(
@@ -2501,12 +2217,7 @@ impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull(
     pub SqlxTypesChronoNaiveDateTime,
 );
@@ -2520,12 +2231,7 @@ impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(pub SqlxTypesChronoNaiveDate);
 impl SqlxTypesChronoNaiveDateAsPostgresqlDate {
     pub fn into_inner_type_vec(
@@ -2537,10 +2243,7 @@ impl SqlxTypesChronoNaiveDateAsPostgresqlDate {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPostgresqlDate {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull(pub SqlxTypesChronoNaiveDate);
 impl SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
     pub fn into_inner_type_vec(
@@ -2552,10 +2255,7 @@ impl SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(pub SqlxTypesChronoNaiveTime);
 impl SqlxTypesChronoNaiveTimeAsPostgresqlTime {
     pub fn into_inner_type_vec(
@@ -2567,10 +2267,7 @@ impl SqlxTypesChronoNaiveTimeAsPostgresqlTime {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPostgresqlTime {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull(pub SqlxTypesChronoNaiveTime);
 impl SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
     pub fn into_inner_type_vec(
@@ -2582,10 +2279,7 @@ impl SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(pub SqlxPostgresTypesPgTimeTz);
 impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
     pub fn into_inner_type_vec(
@@ -2597,10 +2291,7 @@ impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(pub SqlxPostgresTypesPgTimeTz);
 impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
     pub fn into_inner_type_vec(
@@ -2612,12 +2303,7 @@ impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesTimePrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
     pub fn into_inner_type_vec(
@@ -2629,12 +2315,7 @@ impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull(
     pub SqlxTypesTimePrimitiveDateTime,
 );
@@ -2648,12 +2329,7 @@ impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(pub SqlxTypesTimeOffsetDateTime);
 impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
     pub fn into_inner_type_vec(
@@ -2665,12 +2341,7 @@ impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesTimeOffsetDateTime,
 );
@@ -2684,12 +2355,7 @@ impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeDateAsPostgresqlDate(pub SqlxTypesTimeDate);
 impl SqlxTypesTimeDateAsPostgresqlDate {
     pub fn into_inner_type_vec(
@@ -2701,10 +2367,7 @@ impl SqlxTypesTimeDateAsPostgresqlDate {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresqlDate {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeDateAsPostgresqlDateNotNull(pub SqlxTypesTimeDate);
 impl SqlxTypesTimeDateAsPostgresqlDateNotNull {
     pub fn into_inner_type_vec(
@@ -2716,10 +2379,7 @@ impl SqlxTypesTimeDateAsPostgresqlDateNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeDateAsPostgresqlDateNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTime(pub SqlxTypesTimeTime);
 impl SqlxTypesTimeTimeAsPostgresqlTime {
     pub fn into_inner_type_vec(
@@ -2731,10 +2391,7 @@ impl SqlxTypesTimeTimeAsPostgresqlTime {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresqlTime {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTimeNotNull(pub SqlxTypesTimeTime);
 impl SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
     pub fn into_inner_type_vec(
@@ -2746,10 +2403,7 @@ impl SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuid(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuid {
     pub fn into_inner_type_vec(
@@ -2761,10 +2415,7 @@ impl SqlxTypesUuidUuidAsPostgresqlUuid {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuid {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNull(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
     pub fn into_inner_type_vec(
@@ -2776,10 +2427,7 @@ impl SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey(pub SqlxTypesUuidUuid);
 impl SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
     pub fn into_inner_type_vec(
@@ -2791,12 +2439,7 @@ impl SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
     pub fn into_inner_type_vec(
@@ -2808,10 +2451,7 @@ impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
     pub fn into_inner_type_vec(
@@ -2823,12 +2463,7 @@ impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
     pub fn into_inner_type_vec(
@@ -2840,10 +2475,7 @@ impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull(pub SqlxTypesIpnetworkIpNetwork);
 impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
     pub fn into_inner_type_vec(
@@ -2855,12 +2487,7 @@ impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlInet(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlInet {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
@@ -2870,10 +2497,7 @@ impl StdNetIpAddrAsPostgresqlInet {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInet {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlInetNotNull(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlInetNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
@@ -2883,10 +2507,7 @@ impl StdNetIpAddrAsPostgresqlInetNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlInetNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlCidr(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlCidr {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
@@ -2896,10 +2517,7 @@ impl StdNetIpAddrAsPostgresqlCidr {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidr {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlCidrNotNull(pub StdNetIpAddr);
 impl StdNetIpAddrAsPostgresqlCidrNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
@@ -2909,10 +2527,7 @@ impl StdNetIpAddrAsPostgresqlCidrNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for StdNetIpAddrAsPostgresqlCidrNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(pub SqlxTypesMacAddressMacAddress);
 impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
     pub fn into_inner_type_vec(
@@ -2924,12 +2539,7 @@ impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull(
     pub SqlxTypesMacAddressMacAddress,
 );
@@ -2943,12 +2553,7 @@ impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType
-    for SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull
-{
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlBit(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlBit {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
@@ -2958,10 +2563,7 @@ impl SqlxTypesBitVecAsPostgresqlBit {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBit {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlBitNotNull(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlBitNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
@@ -2971,10 +2573,7 @@ impl SqlxTypesBitVecAsPostgresqlBitNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlBitNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlVarBit(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlVarBit {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
@@ -2984,10 +2583,7 @@ impl SqlxTypesBitVecAsPostgresqlVarBit {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVarBit {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlVarBitNotNull(pub SqlxTypesBitVec);
 impl SqlxTypesBitVecAsPostgresqlVarBitNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
@@ -2996,9 +2592,6 @@ impl SqlxTypesBitVecAsPostgresqlVarBitNotNull {
             .map(|element| element.0.into_inner())
             .collect()
     }
-}
-impl CheckSupportedRustAndPostgresqlColumnType for SqlxTypesBitVecAsPostgresqlVarBitNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
 }
 //todo what to do with generic?
 #[derive(Debug)]
@@ -3053,7 +2646,7 @@ impl<T> SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJson(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJson {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
@@ -3063,10 +2656,7 @@ impl SerdeJsonValueAsPostgresqlJson {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJson {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJsonNotNull(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
@@ -3076,10 +2666,7 @@ impl SerdeJsonValueAsPostgresqlJsonNotNull {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJsonB(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonB {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
@@ -3089,10 +2676,7 @@ impl SerdeJsonValueAsPostgresqlJsonB {
             .collect()
     }
 }
-impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonB {
-    fn check_supported_rust_and_postgresql_column_type() {}
-}
-#[derive(Debug)]
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJsonBNotNull(pub SerdeJsonValue);
 impl SerdeJsonValueAsPostgresqlJsonBNotNull {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
@@ -3101,9 +2685,6 @@ impl SerdeJsonValueAsPostgresqlJsonBNotNull {
             .map(|element| element.0.into_inner())
             .collect()
     }
-}
-impl CheckSupportedRustAndPostgresqlColumnType for SerdeJsonValueAsPostgresqlJsonBNotNull {
-    fn check_supported_rust_and_postgresql_column_type() {}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
