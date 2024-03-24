@@ -194,6 +194,51 @@ impl SupportedSqlxPostgresType {
         let value = self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str);
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
+    pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
+        match self {
+            Self::StdPrimitiveBool => FromOrTryFrom::From,
+            Self::StdPrimitiveI16 => FromOrTryFrom::From,
+            Self::StdPrimitiveI32 => FromOrTryFrom::From,
+            Self::StdPrimitiveI64 => FromOrTryFrom::From,
+            Self::StdPrimitiveF32 => FromOrTryFrom::From,
+            Self::StdPrimitiveF64 => FromOrTryFrom::From,
+            Self::StdStringString => FromOrTryFrom::From,
+            Self::StdVecVecStdPrimitiveU8 => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgInterval => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => FromOrTryFrom::TryFrom,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgMoney => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgCiText => FromOrTryFrom::From,
+            Self::SqlxTypesBigDecimal => FromOrTryFrom::From,
+            Self::SqlxTypesDecimal => FromOrTryFrom::From,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => FromOrTryFrom::From,
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => FromOrTryFrom::From,
+            Self::SqlxTypesChronoNaiveDateTime => FromOrTryFrom::From,
+            Self::SqlxTypesChronoNaiveDate => FromOrTryFrom::From,
+            Self::SqlxTypesChronoNaiveTime => FromOrTryFrom::From,
+            Self::SqlxPostgresTypesPgTimeTz => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimePrimitiveDateTime => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimeOffsetDateTime => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimeDate => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesTimeTime => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesUuidUuid => FromOrTryFrom::TryFrom,
+            Self::SqlxTypesIpnetworkIpNetwork => FromOrTryFrom::From,
+            Self::StdNetIpAddr => FromOrTryFrom::From,
+            Self::SqlxTypesMacAddressMacAddress => FromOrTryFrom::From,
+            Self::SqlxTypesBitVec => FromOrTryFrom::From,
+            Self::SqlxTypesJsonT => FromOrTryFrom::From,//todo
+            Self::SerdeJsonValue => FromOrTryFrom::From,
+        }
+    }
 }
 
 impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPostgresType {
