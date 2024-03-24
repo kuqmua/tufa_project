@@ -52,8 +52,8 @@ fn add_path(value: &str) -> std::string::String {
     format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
 }
 impl SupportedSqlxPostgresType {
-    fn get_where_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
-        match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+    fn get_where_with_serialize_deserialize_error_named_stringified(&self, generic_type_str: &str) -> std::string::String {
+        add_path(&match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
                 "{}{}{}{}",
@@ -62,10 +62,7 @@ impl SupportedSqlxPostgresType {
                 proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
                 proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified()
             )
-        }
-    }
-    pub fn get_where_with_serialize_deserialize_error_named_stringified(&self, generic_type_str: &str) -> std::string::String {
-        add_path(&self.get_where_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
+        })
     }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
         &self,
@@ -81,12 +78,6 @@ impl SupportedSqlxPostgresType {
                 proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
             ) 
         }
-    }
-    pub fn get_inner_type_with_serialize_deserialize_stringified(
-        &self,
-        generic_type_str: &str,
-    ) -> std::string::String {
-        add_path(&self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
     pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self {
@@ -951,6 +942,9 @@ impl RustSqlxMapToPostgresTypeVariant {
     }
     pub fn get_where_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&self.get_where_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
+    }
+    pub fn get_where_with_serialize_deserialize_error_named_stringified(&self, generic_type_str: &str) -> std::string::String {
+        SupportedSqlxPostgresType::from(self).get_where_with_serialize_deserialize_error_named_stringified(&generic_type_str)
     }
     pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         SupportedSqlxPostgresType::from(self).inner_type_from_or_try_from_inner_type_with_serialize_deserialize()
