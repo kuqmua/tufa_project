@@ -284,49 +284,15 @@ impl SupportedSqlxPostgresType {
             Self::SerdeJsonValue => std::string::String::from("SerdeJsonValue"),
         }
     }
-    pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self) -> std::string::String {
-        match self {
-            Self::StdPrimitiveBool => std::string::String::from(""),
-            Self::StdPrimitiveI16 => std::string::String::from(""),
-            Self::StdPrimitiveI32 => std::string::String::from(""),
-            Self::StdPrimitiveI64 => std::string::String::from(""),
-            Self::StdPrimitiveF32 => std::string::String::from(""),
-            Self::StdPrimitiveF64 => std::string::String::from(""),
-            Self::StdStringString => std::string::String::from(""),
-            Self::StdVecVecStdPrimitiveU8 => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgInterval => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgMoney => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgCiText => std::string::String::from(""),
-            Self::SqlxTypesBigDecimal => std::string::String::from(""),
-            Self::SqlxTypesDecimal => std::string::String::from(""),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from(""),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from(""),
-            Self::SqlxTypesChronoNaiveDateTime => std::string::String::from(""),
-            Self::SqlxTypesChronoNaiveDate => std::string::String::from(""),
-            Self::SqlxTypesChronoNaiveTime => std::string::String::from(""),
-            Self::SqlxPostgresTypesPgTimeTz => std::string::String::from("SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed"),
-            Self::SqlxTypesTimePrimitiveDateTime => std::string::String::from("SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed"),
-            Self::SqlxTypesTimeOffsetDateTime => std::string::String::from("SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed"),
-            Self::SqlxTypesTimeDate => std::string::String::from("SqlxTypesTimeDateWithSerializeDeserializeErrorNamed"),
-            Self::SqlxTypesTimeTime => std::string::String::from("SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed"),
-            Self::SqlxTypesUuidUuid => std::string::String::from("SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed"),
-            Self::SqlxTypesIpnetworkIpNetwork => std::string::String::from(""),
-            Self::StdNetIpAddr => std::string::String::from(""),
-            Self::SqlxTypesMacAddressMacAddress => std::string::String::from(""),
-            Self::SqlxTypesBitVec => std::string::String::from(""),
-            Self::SqlxTypesJsonT => std::string::String::from(""),
-            Self::SerdeJsonValue => std::string::String::from(""),
+    pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+        match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+            FromOrTryFrom::From => std::string::String::from(""),
+            FromOrTryFrom::TryFrom => format!(
+                "{}{}{}", 
+                self.get_inner_type_handle_stringified(generic_type_str),
+                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified()
+            )
         }
     }
     pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
@@ -1093,11 +1059,17 @@ impl RustSqlxMapToPostgresTypeVariant {
         let value = self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str);
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
     }
-    pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self) -> std::string::String {
-        SupportedSqlxPostgresType::from(self).get_inner_type_with_serialize_deserialize_error_named_handle_stringified()
+    pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(
+        &self,
+        generic_type_str: &str,
+    ) -> std::string::String {
+        SupportedSqlxPostgresType::from(self).get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str)
     }
-    pub fn get_inner_type_with_serialize_deserialize_error_named_stringified(&self) -> std::string::String {
-        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{}", self.get_inner_type_with_serialize_deserialize_error_named_handle_stringified())
+    pub fn get_inner_type_with_serialize_deserialize_error_named_stringified(
+        &self,
+        generic_type_str: &str,
+    ) -> std::string::String {
+        format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{}", self.get_inner_type_with_serialize_deserialize_error_named_handle_stringified(generic_type_str))
     }
     pub fn get_where_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!(
