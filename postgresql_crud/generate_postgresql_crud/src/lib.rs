@@ -8808,7 +8808,7 @@ fn generate_let_option_field_ident_value_option_field_ident_try_from_token_strea
                 let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
                 quote::quote!{
                     match #inner_token_stream {
-                        Some(value) => Some(#inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream)),
+                        Some(value) => Some(#inner_type_token_stream::#from_snake_case_token_stream(value)),
                         None => None,
                     }
                 }
