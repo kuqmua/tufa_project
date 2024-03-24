@@ -144,47 +144,14 @@ impl SupportedSqlxPostgresType {
         generic_type_str: &str,
     ) -> std::string::String {
         match self {
-            Self::StdPrimitiveBool => std::string::String::from("StdPrimitiveBoolWithSerializeDeserialize"),
-            Self::StdPrimitiveI16 => std::string::String::from("StdPrimitiveI16WithSerializeDeserialize"),
-            Self::StdPrimitiveI32 => std::string::String::from("StdPrimitiveI32WithSerializeDeserialize"),
-            Self::StdPrimitiveI64 => std::string::String::from("StdPrimitiveI64WithSerializeDeserialize"),
-            Self::StdPrimitiveF32 => std::string::String::from("StdPrimitiveF32WithSerializeDeserialize"),
-            Self::StdPrimitiveF64 => std::string::String::from("StdPrimitiveF64WithSerializeDeserialize"),
-            Self::StdStringString => std::string::String::from("StdStringStringWithSerializeDeserialize"),
-            Self::StdVecVecStdPrimitiveU8 => std::string::String::from("StdVecVecStdPrimitiveU8WithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgInterval => std::string::String::from("SqlxPostgresTypesPgIntervalWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgMoney => std::string::String::from("SqlxPostgresTypesPgMoneyWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgCiText => std::string::String::from("SqlxPostgresTypesPgCiTextWithSerializeDeserialize"),
-            Self::SqlxTypesBigDecimal => std::string::String::from("SqlxTypesBigDecimalWithSerializeDeserialize"),
-            Self::SqlxTypesDecimal => std::string::String::from("SqlxTypesDecimalWithSerializeDeserialize"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize"),
-            Self::SqlxTypesChronoNaiveDateTime => std::string::String::from("SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize"),
-            Self::SqlxTypesChronoNaiveDate => std::string::String::from("SqlxTypesChronoNaiveDateWithSerializeDeserialize"),
-            Self::SqlxTypesChronoNaiveTime => std::string::String::from("SqlxTypesChronoNaiveTimeWithSerializeDeserialize"),
-            Self::SqlxPostgresTypesPgTimeTz => std::string::String::from("SqlxPostgresTypesPgTimeTzWithSerializeDeserialize"),
-            Self::SqlxTypesTimePrimitiveDateTime => std::string::String::from("SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize"),
-            Self::SqlxTypesTimeOffsetDateTime => std::string::String::from("SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize"),
-            Self::SqlxTypesTimeDate => std::string::String::from("SqlxTypesTimeDateWithSerializeDeserialize"),
-            Self::SqlxTypesTimeTime => std::string::String::from("SqlxTypesTimeTimeWithSerializeDeserialize"),
-            Self::SqlxTypesUuidUuid => std::string::String::from("SqlxTypesUuidUuidWithSerializeDeserialize"),
-            Self::SqlxTypesIpnetworkIpNetwork => std::string::String::from("SqlxTypesIpnetworkIpNetworkWithSerializeDeserialize"),
-            Self::StdNetIpAddr => std::string::String::from("StdNetIpAddrWithSerializeDeserialize"),
-            Self::SqlxTypesMacAddressMacAddress => std::string::String::from("SqlxTypesMacAddressMacAddressWithSerializeDeserialize"),
-            Self::SqlxTypesBitVec => std::string::String::from("SqlxTypesBitVecWithSerializeDeserialize"),
-            Self::SqlxTypesJsonT => format!("sqlx::types::JsonWithSerializeDeserialize<{generic_type_str}>"),//todo maybe turbofish syntax
-            Self::SerdeJsonValue => std::string::String::from("SerdeJsonValueWithSerializeDeserialize"),
+            Self::SqlxTypesJsonT => format!(
+                "sqlx::types::Json{}<{generic_type_str}>",
+                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            ),
+            _ => format!(
+                "{self}{}",
+                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+            ) 
         }
     }
     pub fn get_inner_type_with_serialize_deserialize_stringified(
