@@ -79,7 +79,7 @@ impl SupportedSqlxPostgresType {
             ) 
         }
     }
-    pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self {
             Self::StdPrimitiveBool => std::string::String::from("std::primitive::bool"),//todo maybe Option<T> for nullable ?
             Self::StdPrimitiveI16 => std::string::String::from("std::primitive::i16"),
@@ -130,7 +130,7 @@ impl SupportedSqlxPostgresType {
             _ => self.to_string()
         }
     }
-    pub fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
@@ -141,7 +141,7 @@ impl SupportedSqlxPostgresType {
             )
         }
     }
-    pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
+    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         match self {
             Self::StdPrimitiveBool => FromOrTryFrom::From,
             Self::StdPrimitiveI16 => FromOrTryFrom::From,
