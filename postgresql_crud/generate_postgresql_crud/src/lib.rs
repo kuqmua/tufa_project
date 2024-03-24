@@ -237,16 +237,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_where_inner_type_with_serialize_deserialize_handle_stringified = &primary_key_syn_field_with_additional_info.where_inner_type_with_serialize_deserialize_handle_stringified;
     let primary_key_where_inner_type_token_stream = &primary_key_syn_field_with_additional_info.where_inner_type_token_stream;
     let primary_key_where_inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field_with_additional_info.where_inner_type_with_serialize_deserialize_token_stream;
-    let crate_path_stringified = "postgresql_crud";
     let crate_path_std_primitive_i64_token_stream = {
-        let value_stringified = format!("{crate_path_stringified}::StdPrimitiveI64");
+        let value_stringified = format!(
+            "{}::StdPrimitiveI64",
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
+        );
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let limit_type_token_stream = &crate_path_std_primitive_i64_token_stream;
     let offset_type_token_stream = &crate_path_std_primitive_i64_token_stream;
     let crate_path_std_primitive_i64_with_serialize_deserialize_token_stream = {
-        let value_stringified = format!("{crate_path_stringified}::StdPrimitiveI64WithSerializeDeserialize");
+        let value_stringified = format!(
+            "{}::StdPrimitiveI64WithSerializeDeserialize",
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
+        );
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -758,7 +763,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_from_str_error_named_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_token_stream = {//postgresql_crud
-        let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified = format!("postgresql_crud::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}");
+        let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified = format!(
+            "{}::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}",
+            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
+        );
         crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
@@ -1071,7 +1079,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{column_select_token_stream}");
     //todo reuse path
-    let crate_server_postgres_regex_filter_regex_filter_token_stream = quote::quote! {postgresql_crud::RegexFilter};
     let crate_server_postgres_postgres_bigint_postgres_bigint_token_stream = quote::quote! {crate::server::postgres::postgres_bigint::PostgresBigint};
     let primary_key_uuid_wrapper_try_from_sqlx_row_token_stream = {
         let primary_key_str_token_stream = {
@@ -1621,7 +1628,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_middlewares_error_syn_variants = crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_proc_macro_attribute(
         &ast,
         additional_http_status_codes_error_variants_snake_case_stringified,
-        "postgresql_crud",//todo - its main crate name. maybe reuse it later?
+        postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,//todo - its main crate name. maybe reuse it later?
         &proc_macro_name_upper_camel_case_ident_stringified
     );
     let common_middlewares_error_syn_variants_len = common_middlewares_error_syn_variants.len();
@@ -1707,7 +1714,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     let primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated = {
-        let crate_path_stringified = "postgresql_crud";//todo reusage
         let panic_message = format!("primary key functionality is not implemented for {primary_key_rust_sqlx_map_to_postgres_type_variant} in {proc_macro_name_upper_camel_case_ident_stringified} logic");
         match primary_key_rust_sqlx_map_to_postgres_type_variant {
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => panic!("{panic_message}"),
@@ -1839,7 +1845,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => generate_std_vec_vec_syn_punctuated_punctuated(
-                &[crate_path_stringified, "SqlxTypesUuidUuid"],
+                &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, "SqlxTypesUuidUuid"],
                 &proc_macro_name_upper_camel_case_ident_stringified,
             ),
 
@@ -1872,10 +1878,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonBNotNull => panic!("{panic_message}"),
         }
     };
-    let std_vec_vec_crate_server_postgres_regex_filter_regex_filter_syn_punctuated_punctuated = generate_std_vec_vec_syn_punctuated_punctuated(
-        &["postgresql_crud", "RegexFilter"],
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
     let code_occurence_field = syn::Field {
         attrs: vec![],
         vis: syn::Visibility::Inherited,
@@ -1911,7 +1913,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence,
                 &variant_name_snake_case_stringified,
                 proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                    &["postgresql_crud","TryGenerateBindIncrementsErrorNamed"],//HERE
+                    &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE,"TryGenerateBindIncrementsErrorNamed"],//HERE
                     // &["std","string","String"],
                     &proc_macro_name_upper_camel_case_ident_stringified
                 ),
@@ -2203,7 +2205,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &not_unique_field_vec_snake_case_stringified,
                     generate_std_vec_vec_syn_punctuated_punctuated(
                         //todo reuse
-                        &["postgresql_crud", &where_inner_type_with_serialize_deserialize_handle_stringified],
+                        &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, &where_inner_type_with_serialize_deserialize_handle_stringified],
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     )//todo its dont work with json generic
                 )
@@ -3818,7 +3820,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let field_ident = &element.field_ident;
                     let where_inner_type_token_stream = &element.where_inner_type_token_stream;
                     quote::quote!{
-                        pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>,//#crate_server_postgres_regex_filter_regex_filter_token_stream
+                        pub #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_token_stream>>,
                     }
                 });
                 quote::quote! {
@@ -3839,7 +3841,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let field_ident = &element.field_ident;
                     let where_inner_type_with_serialize_deserialize_token_stream = &element.where_inner_type_with_serialize_deserialize_token_stream;
                     quote::quote!{
-                        #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,//#crate_server_postgres_regex_filter_regex_filter_token_stream
+                        #field_ident: std::option::Option<std::vec::Vec<#where_inner_type_with_serialize_deserialize_token_stream>>,
                     }
                 });
                 quote::quote! {
@@ -6646,12 +6648,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
                         });
                     quote::quote!{
+                        //todo or and support where filter
                         #field_ident: None
-                        //or and support
-                        // Some(vec![crate::server::postgres::regex_filter::RegexFilter {
-                        //     regex: #std_string_string_token_stream::from("test"),
-                        //     conjuctive_operator: crate::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                        // }])
                     }
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 let test_content_token_stream = quote::quote! {
