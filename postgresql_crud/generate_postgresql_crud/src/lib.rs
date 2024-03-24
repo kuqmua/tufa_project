@@ -733,12 +733,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let column_variants = fields_named
             .iter()
             .map(|element| {
-                let field_ident_stringified = element.field.ident
-                    .as_ref()
-                    .unwrap_or_else(|| {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                    })
-                    .to_string();
+                let field_ident_stringified = element.field_ident.to_string();
                 let serialize_deserialize_ident_token_stream = format!("\"{field_ident_stringified}\"").parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let variant_ident_token_stream = {
@@ -864,12 +859,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let default_select_variant_ident_token_stream = {
                 let default_select_variant_ident_stringified = fields_named.iter()
                 .fold(std::string::String::default(), |mut acc, element| {
-                    let field_ident_stringified = element.field.ident
-                        .as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        }).to_string();
-                    acc.push_str(&convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel));
+                    acc.push_str(&convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel));
                     acc
                 });
                 default_select_variant_ident_stringified.parse::<proc_macro2::TokenStream>()
@@ -1638,12 +1628,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_read_permission_name} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let fields_permission_token_stream = fields_named.iter().map(|element| {
-            let field_ident = element.field.ident.as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                });
+            let field_ident = &element.field_ident;
             quote::quote!{
-                #field_ident: bool
+                #field_ident: std::primitive::bool
             }
         });
         quote::quote! {
@@ -2219,12 +2206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len - 1), |mut acc, element| {
-        let field_ident = element.field.ident.as_ref().unwrap_or_else(|| {
-            panic!(
-                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                naming_constants::FIELD_IDENT_IS_NONE
-            )
-        });
+        let field_ident = &element.field_ident;
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
         let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
         let where_inner_type_with_serialize_deserialize_handle_stringified = &element.where_inner_type_with_serialize_deserialize_handle_stringified;
@@ -2635,10 +2617,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         common_error_variants_vec.push(unexpected_case_syn_variant);
         common_error_variants_vec
     };
-    let fields_named_excluding_primary_key = fields_named_wrappers_excluding_primary_key
-        .iter()
-        .map(|element| &element.field)
-        .collect::<std::vec::Vec<&syn::Field>>();
     let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(
         &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -2648,12 +2626,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let select_full_variant_token_stream = {
         let select_full_variant_stringified = fields_named.iter().fold(std::string::String::default(), |mut acc, element| {
-            let field_ident_stringified = element.field.ident
-                .as_ref()
-                .unwrap_or_else(|| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                }).to_string();
-            acc.push_str(&convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel));
+            acc.push_str(&convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel));
             acc
         });
         select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
@@ -5489,17 +5462,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let query_string_token_stream = {
                     let column_names = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                        let field_ident = element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            });
                         let possible_dot_space = match (
                             index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::global_variables::hardcode::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
                         ) == fields_named_len {
                             true => "",
                             false => dot_space,
                         };
-                        acc.push_str(&format!("{field_ident}{possible_dot_space}"));
+                        acc.push_str(&format!("{}{possible_dot_space}", &element.field_ident));
                         acc
                     });
                     let column_increments = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
@@ -5529,22 +5498,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     //todo remove () if in fields named only one element
                     let column_vecs_token_stream = fields_named.iter().map(|element|{
-                        let field_ident_underscore_vec_stringified = {
-                            let field_ident = element.field.ident.as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                                });
-                            format!("{field_ident}{underscore_vec_name_stringified}")
-                        };
+                        let field_ident_underscore_vec_stringified = format!("{}{underscore_vec_name_stringified}", &element.field_ident);
                         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     });
                     let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
                     let columns_acc_push_elements_token_stream = fields_named.iter().enumerate().map(|(index, element)|{
-                        let field_ident = element.field.ident.as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                            });
+                        let field_ident = &element.field_ident;
                         let index_token_stream = {
                             let index_stringified = format!("{index}");
                             index_stringified.parse::<proc_macro2::TokenStream>()
@@ -6727,19 +6687,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     false,
                 );
                 let parameters_match_token_stream = fields_named.iter().map(|element| {
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#field_ident
                     }
                 });
                 let parameters_match_primary_key_some_other_none_token_stream = fields_named.iter().map(|element| {
-                    let field_ident = element.field.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                    let field_ident = &element.field_ident;
                     match field_ident == primary_key_field_ident {
                         true => quote::quote!{Some(#primary_key_field_ident)},
                         false => quote::quote!{None}
@@ -7913,7 +7867,7 @@ fn generate_not_unique_field_vec_snake_case_stringified(
     format!("not_unique_{field_ident}_vec")
 }
 
-fn generate_self_fields_token_stream<'a>(
+fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
     fields: &[&'a syn::Field],
     proc_macro_name_upper_camel_case_ident_stringified: &'a str,
 ) -> std::vec::Vec<&'a syn::Ident> {
@@ -7994,7 +7948,7 @@ fn generate_http_request_many_token_stream(
                 else {
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                 };
-                let error_variant_fields = fields_named.named.iter().map(|field|{
+                let error_variant_fields = fields_named.named.iter().map(|field|{//todo rename//todo refactor
                     let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                         panic!(
                             "{proc_macro_name_upper_camel_case_ident_stringified} {}",
@@ -8302,7 +8256,7 @@ fn generate_try_operation_token_stream(
                 else {
                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                 };
-                let error_variant_fields = fields_named.named.iter().map(|field|{
+                let error_variant_fields = fields_named.named.iter().map(|field|{//todo refactor
                     let field_ident = field.ident.as_ref().unwrap_or_else(|| {
                         panic!(
                             "{proc_macro_name_upper_camel_case_ident_stringified} {}",
