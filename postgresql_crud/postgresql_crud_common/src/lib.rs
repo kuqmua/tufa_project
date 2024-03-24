@@ -1284,1380 +1284,311 @@ pub trait CheckSupportedRustAndPostgresqlColumnType {
 //todo maybe inner value must be pub
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveBoolAsPostgresqlBool(pub StdPrimitiveBool);
-//todo maybe make it a trait, but need to specify generics
-impl StdPrimitiveBoolAsPostgresqlBool {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveBoolAsPostgresqlBoolNotNull(pub StdPrimitiveBool);
-impl StdPrimitiveBoolAsPostgresqlBoolNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::bool> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallInt(pub StdPrimitiveI16);
-impl StdPrimitiveI16AsPostgresqlSmallInt {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallIntNotNull(pub StdPrimitiveI16);
-impl StdPrimitiveI16AsPostgresqlSmallIntNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerial(pub StdPrimitiveI16);
-impl StdPrimitiveI16AsPostgresqlSmallSerial {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlSmallSerialNotNull(pub StdPrimitiveI16);
-impl StdPrimitiveI16AsPostgresqlSmallSerialNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlInt2(pub StdPrimitiveI16);
-impl StdPrimitiveI16AsPostgresqlInt2 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI16AsPostgresqlInt2NotNull(pub StdPrimitiveI16);
-impl StdPrimitiveI16AsPostgresqlInt2NotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i16> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlInt(pub StdPrimitiveI32);
-impl StdPrimitiveI32AsPostgresqlInt {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlIntNotNull(pub StdPrimitiveI32);
-impl StdPrimitiveI32AsPostgresqlIntNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlSerial(pub StdPrimitiveI32);
-impl StdPrimitiveI32AsPostgresqlSerial {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlSerialNotNull(pub StdPrimitiveI32);
-impl StdPrimitiveI32AsPostgresqlSerialNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlInt4(pub StdPrimitiveI32);
-impl StdPrimitiveI32AsPostgresqlInt4 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI32AsPostgresqlInt4NotNull(pub StdPrimitiveI32);
-impl StdPrimitiveI32AsPostgresqlInt4NotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigInt(pub StdPrimitiveI64);
-impl StdPrimitiveI64AsPostgresqlBigInt {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(pub StdPrimitiveI64);
-impl StdPrimitiveI64AsPostgresqlBigIntNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(pub StdPrimitiveI64);
-impl StdPrimitiveI64AsPostgresqlBigSerial {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
-impl StdPrimitiveI64AsPostgresqlBigSerialNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlInt8(pub StdPrimitiveI64);
-impl StdPrimitiveI64AsPostgresqlInt8 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlInt8NotNull(pub StdPrimitiveI64);
-impl StdPrimitiveI64AsPostgresqlInt8NotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::i64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlReal(pub StdPrimitiveF32);
-impl StdPrimitiveF32AsPostgresqlReal {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlRealNotNull(pub StdPrimitiveF32);
-impl StdPrimitiveF32AsPostgresqlRealNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlFloat4(pub StdPrimitiveF32);
-impl StdPrimitiveF32AsPostgresqlFloat4 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF32AsPostgresqlFloat4NotNull(pub StdPrimitiveF32);
-impl StdPrimitiveF32AsPostgresqlFloat4NotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f32> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecision(pub StdPrimitiveF64);
-impl StdPrimitiveF64AsPostgresqlDoublePrecision {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull(pub StdPrimitiveF64);
-impl StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8(pub StdPrimitiveF64);
-impl StdPrimitiveF64AsPostgresqlFloat8 {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveF64AsPostgresqlFloat8NotNull(pub StdPrimitiveF64);
-impl StdPrimitiveF64AsPostgresqlFloat8NotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::primitive::f64> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlVarchar(pub StdStringString);
-impl StdStringStringAsPostgresqlVarchar {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlVarcharNotNull(pub StdStringString);
-impl StdStringStringAsPostgresqlVarcharNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCharN(pub StdStringString);
-impl StdStringStringAsPostgresqlCharN {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCharNNotNull(pub StdStringString);
-impl StdStringStringAsPostgresqlCharNNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlText(pub StdStringString);
-impl StdStringStringAsPostgresqlText {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
-impl StdStringStringAsPostgresqlTextNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlName(pub StdStringString);
-impl StdStringStringAsPostgresqlName {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlNameNotNull(pub StdStringString);
-impl StdStringStringAsPostgresqlNameNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCiText(pub StdStringString);
-impl StdStringStringAsPostgresqlCiText {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCiTextNotNull(pub StdStringString);
-impl StdStringStringAsPostgresqlCiTextNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::string::String> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlBytea(pub StdVecVecStdPrimitiveU8);
-impl StdVecVecStdPrimitiveU8AsPostgresqlBytea {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull(pub StdVecVecStdPrimitiveU8);
-impl StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<std::vec::Vec<std::primitive::u8>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlInterval(pub SqlxPostgresTypesPgInterval);
-impl SqlxPostgresTypesPgIntervalAsPostgresqlInterval {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull(pub SqlxPostgresTypesPgInterval);
-impl SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgInterval> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI64,
 );
-impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI64,
 );
-impl SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i64>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI32,
 );
-impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull(
     pub SqlxPostgresTypesPgRangeStdPrimitiveI32,
 );
-impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<std::primitive::i32>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<
-        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
-    > {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<
-        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
-    > {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<
-        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
-    > {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
-impl
-    SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull
-{
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<
-        sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
-    > {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::time::Date>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange(
     pub SqlxPostgresTypesPgRangeSqlxTypesDecimal,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull(
     pub SqlxPostgresTypesPgRangeSqlxTypesDecimal,
 );
-impl SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgRange<sqlx::types::Decimal>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoney(pub SqlxPostgresTypesPgMoney);
-impl SqlxPostgresTypesPgMoneyAsPostgresqlMoney {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull(pub SqlxPostgresTypesPgMoney);
-impl SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgMoney> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiText(pub SqlxPostgresTypesPgCiText);
-impl SqlxPostgresTypesPgCiTextAsPostgresqlCiText {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull(pub SqlxPostgresTypesPgCiText);
-impl SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgCiText> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumeric(pub SqlxTypesBigDecimal);
-impl SqlxTypesBigDecimalAsPostgresqlNumeric {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::BigDecimal> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBigDecimalAsPostgresqlNumericNotNull(pub SqlxTypesBigDecimal);
-impl SqlxTypesBigDecimalAsPostgresqlNumericNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::BigDecimal> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesDecimalAsPostgresqlNumeric(pub SqlxTypesDecimal);
-impl SqlxTypesDecimalAsPostgresqlNumeric {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesDecimalAsPostgresqlNumericNotNull(pub SqlxTypesDecimal);
-impl SqlxTypesDecimalAsPostgresqlNumericNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Decimal> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
-impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
 );
-impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
-impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
 );
-impl SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesChronoNaiveDateTime);
-impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull(
     pub SqlxTypesChronoNaiveDateTime,
 );
-impl SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDate(pub SqlxTypesChronoNaiveDate);
-impl SqlxTypesChronoNaiveDateAsPostgresqlDate {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull(pub SqlxTypesChronoNaiveDate);
-impl SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::NaiveDate> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTime(pub SqlxTypesChronoNaiveTime);
-impl SqlxTypesChronoNaiveTimeAsPostgresqlTime {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull(pub SqlxTypesChronoNaiveTime);
-impl SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::chrono::NaiveTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz(pub SqlxPostgresTypesPgTimeTz);
-impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull(pub SqlxPostgresTypesPgTimeTz);
-impl SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::postgres::types::PgTimeTz> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp(pub SqlxTypesTimePrimitiveDateTime);
-impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull(
     pub SqlxTypesTimePrimitiveDateTime,
 );
-impl SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::PrimitiveDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz(pub SqlxTypesTimeOffsetDateTime);
-impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull(
     pub SqlxTypesTimeOffsetDateTime,
 );
-impl SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::OffsetDateTime> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeDateAsPostgresqlDate(pub SqlxTypesTimeDate);
-impl SqlxTypesTimeDateAsPostgresqlDate {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::Date> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeDateAsPostgresqlDateNotNull(pub SqlxTypesTimeDate);
-impl SqlxTypesTimeDateAsPostgresqlDateNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::Date> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTime(pub SqlxTypesTimeTime);
-impl SqlxTypesTimeTimeAsPostgresqlTime {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::Time> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesTimeTimeAsPostgresqlTimeNotNull(pub SqlxTypesTimeTime);
-impl SqlxTypesTimeTimeAsPostgresqlTimeNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::time::Time> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuid(pub SqlxTypesUuidUuid);
-impl SqlxTypesUuidUuidAsPostgresqlUuid {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNull(pub SqlxTypesUuidUuid);
-impl SqlxTypesUuidUuidAsPostgresqlUuidNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey(pub SqlxTypesUuidUuid);
-impl SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::uuid::Uuid> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInet(pub SqlxTypesIpnetworkIpNetwork);
-impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInet {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull(pub SqlxTypesIpnetworkIpNetwork);
-impl SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr(pub SqlxTypesIpnetworkIpNetwork);
-impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull(pub SqlxTypesIpnetworkIpNetwork);
-impl SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::ipnetwork::IpNetwork> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlInet(pub StdNetIpAddr);
-impl StdNetIpAddrAsPostgresqlInet {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlInetNotNull(pub StdNetIpAddr);
-impl StdNetIpAddrAsPostgresqlInetNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlCidr(pub StdNetIpAddr);
-impl StdNetIpAddrAsPostgresqlCidr {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdNetIpAddrAsPostgresqlCidrNotNull(pub StdNetIpAddr);
-impl StdNetIpAddrAsPostgresqlCidrNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::net::IpAddr> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr(pub SqlxTypesMacAddressMacAddress);
-impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull(
     pub SqlxTypesMacAddressMacAddress,
 );
-impl SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull {
-    pub fn into_inner_type_vec(
-        value: std::vec::Vec<Self>,
-    ) -> std::vec::Vec<sqlx::types::mac_address::MacAddress> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlBit(pub SqlxTypesBitVec);
-impl SqlxTypesBitVecAsPostgresqlBit {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlBitNotNull(pub SqlxTypesBitVec);
-impl SqlxTypesBitVecAsPostgresqlBitNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlVarBit(pub SqlxTypesBitVec);
-impl SqlxTypesBitVecAsPostgresqlVarBit {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SqlxTypesBitVecAsPostgresqlVarBitNotNull(pub SqlxTypesBitVec);
-impl SqlxTypesBitVecAsPostgresqlVarBitNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::BitVec> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 //todo what to do with generic?
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJson<T>(pub SqlxTypesJson<T>);
-impl<T> SqlxTypesJsonTAsPostgresqlJson<T> {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJson<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJsonNotNull<T>(pub SqlxTypesJson<T>);
-impl<T> SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonNotNull<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJsonB<T>(pub SqlxTypesJson<T>);
-impl<T> SqlxTypesJsonTAsPostgresqlJsonB<T> {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonB<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug)]
 pub struct SqlxTypesJsonTAsPostgresqlJsonBNotNull<T>(pub SqlxTypesJson<T>);
-impl<T> SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 impl<T> CheckSupportedRustAndPostgresqlColumnType for SqlxTypesJsonTAsPostgresqlJsonBNotNull<T> {
     fn check_supported_rust_and_postgresql_column_type() {}
 }
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJson(pub SerdeJsonValue);
-impl SerdeJsonValueAsPostgresqlJson {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJsonNotNull(pub SerdeJsonValue);
-impl SerdeJsonValueAsPostgresqlJsonNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJsonB(pub SerdeJsonValue);
-impl SerdeJsonValueAsPostgresqlJsonB {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct SerdeJsonValueAsPostgresqlJsonBNotNull(pub SerdeJsonValue);
-impl SerdeJsonValueAsPostgresqlJsonBNotNull {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<serde_json::Value> {
-        value
-            .into_iter()
-            .map(|element| element.0.into_inner())
-            .collect()
-    }
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
