@@ -244,26 +244,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let crate_path_std_primitive_i64_token_stream = {
-        let value_stringified = format!(
-            "{}::StdPrimitiveI64",
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
-        );
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let limit_type_token_stream = &crate_path_std_primitive_i64_token_stream;
-    let offset_type_token_stream = &crate_path_std_primitive_i64_token_stream;
-    let crate_path_std_primitive_i64_with_serialize_deserialize_token_stream = {
-        let value_stringified = format!(
-            "{}::StdPrimitiveI64WithSerializeDeserialize",
-            postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
-        );
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let limit_type_with_serialize_deserialize_token_stream = &crate_path_std_primitive_i64_with_serialize_deserialize_token_stream;
-    let offset_type_with_serialize_deserialize_token_stream = &crate_path_std_primitive_i64_with_serialize_deserialize_token_stream;
     let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
     let sqlx_types_uuid_token_stream = {
         sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
@@ -3850,8 +3830,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #(#fields_with_excluded_primary_key_token_stream)*
                         pub #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         pub #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-                        pub #limit_token_stream: #limit_type_token_stream,
-                        pub #offset_token_stream: #offset_type_token_stream,
+                        pub #limit_token_stream: #limit_and_offset_type_token_stream,
+                        pub #offset_token_stream: #limit_and_offset_type_token_stream,
                     }
                 }
             };
@@ -3871,8 +3851,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #(#fields_with_excluded_primary_key_token_stream)*
                         #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
                         #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
-                        #limit_token_stream: #limit_type_with_serialize_deserialize_token_stream,
-                        #offset_token_stream: #offset_type_with_serialize_deserialize_token_stream,
+                        #limit_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
+                        #offset_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
                     }
                 }
             };
@@ -3948,8 +3928,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#fields_assignment_excluding_primary_key_token_stream)*
                                 let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                                 let #order_by_snake_case_token_stream = value.#order_by_snake_case_token_stream;
-                                let #limit_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64::from(value.#limit_snake_case_token_stream);//todo reuse
-                                let #offset_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64::from(value.#offset_snake_case_token_stream);//todo reuse
+                                let #limit_snake_case_token_stream = #limit_and_offset_type_token_stream::from(value.#limit_snake_case_token_stream);//todo reuse
+                                let #offset_snake_case_token_stream = #limit_and_offset_type_token_stream::from(value.#offset_snake_case_token_stream);//todo reuse
                                 Ok(Self {
                                     #(#fields_named_idents_comma_token_stream)*
                                     #select_snake_case_token_stream,
@@ -3993,8 +3973,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #(#fields_assignment_excluding_primary_key_token_stream)*
                             let #select_snake_case_token_stream = value.#select_snake_case_token_stream;
                             let #order_by_snake_case_token_stream = value.#order_by_snake_case_token_stream;
-                            let #limit_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64WithSerializeDeserialize::from(value.#limit_snake_case_token_stream);//todo reuse
-                            let #offset_snake_case_token_stream = #postgresql_crud_token_stream::StdPrimitiveI64WithSerializeDeserialize::from(value.#offset_snake_case_token_stream);//todo reuse
+                            let #limit_snake_case_token_stream = #limit_and_offset_type_with_serialize_deserialize_token_stream::from(value.#limit_snake_case_token_stream);//todo reuse
+                            let #offset_snake_case_token_stream = #limit_and_offset_type_with_serialize_deserialize_token_stream::from(value.#offset_snake_case_token_stream);//todo reuse
                             Self{
                                 #(#fields_named_idents_comma_token_stream)*
                                 #select_snake_case_token_stream,
