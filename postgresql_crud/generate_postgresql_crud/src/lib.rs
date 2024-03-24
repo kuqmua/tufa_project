@@ -180,6 +180,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     } else {
         panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
     };
+    let from_or_try_from: postgresql_crud_common::FromOrTryFrom = {
+        let mut value = postgresql_crud_common::FromOrTryFrom::From;
+        for element in &fields_named {
+            let from_or_try_from = element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
+            if let postgresql_crud_common::FromOrTryFrom::TryFrom = from_or_try_from {
+                value = from_or_try_from;
+                break;
+            }
+        }
+        value
+    };
     let primary_key_syn_field_with_additional_info = {
         let primary_key_attr_name = "generate_postgresql_crud_primary_key";
         let mut primary_key_field_option = None;
