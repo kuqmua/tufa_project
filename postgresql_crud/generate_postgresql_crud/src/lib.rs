@@ -2633,14 +2633,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_keys_token_stream = quote::quote! {primary_keys};
     let primary_key_token_stream = quote::quote! {primary_key};
     let into_inner_type_vec_snake_case_token_stream = quote::quote! {into_inner_type_vec};
-    // let f = postgresql_crud_common::
-
-    // get_inner_type_with_serialize_deserialize_stringified(
-    //     &self,
-    //     generic_type_str: &str,
-    // )
-
-
+    let (
+        limit_and_offset_type_token_stream,
+        limit_and_offset_type_with_serialize_deserialize_token_stream,
+    ) = {
+        let supported_sqlx_postgres_type_std_primitive_i64 = postgresql_crud_common::SupportedSqlxPostgresType::StdPrimitiveI64;
+        (
+            {
+                let value_stringified = supported_sqlx_postgres_type_std_primitive_i64.get_inner_type_stringified("");
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            },
+            {
+                let value_stringified = supported_sqlx_postgres_type_std_primitive_i64.get_inner_type_with_serialize_deserialize_stringified("");
+                value_stringified.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            }
+        )
+    };
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);

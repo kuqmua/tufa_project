@@ -288,6 +288,9 @@ impl SupportedSqlxPostgresType {
             _ => self.to_string()
         }
     }
+    pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
+        add_path(&self.get_inner_type_handle_stringified(generic_type_str))
+    }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
         &self,
         generic_type_str: &str,
@@ -302,6 +305,9 @@ impl SupportedSqlxPostgresType {
                 proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
             ) 
         }
+    }
+    pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
+        add_path(&self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
     fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
