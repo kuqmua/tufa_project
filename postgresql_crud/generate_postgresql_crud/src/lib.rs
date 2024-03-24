@@ -9228,7 +9228,7 @@ fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_de
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let where_with_serialize_deserialize_error_named_token_stream = {
-                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.get_where_with_serialize_deserialize_error_named_stringified();
+                let value_stringified = postgresql_crud_common_supported_sqlx_postgres_type.get_where_with_serialize_deserialize_error_named_stringified("");
                 value_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
