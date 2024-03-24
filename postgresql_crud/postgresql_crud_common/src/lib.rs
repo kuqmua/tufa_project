@@ -239,6 +239,51 @@ impl SupportedSqlxPostgresType {
             Self::SerdeJsonValue => std::string::String::from("serde_json::Value"),
         }
     }
+    fn get_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+        match self {
+            Self::StdPrimitiveBool => std::string::String::from("StdPrimitiveBool"),
+            Self::StdPrimitiveI16 => std::string::String::from("StdPrimitiveI16"),
+            Self::StdPrimitiveI32 => std::string::String::from("StdPrimitiveI32"),
+            Self::StdPrimitiveI64 => std::string::String::from("StdPrimitiveI64"),
+            Self::StdPrimitiveF32 => std::string::String::from("StdPrimitiveF32"),
+            Self::StdPrimitiveF64 => std::string::String::from("StdPrimitiveF64"),
+            Self::StdStringString => std::string::String::from("StdStringString"),
+            Self::StdVecVecStdPrimitiveU8 => std::string::String::from("StdVecVecStdPrimitiveU8"),
+            Self::SqlxPostgresTypesPgInterval => std::string::String::from("SqlxPostgresTypesPgInterval"),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI64"),
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI32"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeDate"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesBigDecimal"),
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesDecimal"),
+            Self::SqlxPostgresTypesPgMoney => std::string::String::from("SqlxPostgresTypesPgMoney"),
+            Self::SqlxPostgresTypesPgCiText => std::string::String::from("SqlxPostgresTypesPgCiText"),
+            Self::SqlxTypesBigDecimal => std::string::String::from("SqlxTypesBigDecimal"),
+            Self::SqlxTypesDecimal => std::string::String::from("SqlxTypesDecimal"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtc"),
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocal"),
+            Self::SqlxTypesChronoNaiveDateTime => std::string::String::from("SqlxTypesChronoNaiveDateTime"),
+            Self::SqlxTypesChronoNaiveDate => std::string::String::from("SqlxTypesChronoNaiveDate"),
+            Self::SqlxTypesChronoNaiveTime => std::string::String::from("SqlxTypesChronoNaiveTime"),
+            Self::SqlxPostgresTypesPgTimeTz => std::string::String::from("SqlxPostgresTypesPgTimeTz"),
+            Self::SqlxTypesTimePrimitiveDateTime => std::string::String::from("SqlxTypesTimePrimitiveDateTime"),
+            Self::SqlxTypesTimeOffsetDateTime => std::string::String::from("SqlxTypesTimeOffsetDateTime"),
+            Self::SqlxTypesTimeDate => std::string::String::from("SqlxTypesTimeDate"),
+            Self::SqlxTypesTimeTime => std::string::String::from("SqlxTypesTimeTime"),
+            Self::SqlxTypesUuidUuid => std::string::String::from("SqlxTypesUuidUuid"),
+            Self::SqlxTypesIpnetworkIpNetwork => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
+            Self::StdNetIpAddr => std::string::String::from("StdNetIpAddr"),
+            Self::SqlxTypesMacAddressMacAddress => std::string::String::from("SqlxTypesMacAddressMacAddress"),
+            Self::SqlxTypesBitVec => std::string::String::from("SqlxTypesBitVec"),
+            Self::SqlxTypesJsonT => format!("sqlx::types::Json<{generic_type_str}>"),//todo maybe turbofish syntax
+            Self::SerdeJsonValue => std::string::String::from("SerdeJsonValue"),
+        }
+    }
     pub fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         match self {
             Self::StdPrimitiveBool => FromOrTryFrom::From,
@@ -984,165 +1029,7 @@ impl RustSqlxMapToPostgresTypeVariant {
         SupportedSqlxPostgresType::from(self).get_original_type_stringified(generic_type_str)
     }
     fn get_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
-        match self {
-            Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("StdPrimitiveBool"),
-            Self::StdPrimitiveBoolAsPostgresqlBoolNotNull => std::string::String::from("StdPrimitiveBool"),
-
-            Self::StdPrimitiveI16AsPostgresqlSmallInt => std::string::String::from("StdPrimitiveI16"),
-            Self::StdPrimitiveI16AsPostgresqlSmallIntNotNull => std::string::String::from("StdPrimitiveI16"),
-            Self::StdPrimitiveI16AsPostgresqlSmallSerial => std::string::String::from("StdPrimitiveI16"),
-            Self::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => std::string::String::from("StdPrimitiveI16"),
-            Self::StdPrimitiveI16AsPostgresqlInt2 => std::string::String::from("StdPrimitiveI16"),
-            Self::StdPrimitiveI16AsPostgresqlInt2NotNull => std::string::String::from("StdPrimitiveI16"),
-
-            Self::StdPrimitiveI32AsPostgresqlInt => std::string::String::from("StdPrimitiveI32"),
-            Self::StdPrimitiveI32AsPostgresqlIntNotNull => std::string::String::from("StdPrimitiveI32"),
-            Self::StdPrimitiveI32AsPostgresqlSerial => std::string::String::from("StdPrimitiveI32"),
-            Self::StdPrimitiveI32AsPostgresqlSerialNotNull => std::string::String::from("StdPrimitiveI32"),
-            Self::StdPrimitiveI32AsPostgresqlInt4 => std::string::String::from("StdPrimitiveI32"),
-            Self::StdPrimitiveI32AsPostgresqlInt4NotNull => std::string::String::from("StdPrimitiveI32"),
-
-            Self::StdPrimitiveI64AsPostgresqlBigInt => std::string::String::from("StdPrimitiveI64"),
-            Self::StdPrimitiveI64AsPostgresqlBigIntNotNull => std::string::String::from("StdPrimitiveI64"),
-            Self::StdPrimitiveI64AsPostgresqlBigSerial => std::string::String::from("StdPrimitiveI64"),
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull => std::string::String::from("StdPrimitiveI64"),
-            Self::StdPrimitiveI64AsPostgresqlInt8 => std::string::String::from("StdPrimitiveI64"),
-            Self::StdPrimitiveI64AsPostgresqlInt8NotNull => std::string::String::from("StdPrimitiveI64"),
-
-            Self::StdPrimitiveF32AsPostgresqlReal => std::string::String::from("StdPrimitiveF32"),
-            Self::StdPrimitiveF32AsPostgresqlRealNotNull => std::string::String::from("StdPrimitiveF32"),
-            Self::StdPrimitiveF32AsPostgresqlFloat4 => std::string::String::from("StdPrimitiveF32"),
-            Self::StdPrimitiveF32AsPostgresqlFloat4NotNull => std::string::String::from("StdPrimitiveF32"),
-
-            Self::StdPrimitiveF64AsPostgresqlDoublePrecision => std::string::String::from("StdPrimitiveF64"),
-            Self::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => std::string::String::from("StdPrimitiveF64"),
-            Self::StdPrimitiveF64AsPostgresqlFloat8 => std::string::String::from("StdPrimitiveF64"),
-            Self::StdPrimitiveF64AsPostgresqlFloat8NotNull => std::string::String::from("StdPrimitiveF64"),
-
-            Self::StdStringStringAsPostgresqlVarchar => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlVarcharNotNull => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlCharN => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlCharNNotNull => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlText => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlTextNotNull => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlName => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlNameNotNull => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlCiText => std::string::String::from("StdStringString"),
-            Self::StdStringStringAsPostgresqlCiTextNotNull => std::string::String::from("StdStringString"),
-
-            Self::StdVecVecStdPrimitiveU8AsPostgresqlBytea => std::string::String::from("StdVecVecStdPrimitiveU8"),
-            Self::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => std::string::String::from("StdVecVecStdPrimitiveU8"),
-
-            Self::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => std::string::String::from("SqlxPostgresTypesPgInterval"),
-            Self::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => std::string::String::from("SqlxPostgresTypesPgInterval"),
-
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI64"),
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI64"),
-
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI32"),
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeStdPrimitiveI32"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeDate"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesTimeDate"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesBigDecimal"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesBigDecimal"),
-
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesDecimal"),
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => std::string::String::from("SqlxPostgresTypesPgRangeSqlxTypesDecimal"),
-
-            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => std::string::String::from("SqlxPostgresTypesPgMoney"),
-            Self::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => std::string::String::from("SqlxPostgresTypesPgMoney"),
-
-            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => std::string::String::from("SqlxPostgresTypesPgCiText"),
-            Self::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => std::string::String::from("SqlxPostgresTypesPgCiText"),
-
-            Self::SqlxTypesBigDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesBigDecimal"),
-            Self::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesBigDecimal"),
-
-            Self::SqlxTypesDecimalAsPostgresqlNumeric => std::string::String::from("SqlxTypesDecimal"),
-            Self::SqlxTypesDecimalAsPostgresqlNumericNotNull => std::string::String::from("SqlxTypesDecimal"),
-
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtc"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoUtc"),
-
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocal"),
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesChronoDateTimeSqlxTypesChronoLocal"),
-
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesChronoNaiveDateTime"),
-            Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesChronoNaiveDateTime"),
-
-            Self::SqlxTypesChronoNaiveDateAsPostgresqlDate => std::string::String::from("SqlxTypesChronoNaiveDate"),
-            Self::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => std::string::String::from("SqlxTypesChronoNaiveDate"),
-
-            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTime => std::string::String::from("SqlxTypesChronoNaiveTime"),
-            Self::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => std::string::String::from("SqlxTypesChronoNaiveTime"),
-
-            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => std::string::String::from("SqlxPostgresTypesPgTimeTz"),
-            Self::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => std::string::String::from("SqlxPostgresTypesPgTimeTz"),
-
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => std::string::String::from("SqlxTypesTimePrimitiveDateTime"),
-            Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => std::string::String::from("SqlxTypesTimePrimitiveDateTime"),
-
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => std::string::String::from("SqlxTypesTimeOffsetDateTime"),
-            Self::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => std::string::String::from("SqlxTypesTimeOffsetDateTime"),
-
-            Self::SqlxTypesTimeDateAsPostgresqlDate => std::string::String::from("SqlxTypesTimeDate"),
-            Self::SqlxTypesTimeDateAsPostgresqlDateNotNull => std::string::String::from("SqlxTypesTimeDate"),
-
-            Self::SqlxTypesTimeTimeAsPostgresqlTime => std::string::String::from("SqlxTypesTimeTime"),
-            Self::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => std::string::String::from("SqlxTypesTimeTime"),
-
-            Self::SqlxTypesUuidUuidAsPostgresqlUuid => std::string::String::from("SqlxTypesUuidUuid"),
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => std::string::String::from("SqlxTypesUuidUuid"),
-            Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => std::string::String::from("SqlxTypesUuidUuid"),
-
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
-            Self::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => std::string::String::from("SqlxTypesIpnetworkIpNetwork"),
-
-            Self::StdNetIpAddrAsPostgresqlInet => std::string::String::from("StdNetIpAddr"),
-            Self::StdNetIpAddrAsPostgresqlInetNotNull => std::string::String::from("StdNetIpAddr"),
-            Self::StdNetIpAddrAsPostgresqlCidr => std::string::String::from("StdNetIpAddr"),
-            Self::StdNetIpAddrAsPostgresqlCidrNotNull => std::string::String::from("StdNetIpAddr"),
-
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => std::string::String::from("SqlxTypesMacAddressMacAddress"),
-            Self::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => std::string::String::from("SqlxTypesMacAddressMacAddress"),
-
-            Self::SqlxTypesBitVecAsPostgresqlBit => std::string::String::from("SqlxTypesBitVec"),
-            Self::SqlxTypesBitVecAsPostgresqlBitNotNull => std::string::String::from("SqlxTypesBitVec"),
-            Self::SqlxTypesBitVecAsPostgresqlVarBit => std::string::String::from("SqlxTypesBitVec"),
-            Self::SqlxTypesBitVecAsPostgresqlVarBitNotNull => std::string::String::from("SqlxTypesBitVec"),
-
-            Self::SqlxTypesJsonTAsPostgresqlJson => format!("sqlx::types::Json<{generic_type_str}>"),//todo maybe turbofish syntax
-            Self::SqlxTypesJsonTAsPostgresqlJsonNotNull => format!("sqlx::types::Json<{generic_type_str}>"),
-            Self::SqlxTypesJsonTAsPostgresqlJsonB => format!("sqlx::types::Json<{generic_type_str}>"),
-            Self::SqlxTypesJsonTAsPostgresqlJsonBNotNull => format!("sqlx::types::Json<{generic_type_str}>"),
-
-            Self::SerdeJsonValueAsPostgresqlJson => std::string::String::from("SerdeJsonValue"),
-            Self::SerdeJsonValueAsPostgresqlJsonNotNull => std::string::String::from("SerdeJsonValue"),
-            Self::SerdeJsonValueAsPostgresqlJsonB => std::string::String::from("SerdeJsonValue"),
-            Self::SerdeJsonValueAsPostgresqlJsonBNotNull => std::string::String::from("SerdeJsonValue"),
-        }
+        SupportedSqlxPostgresType::from(self).get_inner_type_handle_stringified(generic_type_str)
     }
     pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{}", self.get_inner_type_handle_stringified(generic_type_str))
