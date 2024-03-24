@@ -2639,10 +2639,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .iter()
         .map(|element| &element.field)
         .collect::<std::vec::Vec<&syn::Field>>();
-    // let fields_named_idents_comma_excluding_primary_key_token_stream = generate_self_fields_token_stream(
-    //     &fields_named_excluding_primary_key,
-    //     &proc_macro_name_upper_camel_case_ident_stringified,
-    // ).iter().map(|element|quote::quote!{#element,}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(
         &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -3009,12 +3005,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &primary_key_syn_field_with_additional_info,
             );
             let http_request_test_token_stream = {
-                let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
-                    let field_type = &element.ty;
+                let element_fields_initialization_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.field.ty;
                     quote::quote!{
                         #field_ident: #field_type::default()
                     }
@@ -3577,12 +3570,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
-                let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
-                    let field_type = &element.ty;
+                let element_fields_initialization_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.field.ty;
                     quote::quote!{
                         #field_ident: #field_type::default()
                     }
@@ -4115,12 +4105,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             let http_request_test_token_stream = {
                 let order_initialization_token_stream = Order::Desc.to_token_stream();
-                let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.ident
-                        .as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                let fields_initialization_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         #field_ident: None,//todo maybe generate all the possible versions for what need to have?
                     }
@@ -5449,12 +5435,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &primary_key_syn_field_with_additional_info,
             );
             let http_request_test_token_stream = {
-                let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
-                    let field_type = &element.ty;
+                let fields_initialization_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.field.ty;
                     quote::quote!{
                         #field_ident: #field_type::default()
                     }
@@ -6065,12 +6048,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &expected_type_initialization_token_stream,
             );
             let http_request_test_token_stream = {
-                let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
-                    let field_type = &element.ty;
+                let fields_initialization_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.field.ty;
                     quote::quote!{
                         #field_ident: Some(#field_type::default())
                     }
@@ -6678,11 +6658,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &primary_key_syn_field_with_additional_info,
             );
             let http_request_test_token_stream = {
-                let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = element.ident.as_ref()
-                        .unwrap_or_else(|| {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_stringified}")
-                        });
+                let fields_initialization_excluding_primary_key_token_stream = fields_named_wrappers_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
                     quote::quote!{
                         //todo or and support where filter
                         #field_ident: None
