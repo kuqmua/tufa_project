@@ -2743,9 +2743,47 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{payload_with_serialize_deserialize_token_stream}");
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => {
+                    //
+                    let impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
+                        let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                            .map(|element| generate_let_field_ident_value_field_ident_from_token_stream(
+                                element,
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            ));
+                        let fields_idents_excluding_primary_key_token_stream =
+                            fields_named_excluding_primary_key
+                                .iter()
+                                .map(|element| &element.field_ident);
+                        //todo it can be std::convert::From if all #(#fields_assignment_excluding_primary_key_token_stream)* are impl from 
+                        quote::quote! {
+                            impl std::convert::From<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_element_upper_camel_case_token_stream {
+                                fn from(value: #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
+                                    #(#fields_assignment_excluding_primary_key_token_stream)*
+                                    Self {
+                                        #(#fields_idents_excluding_primary_key_token_stream),*
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    let impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
+                        quote::quote! {
+                            impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
+                                fn from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
+                                    let mut elements = std::vec::Vec::with_capacity(value.0.len());
+                                    for element in value.0 {//todo refactor
+                                        elements.push(#operation_payload_element_upper_camel_case_token_stream::from(element));
+                                    }
+                                    Ok(Self(elements))
+                                }
+                            }
+                        }
+                    };
                     quote::quote! {
-                        // todo!()
+                        #impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
+                        #impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                     }
+                    //
                 },
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
                     let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
