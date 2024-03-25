@@ -2755,7 +2755,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             fields_named_excluding_primary_key
                                 .iter()
                                 .map(|element| &element.field_ident);
-                        //todo it can be std::convert::From if all #(#fields_assignment_excluding_primary_key_token_stream)* are impl from 
                         quote::quote! {
                             impl std::convert::From<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_element_upper_camel_case_token_stream {
                                 fn from(value: #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
@@ -2784,7 +2783,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #impl_std_convert_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
                         #impl_std_convert_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                     }
-                    //
                 },
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
                     let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
@@ -2798,13 +2796,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             quote::quote! {
                                 #derive_debug_thiserror_error_occurence_token_stream
                                 pub enum #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream {
-                                    //todo remove useless variant and add later protentian errors from conversion from with serialize_deserialize
-                                    //todo fix empty varinats case - use From instead of TryFrom
-                                    #not_uuid_token_upper_camel_case_stream {
-                                        #eo_display_with_serialize_deserialize_token_stream
-                                        #not_uuid_token_snake_case_stream: std::string::String,//HERE #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream,
-                                        #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
-                                    },
                                     #(#inner_type_from_or_try_from_inner_type_with_serialize_deserialize_error_variants_token_stream)*
                                 }
                             }
