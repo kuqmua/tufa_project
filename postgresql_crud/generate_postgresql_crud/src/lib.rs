@@ -2680,7 +2680,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 type_variants_from_request_response.push(&bind_query_syn_variant);
                 type_variants_from_request_response.push(&operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_syn_variant);
-                type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
+                if let postgresql_crud_common::FromOrTryFrom::TryFrom = fields_named_excluding_primary_key_from_or_try_from {
+                    type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
+                }
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
@@ -7725,14 +7727,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream//+
 
-            #create_many_token_stream//+
-            #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #create_many_token_stream//+
+            // #create_one_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {
