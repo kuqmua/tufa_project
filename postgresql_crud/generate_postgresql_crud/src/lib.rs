@@ -2741,11 +2741,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{payload_with_serialize_deserialize_token_stream}");
-            let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = 
-            // match fields_named_excluding_primary_key_from_or_try_from {
-            //     postgresql_crud_common::FromOrTryFrom::From => todo!(),
-            //     postgresql_crud_common::FromOrTryFrom::TryFrom => 
-            {
+            let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
+                postgresql_crud_common::FromOrTryFrom::From => {
+                    quote::quote! {
+                        // todo!()
+                    }
+                },
+                postgresql_crud_common::FromOrTryFrom::TryFrom => {
                     let impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = {
                         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
                         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream = {
@@ -2838,7 +2840,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #impl_std_convert_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream
                         #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                     }
-                // }
+                }
             };
             // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
