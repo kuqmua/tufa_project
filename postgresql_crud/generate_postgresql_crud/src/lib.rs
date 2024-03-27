@@ -1741,6 +1741,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull => panic!("{panic_message}"),
+            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => generate_std_vec_vec_syn_punctuated_punctuated(
+                &[postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, "StdPrimitiveI64"],
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            ),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull => panic!("{panic_message}"),
 

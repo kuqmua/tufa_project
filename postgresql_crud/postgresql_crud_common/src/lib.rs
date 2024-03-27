@@ -21,6 +21,7 @@ pub enum PostgresqlType {
     BigIntNotNull,
     BigSerial,
     BigSerialNotNull,
+    BigSerialNotNullPrimaryKey,
     Int8,
     Int8NotNull,
     Real,
@@ -114,6 +115,7 @@ impl PostgresqlType {
             Self::BigIntNotNull => "BIGINT",
             Self::BigSerial => "BIGSERIAL",
             Self::BigSerialNotNull => "BIGSERIAL",
+            Self::BigSerialNotNullPrimaryKey => "BIGSERIAL",
             Self::Int8 => "INT8",
             Self::Int8NotNull => "INT8",
             Self::Real => "REAL",
@@ -403,6 +405,7 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPost
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull => Self::StdPrimitiveI64,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => Self::StdPrimitiveI64,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull => Self::StdPrimitiveI64,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => Self::StdPrimitiveI64,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 => Self::StdPrimitiveI64,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull => Self::StdPrimitiveI64,
 
@@ -575,6 +578,7 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     StdPrimitiveI64AsPostgresqlBigIntNotNull,
     StdPrimitiveI64AsPostgresqlBigSerial,
     StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
     StdPrimitiveI64AsPostgresqlInt8,
     StdPrimitiveI64AsPostgresqlInt8NotNull,
 
