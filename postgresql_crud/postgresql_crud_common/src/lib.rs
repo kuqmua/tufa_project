@@ -939,6 +939,7 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
             "StdPrimitiveI64AsPostgresqlBigIntNotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlBigIntNotNull),
             "StdPrimitiveI64AsPostgresqlBigSerial" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerial),
             "StdPrimitiveI64AsPostgresqlBigSerialNotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerialNotNull),
+            "StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey" => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
             "StdPrimitiveI64AsPostgresqlInt8" => Ok(Self::StdPrimitiveI64AsPostgresqlInt8),
             "StdPrimitiveI64AsPostgresqlInt8NotNull" => Ok(Self::StdPrimitiveI64AsPostgresqlInt8NotNull),
 
@@ -1123,6 +1124,8 @@ pub struct StdPrimitiveI64AsPostgresqlBigIntNotNull(pub StdPrimitiveI64);
 pub struct StdPrimitiveI64AsPostgresqlBigSerial(pub StdPrimitiveI64);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNull(pub StdPrimitiveI64);
+#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
+pub struct StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey(pub StdPrimitiveI64);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdPrimitiveI64AsPostgresqlInt8(pub StdPrimitiveI64);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
@@ -1503,6 +1506,7 @@ pub struct TestNewTypeWithAdditionalInfo<T> {
     std_primitive_i64_as_postgresql_big_int_not_null: StdPrimitiveI64AsPostgresqlBigIntNotNull,
     std_primitive_i64_as_postgresql_big_serial: StdPrimitiveI64AsPostgresqlBigSerial,
     std_primitive_i64_as_postgresql_big_serial_not_null: StdPrimitiveI64AsPostgresqlBigSerialNotNull,
+    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
     std_primitive_i64_as_postgresql_big_int8: StdPrimitiveI64AsPostgresqlInt8,
     std_primitive_i64_as_postgresql_big_int8_not_null: StdPrimitiveI64AsPostgresqlInt8NotNull,
 
