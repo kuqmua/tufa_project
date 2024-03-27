@@ -7959,7 +7959,12 @@ fn generate_not_unique_field_vec_upper_camel_stringified(
 fn generate_not_unique_field_vec_snake_case_stringified(
     field_ident: &syn::Ident,
 ) -> std::string::String {
-    format!("not_unique_{field_ident}_vec")
+    format!(
+        "{}_{}_{field_ident}_{}",
+        proc_macro_helpers::naming_conventions::not_snake_case_stringified(),
+        proc_macro_helpers::naming_conventions::unique_snake_case_stringified(),
+        proc_macro_helpers::naming_conventions::vec_snake_case_stringified(),
+    )
 }
 
 fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]

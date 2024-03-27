@@ -773,6 +773,11 @@ pub fn debug_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
 pub fn unique_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UNIQUE)
 }
+pub fn unique_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::UNIQUE,
+    )
+}
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(
