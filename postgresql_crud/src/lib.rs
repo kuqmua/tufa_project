@@ -55,8 +55,6 @@ pub use postgresql_crud_common::StdStringStringAsPostgresqlCharN;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlCharNNotNull;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlText;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlTextNotNull;
-pub use postgresql_crud_common::StdStringStringAsPostgresqlName;
-pub use postgresql_crud_common::StdStringStringAsPostgresqlNameNotNull;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlCiText;
 pub use postgresql_crud_common::StdStringStringAsPostgresqlCiTextNotNull;
 

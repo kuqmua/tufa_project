@@ -1764,8 +1764,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull => panic!("{panic_message}"),
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlName => panic!("{panic_message}"),
-            postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlNameNotNull => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiText => panic!("{panic_message}"),
             postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiTextNotNull => panic!("{panic_message}"),
 

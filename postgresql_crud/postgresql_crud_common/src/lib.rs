@@ -2,6 +2,51 @@ pub const POSTGRESQL_CRUD_SNAKE_CASE: &str = "postgresql_crud";
 
 pub enum PostgresqlType {
     Bool,
+    Char,
+    SmallInt,
+    SmallSerial,
+    Int2,
+    Int,
+    Serial,
+    Int4,
+    BigInt,
+    BigSerial,
+    Int8,
+    Real,
+    Float4,
+    DoublePrecision,
+    Float8,
+    Varchar,
+    CharN,
+    Text,
+    CiText,
+    Bytea,
+    Interval,
+    Int8Range,
+    Int4Range,
+    TsRange,
+    TsTzRange,
+    DateRange,
+    NumRange,
+    Money,
+    Numeric,
+    TimestampTz,
+    Date,
+    Time,
+    TimeTz,
+    Timestamp,
+    Uuid,
+    Inet,
+    Cidr,
+    MacAddr,
+    Bit,
+    VarBit,
+    Json,
+    JsonB,
+}
+
+pub enum PostgresqlTypeWithMetadata {
+    Bool,
     BoolNotNull,
     Char,
     CharNotNull,
@@ -38,8 +83,6 @@ pub enum PostgresqlType {
     CharNNotNull,
     Text,
     TextNotNull,
-    Name,
-    NameNotNull,
     CiText,
     CiTextNotNull,
     Bytea,
@@ -91,7 +134,100 @@ pub enum PostgresqlType {
     JsonBNotNull,
 }
 
-impl PostgresqlType {
+impl std::convert::From<&PostgresqlTypeWithMetadata> for PostgresqlType {
+    fn from(value: &PostgresqlTypeWithMetadata) -> Self {
+        match value {
+            PostgresqlTypeWithMetadata::Bool => Self::Bool,
+            PostgresqlTypeWithMetadata::BoolNotNull => Self::Bool,
+            PostgresqlTypeWithMetadata::Char => Self::Char,
+            PostgresqlTypeWithMetadata::CharNotNull => Self::Char,
+            PostgresqlTypeWithMetadata::SmallInt => Self::SmallInt,
+            PostgresqlTypeWithMetadata::SmallIntNotNull => Self::SmallInt,
+            PostgresqlTypeWithMetadata::SmallSerial => Self::SmallSerial,
+            PostgresqlTypeWithMetadata::SmallSerialNotNull => Self::SmallSerial,
+            PostgresqlTypeWithMetadata::Int2 => Self::Int2,
+            PostgresqlTypeWithMetadata::Int2NotNull => Self::Int2,
+            PostgresqlTypeWithMetadata::Int => Self::Int,
+            PostgresqlTypeWithMetadata::IntNotNull => Self::Int,
+            PostgresqlTypeWithMetadata::Serial => Self::Serial,
+            PostgresqlTypeWithMetadata::SerialNotNull => Self::Serial,
+            PostgresqlTypeWithMetadata::Int4 => Self::Int4,
+            PostgresqlTypeWithMetadata::Int4NotNull => Self::Int4,
+            PostgresqlTypeWithMetadata::BigInt => Self::BigInt,
+            PostgresqlTypeWithMetadata::BigIntNotNull => Self::BigInt,
+            PostgresqlTypeWithMetadata::BigSerial => Self::BigSerial,
+            PostgresqlTypeWithMetadata::BigSerialNotNull => Self::BigSerial,
+            PostgresqlTypeWithMetadata::BigSerialNotNullPrimaryKey => Self::BigSerial,
+            PostgresqlTypeWithMetadata::Int8 => Self::Int8,
+            PostgresqlTypeWithMetadata::Int8NotNull => Self::Int8,
+            PostgresqlTypeWithMetadata::Real => Self::Real,
+            PostgresqlTypeWithMetadata::RealNotNull => Self::Real,
+            PostgresqlTypeWithMetadata::Float4 => Self::Float4,
+            PostgresqlTypeWithMetadata::Float4NotNull => Self::Float4,
+            PostgresqlTypeWithMetadata::DoublePrecision => Self::DoublePrecision,
+            PostgresqlTypeWithMetadata::DoublePrecisionNotNull => Self::DoublePrecision,
+            PostgresqlTypeWithMetadata::Float8 => Self::Float8,
+            PostgresqlTypeWithMetadata::Float8NotNull => Self::Float8,
+            PostgresqlTypeWithMetadata::Varchar => Self::Varchar,
+            PostgresqlTypeWithMetadata::VarcharNotNull => Self::Varchar,
+            PostgresqlTypeWithMetadata::CharN => Self::CharN,
+            PostgresqlTypeWithMetadata::CharNNotNull => Self::CharN,
+            PostgresqlTypeWithMetadata::Text => Self::Text,
+            PostgresqlTypeWithMetadata::TextNotNull => Self::Text,
+            PostgresqlTypeWithMetadata::CiText => Self::CiText,
+            PostgresqlTypeWithMetadata::CiTextNotNull => Self::CiText,
+            PostgresqlTypeWithMetadata::Bytea => Self::Bytea,
+            PostgresqlTypeWithMetadata::ByteaNotNull => Self::Bytea,
+            PostgresqlTypeWithMetadata::Interval => Self::Interval,
+            PostgresqlTypeWithMetadata::IntervalNotNull => Self::Interval,
+            PostgresqlTypeWithMetadata::Int8Range => Self::Int8Range,
+            PostgresqlTypeWithMetadata::Int8RangeNotNull => Self::Int8Range,
+            PostgresqlTypeWithMetadata::Int4Range => Self::Int4Range,
+            PostgresqlTypeWithMetadata::Int4RangeNotNull => Self::Int4Range,
+            PostgresqlTypeWithMetadata::TsRange => Self::TsRange,
+            PostgresqlTypeWithMetadata::TsRangeNotNull => Self::TsRange,
+            PostgresqlTypeWithMetadata::TsTzRange => Self::TsTzRange,
+            PostgresqlTypeWithMetadata::TsTzRangeNotNull => Self::TsTzRange,
+            PostgresqlTypeWithMetadata::DateRange => Self::DateRange,
+            PostgresqlTypeWithMetadata::DateRangeNotNull => Self::DateRange,
+            PostgresqlTypeWithMetadata::NumRange => Self::NumRange,
+            PostgresqlTypeWithMetadata::NumRangeNotNull => Self::NumRange,
+            PostgresqlTypeWithMetadata::Money => Self::Money,
+            PostgresqlTypeWithMetadata::MoneyNotNull => Self::Money,
+            PostgresqlTypeWithMetadata::Numeric => Self::Numeric,
+            PostgresqlTypeWithMetadata::NumericNotNull => Self::Numeric,
+            PostgresqlTypeWithMetadata::TimestampTz => Self::TimestampTz,
+            PostgresqlTypeWithMetadata::TimestampTzNotNull => Self::TimestampTz,
+            PostgresqlTypeWithMetadata::Date => Self::Date,
+            PostgresqlTypeWithMetadata::DateNotNull => Self::Date,
+            PostgresqlTypeWithMetadata::Time => Self::Time,
+            PostgresqlTypeWithMetadata::TimeNotNull => Self::Time,
+            PostgresqlTypeWithMetadata::TimeTz => Self::TimeTz,
+            PostgresqlTypeWithMetadata::TimeTzNotNull => Self::TimeTz,
+            PostgresqlTypeWithMetadata::Timestamp => Self::Timestamp,
+            PostgresqlTypeWithMetadata::TimestampNotNull => Self::Timestamp,
+            PostgresqlTypeWithMetadata::Uuid => Self::Uuid,
+            PostgresqlTypeWithMetadata::UuidNotNull => Self::Uuid,
+            PostgresqlTypeWithMetadata::UuidNotNullPrimaryKey => Self::Uuid,
+            PostgresqlTypeWithMetadata::Inet => Self::Inet,
+            PostgresqlTypeWithMetadata::InetNotNull => Self::Inet,
+            PostgresqlTypeWithMetadata::Cidr => Self::Cidr,
+            PostgresqlTypeWithMetadata::CidrNotNull => Self::Cidr,
+            PostgresqlTypeWithMetadata::MacAddr => Self::MacAddr,
+            PostgresqlTypeWithMetadata::MacAddrNotNull => Self::MacAddr,
+            PostgresqlTypeWithMetadata::Bit => Self::Bit,
+            PostgresqlTypeWithMetadata::BitNotNull => Self::Bit,
+            PostgresqlTypeWithMetadata::VarBit => Self::VarBit,
+            PostgresqlTypeWithMetadata::VarBitNotNull => Self::VarBit,
+            PostgresqlTypeWithMetadata::Json => Self::Json,
+            PostgresqlTypeWithMetadata::JsonNotNull => Self::Json,
+            PostgresqlTypeWithMetadata::JsonB => Self::JsonB,
+            PostgresqlTypeWithMetadata::JsonBNotNull => Self::JsonB,
+        }
+    }
+}
+
+impl PostgresqlTypeWithMetadata {
     //todo add NOT NULL or not? or add different method and Primary Key
     pub fn postgresql_naming(&self) -> &str {
         match self {
@@ -132,8 +268,6 @@ impl PostgresqlType {
             Self::CharNNotNull => "CHAR(N)",
             Self::Text => "TEXT",
             Self::TextNotNull => "TEXT",
-            Self::Name => "NAME",
-            Self::NameNotNull => "NAME",
             Self::CiText => "CITEXT",
             Self::CiTextNotNull => "CITEXT",
             Self::Bytea => "BYTEA",
@@ -425,8 +559,6 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPost
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull => Self::StdStringString,
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText => Self::StdStringString,
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull => Self::StdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlName => Self::StdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlNameNotNull => Self::StdStringString,
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiText => Self::StdStringString,
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiTextNotNull => Self::StdStringString,
 
@@ -598,8 +730,6 @@ pub enum RustSqlxMapToPostgresTypeVariant {
     StdStringStringAsPostgresqlCharNNotNull,
     StdStringStringAsPostgresqlText,
     StdStringStringAsPostgresqlTextNotNull,
-    StdStringStringAsPostgresqlName,
-    StdStringStringAsPostgresqlNameNotNull,
     StdStringStringAsPostgresqlCiText,
     StdStringStringAsPostgresqlCiTextNotNull,
 
@@ -828,8 +958,6 @@ impl std::convert::TryFrom<&str> for RustSqlxMapToPostgresTypeVariant {
             "StdStringStringAsPostgresqlCharNNotNull" => Ok(Self::StdStringStringAsPostgresqlCharNNotNull),
             "StdStringStringAsPostgresqlText" => Ok(Self::StdStringStringAsPostgresqlText),
             "StdStringStringAsPostgresqlTextNotNull" => Ok(Self::StdStringStringAsPostgresqlTextNotNull),
-            "StdStringStringAsPostgresqlName" => Ok(Self::StdStringStringAsPostgresqlName),
-            "StdStringStringAsPostgresqlNameNotNull" => Ok(Self::StdStringStringAsPostgresqlNameNotNull),
             "StdStringStringAsPostgresqlCiText" => Ok(Self::StdStringStringAsPostgresqlCiText),
             "StdStringStringAsPostgresqlCiTextNotNull" => Ok(Self::StdStringStringAsPostgresqlCiTextNotNull),
 
@@ -1027,10 +1155,6 @@ pub struct StdStringStringAsPostgresqlCharNNotNull(pub StdStringString);
 pub struct StdStringStringAsPostgresqlText(pub StdStringString);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlTextNotNull(pub StdStringString);
-#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
-pub struct StdStringStringAsPostgresqlName(pub StdStringString);
-#[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
-pub struct StdStringStringAsPostgresqlNameNotNull(pub StdStringString);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
 pub struct StdStringStringAsPostgresqlCiText(pub StdStringString);
 #[derive(Debug, postgresql_crud_types_macro_logic_reuse::AsPostgresqlCommon)]
@@ -1292,8 +1416,8 @@ pub struct Test<T> {
     std_primitive_i64: std::primitive::i64, //BIGINT, BIGSERIAL, INT8
     std_primitive_f32: std::primitive::f32, //REAL, FLOAT4
     std_primitive_f64: std::primitive::f64, //DOUBLE PRECISION, FLOAT8
-    // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
-    std_string_string: std::string::String, //VARCHAR, CHAR(N), TEXT, NAME, CITEXT
+    // type_8: &std::primitive::str,//lifetimes are unexpectable i think //VARCHAR, CHAR(N), TEXT, CITEXT//NAME was ignored coz its recommended to not using it for typical user  
+    std_string_string: std::string::String, //VARCHAR, CHAR(N), TEXT, CITEXT //NAME was ignored coz its recommended to not using it for typical user 
     // type_10: [std::primitive::u8;1],//ignoring coz deserialization problem//BYTEA
     std_vec_vec_std_primitive_u8: std::vec::Vec<std::primitive::u8>, //BYTEA
     // type_12: (),//didnt find Encode trait impl in sqlx//BYTEA
@@ -1398,8 +1522,6 @@ pub struct TestNewTypeWithAdditionalInfo<T> {
     std_string_string_as_postgresql_char_n_not_null: StdStringStringAsPostgresqlCharNNotNull,
     std_string_string_as_postgresql_text: StdStringStringAsPostgresqlText,
     std_string_string_as_postgresql_text_not_null: StdStringStringAsPostgresqlTextNotNull,
-    std_string_string_as_postgresql_name: StdStringStringAsPostgresqlName,
-    std_string_string_as_postgresql_name_not_null: StdStringStringAsPostgresqlNameNotNull,
     std_string_string_as_postgresql_ci_text: StdStringStringAsPostgresqlCiText,
     std_string_string_as_postgresql_ci_text_not_null: StdStringStringAsPostgresqlCiTextNotNull,
 
@@ -2484,7 +2606,6 @@ pub struct StdStringString(pub std::string::String);
 impl AsPostgresqlVarchar for StdStringString {}
 impl AsPostgresqlCharN for StdStringString {}
 impl AsPostgresqlText for StdStringString {}
-impl AsPostgresqlName for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
@@ -4735,7 +4856,6 @@ pub trait AsPostgresqlFloat8 {}
 pub trait AsPostgresqlVarchar {}
 pub trait AsPostgresqlCharN {}
 pub trait AsPostgresqlText {}
-pub trait AsPostgresqlName {}
 pub trait AsPostgresqlCiText {}
 pub trait AsPostgresqlBytea {}
 pub trait AsPostgresqlInterval {}
