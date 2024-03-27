@@ -2212,29 +2212,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ));
         acc
     });
-    let not_uuid_syn_variant = {
-        let variant_name_upper_camel_case_stringified = format!(
-            "{}{}",
-            proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
-        );
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        crate::type_variants_from_request_response_generator::construct_syn_variant(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
-                    &variant_name_snake_case_stringified,
-                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                        &["sqlx","types","uuid","Error"],
-                        &proc_macro_name_upper_camel_case_ident_stringified
-                    ),
-                )
-            ]
-        )
-    };
     let no_payload_fields_syn_variant = {
         let variant_name_upper_camel_case_stringified = format!(
             "{}{}{}",
@@ -2336,20 +2313,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
     let query_name_token_stream =
         proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
-    let not_uuid_upper_camel_case_stringified = format!(
-        "{}{}",
-        proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
-        proc_macro_helpers::naming_conventions::uuid_upper_camel_case_stringified()
-    );
-    let not_uuid_token_upper_camel_case_stream = {
-        not_uuid_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let not_uuid_token_snake_case_stream = {
-        let not_uuid_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&not_uuid_upper_camel_case_stringified.to_string());
-        not_uuid_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {not_uuid_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let underscore_vec_name_stringified = "_vec";
     let update_name_stringified =
         proc_macro_helpers::naming_conventions::update_snake_case_stringified();
@@ -3894,8 +3857,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     type_variants_from_request_response.push(element);
                 }
                 type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
-                type_variants_from_request_response.push(&bind_query_syn_variant);//HERE
-                type_variants_from_request_response.push(&not_uuid_syn_variant);
+                type_variants_from_request_response.push(&bind_query_syn_variant);
                 type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 type_variants_from_request_response
             };
