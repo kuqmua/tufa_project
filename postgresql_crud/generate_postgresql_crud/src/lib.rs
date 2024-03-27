@@ -202,15 +202,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
                         };
                         match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(&value.path.segments[1].ident.to_string() as &str) {
-                            Ok(value) => match value {
-                                //todo maybe support other postgresql primary key types
-                                postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => match primary_key_field_option {
-                                    Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one PrimaryKey"),
-                                    None => {
-                                        primary_key_field_option = Some(element.clone());
-                                    },
-                                },
-                                _ => ()
+                            Ok(value) => {
+                                if postgresql_crud_common::RustSqlxMapToPostgresTypeVariantPrimaryKey::try_from(&value).is_ok() {
+                                    match primary_key_field_option {
+                                        Some(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} must have one PrimaryKey"),
+                                        None => {
+                                            primary_key_field_option = Some(element.clone());
+                                        },
+                                    }
+                                }
                             },
                             Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed {e}")
                         }
