@@ -117,3 +117,4 @@ pub const DEBUG: &str = "debug";
 pub const OR: &str = "or";
 pub const ASC: &str = "asc";
 pub const DESC: &str = "desc";
+pub const UNIQUE: &str = "unique";

@@ -770,6 +770,9 @@ pub fn debug_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+pub fn unique_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::UNIQUE)
+}
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(

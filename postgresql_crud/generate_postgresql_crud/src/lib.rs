@@ -7943,13 +7943,17 @@ fn generate_common_middlewares_error_syn_variants_from_impls(
 fn generate_not_unique_field_vec_upper_camel_stringified(
     field_ident: &syn::Ident,
 ) -> std::string::String {
-    format!("NotUnique{}Vec", {//todo reuse naming
+    format!(
+        "{}{}{}{}",
+        proc_macro_helpers::naming_conventions::not_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::unique_upper_camel_case_stringified(),
         convert_case::Casing::to_case(
             &field_ident
             .to_string(),
             convert_case::Case::UpperCamel
-        )
-    })
+        ),
+        proc_macro_helpers::naming_conventions::vec_upper_camel_case_stringified(),
+    )
 }
 
 fn generate_not_unique_field_vec_snake_case_stringified(
