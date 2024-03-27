@@ -850,8 +850,8 @@ pub enum RustSqlxMapToPostgresTypeVariant {
 
 #[derive(Debug)]
 pub enum RustSqlxMapToPostgresTypeVariantPrimaryKey {
-    StdPrimitiveI64AsPostgresqlBigSerial,
-    SqlxTypesUuidUuidAsPostgresqlUuid,
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey,
 }
 
 impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToPostgresTypeVariantPrimaryKey {
@@ -880,7 +880,7 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull => Err(error),
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => Err(error),
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull => Err(error),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerial),
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 => Err(error),
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull => Err(error),
 
@@ -986,7 +986,7 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
 
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => Err(error),
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => Err(error),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuid),
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
 
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Err(error),
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => Err(error),
