@@ -17,7 +17,6 @@ pub fn generate_postgres_transaction(
     desirable_token_stream: &proc_macro2::TokenStream,
     try_ident_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     error_log_call_token_stream: &proc_macro2::TokenStream,
-    crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     primary_key_syn_field_with_additional_info: &crate::SynFieldWithAdditionalInfo,
 ) -> proc_macro2::TokenStream {

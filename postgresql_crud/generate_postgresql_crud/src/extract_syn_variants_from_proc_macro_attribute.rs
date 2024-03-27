@@ -86,22 +86,3 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
             }
         })
 }
-
-pub fn extract_syn_variants_from_method_proc_macro_attribute(
-    ast: &syn::DeriveInput,
-    operation_name_snake_case_stringified: &str,
-    additional_http_status_codes_error_variants_snake_case_stringified: &str,
-    proc_macro_name_snake_case: &str,
-    proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
-) -> std::vec::Vec<(
-    syn::Ident,
-    proc_macro2::TokenStream,
-    std::vec::Vec<syn::Variant>,
-)> {
-    crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_proc_macro_attribute(
-        ast,
-        &format!("{operation_name_snake_case_stringified}_{additional_http_status_codes_error_variants_snake_case_stringified}"),
-        proc_macro_name_snake_case,
-        proc_macro_name_upper_camel_case_ident_stringified
-    )
-}
