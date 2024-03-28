@@ -341,7 +341,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let sqlx_decode_decode_database_token_stream =
         quote::quote! {sqlx::decode::Decode<'a, R::Database>};
     let sqlx_types_type_database_token_stream = quote::quote! {sqlx::types::Type<R::Database>};
-    let primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream = quote::quote! {primary_key_uuid_wrapper_try_from_sqlx_row};
     let error_named_upper_camel_case_stringified =
         proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified();
     let std_str_from_str_token_stream =
@@ -1022,6 +1021,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{column_select_token_stream}");
     //todo reuse path
     let crate_server_postgres_postgres_bigint_postgres_bigint_token_stream = quote::quote! {crate::server::postgres::postgres_bigint::PostgresBigint};
+    let primary_key_try_from_sqlx_row_name_token_stream = quote::quote! {primary_key_try_from_sqlx_row};
     let primary_key_uuid_wrapper_try_from_sqlx_row_token_stream = {
         let primary_key_str_token_stream = {
             let primary_key_str_stringified = format!("\"{primary_key_field_ident}\"");
@@ -1032,7 +1032,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let primary_key_name_token_stream = quote::quote! {primary_key};
         //todo rename coz in the future uuid_wrapper will be removed
         quote::quote! {
-            fn #primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
+            fn #primary_key_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
             //HERE
             //#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream
             where
@@ -5606,7 +5606,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &pg_connection_token_stream,
                         &binded_query_name_token_stream,
                         &use_futures_try_stream_ext_token_stream,
-                        &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
+                        &primary_key_try_from_sqlx_row_name_token_stream,
                         &from_log_and_return_error_token_stream,
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
@@ -6761,7 +6761,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &pg_connection_token_stream,
                         &binded_query_name_token_stream,
                         &use_futures_try_stream_ext_token_stream,
-                        &primary_key_uuid_wrapper_try_from_sqlx_row_name_token_stream,
+                        &primary_key_try_from_sqlx_row_name_token_stream,
                         &from_log_and_return_error_token_stream,
                         &rollback_error_name_token_stream,
                         &non_existing_primary_keys_name_token_stream,
