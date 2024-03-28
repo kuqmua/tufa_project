@@ -215,11 +215,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
-    let sqlx_types_uuid_token_stream = {
-        sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {sqlx_types_uuid_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    // let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
+    // let sqlx_types_uuid_token_stream = {
+    //     sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {sqlx_types_uuid_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let fields_named_excluding_primary_key = fields_named
         .clone()
@@ -3075,7 +3075,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     } {
                         match {
                             use #sqlx_row_token_stream;
-                            row.try_get::<#sqlx_types_uuid_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
+                            row.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => {
                                 vec_values.push(
@@ -4408,7 +4408,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     let binded_query_primary_key_modification_token_stream = quote::quote! {
                         if let Some(value) = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#primary_key_field_ident {
-                            query = query.bind(value.into_iter().map(|element|element.into_inner().clone()).collect::<std::vec::Vec<#sqlx_types_uuid_token_stream>>());
+                            query = query.bind(value.into_iter().map(|element|element.into_inner().clone()).collect::<std::vec::Vec<#primary_key_original_type_token_stream>>());
                         }
                     };
                     let binded_query_modifications_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -5501,7 +5501,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #field_ident_underscore_vec_token_stream
                                 .into_iter()
                                 .map(|element| element.into_inner())
-                                .collect::<std::vec::Vec<#sqlx_types_uuid_token_stream>>()
+                                .collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
                             );
                         }
                     };
@@ -6697,7 +6697,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #primary_key_field_ident
                             .into_iter()
                             .map(|element| element.clone().into_inner())
-                            .collect::<std::vec::Vec<#sqlx_types_uuid_token_stream>>()
+                            .collect::<std::vec::Vec<#primary_key_original_type_token_stream>>()
                         );
                         query
                     };
