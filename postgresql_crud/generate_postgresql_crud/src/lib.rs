@@ -2018,45 +2018,55 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed = "OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailed";
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified = format!(
-        "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified}{}{}",
+    //todo maybe instead primary key put upper camel case RustSqlxMapToPostgresTypeVariant variant
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified = "OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailed";
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified
+    );
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified = format!(
+        "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified}{}{}",
         proc_macro_helpers::naming_conventions::in_upper_camel_case_stringified(),
         proc_macro_helpers::naming_conventions::server_upper_camel_case_stringified()
     );
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_token_stream = {
-        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream = {
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified = format!(
-        "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_upper_camel_case_stringified}{}{}",
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified = format!(
+        "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_upper_camel_case_stringified}{}{}",
         proc_macro_helpers::naming_conventions::in_upper_camel_case_stringified(),
         proc_macro_helpers::naming_conventions::client_upper_camel_case_stringified()
-    ); //todo reuse it
-    // let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream = {
-    //     operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream = {
-        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified.to_string());
-        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    );
+    //
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_stringified = format!(
+        "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_snake_case_stringified}_{}_{}",
+        proc_macro_helpers::naming_conventions::in_snake_case_stringified(),
+        proc_macro_helpers::naming_conventions::client_snake_case_stringified()
+    );
+    //
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream = {
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream = {
-        let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified = format!(
-            "{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_stringified}{}{}",
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_token_stream = {
+        let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified);
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream = {
+        let value_stringified = format!(
+            "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified}{}{}",
             proc_macro_helpers::naming_conventions::error_upper_camel_case_stringified(),
             proc_macro_helpers::naming_conventions::unnamed_upper_camel_case_stringified()
         );
-        operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_syn_variant = {
-        let variant_name_upper_camel_case_stringified = operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_stringified;
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError, //todo - is it right status code for this case?
-            &variant_name_upper_camel_case_stringified,
+            &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_stringified,
             &code_occurence_field,
             vec![(
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
@@ -2073,44 +2083,40 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
-            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server_upper_camel_case_token_stream {
+            #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_upper_camel_case_token_stream {
                 operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_server: #error_value_snake_case_token_stream,
                 #field_code_occurence_new_3567ece5_74c9_4b48_a46c_8230cd728182_token_stream,
             }
         }
     };
-    //HERE123
-    // let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream = {
-    //     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = {
-    //         let value_stringified = format!(
-    //             "OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientMany"
-    //         );
-    //         value_stringified.parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     };
-    //     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream = {
-    //         let value_stringified = format!(
-    //             "operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many"
-    //         );
-    //         value_stringified.parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     };
-    //     // let primary_key_supported_sqlx_postgres_type_snake_case_token_stream = {
-    //     //     let value_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-    //     //         &postgresql_crud_common::SupportedSqlxPostgresType::from(primary_key_rust_sqlx_map_to_postgres_type_variant)
-    //     //     );
-    //     //     value_stringified.parse::<proc_macro2::TokenStream>()
-    //     //     .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    //     // };
-    //     quote::quote! {
-    //         #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream {
-    //             #eo_vec_error_occurence_token_stream
-    //             #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream: std::vec::Vec<#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream>,
-    //             #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream,
-    //         }
-    //     }
-    // };
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream = {
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream = {
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream = {
+            let value_stringified = format!(
+                "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_stringified}{}",
+                proc_macro_helpers::naming_conventions::many_upper_camel_case_stringified(),
+            );
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream = {
+            let value_stringified = format!(
+                "{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_stringified}_{}",
+                proc_macro_helpers::naming_conventions::many_snake_case_stringified(),
+            );
+            value_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        quote::quote! {
+            #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_upper_camel_case_token_stream {
+                #eo_vec_error_occurence_token_stream
+                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_snake_case_token_stream: std::vec::Vec<
+                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream
+                >,
+                #code_occurence_snake_case_token_stream: #error_occurence_lib_code_occurence_code_occurence_token_stream,
+            }
+        }
+    };
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream = {
         let field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
@@ -2118,19 +2124,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
-            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-                #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_snake_case_token_stream: vec_errors,
+            #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream {
+                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_snake_case_token_stream: vec_errors,
                 #field_code_occurence_new_bb9fbcd9_7cea_42e2_b7d8_bc42710bf35e_token_stream
             }
         }
     };
-    let uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream =
-        quote::quote! {uuid_wrapper_try_from_possible_uuid_wrapper_in_client};
+    let primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream = quote::quote! {primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client};
     //todo maybe first convert to type what can be primary key ?
     let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = quote::quote! {
-        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
+        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream {
             #eo_error_occurence_attribute_token_stream
-            #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,//#crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+            #primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,
             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
@@ -2142,8 +2147,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
-            #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream {
-                #uuid_wrapper_try_from_possible_uuid_wrapper_in_client_token_stream: #error_value_snake_case_token_stream,//todo rename uuid_wrapper
+            #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream {
+                #primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream: #error_value_snake_case_token_stream,
                 #field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream,
             }
         }
@@ -2861,9 +2866,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{parameters_token_stream}");
         let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_token_stream = quote::quote! {
             #derive_debug_thiserror_error_occurence_token_stream
-            pub enum #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream {
-                #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream(
-                    // #crate_server_postgres_uuid_wrapper_uuid_wrapper_try_from_possible_uuid_wrapper_error_named_token_stream
+            pub enum #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream {
+                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(
                     #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
                 ),
             }
@@ -2871,7 +2875,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
             &desirable_status_code,
-            &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},//HERE #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream 
+            &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
             &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -2895,7 +2899,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         //todo remove request_error variant
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
@@ -2914,15 +2918,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},//HERE //#crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream
+                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
                 &reqwest_initialization_token_stream,
@@ -5393,7 +5397,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
@@ -5412,9 +5416,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -6574,7 +6578,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
@@ -6593,9 +6597,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream,
-                &operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
                 &table_name_stringified,
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
@@ -7888,9 +7892,9 @@ fn generate_http_request_many_token_stream(
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
     commit_header_addition_token_stream: &proc_macro2::TokenStream,
     content_type_application_json_header_addition_token_stream: &proc_macro2::TokenStream,
-    operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-    operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-    operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream: &proc_macro2::TokenStream,
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream: &proc_macro2::TokenStream,
     table_name_stringified: &str,
     operation: &Operation,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -8167,13 +8171,13 @@ fn generate_http_request_many_token_stream(
                             }
                             Err(#error_value_snake_case_token_stream) => {
                                 vec_errors.push(
-                                    #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_error_unnamed_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_upper_camel_case_token_stream(e)
+                                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(e)
                                 );
                             }
                         }
                     }
                     if let false = vec_errors.is_empty() {
-                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_many_initialization_token_stream);
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream);
                     }
                     Ok(vec_values)
                 },

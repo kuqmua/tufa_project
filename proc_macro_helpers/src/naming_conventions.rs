@@ -478,6 +478,11 @@ pub fn in_snake_case_stringified() -> std::string::String {
 pub fn client_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::CLIENT)
 }
+pub fn client_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::CLIENT,
+    )
+}
 pub fn server_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SERVER)
 }
@@ -776,6 +781,14 @@ pub fn unique_upper_camel_case_stringified() -> std::string::String {
 pub fn unique_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::UNIQUE,
+    )
+}
+pub fn many_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::MANY)
+}
+pub fn many_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::MANY,
     )
 }
 
