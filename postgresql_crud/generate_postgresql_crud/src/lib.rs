@@ -2855,7 +2855,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                &primary_key_inner_type_token_stream,
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
@@ -5351,7 +5350,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                &primary_key_inner_type_token_stream,
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
@@ -6531,7 +6529,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let http_request_token_stream = generate_http_request_many_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                &primary_key_inner_type_token_stream,
                 &serde_json_to_string_token_stream,
                 &serde_json_to_string_variant_initialization_token_stream,
                 &reqwest_client_new_token_stream,
@@ -7819,7 +7816,6 @@ fn generate_self_fields_token_stream<'a>(//todo refactor as &[&'a SynRust...]
 fn generate_http_request_many_token_stream(
     server_location_name_token_stream: &proc_macro2::TokenStream,
     str_ref_token_stream: &proc_macro2::TokenStream,
-    primary_key_inner_type_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_token_stream: &proc_macro2::TokenStream,
     serde_json_to_string_variant_initialization_token_stream: &proc_macro2::TokenStream,
     reqwest_client_new_token_stream: &proc_macro2::TokenStream,
