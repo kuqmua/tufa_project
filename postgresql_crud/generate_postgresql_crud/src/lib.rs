@@ -215,11 +215,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    // let sqlx_types_uuid_stringified = naming_constants::SQLX_TYPES_UUID_STRINGIFIED;//todo remove it and use RustSqlxMapToPostgresTypeVariant instead
-    // let sqlx_types_uuid_token_stream = {
-    //     sqlx_types_uuid_stringified.parse::<proc_macro2::TokenStream>()
-    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {sqlx_types_uuid_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let fields_named_excluding_primary_key = fields_named
         .clone()
@@ -948,11 +943,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #declaration_primary_key_token_stream
                         #(#declaration_excluding_primary_key_token_stream)*
                         match self {
-                            //todo why id in all cases
-                            // let primary_key_try_get_result: Result<
-                            //     std::option::Option<sqlx::types::Uuid>,
-                            //     sqlx::Error,
-                            // > = row.try_get("id");
                             #(#assignment_token_stream)*
                         }
                         Ok(#struct_options_ident_token_stream {
