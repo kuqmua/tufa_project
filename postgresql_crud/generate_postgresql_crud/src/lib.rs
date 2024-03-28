@@ -6,37 +6,6 @@ mod from_log_and_return_error;
 mod generate_postgres_transaction;
 mod type_variants_from_request_response_generator;
 
-// trait Something {
-//     fn something();
-// }
-
-// impl Something for i8 {
-//     fn something() {
-//         println!("");
-//     }
-// }
-
-// impl Something for sqlx::types::Uuid {
-//     fn something() {}
-// }
-
-// Rust type	Postgres type(s)
-// bool	BOOL
-// i8	“CHAR”
-// i16	SMALLINT, SMALLSERIAL, INT2
-// i32	INT, SERIAL, INT4
-// i64	BIGINT, BIGSERIAL, INT8
-// f32	REAL, FLOAT4
-// f64	DOUBLE PRECISION, FLOAT8
-// &str, std::string::String	VARCHAR, CHAR(N), TEXT, NAME
-// &[u8], std::vec::Vec<u8>	BYTEA
-// ()	VOID
-// PgInterval	INTERVAL
-// PgRange<T>	INT8RANGE, INT4RANGE, TSRANGE, TSTZRANGE, DATERANGE, NUMRANGE
-// PgMoney	MONEY
-// PgLTree	LTREE
-// PgLQuery	LQUERY
-
 //todo generate for each create update delete body length checked and for path query headers too
 //todo how to write filter logic for sqlx rust postgresql types?
 //todo decide where to do error log (maybe add in some places)
@@ -3614,7 +3583,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             value.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
-                                // #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)
                                 #primary_key_inner_type_with_serialize_deserialize_token_stream::from(
                                     #primary_key_inner_type_token_stream(value)
                                 )
@@ -6175,7 +6143,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             value.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
                         } {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(
-                                // #crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream::from(value)
                                 #primary_key_inner_type_with_serialize_deserialize_token_stream::from(
                                     #primary_key_inner_type_token_stream(value)
                                 )
@@ -6612,11 +6579,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream {
                                 #primary_key_field_ident: Some(
                                     #primary_keys_token_stream.clone()
-                                    // vec![
-                                    //     crate::server::postgres::uuid_wrapper::UuidWrapper::try_from(
-                                    //         crate::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
-                                    //     ).unwrap()
-                                    // ]
                                 ),
                                 #(#fields_initialization_excluding_primary_key_token_stream),*
                             }
@@ -7357,7 +7319,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                // &crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream,
                 &primary_key_inner_type_token_stream,
                 &quote::quote! {
                     //todo maybe for all cases use this? = remove this parameter and write it inside generate_try_operation_token_stream
