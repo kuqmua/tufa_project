@@ -36,6 +36,7 @@ pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlBigInt;
 pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlBigIntNotNull;
 pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlBigSerial;
 pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlBigSerialNotNull;
+pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey;
 pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlInt8;
 pub use postgresql_crud_common::StdPrimitiveI64AsPostgresqlInt8NotNull;
 

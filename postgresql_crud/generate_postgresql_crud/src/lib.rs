@@ -241,7 +241,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
-    // let primary_key_from_or_try_from = primary_key_syn_field.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
+    let primary_key_from_or_try_from = primary_key_syn_field.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
     let fields_named_excluding_primary_key_from_or_try_from = {
         let mut value = postgresql_crud_common::FromOrTryFrom::From;
         for element in &fields_named_excluding_primary_key {
@@ -2550,7 +2550,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     type_variants_from_request_response.push(element);
                 }
                 type_variants_from_request_response.push(&bind_query_syn_variant);
-                type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
+                if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
+                    type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
+                }
                 if let postgresql_crud_common::FromOrTryFrom::TryFrom = fields_named_excluding_primary_key_from_or_try_from {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
@@ -2802,12 +2804,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream = quote::quote! {
-            #derive_debug_thiserror_error_occurence_token_stream
-            pub enum #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream {
-                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(
-                    #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
-                ),
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream = match &primary_key_from_or_try_from {
+            postgresql_crud_common::FromOrTryFrom::From => quote::quote! {},
+            postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
+                #derive_debug_thiserror_error_occurence_token_stream
+                pub enum #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream {
+                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(
+                        #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream
+                    ),
+                }
             }
         };
         // println!("{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream}");
@@ -7608,9 +7613,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
