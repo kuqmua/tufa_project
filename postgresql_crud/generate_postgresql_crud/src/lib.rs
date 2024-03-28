@@ -2116,7 +2116,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream = quote::quote! {primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client};
     //todo maybe first convert to type what can be primary key ?
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream = quote::quote! {
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream = quote::quote! {
         #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream {
             #eo_error_occurence_attribute_token_stream
             #primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream: #primary_key_inner_type_with_serialize_deserialize_error_named_token_stream,
@@ -3461,7 +3461,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream,
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
@@ -5963,7 +5963,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream,
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
@@ -7344,7 +7344,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream,
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
