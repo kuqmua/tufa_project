@@ -542,8 +542,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         #derive_debug_thiserror_error_occurence_token_stream
                         pub enum #ident_try_from_ident_options_error_named_upper_camel_case_token_stream {
-                            //HERE remove
-                            // #uuid_wrapper_try_from_possible_uuid_wrapper_primary_key_variant_token_stream
                             #(#is_none_variant_columns_token_stream),*
                         }
                     }
@@ -562,17 +560,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                     quote::quote!{
                                         let #primary_key_field_ident = match value.#primary_key_field_ident {
-                                            //
-                                            // match #crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::try_from(value) {
-                                            //     Ok(value) => value.into_inner(),
-                                            //     Err(#error_value_snake_case_token_stream) => {
-                                            //         return Err(Self::Error::#uuid_wrapper_try_from_possible_uuid_wrapper_upper_camel_case_token_stream {
-                                            //             #uuid_wrapper_try_from_possible_uuid_wrapper_snake_case_token_stream: #error_value_snake_case_token_stream,
-                                            //             #field_code_occurence_new_ea56ed9e_86e6_4b3e_b116_106eb0bca826_token_stream,
-                                            //         });
-                                            //     }
-                                            // }
-                                            //
                                             Some(value) => value,
                                             None => {
                                                 return Err(Self::Error::IdIsNone {
@@ -1022,34 +1009,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //todo reuse path
     let crate_server_postgres_postgres_bigint_postgres_bigint_token_stream = quote::quote! {crate::server::postgres::postgres_bigint::PostgresBigint};
     let primary_key_try_from_sqlx_row_name_token_stream = quote::quote! {primary_key_try_from_sqlx_row};
-    let primary_key_uuid_wrapper_try_from_sqlx_row_token_stream = {
-        let primary_key_str_token_stream = {
-            let primary_key_str_stringified = format!("\"{primary_key_field_ident}\"");
-            primary_key_str_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {primary_key_str_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+    let primary_key_try_get_sqlx_row_token_stream = {
+        let primary_key_str_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+            &primary_key_field_ident.to_string(),
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        );
         let row_name_token_stream = quote::quote! {row};
         let primary_key_name_token_stream = quote::quote! {primary_key};
-        //todo rename coz in the future uuid_wrapper will be removed
         quote::quote! {
             fn #primary_key_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
-            //HERE
-            //#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream
             where
                 #std_primitive_str_sqlx_column_index_token_stream
-                //HERE
-                // #sqlx_types_uuid_token_stream: #sqlx_decode_decode_database_token_stream,
-                // #sqlx_types_uuid_token_stream: #sqlx_types_type_database_token_stream,
                 #primary_key_original_type_token_stream: #sqlx_decode_decode_database_token_stream,
                 #primary_key_original_type_token_stream: #sqlx_types_type_database_token_stream,
             {
                 let #primary_key_name_token_stream: #primary_key_original_type_token_stream = #row_name_token_stream.try_get(#primary_key_str_token_stream)?;
-                // Ok(#crate_server_postgres_uuid_wrapper_uuid_wrapper_token_stream::from(#primary_key_name_token_stream))
                 Ok(#primary_key_inner_type_token_stream(#primary_key_name_token_stream))
             }
         }
     };
-    // println!("{primary_key_uuid_wrapper_try_from_sqlx_row_token_stream}");
+    // println!("{primary_key_try_get_sqlx_row_token_stream}");
     // let order_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&order_upper_camel_case_stringified);
     let order_by_upper_camel_case_stringified = format!(
         "{}{}",
@@ -7662,7 +7641,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
         #column_token_stream
         #column_select_token_stream
-        #primary_key_uuid_wrapper_try_from_sqlx_row_token_stream
+        #primary_key_try_get_sqlx_row_token_stream
         #deserialize_ident_order_by_token_stream
         #order_by_wrapper_token_stream
         #allow_methods_token_stream
