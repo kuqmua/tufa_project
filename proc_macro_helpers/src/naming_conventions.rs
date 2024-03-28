@@ -486,6 +486,11 @@ pub fn client_snake_case_stringified() -> std::string::String {
 pub fn server_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SERVER)
 }
+pub fn server_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::SERVER,
+    )
+}
 pub fn no_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::NO)
 }
