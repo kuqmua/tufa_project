@@ -2123,7 +2123,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
-    let operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream = {
+    let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream = {
         let field_code_occurence_new_a1c07748_20c3_49eb_85e0_615161d95345_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
@@ -3438,7 +3438,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
             &desirable_status_code,
-            &primary_key_inner_type_with_serialize_deserialize_token_stream,//crate_server_postgres_uuid_wrapper_possible_uuid_wrapper_token_stream
+            &primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
             &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -3490,7 +3490,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     match #primary_key_inner_type_token_stream::try_from(value) {
                         Ok(value) => Ok(value),
                         Err(#error_value_snake_case_token_stream) => Err(
-                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream
+                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
                         )
                     }
                 },
@@ -5991,7 +5991,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &quote::quote! {
                     match #primary_key_inner_type_token_stream::try_from(value) {
                         Ok(value) => Ok(value),
-                        Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream )
+                        Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream )
                     }
                 },
                 &table_name_stringified,
@@ -7374,7 +7374,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &quote::quote! {
                     match #primary_key_inner_type_token_stream::try_from(value) {
                         Ok(value) => Ok(value),
-                        Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_cannot_convert_uuid_wrapper_from_possible_uuid_wrapper_in_client_one_initialization_token_stream )
+                        Err(#error_value_snake_case_token_stream) => Err(#try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream )
                     }
                 },
                 &table_name_stringified,
