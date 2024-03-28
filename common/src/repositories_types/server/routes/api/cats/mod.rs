@@ -1949,6 +1949,28 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr201Created>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateManyResponseVariantsTvfrr408RequestTimeout>
+    for TryCreateManyResponseVariants
+{
+    fn from(value: TryCreateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryCreateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryCreateManyResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -2067,28 +2089,6 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr400BadRequest>
                 code_occurence,
             } => Self::NoCommitExtractorHeader {
                 no_commit_header,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyResponseVariantsTvfrr408RequestTimeout>
-    for TryCreateManyResponseVariants
-{
-    fn from(value: TryCreateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryCreateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
                 code_occurence,
             },
         }
@@ -2727,49 +2727,49 @@ impl axum::response::IntoResponse for TryCreateManyResponseVariants {
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryCreateManyErrorNamed {
-    SerdeJsonToString
-    {
-        #[eo_display] serde_json_to_string : serde_json :: Error,
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
+    SerdeJsonToString {
+        #[eo_display]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientMany
-    {
-        #[eo_vec_error_occurence]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many
-        : std :: vec :: Vec <
-        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamed
-        >, code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }, ExpectedType
-    {
-        #[eo_display_with_serialize_deserialize] expected_type :
-        TryCreateManyWithSerializeDeserialize, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, UnexpectedStatusCode
-    {
-        #[eo_display] status_code : http :: StatusCode,
-        #[eo_display_foreign_type] headers : reqwest :: header :: HeaderMap,
-        #[eo_display_foreign_type] response_text_result : crate :: common ::
-        api_request_unexpected_error :: ResponseTextResult, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, FailedToGetResponseText
-    {
-        #[eo_display_foreign_type] reqwest : reqwest :: Error, #[eo_display]
-        status_code : http :: StatusCode, #[eo_display_foreign_type] headers :
-        reqwest :: header :: HeaderMap, code_occurence : error_occurence_lib
-        :: code_occurence :: CodeOccurence,
-    }, DeserializeResponse
-    {
-        #[eo_display] serde : serde_json :: Error, #[eo_display] status_code :
-        http :: StatusCode, #[eo_display_foreign_type] headers : reqwest ::
-        header :: HeaderMap, #[eo_display_with_serialize_deserialize]
-        response_text : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, Reqwest
-    {
-        #[eo_display_foreign_type] reqwest : reqwest :: Error, code_occurence
-        : error_occurence_lib :: code_occurence :: CodeOccurence,
+    ExpectedType {
+        #[eo_display_with_serialize_deserialize]
+        expected_type: TryCreateManyWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedStatusCode {
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_foreign_type]
+        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_display]
+        serde: serde_json::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_with_serialize_deserialize]
+        response_text: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 pub async fn try_create_many<'a>(
@@ -2924,8 +2924,8 @@ pub async fn try_create_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr408RequestTimeout>(
             &response_text,
         ) {
             Ok(value) => TryCreateManyResponseVariants::from(value),
