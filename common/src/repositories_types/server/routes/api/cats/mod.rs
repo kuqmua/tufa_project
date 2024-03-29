@@ -214,6 +214,7 @@ pub struct Dog {
 
 ////////////////////////////////////////////////////////////////////////
 
+
 pub const TABLE_NAME: &str = "dogs";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct DogOptions {
@@ -1949,28 +1950,6 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr201Created>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyResponseVariantsTvfrr408RequestTimeout>
-    for TryCreateManyResponseVariants
-{
-    fn from(value: TryCreateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryCreateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryCreateManyResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -1987,108 +1966,6 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr404NotFound>
                 code_occurence,
             } => Self::RowNotFound {
                 row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateManyResponseVariantsTvfrr400BadRequest {
-    TypeNotFound {
-        type_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnNotFound {
-        column_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonDataError {
-        json_data_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonSyntaxError {
-        json_syntax_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CommitExtractorNotEqual {
-        commit_not_equal: std::string::String,
-        commit_to_use: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CommitExtractorToStrConversion {
-        commit_to_str_conversion: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoCommitExtractorHeader {
-        no_commit_header: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyResponseVariantsTvfrr400BadRequest>
-    for TryCreateManyResponseVariants
-{
-    fn from(value: TryCreateManyResponseVariantsTvfrr400BadRequest) -> Self {
-        match value {
-            TryCreateManyResponseVariantsTvfrr400BadRequest::TypeNotFound {
-                type_not_found,
-                code_occurence,
-            } => Self::TypeNotFound {
-                type_not_found,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::ColumnNotFound {
-                column_not_found,
-                code_occurence,
-            } => Self::ColumnNotFound {
-                column_not_found,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::JsonDataError {
-                json_data_error,
-                code_occurence,
-            } => Self::JsonDataError {
-                json_data_error,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::JsonSyntaxError {
-                json_syntax_error,
-                code_occurence,
-            } => Self::JsonSyntaxError {
-                json_syntax_error,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::MissingJsonContentType {
-                missing_json_content_type,
-                code_occurence,
-            } => Self::MissingJsonContentType {
-                missing_json_content_type,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::CommitExtractorNotEqual {
-                commit_not_equal,
-                commit_to_use,
-                code_occurence,
-            } => Self::CommitExtractorNotEqual {
-                commit_not_equal,
-                commit_to_use,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::CommitExtractorToStrConversion {
-                commit_to_str_conversion,
-                code_occurence,
-            } => Self::CommitExtractorToStrConversion {
-                commit_to_str_conversion,
-                code_occurence,
-            },
-            TryCreateManyResponseVariantsTvfrr400BadRequest::NoCommitExtractorHeader {
-                no_commit_header,
-                code_occurence,
-            } => Self::NoCommitExtractorHeader {
-                no_commit_header,
                 code_occurence,
             },
         }
@@ -2256,6 +2133,130 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr500InternalServerError
                 code_occurence,
             } => Self::BindQuery {
                 bind_query,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateManyResponseVariantsTvfrr408RequestTimeout>
+    for TryCreateManyResponseVariants
+{
+    fn from(value: TryCreateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryCreateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateManyResponseVariantsTvfrr400BadRequest {
+    TypeNotFound {
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        commit_not_equal: std::string::String,
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        commit_to_str_conversion: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateManyResponseVariantsTvfrr400BadRequest>
+    for TryCreateManyResponseVariants
+{
+    fn from(value: TryCreateManyResponseVariantsTvfrr400BadRequest) -> Self {
+        match value {
+            TryCreateManyResponseVariantsTvfrr400BadRequest::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Self::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Self::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Self::JsonDataError {
+                json_data_error,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Self::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Self::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            } => Self::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            } => Self::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            },
+            TryCreateManyResponseVariantsTvfrr400BadRequest::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            } => Self::NoCommitExtractorHeader {
+                no_commit_header,
                 code_occurence,
             },
         }
@@ -2873,33 +2874,8 @@ pub async fn try_create_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr404NotFound>(&response_text)
-        {
-            Ok(value) => TryCreateManyResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryCreateManyErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2376,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr500InternalServerError>(
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
             &response_text,
         ) {
             Ok(value) => TryCreateManyResponseVariants::from(value),
@@ -2950,6 +2926,32 @@ pub async fn try_create_many<'a>(
                 });
             }
         }
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr500InternalServerError>(
+            &response_text,
+        ) {
+            Ok(value) => TryCreateManyResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryCreateManyErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2376,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
     } else {
         return Err(TryCreateManyErrorNamed::UnexpectedStatusCode {
             status_code,
@@ -2975,41 +2977,10 @@ pub async fn try_create_many<'a>(
     match std::vec::Vec::<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>::try_from(
         variants,
     ) {
-        Ok(value) => {
-            let mut vec_values = std::vec::Vec::with_capacity(value.len());
-            let mut vec_errors = std::vec::Vec::with_capacity(value.len());
-            for element in value {
-                match postgresql_crud::StdPrimitiveI64::try_from(element) {
-                    Ok(value) => {
-                        vec_values.push(value);
-                    }
-                    Err(e) => {
-                        vec_errors.push(OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamed
-                        ::
-                        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient(e))
-                        ;
-                    }
-                }
-            }
-            if let false = vec_errors.is_empty() {
-                return
-                Err(TryCreateManyErrorNamed ::
-                OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientMany
-                {
-                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many
-                    : vec_errors, code_occurence : error_occurence_lib ::
-                    code_occurence :: CodeOccurence ::
-                    new(file! ().to_string(), line! (), column! (),
-                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    {
-                        file : std :: string :: String ::
-                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line : 2060, column : 13,
-                    }))
-                }) ;
-            }
-            Ok(vec_values)
-        }
+        Ok(value) => Ok(value
+            .into_iter()
+            .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
+            .collect()),
         Err(e) => {
             return Err(TryCreateManyErrorNamed::ExpectedType {
                 expected_type: e,

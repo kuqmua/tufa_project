@@ -8055,6 +8055,41 @@ fn generate_http_request_many_token_stream(
         status_code_enums_try_from_variants
     };
     let primary_key_inner_type_token_stream = &primary_key_syn_field.inner_type_token_stream;
+    let primary_key_inner_type_from_or_try_from_token_stream = match &primary_key_syn_field.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+        postgresql_crud_common::FromOrTryFrom::From => {
+            quote::quote! {
+                {
+                    Ok(value.into_iter().map(|element|#primary_key_inner_type_token_stream::from(element)).collect())
+                }
+            }
+        },
+        postgresql_crud_common::FromOrTryFrom::TryFrom => {
+            quote::quote! {
+                {
+                    let mut vec_values = std::vec::Vec::with_capacity(value.len());
+                    let mut vec_errors = std::vec::Vec::with_capacity(value.len());
+                    for element in value {
+                        match #primary_key_inner_type_token_stream::try_from(element) {
+                            Ok(value) => {
+                                vec_values.push(value);
+                            }
+                            Err(#error_value_snake_case_token_stream) => {
+                                vec_errors.push(
+                                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(e)
+                                );
+                            }
+                        }
+                    }
+                    if let false = vec_errors.is_empty() {
+                        return Err(
+                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream
+                        );
+                    }
+                    Ok(vec_values)
+                }
+            }
+        },
+    };
     quote::quote! {
         pub async fn #try_operation_snake_case_token_stream<'a>(
             #server_location_name_token_stream: #str_ref_token_stream,
@@ -8095,28 +8130,7 @@ fn generate_http_request_many_token_stream(
             };
             let variants = #(#status_code_enums_try_from)*;
             match #desirable_type_token_stream::try_from(variants) {
-                Ok(value) => {
-                    let mut vec_values = std::vec::Vec::with_capacity(value.len());
-                    let mut vec_errors = std::vec::Vec::with_capacity(value.len());
-                    for element in value {
-                        match #primary_key_inner_type_token_stream::try_from(element) {
-                            Ok(value) => {
-                                vec_values.push(value);
-                            }
-                            Err(#error_value_snake_case_token_stream) => {
-                                vec_errors.push(
-                                    #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream(e)
-                                );
-                            }
-                        }
-                    }
-                    if let false = vec_errors.is_empty() {
-                        return Err(
-                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream
-                        );
-                    }
-                    Ok(vec_values)
-                },
+                Ok(value) => #primary_key_inner_type_from_or_try_from_token_stream,
                 Err(#error_value_snake_case_token_stream) => {
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#expected_type_initialization_token_stream);
                 }
