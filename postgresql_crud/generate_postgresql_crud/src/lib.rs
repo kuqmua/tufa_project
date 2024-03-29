@@ -2857,10 +2857,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
                 let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
                 let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream = match primary_key_from_or_try_from {
+                    postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
                     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
                         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
                     },
-                    postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
                 };
                 quote::quote! {
                     #derive_debug_thiserror_error_occurence_token_stream
@@ -3438,13 +3438,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (http_request_token_stream, http_request_test_token_stream) = {
             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
             let try_operation_error_named_token_stream = {
-                let expected_type_declaration_token_stream =
-                    generate_expected_type_declaration_token_stream(&operation);
+                let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
+                let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_handle_token_stream = match primary_key_from_or_try_from {
+                    postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
+                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream,},
+                };
                 quote::quote! {
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
                         #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_handle_token_stream
                         #expected_type_declaration_token_stream,
                         #unexpected_status_code_declaration_token_stream,
                         #failed_to_get_response_text_declaration_token_stream,
