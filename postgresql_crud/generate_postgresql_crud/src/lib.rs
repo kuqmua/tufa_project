@@ -3472,12 +3472,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
-                &quote::quote! {
-                    match #primary_key_inner_type_token_stream::try_from(value) {
-                        Ok(value) => Ok(value),
-                        Err(#error_value_snake_case_token_stream) => Err(
-                            #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
-                        )
+                &match primary_key_from_or_try_from {
+                    postgresql_crud_common::FromOrTryFrom::From => quote::quote!{Ok(#primary_key_inner_type_token_stream::from(value))},
+                    postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote!{
+                        match #primary_key_inner_type_token_stream::try_from(value) {
+                            Ok(value) => Ok(value),
+                            Err(#error_value_snake_case_token_stream) => Err(
+                                #try_operation_error_named_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_initialization_token_stream
+                            )
+                        }
                     }
                 },
                 &table_name_stringified,
@@ -7644,7 +7647,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #common_token_stream
 
             #create_many_token_stream
-            // #create_one_token_stream
+            #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
             // #update_many_token_stream
