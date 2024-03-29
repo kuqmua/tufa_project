@@ -1550,6 +1550,14 @@ pub enum TryCreateMany {
         no_commit_header: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //HERE123
+    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+    {
+        #[eo_display]
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: sqlx::Error, 
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryCreateManyResponseVariants {
@@ -3110,8 +3118,8 @@ pub async fn create_many(
                     );
                 }
                 Err(e) => {
-                    let e = TryCreateMany ::
-                    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+                    //HERE123
+                    let e = TryCreateMany::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
                     {
                         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
                         : e, code_occurence : error_occurence_lib :: code_occurence
