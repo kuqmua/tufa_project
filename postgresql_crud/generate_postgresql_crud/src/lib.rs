@@ -484,11 +484,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let ident_try_from_ident_options_error_named_token_stream = {
                     let is_none_variant_columns_token_stream = variant_columns.iter().map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_ident_title_case_stringified = convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::UpperCamel);
-                        let field_ident_is_none_title_case_token_stream = {
-                            let field_ident_is_none_title_case_stringified = format!("{field_ident_title_case_stringified}{is_none_upper_camel_case_stringified}");
-                            field_ident_is_none_title_case_stringified.parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_title_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        let field_ident_upper_camel_case_stringified = convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::UpperCamel);
+                        let field_ident_is_none_upper_camel_case_token_stream = {
+                            let field_ident_is_none_upper_camel_case_stringified = format!("{field_ident_upper_camel_case_stringified}{is_none_upper_camel_case_stringified}");
+                            field_ident_is_none_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
                         let field_ident_is_none_snake_case_token_stream = {
                             let field_ident_is_none_snake_case_stringified = format!("{field_ident}{postfix_is_none_snake_case_stringified}");
@@ -496,7 +496,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
                         quote::quote! {
-                            #field_ident_is_none_title_case_token_stream {
+                            #field_ident_is_none_upper_camel_case_token_stream {
                                 #eo_display_with_serialize_deserialize_token_stream
                                 #field_ident_is_none_snake_case_token_stream: #std_string_string_token_stream,
                                 #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
@@ -522,14 +522,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         column!(),
                                         &proc_macro_name_upper_camel_case_ident_stringified,
                                     );
+                                    let primary_key_field_ident_upper_camel_case_stringified = convert_case::Casing::to_case(&primary_key_field_ident.to_string(), convert_case::Case::UpperCamel);
+                                    let primary_key_field_ident_is_none_upper_camel_case_token_stream = {
+                                        let value_stringified = format!("{primary_key_field_ident_upper_camel_case_stringified}{is_none_upper_camel_case_stringified}");
+                                        value_stringified.parse::<proc_macro2::TokenStream>()
+                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    };
+                                    let primary_key_field_ident_is_none_snake_case_stringified = format!("{primary_key_field_ident}{postfix_is_none_snake_case_stringified}");
+                                    let primary_key_field_ident_is_none_snake_case_token_stream = {
+                                        primary_key_field_ident_is_none_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+                                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {primary_key_field_ident_is_none_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    };
+                                    let primary_key_is_none_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+                                        &format!(
+                                            "{primary_key_field_ident_is_none_snake_case_stringified} {} {}",
+                                            proc_macro_helpers::naming_conventions::is_snake_case_stringified(),
+                                            proc_macro_helpers::naming_conventions::none_upper_camel_case_stringified()
+                                        ),
+                                        &proc_macro_name_upper_camel_case_ident_stringified,
+                                    );
+                                    //todo maybe remove information duplication: field name and value contains same info.
                                     quote::quote!{
                                         let #primary_key_field_ident = match value.#primary_key_field_ident {
                                             Some(value) => value,
                                             None => {
-                                                return Err(Self::Error::IdIsNone {
-                                                    id_is_none: #std_string_string_token_stream::from("id is None"),//todo primary key field naming fix
-                                                    #field_code_occurence_new_fb6f51c7_7907_4872_9b50_852f40a91c0f_token_stream,
-                                                });
+                                                return Err(Self::Error::
+                                                    #primary_key_field_ident_is_none_upper_camel_case_token_stream {
+                                                        #primary_key_field_ident_is_none_snake_case_token_stream: #std_string_string_token_stream::from(#primary_key_is_none_quotes_token_stream),
+                                                        #field_code_occurence_new_fb6f51c7_7907_4872_9b50_852f40a91c0f_token_stream,
+                                                    }
+                                                );
                                             }
                                         };
                                     }
@@ -541,11 +563,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let variant_columns_assignment_token_stream = variant_columns.iter().filter(|element|element.field_ident != *primary_key_field_ident).map(|element|{
                         let field_ident = &element.field_ident;
-                        let field_ident_title_case_stringified = convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::UpperCamel);
-                        let field_ident_is_none_title_case_token_stream = {
-                            let field_ident_is_none_title_case_stringified = format!("{field_ident_title_case_stringified}{is_none_upper_camel_case_stringified}");
-                            field_ident_is_none_title_case_stringified.parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_title_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        let field_ident_upper_camel_case_stringified = convert_case::Casing::to_case(&field_ident.to_string(), convert_case::Case::UpperCamel);
+                        let field_ident_is_none_upper_camel_case_token_stream = {
+                            let field_ident_is_none_upper_camel_case_stringified = format!("{field_ident_upper_camel_case_stringified}{is_none_upper_camel_case_stringified}");
+                            field_ident_is_none_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_is_none_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
                         let field_ident_is_none_snake_case_token_stream = {
                             let field_ident_is_none_snake_case_stringified = format!("{field_ident}{postfix_is_none_snake_case_stringified}");
@@ -567,7 +589,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let #field_ident = match value.#field_ident {
                                 Some(value) => value,
                                 None => {
-                                    return Err(Self::Error::#field_ident_is_none_title_case_token_stream {
+                                    return Err(Self::Error::#field_ident_is_none_upper_camel_case_token_stream {
                                         #field_ident_is_none_snake_case_token_stream: #std_string_string_token_stream::from(#field_ident_is_none_message_snake_case_token_stream),
                                         #field_code_occurence_new_dea6a52d_6fb9_49c7_9220_6f185e417faf_token_stream,
                                     });
