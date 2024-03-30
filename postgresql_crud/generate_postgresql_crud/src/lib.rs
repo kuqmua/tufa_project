@@ -2531,6 +2531,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
+    let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| &element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
@@ -2599,10 +2600,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = {
             let payload_token_stream = {
                 let operation_payload_element_token_stream = {
-                    let fields_with_excluded_primary_key_token_stream =
-                        fields_named_excluding_primary_key
-                            .iter()
-                            .map(|element|generate_pub_field_ident_field_type_token_stream(element));
+                    let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|generate_pub_field_ident_field_type_token_stream(element));
                     quote::quote! {
                         #derive_debug_token_stream
                         pub struct #operation_payload_element_upper_camel_case_token_stream {
@@ -2644,10 +2642,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(
                                 element
                             ));
-                        let fields_idents_excluding_primary_key_token_stream =
-                            fields_named_excluding_primary_key
-                                .iter()
-                                .map(|element| &element.field_ident);
                         quote::quote! {
                             impl std::convert::From<#operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_element_upper_camel_case_token_stream {
                                 fn from(value: #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
@@ -2706,10 +2700,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &field_code_occurence_new_591cf20c_c2de_4d33_a7b0_785e8796f0ce_token_stream,
                                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                             ));
-                        let fields_idents_excluding_primary_key_token_stream =
-                            fields_named_excluding_primary_key
-                                .iter()
-                                .map(|element| &element.field_ident);
                         //todo it can be std::convert::From if all #(#fields_assignment_excluding_primary_key_token_stream)* are impl from 
                         quote::quote! {
                             #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream
@@ -2783,16 +2773,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
                 let impl_std_convert_from_operation_payload_element_for_operation_payload_element_with_serialize_deserialize_token_stream = {
-                    let fields_assignment_excluding_primary_key_token_stream =
-                        fields_named_excluding_primary_key
-                            .iter()
-                            .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(
-                                element
-                            ));
-                    let fields_idents_excluding_primary_key_token_stream =
-                        fields_named_excluding_primary_key
-                            .iter()
-                            .map(|element| &element.field_ident);
+                    let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                        .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(
+                            element
+                        ));
                     quote::quote! {
                         impl std::convert::From<#operation_payload_element_upper_camel_case_token_stream> for #operation_payload_element_with_serialize_deserialize_upper_camel_case_token_stream {
                             fn from(value: #operation_payload_element_upper_camel_case_token_stream) -> Self {
@@ -3311,7 +3295,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let #field_ident = #inner_type_token_stream::#from_snake_case_token_stream(value.#field_ident);
                                 }
                             });
-                        let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| &element.field_ident);
                         quote::quote! {
                             impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
                                 fn from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
@@ -3357,10 +3340,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &field_code_occurence_new_3763990f_5c49_47d0_a774_5ef584cd1236_token_stream,
                                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                             ));
-                        let fields_idents_excluding_primary_key_token_stream =
-                            fields_named_excluding_primary_key
-                                .iter()
-                                .map(|element| &element.field_ident);
                         quote::quote! {
                             impl std::convert::TryFrom<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
                                 type Error = #operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream;
@@ -3381,16 +3360,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream}");
             let impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream = {
-                let fields_assignment_excluding_primary_key_token_stream =
-                    fields_named_excluding_primary_key
-                        .iter()
-                        .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(
-                            element
-                        ));
-                let fields_idents_excluding_primary_key_token_stream =
-                    fields_named_excluding_primary_key
-                        .iter()
-                        .map(|element| &element.field_ident);
+                let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
+                    .map(|element|generate_let_field_ident_value_inner_type_with_serialize_deserialize_from_token_stream(
+                        element
+                    ));
                 quote::quote! {
                     impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
@@ -5919,7 +5892,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 postgresql_crud_common::FromOrTryFrom::From => {
                     let fields_assignment_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter()
                         .map(|element| generate_let_option_field_ident_value_option_inner_type_from_token_stream(&element));
-                    let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| &element.field_ident);
                     let primary_key_let_field_ident_value_field_ident_try_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
                     quote::quote! {
                         impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
@@ -5971,10 +5943,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &field_code_occurence_new_1755cb35_9932_42ce_8a4a_edd53bb789a1_token_stream,
                                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                             ));
-                        let fields_idents_excluding_primary_key_token_stream =
-                            fields_named_excluding_primary_key
-                                .iter()
-                                .map(|element| &element.field_ident);
                         let field_code_occurence_new_9d290620_cad2_47ab_900e_da3f3d08307f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                             file!(),
                             line!(),
@@ -6016,10 +5984,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .map(|element| generate_let_field_option_ident_value_field_option_ident_from_token_stream(
                             &element
                         ));
-                let fields_idents_excluding_primary_key_token_stream =
-                    fields_named_excluding_primary_key
-                        .iter()
-                        .map(|element| &element.field_ident);
                 quote::quote! {
                     impl std::convert::From<#operation_payload_upper_camel_case_token_stream> for #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         fn from(value: #operation_payload_upper_camel_case_token_stream) -> Self {
