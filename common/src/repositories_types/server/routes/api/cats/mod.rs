@@ -214,214 +214,203 @@ pub struct Dog {
 
 ////////////////////////////////////////////////////////////////////////
 
-#[derive(Debug, utoipa :: ToSchema)]
-pub struct UpdateOnePayload {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        postgresql_crud::StdPrimitiveI64,
-    pub std_primitive_bool_as_postgresql_bool:
-        std::option::Option<postgresql_crud::StdPrimitiveBool>,
+#[derive(Debug, utoipa :: ToSchema)] pub struct UpdateOnePayload
+{
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key :
+    postgresql_crud::StdPrimitiveI64, pub
+    std_primitive_bool_as_postgresql_bool : std :: option :: Option <
+    postgresql_crud::StdPrimitiveBool >
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct UpdateOnePayloadWithSerializeDeserialize {
-    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
-    std_primitive_bool_as_postgresql_bool:
-        std::option::Option<postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize>,
-}
-impl std::convert::From<UpdateOnePayloadWithSerializeDeserialize> for UpdateOnePayload {
-    fn from(value: UpdateOnePayloadWithSerializeDeserialize) -> Self {
+pub struct UpdateOnePayloadWithSerializeDeserialize
+{
+    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key :
+    postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+    std_primitive_bool_as_postgresql_bool : std :: option :: Option <
+    postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize >
+} impl std :: convert :: From < UpdateOnePayloadWithSerializeDeserialize > for
+UpdateOnePayload
+{
+    fn from(value : UpdateOnePayloadWithSerializeDeserialize) -> Self
+    {
         let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
-            postgresql_crud::StdPrimitiveI64::from(
-                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            );
-        let std_primitive_bool_as_postgresql_bool =
-            match value.std_primitive_bool_as_postgresql_bool {
-                Some(value) => Some(postgresql_crud::StdPrimitiveBool::from(value)),
-                None => None,
-            };
-        Self {
+        postgresql_crud::StdPrimitiveI64 ::
+        from(value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key)
+        ; let std_primitive_bool_as_postgresql_bool = match
+        value.std_primitive_bool_as_postgresql_bool
+        {
+            Some(value) =>
+            Some(postgresql_crud::StdPrimitiveBool :: from(value)), None =>
+            None,
+        } ; Self
+        {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            std_primitive_bool_as_postgresql_bool,
+            std_primitive_bool_as_postgresql_bool
         }
     }
-}
-impl std::convert::From<UpdateOnePayload> for UpdateOnePayloadWithSerializeDeserialize {
-    fn from(value: UpdateOnePayload) -> Self {
+} impl std :: convert :: From < UpdateOnePayload > for
+UpdateOnePayloadWithSerializeDeserialize
+{
+    fn from(value : UpdateOnePayload) -> Self
+    {
         let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
-            postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
-                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            );
-        let std_primitive_bool_as_postgresql_bool =
-            match value.std_primitive_bool_as_postgresql_bool {
-                Some(value) => {
-                    Some(postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize::from(value))
-                }
-                None => None,
-            };
-        Self {
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize ::
+        from(value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key)
+        ; let std_primitive_bool_as_postgresql_bool = match
+        value.std_primitive_bool_as_postgresql_bool
+        {
+            Some(value) =>
+            Some(postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize ::
+            from(value)), None => None,
+        } ; Self
+        {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            std_primitive_bool_as_postgresql_bool,
+            std_primitive_bool_as_postgresql_bool
         }
     }
-}
-#[derive(Debug)]
-pub struct UpdateOneParameters {
-    pub payload: UpdateOnePayload,
-}
-#[derive(
-    Debug,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-    from_sqlx_postgres_error :: FromSqlxPostgresError,
-)]
-pub enum TryUpdateOne {
-    Configuration {
-        #[eo_display_with_serialize_deserialize]
-        configuration: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Database {
-        #[eo_display_with_serialize_deserialize]
-        database: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Io {
-        #[eo_display]
-        io: std::io::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Tls {
-        #[eo_display_with_serialize_deserialize]
-        tls: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Protocol {
-        #[eo_display_with_serialize_deserialize]
-        protocol: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    RowNotFound {
-        #[eo_display_with_serialize_deserialize]
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    TypeNotFound {
-        #[eo_display_with_serialize_deserialize]
-        type_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnIndexOutOfBounds {
-        #[eo_display_with_serialize_deserialize]
-        column_index_out_of_bounds: usize,
-        #[eo_display_with_serialize_deserialize]
-        len: usize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnNotFound {
-        #[eo_display_with_serialize_deserialize]
-        column_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnDecode {
-        #[eo_display_with_serialize_deserialize]
-        column_decode_index: std::string::String,
-        #[eo_display_with_serialize_deserialize]
-        source_handle: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Decode {
-        #[eo_display_with_serialize_deserialize]
-        decode: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PoolTimedOut {
-        #[eo_display_with_serialize_deserialize]
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PoolClosed {
-        #[eo_display_with_serialize_deserialize]
-        pool_closed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    WorkerCrashed {
-        #[eo_display_with_serialize_deserialize]
-        worker_crashed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Migrate {
-        #[eo_display]
-        migrate: sqlx::migrate::MigrateError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonDataError {
-        #[eo_display]
-        json_data_error: axum::extract::rejection::JsonDataError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonSyntaxError {
-        #[eo_display]
-        json_syntax_error: axum::extract::rejection::JsonSyntaxError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        #[eo_display_with_serialize_deserialize]
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        #[eo_display_with_serialize_deserialize]
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        #[eo_display_with_serialize_deserialize]
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        #[eo_error_occurence]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoPayloadFields {
-        #[eo_display_with_serialize_deserialize]
-        no_payload_fields: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize {
-        #[eo_error_occurence]
-        update_one_payload_try_from_update_one_payload_with_serialize_deserialize:
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+} #[derive(Debug)] pub struct UpdateOneParameters
+{ pub payload : UpdateOnePayload, }
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence,
+from_sqlx_postgres_error :: FromSqlxPostgresError,)] pub enum TryUpdateOne
+{
+    Configuration
+    {
+        #[eo_display_with_serialize_deserialize] configuration : std :: string
+        :: String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, Database
+    {
+        #[eo_display_with_serialize_deserialize] database : std :: string ::
+        String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, Io
+    {
+        #[eo_display] io : std :: io :: Error, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence
+    }, Tls
+    {
+        #[eo_display_with_serialize_deserialize] tls : std :: string ::
+        String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, Protocol
+    {
+        #[eo_display_with_serialize_deserialize] protocol : std :: string ::
+        String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, RowNotFound
+    {
+        #[eo_display_with_serialize_deserialize] row_not_found : std :: string
+        :: String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, TypeNotFound
+    {
+        #[eo_display_with_serialize_deserialize] type_not_found : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, ColumnIndexOutOfBounds
+    {
+        #[eo_display_with_serialize_deserialize] column_index_out_of_bounds :
+        usize, #[eo_display_with_serialize_deserialize] len : usize,
+        code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, ColumnNotFound
+    {
+        #[eo_display_with_serialize_deserialize] column_not_found : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, ColumnDecode
+    {
+        #[eo_display_with_serialize_deserialize] column_decode_index : std ::
+        string :: String, #[eo_display_with_serialize_deserialize]
+        source_handle : std :: string :: String, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence
+    }, Decode
+    {
+        #[eo_display_with_serialize_deserialize] decode : std :: string ::
+        String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, PoolTimedOut
+    {
+        #[eo_display_with_serialize_deserialize] pool_timed_out : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, PoolClosed
+    {
+        #[eo_display_with_serialize_deserialize] pool_closed : std :: string
+        :: String, code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, WorkerCrashed
+    {
+        #[eo_display_with_serialize_deserialize] worker_crashed : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, Migrate
+    {
+        #[eo_display] migrate : sqlx :: migrate :: MigrateError,
+        code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, JsonDataError
+    {
+        #[eo_display] json_data_error : axum :: extract :: rejection ::
+        JsonDataError, code_occurence : error_occurence_lib :: code_occurence
+        :: CodeOccurence
+    }, JsonSyntaxError
+    {
+        #[eo_display] json_syntax_error : axum :: extract :: rejection ::
+        JsonSyntaxError, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, MissingJsonContentType
+    {
+        #[eo_display_with_serialize_deserialize] missing_json_content_type :
+        std :: string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, BytesRejection
+    {
+        #[eo_display_with_serialize_deserialize] bytes_rejection : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, UnexpectedCase
+    {
+        #[eo_display_with_serialize_deserialize] unexpected_case : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, BindQuery
+    {
+        #[eo_error_occurence] bind_query : postgresql_crud ::
+        TryGenerateBindIncrementsErrorNamed, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence
+    }, NoPayloadFields
+    {
+        #[eo_display_with_serialize_deserialize] no_payload_fields : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
     {
         #[eo_display]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CommitExtractorNotEqual {
-        #[eo_display_with_serialize_deserialize]
-        commit_not_equal: std::string::String,
-        #[eo_display_with_serialize_deserialize]
-        commit_to_use: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CommitExtractorToStrConversion {
-        #[eo_display]
-        commit_to_str_conversion: http::header::ToStrError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoCommitExtractorHeader {
-        #[eo_display_with_serialize_deserialize]
-        no_commit_header: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub enum TryUpdateOneResponseVariants {
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
+        : sqlx :: Error, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }, CommitExtractorNotEqual
+    {
+        #[eo_display_with_serialize_deserialize] commit_not_equal : std ::
+        string :: String, #[eo_display_with_serialize_deserialize]
+        commit_to_use : std :: string :: String, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence
+    }, CommitExtractorToStrConversion
+    {
+        #[eo_display] commit_to_str_conversion : http :: header :: ToStrError,
+        code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence
+    }, NoCommitExtractorHeader
+    {
+        #[eo_display_with_serialize_deserialize] no_commit_header : std ::
+        string :: String, code_occurence : error_occurence_lib ::
+        code_occurence :: CodeOccurence
+    }
+} #[derive(Debug, serde :: Serialize, serde :: Deserialize)] pub enum
+TryUpdateOneResponseVariants
+{
     Desirable(postgresql_crud::StdPrimitiveI64WithSerializeDeserialize),
     Configuration
     {
@@ -513,12 +502,6 @@ pub enum TryUpdateOneResponseVariants {
     {
         no_payload_fields : std::string::String<>, code_occurence :
         error_occurence_lib::code_occurence::CodeOccurence
-    }, UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-    {
-        update_one_payload_try_from_update_one_payload_with_serialize_deserialize
-        :
-        UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
     {
@@ -539,9 +522,11 @@ pub enum TryUpdateOneResponseVariants {
         no_commit_header : std::string::String<>, code_occurence :
         error_occurence_lib::code_occurence::CodeOccurence
     }
-}
-impl std::convert::From<TryUpdateOne> for TryUpdateOneResponseVariants {
-    fn from(value: TryUpdateOne) -> Self {
+} impl std :: convert :: From < TryUpdateOne > for
+TryUpdateOneResponseVariants
+{
+    fn from(value : TryUpdateOne) -> Self
+    {
         match value.into_serialize_deserialize_version()
         {
             TryUpdateOneWithSerializeDeserialize :: Configuration
@@ -608,16 +593,6 @@ impl std::convert::From<TryUpdateOne> for TryUpdateOneResponseVariants {
             { no_payload_fields, code_occurence } => Self :: NoPayloadFields
             { no_payload_fields, code_occurence },
             TryUpdateOneWithSerializeDeserialize ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryUpdateOneWithSerializeDeserialize ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
@@ -641,9 +616,11 @@ impl std::convert::From<TryUpdateOne> for TryUpdateOneResponseVariants {
             NoCommitExtractorHeader { no_commit_header, code_occurence }
         }
     }
-}
-impl std::convert::From<&TryUpdateOneResponseVariants> for axum::http::StatusCode {
-    fn from(value: &TryUpdateOneResponseVariants) -> Self {
+} impl std :: convert :: From < & TryUpdateOneResponseVariants > for axum ::
+http :: StatusCode
+{
+    fn from(value : & TryUpdateOneResponseVariants) -> Self
+    {
         match value
         {
             TryUpdateOneResponseVariants :: Desirable(_) => axum :: http ::
@@ -695,12 +672,6 @@ impl std::convert::From<&TryUpdateOneResponseVariants> for axum::http::StatusCod
             :: StatusCode :: OK, TryUpdateOneResponseVariants ::
             NoPayloadFields { no_payload_fields : _, code_occurence : _ } =>
             axum :: http :: StatusCode :: OK, TryUpdateOneResponseVariants ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize
-                : _, code_occurence : _
-            } => axum :: http :: StatusCode :: OK,
-            TryUpdateOneResponseVariants ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
@@ -719,18 +690,46 @@ impl std::convert::From<&TryUpdateOneResponseVariants> for axum::http::StatusCod
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr200Ok {
-    Desirable(postgresql_crud::StdPrimitiveI64WithSerializeDeserialize),
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr200Ok> for TryUpdateOneResponseVariants {
-    fn from(value: TryUpdateOneResponseVariantsTvfrr200Ok) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr200Ok::Desirable(i) => Self::Desirable(i),
+pub enum TryUpdateOneResponseVariantsTvfrr200Ok
+{ Desirable(postgresql_crud::StdPrimitiveI64WithSerializeDeserialize), } impl
+std :: convert :: From < TryUpdateOneResponseVariantsTvfrr200Ok > for
+TryUpdateOneResponseVariants
+{
+    fn from(value : TryUpdateOneResponseVariantsTvfrr200Ok) -> Self
+    {
+        match value
+        {
+            TryUpdateOneResponseVariantsTvfrr200Ok :: Desirable(i) => Self ::
+            Desirable(i),
         }
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr400BadRequest {
+pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout
+{
+    PoolTimedOut
+    {
+        pool_timed_out : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+} impl std :: convert :: From <
+TryUpdateOneResponseVariantsTvfrr408RequestTimeout > for
+TryUpdateOneResponseVariants
+{
+    fn from(value : TryUpdateOneResponseVariantsTvfrr408RequestTimeout) ->
+    Self
+    {
+        match value
+        {
+            TryUpdateOneResponseVariantsTvfrr408RequestTimeout :: PoolTimedOut
+            { pool_timed_out, code_occurence } => Self :: PoolTimedOut
+            { pool_timed_out, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr400BadRequest
+{
     TypeNotFound
     {
         type_not_found : std::string::String<>, code_occurence :
@@ -755,12 +754,6 @@ pub enum TryUpdateOneResponseVariantsTvfrr400BadRequest {
     {
         no_payload_fields : std::string::String<>, code_occurence :
         error_occurence_lib::code_occurence::CodeOccurence
-    }, UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-    {
-        update_one_payload_try_from_update_one_payload_with_serialize_deserialize
-        :
-        UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
     }, CommitExtractorNotEqual
     {
         commit_not_equal : std::string::String<>, commit_to_use :
@@ -775,11 +768,11 @@ pub enum TryUpdateOneResponseVariantsTvfrr400BadRequest {
         no_commit_header : std::string::String<>, code_occurence :
         error_occurence_lib::code_occurence::CodeOccurence
     }
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
-    for TryUpdateOneResponseVariants
+} impl std :: convert :: From < TryUpdateOneResponseVariantsTvfrr400BadRequest
+> for TryUpdateOneResponseVariants
 {
-    fn from(value: TryUpdateOneResponseVariantsTvfrr400BadRequest) -> Self {
+    fn from(value : TryUpdateOneResponseVariantsTvfrr400BadRequest) -> Self
+    {
         match value
         {
             TryUpdateOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
@@ -803,16 +796,6 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
             { no_payload_fields, code_occurence } => Self :: NoPayloadFields
             { no_payload_fields, code_occurence },
             TryUpdateOneResponseVariantsTvfrr400BadRequest ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryUpdateOneResponseVariantsTvfrr400BadRequest ::
             CommitExtractorNotEqual
             { commit_not_equal, commit_to_use, code_occurence } => Self ::
             CommitExtractorNotEqual
@@ -830,76 +813,101 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr500InternalServerError {
-    Configuration {
-        configuration: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Database {
-        database: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Io {
-        io: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Tls {
-        tls: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Protocol {
-        protocol: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnIndexOutOfBounds {
-        column_index_out_of_bounds: usize,
-        len: usize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnDecode {
-        column_decode_index: std::string::String,
-        source_handle: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Decode {
-        decode: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PoolClosed {
-        pool_closed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    WorkerCrashed {
-        worker_crashed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Migrate {
-        migrate: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+pub enum TryUpdateOneResponseVariantsTvfrr404NotFound
+{
+    RowNotFound
+    {
+        row_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+} impl std :: convert :: From < TryUpdateOneResponseVariantsTvfrr404NotFound >
+for TryUpdateOneResponseVariants
+{
+    fn from(value : TryUpdateOneResponseVariantsTvfrr404NotFound) -> Self
+    {
+        match value
+        {
+            TryUpdateOneResponseVariantsTvfrr404NotFound :: RowNotFound
+            { row_not_found, code_occurence } => Self :: RowNotFound
+            { row_not_found, code_occurence }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr500InternalServerError
+{
+    Configuration
+    {
+        configuration : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, Database
+    {
+        database : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, Io
+    {
+        io : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, Tls
+    {
+        tls : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, Protocol
+    {
+        protocol : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnIndexOutOfBounds
+    {
+        column_index_out_of_bounds : usize<>, len : usize<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnDecode
+    {
+        column_decode_index : std::string::String<>, source_handle :
+        std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, Decode
+    {
+        decode : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, PoolClosed
+    {
+        pool_closed : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, WorkerCrashed
+    {
+        worker_crashed : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, Migrate
+    {
+        migrate : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, BytesRejection
+    {
+        bytes_rejection : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, UnexpectedCase
+    {
+        unexpected_case : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, BindQuery
+    {
+        bind_query :
+        postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
     },
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
     {
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr500InternalServerError>
-    for TryUpdateOneResponseVariants
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
+        : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+} impl std :: convert :: From <
+TryUpdateOneResponseVariantsTvfrr500InternalServerError > for
+TryUpdateOneResponseVariants
 {
-    fn from(value: TryUpdateOneResponseVariantsTvfrr500InternalServerError) -> Self {
+    fn from(value : TryUpdateOneResponseVariantsTvfrr500InternalServerError)
+    -> Self
+    {
         match value
         {
             TryUpdateOneResponseVariantsTvfrr500InternalServerError ::
@@ -959,56 +967,13 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr500InternalServerError>
             }
         }
     }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>
-    for TryUpdateOneResponseVariants
+} impl TryFrom < TryUpdateOneResponseVariants > for
+postgresql_crud::StdPrimitiveI64WithSerializeDeserialize
 {
-    fn from(value: TryUpdateOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr404NotFound>
-    for TryUpdateOneResponseVariants
-{
-    fn from(value: TryUpdateOneResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-impl TryFrom<TryUpdateOneResponseVariants>
-    for postgresql_crud::StdPrimitiveI64WithSerializeDeserialize
-{
-    type Error = TryUpdateOneWithSerializeDeserialize;
-    fn try_from(value: TryUpdateOneResponseVariants) -> Result<Self, Self::Error> {
+    type Error = TryUpdateOneWithSerializeDeserialize ; fn
+    try_from(value : TryUpdateOneResponseVariants) -> Result < Self, Self ::
+    Error >
+    {
         match value
         {
             TryUpdateOneResponseVariants :: Desirable(i) => Ok(i),
@@ -1086,17 +1051,6 @@ impl TryFrom<TryUpdateOneResponseVariants>
             Err(TryUpdateOneWithSerializeDeserialize :: NoPayloadFields
             { no_payload_fields, code_occurence }),
             TryUpdateOneResponseVariants ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            } =>
-            Err(TryUpdateOneWithSerializeDeserialize ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize,
-                code_occurence
-            }), TryUpdateOneResponseVariants ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
@@ -1123,80 +1077,64 @@ impl TryFrom<TryUpdateOneResponseVariants>
             NoCommitExtractorHeader { no_commit_header, code_occurence })
         }
     }
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryUpdateOneRequestError {
-    ExpectedType {
-        #[eo_display_with_serialize_deserialize]
-        expected_type: TryUpdateOneWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+} #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum TryUpdateOneRequestError
+{
+    ExpectedType
+    {
+        #[eo_display_with_serialize_deserialize] expected_type :
+        TryUpdateOneWithSerializeDeserialize, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, UnexpectedStatusCode
+    {
+        #[eo_display] status_code : http :: StatusCode,
+        #[eo_display_foreign_type] headers : reqwest :: header :: HeaderMap,
+        #[eo_display_foreign_type] response_text_result : crate :: common ::
+        api_request_unexpected_error :: ResponseTextResult, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, FailedToGetResponseText
+    {
+        #[eo_display_foreign_type] reqwest : reqwest :: Error, #[eo_display]
+        status_code : http :: StatusCode, #[eo_display_foreign_type] headers :
+        reqwest :: header :: HeaderMap, code_occurence : error_occurence_lib
+        :: code_occurence :: CodeOccurence,
+    }, DeserializeResponse
+    {
+        #[eo_display] serde : serde_json :: Error, #[eo_display] status_code :
+        http :: StatusCode, #[eo_display_foreign_type] headers : reqwest ::
+        header :: HeaderMap, #[eo_display_with_serialize_deserialize]
+        response_text : std :: string :: String, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, Reqwest
+    {
+        #[eo_display_foreign_type] reqwest : reqwest :: Error, code_occurence
+        : error_occurence_lib :: code_occurence :: CodeOccurence,
     },
-    UnexpectedStatusCode {
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        #[eo_display_foreign_type]
-        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    FailedToGetResponseText {
-        #[eo_display_foreign_type]
-        reqwest: reqwest::Error,
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeserializeResponse {
-        #[eo_display]
-        serde: serde_json::Error,
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        #[eo_display_with_serialize_deserialize]
-        response_text: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Reqwest {
-        #[eo_display_foreign_type]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-pub enum TryUpdateOneStatusCodesChecker {
+} pub enum TryUpdateOneStatusCodesChecker
+{
     ConfigurationTvfrr500InternalServerError,
-    DatabaseTvfrr500InternalServerError,
-    IoTvfrr500InternalServerError,
-    TlsTvfrr500InternalServerError,
-    ProtocolTvfrr500InternalServerError,
-    RowNotFoundTvfrr404NotFound,
-    TypeNotFoundTvfrr400BadRequest,
+    DatabaseTvfrr500InternalServerError, IoTvfrr500InternalServerError,
+    TlsTvfrr500InternalServerError, ProtocolTvfrr500InternalServerError,
+    RowNotFoundTvfrr404NotFound, TypeNotFoundTvfrr400BadRequest,
     ColumnIndexOutOfBoundsTvfrr500InternalServerError,
-    ColumnNotFoundTvfrr400BadRequest,
-    ColumnDecodeTvfrr500InternalServerError,
-    DecodeTvfrr500InternalServerError,
-    PoolTimedOutTvfrr408RequestTimeout,
+    ColumnNotFoundTvfrr400BadRequest, ColumnDecodeTvfrr500InternalServerError,
+    DecodeTvfrr500InternalServerError, PoolTimedOutTvfrr408RequestTimeout,
     PoolClosedTvfrr500InternalServerError,
     WorkerCrashedTvfrr500InternalServerError,
-    MigrateTvfrr500InternalServerError,
-    JsonDataErrorTvfrr400BadRequest,
+    MigrateTvfrr500InternalServerError, JsonDataErrorTvfrr400BadRequest,
     JsonSyntaxErrorTvfrr400BadRequest,
     MissingJsonContentTypeTvfrr400BadRequest,
     BytesRejectionTvfrr500InternalServerError,
     UnexpectedCaseTvfrr500InternalServerError,
-    BindQueryTvfrr500InternalServerError,
-    NoPayloadFieldsTvfrr400BadRequest,
-    UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserializeTvfrr400BadRequest,
+    BindQueryTvfrr500InternalServerError, NoPayloadFieldsTvfrr400BadRequest,
     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServerTvfrr500InternalServerError,
     CommitExtractorNotEqualTvfrr400BadRequest,
     CommitExtractorToStrConversionTvfrr400BadRequest,
     NoCommitExtractorHeaderTvfrr400BadRequest,
-}
-impl axum::response::IntoResponse for TryUpdateOneResponseVariants {
-    fn into_response(self) -> axum::response::Response {
+} impl axum :: response :: IntoResponse for TryUpdateOneResponseVariants
+{
+    fn into_response(self) -> axum :: response :: Response
+    {
         match & self
         {
             TryUpdateOneResponseVariants :: Desirable(_) =>
@@ -1315,15 +1253,6 @@ impl axum::response::IntoResponse for TryUpdateOneResponseVariants {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: OK ; res
             }, TryUpdateOneResponseVariants ::
-            UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
-            {
-                update_one_payload_try_from_update_one_payload_with_serialize_deserialize
-                : _, code_occurence : _
-            } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateOneResponseVariants ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
@@ -1350,271 +1279,245 @@ impl axum::response::IntoResponse for TryUpdateOneResponseVariants {
             }
         }
     }
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryUpdateOneErrorNamed {
-    SerdeJsonToString {
-        #[eo_display]
-        serde_json_to_string: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+} #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum TryUpdateOneErrorNamed
+{
+    SerdeJsonToString
+    {
+        #[eo_display] serde_json_to_string : serde_json :: Error,
+        code_occurence : error_occurence_lib :: code_occurence ::
+        CodeOccurence,
+    }, ExpectedType
+    {
+        #[eo_display_with_serialize_deserialize] expected_type :
+        TryUpdateOneWithSerializeDeserialize, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, UnexpectedStatusCode
+    {
+        #[eo_display] status_code : http :: StatusCode,
+        #[eo_display_foreign_type] headers : reqwest :: header :: HeaderMap,
+        #[eo_display_foreign_type] response_text_result : crate :: common ::
+        api_request_unexpected_error :: ResponseTextResult, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, FailedToGetResponseText
+    {
+        #[eo_display_foreign_type] reqwest : reqwest :: Error, #[eo_display]
+        status_code : http :: StatusCode, #[eo_display_foreign_type] headers :
+        reqwest :: header :: HeaderMap, code_occurence : error_occurence_lib
+        :: code_occurence :: CodeOccurence,
+    }, DeserializeResponse
+    {
+        #[eo_display] serde : serde_json :: Error, #[eo_display] status_code :
+        http :: StatusCode, #[eo_display_foreign_type] headers : reqwest ::
+        header :: HeaderMap, #[eo_display_with_serialize_deserialize]
+        response_text : std :: string :: String, code_occurence :
+        error_occurence_lib :: code_occurence :: CodeOccurence,
+    }, Reqwest
+    {
+        #[eo_display_foreign_type] reqwest : reqwest :: Error, code_occurence
+        : error_occurence_lib :: code_occurence :: CodeOccurence,
     },
-    ExpectedType {
-        #[eo_display_with_serialize_deserialize]
-        expected_type: TryUpdateOneWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedStatusCode {
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        #[eo_display_foreign_type]
-        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    FailedToGetResponseText {
-        #[eo_display_foreign_type]
-        reqwest: reqwest::Error,
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeserializeResponse {
-        #[eo_display]
-        serde: serde_json::Error,
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        #[eo_display_with_serialize_deserialize]
-        response_text: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Reqwest {
-        #[eo_display_foreign_type]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-pub async fn try_update_one<'a>(
-    server_location: &str,
-    parameters: UpdateOneParameters,
-) -> Result<postgresql_crud::StdPrimitiveI64, TryUpdateOneErrorNamed> {
-    let payload = match serde_json::to_string(&UpdateOnePayloadWithSerializeDeserialize::from(
-        parameters.payload,
-    )) {
-        Ok(value) => value,
-        Err(e) => {
-            return Err(TryUpdateOneErrorNamed::SerdeJsonToString {
-                serde_json_to_string: e,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1588,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let url = format!("{}/dogs/update_one", server_location);
-    let future = reqwest::Client::new()
-        .patch(&url)
-        .header(postgresql_crud::COMMIT, git_info::PROJECT_GIT_INFO.commit)
-        .header(reqwest::header::CONTENT_TYPE, "application/json")
-        .body(payload)
-        .send();
-    let response = match future.await {
-        Ok(response) => response,
-        Err(e) => {
-            return Err(TryUpdateOneErrorNamed::Reqwest {
-                reqwest: e,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 2432,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let status_code = response.status();
-    let headers = response.headers().clone();
-    let response_text = match response.text().await {
-        Ok(response_text) => response_text,
-        Err(e) => {
-            return Err(TryUpdateOneErrorNamed::FailedToGetResponseText {
-                reqwest: e,
-                status_code,
-                headers,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 2361,
-                        column: 13,
-                    }),
-                ),
-            });
-        }
-    };
-    let variants = if status_code == http::StatusCode::OK {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr200Ok>(&response_text) {
-            Ok(value) => TryUpdateOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2398,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>(
-            &response_text,
-        ) {
-            Ok(value) => TryUpdateOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2398,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr404NotFound>(&response_text) {
-            Ok(value) => TryUpdateOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2398,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr400BadRequest>(&response_text)
+} pub async fn try_update_one < 'a >
+(server_location : & str, parameters : UpdateOneParameters,) -> Result <
+postgresql_crud::StdPrimitiveI64, TryUpdateOneErrorNamed >
+{
+    let payload = match serde_json ::
+    to_string(& UpdateOnePayloadWithSerializeDeserialize ::
+    from(parameters.payload))
+    {
+        Ok(value) => value, Err(e) =>
         {
-            Ok(value) => TryUpdateOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2398,
-                            column: 13,
-                        }),
-                    ),
-                });
+            return
+            Err(TryUpdateOneErrorNamed :: SerdeJsonToString
+            {
+                serde_json_to_string : e, code_occurence : error_occurence_lib
+                :: code_occurence :: CodeOccurence ::
+                new(file! ().to_string(), line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line : 1588, column : 13,
+                })),
+            }) ;
+        }
+    } ; let url = format! ("{}/dogs/update_one", server_location) ; let future
+    = reqwest :: Client ::
+    new().patch(&
+    url).header(postgresql_crud :: COMMIT, git_info ::
+    PROJECT_GIT_INFO.commit,).header(reqwest :: header :: CONTENT_TYPE,
+    "application/json").body(payload).send() ; let response = match
+    future.await
+    {
+        Ok(response) => response, Err(e) =>
+        {
+            return
+            Err(TryUpdateOneErrorNamed :: Reqwest
+            {
+                reqwest : e, code_occurence : error_occurence_lib ::
+                code_occurence :: CodeOccurence ::
+                new(file! ().to_string(), line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line : 2432, column : 13,
+                })),
+            }) ;
+        }
+    } ; let status_code = response.status() ; let headers =
+    response.headers().clone() ; let response_text = match
+    response.text().await
+    {
+        Ok(response_text) => response_text, Err(e) =>
+        {
+            return
+            Err(TryUpdateOneErrorNamed :: FailedToGetResponseText
+            {
+                reqwest : e, status_code, headers, code_occurence :
+                error_occurence_lib :: code_occurence :: CodeOccurence ::
+                new(file! ().to_string(), line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line : 2361, column : 13,
+                }))
+            }) ;
+        }
+    } ; let variants = if status_code == http :: StatusCode :: OK
+    {
+        match serde_json :: from_str :: <
+        TryUpdateOneResponseVariantsTvfrr200Ok > (& response_text)
+        {
+            Ok(value) => TryUpdateOneResponseVariants :: from(value), Err(e)
+            =>
+            {
+                return
+                Err(TryUpdateOneErrorNamed :: DeserializeResponse
+                {
+                    serde : e, status_code, headers, response_text,
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 2398, column : 13,
+                    }))
+                }) ;
             }
         }
-    } else {
-        return Err(TryUpdateOneErrorNamed::UnexpectedStatusCode {
-            status_code,
-            headers,
-            response_text_result:
-                crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(
-                    response_text,
-                ),
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
-                line!(),
-                column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from(
-                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                    ),
-                    line: 2326,
-                    column: 13,
-                }),
-            ),
-        });
-    };
-    match postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::try_from(variants) {
-        Ok(value) => Ok(postgresql_crud::StdPrimitiveI64::from(value)),
-        Err(e) => {
-            return Err(TryUpdateOneErrorNamed::ExpectedType {
-                expected_type: e,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 2288,
-                        column: 13,
-                    }),
-                ),
-            });
+    } else if status_code == http :: StatusCode :: REQUEST_TIMEOUT
+    {
+        match serde_json :: from_str :: <
+        TryUpdateOneResponseVariantsTvfrr408RequestTimeout > (& response_text)
+        {
+            Ok(value) => TryUpdateOneResponseVariants :: from(value), Err(e)
+            =>
+            {
+                return
+                Err(TryUpdateOneErrorNamed :: DeserializeResponse
+                {
+                    serde : e, status_code, headers, response_text,
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 2398, column : 13,
+                    }))
+                }) ;
+            }
         }
+    } else if status_code == http :: StatusCode :: NOT_FOUND
+    {
+        match serde_json :: from_str :: <
+        TryUpdateOneResponseVariantsTvfrr404NotFound > (& response_text)
+        {
+            Ok(value) => TryUpdateOneResponseVariants :: from(value), Err(e)
+            =>
+            {
+                return
+                Err(TryUpdateOneErrorNamed :: DeserializeResponse
+                {
+                    serde : e, status_code, headers, response_text,
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 2398, column : 13,
+                    }))
+                }) ;
+            }
+        }
+    } else if status_code == http :: StatusCode :: BAD_REQUEST
+    {
+        match serde_json :: from_str :: <
+        TryUpdateOneResponseVariantsTvfrr400BadRequest > (& response_text)
+        {
+            Ok(value) => TryUpdateOneResponseVariants :: from(value), Err(e)
+            =>
+            {
+                return
+                Err(TryUpdateOneErrorNamed :: DeserializeResponse
+                {
+                    serde : e, status_code, headers, response_text,
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 2398, column : 13,
+                    }))
+                }) ;
+            }
+        }
+    } else
+    {
+        return
+        Err(TryUpdateOneErrorNamed :: UnexpectedStatusCode
+        {
+            status_code, headers, response_text_result : crate :: common ::
+            api_request_unexpected_error :: ResponseTextResult ::
+            ResponseText(response_text), code_occurence : error_occurence_lib
+            :: code_occurence :: CodeOccurence ::
+            new(file! ().to_string(), line! (), column! (),
+            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+            {
+                file : std :: string :: String ::
+                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                line : 2326, column : 13,
+            }))
+        }) ;
+    } ; match postgresql_crud::StdPrimitiveI64WithSerializeDeserialize ::
+    try_from(variants)
+    {
+        Ok(value) => Ok(postgresql_crud::StdPrimitiveI64 :: from(value)),
+        Err(e) =>
+        {
+            return
+            Err(TryUpdateOneErrorNamed :: ExpectedType
+            {
+                expected_type : e, code_occurence : error_occurence_lib ::
+                code_occurence :: CodeOccurence ::
+                new(file! ().to_string(), line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line : 2288, column : 13,
+                }))
+            }) ;
+        },
     }
 }
 #[utoipa ::
@@ -1635,27 +1538,25 @@ TryUpdateOneResponseVariantsTvfrr400BadRequest, content_type =
 "application/json"),
 (status = 408, description = "request timeout", body =
 TryUpdateOneResponseVariantsTvfrr408RequestTimeout, content_type =
-"application/json")),)]
-pub async fn update_one<'a>(
-    app_state: axum::extract::State<
-        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
-    >,
-    payload_extraction_result: Result<
-        axum::Json<UpdateOnePayloadWithSerializeDeserialize>,
-        axum::extract::rejection::JsonRejection,
-    >,
-) -> impl axum::response::IntoResponse {
-    let parameters = UpdateOneParameters {
-        payload:
-            match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-                UpdateOnePayloadWithSerializeDeserialize,
-                TryUpdateOneResponseVariants,
-            >::try_extract_value(payload_extraction_result, &app_state)
+"application/json")),)] pub async fn update_one < 'a >
+(app_state : axum :: extract :: State < postgresql_crud :: app_state ::
+DynArcGetConfigGetPostgresPoolSendSync >, payload_extraction_result : Result <
+axum :: Json < UpdateOnePayloadWithSerializeDeserialize >, axum :: extract ::
+rejection :: JsonRejection, >,) -> impl axum :: response :: IntoResponse
+{
+    let parameters = UpdateOneParameters
+    {
+        payload : match crate :: server :: routes :: helpers ::
+        json_extractor_error :: JsonValueResultExtractor :: <
+        UpdateOnePayloadWithSerializeDeserialize,
+        TryUpdateOneResponseVariants, > ::
+        try_extract_value(payload_extraction_result, & app_state)
+        {
+            Ok(value) => match UpdateOnePayload :: try_from(value)
             {
-                Ok(value) => match UpdateOnePayload::try_from(value) {
-                    Ok(value) => value,
-                    Err(e) => {
-                        let e = TryUpdateOne ::
+                Ok(value) => value, Err(e) =>
+                {
+                    let e = TryUpdateOne ::
                     UpdateOnePayloadTryFromUpdateOnePayloadWithSerializeDeserialize
                     {
                         update_one_payload_try_from_update_one_payload_with_serialize_deserialize
@@ -1666,143 +1567,134 @@ pub async fn update_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6329, column : 17,
+                            line : 6331, column : 17,
                         })),
-                    } ;
-                        error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                        return TryUpdateOneResponseVariants::from(e);
-                    }
-                },
-                Err(e) => {
-                    return e;
+                    } ; error_occurence_lib :: error_log :: ErrorLog ::
+                    error_log(& e, app_state.as_ref(),) ; return
+                    TryUpdateOneResponseVariants :: from(e) ;
                 }
-            },
-    };
-    println!("{:#?}", parameters);
+            }, Err(e) => { return e ; }
+        },
+    } ; println! ("{:#?}", parameters) ;
     {
-        if let (None) = (&parameters.payload.std_primitive_bool_as_postgresql_bool) {
-            return TryUpdateOneResponseVariants::NoPayloadFields {
-                no_payload_fields: std::string::String::from("no payload fields"),
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/check_for_none.rs",
-                        ),
-                        line: 49,
-                        column: 13,
-                    }),
-                ),
-            };
-        }
-        let query_string = {
-            let mut increment: u64 = 0;
-            let mut query = std::string::String::from("update dogs set ");
-            if let Some(value) = &parameters.payload.std_primitive_bool_as_postgresql_bool {
-                match postgresql_crud::BindQuery::try_increment(value, &mut increment) {
-                    Ok(_) => {
-                        query.push_str(&format!(
-                            "std_primitive_bool_as_postgresql_bool = ${increment}"
-                        ));
-                    }
-                    Err(e) => {
-                        return TryUpdateOneResponseVariants::BindQuery {
-                            bind_query: e.into_serialize_deserialize_version(),
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_string(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from(
-                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                    ),
-                                    line: 1826,
-                                    column: 13,
-                                }),
-                            ),
-                        };
-                    }
+        if let(None) =
+        (&parameters.payload.std_primitive_bool_as_postgresql_bool)
+        {
+            return TryUpdateOneResponseVariants :: NoPayloadFields
+            {
+                no_payload_fields : std :: string :: String ::
+                from("no payload fields"), code_occurence :
+                error_occurence_lib :: code_occurence :: CodeOccurence ::
+                new(file! ().to_string(), line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/check_for_none.rs"),
+                    line : 49, column : 13,
+                }))
+            } ;
+        } let query_string =
+        {
+            let mut increment : u64 = 0 ; let mut query = std :: string ::
+            String :: from("update dogs set ") ; if let Some(value) = &
+            parameters.payload.std_primitive_bool_as_postgresql_bool
+            {
+                match postgresql_crud :: BindQuery ::
+                try_increment(value, & mut increment)
+                {
+                    Ok(_) =>
+                    {
+                        query.push_str(& format!
+                        ("std_primitive_bool_as_postgresql_bool = ${increment}")) ;
+                    }, Err(e) =>
+                    {
+                        return TryUpdateOneResponseVariants :: BindQuery
+                        {
+                            bind_query : e.into_serialize_deserialize_version(),
+                            code_occurence : error_occurence_lib :: code_occurence ::
+                            CodeOccurence ::
+                            new(file! ().to_string(), line! (), column! (),
+                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                            {
+                                file : std :: string :: String ::
+                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line : 1826, column : 13,
+                            }))
+                        } ;
+                    },
                 }
-            }
-            match postgresql_crud::BindQuery::try_increment(
-                &parameters
-                    .payload
-                    .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-                &mut increment,
-            ) {
-                Ok(_) => {
+            } match postgresql_crud :: BindQuery ::
+            try_increment(&
+            parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            & mut increment)
+            {
+                Ok(_) =>
+                {
                     query.push_str(& format!
                     (" where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = ${increment}"))
                     ;
-                }
-                Err(e) => {
-                    return TryUpdateOneResponseVariants::BindQuery {
-                        bind_query: e.into_serialize_deserialize_version(),
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1826,
-                                column: 13,
-                            }),
-                        ),
-                    };
-                }
+                }, Err(e) =>
+                {
+                    return TryUpdateOneResponseVariants :: BindQuery
+                    {
+                        bind_query : e.into_serialize_deserialize_version(),
+                        code_occurence : error_occurence_lib :: code_occurence ::
+                        CodeOccurence ::
+                        new(file! ().to_string(), line! (), column! (),
+                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        {
+                            file : std :: string :: String ::
+                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line : 1826, column : 13,
+                        }))
+                    } ;
+                },
             }
-            query.push_str(&format!(
-                " returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-            ));
-            query
-        };
-        println!("{}", query_string);
-        let binded_query = {
-            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-            if let Some(value) = parameters.payload.std_primitive_bool_as_postgresql_bool {
-                query = postgresql_crud::BindQuery::bind_value_to_query(value, query);
+            query.push_str(& format!
+            (" returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"))
+            ; query
+        } ; println! ("{}", query_string) ; let binded_query =
+        {
+            let mut query = sqlx :: query :: < sqlx :: Postgres >
+            (& query_string) ; if let Some(value) =
+            parameters.payload.std_primitive_bool_as_postgresql_bool
+            {
+                query = postgresql_crud :: BindQuery ::
+                bind_value_to_query(value, query,) ;
+            } query = postgresql_crud :: BindQuery ::
+            bind_value_to_query(parameters.payload.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            query,) ; query
+        } ; let mut pool_connection = match
+        app_state.get_postgres_pool().acquire().await
+        {
+            Ok(value) => value, Err(e) =>
+            {
+                let e = TryUpdateOne :: from(e) ; error_occurence_lib ::
+                error_log :: ErrorLog :: error_log(& e, app_state.as_ref(),) ;
+                return TryUpdateOneResponseVariants :: from(e)
             }
-            query = postgresql_crud::BindQuery::bind_value_to_query(
-                parameters
-                    .payload
-                    .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-                query,
-            );
-            query
-        };
-        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
-            Ok(value) => value,
-            Err(e) => {
-                let e = TryUpdateOne::from(e);
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                return TryUpdateOneResponseVariants::from(e);
+        } ; let pg_connection = match sqlx :: Acquire ::
+        acquire(& mut pool_connection).await
+        {
+            Ok(value) => value, Err(e) =>
+            {
+                let e = TryUpdateOne :: from(e) ; error_occurence_lib ::
+                error_log :: ErrorLog :: error_log(& e, app_state.as_ref(),) ;
+                return TryUpdateOneResponseVariants :: from(e)
             }
-        };
-        let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
-            Ok(value) => value,
-            Err(e) => {
-                let e = TryUpdateOne::from(e);
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                return TryUpdateOneResponseVariants::from(e);
+        } ; match binded_query.fetch_one(pg_connection.as_mut()).await
+        {
+            Ok(value) => match
+            {
+                use sqlx :: Row ; value.try_get :: < std::primitive::i64, &
+                str >
+                ("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")
             }
-        };
-        match binded_query.fetch_one(pg_connection.as_mut()).await {
-            Ok(value) => match {
-                use sqlx::Row;
-                value.try_get::<std::primitive::i64, &str>(
-                    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-                )
-            } {
-                Ok(value) => TryUpdateOneResponseVariants::Desirable(
-                    postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
-                        postgresql_crud::StdPrimitiveI64(value),
-                    ),
-                ),
-                Err(e) => {
+            {
+                Ok(value) => TryUpdateOneResponseVariants ::
+                Desirable(postgresql_crud::StdPrimitiveI64WithSerializeDeserialize
+                :: from(postgresql_crud::StdPrimitiveI64(value))), Err(e) =>
+                {
                     let e = TryUpdateOne ::
                     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
                     {
@@ -1816,25 +1708,27 @@ pub async fn update_one<'a>(
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
                             line : 2043, column : 13,
                         })),
-                    } ;
-                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                    return TryUpdateOneResponseVariants::from(e);
+                    } ; error_occurence_lib :: error_log :: ErrorLog ::
+                    error_log(& e, app_state.as_ref(),) ; return
+                    TryUpdateOneResponseVariants :: from(e) ;
                 }
-            },
-            Err(e) => {
-                let e = TryUpdateOne::from(e);
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                return TryUpdateOneResponseVariants::from(e);
+            }, Err(e) =>
+            {
+                let e = TryUpdateOne :: from(e) ; error_occurence_lib ::
+                error_log :: ErrorLog :: error_log(& e, app_state.as_ref(),) ;
+                return TryUpdateOneResponseVariants :: from(e) ;
             }
         }
     }
-}
-impl std::convert::From<crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed>
-    for TryUpdateOne
+} impl std :: convert :: From <
+crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed >
+for TryUpdateOne
 {
-    fn from(
-        value: crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed,
-    ) -> Self {
+    fn
+    from(value :
+    crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed)
+    -> Self
+    {
         match value
         {
             crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
