@@ -2824,7 +2824,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{parameters_token_stream}");
-        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream = match &primary_key_from_or_try_from {
+        let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream = match primary_key_from_or_try_from {
             postgresql_crud_common::FromOrTryFrom::From => quote::quote! {},
             postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
                 #derive_debug_thiserror_error_occurence_token_stream
@@ -5223,23 +5223,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let impl_std_convert_from_or_try_from_operation_payload_element_with_serialize_deserialize_for_operation_payload_element_token_stream = match fields_named_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => {
-                        let field_code_occurence_new_77f303a5_de96_4f73_a274_f2195cb619b1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                            file!(),
-                            line!(),
-                            column!(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
                         let fields_assignments_token_stream = fields_named_excluding_primary_key.iter()
                             .map(|element| generate_let_field_ident_value_inner_type_from_token_stream(element));
                         let self_init_fields_token_stream = generate_self_fields_token_stream(
                             &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
                                 as &[&syn::Field],
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
-                        let field_code_occurence_new_814b41f8_3219_4b62_bc0b_02a26d23b262_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                            file!(),
-                            line!(),
-                            column!(),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         let primary_key_let_field_ident_value_field_ident_try_from_token_stream = generate_let_field_ident_value_inner_type_from_token_stream(&primary_key_syn_field);
