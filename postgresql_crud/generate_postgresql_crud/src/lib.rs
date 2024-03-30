@@ -5738,6 +5738,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 column!(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
+            let operation_payload_from_or_try_from_token_stream = match fields_named_from_or_try_from {
+                postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#operation_payload_upper_camel_case_token_stream::from(value)},
+                postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
+                     match #operation_payload_upper_camel_case_token_stream::try_from(value) {
+                        Ok(value) => value,
+                        Err(#error_value_snake_case_token_stream) => {
+                            let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
+                                #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
+                                #field_code_occurence_new_04274f8d_c9a4_41d1_9bdc_39432371c33f_token_stream,
+                            };
+                            #error_log_call_token_stream
+                            return #try_operation_response_variants_token_stream::from(#error_value_snake_case_token_stream);
+                        }
+                    }
+                },
+            };
             quote::quote! {
                 #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
@@ -5753,17 +5769,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #try_operation_response_variants_token_stream,
                         >::#try_extract_value_token_stream(#payload_extraction_result_snake_case_token_stream, &#app_state_name_token_stream)
                         {
-                            Ok(value) => match #operation_payload_upper_camel_case_token_stream::try_from(value) {
-                                Ok(value) => value,
-                                Err(#error_value_snake_case_token_stream) => {
-                                    let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
-                                        #operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream: #error_value_snake_case_token_stream,
-                                        #field_code_occurence_new_04274f8d_c9a4_41d1_9bdc_39432371c33f_token_stream,
-                                    };
-                                    #error_log_call_token_stream
-                                    return #try_operation_response_variants_token_stream::from(#error_value_snake_case_token_stream);
-                                }
-                            },
+                            Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
                                 return #error_value_snake_case_token_stream;
                             }
@@ -7754,7 +7760,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_one_token_stream
             #read_many_token_stream
             #read_one_token_stream
-            // #update_many_token_stream
+            #update_many_token_stream
             // #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
