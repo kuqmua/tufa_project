@@ -830,28 +830,6 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr400BadRequest>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateOneResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateOneResponseVariantsTvfrr404NotFound>
-    for TryUpdateOneResponseVariants
-{
-    fn from(value: TryUpdateOneResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryUpdateOneResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryUpdateOneResponseVariantsTvfrr500InternalServerError {
     Configuration {
         configuration: std::string::String,
@@ -999,6 +977,28 @@ impl std::convert::From<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>
                 code_occurence,
             } => Self::PoolTimedOut {
                 pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateOneResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateOneResponseVariantsTvfrr404NotFound>
+    for TryUpdateOneResponseVariants
+{
+    fn from(value: TryUpdateOneResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryUpdateOneResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
                 code_occurence,
             },
         }
@@ -1499,6 +1499,32 @@ pub async fn try_update_one<'a>(
                 });
             }
         }
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
+            Ok(value) => TryUpdateOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryUpdateOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2398,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
     } else if status_code == http::StatusCode::NOT_FOUND {
         match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryUpdateOneResponseVariants::from(value),
@@ -1523,36 +1549,9 @@ pub async fn try_update_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
-            Ok(value) => TryUpdateOneResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateOneErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2398,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr408RequestTimeout>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryUpdateOneResponseVariantsTvfrr400BadRequest>(&response_text)
+        {
             Ok(value) => TryUpdateOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryUpdateOneErrorNamed::DeserializeResponse {
@@ -1597,42 +1596,25 @@ pub async fn try_update_one<'a>(
             ),
         });
     };
-    match postgresql_crud::StdPrimitiveI64WithSerializeDeserialize ::
-    try_from(variants)
-    {
-        Ok(value) => match postgresql_crud::StdPrimitiveI64 :: try_from(value)
-        {
-            Ok(value) => Ok(value), Err(e) =>
-            Err(TryUpdateOneErrorNamed ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClient
-            {
-                primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client
-                : e, code_occurence : error_occurence_lib :: code_occurence ::
-                CodeOccurence ::
-                new(file! ().to_string(), line! (), column! (),
-                Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                {
-                    file : std :: string :: String ::
-                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line : 2105, column : 13,
-                })),
-            })
-        }, Err(e) =>
-        {
-            return
-            Err(TryUpdateOneErrorNamed :: ExpectedType
-            {
-                expected_type : e, code_occurence : error_occurence_lib ::
-                code_occurence :: CodeOccurence ::
-                new(file! ().to_string(), line! (), column! (),
-                Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                {
-                    file : std :: string :: String ::
-                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line : 2288, column : 13,
-                }))
-            }) ;
-        },
+    match postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::try_from(variants) {
+        Ok(value) => Ok(postgresql_crud::StdPrimitiveI64::from(value)),
+        Err(e) => {
+            return Err(TryUpdateOneErrorNamed::ExpectedType {
+                expected_type: e,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2288,
+                        column: 13,
+                    }),
+                ),
+            });
+        }
     }
 }
 #[utoipa ::
@@ -1684,7 +1666,7 @@ pub async fn update_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 6326, column : 17,
+                            line : 6329, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -1872,4 +1854,3 @@ impl std::convert::From<crate::server::extractors::commit_extractor::CommitExtra
         }
     }
 }
-
