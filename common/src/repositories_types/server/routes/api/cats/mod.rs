@@ -42,7 +42,7 @@
     // }
 }]
 pub struct Dog {
-    // pub id: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey, //todo remove UuidWrapper todo - if using js JSON.parse() - must be two variants - for usage and deserialization - coz json number type capacity less than i64::MAX
+    // pub id: postgresql_crud::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey, //todo - if using js JSON.parse() - must be two variants - for usage and deserialization - coz json number type capacity less than i64::MAX - check it
     // pub name: postgresql_crud::StdStringStringAsPostgresqlVarcharNotNull,
     // pub color: postgresql_crud::StdStringStringAsPostgresqlVarcharNotNull,
 

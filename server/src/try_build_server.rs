@@ -69,7 +69,6 @@
             // common::repositories_types::server::routes::api::cats::CreateOnePayload,
 
             common::common::utoipa::std::time::StdTimeDuration,
-            // common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
             error_occurence_lib::code_occurence::CodeOccurence,
             //
             postgresql_crud::TimeMonthWithSerializeDeserialize,

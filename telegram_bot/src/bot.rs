@@ -3,390 +3,243 @@ pub async fn start_bot() {
     pretty_env_logger::init();
     log::info!("Starting command bot...");
     // let id  = "b129a42c-5f99-4a3e-ab25-154f3549f638";
-    let api_location = std::string::String::from("http://127.0.0.1:8080");
-    let limit = 1000;
-    let offset = 0;
     //
-    println!("--------------try_create_many-----------------"); //todo add try_create_many
-    let primary_keys = match common::repositories_types::server::routes::api::cats::try_create_many(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::CreateManyParameters {
-            payload: common::repositories_types::server::routes::api::cats::CreateManyPayload(
-                vec![
-                common::repositories_types::server::routes::api::cats::CreateManyPayloadElement{
-                    name: std::string::String::from("try_create_many_name1"),
-                    color: std::string::String::from("try_create_many_color1"),
-                },
-                common::repositories_types::server::routes::api::cats::CreateManyPayloadElement{
-                    name: std::string::String::from("try_create_many_name2"),
-                    color: std::string::String::from("try_create_many_color2"),
-                },
-            ],
-            ),
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            value
-        }
-        Err(e) => {
-            panic!("{e}");
-        }
-    };
-    println!("--------------try_read_many-----------------");
-    match common::repositories_types::server::routes::api::cats::try_read_many(
-        &api_location,
-        //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::ReadManyParameters{
-            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload {
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
-                id: Some(
-                    primary_keys.clone()
-                    // vec![
-                    //     common::server::postgres::uuid_wrapper::UuidWrapper::try_from(
-                    //         common::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
-                    //     ).unwrap()
-                    // ]
-                ),
-                name: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,//or and support
-                color: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,
-                order_by: common::server::postgres::order_by::OrderBy {
-                    column: common::repositories_types::server::routes::api::cats::DogColumn::Name,
-                    order: Some(common::server::postgres::order::Order::Desc),
-                },
-                limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
-                offset: common::server::postgres::postgres_bigint::PostgresBigint(offset),
-            }
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::DogId,
-            // > = value
-            //     .into_iter()
-            //     .filter_map(|value| match value.id {
-            //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::DogId {
-            //                 id,
-            //             },
-            //         ),
-            //         None => None,
-            //     })
-            //     .collect();
-            // println!("{vec_cat_id:#?}");
-        }
-        Err(e) => {
-            panic!("{e}");
-        }
-    }
-    println!("--------------try_update_many------------------");
-    match common::repositories_types::server::routes::api::cats::try_update_many(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::UpdateManyParameters {
-            payload: common::repositories_types::server::routes::api::cats::UpdateManyPayload(
-                primary_keys.clone().into_iter().map(|element| {
-                    common::repositories_types::server::routes::api::cats::UpdateManyPayloadElement {
-                        id: element,
-                        name: std::string::String::from("name"), //todo make sure name and color both are not None(make it option<value>, not just a value)
-                        color: std::string::String::from("color"), 
-                    }
-                }).collect()
-            )
-        }
-    )
-    .await
-    {
-        Ok(value) => println!("{value:#?}"),
-        Err(e) => {
-            panic!("{e}");
-        },
-    }
-    println!("--------------try_read_many-----------------");
-    match common::repositories_types::server::routes::api::cats::try_read_many(
-        &api_location,
-        //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::ReadManyParameters{
-            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload {
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
-                id: Some(
-                    primary_keys.clone()
-                    // vec![
-                    //     common::server::postgres::uuid_wrapper::UuidWrapper::try_from(
-                    //         common::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
-                    //     ).unwrap()
-                    // ]
-                ),
-                name: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,//or and support
-                color: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,
-                order_by: common::server::postgres::order_by::OrderBy {
-                    column: common::repositories_types::server::routes::api::cats::DogColumn::Name,
-                    order: Some(common::server::postgres::order::Order::Desc),
-                },
-                limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
-                offset: common::server::postgres::postgres_bigint::PostgresBigint(offset),
-            }
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::DogId,
-            // > = value
-            //     .into_iter()
-            //     .filter_map(|value| match value.id {
-            //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::DogId {
-            //                 id,
-            //             },
-            //         ),
-            //         None => None,
-            //     })
-            //     .collect();
-            // println!("{vec_cat_id:#?}");
-        }
-        Err(e) => {
-            panic!("{e}");
-        }
-    }
-    println!("--------------try_delete_many-----------------");
-    match common::repositories_types::server::routes::api::cats::try_delete_many(
-        &api_location,
-        //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::DeleteManyParameters {
-            payload: common::repositories_types::server::routes::api::cats::DeleteManyPayload {
-                id: Some(
-                    primary_keys.clone(), // vec![
-                                          //     common::server::postgres::uuid_wrapper::UuidWrapper::try_from(
-                                          //         common::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
-                                          //     ).unwrap()
-                                          // ]
-                ),
-                name: None, // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                //or and support
-                color: None, // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                             //     regex: std::string::String::from("test"),
-                             //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                             // }])
+        let api_location = std::string::String::from("http://127.0.0.1:8080");
+        let limit = 1000;
+        let offset = 0;
+        println!("-------trycreate_many start-------");
+        let primary_keys = match try_create_many(
+            &api_location,
+            CreateManyParameters {
+                payload: CreateManyPayload(vec![CreateManyPayloadElement {
+                    sqlx_types_time_time_as_postgresql_time:
+                        postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTime::default(),
+                }]),
             },
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::DogId,
-            // > = value
-            //     .into_iter()
-            //     .filter_map(|value| match value.id {
-            //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::DogId {
-            //                 id,
-            //             },
-            //         ),
-            //         None => None,
-            //     })
-            //     .collect();
-            // println!("{vec_cat_id:#?}");
-        }
-        Err(e) => {
-            println!("{e}");
-        }
-    }
-    println!("--------------try_read_many-----------------");
-    match common::repositories_types::server::routes::api::cats::try_read_many(
-        &api_location,
-        //todo - builder pattern?
-        common::repositories_types::server::routes::api::cats::ReadManyParameters{
-            payload: common::repositories_types::server::routes::api::cats::ReadManyPayload {
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor,
-                id: Some(
-                    primary_keys.clone()
-                    // vec![
-                    //     common::server::postgres::uuid_wrapper::UuidWrapper::try_from(
-                    //         common::server::postgres::uuid_wrapper::PossibleUuidWrapper::from(id)
-                    //     ).unwrap()
-                    // ]
-                ),
-                name: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,//or and support
-                color: None
-                // Some(vec![common::server::postgres::regex_filter::RegexFilter {
-                //     regex: std::string::String::from("test"),
-                //     conjuctive_operator: common::server::postgres::conjuctive_operator::ConjunctiveOperator::Or,
-                // }])
-                ,
-                order_by: common::server::postgres::order_by::OrderBy {
-                    column: common::repositories_types::server::routes::api::cats::DogColumn::Name,
-                    order: Some(common::server::postgres::order::Order::Desc),
-                },
-                limit: common::server::postgres::postgres_bigint::PostgresBigint(limit),
-                offset: common::server::postgres::postgres_bigint::PostgresBigint(offset),
+        )
+        .await
+        {
+            Ok(value) => {
+                println!("{value:#?}");
+                value
             }
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            // let vec_cat_id: Vec<
-            //     common::repositories_types::server::routes::api::cats::DogId,
-            // > = value
-            //     .into_iter()
-            //     .filter_map(|value| match value.id {
-            //         Some(id) => Some(
-            //             common::repositories_types::server::routes::api::cats::DogId {
-            //                 id,
-            //             },
-            //         ),
-            //         None => None,
-            //     })
-            //     .collect();
-            // println!("{vec_cat_id:#?}");
+            Err(e) => panic!("{}", e),
+        };
+        println!("-------trycreate_many end-------");
+        println!("-------tryread_many start-------");
+        match
+        try_read_many(& api_location, ReadManyParameters
+        {
+            payload : ReadManyPayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : Some(primary_keys.clone()),
+                sqlx_types_time_time_as_postgresql_time : None, select :
+                DogColumnSelect ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime,
+                order_by : crate :: server :: postgres :: order_by :: OrderBy
+                {
+                    column : DogColumn :: Name, order :
+                    Some(crate :: server :: postgres :: order :: Order :: Desc),
+                }, limit : crate :: server :: postgres :: postgres_bigint ::
+                PostgresBigint(limit), offset : crate :: server :: postgres ::
+                postgres_bigint :: PostgresBigint(offset),
+            }
+        },).await
+        {
+            Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+            ("{}", e)
+        } ;
+        println!("-------tryread_many end-------");
+        println!("-------tryupdate_many start-------");
+        match try_update_many(
+            &api_location,
+            UpdateManyParameters {
+                payload: UpdateManyPayload(
+                    primary_keys
+                        .clone()
+                        .into_iter()
+                        .map(|element| UpdateManyPayloadElement {
+                            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+                                element,
+                            sqlx_types_time_time_as_postgresql_time:
+                                postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTime::default(),
+                        })
+                        .collect(),
+                ),
+            },
+        )
+        .await
+        {
+            Ok(value) => println!("{value:#?}"),
+            Err(e) => panic!("{}", e),
         }
-        Err(e) => {
-            println!("{e}");
+        println!("-------tryupdate_many end-------");
+        println!("-------tryread_many start-------");
+        match
+        try_read_many(& api_location, ReadManyParameters
+        {
+            payload : ReadManyPayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : Some(primary_keys.clone()),
+                sqlx_types_time_time_as_postgresql_time : None, select :
+                DogColumnSelect ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime,
+                order_by : crate :: server :: postgres :: order_by :: OrderBy
+                {
+                    column : DogColumn :: Name, order :
+                    Some(crate :: server :: postgres :: order :: Order :: Desc),
+                }, limit : crate :: server :: postgres :: postgres_bigint ::
+                PostgresBigint(limit), offset : crate :: server :: postgres ::
+                postgres_bigint :: PostgresBigint(offset),
+            }
+        },).await
+        {
+            Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+            ("{}", e)
+        } ;
+        println!("-------tryread_many end-------");
+        println!("-------trydelete_many start-------");
+        match try_delete_many(
+            &api_location,
+            DeleteManyParameters {
+                payload: DeleteManyPayload {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
+                        primary_keys.clone(),
+                    ),
+                    sqlx_types_time_time_as_postgresql_time: None,
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => println!("{value:#?}"),
+            Err(e) => panic!("{}", e),
         }
-    }
+        println!("-------trydelete_many end-------");
+        println!("-------tryread_many start-------");
+        match
+        try_read_many(& api_location, ReadManyParameters
+        {
+            payload : ReadManyPayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : Some(primary_keys.clone()),
+                sqlx_types_time_time_as_postgresql_time : None, select :
+                DogColumnSelect ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime,
+                order_by : crate :: server :: postgres :: order_by :: OrderBy
+                {
+                    column : DogColumn :: Name, order :
+                    Some(crate :: server :: postgres :: order :: Order :: Desc),
+                }, limit : crate :: server :: postgres :: postgres_bigint ::
+                PostgresBigint(limit), offset : crate :: server :: postgres ::
+                postgres_bigint :: PostgresBigint(offset),
+            }
+        },).await
+        {
+            Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+            ("{}", e)
+        } ;
+        println!("-------tryread_many end-------");
+        println!("-------trycreate_one start-------");
+        let primary_key = match try_create_one(
+            &api_location,
+            CreateOneParameters {
+                payload: CreateOnePayload {
+                    sqlx_types_time_time_as_postgresql_time:
+                        postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTime::default(),
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => {
+                println!("{value:#?}");
+                value
+            }
+            Err(e) => panic!("{}", e),
+        };
+        println!("-------trycreate_one end-------");
+        println!("-------tryread_one start-------");
+        match
+        try_read_one(& api_location, ReadOneParameters
+        {
+            payload : ReadOnePayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : primary_key.clone(), select : DogColumnSelect ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime
+            }
+        },).await
+        { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
+        println!("-------tryread_one end-------");
+        println!("-------tryupdate_one start-------");
+        let primary_key = match try_update_one(
+            &api_location,
+            UpdateOneParameters {
+                payload: UpdateOnePayload {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: primary_key
+                        .clone(),
+                    sqlx_types_time_time_as_postgresql_time: Some(
+                        postgresql_crud::SqlxTypesTimeTimeAsPostgresqlTime::default(),
+                    ),
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => {
+                println!("{value:#?}");
+                value
+            }
+            Err(e) => panic!("{}", e),
+        };
+        println!("-------tryupdate_one end-------");
+        println!("-------tryread_one start-------");
+        match
+        try_read_one(& api_location, ReadOneParameters
+        {
+            payload : ReadOnePayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : primary_key.clone(), select : DogColumnSelect ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime
+            }
+        },).await
+        { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
+        println!("-------tryread_one end-------");
+        println!("-------trydelete_one start-------");
+        match try_delete_one(
+            &api_location,
+            DeleteOneParameters {
+                payload: DeleteOnePayload {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: primary_key
+                        .clone(),
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => println!("{value:#?}"),
+            Err(e) => panic!("{}", e),
+        }
+        println!("-------trydelete_one end-------");
+        println!("-------tryread_one start-------");
+        match
+        try_read_one(& api_location, ReadOneParameters
+        {
+            payload : ReadOnePayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : primary_key.clone(), select : DogColumnSelect ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime
+            }
+        },).await
+        { Ok(value) => panic! ("{value:#?}"), Err(e) => println! ("{}", e) } ;
+        println!("-------tryread_one end-------");
     //
-    println!("--------------try_create_one-----------------"); //todo add try_create_many
-    let primary_key = match common::repositories_types::server::routes::api::cats::try_create_one(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::CreateOneParameters {
-            payload: common::repositories_types::server::routes::api::cats::CreateOnePayload {
-                name: std::string::String::from("try_create_one_name"),
-                color: std::string::String::from("try_create_one_color"),
-            },
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            value
-        }
-        Err(e) => {
-            panic!("{e}");
-        }
-    };
-    println!("--------------try_read_one-----------------");
-    match common::repositories_types::server::routes::api::cats::try_read_one(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::ReadOneParameters {
-            payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
-                id: primary_key.clone(),
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
-            }
-        },
-    )
-    .await
-    {
-        Ok(value) => println!("{value:#?}"),
-        Err(e) => {
-            panic!("{e}");
-        }
-    }
-    println!("--------------try_update_one------------------"); //todo try_update_many
-    let primary_key = match common::repositories_types::server::routes::api::cats::try_update_one(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::UpdateOneParameters {
-            payload: common::repositories_types::server::routes::api::cats::UpdateOnePayload {
-                id: primary_key.clone(),
-                name: Some(std::string::String::from("name")),
-                color: Some(std::string::String::from("color")),
-            },
-        },
-    )
-    .await
-    {
-        Ok(value) => {
-            println!("{value:#?}");
-            value
-        }
-        Err(e) => panic!("{e}"),
-    };
-    println!("--------------try_read_one-----------------");
-    match common::repositories_types::server::routes::api::cats::try_read_one(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::ReadOneParameters {
-            payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
-                id: primary_key.clone(),
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
-            }
-        },
-    )
-    .await
-    {
-        Ok(value) => println!("{value:#?}"),
-        Err(e) => {
-            panic!("{e}");
-        }
-    }
-    println!("--------------try_delete_one------------------");
-    match common::repositories_types::server::routes::api::cats::try_delete_one(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::DeleteOneParameters {
-            payload: common::repositories_types::server::routes::api::cats::DeleteOnePayload {
-                id: primary_key.clone(),
-            },
-        },
-    )
-    .await
-    {
-        Ok(value) => println!("{value:#?}"),
-        Err(e) => panic!("{e}"),
-    }
-    println!("--------------try_read_one-----------------");
-    match common::repositories_types::server::routes::api::cats::try_read_one(
-        &api_location,
-        common::repositories_types::server::routes::api::cats::ReadOneParameters {
-            payload: common::repositories_types::server::routes::api::cats::ReadOnePayload {
-                id: primary_key,
-                select: common::repositories_types::server::routes::api::cats::DogColumnSelect::IdNameColor
-            }
-        },
-    )
-    .await
-    {
-        Ok(value) => println!("{value:#?}"),
-        Err(e) => {
-            println!("{e}");
-        }
-    }
     // let bot = teloxide::Bot::from_env();
     // teloxide::commands_repl(bot, answer, {
     //     use teloxide::utils::command::BotCommands;
