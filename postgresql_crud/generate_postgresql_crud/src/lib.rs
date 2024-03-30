@@ -2859,7 +2859,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream = match primary_key_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
                     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
-                        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
                     },
                 };
                 quote::quote! {
