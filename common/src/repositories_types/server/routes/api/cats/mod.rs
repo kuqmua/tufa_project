@@ -455,12 +455,6 @@ pub enum TryUpdateMany {
         rollback_error: sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize {
-        #[eo_error_occurence]
-        update_many_payload_try_from_update_many_payload_with_serialize_deserialize:
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     CommitExtractorNotEqual {
         #[eo_display_with_serialize_deserialize]
         commit_not_equal: std::string::String,
@@ -481,362 +475,518 @@ pub enum TryUpdateMany {
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryUpdateManyResponseVariants {
-    Desirable(std :: vec :: Vec :: <
-    postgresql_crud::StdPrimitiveI64WithSerializeDeserialize >), Configuration
-    {
-        configuration : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Database
-    {
-        database : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Io
-    {
-        io : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Tls
-    {
-        tls : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Protocol
-    {
-        protocol : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, RowNotFound
-    {
-        row_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnIndexOutOfBounds
-    {
-        column_index_out_of_bounds : usize<>, len : usize<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnDecode
-    {
-        column_decode_index : std::string::String<>, source_handle :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Decode
-    {
-        decode : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, PoolTimedOut
-    {
-        pool_timed_out : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, PoolClosed
-    {
-        pool_closed : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, WorkerCrashed
-    {
-        worker_crashed : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, Migrate
-    {
-        migrate : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, BytesRejection
-    {
-        bytes_rejection : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, UnexpectedCase
-    {
-        unexpected_case : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniquePrimaryKeys
-    {
-        not_unique_primary_keys : std::vec::Vec<std::string::String>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, BindQuery
-    {
-        bind_query :
-        postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CheckedAdd
-    {
-        checked_add : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoPayloadFields
-    {
-        no_payload_fields : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitFailed
-    {
-        commit_failed : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NonExistingPrimaryKeys
-    {
-        non_existing_primary_keys : std::vec::Vec<std::string::String>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, PrimaryKeyFromRowAndFailedRollback
-    {
-        primary_key_from_row : std :: string :: String, rollback_error : std
-        :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NonExistingPrimaryKeysAndFailedRollback
-    {
-        non_existing_primary_keys : std::vec::Vec<std::string::String>,
-        rollback_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, QueryAndRollbackFailed
-    {
-        query_error : std :: string :: String, rollback_error : std :: string
-        :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-    {
-        update_many_payload_try_from_update_many_payload_with_serialize_deserialize
-        :
-        UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }
+    Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
+    Configuration {
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TypeNotFound {
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        column_index_out_of_bounds: usize,
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        column_decode_index: std::string::String,
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniquePrimaryKeys {
+        not_unique_primary_keys: std::vec::Vec<std::string::String>,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckedAdd {
+        checked_add: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoPayloadFields {
+        no_payload_fields: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitFailed {
+        commit_failed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NonExistingPrimaryKeys {
+        non_existing_primary_keys: std::vec::Vec<std::string::String>,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PrimaryKeyFromRowAndFailedRollback {
+        primary_key_from_row: std::string::String,
+        rollback_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NonExistingPrimaryKeysAndFailedRollback {
+        non_existing_primary_keys: std::vec::Vec<std::string::String>,
+        rollback_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryAndRollbackFailed {
+        query_error: std::string::String,
+        rollback_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        commit_not_equal: std::string::String,
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        commit_to_str_conversion: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl std::convert::From<TryUpdateMany> for TryUpdateManyResponseVariants {
     fn from(value: TryUpdateMany) -> Self {
-        match value.into_serialize_deserialize_version()
-        {
-            TryUpdateManyWithSerializeDeserialize :: Configuration
-            { configuration, code_occurence } => Self :: Configuration
-            { configuration, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: Database
-            { database, code_occurence } => Self :: Database
-            { database, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: Io { io, code_occurence }
-            => Self :: Io { io, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: Tls
-            { tls, code_occurence } => Self :: Tls { tls, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: Protocol
-            { protocol, code_occurence } => Self :: Protocol
-            { protocol, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: RowNotFound
-            { row_not_found, code_occurence } => Self :: RowNotFound
-            { row_not_found, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence } => Self ::
-            ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: ColumnDecode
-            { column_decode_index, source_handle, code_occurence } => Self ::
-            ColumnDecode
-            { column_decode_index, source_handle, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: Decode
-            { decode, code_occurence } => Self :: Decode
-            { decode, code_occurence }, TryUpdateManyWithSerializeDeserialize
-            :: PoolTimedOut { pool_timed_out, code_occurence } => Self ::
-            PoolTimedOut { pool_timed_out, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: PoolClosed
-            { pool_closed, code_occurence } => Self :: PoolClosed
-            { pool_closed, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: WorkerCrashed
-            { worker_crashed, code_occurence } => Self :: WorkerCrashed
-            { worker_crashed, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: Migrate
-            { migrate, code_occurence } => Self :: Migrate
-            { migrate, code_occurence }, TryUpdateManyWithSerializeDeserialize
-            :: JsonDataError { json_data_error, code_occurence } => Self ::
-            JsonDataError { json_data_error, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: BytesRejection
-            { bytes_rejection, code_occurence } => Self :: BytesRejection
-            { bytes_rejection, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: UnexpectedCase
-            { unexpected_case, code_occurence } => Self :: UnexpectedCase
-            { unexpected_case, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: NotUniquePrimaryKeys
-            { not_unique_primary_keys, code_occurence } => Self ::
-            NotUniquePrimaryKeys { not_unique_primary_keys, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: BindQuery
-            { bind_query, code_occurence } => Self :: BindQuery
-            { bind_query, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: CheckedAdd
-            { checked_add, code_occurence } => Self :: CheckedAdd
-            { checked_add, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: NoPayloadFields
-            { no_payload_fields, code_occurence } => Self :: NoPayloadFields
-            { no_payload_fields, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: CommitFailed
-            { commit_failed, code_occurence } => Self :: CommitFailed
-            { commit_failed, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: NonExistingPrimaryKeys
-            { non_existing_primary_keys, code_occurence } => Self ::
-            NonExistingPrimaryKeys
-            { non_existing_primary_keys, code_occurence },
-            TryUpdateManyWithSerializeDeserialize ::
-            PrimaryKeyFromRowAndFailedRollback
-            { primary_key_from_row, rollback_error, code_occurence } => Self
-            :: PrimaryKeyFromRowAndFailedRollback
-            { primary_key_from_row, rollback_error, code_occurence },
-            TryUpdateManyWithSerializeDeserialize ::
-            NonExistingPrimaryKeysAndFailedRollback
-            { non_existing_primary_keys, rollback_error, code_occurence } =>
-            Self :: NonExistingPrimaryKeysAndFailedRollback
-            { non_existing_primary_keys, rollback_error, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: QueryAndRollbackFailed
-            { query_error, rollback_error, code_occurence } => Self ::
-            QueryAndRollbackFailed
-            { query_error, rollback_error, code_occurence },
-            TryUpdateManyWithSerializeDeserialize ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryUpdateManyWithSerializeDeserialize ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } => Self ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence },
-            TryUpdateManyWithSerializeDeserialize ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } => Self ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence },
-            TryUpdateManyWithSerializeDeserialize :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence } => Self ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence }
+        match value.into_serialize_deserialize_version() {
+            TryUpdateManyWithSerializeDeserialize::Configuration {
+                configuration,
+                code_occurence,
+            } => Self::Configuration {
+                configuration,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::Database {
+                database,
+                code_occurence,
+            } => Self::Database {
+                database,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::Io { io, code_occurence } => {
+                Self::Io { io, code_occurence }
+            }
+            TryUpdateManyWithSerializeDeserialize::Tls {
+                tls,
+                code_occurence,
+            } => Self::Tls {
+                tls,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::Protocol {
+                protocol,
+                code_occurence,
+            } => Self::Protocol {
+                protocol,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Self::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => Self::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Self::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => Self::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::Decode {
+                decode,
+                code_occurence,
+            } => Self::Decode {
+                decode,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => Self::PoolClosed {
+                pool_closed,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => Self::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::Migrate {
+                migrate,
+                code_occurence,
+            } => Self::Migrate {
+                migrate,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Self::JsonDataError {
+                json_data_error,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Self::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Self::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => Self::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => Self::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::NotUniquePrimaryKeys {
+                not_unique_primary_keys,
+                code_occurence,
+            } => Self::NotUniquePrimaryKeys {
+                not_unique_primary_keys,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::BindQuery {
+                bind_query,
+                code_occurence,
+            } => Self::BindQuery {
+                bind_query,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::CheckedAdd {
+                checked_add,
+                code_occurence,
+            } => Self::CheckedAdd {
+                checked_add,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::NoPayloadFields {
+                no_payload_fields,
+                code_occurence,
+            } => Self::NoPayloadFields {
+                no_payload_fields,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::CommitFailed {
+                commit_failed,
+                code_occurence,
+            } => Self::CommitFailed {
+                commit_failed,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::NonExistingPrimaryKeys {
+                non_existing_primary_keys,
+                code_occurence,
+            } => Self::NonExistingPrimaryKeys {
+                non_existing_primary_keys,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::PrimaryKeyFromRowAndFailedRollback {
+                primary_key_from_row,
+                rollback_error,
+                code_occurence,
+            } => Self::PrimaryKeyFromRowAndFailedRollback {
+                primary_key_from_row,
+                rollback_error,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::NonExistingPrimaryKeysAndFailedRollback {
+                non_existing_primary_keys,
+                rollback_error,
+                code_occurence,
+            } => Self::NonExistingPrimaryKeysAndFailedRollback {
+                non_existing_primary_keys,
+                rollback_error,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::QueryAndRollbackFailed {
+                query_error,
+                rollback_error,
+                code_occurence,
+            } => Self::QueryAndRollbackFailed {
+                query_error,
+                rollback_error,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            } => Self::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            } => Self::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            },
+            TryUpdateManyWithSerializeDeserialize::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            } => Self::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            },
         }
     }
 }
 impl std::convert::From<&TryUpdateManyResponseVariants> for axum::http::StatusCode {
     fn from(value: &TryUpdateManyResponseVariants) -> Self {
-        match value
-        {
-            TryUpdateManyResponseVariants :: Desirable(_) => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: Configuration
-            { configuration : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: Database
-            { database : _, code_occurence : _ } => axum :: http :: StatusCode
-            :: OK, TryUpdateManyResponseVariants :: Io
-            { io : _, code_occurence : _ } => axum :: http :: StatusCode ::
-            OK, TryUpdateManyResponseVariants :: Tls
-            { tls : _, code_occurence : _ } => axum :: http :: StatusCode ::
-            OK, TryUpdateManyResponseVariants :: Protocol
-            { protocol : _, code_occurence : _ } => axum :: http :: StatusCode
-            :: OK, TryUpdateManyResponseVariants :: RowNotFound
-            { row_not_found : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: TypeNotFound
-            { type_not_found : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants ::
-            ColumnIndexOutOfBounds
-            { column_index_out_of_bounds : _, len : _, code_occurence : _ } =>
-            axum :: http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            ColumnNotFound { column_not_found : _, code_occurence : _ } =>
-            axum :: http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            ColumnDecode
-            { column_decode_index : _, source_handle : _, code_occurence : _ }
-            => axum :: http :: StatusCode :: OK, TryUpdateManyResponseVariants
-            :: Decode { decode : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: PoolTimedOut
-            { pool_timed_out : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: PoolClosed
-            { pool_closed : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: WorkerCrashed
-            { worker_crashed : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: Migrate
-            { migrate : _, code_occurence : _ } => axum :: http :: StatusCode
-            :: OK, TryUpdateManyResponseVariants :: JsonDataError
-            { json_data_error : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: JsonSyntaxError
-            { json_syntax_error : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants ::
-            MissingJsonContentType
-            { missing_json_content_type : _, code_occurence : _ } => axum ::
-            http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            BytesRejection { bytes_rejection : _, code_occurence : _ } => axum
-            :: http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            UnexpectedCase { unexpected_case : _, code_occurence : _ } => axum
-            :: http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            NotUniquePrimaryKeys
-            { not_unique_primary_keys : _, code_occurence : _ } => axum ::
-            http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            BindQuery { bind_query : _, code_occurence : _ } => axum :: http
-            :: StatusCode :: OK, TryUpdateManyResponseVariants :: CheckedAdd
-            { checked_add : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: NoPayloadFields
-            { no_payload_fields : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants :: CommitFailed
-            { commit_failed : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK, TryUpdateManyResponseVariants ::
-            NonExistingPrimaryKeys
-            { non_existing_primary_keys : _, code_occurence : _ } => axum ::
-            http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            PrimaryKeyFromRowAndFailedRollback
-            {
-                primary_key_from_row : _, rollback_error : _, code_occurence :
-                _
-            } => axum :: http :: StatusCode :: OK,
-            TryUpdateManyResponseVariants ::
-            NonExistingPrimaryKeysAndFailedRollback
-            {
-                non_existing_primary_keys : _, rollback_error : _,
-                code_occurence : _
-            } => axum :: http :: StatusCode :: OK,
-            TryUpdateManyResponseVariants :: QueryAndRollbackFailed
-            { query_error : _, rollback_error : _, code_occurence : _ } =>
-            axum :: http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize
-                : _, code_occurence : _
-            } => axum :: http :: StatusCode :: OK,
-            TryUpdateManyResponseVariants :: CommitExtractorNotEqual
-            { commit_not_equal : _, commit_to_use : _, code_occurence : _ } =>
-            axum :: http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion : _, code_occurence : _ } => axum ::
-            http :: StatusCode :: OK, TryUpdateManyResponseVariants ::
-            NoCommitExtractorHeader
-            { no_commit_header : _, code_occurence : _ } => axum :: http ::
-            StatusCode :: OK
+        match value {
+            TryUpdateManyResponseVariants::Desirable(_) => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Configuration {
+                configuration: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Database {
+                database: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Io {
+                io: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Tls {
+                tls: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Protocol {
+                protocol: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::RowNotFound {
+                row_not_found: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::TypeNotFound {
+                type_not_found: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds: _,
+                len: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::ColumnNotFound {
+                column_not_found: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::ColumnDecode {
+                column_decode_index: _,
+                source_handle: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Decode {
+                decode: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::PoolTimedOut {
+                pool_timed_out: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::PoolClosed {
+                pool_closed: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::WorkerCrashed {
+                worker_crashed: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::Migrate {
+                migrate: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::JsonDataError {
+                json_data_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::JsonSyntaxError {
+                json_syntax_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::MissingJsonContentType {
+                missing_json_content_type: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::BytesRejection {
+                bytes_rejection: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::UnexpectedCase {
+                unexpected_case: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::NotUniquePrimaryKeys {
+                not_unique_primary_keys: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::BindQuery {
+                bind_query: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::CheckedAdd {
+                checked_add: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::NoPayloadFields {
+                no_payload_fields: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::CommitFailed {
+                commit_failed: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::NonExistingPrimaryKeys {
+                non_existing_primary_keys: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::PrimaryKeyFromRowAndFailedRollback {
+                primary_key_from_row: _,
+                rollback_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::NonExistingPrimaryKeysAndFailedRollback {
+                non_existing_primary_keys: _,
+                rollback_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::QueryAndRollbackFailed {
+                query_error: _,
+                rollback_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::CommitExtractorNotEqual {
+                commit_not_equal: _,
+                commit_to_use: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::CommitExtractorToStrConversion {
+                commit_to_str_conversion: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryUpdateManyResponseVariants::NoCommitExtractorHeader {
+                no_commit_header: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
         }
     }
 }
@@ -852,64 +1002,79 @@ impl std::convert::From<TryUpdateManyResponseVariantsTvfrr200Ok> for TryUpdateMa
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateManyResponseVariantsTvfrr400BadRequest {
-    TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NotUniquePrimaryKeys
-    {
-        not_unique_primary_keys : std::vec::Vec<std::string::String>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NoPayloadFields
-    {
-        no_payload_fields : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NonExistingPrimaryKeys
-    {
-        non_existing_primary_keys : std::vec::Vec<std::string::String>,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, NonExistingPrimaryKeysAndFailedRollback
-    {
-        non_existing_primary_keys : std::vec::Vec<std::string::String>,
-        rollback_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-    {
-        update_many_payload_try_from_update_many_payload_with_serialize_deserialize
-        :
-        UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
+pub enum TryUpdateManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryUpdateManyResponseVariantsTvfrr408RequestTimeout>
+    for TryUpdateManyResponseVariants
+{
+    fn from(value: TryUpdateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryUpdateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
     }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryUpdateManyResponseVariantsTvfrr400BadRequest {
+    TypeNotFound {
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniquePrimaryKeys {
+        not_unique_primary_keys: std::vec::Vec<std::string::String>,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoPayloadFields {
+        no_payload_fields: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NonExistingPrimaryKeys {
+        non_existing_primary_keys: std::vec::Vec<std::string::String>,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NonExistingPrimaryKeysAndFailedRollback {
+        non_existing_primary_keys: std::vec::Vec<std::string::String>,
+        rollback_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        commit_not_equal: std::string::String,
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        commit_to_str_conversion: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl std::convert::From<TryUpdateManyResponseVariantsTvfrr400BadRequest>
     for TryUpdateManyResponseVariants
@@ -952,16 +1117,6 @@ impl std::convert::From<TryUpdateManyResponseVariantsTvfrr400BadRequest>
             Self :: NonExistingPrimaryKeysAndFailedRollback
             { non_existing_primary_keys, rollback_error, code_occurence },
             TryUpdateManyResponseVariantsTvfrr400BadRequest ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryUpdateManyResponseVariantsTvfrr400BadRequest ::
             CommitExtractorNotEqual
             { commit_not_equal, commit_to_use, code_occurence } => Self ::
             CommitExtractorNotEqual
@@ -1148,172 +1303,265 @@ impl std::convert::From<TryUpdateManyResponseVariantsTvfrr500InternalServerError
         }
     }
 }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryUpdateManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryUpdateManyResponseVariantsTvfrr408RequestTimeout>
-    for TryUpdateManyResponseVariants
-{
-    fn from(value: TryUpdateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryUpdateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
 impl TryFrom<TryUpdateManyResponseVariants>
     for std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>
 {
     type Error = TryUpdateManyWithSerializeDeserialize;
     fn try_from(value: TryUpdateManyResponseVariants) -> Result<Self, Self::Error> {
-        match value
-        {
-            TryUpdateManyResponseVariants :: Desirable(i) => Ok(i),
-            TryUpdateManyResponseVariants :: Configuration
-            { configuration, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Configuration
-            { configuration, code_occurence }), TryUpdateManyResponseVariants
-            :: Database { database, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Database
-            { database, code_occurence }), TryUpdateManyResponseVariants :: Io
-            { io, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Io
-            { io, code_occurence }), TryUpdateManyResponseVariants :: Tls
-            { tls, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Tls
-            { tls, code_occurence }), TryUpdateManyResponseVariants ::
-            Protocol { protocol, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Protocol
-            { protocol, code_occurence }), TryUpdateManyResponseVariants ::
-            RowNotFound { row_not_found, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: RowNotFound
-            { row_not_found, code_occurence }), TryUpdateManyResponseVariants
-            :: TypeNotFound { type_not_found, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: TypeNotFound
-            { type_not_found, code_occurence }), TryUpdateManyResponseVariants
-            :: ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence }),
-            TryUpdateManyResponseVariants :: ColumnNotFound
-            { column_not_found, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: ColumnNotFound
-            { column_not_found, code_occurence }),
-            TryUpdateManyResponseVariants :: ColumnDecode
-            { column_decode_index, source_handle, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: ColumnDecode
-            { column_decode_index, source_handle, code_occurence }),
-            TryUpdateManyResponseVariants :: Decode { decode, code_occurence }
-            =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Decode
-            { decode, code_occurence }), TryUpdateManyResponseVariants ::
-            PoolTimedOut { pool_timed_out, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: PoolTimedOut
-            { pool_timed_out, code_occurence }), TryUpdateManyResponseVariants
-            :: PoolClosed { pool_closed, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: PoolClosed
-            { pool_closed, code_occurence }), TryUpdateManyResponseVariants ::
-            WorkerCrashed { worker_crashed, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: WorkerCrashed
-            { worker_crashed, code_occurence }), TryUpdateManyResponseVariants
-            :: Migrate { migrate, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: Migrate
-            { migrate, code_occurence }), TryUpdateManyResponseVariants ::
-            JsonDataError { json_data_error, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: JsonDataError
-            { json_data_error, code_occurence }),
-            TryUpdateManyResponseVariants :: JsonSyntaxError
-            { json_syntax_error, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: JsonSyntaxError
-            { json_syntax_error, code_occurence }),
-            TryUpdateManyResponseVariants :: MissingJsonContentType
-            { missing_json_content_type, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence }),
-            TryUpdateManyResponseVariants :: BytesRejection
-            { bytes_rejection, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: BytesRejection
-            { bytes_rejection, code_occurence }),
-            TryUpdateManyResponseVariants :: UnexpectedCase
-            { unexpected_case, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: UnexpectedCase
-            { unexpected_case, code_occurence }),
-            TryUpdateManyResponseVariants :: NotUniquePrimaryKeys
-            { not_unique_primary_keys, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: NotUniquePrimaryKeys
-            { not_unique_primary_keys, code_occurence }),
-            TryUpdateManyResponseVariants :: BindQuery
-            { bind_query, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: BindQuery
-            { bind_query, code_occurence }), TryUpdateManyResponseVariants ::
-            CheckedAdd { checked_add, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: CheckedAdd
-            { checked_add, code_occurence }), TryUpdateManyResponseVariants ::
-            NoPayloadFields { no_payload_fields, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: NoPayloadFields
-            { no_payload_fields, code_occurence }),
-            TryUpdateManyResponseVariants :: CommitFailed
-            { commit_failed, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize :: CommitFailed
-            { commit_failed, code_occurence }), TryUpdateManyResponseVariants
-            :: NonExistingPrimaryKeys
-            { non_existing_primary_keys, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            NonExistingPrimaryKeys
-            { non_existing_primary_keys, code_occurence }),
-            TryUpdateManyResponseVariants ::
-            PrimaryKeyFromRowAndFailedRollback
-            { primary_key_from_row, rollback_error, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            PrimaryKeyFromRowAndFailedRollback
-            { primary_key_from_row, rollback_error, code_occurence }),
-            TryUpdateManyResponseVariants ::
-            NonExistingPrimaryKeysAndFailedRollback
-            { non_existing_primary_keys, rollback_error, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            NonExistingPrimaryKeysAndFailedRollback
-            { non_existing_primary_keys, rollback_error, code_occurence }),
-            TryUpdateManyResponseVariants :: QueryAndRollbackFailed
-            { query_error, rollback_error, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            QueryAndRollbackFailed
-            { query_error, rollback_error, code_occurence }),
-            TryUpdateManyResponseVariants ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize,
-                code_occurence
-            }), TryUpdateManyResponseVariants :: CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence }),
-            TryUpdateManyResponseVariants :: CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence }),
-            TryUpdateManyResponseVariants :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence } =>
-            Err(TryUpdateManyWithSerializeDeserialize ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence })
+        match value {
+            TryUpdateManyResponseVariants::Desirable(i) => Ok(i),
+            TryUpdateManyResponseVariants::Configuration {
+                configuration,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::Configuration {
+                configuration,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::Database {
+                database,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::Database {
+                database,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::Io { io, code_occurence } => {
+                Err(TryUpdateManyWithSerializeDeserialize::Io { io, code_occurence })
+            }
+            TryUpdateManyResponseVariants::Tls {
+                tls,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::Tls {
+                tls,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::Protocol {
+                protocol,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::Protocol {
+                protocol,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::RowNotFound {
+                row_not_found,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::ColumnIndexOutOfBounds {
+                    column_index_out_of_bounds,
+                    len,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::Decode {
+                decode,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::Decode {
+                decode,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::PoolClosed {
+                pool_closed,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::Migrate {
+                migrate,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::Migrate {
+                migrate,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::JsonDataError {
+                json_data_error,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::MissingJsonContentType {
+                    missing_json_content_type,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::NotUniquePrimaryKeys {
+                not_unique_primary_keys,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::NotUniquePrimaryKeys {
+                    not_unique_primary_keys,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::BindQuery {
+                bind_query,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::BindQuery {
+                bind_query,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::CheckedAdd {
+                checked_add,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::CheckedAdd {
+                checked_add,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::NoPayloadFields {
+                no_payload_fields,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::NoPayloadFields {
+                no_payload_fields,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::CommitFailed {
+                commit_failed,
+                code_occurence,
+            } => Err(TryUpdateManyWithSerializeDeserialize::CommitFailed {
+                commit_failed,
+                code_occurence,
+            }),
+            TryUpdateManyResponseVariants::NonExistingPrimaryKeys {
+                non_existing_primary_keys,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::NonExistingPrimaryKeys {
+                    non_existing_primary_keys,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::PrimaryKeyFromRowAndFailedRollback {
+                primary_key_from_row,
+                rollback_error,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::PrimaryKeyFromRowAndFailedRollback {
+                    primary_key_from_row,
+                    rollback_error,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::NonExistingPrimaryKeysAndFailedRollback {
+                non_existing_primary_keys,
+                rollback_error,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::NonExistingPrimaryKeysAndFailedRollback {
+                    non_existing_primary_keys,
+                    rollback_error,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::QueryAndRollbackFailed {
+                query_error,
+                rollback_error,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::QueryAndRollbackFailed {
+                    query_error,
+                    rollback_error,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::CommitExtractorNotEqual {
+                    commit_not_equal,
+                    commit_to_use,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::CommitExtractorToStrConversion {
+                    commit_to_str_conversion,
+                    code_occurence,
+                },
+            ),
+            TryUpdateManyResponseVariants::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            } => Err(
+                TryUpdateManyWithSerializeDeserialize::NoCommitExtractorHeader {
+                    no_commit_header,
+                    code_occurence,
+                },
+            ),
         }
     }
 }
@@ -1389,246 +1637,328 @@ pub enum TryUpdateManyStatusCodesChecker {
     PrimaryKeyFromRowAndFailedRollbackTvfrr500InternalServerError,
     NonExistingPrimaryKeysAndFailedRollbackTvfrr400BadRequest,
     QueryAndRollbackFailedTvfrr500InternalServerError,
-    UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserializeTvfrr400BadRequest,
     CommitExtractorNotEqualTvfrr400BadRequest,
     CommitExtractorToStrConversionTvfrr400BadRequest,
     NoCommitExtractorHeaderTvfrr400BadRequest,
 }
 impl axum::response::IntoResponse for TryUpdateManyResponseVariants {
     fn into_response(self) -> axum::response::Response {
-        match & self
-        {
-            TryUpdateManyResponseVariants :: Desirable(_) =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            } TryUpdateManyResponseVariants :: Configuration
-            { configuration : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: Database
-            { database : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: Io
-            { io : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: Tls
-            { tls : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: Protocol
-            { protocol : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: RowNotFound
-            { row_not_found : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: TypeNotFound
-            { type_not_found : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: ColumnIndexOutOfBounds
-            { column_index_out_of_bounds : _, len : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: ColumnNotFound
-            { column_not_found : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: ColumnDecode
-            { column_decode_index : _, source_handle : _, code_occurence : _ }
-            =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: Decode
-            { decode : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: PoolTimedOut
-            { pool_timed_out : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: PoolClosed
-            { pool_closed : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: WorkerCrashed
-            { worker_crashed : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: Migrate
-            { migrate : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: JsonDataError
-            { json_data_error : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: JsonSyntaxError
-            { json_syntax_error : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: MissingJsonContentType
-            { missing_json_content_type : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: BytesRejection
-            { bytes_rejection : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: UnexpectedCase
-            { unexpected_case : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: NotUniquePrimaryKeys
-            { not_unique_primary_keys : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: BindQuery
-            { bind_query : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: CheckedAdd
-            { checked_add : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: NoPayloadFields
-            { no_payload_fields : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: CommitFailed
-            { commit_failed : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: NonExistingPrimaryKeys
-            { non_existing_primary_keys : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants ::
-            PrimaryKeyFromRowAndFailedRollback
-            {
-                primary_key_from_row : _, rollback_error : _, code_occurence :
-                _
-            } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants ::
-            NonExistingPrimaryKeysAndFailedRollback
-            {
-                non_existing_primary_keys : _, rollback_error : _,
-                code_occurence : _
-            } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: QueryAndRollbackFailed
-            { query_error : _, rollback_error : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants ::
-            UpdateManyPayloadTryFromUpdateManyPayloadWithSerializeDeserialize
-            {
-                update_many_payload_try_from_update_many_payload_with_serialize_deserialize
-                : _, code_occurence : _
-            } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: CommitExtractorNotEqual
-            { commit_not_equal : _, commit_to_use : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: CommitExtractorToStrConversion
-            { commit_to_str_conversion : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
-            }, TryUpdateManyResponseVariants :: NoCommitExtractorHeader
-            { no_commit_header : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: OK ; res
+        match &self {
+            TryUpdateManyResponseVariants::Desirable(_) => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Configuration {
+                configuration: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Database {
+                database: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Io {
+                io: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Tls {
+                tls: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Protocol {
+                protocol: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::RowNotFound {
+                row_not_found: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::TypeNotFound {
+                type_not_found: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds: _,
+                len: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::ColumnNotFound {
+                column_not_found: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::ColumnDecode {
+                column_decode_index: _,
+                source_handle: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Decode {
+                decode: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::PoolTimedOut {
+                pool_timed_out: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::PoolClosed {
+                pool_closed: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::WorkerCrashed {
+                worker_crashed: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::Migrate {
+                migrate: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::JsonDataError {
+                json_data_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::JsonSyntaxError {
+                json_syntax_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::MissingJsonContentType {
+                missing_json_content_type: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::BytesRejection {
+                bytes_rejection: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::UnexpectedCase {
+                unexpected_case: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::NotUniquePrimaryKeys {
+                not_unique_primary_keys: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::BindQuery {
+                bind_query: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::CheckedAdd {
+                checked_add: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::NoPayloadFields {
+                no_payload_fields: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::CommitFailed {
+                commit_failed: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::NonExistingPrimaryKeys {
+                non_existing_primary_keys: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::PrimaryKeyFromRowAndFailedRollback {
+                primary_key_from_row: _,
+                rollback_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::NonExistingPrimaryKeysAndFailedRollback {
+                non_existing_primary_keys: _,
+                rollback_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::QueryAndRollbackFailed {
+                query_error: _,
+                rollback_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::CommitExtractorNotEqual {
+                commit_not_equal: _,
+                commit_to_use: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::CommitExtractorToStrConversion {
+                commit_to_str_conversion: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryUpdateManyResponseVariants::NoCommitExtractorHeader {
+                no_commit_header: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
             }
         }
     }
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryUpdateManyErrorNamed {
-    SerdeJsonToString
-    {
-        #[eo_display] serde_json_to_string : serde_json :: Error,
-        code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
+    SerdeJsonToString {
+        #[eo_display]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientMany
-    {
-        #[eo_vec_error_occurence]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many
-        : std :: vec :: Vec <
-        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInClientErrorUnnamed
-        >, code_occurence : error_occurence_lib :: code_occurence ::
-        CodeOccurence,
-    }, ExpectedType
-    {
-        #[eo_display_with_serialize_deserialize] expected_type :
-        TryUpdateManyWithSerializeDeserialize, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, UnexpectedStatusCode
-    {
-        #[eo_display] status_code : http :: StatusCode,
-        #[eo_display_foreign_type] headers : reqwest :: header :: HeaderMap,
-        #[eo_display_foreign_type] response_text_result : crate :: common ::
-        api_request_unexpected_error :: ResponseTextResult, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, FailedToGetResponseText
-    {
-        #[eo_display_foreign_type] reqwest : reqwest :: Error, #[eo_display]
-        status_code : http :: StatusCode, #[eo_display_foreign_type] headers :
-        reqwest :: header :: HeaderMap, code_occurence : error_occurence_lib
-        :: code_occurence :: CodeOccurence,
-    }, DeserializeResponse
-    {
-        #[eo_display] serde : serde_json :: Error, #[eo_display] status_code :
-        http :: StatusCode, #[eo_display_foreign_type] headers : reqwest ::
-        header :: HeaderMap, #[eo_display_with_serialize_deserialize]
-        response_text : std :: string :: String, code_occurence :
-        error_occurence_lib :: code_occurence :: CodeOccurence,
-    }, Reqwest
-    {
-        #[eo_display_foreign_type] reqwest : reqwest :: Error, code_occurence
-        : error_occurence_lib :: code_occurence :: CodeOccurence,
+    ExpectedType {
+        #[eo_display_with_serialize_deserialize]
+        expected_type: TryUpdateManyWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedStatusCode {
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_foreign_type]
+        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_display]
+        serde: serde_json::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_with_serialize_deserialize]
+        response_text: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 pub async fn try_update_many<'a>(
@@ -1732,32 +2062,6 @@ pub async fn try_update_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr500InternalServerError>(
-            &response_text,
-        ) {
-            Ok(value) => TryUpdateManyResponseVariants::from(value),
-            Err(e) => {
-                return Err(TryUpdateManyErrorNamed::DeserializeResponse {
-                    serde: e,
-                    status_code,
-                    headers,
-                    response_text,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_string(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 2398,
-                            column: 13,
-                        }),
-                    ),
-                });
-            }
-        }
     } else if status_code == http::StatusCode::BAD_REQUEST {
         match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr400BadRequest>(
             &response_text,
@@ -1786,6 +2090,32 @@ pub async fn try_update_many<'a>(
         }
     } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
         match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
+            Ok(value) => TryUpdateManyResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryUpdateManyErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2398,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryUpdateManyResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
             Ok(value) => TryUpdateManyResponseVariants::from(value),
@@ -1907,7 +2237,7 @@ pub async fn update_many<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 5731, column : 17,
+                            line : 5737, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
