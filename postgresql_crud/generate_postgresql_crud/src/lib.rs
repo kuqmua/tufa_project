@@ -6125,7 +6125,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &reqwest_client_new_token_stream,
                 &commit_header_addition_token_stream,
                 &content_type_application_json_header_addition_token_stream,
-                &match &fields_named_from_or_try_from {
+                &match &primary_key_from_or_try_from {
                     postgresql_crud_common::FromOrTryFrom::From => quote::quote! {Ok(#primary_key_inner_type_token_stream::from(value))},
                     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
                         match #primary_key_inner_type_token_stream::try_from(value) {
@@ -7876,9 +7876,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #create_many_token_stream
             #create_one_token_stream
             #read_many_token_stream
-            // #read_one_token_stream
-            // #update_many_token_stream
-            // #update_one_token_stream
+            #read_one_token_stream
+            #update_many_token_stream
+            #update_one_token_stream
             // #delete_many_token_stream
             // #delete_one_token_stream
         // }
