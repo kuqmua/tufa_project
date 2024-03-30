@@ -224,17 +224,14 @@ pub struct DeleteOnePayloadWithSerializeDeserialize {
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
 }
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserializeErrorNamed {}
-impl std::convert::TryFrom<DeleteOnePayloadWithSerializeDeserialize> for DeleteOnePayload {
-    type Error = DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserializeErrorNamed;
-    fn try_from(value: DeleteOnePayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        Ok(Self {
+impl std::convert::From<DeleteOnePayloadWithSerializeDeserialize> for DeleteOnePayload {
+    fn from(value: DeleteOnePayloadWithSerializeDeserialize) -> Self {
+        Self {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
                 postgresql_crud::StdPrimitiveI64::from(
                     value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
                 ),
-        })
+        }
     }
 }
 impl std::convert::From<DeleteOnePayload> for DeleteOnePayloadWithSerializeDeserialize {
@@ -685,28 +682,6 @@ impl std::convert::From<TryDeleteOneResponseVariantsTvfrr200Ok> for TryDeleteOne
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteOneResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>
-    for TryDeleteOneResponseVariants
-{
-    fn from(value: TryDeleteOneResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryDeleteOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryDeleteOneResponseVariantsTvfrr404NotFound {
     RowNotFound {
         row_not_found: std::string::String,
@@ -725,99 +700,6 @@ impl std::convert::From<TryDeleteOneResponseVariantsTvfrr404NotFound>
                 row_not_found,
                 code_occurence,
             },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryDeleteOneResponseVariantsTvfrr400BadRequest {
-    TypeNotFound
-    {
-        type_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, ColumnNotFound
-    {
-        column_not_found : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonDataError
-    {
-        json_data_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, JsonSyntaxError
-    {
-        json_syntax_error : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, MissingJsonContentType
-    {
-        missing_json_content_type : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserialize
-    {
-        delete_one_payload_try_from_delete_one_payload_with_serialize_deserialize
-        :
-        DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
-        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorNotEqual
-    {
-        commit_not_equal : std::string::String<>, commit_to_use :
-        std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, CommitExtractorToStrConversion
-    {
-        commit_to_str_conversion : std :: string :: String, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }, NoCommitExtractorHeader
-    {
-        no_commit_header : std::string::String<>, code_occurence :
-        error_occurence_lib::code_occurence::CodeOccurence
-    }
-}
-impl std::convert::From<TryDeleteOneResponseVariantsTvfrr400BadRequest>
-    for TryDeleteOneResponseVariants
-{
-    fn from(value: TryDeleteOneResponseVariantsTvfrr400BadRequest) -> Self {
-        match value
-        {
-            TryDeleteOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest :: JsonDataError
-            { json_data_error, code_occurence } => Self :: JsonDataError
-            { json_data_error, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
-            DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserialize
-            {
-                delete_one_payload_try_from_delete_one_payload_with_serialize_deserialize,
-                code_occurence
-            } => Self ::
-            DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserialize
-            {
-                delete_one_payload_try_from_delete_one_payload_with_serialize_deserialize,
-                code_occurence
-            }, TryDeleteOneResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence } => Self ::
-            CommitExtractorNotEqual
-            { commit_not_equal, commit_to_use, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence } => Self ::
-            CommitExtractorToStrConversion
-            { commit_to_str_conversion, code_occurence },
-            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
-            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
-            Self :: NoCommitExtractorHeader
-            { no_commit_header, code_occurence }
         }
     }
 }
@@ -942,6 +824,121 @@ impl std::convert::From<TryDeleteOneResponseVariantsTvfrr500InternalServerError>
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
                 code_occurence
             }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>
+    for TryDeleteOneResponseVariants
+{
+    fn from(value: TryDeleteOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryDeleteOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryDeleteOneResponseVariantsTvfrr400BadRequest {
+    TypeNotFound
+    {
+        type_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, ColumnNotFound
+    {
+        column_not_found : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonDataError
+    {
+        json_data_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, JsonSyntaxError
+    {
+        json_syntax_error : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, MissingJsonContentType
+    {
+        missing_json_content_type : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserialize
+    {
+        delete_one_payload_try_from_delete_one_payload_with_serialize_deserialize
+        :
+        DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
+        code_occurence : error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorNotEqual
+    {
+        commit_not_equal : std::string::String<>, commit_to_use :
+        std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, CommitExtractorToStrConversion
+    {
+        commit_to_str_conversion : std :: string :: String, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }, NoCommitExtractorHeader
+    {
+        no_commit_header : std::string::String<>, code_occurence :
+        error_occurence_lib::code_occurence::CodeOccurence
+    }
+}
+impl std::convert::From<TryDeleteOneResponseVariantsTvfrr400BadRequest>
+    for TryDeleteOneResponseVariants
+{
+    fn from(value: TryDeleteOneResponseVariantsTvfrr400BadRequest) -> Self {
+        match value
+        {
+            TryDeleteOneResponseVariantsTvfrr400BadRequest :: TypeNotFound
+            { type_not_found, code_occurence } => Self :: TypeNotFound
+            { type_not_found, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest :: ColumnNotFound
+            { column_not_found, code_occurence } => Self :: ColumnNotFound
+            { column_not_found, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest :: JsonDataError
+            { json_data_error, code_occurence } => Self :: JsonDataError
+            { json_data_error, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest :: JsonSyntaxError
+            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            { json_syntax_error, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence } => Self ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
+            DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserialize
+            {
+                delete_one_payload_try_from_delete_one_payload_with_serialize_deserialize,
+                code_occurence
+            } => Self ::
+            DeleteOnePayloadTryFromDeleteOnePayloadWithSerializeDeserialize
+            {
+                delete_one_payload_try_from_delete_one_payload_with_serialize_deserialize,
+                code_occurence
+            }, TryDeleteOneResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence } => Self ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence } => Self ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence },
+            TryDeleteOneResponseVariantsTvfrr400BadRequest ::
+            NoCommitExtractorHeader { no_commit_header, code_occurence } =>
+            Self :: NoCommitExtractorHeader
+            { no_commit_header, code_occurence }
         }
     }
 }
@@ -1447,9 +1444,10 @@ pub async fn try_delete_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr400BadRequest>(&response_text)
-        {
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteOneErrorNamed::DeserializeResponse {
@@ -1472,10 +1470,9 @@ pub async fn try_delete_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr408RequestTimeout>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryDeleteOneResponseVariantsTvfrr400BadRequest>(&response_text)
+        {
             Ok(value) => TryDeleteOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryDeleteOneErrorNamed::DeserializeResponse {
@@ -1607,7 +1604,7 @@ pub async fn delete_one<'a>(
                         {
                             file : std :: string :: String ::
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 7683, column : 17,
+                            line : 7695, column : 17,
                         })),
                     } ;
                         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
