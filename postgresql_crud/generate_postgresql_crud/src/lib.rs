@@ -2511,6 +2511,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let primary_keys_token_stream = quote::quote! {primary_keys};
     let primary_key_token_stream = quote::quote! {primary_key};
+    let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
     let into_inner_type_vec_snake_case_token_stream = quote::quote! {into_inner_type_vec};
     let (
         limit_and_offset_type_token_stream,
@@ -3306,15 +3307,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .map(|element| {
                                 let field_ident = &element.field_ident;
                                 let inner_type_token_stream = &element.inner_type_token_stream;
-                                let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
                                 quote::quote!{
                                     let #field_ident = #inner_type_token_stream::#from_snake_case_token_stream(value.#field_ident);
                                 }
                             });
-                        let fields_idents_excluding_primary_key_token_stream =
-                            fields_named_excluding_primary_key
-                                .iter()
-                                .map(|element| &element.field_ident);
+                        let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| &element.field_ident);
                         quote::quote! {
                             impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
                                 fn from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
@@ -4713,14 +4710,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => {
                     let impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = {
-                        let primary_key_let_field_ident_value_field_ident_try_from_token_stream = {
-                            let initialization_token_stream = {
-                                let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
-                                quote::quote!{#primary_key_inner_type_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident)}
-                            };
-                            quote::quote! {
-                                let #primary_key_field_ident = #initialization_token_stream;
-                            }
+                        let primary_key_let_field_ident_value_field_ident_try_from_token_stream = quote::quote! {
+                            let #primary_key_field_ident = #primary_key_inner_type_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident);
                         };
                         quote::quote! {
                             impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
@@ -7394,13 +7385,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{payload_with_serialize_deserialize_token_stream}");
             let impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream = match &primary_key_from_or_try_from {
-                postgresql_crud_common::FromOrTryFrom::From => {
-                    let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
-                    quote::quote! {
-                        impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
-                            fn from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
-                                Self{ #primary_key_field_ident: #primary_key_inner_type_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident) }
-                            }
+                postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
+                    impl std::convert::From<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream> for #operation_payload_upper_camel_case_token_stream {
+                        fn from(value: #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
+                            Self{ #primary_key_field_ident: #primary_key_inner_type_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident) }
                         }
                     }
                 },
@@ -7431,11 +7419,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let inner_token_stream = quote::quote! {value.#primary_key_field_ident};
                             {
                                 match primary_key_rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-                                    postgresql_crud_common::FromOrTryFrom::From => {
-                                        let from_snake_case_token_stream = proc_macro_helpers::naming_conventions::from_snake_case_token_stream();
-                                        quote::quote!{
-                                             Ok(Self{ #primary_key_field_ident: #primary_key_inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream) })
-                                        }
+                                    postgresql_crud_common::FromOrTryFrom::From => quote::quote!{
+                                        Ok(Self{ #primary_key_field_ident: #primary_key_inner_type_token_stream::#from_snake_case_token_stream(#inner_token_stream) })
                                     },
                                     postgresql_crud_common::FromOrTryFrom::TryFrom => {
                                         let try_from_snake_case_token_stream = proc_macro_helpers::naming_conventions::try_from_snake_case_token_stream();
