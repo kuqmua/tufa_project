@@ -10,16 +10,16 @@
     crate::repositories_types::server::routes::api::cats::TryCreateOne
     ,
     crate::repositories_types::server::routes::api::cats::TryReadMany
-    ,
-    crate::repositories_types::server::routes::api::cats::TryReadOne
-    ,
-    crate::repositories_types::server::routes::api::cats::TryUpdateMany
-    ,
-    crate::repositories_types::server::routes::api::cats::TryUpdateOne
-    ,
-    crate::repositories_types::server::routes::api::cats::TryDeleteMany
-    ,
-    crate::repositories_types::server::routes::api::cats::TryDeleteOne
+    // ,
+    // crate::repositories_types::server::routes::api::cats::TryReadOne
+    // ,
+    // crate::repositories_types::server::routes::api::cats::TryUpdateMany
+    // ,
+    // crate::repositories_types::server::routes::api::cats::TryUpdateOne
+    // ,
+    // crate::repositories_types::server::routes::api::cats::TryDeleteMany
+    // ,
+    // crate::repositories_types::server::routes::api::cats::TryDeleteOne
 )]
 pub enum CommitExtractorCheckErrorNamed {
     #[tvfrr_400_bad_request]
