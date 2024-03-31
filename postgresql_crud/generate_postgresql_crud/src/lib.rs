@@ -2551,6 +2551,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_response_variants_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
         let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(&operation);
         let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
+        let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
         let additional_http_status_codes_error_variants = vec![]; //todo find out why rust analyzer crashes
                                                                   // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
                                                                   //     &ast,
@@ -2617,7 +2618,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {
                     #operation_payload_element_token_stream
                     #derive_debug_token_stream
-                    pub struct #operation_payload_upper_camel_case_token_stream(pub std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>);
+                    pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
                 }
             };
             // println!("{payload_token_stream}");
@@ -5097,6 +5098,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
         let operation_payload_try_from_operation_payload_with_serialize_deserialize_snake_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadTryFromSelfPayloadWithSerializeDeserializeSnakeCaseTokenStream::self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_token_stream(&operation);
         let operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeErrorNamedUpperCamelCaseTokenStream::self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(&operation);
+        let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
         let additional_http_status_codes_error_variants = vec![]; //todo find out why rust analyzer crashes
                                                                   // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
                                                                   //     &ast,
@@ -5178,7 +5180,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #operation_payload_element_token_stream
 
                     #derive_debug_to_schema_token_stream
-                    pub struct #operation_payload_upper_camel_case_token_stream(pub std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>);
+                    pub struct #operation_payload_upper_camel_case_token_stream(pub #std_vec_vec_operation_payload_element_token_stream);
                 }
             };
             // println!("{payload_token_stream}");
@@ -5316,7 +5318,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     Self (
                                         value.0.into_iter()//todo rewrite as try_from
                                         .map(|element|#operation_payload_element_upper_camel_case_token_stream::#from_snake_case_token_stream(element))
-                                        .collect::<std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>>()
+                                        .collect()
                                     )
                                 }
                             }
@@ -5375,7 +5377,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     match value.0.into_iter()//todo rewrite as try_from
                                         .map(|element|#operation_payload_element_upper_camel_case_token_stream::try_from(element))
                                         .collect::<Result<
-                                            std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>,
+                                            #std_vec_vec_operation_payload_element_token_stream,
                                             #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream
                                         >>()
                                     {
@@ -8780,6 +8782,10 @@ impl Operation {
             Self::DeleteMany => OperationHttpMethod::Delete,
             Self::DeleteOne => OperationHttpMethod::Delete,
         }
+    }
+    fn std_vec_vec_self_payload_element_token_stream(&self) -> proc_macro2::TokenStream {
+        let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(self);
+        quote::quote!{std::vec::Vec<#operation_payload_element_upper_camel_case_token_stream>}
     }
 }
 
