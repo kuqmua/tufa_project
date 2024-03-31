@@ -1400,7 +1400,11 @@ impl RustSqlxMapToPostgresTypeVariant {
     }
     //todo maybe move to generate_postgresql_crud macro
     pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        SupportedSqlxPostgresType::from(self).get_original_type_stringified(generic_type_str)
+        let value = SupportedSqlxPostgresType::from(self).get_original_type_stringified(generic_type_str);
+        match RustSqlxMapToPostgresTypeVariantNullable::try_from(self) {
+            Ok(_) => format!("std::option::Option<{value}>"),
+            Err(_) => value,
+        }
     }
     fn get_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
         SupportedSqlxPostgresType::from(self).get_inner_type_handle_stringified(generic_type_str)
