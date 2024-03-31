@@ -1088,7 +1088,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     match offset_slice.get(0..offset_slice_next_comma_index) {
                                         Some(possible_column) => match {
                                             use #std_str_from_str_token_stream;
-                                            #ident_column_upper_camel_case_token_stream::from_str(possible_column)
+                                            #ident_column_upper_camel_case_token_stream::#from_str_snake_case_token_stream(possible_column)
                                         } {
                                             Ok(column) => column,
                                             Err(#error_value_snake_case_token_stream) => {
@@ -1108,7 +1108,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 None => match offset_slice.get(0..) {
                                     Some(possible_column) => match {
                                         use #std_str_from_str_token_stream;
-                                        #ident_column_upper_camel_case_token_stream::from_str(possible_column)
+                                        #ident_column_upper_camel_case_token_stream::#from_str_snake_case_token_stream(possible_column)
                                     } {
                                         Ok(column) => column,
                                         Err(#error_value_snake_case_token_stream) => {
@@ -1151,7 +1151,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     match offset_slice.get(0..offset_slice_next_comma_index) {
                                         Some(possible_order) => match {
                                             use #std_str_from_str_token_stream;
-                                            #crate_server_postgres_order_order_token_stream::from_str(possible_order)
+                                            #crate_server_postgres_order_order_token_stream::#from_str_snake_case_token_stream(possible_order)
                                         } {
                                             Ok(order) => Some(order),
                                             Err(#error_value_snake_case_token_stream) => {
@@ -1171,7 +1171,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 None => match offset_slice.get(0..) {
                                     Some(possible_order) => match {
                                         use #std_str_from_str_token_stream;
-                                        #crate_server_postgres_order_order_token_stream::from_str(possible_order)
+                                        #crate_server_postgres_order_order_token_stream::#from_str_snake_case_token_stream(possible_order)
                                     } {
                                         Ok(order) => Some(order),
                                         Err(#error_value_snake_case_token_stream) => {
@@ -1368,7 +1368,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     Some(offset_slice) => match offset_slice.find(split_inner_url_parameters_symbol) {
                                         Some(offset_slice_next_comma_index) => {
                                             match offset_slice.get(0..offset_slice_next_comma_index) {
-                                                Some(possible_column) => match #ident_column_upper_camel_case_token_stream::from_str(possible_column) {
+                                                Some(possible_column) => match #ident_column_upper_camel_case_token_stream::#from_str_snake_case_token_stream(possible_column) {
                                                     Ok(column) => column,
                                                     Err(#error_value_snake_case_token_stream) => {
                                                         return Err(Self::Err::ColumnFromStr {
@@ -1386,7 +1386,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             }
                                         }
                                         None => match offset_slice.get(0..) {
-                                            Some(possible_column) => match #ident_column_upper_camel_case_token_stream::from_str(possible_column) {
+                                            Some(possible_column) => match #ident_column_upper_camel_case_token_stream::#from_str_snake_case_token_stream(possible_column) {
                                                 Ok(column) => column,
                                                 Err(#error_value_snake_case_token_stream) => {
                                                     return Err(Self::Err::ColumnFromStr {
@@ -1430,7 +1430,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     Some(offset_slice) => match offset_slice.find(split_inner_url_parameters_symbol) {
                                         Some(offset_slice_next_comma_index) => {
                                             match offset_slice.get(0..offset_slice_next_comma_index) {
-                                                Some(possible_order) => match #crate_server_postgres_order_order_token_stream::from_str(possible_order) {
+                                                Some(possible_order) => match #crate_server_postgres_order_order_token_stream::#from_str_snake_case_token_stream(possible_order) {
                                                     Ok(order) => Some(order),
                                                     Err(#error_value_snake_case_token_stream) => {
                                                         return Err(Self::Err::OrderFromStr {
@@ -1448,7 +1448,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             }
                                         }
                                         None => match offset_slice.get(0..) {
-                                            Some(possible_order) => match #crate_server_postgres_order_order_token_stream::from_str(possible_order) {
+                                            Some(possible_order) => match #crate_server_postgres_order_order_token_stream::#from_str_snake_case_token_stream(possible_order) {
                                                 Ok(order) => Some(order),
                                                 Err(#error_value_snake_case_token_stream) => {
                                                     return Err(Self::Err::OrderFromStr {
@@ -2898,6 +2898,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &expected_type_initialization_token_stream,
                 &primary_key_syn_field,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -3477,6 +3478,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &failed_to_get_response_text_initialization_token_stream,
                 &expected_type_initialization_token_stream,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -4095,6 +4097,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &failed_to_get_response_text_initialization_token_stream,
                 &expected_type_initialization_token_stream,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let order_initialization_token_stream = Order::Desc.to_token_stream();
@@ -4894,6 +4897,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &failed_to_get_response_text_initialization_token_stream,
                 &expected_type_initialization_token_stream,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_expect_success_token_stream = {
                 let test_content_token_stream = quote::quote! {
@@ -5528,6 +5532,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &expected_type_initialization_token_stream,
                 &primary_key_syn_field,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -6156,6 +6161,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &failed_to_get_response_text_initialization_token_stream,
                 &expected_type_initialization_token_stream,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -6787,6 +6793,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &expected_type_initialization_token_stream,
                 &primary_key_syn_field,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let fields_initialization_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
@@ -7594,6 +7601,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &failed_to_get_response_text_initialization_token_stream,
                 &expected_type_initialization_token_stream,
                 &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
             );
             let http_request_test_token_stream = {
                 let test_content_token_stream = quote::quote! {
@@ -8101,6 +8109,7 @@ fn generate_http_request_many_token_stream(
     expected_type_initialization_token_stream: &proc_macro2::TokenStream,
     primary_key_syn_field: &SynFieldWithAdditionalInfo,
     from_snake_case_token_stream: &proc_macro2::TokenStream,
+    from_str_snake_case_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let parameters_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::parameters_snake_case_token_stream();
@@ -8264,7 +8273,7 @@ fn generate_http_request_many_token_stream(
     let status_code_enums_try_from = {
         let mut is_last_element_found = false;
         let desirable_status_code_case_token_stream = quote::quote! {
-            match serde_json::from_str::<#desirable_enum_name>(&response_text) {
+            match serde_json::#from_str_snake_case_token_stream::<#desirable_enum_name>(&response_text) {
                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
                 Err(#error_value_snake_case_token_stream) => {
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
@@ -8297,7 +8306,7 @@ fn generate_http_request_many_token_stream(
                     if *desirable_status_code != status_code_attribute {
                         status_code_enums_try_from_variants.push(quote::quote! {
                             else if status_code == #http_status_code_token_stream {
-                                match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                                match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
                                     Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
                                     Err(#error_value_snake_case_token_stream) => {
                                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
@@ -8420,6 +8429,7 @@ fn generate_try_operation_token_stream(
     failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
     expected_type_initialization_token_stream: &proc_macro2::TokenStream,
     from_snake_case_token_stream: &proc_macro2::TokenStream,
+    from_str_snake_case_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     let parameters_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::parameters_snake_case_token_stream();
@@ -8582,7 +8592,7 @@ fn generate_try_operation_token_stream(
     let status_code_enums_try_from = {
         let mut is_last_element_found = false;
         let desirable_status_code_case_token_stream = quote::quote! {
-            match serde_json::from_str::<#desirable_enum_name>(&response_text) {
+            match serde_json::#from_str_snake_case_token_stream::<#desirable_enum_name>(&response_text) {
                 Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
                 Err(#error_value_snake_case_token_stream) => {
                     return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
@@ -8615,7 +8625,7 @@ fn generate_try_operation_token_stream(
                     if *desirable_status_code != status_code_attribute {
                         status_code_enums_try_from_variants.push(quote::quote! {
                             else if status_code == #http_status_code_token_stream {
-                                match serde_json::from_str::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                                match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
                                     Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
                                     Err(#error_value_snake_case_token_stream) => {
                                         return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
