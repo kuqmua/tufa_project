@@ -556,7 +556,6 @@ impl std::convert::From<&SqlxPostgresType> for SupportedSqlxPostgresType {
     }
 }
 
-//
 impl std::convert::TryFrom<&SupportedSqlxPostgresType> for SqlxPostgresType {
     type Error = ();
     fn try_from(value: &SupportedSqlxPostgresType) -> Result<Self, Self::Error> {
@@ -646,7 +645,54 @@ impl std::convert::TryFrom<&SupportedSqlxPostgresType> for SqlxPostgresType {
         }
     }
 }
-//
+
+impl std::convert::From<&OptionSupportedSqlxPostgresType> for SqlxPostgresType {
+    fn from(value: &OptionSupportedSqlxPostgresType) -> Self {
+        match value {
+            OptionSupportedSqlxPostgresType::StdPrimitiveBool => Self::StdPrimitiveBool,
+            OptionSupportedSqlxPostgresType::StdPrimitiveI16 => Self::StdPrimitiveI16,
+            OptionSupportedSqlxPostgresType::StdPrimitiveI32 => Self::StdPrimitiveI32,
+            OptionSupportedSqlxPostgresType::StdPrimitiveI64 => Self::StdPrimitiveI64,
+            OptionSupportedSqlxPostgresType::StdPrimitiveF32 => Self::StdPrimitiveF32,
+            OptionSupportedSqlxPostgresType::StdPrimitiveF64 => Self::StdPrimitiveF64,
+            OptionSupportedSqlxPostgresType::StdStringString => Self::StdStringString,
+            OptionSupportedSqlxPostgresType::StdVecVecStdPrimitiveU8 => Self::StdVecVecStdPrimitiveU8,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgInterval => Self::SqlxPostgresTypesPgInterval,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgMoney => Self::SqlxPostgresTypesPgMoney,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgCiText => Self::SqlxPostgresTypesPgCiText,
+            OptionSupportedSqlxPostgresType::SqlxTypesBigDecimal => Self::SqlxTypesBigDecimal,
+            OptionSupportedSqlxPostgresType::SqlxTypesDecimal => Self::SqlxTypesDecimal,
+            OptionSupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            OptionSupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+            OptionSupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime => Self::SqlxTypesChronoNaiveDateTime,
+            OptionSupportedSqlxPostgresType::SqlxTypesChronoNaiveDate => Self::SqlxTypesChronoNaiveDate,
+            OptionSupportedSqlxPostgresType::SqlxTypesChronoNaiveTime => Self::SqlxTypesChronoNaiveTime,
+            OptionSupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz => Self::SqlxPostgresTypesPgTimeTz,
+            OptionSupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime => Self::SqlxTypesTimePrimitiveDateTime,
+            OptionSupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime => Self::SqlxTypesTimeOffsetDateTime,
+            OptionSupportedSqlxPostgresType::SqlxTypesTimeDate => Self::SqlxTypesTimeDate,
+            OptionSupportedSqlxPostgresType::SqlxTypesTimeTime => Self::SqlxTypesTimeTime,
+            OptionSupportedSqlxPostgresType::SqlxTypesUuidUuid => Self::SqlxTypesUuidUuid,
+            OptionSupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork => Self::SqlxTypesIpnetworkIpNetwork,
+            OptionSupportedSqlxPostgresType::StdNetIpAddr => Self::StdNetIpAddr,
+            OptionSupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
+            OptionSupportedSqlxPostgresType::SqlxTypesBitVec => Self::SqlxTypesBitVec,
+            OptionSupportedSqlxPostgresType::SqlxTypesJsonT => Self::SqlxTypesJsonT,
+            OptionSupportedSqlxPostgresType::SerdeJsonValue => Self::SerdeJsonValue,
+        }
+    }
+}
 
 #[derive(Debug)]
 pub enum OptionSupportedSqlxPostgresType {
@@ -827,6 +873,54 @@ impl std::convert::TryFrom<&SupportedSqlxPostgresType> for OptionSupportedSqlxPo
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJsonT => Ok(Self::SqlxTypesJsonT),
             SupportedSqlxPostgresType::SerdeJsonValue => Err(()),
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Ok(Self::SerdeJsonValue),
+        }
+    }
+}
+
+impl std::convert::From<&SqlxPostgresType> for OptionSupportedSqlxPostgresType {
+    fn from(value: &SqlxPostgresType) -> Self {
+        match value {
+            SqlxPostgresType::StdPrimitiveBool => Self::StdPrimitiveBool,
+            SqlxPostgresType::StdPrimitiveI16 => Self::StdPrimitiveI16,
+            SqlxPostgresType::StdPrimitiveI32 => Self::StdPrimitiveI32,
+            SqlxPostgresType::StdPrimitiveI64 => Self::StdPrimitiveI64,
+            SqlxPostgresType::StdPrimitiveF32 => Self::StdPrimitiveF32,
+            SqlxPostgresType::StdPrimitiveF64 => Self::StdPrimitiveF64,
+            SqlxPostgresType::StdStringString => Self::StdStringString,
+            SqlxPostgresType::StdVecVecStdPrimitiveU8 => Self::StdVecVecStdPrimitiveU8,
+            SqlxPostgresType::SqlxPostgresTypesPgInterval => Self::SqlxPostgresTypesPgInterval,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+            SqlxPostgresType::SqlxPostgresTypesPgMoney => Self::SqlxPostgresTypesPgMoney,
+            SqlxPostgresType::SqlxPostgresTypesPgCiText => Self::SqlxPostgresTypesPgCiText,
+            SqlxPostgresType::SqlxTypesBigDecimal => Self::SqlxTypesBigDecimal,
+            SqlxPostgresType::SqlxTypesDecimal => Self::SqlxTypesDecimal,
+            SqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            SqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+            SqlxPostgresType::SqlxTypesChronoNaiveDateTime => Self::SqlxTypesChronoNaiveDateTime,
+            SqlxPostgresType::SqlxTypesChronoNaiveDate => Self::SqlxTypesChronoNaiveDate,
+            SqlxPostgresType::SqlxTypesChronoNaiveTime => Self::SqlxTypesChronoNaiveTime,
+            SqlxPostgresType::SqlxPostgresTypesPgTimeTz => Self::SqlxPostgresTypesPgTimeTz,
+            SqlxPostgresType::SqlxTypesTimePrimitiveDateTime => Self::SqlxTypesTimePrimitiveDateTime,
+            SqlxPostgresType::SqlxTypesTimeOffsetDateTime => Self::SqlxTypesTimeOffsetDateTime,
+            SqlxPostgresType::SqlxTypesTimeDate => Self::SqlxTypesTimeDate,
+            SqlxPostgresType::SqlxTypesTimeTime => Self::SqlxTypesTimeTime,
+            SqlxPostgresType::SqlxTypesUuidUuid => Self::SqlxTypesUuidUuid,
+            SqlxPostgresType::SqlxTypesIpnetworkIpNetwork => Self::SqlxTypesIpnetworkIpNetwork,
+            SqlxPostgresType::StdNetIpAddr => Self::StdNetIpAddr,
+            SqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
+            SqlxPostgresType::SqlxTypesBitVec => Self::SqlxTypesBitVec,
+            SqlxPostgresType::SqlxTypesJsonT => Self::SqlxTypesJsonT,
+            SqlxPostgresType::SerdeJsonValue => Self::SerdeJsonValue,
         }
     }
 }
