@@ -42,6 +42,8 @@ mod type_variants_from_request_response_generator;
 //todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
 //todo write checks on fields one by one with early return. not need to check all and create combinatorial complexity
 //todo add transaction isolation level (see postgresql docs)
+//todo check on postgresql max length value of type
+//todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
 
 #[proc_macro_attribute]
 pub fn create_many_additional_http_status_codes_error_variants(
@@ -108,9 +110,8 @@ pub fn additional_http_status_codes_error_variants(
     item
 }
 
-#[proc_macro_derive(GeneratePostgresqlCrud)] //todo check on postgresql max length value of type
+#[proc_macro_derive(GeneratePostgresqlCrud)]
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
@@ -351,7 +352,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &primary_key_syn_field
                 .inner_type_with_serialize_deserialize_token_stream;
         let ident_option_variant_primary_key_token_stream = quote::quote! {
-            #primary_key_field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident.0)),//todo from or try_from
+            #primary_key_field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident.0)),
         };
         let ident_option_variants_excluding_primary_key_token_stream =
             fields_named_excluding_primary_key
@@ -361,7 +362,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let inner_type_with_serialize_deserialize_token_stream =
                         &element.inner_type_with_serialize_deserialize_token_stream;
                     quote::quote! {
-                        #field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#field_ident.0))//todo from or try_from
+                        #field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#field_ident.0))
                     }
                 });
         quote::quote! {
@@ -684,13 +685,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ident_column_select_from_str_error_named_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_from_str_error_named_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_token_stream = {//todo rename variable
-        let crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified = format!(
+    let postgresql_crud_try_generate_bind_increments_error_named_name_token_stream = {
+        let value_stringified = format!(
             "{}::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}",
             postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE
         );
-        crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let column_select_token_stream = {
         let column_select_struct_token_stream = {
@@ -4272,8 +4273,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         increment = value;
                                     },
                                     None => {
-                                        //todo - think what to do with #crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_token_stream and how handle it
-                                        let e = #crate_server_postgres_bind_query_try_generate_bind_increments_error_named_name_token_stream::#checked_add_variant_initialization_token_stream;
+                                        let e = #postgresql_crud_try_generate_bind_increments_error_named_name_token_stream::#checked_add_variant_initialization_token_stream;
                                         return #try_operation_response_variants_token_stream::#bind_query_variant_initialization_token_stream;
                                     },
                                 }
