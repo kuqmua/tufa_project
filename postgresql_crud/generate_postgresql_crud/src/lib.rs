@@ -4061,7 +4061,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let http_request_token_stream = generate_try_operation_token_stream(
                 &server_location_name_token_stream,
                 &str_ref_token_stream,
-                &quote::quote! {std::vec::Vec<#struct_options_ident_token_stream>},
+                &std_vec_vec_struct_options_ident_token_stream,
                 &quote::quote! {
                     let #payload_snake_case_token_stream = match #serde_json_to_string_token_stream(
                         &#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream::#from_snake_case_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream)
