@@ -2536,6 +2536,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| &element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
+    let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>};
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
@@ -2836,7 +2837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
             &desirable_status_code,
-            &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
+            &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
             &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -2885,7 +2886,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
+                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
                 &reqwest_initialization_token_stream,
@@ -5446,7 +5447,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
             &desirable_status_code,
-            &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},//todo reuse
+            &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
             &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -5494,7 +5495,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},//todo reuse
+                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
                 &reqwest_initialization_token_stream,
@@ -6700,7 +6701,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
+                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
                 &derive_debug_serialize_deserialize_to_schema_token_stream,
@@ -6749,7 +6750,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
                 &desirable_status_code,
-                &quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>},
+                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
                 &reqwest_initialization_token_stream,
