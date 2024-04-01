@@ -119,3 +119,5 @@ pub const ASC: &str = "asc";
 pub const DESC: &str = "desc";
 pub const UNIQUE: &str = "unique";
 pub const MANY: &str = "many";
+pub const STD: &str = "std";
+pub const OPTION: &str = "option";

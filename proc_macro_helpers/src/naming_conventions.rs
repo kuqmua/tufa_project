@@ -796,6 +796,13 @@ pub fn many_snake_case_stringified() -> std::string::String {
         &naming_constants::MANY,
     )
 }
+pub fn std_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::STD)
+}
+pub fn option_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OPTION)
+}
+//////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
     format!(
@@ -1154,6 +1161,20 @@ pub fn response_text_result_snake_case_token_stream() -> proc_macro2::TokenStrea
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+pub fn std_option_option_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}",
+        std_upper_camel_case_stringified(),
+        option_upper_camel_case_stringified(),
+        option_upper_camel_case_stringified(),
+    )
+}
+// pub fn std_option_option_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+//     let value = std_option_option_upper_camel_case_stringified();
+//     value.parse::<proc_macro2::TokenStream>()
+//     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+// }
+/////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {
     fn self_parameters_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;

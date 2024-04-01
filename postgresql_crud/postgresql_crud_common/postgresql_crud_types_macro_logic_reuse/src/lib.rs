@@ -453,6 +453,39 @@ pub fn field_type_implements_serialize_deserialize_option(input: proc_macro::Tok
                 Self(value.0)
             }
         }
+        ///////////////////////////////////////
+        #[derive(
+            Debug,
+            PartialEq,
+            serde::Serialize,
+            serde::Deserialize,
+            utoipa::ToSchema,
+        )]
+        pub struct StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize(std::option::Option<std::primitive::bool>);
+        impl std::fmt::Display for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{:?}", self.0)
+            }
+        }
+        impl std::convert::From<StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for StdOptionOptionStdPrimitiveBool {
+            fn from(value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+                Self(value.0)
+            }
+        }
+        impl std::convert::From<StdOptionOptionStdPrimitiveBool> for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+            fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
+                Self(value.0)
+            }
+        }
+        //postgresql_crud_types_macro_logic_reuse::CommonFromOption
+        impl std::convert::From<WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for WhereStdOptionOptionStdPrimitiveBool {
+            fn from(value: WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+                Self {
+                    value: StdOptionOptionStdPrimitiveBool::from(value.value),
+                    conjuctive_operator: value.conjuctive_operator,
+                }
+            }
+        }
     };
     // if ident == "" {
     //     println!("{gen}");
@@ -635,6 +668,14 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    //
+    let std_option_option_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified();
+    let std_option_option_upper_camel_case_ident_token_stream = {
+        let value_stringified = format!("{std_option_option_upper_camel_case_stringified}{ident}");
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    //
     let gen = quote::quote!{
         impl std::fmt::Display for #ident {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -799,6 +840,9 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 }
             }
         }
+        ///////////////////////////////////////
+        #[derive(Debug, PartialEq)]
+        pub struct #std_option_option_upper_camel_case_ident_token_stream(pub std::option::Option<#field_type>);
     };
     // if ident == "" {
     //     println!("{gen}");
