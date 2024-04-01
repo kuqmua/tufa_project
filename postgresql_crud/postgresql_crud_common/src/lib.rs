@@ -3954,7 +3954,15 @@ impl std::convert::From<WhereStdPrimitiveBool> for WhereStdPrimitiveBoolWithSeri
         }
     }
 }
-
+//
+#[derive(Debug, PartialEq, 
+    // postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, 
+    // postgresql_crud_types_macro_logic_reuse::CommonFrom, 
+    // postgresql_crud_types_macro_logic_reuse::Common
+)]
+pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
+impl AsPostgresqlBool for StdOptionOptionStdPrimitiveBool {}
+impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 //
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
