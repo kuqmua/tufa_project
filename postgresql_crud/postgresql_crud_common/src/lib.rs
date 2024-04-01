@@ -3756,7 +3756,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 #[derive(Debug, PartialEq, 
     postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, 
     postgresql_crud_types_macro_logic_reuse::CommonFrom, 
-    postgresql_crud_types_macro_logic_reuse::Common
+    postgresql_crud_types_macro_logic_reuse::CommonOption
 )]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
 impl AsPostgresqlBool for StdPrimitiveBool {}
@@ -3960,39 +3960,39 @@ impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 // #[derive(Debug, PartialEq)]
 // pub struct StdOptionOptionStdPrimitiveBool(pub std::option::Option<std::primitive::bool>);
 //postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption
-#[derive(
-    Debug,
-    PartialEq,
-    serde :: Serialize,
-    serde :: Deserialize,
-    utoipa ::
-    ToSchema,
-)]
-pub struct StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize(std::option::Option<std::primitive::bool>);
-impl std::fmt::Display for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
-impl std::convert::From<StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for StdOptionOptionStdPrimitiveBool {
-    fn from(value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self(value.0)
-    }
-}
-impl std::convert::From<StdOptionOptionStdPrimitiveBool> for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
-        Self(value.0)
-    }
-}
-//postgresql_crud_types_macro_logic_reuse::CommonFromOption
-impl std::convert::From<WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for WhereStdOptionOptionStdPrimitiveBool {
-    fn from(value: WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
-        Self {
-            value: StdOptionOptionStdPrimitiveBool::from(value.value),
-            conjuctive_operator: value.conjuctive_operator,
-        }
-    }
-}
+// #[derive(
+//     Debug,
+//     PartialEq,
+//     serde :: Serialize,
+//     serde :: Deserialize,
+//     utoipa ::
+//     ToSchema,
+// )]
+// pub struct StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize(std::option::Option<std::primitive::bool>);
+// impl std::fmt::Display for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{:?}", self.0)
+//     }
+// }
+// impl std::convert::From<StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for StdOptionOptionStdPrimitiveBool {
+//     fn from(value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+//         Self(value.0)
+//     }
+// }
+// impl std::convert::From<StdOptionOptionStdPrimitiveBool> for StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
+//         Self(value.0)
+//     }
+// }
+// //postgresql_crud_types_macro_logic_reuse::CommonFromOption
+// impl std::convert::From<WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for WhereStdOptionOptionStdPrimitiveBool {
+//     fn from(value: WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+//         Self {
+//             value: StdOptionOptionStdPrimitiveBool::from(value.value),
+//             conjuctive_operator: value.conjuctive_operator,
+//         }
+//     }
+// }
 //postgresql_crud_types_macro_logic_reuse::Common
 impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
