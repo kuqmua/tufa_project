@@ -513,15 +513,6 @@ pub fn field_type_implements_serialize_deserialize_option(input: proc_macro::Tok
                 Self(value.0)
             }
         }
-        //postgresql_crud_types_macro_logic_reuse::CommonFromOption
-        impl std::convert::From<#where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #where_std_option_option_ident_upper_camel_case_token_stream {
-            fn from(value: #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
-                Self {
-                    value: #std_option_option_ident_upper_camel_case_token_stream::from(value.value),
-                    conjuctive_operator: value.conjuctive_operator,
-                }
-            }
-        }
     };
     // if ident == "" {
     //     println!("{gen}");
@@ -557,12 +548,47 @@ pub fn common_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenSt
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let std_option_option_ident_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}",
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_std_option_option_ident_token_stream = {
+        let value_stringified = format!(
+            "{}{}{ident}",
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_std_option_option_ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!(
+            "{}{}{ident}{}", 
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let gen = quote::quote!{
         impl std::convert::From<#where_ident_with_serialize_deserialize_token_stream> for #where_ident_token_stream {
             fn from(value: #where_ident_with_serialize_deserialize_token_stream) -> Self {
                 Self {
                     value: #ident::from(value.value),
                     conjuctive_operator: value.conjuctive_operator
+                }
+            }
+        }
+        impl std::convert::From<#where_std_option_option_ident_with_serialize_deserialize_token_stream> for #where_std_option_option_ident_token_stream {
+            fn from(value: #where_std_option_option_ident_with_serialize_deserialize_token_stream) -> Self {
+                Self {
+                    value: #std_option_option_ident_token_stream::from(value.value),
+                    conjuctive_operator: value.conjuctive_operator,
                 }
             }
         }

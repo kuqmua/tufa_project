@@ -3755,7 +3755,7 @@ pub trait CheckSupportedPostgresqlColumnType {
 // sqlx::Encode impl was copied from https://docs.rs/sqlx/0.7.3/sqlx/trait.Encode.html
 #[derive(Debug, PartialEq, 
     postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, 
-    postgresql_crud_types_macro_logic_reuse::CommonFrom, 
+    postgresql_crud_types_macro_logic_reuse::CommonFromOption, 
     postgresql_crud_types_macro_logic_reuse::CommonOption
 )]
 pub struct StdPrimitiveBool(pub std::primitive::bool); //todo maybe make it private?
