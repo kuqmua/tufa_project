@@ -451,25 +451,6 @@ pub fn field_type_implements_serialize_deserialize_option(input: proc_macro::Tok
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let where_std_option_option_ident_upper_camel_case_token_stream = {
-        let value_stringified = format!(
-            "{}{}{ident}",
-            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
-        );
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
-        let value_stringified = format!(
-            "{}{}{ident}{}",
-            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-        );
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
         #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
@@ -738,6 +719,35 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let where_std_option_option_ident_upper_camel_case_token_stream = {
+        let value_stringified = format!(
+            "{}{}{ident}",
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    //
+    let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}{}",
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
+        let value_stringified = format!(
+            "{}{}{ident}{}",
+            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let gen = quote::quote!{
         impl std::fmt::Display for #ident {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -905,6 +915,164 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
         ///////////////////////////////////////
         #[derive(Debug, PartialEq)]
         pub struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
+        ////////////////////////////
+        impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{:?}", self.0)
+            }
+        }
+        impl #std_option_option_ident_upper_camel_case_token_stream {
+            pub fn into_inner(self) -> std::option::Option<#field_type> {
+                self.0
+            }
+        }
+        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for std::option::Option<#field_type> {
+            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+                value.0
+            }
+        }
+        impl sqlx::Type<sqlx::Postgres> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
+            }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                <std::option::Option<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
+        }
+        impl CheckSupportedPostgresqlColumnType for #std_option_option_ident_upper_camel_case_token_stream {
+            fn check_supported_postgresql_column_type() {}
+        }
+        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for SupportedSqlxPostgresType {
+            fn from(_value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+                SupportedSqlxPostgresType::#ident
+            }
+        }
+        impl #std_option_option_ident_upper_camel_case_token_stream {
+            pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<#field_type>> {
+                value
+                    .into_iter()
+                    .map(|element| element.into_inner())
+                    .collect()
+            }
+        }
+        impl BindQuery for #std_option_option_ident_upper_camel_case_token_stream {
+            fn try_increment(
+                &self,
+                increment: &mut std::primitive::u64,
+            ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        Ok(())
+                    }
+                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                }
+            }
+            fn try_generate_bind_increments(
+                &self,
+                increment: &mut std::primitive::u64,
+            ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+                let mut increments = std::string::String::default();
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        increments.push_str(&format!("${increment}"));
+                    }
+                    None => {
+                        return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                            checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    }
+                }
+                Ok(increments)
+            }
+            fn bind_value_to_query(
+                self,
+                mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
+            ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+                query = query.bind(self.0);
+                query
+            }
+        }
+        #[derive(Debug, PartialEq)]
+        pub struct #where_std_option_option_ident_upper_camel_case_token_stream {
+            pub value: #std_option_option_ident_upper_camel_case_token_stream ,
+            pub conjuctive_operator: ConjunctiveOperator,
+        }
+        impl std::fmt::Display for #where_std_option_option_ident_upper_camel_case_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(
+                    f,
+                    "value: {}, conjuctive_operator: {}",
+                    self.value, self.conjuctive_operator
+                )
+            }
+        }
+        impl BindQuery for #where_std_option_option_ident_upper_camel_case_token_stream {
+            fn try_increment(
+                &self,
+                increment: &mut std::primitive::u64,
+            ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        Ok(())
+                    }
+                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        checked_add: std::string::String::from("checked_add is None"),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                }
+            }
+            fn try_generate_bind_increments(
+                &self,
+                increment: &mut std::primitive::u64,
+            ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+                match increment.checked_add(1) {
+                    Some(incr) => {
+                        *increment = incr;
+                        Ok(format!("${increment}"))
+                    }
+                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                        checked_add: std::string::String::from("checked_add is None"),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }),
+                }
+            }
+            fn bind_value_to_query(
+                self,
+                mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
+            ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+                query = query.bind(self.value.0);
+                query
+            }
+        }
+        #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize)]
+        pub struct #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
+            pub value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream,
+            pub conjuctive_operator: ConjunctiveOperator,
+        }
+        impl std::fmt::Display for #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(
+                    f,
+                    "value: {}, conjuctive_operator: {}",
+                    self.value, self.conjuctive_operator
+                )
+            }
+        }
+        impl std::convert::From<#where_std_option_option_ident_upper_camel_case_token_stream> for #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
+            fn from(value: #where_std_option_option_ident_upper_camel_case_token_stream) -> Self {
+                Self {
+                    value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream::from(value.value),
+                    conjuctive_operator: value.conjuctive_operator,
+                }
+            }
+        }
     };
     // if ident == "" {
     //     println!("{gen}");

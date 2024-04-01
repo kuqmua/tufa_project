@@ -3994,163 +3994,163 @@ impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 //     }
 // }
 //postgresql_crud_types_macro_logic_reuse::Common
-impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
-impl StdOptionOptionStdPrimitiveBool {
-    pub fn into_inner(self) -> std::option::Option<std::primitive::bool> {
-        self.0
-    }
-}
-impl std::convert::From<StdOptionOptionStdPrimitiveBool> for std::option::Option<std::primitive::bool> {
-    fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
-        value.0
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveBool {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::option::Option<std::primitive::bool> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <std::option::Option<std::primitive::bool> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl CheckSupportedPostgresqlColumnType for StdOptionOptionStdPrimitiveBool {
-    fn check_supported_postgresql_column_type() {}
-}
-impl std::convert::From<StdOptionOptionStdPrimitiveBool> for SupportedSqlxPostgresType {
-    fn from(_value: StdOptionOptionStdPrimitiveBool) -> Self {
-        SupportedSqlxPostgresType::StdPrimitiveBool
-    }
-}
-impl StdOptionOptionStdPrimitiveBool {
-    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<std::primitive::bool>> {
-        value
-            .into_iter()
-            .map(|element| element.into_inner())
-            .collect()
-    }
-}
-impl BindQuery for StdOptionOptionStdPrimitiveBool {
-    fn try_increment(
-        &self,
-        increment: &mut std::primitive::u64,
-    ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(())
-            }
-            None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-    fn try_generate_bind_increments(
-        &self,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-        let mut increments = std::string::String::default();
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                increments.push_str(&format!("${increment}"));
-            }
-            None => {
-                return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                    checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        }
-        Ok(increments)
-    }
-    fn bind_value_to_query(
-        self,
-        mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.0);
-        query
-    }
-}
-#[derive(Debug, PartialEq)]
-pub struct WhereStdOptionOptionStdPrimitiveBool {
-    pub value: StdOptionOptionStdPrimitiveBool,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBool {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "value: {}, conjuctive_operator: {}",
-            self.value, self.conjuctive_operator
-        )
-    }
-}
-impl BindQuery for WhereStdOptionOptionStdPrimitiveBool {
-    fn try_increment(
-        &self,
-        increment: &mut std::primitive::u64,
-    ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(())
-            }
-            None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                checked_add: std::string::String::from("checked_add is None"),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-    fn try_generate_bind_increments(
-        &self,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
-        match increment.checked_add(1) {
-            Some(incr) => {
-                *increment = incr;
-                Ok(format!("${increment}"))
-            }
-            None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                checked_add: std::string::String::from("checked_add is None"),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }),
-        }
-    }
-    fn bind_value_to_query(
-        self,
-        mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.value.0);
-        query
-    }
-}
-#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub struct WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    pub value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
-    pub conjuctive_operator: ConjunctiveOperator,
-}
-impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "value: {}, conjuctive_operator: {}",
-            self.value, self.conjuctive_operator
-        )
-    }
-}
-impl std::convert::From<WhereStdOptionOptionStdPrimitiveBool> for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
-    fn from(value: WhereStdOptionOptionStdPrimitiveBool) -> Self {
-        Self {
-            value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(value.value),
-            conjuctive_operator: value.conjuctive_operator,
-        }
-    }
-}
+// impl std::fmt::Display for StdOptionOptionStdPrimitiveBool {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{:?}", self.0)
+//     }
+// }
+// impl StdOptionOptionStdPrimitiveBool {
+//     pub fn into_inner(self) -> std::option::Option<std::primitive::bool> {
+//         self.0
+//     }
+// }
+// impl std::convert::From<StdOptionOptionStdPrimitiveBool> for std::option::Option<std::primitive::bool> {
+//     fn from(value: StdOptionOptionStdPrimitiveBool) -> Self {
+//         value.0
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for StdOptionOptionStdPrimitiveBool {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <std::option::Option<std::primitive::bool> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+//         <std::option::Option<std::primitive::bool> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl CheckSupportedPostgresqlColumnType for StdOptionOptionStdPrimitiveBool {
+//     fn check_supported_postgresql_column_type() {}
+// }
+// impl std::convert::From<StdOptionOptionStdPrimitiveBool> for SupportedSqlxPostgresType {
+//     fn from(_value: StdOptionOptionStdPrimitiveBool) -> Self {
+//         SupportedSqlxPostgresType::StdPrimitiveBool
+//     }
+// }
+// impl StdOptionOptionStdPrimitiveBool {
+//     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<std::primitive::bool>> {
+//         value
+//             .into_iter()
+//             .map(|element| element.into_inner())
+//             .collect()
+//     }
+// }
+// impl BindQuery for StdOptionOptionStdPrimitiveBool {
+//     fn try_increment(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(())
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             }),
+//         }
+//     }
+//     fn try_generate_bind_increments(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+//         let mut increments = std::string::String::default();
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 increments.push_str(&format!("${increment}"));
+//             }
+//             None => {
+//                 return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                     checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             }
+//         }
+//         Ok(increments)
+//     }
+//     fn bind_value_to_query(
+//         self,
+//         mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.0);
+//         query
+//     }
+// }
+// #[derive(Debug, PartialEq)]
+// pub struct WhereStdOptionOptionStdPrimitiveBool {
+//     pub value: StdOptionOptionStdPrimitiveBool,
+//     pub conjuctive_operator: ConjunctiveOperator,
+// }
+// impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBool {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(
+//             f,
+//             "value: {}, conjuctive_operator: {}",
+//             self.value, self.conjuctive_operator
+//         )
+//     }
+// }
+// impl BindQuery for WhereStdOptionOptionStdPrimitiveBool {
+//     fn try_increment(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(())
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from("checked_add is None"),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             }),
+//         }
+//     }
+//     fn try_generate_bind_increments(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(format!("${increment}"))
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from("checked_add is None"),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             }),
+//         }
+//     }
+//     fn bind_value_to_query(
+//         self,
+//         mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.value.0);
+//         query
+//     }
+// }
+// #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize)]
+// pub struct WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     pub value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+//     pub conjuctive_operator: ConjunctiveOperator,
+// }
+// impl std::fmt::Display for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(
+//             f,
+//             "value: {}, conjuctive_operator: {}",
+//             self.value, self.conjuctive_operator
+//         )
+//     }
+// }
+// impl std::convert::From<WhereStdOptionOptionStdPrimitiveBool> for WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize {
+//     fn from(value: WhereStdOptionOptionStdPrimitiveBool) -> Self {
+//         Self {
+//             value: StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(value.value),
+//             conjuctive_operator: value.conjuctive_operator,
+//         }
+//     }
+// }
 //
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
