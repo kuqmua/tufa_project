@@ -3988,6 +3988,15 @@ impl std::convert::From<StdOptionOptionStdPrimitiveBool> for StdOptionOptionStdP
         Self(value.0)
     }
 }
+//postgresql_crud_types_macro_logic_reuse::CommonFromOption
+impl std::convert::From<WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize> for WhereStdOptionOptionStdPrimitiveBool {
+    fn from(value: WhereStdOptionOptionStdPrimitiveBoolWithSerializeDeserialize) -> Self {
+        Self {
+            value: StdOptionOptionStdPrimitiveBool::from(value.value),
+            conjuctive_operator: value.conjuctive_operator,
+        }
+    }
+}
 //
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
