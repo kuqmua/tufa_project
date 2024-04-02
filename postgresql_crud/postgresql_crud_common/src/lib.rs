@@ -4220,7 +4220,7 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTy
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonOption, postgresql_crud_types_macro_logic_reuse::CommonTryFrom)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonOption, postgresql_crud_types_macro_logic_reuse::CommonTryFromOption, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFromOption)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
@@ -4466,39 +4466,39 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWi
     }
 }
 //
-#[derive(
-    Debug,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-)]
-pub struct StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(std::option::Option<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>);
-impl std::fmt::Display for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
-impl std::convert::TryFrom<StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match value.0 {
-            Some(value) => match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value) {
-                Ok(value) => Ok(Self(Some(value.0))),
-                Err(e) => Err(e)
-            },
-            None => Ok(Self(None))
-        }
-    }
-}
-impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    fn from(value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
-        match value.0 {
-            Some(value) => Self(Some(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(value)))),
-            None => Self(None)
-        }
-    }
-}
+// #[derive(
+//     Debug,
+//     PartialEq,
+//     serde::Serialize,
+//     serde::Deserialize,
+//     utoipa::ToSchema,
+// )]
+// pub struct StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(std::option::Option<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>);
+// impl std::fmt::Display for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{:?}", self.0)
+//     }
+// }
+// impl std::convert::TryFrom<StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+//     type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+//     fn try_from(value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+//         match value.0 {
+//             Some(value) => match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value) {
+//                 Ok(value) => Ok(Self(Some(value.0))),
+//                 Err(e) => Err(e)
+//             },
+//             None => Ok(Self(None))
+//         }
+//     }
+// }
+// impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
+//     fn from(value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
+//         match value.0 {
+//             Some(value) => Self(Some(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(value)))),
+//             None => Self(None)
+//         }
+//     }
+// }
 //
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
 
