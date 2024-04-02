@@ -3764,14 +3764,14 @@ impl PostgresqlOrder for StdPrimitiveBool {}
 impl AsPostgresqlBool for StdOptionOptionStdPrimitiveBool {}
 impl PostgresqlOrder for StdOptionOptionStdPrimitiveBool {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdPrimitiveI16(pub std::primitive::i16);
 impl AsPostgresqlSmallInt for StdPrimitiveI16 {}
 impl AsPostgresqlSmallSerial for StdPrimitiveI16 {}
 impl AsPostgresqlInt2 for StdPrimitiveI16 {}
 impl PostgresqlOrder for StdPrimitiveI16 {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdPrimitiveI32(pub std::primitive::i32);
 impl AsPostgresqlInt for StdPrimitiveI32 {}
 impl AsPostgresqlSerial for StdPrimitiveI32 {}
@@ -3785,19 +3785,19 @@ impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
 impl AsPostgresqlInt8 for StdPrimitiveI64 {}
 impl PostgresqlOrder for StdPrimitiveI64 {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdPrimitiveF32(pub std::primitive::f32);
 impl AsPostgresqlReal for StdPrimitiveF32 {}
 impl AsPostgresqlFloat4 for StdPrimitiveF32 {}
 impl PostgresqlOrder for StdPrimitiveF32 {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdPrimitiveF64(pub std::primitive::f64);
 impl AsPostgresqlDoublePrecision for StdPrimitiveF64 {}
 impl AsPostgresqlFloat8 for StdPrimitiveF64 {}
 impl PostgresqlOrder for StdPrimitiveF64 {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdStringString(pub std::string::String);
 impl AsPostgresqlVarchar for StdStringString {}
 impl AsPostgresqlCharN for StdStringString {}
@@ -3805,11 +3805,11 @@ impl AsPostgresqlText for StdStringString {}
 impl AsPostgresqlCiText for StdStringString {}
 impl PostgresqlOrder for StdStringString {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::Common, postgresql_crud_types_macro_logic_reuse::CommonFrom)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
@@ -5363,31 +5363,31 @@ impl std::fmt::Display for SqlxTypesBigDecimalWithSerializeDeserialize {
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 impl AsPostgresqlTimestamp for SqlxTypesChronoNaiveDateTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
@@ -5738,12 +5738,12 @@ impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 impl AsPostgresqlInet for SqlxTypesIpnetworkIpNetwork {}
 impl AsPostgresqlCidr for SqlxTypesIpnetworkIpNetwork {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
@@ -5977,7 +5977,7 @@ impl<T> SqlxTypesJson<T> {
 //     }
 // }
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::Common)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SerdeJsonValue(pub serde_json::Value);
 impl AsPostgresqlJson for SerdeJsonValue {}
 impl AsPostgresqlJsonB for SerdeJsonValue {}
