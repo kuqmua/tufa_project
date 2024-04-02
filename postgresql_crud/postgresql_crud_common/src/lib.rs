@@ -4465,37 +4465,6 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWi
         write!(f, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
-//
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
-    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-        #[eo_error_occurence]
-        sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
-    },
-}
-impl std::convert::TryFrom<WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-    type Error = WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-    fn try_from(value: WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        match value.value.0 {
-            Some(value_one) => match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value_one) {
-                Ok(value_two) => Ok(Self{
-                    value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(Some(value_two.0)),
-                    conjuctive_operator: value.conjuctive_operator,
-                }),
-                Err(e) => Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-                    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: e,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            },
-            None => Ok(Self {
-                value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(None),
-                conjuctive_operator: value.conjuctive_operator,
-            })
-        }
-    }
-}
-//
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonSpecificFromOption)]
