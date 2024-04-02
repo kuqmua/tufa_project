@@ -1081,6 +1081,120 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
     gen.into()
 }
 ///////////////
+#[proc_macro_derive(CommonSpecificFromOption)]
+pub fn common_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "CommonFrom";
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+        panic!(
+            "{proc_macro_name_upper_camel_case} {}: {e}",
+            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+        )
+    });
+    let ident = &ast.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    // let where_ident_token_stream = {
+    //     let value_stringified = format!("{}{ident}", proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified());
+    //     value_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
+    // let where_ident_with_serialize_deserialize_token_stream = {
+    //     let value_stringified = format!(
+    //         "{}{ident}{}", 
+    //         proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+    //         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+    //     );
+    //     value_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
+    // let std_option_option_ident_token_stream = {
+    //     let value_stringified = format!(
+    //         "{}{ident}",
+    //         proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+    //     );
+    //     value_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
+    // let where_std_option_option_ident_token_stream = {
+    //     let value_stringified = format!(
+    //         "{}{}{ident}",
+    //         proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+    //         proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+    //     );
+    //     value_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
+    // let where_std_option_option_ident_with_serialize_deserialize_token_stream = {
+    //     let value_stringified = format!(
+    //         "{}{}{ident}{}", 
+    //         proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
+    //         proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+    //         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+    //     );
+    //     value_stringified.parse::<proc_macro2::TokenStream>()
+    //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    // };
+    let ident_with_serialize_deserialize_token_stream = {
+        let value_stringified = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let std_option_option_ident_upper_camel_case_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}",
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream = {
+        let value_stringified = format!(
+            "{}{ident}{}",
+            proc_macro_helpers::naming_conventions::std_option_option_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let gen = quote::quote!{
+        #[derive(
+            Debug,
+            PartialEq,
+            serde::Serialize,
+            serde::Deserialize,
+            utoipa::ToSchema,
+        )]
+        pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#ident_with_serialize_deserialize_token_stream>);
+        impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{:?}", self.0)
+            }
+        }
+        impl std::convert::From<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
+            fn from(value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream) -> Self {
+                match value.0 {
+                    Some(value) => Self(Some(#ident::from(value).0)),
+                    None => Self(None)
+                }
+            }
+        }
+        impl std::convert::From<#std_option_option_ident_upper_camel_case_token_stream> for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
+            fn from(value: #std_option_option_ident_upper_camel_case_token_stream) -> Self {
+                match value.0 {
+                    Some(value) => Self(Some(#ident_with_serialize_deserialize_token_stream::from(#ident(value)))),
+                    None => Self(None)
+                }
+            }
+        }
+    };
+    // if ident == "" {
+    //     println!("{gen}");
+    //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
+    // }
+    gen.into()
+}
+////////////////
 
 #[proc_macro_derive(AsPostgresqlCommon)] //todo check on postgresql max length value of type
 pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
