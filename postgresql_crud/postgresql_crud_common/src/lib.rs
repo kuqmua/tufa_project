@@ -4466,39 +4466,35 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWi
     }
 }
 //
-// #[derive(
-//     Debug,
-//     PartialEq,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     utoipa::ToSchema,
-// )]
-// pub struct StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(std::option::Option<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>);
-// impl std::fmt::Display for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "{:?}", self.0)
-//     }
-// }
-// impl std::convert::TryFrom<StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
-//     type Error = SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
-//     fn try_from(value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
-//         match value.0 {
-//             Some(value) => match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value) {
-//                 Ok(value) => Ok(Self(Some(value.0))),
-//                 Err(e) => Err(e)
-//             },
-//             None => Ok(Self(None))
-//         }
-//     }
-// }
-// impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime> for StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-//     fn from(value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime) -> Self {
-//         match value.0 {
-//             Some(value) => Self(Some(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize::from(SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(value)))),
-//             None => Self(None)
-//         }
-//     }
-// }
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
+    SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+        #[eo_error_occurence]
+        sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence//todo reuse path to error_occurence_lib
+    },
+}
+impl std::convert::TryFrom<WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> for WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+    type Error = WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed;
+    fn try_from(value: WhereStdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize) -> Result<Self, Self::Error> {
+        match value.value.0 {
+            Some(value_one) => match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(value_one) {
+                Ok(value_two) => Ok(Self{
+                    value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(Some(value_two.0)),
+                    conjuctive_operator: value.conjuctive_operator,
+                }),
+                Err(e) => Err(Self::Error::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {
+                    sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time: e,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            },
+            None => Ok(Self {
+                value: StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(None),
+                conjuctive_operator: value.conjuctive_operator,
+            })
+        }
+    }
+}
 //
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
 
