@@ -1082,7 +1082,7 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
 }
 ///////////////
 #[proc_macro_derive(CommonSpecificFromOption)]
-pub fn common_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn common_specific_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonFrom";

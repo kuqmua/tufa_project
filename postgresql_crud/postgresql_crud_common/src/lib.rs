@@ -3809,7 +3809,7 @@ impl PostgresqlOrder for StdStringString {}
 pub struct StdVecVecStdPrimitiveU8(pub std::vec::Vec<std::primitive::u8>);
 impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
-#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption)]
+#[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonSpecificFromOption)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
@@ -3844,37 +3844,6 @@ impl std::fmt::Display for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
         write!(f, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
     }
 }
-//
-#[derive(
-    Debug,
-    PartialEq,
-    serde::Serialize,
-    serde::Deserialize,
-    utoipa::ToSchema,
-)]
-pub struct StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize(std::option::Option<SqlxPostgresTypesPgIntervalWithSerializeDeserialize>);//not sure
-impl std::fmt::Display for StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
-    }
-}
-impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize> for StdOptionOptionSqlxPostgresTypesPgInterval {
-    fn from(value: StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize) -> Self {
-        match value.0 {
-            Some(value) => Self(Some(SqlxPostgresTypesPgInterval::from(value).0)),
-            None => Self(None)
-        }
-    }
-}
-impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgInterval> for StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize {
-    fn from(value: StdOptionOptionSqlxPostgresTypesPgInterval) -> Self {
-        match value.0 {
-            Some(value) => Self(Some(SqlxPostgresTypesPgIntervalWithSerializeDeserialize::from(SqlxPostgresTypesPgInterval(value)))),
-            None => Self(None)
-        }
-    }
-}
-//
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 
