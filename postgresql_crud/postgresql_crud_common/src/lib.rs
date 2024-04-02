@@ -3844,6 +3844,37 @@ impl std::fmt::Display for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
         write!(f, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
     }
 }
+//
+#[derive(
+    Debug,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+)]
+pub struct StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize(std::option::Option<SqlxPostgresTypesPgIntervalWithSerializeDeserialize>);//not sure
+impl std::fmt::Display for StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
+impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize> for StdOptionOptionSqlxPostgresTypesPgInterval {
+    fn from(value: StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize) -> Self {
+        match value.0 {
+            Some(value) => Self(Some(SqlxPostgresTypesPgInterval::from(value).0)),
+            None => Self(None)
+        }
+    }
+}
+impl std::convert::From<StdOptionOptionSqlxPostgresTypesPgInterval> for StdOptionOptionSqlxPostgresTypesPgIntervalWithSerializeDeserialize {
+    fn from(value: StdOptionOptionSqlxPostgresTypesPgInterval) -> Self {
+        match value.0 {
+            Some(value) => Self(Some(SqlxPostgresTypesPgIntervalWithSerializeDeserialize::from(SqlxPostgresTypesPgInterval(value)))),
+            None => Self(None)
+        }
+    }
+}
+//
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
 impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 
