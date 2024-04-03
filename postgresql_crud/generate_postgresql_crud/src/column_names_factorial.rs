@@ -180,7 +180,7 @@ pub fn column_names_factorial<'a>(
                     }
                     if !out.contains(first_element) {
                         let mut cl = out.clone();
-                        cl.push(first_element.clone());
+                        cl.push(first_element);
                         cl.sort_by(|a,b|{
                             let (index_a, _) = original_input.iter().find(|(_, field)|{a.ident
                                 .clone()

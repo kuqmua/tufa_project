@@ -2534,7 +2534,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| &element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
+    let fields_idents_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
     let std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream = quote::quote!{std::vec::Vec::<#primary_key_inner_type_with_serialize_deserialize_token_stream>};
     let std_vec_vec_struct_options_ident_token_stream = quote::quote!{std::vec::Vec::<#struct_options_ident_token_stream>};
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
@@ -8948,7 +8948,7 @@ fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string:
 #[derive(Debug, Clone)]
 struct SynFieldWithAdditionalInfo<'a> {
     field: &'a syn::Field,
-    field_ident: syn::Ident,
+    field_ident: &'a syn::Ident,
     rust_sqlx_map_to_postgres_type_variant:
         postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
     _maybe_generic_token_stream: proc_macro2::TokenStream, //todo maybe not need to add here
@@ -8964,10 +8964,7 @@ struct SynFieldWithAdditionalInfo<'a> {
 impl<'a> std::convert::From<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
     fn from(value: &'a syn::Field) -> Self {
         let name = "SynFieldWithAdditionalInfo from syn::Field error";
-        let field_ident = value
-            .ident
-            .clone()
-            .unwrap_or_else(|| panic!("{name} field ident is none"));
+        let field_ident = value.ident.as_ref().unwrap_or_else(|| panic!("{name} field ident is none"));
         let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
             syn::Type::Path(value) => {
                 match value.path.segments.len() == 2 {
