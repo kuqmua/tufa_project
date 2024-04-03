@@ -137,8 +137,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let table_name_declaration_token_stream = quote::quote! {pub const TABLE_NAME: #str_ref_token_stream = #table_name_quotes_token_stream;};
     let fields_named = if let syn::Data::Struct(data_struct) = &ast.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
-            fields_named.named.clone()
-                .into_iter()
+            fields_named.named
+                .iter()
                 .map(|element| SynFieldWithAdditionalInfo::from(element))
                 .collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>()
         } else {
@@ -377,28 +377,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{from_ident_for_ident_options_token_stream}");
-    let column_variants = {
+    let column_names_factorial_vec: std::vec::Vec<std::vec::Vec<syn::Field>> = {
         let fields_named_enumerated = fields_named
             .iter()
             .enumerate()
-            .map(|(index, element)|(index, &element.field))
+            .map(|(index, element)|(index, element.field))
             .collect::<std::vec::Vec<(usize, &syn::Field)>>();
-        let fields_named_clone_stringified =
-            fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>();
+        let fields_named_clone_stringified = fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>();
         let mut veced_vec = fields_named_clone_stringified
             .iter()
             .map(|field| vec![(*field).clone()])
             .collect::<std::vec::Vec<std::vec::Vec<syn::Field>>>();
-        //todo rewrite in different way, coz compile time for many columns in not accaptable
-        let column_variants_vec: std::vec::Vec<std::vec::Vec<syn::Field>> =
-            crate::column_names_factorial::column_names_factorial(
-                fields_named_enumerated,
-                fields_named_clone_stringified,
-                &mut veced_vec as &mut [std::vec::Vec<syn::Field>],
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
-        column_variants_vec
-            .into_iter()
+        crate::column_names_factorial::column_names_factorial(
+            fields_named_enumerated,
+            fields_named_clone_stringified,
+            &mut veced_vec as &mut [std::vec::Vec<syn::Field>],
+            &proc_macro_name_upper_camel_case_ident_stringified,
+        )
+    };
+    let column_variants = {
+            column_names_factorial_vec.iter()
             .map(|elements| {
                 elements
                     .into_iter()
@@ -471,7 +469,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 let self_fields_token_stream = generate_self_fields_token_stream(
-                    &variant_columns.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
+                    &variant_columns.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
                 let ident_try_from_ident_options_error_named_upper_camel_case_token_stream = {
@@ -937,7 +935,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             let option_fields_initiation_token_stream = generate_self_fields_token_stream(
-                &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
+                &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             let sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream = {
@@ -2501,7 +2499,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         common_error_variants_vec
     };
     let fields_named_idents_comma_token_stream = generate_self_fields_token_stream(
-        &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
+        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
         &proc_macro_name_upper_camel_case_ident_stringified,
     )
     .iter()
@@ -5244,7 +5242,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &from_snake_case_token_stream,
                             ));
                         let self_init_fields_token_stream = generate_self_fields_token_stream(
-                            &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
+                            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>()
                                 as &[&syn::Field],
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
@@ -5302,7 +5300,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &from_snake_case_token_stream,
                             ));
                         let self_init_fields_token_stream = generate_self_fields_token_stream(
-                            &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
+                            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>()
                                 as &[&syn::Field],
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
@@ -5430,7 +5428,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &from_snake_case_token_stream,
                             ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
+                        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>()
                             as &[&syn::Field],
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
@@ -6207,7 +6205,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = {
                 let check_for_none_token_stream_excluding_primary_key =
                     crate::check_for_none::check_for_none(
-                        fields_named.iter().map(|element|&element.field).collect(),
+                        fields_named.iter().map(|element|element.field).collect(),
                         &primary_key_field,
                         &proc_macro_name_upper_camel_case_ident_stringified,
                         dot_space,
@@ -6567,7 +6565,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &from_snake_case_token_stream,
                         ));
                     let self_init_fields_token_stream = generate_self_fields_token_stream(
-                        &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
+                        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>()
                             as &[&syn::Field],
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
@@ -6623,7 +6621,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &from_snake_case_token_stream,
                             ));
                         let self_init_fields_token_stream = generate_self_fields_token_stream(
-                            &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
+                            &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>()
                                 as &[&syn::Field],
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
@@ -6699,7 +6697,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &from_snake_case_token_stream,
                     ));
                 let self_init_fields_token_stream = generate_self_fields_token_stream(
-                    &fields_named.iter().map(|element|&element.field).collect::<std::vec::Vec<&syn::Field>>()
+                    &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>()
                         as &[&syn::Field],
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
@@ -6852,7 +6850,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let try_operation_token_stream = {
                 let check_for_none_token_stream = crate::check_for_none::check_for_none(
-                    fields_named.iter().map(|element|&element.field).collect(),
+                    fields_named.iter().map(|element|element.field).collect(),
                     &primary_key_field,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     dot_space,
@@ -8948,8 +8946,8 @@ fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string:
 }
 
 #[derive(Debug, Clone)]
-struct SynFieldWithAdditionalInfo {
-    field: syn::Field,
+struct SynFieldWithAdditionalInfo<'a> {
+    field: &'a syn::Field,
     field_ident: syn::Ident,
     rust_sqlx_map_to_postgres_type_variant:
         postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
@@ -8963,12 +8961,12 @@ struct SynFieldWithAdditionalInfo {
     where_inner_type_token_stream: proc_macro2::TokenStream,
     where_inner_type_with_serialize_deserialize_token_stream: proc_macro2::TokenStream,
 }
-impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
-    fn from(value: syn::Field) -> Self {
+impl<'a> std::convert::From<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
+    fn from(value: &'a syn::Field) -> Self {
         let name = "SynFieldWithAdditionalInfo from syn::Field error";
-        let field = value.clone();
         let field_ident = value
             .ident
+            .clone()
             .unwrap_or_else(|| panic!("{name} field ident is none"));
         let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
             syn::Type::Path(value) => {
@@ -9046,7 +9044,7 @@ impl std::convert::From<syn::Field> for SynFieldWithAdditionalInfo {
             .unwrap_or_else(|_| panic!("{name} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         Self {
-            field,
+            field: value,
             field_ident,
             rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
             _maybe_generic_token_stream: maybe_generic_token_stream, //todo maybe not need to add here
