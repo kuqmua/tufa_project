@@ -5,8 +5,7 @@ pub fn column_names_factorial<'a>(
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
 ) -> std::vec::Vec<std::vec::Vec<&'a syn::Field>> {
     //todo optimize
-    let len = input.len();
-    match len {
+    match input.len() {
         0 => {
             let mut end_out = {
                 let output_len = output.len();
@@ -17,14 +16,14 @@ pub fn column_names_factorial<'a>(
                             let (index_a, _) = original_input
                                 .iter()
                                 .find(|(_, field)| {
-                                    a.ident
-                                        .clone()
+                                        a.ident
+                                        .as_ref()
                                         .unwrap_or_else(|| {
                                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                         })
                                         == field
                                             .ident
-                                            .clone()
+                                            .as_ref()
                                             .unwrap_or_else(|| {
                                                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                             })
@@ -38,13 +37,13 @@ pub fn column_names_factorial<'a>(
                                 .iter()
                                 .find(|(_, field)| {
                                     b.ident
-                                        .clone()
+                                        .as_ref()
                                         .unwrap_or_else(|| {
                                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                         })
                                         == field
                                             .ident
-                                            .clone()
+                                            .as_ref()
                                             .unwrap_or_else(|| {
                                                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                             })
@@ -72,7 +71,7 @@ pub fn column_names_factorial<'a>(
                         for b_elem in a {
                             if let Some(or) = a_elem
                                 .ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 })
@@ -80,7 +79,7 @@ pub fn column_names_factorial<'a>(
                                 .partial_cmp(
                                     &b_elem
                                         .ident
-                                        .clone()
+                                        .as_ref()
                                         .unwrap_or_else(|| {
                                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                         })
@@ -153,23 +152,23 @@ pub fn column_names_factorial<'a>(
                     if !acc.contains(out) {
                         out.sort_by(|a,b|{
                             let (index_a, _) = original_input.iter().find(|(_, field)|{a.ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 }) == field
                                 .ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 })
                             }).unwrap_or_else(||panic!("{proc_macro_name_upper_camel_case_ident_stringified} cannot find original input index"));
                             let (index_b, _) = original_input.iter().find(|(_, field)|{b.ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 }) == field
                                 .ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 })
@@ -183,23 +182,23 @@ pub fn column_names_factorial<'a>(
                         cl.push(first_element);
                         cl.sort_by(|a,b|{
                             let (index_a, _) = original_input.iter().find(|(_, field)|{a.ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 }) == field
                                 .ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 })
                             }).unwrap_or_else(||panic!("{proc_macro_name_upper_camel_case_ident_stringified} cannot find original input index"));
                             let (index_b, _) = original_input.iter().find(|(_, field)|{b.ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 }) == field
                                 .ident
-                                .clone()
+                                .as_ref()
                                 .unwrap_or_else(|| {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} field.ident is None")
                                 })
