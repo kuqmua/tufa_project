@@ -377,7 +377,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{from_ident_for_ident_options_token_stream}");
-    let column_names_factorial_vec: std::vec::Vec<std::vec::Vec<syn::Field>> = {
+    let column_names_factorial_vec: std::vec::Vec<std::vec::Vec<&syn::Field>> = {
         let fields_named_enumerated = fields_named
             .iter()
             .enumerate()
@@ -386,12 +386,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_named_clone_stringified = fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>();
         let mut veced_vec = fields_named_clone_stringified
             .iter()
-            .map(|field| vec![(*field).clone()])
-            .collect::<std::vec::Vec<std::vec::Vec<syn::Field>>>();
+            .map(|field| vec![*field])
+            .collect::<std::vec::Vec<std::vec::Vec<&syn::Field>>>();
         crate::column_names_factorial::column_names_factorial(
             fields_named_enumerated,
             fields_named_clone_stringified,
-            &mut veced_vec as &mut [std::vec::Vec<syn::Field>],
+            &mut veced_vec as &mut [std::vec::Vec<&syn::Field>],
             &proc_macro_name_upper_camel_case_ident_stringified,
         )
     };
@@ -399,8 +399,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             column_names_factorial_vec.iter()
             .map(|elements| {
                 elements
-                    .into_iter()
-                    .map(|element| SynFieldWithAdditionalInfo::from(element))
+                    .iter()
+                    .map(|element| SynFieldWithAdditionalInfo::from(*element))
                     .collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>()
             })
             .collect::<std::vec::Vec<std::vec::Vec<SynFieldWithAdditionalInfo>>>()
