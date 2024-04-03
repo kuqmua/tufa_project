@@ -213,7 +213,6 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-
 pub const TABLE_NAME: &str = "dogs";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct DogOptions {
@@ -221,8 +220,9 @@ pub struct DogOptions {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         std::option::Option<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub std_primitive_bool_as_postgresql_bool:
-        std::option::Option<postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize>,
+    pub std_primitive_bool_as_postgresql_bool: std::option::Option<
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    >,
 }
 impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
@@ -235,7 +235,7 @@ impl std::convert::From<Dog> for DogOptions {
                 ),
             ),
             std_primitive_bool_as_postgresql_bool: Some(
-                postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize::from(
+                postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
                     value.std_primitive_bool_as_postgresql_bool.0,
                 ),
             ),
@@ -245,7 +245,7 @@ impl std::convert::From<Dog> for DogOptions {
 #[derive(Debug)]
 pub struct DogStdPrimitiveBoolAsPostgresqlBool {
     pub std_primitive_bool_as_postgresql_bool:
-        postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
 }
 #[derive(Debug)]
 pub struct DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey {
@@ -256,7 +256,7 @@ pub struct DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey {
 pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
 {
     pub std_primitive_bool_as_postgresql_bool:
-        postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
 }
@@ -551,7 +551,7 @@ impl DogColumnSelect {
         :: option :: Option <
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize > = None ;
         let mut std_primitive_bool_as_postgresql_bool: std::option::Option<
-            postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,
+            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
         > = None;
         match self
         {
@@ -563,8 +563,9 @@ impl DogColumnSelect {
                     std::option::Option<std::primitive::bool> > =
                     row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
                     value.map(| value |
-                    postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize ::
-                    from(postgresql_crud::StdPrimitiveBool(value)))
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
                 } ;
             } Self :: StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
             {} Self ::
@@ -577,8 +578,9 @@ impl DogColumnSelect {
                     std::option::Option<std::primitive::bool> > =
                     row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
                     value.map(| value |
-                    postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize ::
-                    from(postgresql_crud::StdPrimitiveBool(value)))
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
                 } ;
             }
         }
@@ -1365,14 +1367,14 @@ fn dog_emulate_crud_api_usage_test() {
 }
 #[derive(Debug)]
 pub struct CreateManyPayloadElement {
-    pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBool,
+    pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdOptionOptionStdPrimitiveBool,
 }
 #[derive(Debug)]
 pub struct CreateManyPayload(pub std::vec::Vec<CreateManyPayloadElement>);
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct CreateManyPayloadElementWithSerializeDeserialize {
     pub std_primitive_bool_as_postgresql_bool:
-        postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize,
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct CreateManyPayloadWithSerializeDeserialize(
@@ -1383,7 +1385,9 @@ impl std::convert::From<CreateManyPayloadElementWithSerializeDeserialize>
 {
     fn from(value: CreateManyPayloadElementWithSerializeDeserialize) -> Self {
         let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdPrimitiveBool::from(value.std_primitive_bool_as_postgresql_bool);
+            postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
+                value.std_primitive_bool_as_postgresql_bool,
+            );
         Self {
             std_primitive_bool_as_postgresql_bool,
         }
@@ -1403,7 +1407,7 @@ impl std::convert::From<CreateManyPayloadElement>
 {
     fn from(value: CreateManyPayloadElement) -> Self {
         let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdPrimitiveBoolWithSerializeDeserialize::from(
+            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
                 value.std_primitive_bool_as_postgresql_bool,
             );
         Self {
@@ -1852,50 +1856,6 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr201Created>
     }
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateManyResponseVariantsTvfrr404NotFound {
-    RowNotFound {
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyResponseVariantsTvfrr404NotFound>
-    for TryCreateManyResponseVariants
-{
-    fn from(value: TryCreateManyResponseVariantsTvfrr404NotFound) -> Self {
-        match value {
-            TryCreateManyResponseVariantsTvfrr404NotFound::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
-    PoolTimedOut {
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyResponseVariantsTvfrr408RequestTimeout>
-    for TryCreateManyResponseVariants
-{
-    fn from(value: TryCreateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
-        match value {
-            TryCreateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            },
-        }
-    }
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub enum TryCreateManyResponseVariantsTvfrr400BadRequest {
     TypeNotFound {
         type_not_found: std::string::String,
@@ -1992,6 +1952,28 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr400BadRequest>
                 code_occurence,
             } => Self::NoCommitExtractorHeader {
                 no_commit_header,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateManyResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateManyResponseVariantsTvfrr404NotFound>
+    for TryCreateManyResponseVariants
+{
+    fn from(value: TryCreateManyResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryCreateManyResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
                 code_occurence,
             },
         }
@@ -2125,6 +2107,28 @@ impl std::convert::From<TryCreateManyResponseVariantsTvfrr500InternalServerError
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
                 code_occurence
             }
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryCreateManyResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryCreateManyResponseVariantsTvfrr408RequestTimeout>
+    for TryCreateManyResponseVariants
+{
+    fn from(value: TryCreateManyResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryCreateManyResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
         }
     }
 }
@@ -2597,8 +2601,8 @@ pub async fn try_create_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
-        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr500InternalServerError>(
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
             &response_text,
         ) {
             Ok(value) => TryCreateManyResponseVariants::from(value),
@@ -2623,8 +2627,8 @@ pub async fn try_create_many<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr500InternalServerError>(
             &response_text,
         ) {
             Ok(value) => TryCreateManyResponseVariants::from(value),
@@ -2780,9 +2784,11 @@ pub async fn create_many(
                     acc
                 },
             );
-            query = query.bind(postgresql_crud::StdPrimitiveBool::into_inner_type_vec(
-                std_primitive_bool_as_postgresql_bool_vec,
-            ));
+            query = query.bind(
+                postgresql_crud::StdOptionOptionStdPrimitiveBool::into_inner_type_vec(
+                    std_primitive_bool_as_postgresql_bool_vec,
+                ),
+            );
             query
         };
         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
