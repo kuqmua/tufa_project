@@ -49,14 +49,14 @@ pub struct Dog {
     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdPrimitiveBoolAsPostgresqlBool,
     // pub std_primitive_bool_as_postgresql_bool_not_null: postgresql_crud::StdPrimitiveBoolAsPostgresqlBoolNotNull,
 
-    // pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt,
+    pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt,
     // pub std_primitive_i16_as_postgresql_small_int_not_null: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallIntNotNull,
     // pub std_primitive_i16_as_postgresql_small_serial: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallSerial,
     // pub std_primitive_i16_as_postgresql_small_serial_not_null: postgresql_crud::StdPrimitiveI16AsPostgresqlSmallSerialNotNull,
     // pub std_primitive_i16_as_postgresql_small_int2: postgresql_crud::StdPrimitiveI16AsPostgresqlInt2,
     // pub std_primitive_i16_as_postgresql_small_int2_not_null: postgresql_crud::StdPrimitiveI16AsPostgresqlInt2NotNull,
 
-    // pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdPrimitiveI32AsPostgresqlInt,
+    pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdPrimitiveI32AsPostgresqlInt,
     // pub std_primitive_i32_as_postgresql_int_not_null: postgresql_crud::StdPrimitiveI32AsPostgresqlIntNotNull,
     // pub std_primitive_i32_as_postgresql_serial: postgresql_crud::StdPrimitiveI32AsPostgresqlSerial,
     // pub std_primitive_i32_as_postgresql_serial_not_null: postgresql_crud::StdPrimitiveI32AsPostgresqlSerialNotNull,
@@ -223,6 +223,14 @@ pub struct DogOptions {
     pub std_primitive_bool_as_postgresql_bool: std::option::Option<
         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
     >,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub std_primitive_i16_as_postgresql_small_int: std::option::Option<
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    >,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub std_primitive_i32_as_postgresql_int: std::option::Option<
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+    >,
 }
 impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
@@ -239,6 +247,16 @@ impl std::convert::From<Dog> for DogOptions {
                     value.std_primitive_bool_as_postgresql_bool.0,
                 ),
             ),
+            std_primitive_i16_as_postgresql_small_int: Some(
+                postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
+                    value.std_primitive_i16_as_postgresql_small_int.0,
+                ),
+            ),
+            std_primitive_i32_as_postgresql_int: Some(
+                postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
+                    value.std_primitive_i32_as_postgresql_int.0,
+                ),
+            ),
         }
     }
 }
@@ -248,15 +266,113 @@ pub struct DogStdPrimitiveBoolAsPostgresqlBool {
         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
 }
 #[derive(Debug)]
+pub struct DogStdPrimitiveI16AsPostgresqlSmallInt {
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveI32AsPostgresqlInt {
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+}
+#[derive(Debug)]
 pub struct DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt {
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
 }
 #[derive(Debug)]
 pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
 {
     pub std_primitive_bool_as_postgresql_bool:
         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt {
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt {
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey {
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+{
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i16_as_postgresql_small_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+    pub std_primitive_i32_as_postgresql_int:
+        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
 }
@@ -296,6 +412,84 @@ impl std::convert::TryFrom<DogOptions> for DogStdPrimitiveBoolAsPostgresqlBool {
             };
         Ok(Self {
             std_primitive_bool_as_postgresql_bool,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI16AsPostgresqlSmallIntTryFromDogOptionsErrorNamed {
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions> for DogStdPrimitiveI16AsPostgresqlSmallInt {
+    type Error = DogStdPrimitiveI16AsPostgresqlSmallIntTryFromDogOptionsErrorNamed;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i16_as_postgresql_small_int = match value
+            .std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+                    std_primitive_i16_as_postgresql_small_int_is_none: std::string::String::from(
+                        "std_primitive_i16_as_postgresql_small_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_i16_as_postgresql_small_int,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed {
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions> for DogStdPrimitiveI32AsPostgresqlInt {
+    type Error = DogStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI32AsPostgresqlIntIsNone {
+                    std_primitive_i32_as_postgresql_int_is_none: std::string::String::from(
+                        "std_primitive_i32_as_postgresql_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_i32_as_postgresql_int,
         })
     }
 }
@@ -340,6 +534,78 @@ impl std::convert::TryFrom<DogOptions>
         };
         Ok(Self {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed
+    ;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_bool_as_postgresql_bool =
+            match value.std_primitive_bool_as_postgresql_bool {
+                Some(value) => value,
+                None => {
+                    return Err(Self::Error::StdPrimitiveBoolAsPostgresqlBoolIsNone {
+                        std_primitive_bool_as_postgresql_bool_is_none: std::string::String::from(
+                            "std_primitive_bool_as_postgresql_bool is None",
+                        ),
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 584,
+                                column: 29,
+                            }),
+                        ),
+                    });
+                }
+            };
+        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI32AsPostgresqlIntIsNone {
+                    std_primitive_i32_as_postgresql_int_is_none: std::string::String::from(
+                        "std_primitive_i32_as_postgresql_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i32_as_postgresql_int,
         })
     }
 }
@@ -418,6 +684,848 @@ impl std::convert::TryFrom<DogOptions>
         })
     }
 }
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntTryFromDogOptionsErrorNamed
+    ;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_bool_as_postgresql_bool =
+            match value.std_primitive_bool_as_postgresql_bool {
+                Some(value) => value,
+                None => {
+                    return Err(Self::Error::StdPrimitiveBoolAsPostgresqlBoolIsNone {
+                        std_primitive_bool_as_postgresql_bool_is_none: std::string::String::from(
+                            "std_primitive_bool_as_postgresql_bool is None",
+                        ),
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 584,
+                                column: 29,
+                            }),
+                        ),
+                    });
+                }
+            };
+        let std_primitive_i16_as_postgresql_small_int = match value
+            .std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+                    std_primitive_i16_as_postgresql_small_int_is_none: std::string::String::from(
+                        "std_primitive_i16_as_postgresql_small_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i16_as_postgresql_small_int,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+{
+    type Error =
+    DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed
+    ;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i16_as_postgresql_small_int = match value
+            .std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+                    std_primitive_i16_as_postgresql_small_int_is_none: std::string::String::from(
+                        "std_primitive_i16_as_postgresql_small_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI32AsPostgresqlIntIsNone {
+                    std_primitive_i32_as_postgresql_int_is_none: std::string::String::from(
+                        "std_primitive_i32_as_postgresql_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i32_as_postgresql_int,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = match value
+            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value,
+            None => {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        };
+        let std_primitive_i16_as_postgresql_small_int = match value
+            .std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+                    std_primitive_i16_as_postgresql_small_int_is_none: std::string::String::from(
+                        "std_primitive_i16_as_postgresql_small_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = match value
+            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value,
+            None => {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        };
+        let std_primitive_i32_as_postgresql_int = match value.std_primitive_i32_as_postgresql_int {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::StdPrimitiveI32AsPostgresqlIntIsNone {
+                    std_primitive_i32_as_postgresql_int_is_none: std::string::String::from(
+                        "std_primitive_i32_as_postgresql_int is None",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 584,
+                            column: 29,
+                        }),
+                    ),
+                });
+            }
+        };
+        Ok(Self {
+            std_primitive_i32_as_postgresql_int,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std :: convert :: TryFrom < DogOptions > for
+DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ; fn try_from(value : DogOptions) -> Result < Self, Self :: Error >
+    {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+        match
+        value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_bool_as_postgresql_bool = match
+        value.std_primitive_bool_as_postgresql_bool
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveBoolAsPostgresqlBoolIsNone
+                {
+                    std_primitive_bool_as_postgresql_bool_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_bool_as_postgresql_bool is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i32_as_postgresql_int = match
+        value.std_primitive_i32_as_postgresql_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI32AsPostgresqlIntIsNone
+                {
+                    std_primitive_i32_as_postgresql_int_is_none : std :: string
+                    :: String ::
+                    from("std_primitive_i32_as_postgresql_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ;
+        Ok(Self
+        {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i32_as_postgresql_int,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std :: convert :: TryFrom < DogOptions > for
+DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntTryFromDogOptionsErrorNamed
+    ; fn try_from(value : DogOptions) -> Result < Self, Self :: Error >
+    {
+        let std_primitive_bool_as_postgresql_bool = match
+        value.std_primitive_bool_as_postgresql_bool
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveBoolAsPostgresqlBoolIsNone
+                {
+                    std_primitive_bool_as_postgresql_bool_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_bool_as_postgresql_bool is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i16_as_postgresql_small_int = match
+        value.std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI16AsPostgresqlSmallIntIsNone
+                {
+                    std_primitive_i16_as_postgresql_small_int_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_i16_as_postgresql_small_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i32_as_postgresql_int = match
+        value.std_primitive_i32_as_postgresql_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI32AsPostgresqlIntIsNone
+                {
+                    std_primitive_i32_as_postgresql_int_is_none : std :: string
+                    :: String ::
+                    from("std_primitive_i32_as_postgresql_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ;
+        Ok(Self
+        {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i32_as_postgresql_int
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std :: convert :: TryFrom < DogOptions > for
+DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ; fn try_from(value : DogOptions) -> Result < Self, Self :: Error >
+    {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+        match
+        value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_bool_as_postgresql_bool = match
+        value.std_primitive_bool_as_postgresql_bool
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveBoolAsPostgresqlBoolIsNone
+                {
+                    std_primitive_bool_as_postgresql_bool_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_bool_as_postgresql_bool is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i16_as_postgresql_small_int = match
+        value.std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI16AsPostgresqlSmallIntIsNone
+                {
+                    std_primitive_i16_as_postgresql_small_int_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_i16_as_postgresql_small_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ;
+        Ok(Self
+        {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std :: convert :: TryFrom < DogOptions > for
+DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ; fn try_from(value : DogOptions) -> Result < Self, Self :: Error >
+    {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+        match
+        value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i16_as_postgresql_small_int = match
+        value.std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI16AsPostgresqlSmallIntIsNone
+                {
+                    std_primitive_i16_as_postgresql_small_int_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_i16_as_postgresql_small_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i32_as_postgresql_int = match
+        value.std_primitive_i32_as_postgresql_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI32AsPostgresqlIntIsNone
+                {
+                    std_primitive_i32_as_postgresql_int_is_none : std :: string
+                    :: String ::
+                    from("std_primitive_i32_as_postgresql_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ;
+        Ok(Self
+        {
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i32_as_postgresql_int,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI16AsPostgresqlSmallIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i16_as_postgresql_small_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI32AsPostgresqlIntIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i32_as_postgresql_int_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std :: convert :: TryFrom < DogOptions > for
+DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ; fn try_from(value : DogOptions) -> Result < Self, Self :: Error >
+    {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+        match
+        value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_bool_as_postgresql_bool = match
+        value.std_primitive_bool_as_postgresql_bool
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveBoolAsPostgresqlBoolIsNone
+                {
+                    std_primitive_bool_as_postgresql_bool_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_bool_as_postgresql_bool is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i16_as_postgresql_small_int = match
+        value.std_primitive_i16_as_postgresql_small_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI16AsPostgresqlSmallIntIsNone
+                {
+                    std_primitive_i16_as_postgresql_small_int_is_none : std ::
+                    string :: String ::
+                    from("std_primitive_i16_as_postgresql_small_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ; let std_primitive_i32_as_postgresql_int = match
+        value.std_primitive_i32_as_postgresql_int
+        {
+            Some(value) => value, None =>
+            {
+                return
+                Err(Self :: Error :: StdPrimitiveI32AsPostgresqlIntIsNone
+                {
+                    std_primitive_i32_as_postgresql_int_is_none : std :: string
+                    :: String ::
+                    from("std_primitive_i32_as_postgresql_int is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 584, column : 29,
+                    })),
+                }) ;
+            }
+        } ;
+        Ok(Self
+        {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i32_as_postgresql_int,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        })
+    }
+}
 #[derive(
     Debug,
     serde :: Serialize,
@@ -435,6 +1543,16 @@ pub enum DogColumn {
         deserialize = "std_primitive_bool_as_postgresql_bool"
     ))]
     StdPrimitiveBoolAsPostgresqlBool,
+    #[serde(rename(
+        serialize = "std_primitive_i16_as_postgresql_small_int",
+        deserialize = "std_primitive_i16_as_postgresql_small_int"
+    ))]
+    StdPrimitiveI16AsPostgresqlSmallInt,
+    #[serde(rename(
+        serialize = "std_primitive_i32_as_postgresql_int",
+        deserialize = "std_primitive_i32_as_postgresql_int"
+    ))]
+    StdPrimitiveI32AsPostgresqlInt,
     #[serde(rename(
         serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
         deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
@@ -456,8 +1574,20 @@ impl std::fmt::Display for DogColumn {
 )]
 pub enum DogColumnSelect {
     StdPrimitiveBoolAsPostgresqlBool,
+    StdPrimitiveI16AsPostgresqlSmallInt,
+    StdPrimitiveI32AsPostgresqlInt,
     StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt,
     StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt,
+    StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt,
+    StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
 }
 impl crate::server::postgres::generate_query::GenerateQuery for DogColumnSelect {
     fn generate_query(&self) -> std::string::String {
@@ -465,19 +1595,64 @@ impl crate::server::postgres::generate_query::GenerateQuery for DogColumnSelect 
         {
             Self :: StdPrimitiveBoolAsPostgresqlBool => std :: string ::
             String :: from("std_primitive_bool_as_postgresql_bool"), Self ::
+            StdPrimitiveI16AsPostgresqlSmallInt => std :: string :: String ::
+            from("std_primitive_i16_as_postgresql_small_int"), Self ::
+            StdPrimitiveI32AsPostgresqlInt => std :: string :: String ::
+            from("std_primitive_i32_as_postgresql_int"), Self ::
             StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => std ::
             string :: String ::
             from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
             Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt =>
+            std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i32_as_postgresql_int"),
+            Self ::
             StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
             => std :: string :: String ::
-            from("std_primitive_bool_as_postgresql_bool,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt
+            => std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i16_as_postgresql_small_int"),
+            Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+            => std :: string :: String ::
+            from("std_primitive_i16_as_postgresql_small_int,std_primitive_i32_as_postgresql_int"),
+            Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_i16_as_postgresql_small_int,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_i32_as_postgresql_int,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i32_as_postgresql_int,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+            => std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i16_as_postgresql_small_int,std_primitive_i32_as_postgresql_int"),
+            Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i16_as_postgresql_small_int,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_i16_as_postgresql_small_int,std_primitive_i32_as_postgresql_int,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i16_as_postgresql_small_int,std_primitive_i32_as_postgresql_int,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")
         }
     }
 }
 impl std::default::Default for DogColumnSelect {
     fn default() -> Self {
-        Self::StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+        Self ::
+        StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
     }
 }
 impl std::convert::From<std::option::Option<Self>> for DogColumnSelect {
@@ -505,18 +1680,62 @@ impl std::str::FromStr for DogColumnSelect {
         {
             "StdPrimitiveBoolAsPostgresqlBool" =>
             Ok(Self :: StdPrimitiveBoolAsPostgresqlBool),
+            "StdPrimitiveI16AsPostgresqlSmallInt" =>
+            Ok(Self :: StdPrimitiveI16AsPostgresqlSmallInt),
+            "StdPrimitiveI32AsPostgresqlInt" =>
+            Ok(Self :: StdPrimitiveI32AsPostgresqlInt),
             "StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey" =>
             Ok(Self :: StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt),
             "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
             =>
             Ok(Self ::
             StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt),
+            "StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt"
+            =>
+            Ok(Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt),
+            "StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
             _ =>
             Err(Self :: Err :: NotCorrect
             {
                 not_correct_value : std :: string :: String :: from(value),
                 supported_values : std :: string :: String ::
-                from("\"StdPrimitiveBoolAsPostgresqlBool\",\"StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\""),
+                from("\"StdPrimitiveBoolAsPostgresqlBool\",\"StdPrimitiveI16AsPostgresqlSmallInt\",\"StdPrimitiveI32AsPostgresqlInt\",\"StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt\",\"StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt\",\"StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\""),
                 code_occurence : error_occurence_lib :: code_occurence ::
                 CodeOccurence ::
                 new(file! ().to_string(), line! (), column! (),
@@ -545,6 +1764,14 @@ impl DogColumnSelect {
             sqlx::decode::Decode<'a, R::Database>,
         std::option::Option<std::option::Option<std::primitive::bool>>:
             sqlx::types::Type<R::Database>,
+        std::option::Option<std::option::Option<std::primitive::i16>>:
+            sqlx::decode::Decode<'a, R::Database>,
+        std::option::Option<std::option::Option<std::primitive::i16>>:
+            sqlx::types::Type<R::Database>,
+        std::option::Option<std::option::Option<std::primitive::i32>>:
+            sqlx::decode::Decode<'a, R::Database>,
+        std::option::Option<std::option::Option<std::primitive::i32>>:
+            sqlx::types::Type<R::Database>,
     {
         let mut
         std_primitive_i64_as_postgresql_big_serial_not_null_primary_key : std
@@ -552,6 +1779,12 @@ impl DogColumnSelect {
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize > = None ;
         let mut std_primitive_bool_as_postgresql_bool: std::option::Option<
             postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+        > = None;
+        let mut std_primitive_i16_as_postgresql_small_int: std::option::Option<
+            postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+        > = None;
+        let mut std_primitive_i32_as_postgresql_int: std::option::Option<
+            postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
         > = None;
         match self
         {
@@ -567,8 +1800,54 @@ impl DogColumnSelect {
                     ::
                     from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
                 } ;
+            } Self :: StdPrimitiveI16AsPostgresqlSmallInt =>
+            {
+                std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ;
+            } Self :: StdPrimitiveI32AsPostgresqlInt =>
+            {
+                std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
             } Self :: StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
             {} Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlInt =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ; std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
+            } Self ::
             StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
             =>
             {
@@ -582,10 +1861,219 @@ impl DogColumnSelect {
                     ::
                     from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
                 } ;
+            } Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallInt
+            =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ; std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ;
+            } Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+            =>
+            {
+                std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ; std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
+            } Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ;
+            } Self ::
+            StdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
+            } Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ; std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
+            } Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlInt
+            =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ; std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ; std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
+            } Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ; std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ;
+            } Self ::
+            StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ; std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
+            } Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ; std_primitive_i16_as_postgresql_small_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i16> > =
+                    row.try_get("std_primitive_i16_as_postgresql_small_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                } ; std_primitive_i32_as_postgresql_int =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::i32> > =
+                    row.try_get("std_primitive_i32_as_postgresql_int") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                } ;
             }
         }
         Ok(DogOptions {
             std_primitive_bool_as_postgresql_bool,
+            std_primitive_i16_as_postgresql_small_int,
+            std_primitive_i32_as_postgresql_int,
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
         })
     }
@@ -1109,6 +2597,8 @@ pub const ALLOW_METHODS: [http::Method; 4] = [
 ];
 pub struct DogColumnReadPermission {
     std_primitive_bool_as_postgresql_bool: std::primitive::bool,
+    std_primitive_i16_as_postgresql_small_int: std::primitive::bool,
+    std_primitive_i32_as_postgresql_int: std::primitive::bool,
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
 }
 #[test]
@@ -1124,6 +2614,10 @@ fn dog_emulate_crud_api_usage_test() {
                 payload: CreateManyPayload(vec![CreateManyPayloadElement {
                     std_primitive_bool_as_postgresql_bool:
                         postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                    std_primitive_i16_as_postgresql_small_int:
+                        postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt::default(),
+                    std_primitive_i32_as_postgresql_int:
+                        postgresql_crud::StdPrimitiveI32AsPostgresqlInt::default(),
                 }]),
             },
         )
@@ -1144,9 +2638,11 @@ fn dog_emulate_crud_api_usage_test() {
             {
                 std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 : Some(primary_keys.clone()),
-                std_primitive_bool_as_postgresql_bool : None, select :
+                std_primitive_bool_as_postgresql_bool : None,
+                std_primitive_i16_as_postgresql_small_int : None,
+                std_primitive_i32_as_postgresql_int : None, select :
                 DogColumnSelect ::
-                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
                 order_by : crate :: server :: postgres :: order_by :: OrderBy
                 {
                     column : DogColumn :: Name, order :
@@ -1174,6 +2670,10 @@ fn dog_emulate_crud_api_usage_test() {
                                 element,
                             std_primitive_bool_as_postgresql_bool:
                                 postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                            std_primitive_i16_as_postgresql_small_int:
+                                postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt::default(),
+                            std_primitive_i32_as_postgresql_int:
+                                postgresql_crud::StdPrimitiveI32AsPostgresqlInt::default(),
                         })
                         .collect(),
                 ),
@@ -1193,9 +2693,11 @@ fn dog_emulate_crud_api_usage_test() {
             {
                 std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 : Some(primary_keys.clone()),
-                std_primitive_bool_as_postgresql_bool : None, select :
+                std_primitive_bool_as_postgresql_bool : None,
+                std_primitive_i16_as_postgresql_small_int : None,
+                std_primitive_i32_as_postgresql_int : None, select :
                 DogColumnSelect ::
-                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
                 order_by : crate :: server :: postgres :: order_by :: OrderBy
                 {
                     column : DogColumn :: Name, order :
@@ -1219,6 +2721,8 @@ fn dog_emulate_crud_api_usage_test() {
                         primary_keys.clone(),
                     ),
                     std_primitive_bool_as_postgresql_bool: None,
+                    std_primitive_i16_as_postgresql_small_int: None,
+                    std_primitive_i32_as_postgresql_int: None,
                 },
             },
         )
@@ -1236,9 +2740,11 @@ fn dog_emulate_crud_api_usage_test() {
             {
                 std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 : Some(primary_keys.clone()),
-                std_primitive_bool_as_postgresql_bool : None, select :
+                std_primitive_bool_as_postgresql_bool : None,
+                std_primitive_i16_as_postgresql_small_int : None,
+                std_primitive_i32_as_postgresql_int : None, select :
                 DogColumnSelect ::
-                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
                 order_by : crate :: server :: postgres :: order_by :: OrderBy
                 {
                     column : DogColumn :: Name, order :
@@ -1260,6 +2766,10 @@ fn dog_emulate_crud_api_usage_test() {
                 payload: CreateOnePayload {
                     std_primitive_bool_as_postgresql_bool:
                         postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                    std_primitive_i16_as_postgresql_small_int:
+                        postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt::default(),
+                    std_primitive_i32_as_postgresql_int:
+                        postgresql_crud::StdPrimitiveI32AsPostgresqlInt::default(),
                 },
             },
         )
@@ -1280,7 +2790,7 @@ fn dog_emulate_crud_api_usage_test() {
             {
                 std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 : primary_key.clone(), select : DogColumnSelect ::
-                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
             }
         },).await
         { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
@@ -1294,6 +2804,12 @@ fn dog_emulate_crud_api_usage_test() {
                         .clone(),
                     std_primitive_bool_as_postgresql_bool: Some(
                         postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                    ),
+                    std_primitive_i16_as_postgresql_small_int: Some(
+                        postgresql_crud::StdPrimitiveI16AsPostgresqlSmallInt::default(),
+                    ),
+                    std_primitive_i32_as_postgresql_int: Some(
+                        postgresql_crud::StdPrimitiveI32AsPostgresqlInt::default(),
                     ),
                 },
             },
@@ -1315,7 +2831,7 @@ fn dog_emulate_crud_api_usage_test() {
             {
                 std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 : primary_key.clone(), select : DogColumnSelect ::
-                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
             }
         },).await
         { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
@@ -1344,7 +2860,7 @@ fn dog_emulate_crud_api_usage_test() {
             {
                 std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
                 : primary_key.clone(), select : DogColumnSelect ::
-                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
             }
         },).await
         { Ok(value) => panic! ("{value:#?}"), Err(e) => println! ("{}", e) } ;
@@ -2807,10 +4323,8 @@ pub async fn try_read_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr408RequestTimeout>(
-            &response_text,
-        ) {
+    } else if status_code == http::StatusCode::NOT_FOUND {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr404NotFound>(&response_text) {
             Ok(value) => TryReadOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadOneErrorNamed::DeserializeResponse {
@@ -2833,8 +4347,10 @@ pub async fn try_read_one<'a>(
                 });
             }
         }
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr400BadRequest>(&response_text) {
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
             Ok(value) => TryReadOneResponseVariants::from(value),
             Err(e) => {
                 return Err(TryReadOneErrorNamed::DeserializeResponse {
