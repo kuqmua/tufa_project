@@ -7885,16 +7885,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream
+            #common_token_stream
 
-            // #create_many_token_stream
-            // #create_one_token_stream
-            // #read_many_token_stream
-            // #read_one_token_stream
-            // #update_many_token_stream
-            // #update_one_token_stream
-            // #delete_many_token_stream
-            // #delete_one_token_stream
+            #create_many_token_stream
+            #create_one_token_stream
+            #read_many_token_stream
+            #read_one_token_stream
+            #update_many_token_stream
+            #update_one_token_stream
+            #delete_many_token_stream
+            #delete_one_token_stream
         // }
     };
     // if ident == "" {
