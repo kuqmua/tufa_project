@@ -2,10 +2,10 @@
 #[openapi(
     paths(
         common::server::routes::git_info::git_info,
-        common::repositories_types::server::routes::api::cats::create_many,
+        // common::repositories_types::server::routes::api::cats::create_many,
         // common::repositories_types::server::routes::api::cats::create_one,
         // common::repositories_types::server::routes::api::cats::read_many,
-        // common::repositories_types::server::routes::api::cats::read_one,
+        common::repositories_types::server::routes::api::cats::read_one,
         // common::repositories_types::server::routes::api::cats::update_many,
         // common::repositories_types::server::routes::api::cats::update_one,
         // common::repositories_types::server::routes::api::cats::delete_many,

@@ -213,3 +213,2835 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
+pub const TABLE_NAME: &str = "dogs";
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub struct DogOptions {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        std::option::Option<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub std_primitive_bool_as_postgresql_bool: std::option::Option<
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    >,
+}
+impl std::convert::From<Dog> for DogOptions {
+    fn from(value: Dog) -> Self {
+        Self {
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
+                postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
+                    value
+                        .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                        .0,
+                ),
+            ),
+            std_primitive_bool_as_postgresql_bool: Some(
+                postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                    value.std_primitive_bool_as_postgresql_bool.0,
+                ),
+            ),
+        }
+    }
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBool {
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey {
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug)]
+pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    pub std_primitive_bool_as_postgresql_bool:
+        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolTryFromDogOptionsErrorNamed {
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions> for DogStdPrimitiveBoolAsPostgresqlBool {
+    type Error = DogStdPrimitiveBoolAsPostgresqlBoolTryFromDogOptionsErrorNamed;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_bool_as_postgresql_bool =
+            match value.std_primitive_bool_as_postgresql_bool {
+                Some(value) => value,
+                None => {
+                    return Err(Self::Error::StdPrimitiveBoolAsPostgresqlBoolIsNone {
+                        std_primitive_bool_as_postgresql_bool_is_none: std::string::String::from(
+                            "std_primitive_bool_as_postgresql_bool is None",
+                        ),
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 584,
+                                column: 29,
+                            }),
+                        ),
+                    });
+                }
+            };
+        Ok(Self {
+            std_primitive_bool_as_postgresql_bool,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed {
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+        DogStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = match value
+            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value,
+            None => {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        };
+        Ok(Self {
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        })
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+{
+    StdPrimitiveBoolAsPostgresqlBoolIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_bool_as_postgresql_bool_is_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone {
+        #[eo_display_with_serialize_deserialize]
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::TryFrom<DogOptions>
+    for DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+{
+    type Error =
+    DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyTryFromDogOptionsErrorNamed
+    ;
+    fn try_from(value: DogOptions) -> Result<Self, Self::Error> {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = match value
+            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+        {
+            Some(value) => value,
+            None => {
+                return
+                Err(Self :: Error ::
+                StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeyIsNone
+                {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none
+                    : std :: string :: String ::
+                    from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key_is_none is None"),
+                    code_occurence : error_occurence_lib :: code_occurence ::
+                    CodeOccurence ::
+                    new(file! ().to_string(), line! (), column! (),
+                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                    {
+                        file : std :: string :: String ::
+                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line : 521, column : 41,
+                    })),
+                }) ;
+            }
+        };
+        let std_primitive_bool_as_postgresql_bool =
+            match value.std_primitive_bool_as_postgresql_bool {
+                Some(value) => value,
+                None => {
+                    return Err(Self::Error::StdPrimitiveBoolAsPostgresqlBoolIsNone {
+                        std_primitive_bool_as_postgresql_bool_is_none: std::string::String::from(
+                            "std_primitive_bool_as_postgresql_bool is None",
+                        ),
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 584,
+                                column: 29,
+                            }),
+                        ),
+                    });
+                }
+            };
+        Ok(Self {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        })
+    }
+}
+#[derive(
+    Debug,
+    serde :: Serialize,
+    serde :: Deserialize,
+    enum_extension ::
+EnumExtension,
+    strum_macros :: EnumIter,
+    PartialEq,
+    Eq,
+    from_str :: FromStr,
+)]
+pub enum DogColumn {
+    #[serde(rename(
+        serialize = "std_primitive_bool_as_postgresql_bool",
+        deserialize = "std_primitive_bool_as_postgresql_bool"
+    ))]
+    StdPrimitiveBoolAsPostgresqlBool,
+    #[serde(rename(
+        serialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+        deserialize = "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+    ))]
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+}
+impl std::fmt::Display for DogColumn {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", Self::to_snake_case(self))
+    }
+}
+#[derive(
+    Debug,
+    serde :: Serialize,
+    serde :: Deserialize,
+    Clone,
+    strum_macros
+:: Display,
+)]
+pub enum DogColumnSelect {
+    StdPrimitiveBoolAsPostgresqlBool,
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+    StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+}
+impl crate::server::postgres::generate_query::GenerateQuery for DogColumnSelect {
+    fn generate_query(&self) -> std::string::String {
+        match self
+        {
+            Self :: StdPrimitiveBoolAsPostgresqlBool => std :: string ::
+            String :: from("std_primitive_bool_as_postgresql_bool"), Self ::
+            StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => std ::
+            string :: String ::
+            from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+            Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            => std :: string :: String ::
+            from("std_primitive_bool_as_postgresql_bool,std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")
+        }
+    }
+}
+impl std::default::Default for DogColumnSelect {
+    fn default() -> Self {
+        Self::StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+    }
+}
+impl std::convert::From<std::option::Option<Self>> for DogColumnSelect {
+    fn from(option_value: std::option::Option<Self>) -> Self {
+        match option_value {
+            Some(value) => value,
+            None => Self::default(),
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogColumnSelectFromStrErrorNamed {
+    NotCorrect {
+        #[eo_display_with_serialize_deserialize]
+        not_correct_value: std::string::String,
+        #[eo_display_with_serialize_deserialize]
+        supported_values: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::str::FromStr for DogColumnSelect {
+    type Err = DogColumnSelectFromStrErrorNamed;
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        match value
+        {
+            "StdPrimitiveBoolAsPostgresqlBool" =>
+            Ok(Self :: StdPrimitiveBoolAsPostgresqlBool),
+            "StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey" =>
+            Ok(Self :: StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            "StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey"
+            =>
+            Ok(Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
+            _ =>
+            Err(Self :: Err :: NotCorrect
+            {
+                not_correct_value : std :: string :: String :: from(value),
+                supported_values : std :: string :: String ::
+                from("\"StdPrimitiveBoolAsPostgresqlBool\",\"StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\",\"StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey\""),
+                code_occurence : error_occurence_lib :: code_occurence ::
+                CodeOccurence ::
+                new(file! ().to_string(), line! (), column! (),
+                Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                {
+                    file : std :: string :: String ::
+                    from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line : 852, column : 17,
+                })),
+            }),
+        }
+    }
+}
+impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for DogColumnSelect {
+    fn serde_urlencoded_parameter(self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl DogColumnSelect {
+    fn options_try_from_sqlx_row<'a, R: sqlx::Row>(&self, row: &'a R) -> sqlx::Result<DogOptions>
+    where
+        &'a std::primitive::str: sqlx::ColumnIndex<R>,
+        std::option::Option<std::primitive::i64>: sqlx::decode::Decode<'a, R::Database>,
+        std::option::Option<std::primitive::i64>: sqlx::types::Type<R::Database>,
+        std::option::Option<std::option::Option<std::primitive::bool>>:
+            sqlx::decode::Decode<'a, R::Database>,
+        std::option::Option<std::option::Option<std::primitive::bool>>:
+            sqlx::types::Type<R::Database>,
+    {
+        let mut
+        std_primitive_i64_as_postgresql_big_serial_not_null_primary_key : std
+        :: option :: Option <
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize > = None ;
+        let mut std_primitive_bool_as_postgresql_bool: std::option::Option<
+            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+        > = None;
+        match self
+        {
+            Self :: StdPrimitiveBoolAsPostgresqlBool =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ;
+            } Self :: StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey =>
+            {} Self ::
+            StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            =>
+            {
+                std_primitive_bool_as_postgresql_bool =
+                {
+                    let value : std :: option :: Option <
+                    std::option::Option<std::primitive::bool> > =
+                    row.try_get("std_primitive_bool_as_postgresql_bool") ? ;
+                    value.map(| value |
+                    postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize
+                    ::
+                    from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                } ;
+            }
+        }
+        Ok(DogOptions {
+            std_primitive_bool_as_postgresql_bool,
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+        })
+    }
+}
+fn primary_key_try_from_sqlx_row<'a, R: sqlx::Row>(
+    row: &'a R,
+) -> sqlx::Result<postgresql_crud::StdPrimitiveI64>
+where
+    &'a std::primitive::str: sqlx::ColumnIndex<R>,
+    std::primitive::i64: sqlx::decode::Decode<'a, R::Database>,
+    std::primitive::i64: sqlx::types::Type<R::Database>,
+{
+    let primary_key: std::primitive::i64 =
+        row.try_get("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")?;
+    Ok(postgresql_crud::StdPrimitiveI64(primary_key))
+}
+fn deserialize_dog_order_by<'de, D>(
+    deserializer: D,
+) -> Result<crate::server::postgres::order_by::OrderBy<DogColumn>, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    let string_deserialized = {
+        use serde::Deserialize;
+        std::string::String::deserialize(deserializer)?
+    };
+    let split_inner_url_parameters_symbol = ',';
+    let default_message = format!("Invalid DogOrderBy:");
+    let column_equal_str = "column=";
+    let order_equal_str = "order=";
+    let column = match string_deserialized.find(column_equal_str) {
+        Some(index) => match index.checked_add(column_equal_str.len()) {
+            Some(offset) => match string_deserialized.get(offset..) {
+                Some(offset_slice) => match offset_slice.find(split_inner_url_parameters_symbol) {
+                    Some(offset_slice_next_comma_index) => {
+                        match offset_slice.get(0..offset_slice_next_comma_index) {
+                            Some(possible_column) => match {
+                                use std::str::FromStr;
+                                DogColumn::from_str(possible_column)
+                            } {
+                                Ok(column) => column,
+                                Err(e) => {
+                                    return Err(serde::de::Error::custom(&format!(
+                                        "{default_message} {column_equal_str} {}",
+                                        e
+                                    )));
+                                }
+                            },
+                            None => {
+                                return
+                                Err(serde :: de :: Error ::
+                                custom(& format!
+                                ("{default_message} {column_equal_str} failed to offset_slice.get(0..offset_slice_next_comma_index)")))
+                                ;
+                            }
+                        }
+                    }
+                    None => match offset_slice.get(0..) {
+                        Some(possible_column) => match {
+                            use std::str::FromStr;
+                            DogColumn::from_str(possible_column)
+                        } {
+                            Ok(column) => column,
+                            Err(e) => {
+                                return Err(serde::de::Error::custom(&format!(
+                                    "{default_message} {column_equal_str} {}",
+                                    e
+                                )));
+                            }
+                        },
+                        None => {
+                            return
+                            Err(serde :: de :: Error ::
+                            custom(& format!
+                            ("{default_message} {column_equal_str} failed to offset_slice.get(0..)")))
+                            ;
+                        }
+                    },
+                },
+                None => {
+                    return
+                    Err(serde :: de :: Error ::
+                    custom(& format!
+                    ("{default_message} {column_equal_str} failed to string_deserialized.get(offset..)")))
+                    ;
+                }
+            },
+            None => {
+                return Err(serde::de::Error::custom(&format!(
+                    "{default_message} {column_equal_str} index overflow"
+                )));
+            }
+        },
+        None => {
+            return Err(serde::de::Error::custom(&format!(
+                "{default_message} {column_equal_str} not found"
+            )));
+        }
+    };
+    let order = match string_deserialized.find(order_equal_str) {
+        Some(index) => match index.checked_add(order_equal_str.len()) {
+            Some(offset) => match string_deserialized.get(offset..) {
+                Some(offset_slice) => match offset_slice.find(split_inner_url_parameters_symbol) {
+                    Some(offset_slice_next_comma_index) => {
+                        match offset_slice.get(0..offset_slice_next_comma_index) {
+                            Some(possible_order) => match {
+                                use std::str::FromStr;
+                                crate::server::postgres::order::Order::from_str(possible_order)
+                            } {
+                                Ok(order) => Some(order),
+                                Err(e) => {
+                                    return Err(serde::de::Error::custom(&format!(
+                                        "{default_message} {order_equal_str} {}",
+                                        e
+                                    )));
+                                }
+                            },
+                            None => {
+                                return
+                                Err(serde :: de :: Error ::
+                                custom(& format!
+                                ("{default_message} {order_equal_str} failed to offset_slice.get(0..offset_slice_next_comma_index)")))
+                                ;
+                            }
+                        }
+                    }
+                    None => match offset_slice.get(0..) {
+                        Some(possible_order) => match {
+                            use std::str::FromStr;
+                            crate::server::postgres::order::Order::from_str(possible_order)
+                        } {
+                            Ok(order) => Some(order),
+                            Err(e) => {
+                                return Err(serde::de::Error::custom(&format!(
+                                    "{default_message} {order_equal_str} {}",
+                                    e
+                                )));
+                            }
+                        },
+                        None => {
+                            return Err(serde::de::Error::custom(
+                                &format!
+                            ("{default_message} {order_equal_str} failed to offset_slice.get(0..)"),
+                            ));
+                        }
+                    },
+                },
+                None => {
+                    return
+                    Err(serde :: de :: Error ::
+                    custom(& format!
+                    ("{default_message} {order_equal_str} failed to string_deserialized.get(offset..)")))
+                    ;
+                }
+            },
+            None => {
+                return Err(serde::de::Error::custom(&format!(
+                    "{default_message} {order_equal_str} index overflow"
+                )));
+            }
+        },
+        None => None,
+    };
+    Ok(crate::server::postgres::order_by::OrderBy { column, order })
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub struct DogOrderByWrapper(
+    #[serde(deserialize_with = "deserialize_dog_order_by")]
+    pub  crate::server::postgres::order_by::OrderBy<DogColumn>,
+);
+impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for DogOrderByWrapper {
+    fn serde_urlencoded_parameter(self) -> std::string::String {
+        let column = &self.0.column;
+        let order = self.0.order.unwrap_or_default();
+        format!("column={column},order={order}")
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum DogOrderByWrapperFromStrErrorNamed {
+    ColumnFromStr {
+        #[eo_display_with_serialize_deserialize]
+        column_from_str: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNoOffsetValue {
+        #[eo_display_with_serialize_deserialize]
+        column_no_offset_value: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnOffsetSliceGet {
+        #[eo_display_with_serialize_deserialize]
+        column_offset_slice_get: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnStringDeserializedGet {
+        #[eo_display_with_serialize_deserialize]
+        column_string_deserialized_get: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexCheckedAdd {
+        #[eo_display_with_serialize_deserialize]
+        column_index_checked_add: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnStringDeserializedFind {
+        #[eo_display_with_serialize_deserialize]
+        column_string_deserialized_find: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OrderFromStr {
+        #[eo_display_with_serialize_deserialize]
+        order_from_str: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OrderOffsetSliceGetNone {
+        #[eo_display_with_serialize_deserialize]
+        order_offset_slice_get_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OrderStringDeserializedGetNone {
+        #[eo_display_with_serialize_deserialize]
+        order_string_deserialized_get_none: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OrderIndexCheckedAdd {
+        #[eo_display_with_serialize_deserialize]
+        order_index_checked_add: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::str::FromStr for DogOrderByWrapper {
+    type Err = DogOrderByWrapperFromStrErrorNamed;
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        let string_deserialized = value.to_string();
+        let split_inner_url_parameters_symbol = ',';
+        let default_message = format!("Invalid DogOrderBy:");
+        let column_equal_str = "column=";
+        let order_equal_str = "order=";
+        let column = match string_deserialized.find(column_equal_str) {
+            Some(index) => match index.checked_add(column_equal_str.len()) {
+                Some(offset) => {
+                    match string_deserialized.get(offset..) {
+                        Some(offset_slice) => match offset_slice
+                            .find(split_inner_url_parameters_symbol)
+                        {
+                            Some(offset_slice_next_comma_index) => {
+                                match offset_slice.get(0..offset_slice_next_comma_index) {
+                                    Some(possible_column) => {
+                                        match DogColumn::from_str(possible_column) {
+                                            Ok(column) => column,
+                                            Err(e) => {
+                                                return
+                                        Err(Self :: Err :: ColumnFromStr
+                                        {
+                                            column_from_str : e, code_occurence : error_occurence_lib ::
+                                            code_occurence :: CodeOccurence ::
+                                            new(file! ().to_string(), line! (), column! (),
+                                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                            {
+                                                file : std :: string :: String ::
+                                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                line : 1278, column : 17,
+                                            })),
+                                        }) ;
+                                            }
+                                        }
+                                    }
+                                    None => {
+                                        return
+                                    Err(Self :: Err :: ColumnNoOffsetValue
+                                    {
+                                        column_no_offset_value : std :: string :: String ::
+                                        from("no offset value"), code_occurence :
+                                        error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_string(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1284, column : 17,
+                                        })),
+                                    }) ;
+                                    }
+                                }
+                            }
+                            None => match offset_slice.get(0..) {
+                                Some(possible_column) => match DogColumn::from_str(possible_column)
+                                {
+                                    Ok(column) => column,
+                                    Err(e) => {
+                                        return
+                                    Err(Self :: Err :: ColumnFromStr
+                                    {
+                                        column_from_str : e, code_occurence : error_occurence_lib ::
+                                        code_occurence :: CodeOccurence ::
+                                        new(file! ().to_string(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1290, column : 17,
+                                        })),
+                                    }) ;
+                                    }
+                                },
+                                None => {
+                                    return
+                                Err(Self :: Err :: ColumnOffsetSliceGet
+                                {
+                                    column_offset_slice_get : std :: string :: String ::
+                                    from("offset_slice_get"), code_occurence :
+                                    error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                    new(file! ().to_string(), line! (), column! (),
+                                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                    {
+                                        file : std :: string :: String ::
+                                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                        line : 1296, column : 17,
+                                    })),
+                                }) ;
+                                }
+                            },
+                        },
+                        None => {
+                            return
+                        Err(Self :: Err :: ColumnStringDeserializedGet
+                        {
+                            column_string_deserialized_get : std :: string :: String ::
+                            from("string_deserialized_get"), code_occurence :
+                            error_occurence_lib :: code_occurence :: CodeOccurence ::
+                            new(file! ().to_string(), line! (), column! (),
+                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                            {
+                                file : std :: string :: String ::
+                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line : 1302, column : 17,
+                            })),
+                        }) ;
+                        }
+                    }
+                }
+                None => {
+                    return Err(Self::Err::ColumnIndexCheckedAdd {
+                        column_index_checked_add: std::string::String::from("index_checked_add"),
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1308,
+                                column: 17,
+                            }),
+                        ),
+                    });
+                }
+            },
+            None => {
+                return Err(Self::Err::ColumnStringDeserializedFind {
+                    column_string_deserialized_find: std::string::String::from(
+                        "string_deserialized_find",
+                    ),
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 1314,
+                            column: 17,
+                        }),
+                    ),
+                });
+            }
+        };
+        let order = match string_deserialized.find(order_equal_str) {
+            Some(index) => {
+                match index.checked_add(order_equal_str.len()) {
+                    Some(offset) => match string_deserialized.get(offset..) {
+                        Some(offset_slice) => {
+                            match offset_slice.find(split_inner_url_parameters_symbol) {
+                                Some(offset_slice_next_comma_index) => {
+                                    match offset_slice.get(0..offset_slice_next_comma_index) {
+                                        Some(possible_order) => {
+                                            match crate::server::postgres::order::Order::from_str(
+                                                possible_order,
+                                            ) {
+                                                Ok(order) => Some(order),
+                                                Err(e) => {
+                                                    return
+                                        Err(Self :: Err :: OrderFromStr
+                                        {
+                                            order_from_str : e, code_occurence : error_occurence_lib ::
+                                            code_occurence :: CodeOccurence ::
+                                            new(file! ().to_string(), line! (), column! (),
+                                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                            {
+                                                file : std :: string :: String ::
+                                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                line : 1320, column : 17,
+                                            })),
+                                        }) ;
+                                                }
+                                            }
+                                        }
+                                        None => {
+                                            return
+                                    Err(Self :: Err :: OrderOffsetSliceGetNone
+                                    {
+                                        order_offset_slice_get_none : std :: string :: String ::
+                                        from("order_offset_slice_get_none"), code_occurence :
+                                        error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                        new(file! ().to_string(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1326, column : 17,
+                                        })),
+                                    }) ;
+                                        }
+                                    }
+                                }
+                                None => match offset_slice.get(0..) {
+                                    Some(possible_order) => {
+                                        match crate::server::postgres::order::Order::from_str(
+                                            possible_order,
+                                        ) {
+                                            Ok(order) => Some(order),
+                                            Err(e) => {
+                                                return
+                                    Err(Self :: Err :: OrderFromStr
+                                    {
+                                        order_from_str : e, code_occurence : error_occurence_lib ::
+                                        code_occurence :: CodeOccurence ::
+                                        new(file! ().to_string(), line! (), column! (),
+                                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                        {
+                                            file : std :: string :: String ::
+                                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line : 1332, column : 17,
+                                        }))
+                                    }) ;
+                                            }
+                                        }
+                                    }
+                                    None => {
+                                        return
+                                Err(Self :: Err :: OrderOffsetSliceGetNone
+                                {
+                                    order_offset_slice_get_none : std :: string :: String ::
+                                    from("order_offset_slice_get_none"), code_occurence :
+                                    error_occurence_lib :: code_occurence :: CodeOccurence ::
+                                    new(file! ().to_string(), line! (), column! (),
+                                    Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                                    {
+                                        file : std :: string :: String ::
+                                        from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                        line : 1338, column : 17,
+                                    })),
+                                }) ;
+                                    }
+                                },
+                            }
+                        }
+                        None => {
+                            return
+                        Err(Self :: Err :: OrderStringDeserializedGetNone
+                        {
+                            order_string_deserialized_get_none : std :: string :: String
+                            :: from("string_deserialized_get_none"), code_occurence :
+                            error_occurence_lib :: code_occurence :: CodeOccurence ::
+                            new(file! ().to_string(), line! (), column! (),
+                            Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                            {
+                                file : std :: string :: String ::
+                                from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line : 1344, column : 17,
+                            })),
+                        }) ;
+                        }
+                    },
+                    None => {
+                        return Err(Self::Err::OrderIndexCheckedAdd {
+                            order_index_checked_add: std::string::String::from(
+                                "order_index_checked_add",
+                            ),
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                file!().to_string(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from(
+                                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                    ),
+                                    line: 1350,
+                                    column: 17,
+                                }),
+                            ),
+                        });
+                    }
+                }
+            }
+            None => None,
+        };
+        Ok(Self(crate::server::postgres::order_by::OrderBy {
+            column,
+            order,
+        }))
+    }
+}
+pub const ALLOW_METHODS: [http::Method; 4] = [
+    http::Method::GET,
+    http::Method::POST,
+    http::Method::PATCH,
+    http::Method::DELETE,
+];
+pub struct DogColumnReadPermission {
+    std_primitive_bool_as_postgresql_bool: std::primitive::bool,
+    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
+}
+#[test]
+fn dog_emulate_crud_api_usage_test() {
+    async fn find_out_if_it_works() {
+        let api_location = std::string::String::from("http://127.0.0.1:8080");
+        let limit = 1000;
+        let offset = 0;
+        println!("-------trycreate_many start-------");
+        let primary_keys = match try_create_many(
+            &api_location,
+            CreateManyParameters {
+                payload: CreateManyPayload(vec![CreateManyPayloadElement {
+                    std_primitive_bool_as_postgresql_bool:
+                        postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                }]),
+            },
+        )
+        .await
+        {
+            Ok(value) => {
+                println!("{value:#?}");
+                value
+            }
+            Err(e) => panic!("{}", e),
+        };
+        println!("-------trycreate_many end-------");
+        println!("-------tryread_many start-------");
+        match
+        try_read_many(& api_location, ReadManyParameters
+        {
+            payload : ReadManyPayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : Some(primary_keys.clone()),
+                std_primitive_bool_as_postgresql_bool : None, select :
+                DogColumnSelect ::
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+                order_by : crate :: server :: postgres :: order_by :: OrderBy
+                {
+                    column : DogColumn :: Name, order :
+                    Some(crate :: server :: postgres :: order :: Order :: Desc),
+                }, limit : crate :: server :: postgres :: postgres_bigint ::
+                PostgresBigint(limit), offset : crate :: server :: postgres ::
+                postgres_bigint :: PostgresBigint(offset),
+            }
+        },).await
+        {
+            Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+            ("{}", e)
+        } ;
+        println!("-------tryread_many end-------");
+        println!("-------tryupdate_many start-------");
+        match try_update_many(
+            &api_location,
+            UpdateManyParameters {
+                payload: UpdateManyPayload(
+                    primary_keys
+                        .clone()
+                        .into_iter()
+                        .map(|element| UpdateManyPayloadElement {
+                            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+                                element,
+                            std_primitive_bool_as_postgresql_bool:
+                                postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                        })
+                        .collect(),
+                ),
+            },
+        )
+        .await
+        {
+            Ok(value) => println!("{value:#?}"),
+            Err(e) => panic!("{}", e),
+        }
+        println!("-------tryupdate_many end-------");
+        println!("-------tryread_many start-------");
+        match
+        try_read_many(& api_location, ReadManyParameters
+        {
+            payload : ReadManyPayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : Some(primary_keys.clone()),
+                std_primitive_bool_as_postgresql_bool : None, select :
+                DogColumnSelect ::
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+                order_by : crate :: server :: postgres :: order_by :: OrderBy
+                {
+                    column : DogColumn :: Name, order :
+                    Some(crate :: server :: postgres :: order :: Order :: Desc),
+                }, limit : crate :: server :: postgres :: postgres_bigint ::
+                PostgresBigint(limit), offset : crate :: server :: postgres ::
+                postgres_bigint :: PostgresBigint(offset),
+            }
+        },).await
+        {
+            Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+            ("{}", e)
+        } ;
+        println!("-------tryread_many end-------");
+        println!("-------trydelete_many start-------");
+        match try_delete_many(
+            &api_location,
+            DeleteManyParameters {
+                payload: DeleteManyPayload {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
+                        primary_keys.clone(),
+                    ),
+                    std_primitive_bool_as_postgresql_bool: None,
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => println!("{value:#?}"),
+            Err(e) => panic!("{}", e),
+        }
+        println!("-------trydelete_many end-------");
+        println!("-------tryread_many start-------");
+        match
+        try_read_many(& api_location, ReadManyParameters
+        {
+            payload : ReadManyPayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : Some(primary_keys.clone()),
+                std_primitive_bool_as_postgresql_bool : None, select :
+                DogColumnSelect ::
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+                order_by : crate :: server :: postgres :: order_by :: OrderBy
+                {
+                    column : DogColumn :: Name, order :
+                    Some(crate :: server :: postgres :: order :: Order :: Desc),
+                }, limit : crate :: server :: postgres :: postgres_bigint ::
+                PostgresBigint(limit), offset : crate :: server :: postgres ::
+                postgres_bigint :: PostgresBigint(offset),
+            }
+        },).await
+        {
+            Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+            ("{}", e)
+        } ;
+        println!("-------tryread_many end-------");
+        println!("-------trycreate_one start-------");
+        let primary_key = match try_create_one(
+            &api_location,
+            CreateOneParameters {
+                payload: CreateOnePayload {
+                    std_primitive_bool_as_postgresql_bool:
+                        postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => {
+                println!("{value:#?}");
+                value
+            }
+            Err(e) => panic!("{}", e),
+        };
+        println!("-------trycreate_one end-------");
+        println!("-------tryread_one start-------");
+        match
+        try_read_one(& api_location, ReadOneParameters
+        {
+            payload : ReadOnePayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : primary_key.clone(), select : DogColumnSelect ::
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            }
+        },).await
+        { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
+        println!("-------tryread_one end-------");
+        println!("-------tryupdate_one start-------");
+        let primary_key = match try_update_one(
+            &api_location,
+            UpdateOneParameters {
+                payload: UpdateOnePayload {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: primary_key
+                        .clone(),
+                    std_primitive_bool_as_postgresql_bool: Some(
+                        postgresql_crud::StdPrimitiveBoolAsPostgresqlBool::default(),
+                    ),
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => {
+                println!("{value:#?}");
+                value
+            }
+            Err(e) => panic!("{}", e),
+        };
+        println!("-------tryupdate_one end-------");
+        println!("-------tryread_one start-------");
+        match
+        try_read_one(& api_location, ReadOneParameters
+        {
+            payload : ReadOnePayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : primary_key.clone(), select : DogColumnSelect ::
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            }
+        },).await
+        { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
+        println!("-------tryread_one end-------");
+        println!("-------trydelete_one start-------");
+        match try_delete_one(
+            &api_location,
+            DeleteOneParameters {
+                payload: DeleteOnePayload {
+                    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: primary_key
+                        .clone(),
+                },
+            },
+        )
+        .await
+        {
+            Ok(value) => println!("{value:#?}"),
+            Err(e) => panic!("{}", e),
+        }
+        println!("-------trydelete_one end-------");
+        println!("-------tryread_one start-------");
+        match
+        try_read_one(& api_location, ReadOneParameters
+        {
+            payload : ReadOnePayload
+            {
+                std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                : primary_key.clone(), select : DogColumnSelect ::
+                StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey
+            }
+        },).await
+        { Ok(value) => panic! ("{value:#?}"), Err(e) => println! ("{}", e) } ;
+        println!("-------tryread_one end-------");
+    }
+    match tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(num_cpus::get())
+        .enable_all()
+        .build()
+    {
+        Err(e) => {
+            panic!
+            ("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {:#?}",
+            e)
+        }
+        Ok(runtime) => {
+            runtime.block_on(find_out_if_it_works());
+        }
+    }
+}
+#[derive(Debug, utoipa :: ToSchema)]
+pub struct ReadOnePayload {
+    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64,
+    pub select: DogColumnSelect,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub struct ReadOnePayloadWithSerializeDeserialize {
+    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
+    select: DogColumnSelect,
+}
+impl std::convert::From<ReadOnePayloadWithSerializeDeserialize> for ReadOnePayload {
+    fn from(value: ReadOnePayloadWithSerializeDeserialize) -> Self {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+            postgresql_crud::StdPrimitiveI64::from(
+                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            );
+        let select = value.select;
+        Self {
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            select,
+        }
+    }
+}
+impl std::convert::From<ReadOnePayload> for ReadOnePayloadWithSerializeDeserialize {
+    fn from(value: ReadOnePayload) -> Self {
+        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
+            postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
+                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            );
+        let select = value.select;
+        Self {
+            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+            select,
+        }
+    }
+}
+#[derive(Debug)]
+pub struct ReadOneParameters {
+    pub payload: ReadOnePayload,
+}
+#[derive(
+    Debug,
+    thiserror :: Error,
+    error_occurence_lib :: ErrorOccurence,
+    from_sqlx_postgres_error :: FromSqlxPostgresError,
+)]
+pub enum TryReadOne {
+    Configuration {
+        #[eo_display_with_serialize_deserialize]
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        #[eo_display_with_serialize_deserialize]
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        #[eo_display]
+        io: std::io::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        #[eo_display_with_serialize_deserialize]
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        #[eo_display_with_serialize_deserialize]
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowNotFound {
+        #[eo_display_with_serialize_deserialize]
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TypeNotFound {
+        #[eo_display_with_serialize_deserialize]
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        #[eo_display_with_serialize_deserialize]
+        column_index_out_of_bounds: usize,
+        #[eo_display_with_serialize_deserialize]
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        #[eo_display_with_serialize_deserialize]
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        #[eo_display_with_serialize_deserialize]
+        column_decode_index: std::string::String,
+        #[eo_display_with_serialize_deserialize]
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        #[eo_display_with_serialize_deserialize]
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolTimedOut {
+        #[eo_display_with_serialize_deserialize]
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        #[eo_display_with_serialize_deserialize]
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        #[eo_display_with_serialize_deserialize]
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        #[eo_display]
+        migrate: sqlx::migrate::MigrateError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        #[eo_display]
+        json_data_error: axum::extract::rejection::JsonDataError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        #[eo_display]
+        json_syntax_error: axum::extract::rejection::JsonSyntaxError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        #[eo_display_with_serialize_deserialize]
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        #[eo_display_with_serialize_deserialize]
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        #[eo_display_with_serialize_deserialize]
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        #[eo_display_with_serialize_deserialize]
+        commit_not_equal: std::string::String,
+        #[eo_display_with_serialize_deserialize]
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        #[eo_display]
+        commit_to_str_conversion: http::header::ToStrError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        #[eo_display_with_serialize_deserialize]
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum TryReadOneResponseVariants {
+    Desirable(DogOptions),
+    Configuration {
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TypeNotFound {
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        column_index_out_of_bounds: usize,
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        column_decode_index: std::string::String,
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        commit_not_equal: std::string::String,
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        commit_to_str_conversion: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadOne> for TryReadOneResponseVariants {
+    fn from(value: TryReadOne) -> Self {
+        match value.into_serialize_deserialize_version() {
+            TryReadOneWithSerializeDeserialize::Configuration {
+                configuration,
+                code_occurence,
+            } => Self::Configuration {
+                configuration,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::Database {
+                database,
+                code_occurence,
+            } => Self::Database {
+                database,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::Io { io, code_occurence } => {
+                Self::Io { io, code_occurence }
+            }
+            TryReadOneWithSerializeDeserialize::Tls {
+                tls,
+                code_occurence,
+            } => Self::Tls {
+                tls,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::Protocol {
+                protocol,
+                code_occurence,
+            } => Self::Protocol {
+                protocol,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Self::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => Self::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Self::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => Self::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::Decode {
+                decode,
+                code_occurence,
+            } => Self::Decode {
+                decode,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => Self::PoolClosed {
+                pool_closed,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => Self::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::Migrate {
+                migrate,
+                code_occurence,
+            } => Self::Migrate {
+                migrate,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Self::JsonDataError {
+                json_data_error,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Self::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Self::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => Self::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => Self::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            } => Self::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            } => Self::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            },
+            TryReadOneWithSerializeDeserialize::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            } => Self::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            },
+        }
+    }
+}
+impl std::convert::From<&TryReadOneResponseVariants> for axum::http::StatusCode {
+    fn from(value: &TryReadOneResponseVariants) -> Self {
+        match value {
+            TryReadOneResponseVariants::Desirable(_) => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Configuration {
+                configuration: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Database {
+                database: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Io {
+                io: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Tls {
+                tls: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Protocol {
+                protocol: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::RowNotFound {
+                row_not_found: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::TypeNotFound {
+                type_not_found: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds: _,
+                len: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::ColumnNotFound {
+                column_not_found: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::ColumnDecode {
+                column_decode_index: _,
+                source_handle: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Decode {
+                decode: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::PoolTimedOut {
+                pool_timed_out: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::PoolClosed {
+                pool_closed: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::WorkerCrashed {
+                worker_crashed: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::Migrate {
+                migrate: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::JsonDataError {
+                json_data_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::JsonSyntaxError {
+                json_syntax_error: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::MissingJsonContentType {
+                missing_json_content_type: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::BytesRejection {
+                bytes_rejection: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::UnexpectedCase {
+                unexpected_case: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::CommitExtractorNotEqual {
+                commit_not_equal: _,
+                commit_to_use: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::CommitExtractorToStrConversion {
+                commit_to_str_conversion: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+            TryReadOneResponseVariants::NoCommitExtractorHeader {
+                no_commit_header: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::OK,
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr200Ok {
+    Desirable(DogOptions),
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr200Ok> for TryReadOneResponseVariants {
+    fn from(value: TryReadOneResponseVariantsTvfrr200Ok) -> Self {
+        match value {
+            TryReadOneResponseVariantsTvfrr200Ok::Desirable(i) => Self::Desirable(i),
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr500InternalServerError {
+    Configuration {
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        column_index_out_of_bounds: usize,
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        column_decode_index: std::string::String,
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr500InternalServerError>
+    for TryReadOneResponseVariants
+{
+    fn from(value: TryReadOneResponseVariantsTvfrr500InternalServerError) -> Self {
+        match value {
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Configuration {
+                configuration,
+                code_occurence,
+            } => Self::Configuration {
+                configuration,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Database {
+                database,
+                code_occurence,
+            } => Self::Database {
+                database,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Io { io, code_occurence } => {
+                Self::Io { io, code_occurence }
+            }
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Tls {
+                tls,
+                code_occurence,
+            } => Self::Tls {
+                tls,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Protocol {
+                protocol,
+                code_occurence,
+            } => Self::Protocol {
+                protocol,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => Self::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => Self::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Decode {
+                decode,
+                code_occurence,
+            } => Self::Decode {
+                decode,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => Self::PoolClosed {
+                pool_closed,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => Self::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::Migrate {
+                migrate,
+                code_occurence,
+            } => Self::Migrate {
+                migrate,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => Self::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr500InternalServerError::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => Self::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr400BadRequest {
+    TypeNotFound {
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        commit_not_equal: std::string::String,
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        commit_to_str_conversion: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr400BadRequest>
+    for TryReadOneResponseVariants
+{
+    fn from(value: TryReadOneResponseVariantsTvfrr400BadRequest) -> Self {
+        match value {
+            TryReadOneResponseVariantsTvfrr400BadRequest::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Self::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Self::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Self::JsonDataError {
+                json_data_error,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Self::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Self::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            } => Self::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            } => Self::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            },
+            TryReadOneResponseVariantsTvfrr400BadRequest::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            } => Self::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr408RequestTimeout {
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr408RequestTimeout>
+    for TryReadOneResponseVariants
+{
+    fn from(value: TryReadOneResponseVariantsTvfrr408RequestTimeout) -> Self {
+        match value {
+            TryReadOneResponseVariantsTvfrr408RequestTimeout::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub enum TryReadOneResponseVariantsTvfrr404NotFound {
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<TryReadOneResponseVariantsTvfrr404NotFound> for TryReadOneResponseVariants {
+    fn from(value: TryReadOneResponseVariantsTvfrr404NotFound) -> Self {
+        match value {
+            TryReadOneResponseVariantsTvfrr404NotFound::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            },
+        }
+    }
+}
+impl TryFrom<TryReadOneResponseVariants> for DogOptions {
+    type Error = TryReadOneWithSerializeDeserialize;
+    fn try_from(value: TryReadOneResponseVariants) -> Result<Self, Self::Error> {
+        match value {
+            TryReadOneResponseVariants::Desirable(i) => Ok(i),
+            TryReadOneResponseVariants::Configuration {
+                configuration,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::Configuration {
+                configuration,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::Database {
+                database,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::Database {
+                database,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::Io { io, code_occurence } => {
+                Err(TryReadOneWithSerializeDeserialize::Io { io, code_occurence })
+            }
+            TryReadOneResponseVariants::Tls {
+                tls,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::Tls {
+                tls,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::Protocol {
+                protocol,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::Protocol {
+                protocol,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::RowNotFound {
+                row_not_found,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::Decode {
+                decode,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::Decode {
+                decode,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::PoolClosed {
+                pool_closed,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::Migrate {
+                migrate,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::Migrate {
+                migrate,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::JsonDataError {
+                json_data_error,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => Err(TryReadOneWithSerializeDeserialize::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            }),
+            TryReadOneResponseVariants::CommitExtractorNotEqual {
+                commit_not_equal,
+                commit_to_use,
+                code_occurence,
+            } => Err(
+                TryReadOneWithSerializeDeserialize::CommitExtractorNotEqual {
+                    commit_not_equal,
+                    commit_to_use,
+                    code_occurence,
+                },
+            ),
+            TryReadOneResponseVariants::CommitExtractorToStrConversion {
+                commit_to_str_conversion,
+                code_occurence,
+            } => Err(
+                TryReadOneWithSerializeDeserialize::CommitExtractorToStrConversion {
+                    commit_to_str_conversion,
+                    code_occurence,
+                },
+            ),
+            TryReadOneResponseVariants::NoCommitExtractorHeader {
+                no_commit_header,
+                code_occurence,
+            } => Err(
+                TryReadOneWithSerializeDeserialize::NoCommitExtractorHeader {
+                    no_commit_header,
+                    code_occurence,
+                },
+            ),
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum TryReadOneRequestError {
+    ExpectedType {
+        #[eo_display_with_serialize_deserialize]
+        expected_type: TryReadOneWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedStatusCode {
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_foreign_type]
+        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_display]
+        serde: serde_json::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_with_serialize_deserialize]
+        response_text: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+pub enum TryReadOneStatusCodesChecker {
+    ConfigurationTvfrr500InternalServerError,
+    DatabaseTvfrr500InternalServerError,
+    IoTvfrr500InternalServerError,
+    TlsTvfrr500InternalServerError,
+    ProtocolTvfrr500InternalServerError,
+    RowNotFoundTvfrr404NotFound,
+    TypeNotFoundTvfrr400BadRequest,
+    ColumnIndexOutOfBoundsTvfrr500InternalServerError,
+    ColumnNotFoundTvfrr400BadRequest,
+    ColumnDecodeTvfrr500InternalServerError,
+    DecodeTvfrr500InternalServerError,
+    PoolTimedOutTvfrr408RequestTimeout,
+    PoolClosedTvfrr500InternalServerError,
+    WorkerCrashedTvfrr500InternalServerError,
+    MigrateTvfrr500InternalServerError,
+    JsonDataErrorTvfrr400BadRequest,
+    JsonSyntaxErrorTvfrr400BadRequest,
+    MissingJsonContentTypeTvfrr400BadRequest,
+    BytesRejectionTvfrr500InternalServerError,
+    UnexpectedCaseTvfrr500InternalServerError,
+    CommitExtractorNotEqualTvfrr400BadRequest,
+    CommitExtractorToStrConversionTvfrr400BadRequest,
+    NoCommitExtractorHeaderTvfrr400BadRequest,
+}
+impl axum::response::IntoResponse for TryReadOneResponseVariants {
+    fn into_response(self) -> axum::response::Response {
+        match &self {
+            TryReadOneResponseVariants::Desirable(_) => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Configuration {
+                configuration: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Database {
+                database: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Io {
+                io: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Tls {
+                tls: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Protocol {
+                protocol: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::RowNotFound {
+                row_not_found: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::TypeNotFound {
+                type_not_found: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds: _,
+                len: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::ColumnNotFound {
+                column_not_found: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::ColumnDecode {
+                column_decode_index: _,
+                source_handle: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Decode {
+                decode: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::PoolTimedOut {
+                pool_timed_out: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::PoolClosed {
+                pool_closed: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::WorkerCrashed {
+                worker_crashed: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::Migrate {
+                migrate: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::JsonDataError {
+                json_data_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::JsonSyntaxError {
+                json_syntax_error: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::MissingJsonContentType {
+                missing_json_content_type: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::BytesRejection {
+                bytes_rejection: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::UnexpectedCase {
+                unexpected_case: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::CommitExtractorNotEqual {
+                commit_not_equal: _,
+                commit_to_use: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::CommitExtractorToStrConversion {
+                commit_to_str_conversion: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+            TryReadOneResponseVariants::NoCommitExtractorHeader {
+                no_commit_header: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response();
+                *res.status_mut() = axum::http::StatusCode::OK;
+                res
+            }
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum TryReadOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_display]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExpectedType {
+        #[eo_display_with_serialize_deserialize]
+        expected_type: TryReadOneWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedStatusCode {
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_foreign_type]
+        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_display]
+        serde: serde_json::Error,
+        #[eo_display]
+        status_code: http::StatusCode,
+        #[eo_display_foreign_type]
+        headers: reqwest::header::HeaderMap,
+        #[eo_display_with_serialize_deserialize]
+        response_text: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_display_foreign_type]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+pub async fn try_read_one<'a>(
+    server_location: &str,
+    parameters: ReadOneParameters,
+) -> Result<DogOptions, TryReadOneErrorNamed> {
+    let payload = match serde_json::to_string(&ReadOnePayloadWithSerializeDeserialize::from(
+        parameters.payload,
+    )) {
+        Ok(value) => value,
+        Err(e) => {
+            return Err(TryReadOneErrorNamed::SerdeJsonToString {
+                serde_json_to_string: e,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1588,
+                        column: 13,
+                    }),
+                ),
+            });
+        }
+    };
+    let url = format!("{}/dogs/read_one", server_location);
+    let future = reqwest::Client::new()
+        .post(&url)
+        .header(postgresql_crud::COMMIT, git_info::PROJECT_GIT_INFO.commit)
+        .header(reqwest::header::CONTENT_TYPE, "application/json")
+        .body(payload)
+        .send();
+    let response = match future.await {
+        Ok(response) => response,
+        Err(e) => {
+            return Err(TryReadOneErrorNamed::Reqwest {
+                reqwest: e,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2442,
+                        column: 13,
+                    }),
+                ),
+            });
+        }
+    };
+    let status_code = response.status();
+    let headers = response.headers().clone();
+    let response_text = match response.text().await {
+        Ok(response_text) => response_text,
+        Err(e) => {
+            return Err(TryReadOneErrorNamed::FailedToGetResponseText {
+                reqwest: e,
+                status_code,
+                headers,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2371,
+                        column: 13,
+                    }),
+                ),
+            });
+        }
+    };
+    let variants = if status_code == http::StatusCode::OK {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr200Ok>(&response_text) {
+            Ok(value) => TryReadOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryReadOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2408,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr408RequestTimeout>(
+            &response_text,
+        ) {
+            Ok(value) => TryReadOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryReadOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2408,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::BAD_REQUEST {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr400BadRequest>(&response_text) {
+            Ok(value) => TryReadOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryReadOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2408,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else if status_code == http::StatusCode::INTERNAL_SERVER_ERROR {
+        match serde_json::from_str::<TryReadOneResponseVariantsTvfrr500InternalServerError>(
+            &response_text,
+        ) {
+            Ok(value) => TryReadOneResponseVariants::from(value),
+            Err(e) => {
+                return Err(TryReadOneErrorNamed::DeserializeResponse {
+                    serde: e,
+                    status_code,
+                    headers,
+                    response_text,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 2408,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        }
+    } else {
+        return Err(TryReadOneErrorNamed::UnexpectedStatusCode {
+            status_code,
+            headers,
+            response_text_result:
+                crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(
+                    response_text,
+                ),
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 2336,
+                    column: 13,
+                }),
+            ),
+        });
+    };
+    match DogOptions::try_from(variants) {
+        Ok(value) => Ok(value),
+        Err(e) => {
+            return Err(TryReadOneErrorNamed::ExpectedType {
+                expected_type: e,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 2298,
+                        column: 13,
+                    }),
+                ),
+            });
+        }
+    }
+}
+#[utoipa ::
+path(post, path = "/dogs/read_one", operation_id = "/dogs/read_one", tag =
+"dogs",
+request_body(content = ReadOnePayloadWithSerializeDeserialize, description =
+"dogs read_one payload", content_type = "application/json"),
+responses((status = 200, description = "ok", body =
+TryReadOneResponseVariantsTvfrr200Ok, content_type = "application/json"),
+(status = 500, description = "internal server error", body =
+TryReadOneResponseVariantsTvfrr500InternalServerError, content_type =
+"application/json"),
+(status = 404, description = "not found", body =
+TryReadOneResponseVariantsTvfrr404NotFound, content_type =
+"application/json"),
+(status = 400, description = "bad request", body =
+TryReadOneResponseVariantsTvfrr400BadRequest, content_type =
+"application/json"),
+(status = 408, description = "request timeout", body =
+TryReadOneResponseVariantsTvfrr408RequestTimeout, content_type =
+"application/json")),)]
+pub async fn read_one(
+    app_state: axum::extract::State<
+        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+    >,
+    payload_extraction_result: Result<
+        axum::Json<ReadOnePayloadWithSerializeDeserialize>,
+        axum::extract::rejection::JsonRejection,
+    >,
+) -> impl axum::response::IntoResponse {
+    let parameters = ReadOneParameters {
+        payload:
+            match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+                ReadOnePayloadWithSerializeDeserialize,
+                TryReadOneResponseVariants,
+            >::try_extract_value(payload_extraction_result, &app_state)
+            {
+                Ok(value) => ReadOnePayload::from(value),
+                Err(e) => {
+                    return e;
+                }
+            },
+    };
+    println!("{:#?}", parameters);
+    {
+        let select = parameters.payload.select;
+        let query_string = {
+            format!
+            ("select {} from dogs where std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = $1",
+            crate :: server :: postgres :: generate_query :: GenerateQuery ::
+            generate_query(& select),)
+        };
+        println!("{}", query_string);
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            let query = postgresql_crud::BindQuery::bind_value_to_query(
+                parameters
+                    .payload
+                    .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
+                query,
+            );
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(e) => {
+                let e = TryReadOne::from(e);
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                return TryReadOneResponseVariants::from(e);
+            }
+        };
+        let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(e) => {
+                let e = TryReadOne::from(e);
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                return TryReadOneResponseVariants::from(e);
+            }
+        };
+        match binded_query.fetch_one(pg_connection.as_mut()).await {
+            Ok(row) => match select.options_try_from_sqlx_row(&row) {
+                Ok(value) => TryReadOneResponseVariants::Desirable(value),
+                Err(e) => {
+                    let e = TryReadOne::from(e);
+                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                    return TryReadOneResponseVariants::from(e);
+                }
+            },
+            Err(e) => {
+                let e = TryReadOne::from(e);
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                return TryReadOneResponseVariants::from(e);
+            }
+        }
+    }
+}
+impl std::convert::From<crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed>
+    for TryReadOne
+{
+    fn from(
+        value: crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed,
+    ) -> Self {
+        match value
+        {
+            crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
+            :: CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence } => Self ::
+            CommitExtractorNotEqual
+            { commit_not_equal, commit_to_use, code_occurence },
+            crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
+            :: CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence } => Self ::
+            CommitExtractorToStrConversion
+            { commit_to_str_conversion, code_occurence },
+            crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
+            :: NoCommitExtractorHeader { no_commit_header, code_occurence } =>
+            Self :: NoCommitExtractorHeader
+            { no_commit_header, code_occurence }
+        }
+    }
+}
