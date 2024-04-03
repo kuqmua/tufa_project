@@ -1,5 +1,5 @@
-#[proc_macro_derive(FieldTypeImplementsSerializeDeserializeOption)]
-pub fn field_type_implements_serialize_deserialize_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(FieldTypeImplementsSerializeDeserialize)]
+pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserialize";
@@ -97,8 +97,8 @@ pub fn field_type_implements_serialize_deserialize_option(input: proc_macro::Tok
     gen.into()
 }
 
-#[proc_macro_derive(CommonFromOption)]
-pub fn common_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(CommonFrom)]
+pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonFrom";
@@ -176,8 +176,8 @@ pub fn common_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenSt
     gen.into()
 }
 
-#[proc_macro_derive(CommonTryFromOption)]
-pub fn common_try_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(CommonTryFrom)]
+pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonTryFrom";
@@ -329,8 +329,8 @@ pub fn common_try_from_option(input: proc_macro::TokenStream) -> proc_macro::Tok
     gen.into()
 }
 
-#[proc_macro_derive(CommonOption)] //todo check on postgresql max length value of type
-pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(Common)] //todo check on postgresql max length value of type
+pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "Common";
@@ -745,8 +745,8 @@ pub fn common_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
     gen.into()
 }
 ///////////////
-#[proc_macro_derive(CommonSpecificFromOption)]
-pub fn common_specific_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(CommonSpecificFrom)]
+pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonFrom";
@@ -818,8 +818,8 @@ pub fn common_specific_from_option(input: proc_macro::TokenStream) -> proc_macro
     gen.into()
 }
 ////////////////
-#[proc_macro_derive(CommonSpecificTryFromOption)]
-pub fn common_specific_try_from_option(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(CommonSpecificTryFrom)]
+pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonTryFrom";
