@@ -3822,7 +3822,7 @@ impl AsPostgresqlSerial for StdPrimitiveI32 {}
 impl AsPostgresqlInt4 for StdPrimitiveI32 {}
 impl PostgresqlOrder for StdPrimitiveI32 {}
 
-#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, Clone, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserialize, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonOption)]
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord, Clone, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct StdPrimitiveI64(pub std::primitive::i64);
 impl AsPostgresqlBigInt for StdPrimitiveI64 {}
 impl AsPostgresqlBigSerial for StdPrimitiveI64 {}
@@ -5847,7 +5847,7 @@ impl AsPostgresqlVarBit for SqlxTypesBitVec {}
 impl PostgresqlOrder for SqlxTypesBitVec {}
 
 #[derive(Debug, PartialEq)]
-pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);HERE need to generate option variants
+pub struct SqlxTypesJson<T>(sqlx::types::Json<T>);
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesJsonWithSerializeDeserialize<T>(sqlx::types::Json<T>);
 impl<T> std::convert::From<SqlxTypesJsonWithSerializeDeserialize<T>> for SqlxTypesJson<T> {
@@ -6020,6 +6020,209 @@ impl<T> SqlxTypesJson<T> {
 //         }
 //     }
 // }
+
+//
+#[derive(Debug, PartialEq)]
+pub struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
+////////////////////////////
+impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJson<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
+impl<T> StdOptionOptionSqlxTypesJson<T> {
+    pub fn into_inner(self) -> std::option::Option<sqlx::types::Json<T>> {
+        self.0
+    }
+}
+impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for std::option::Option<sqlx::types::Json<T>> {
+    fn from(value: StdOptionOptionSqlxTypesJson<T>) -> Self {
+        value.0
+    }
+}
+impl<T> sqlx::Type<sqlx::Postgres> for StdOptionOptionSqlxTypesJson<T> {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::option::Option<sqlx::types::Json<T>> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <std::option::Option<sqlx::types::Json<T>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl<T> CheckSupportedPostgresqlColumnType for StdOptionOptionSqlxTypesJson<T> {
+    fn check_supported_postgresql_column_type() {}
+}
+impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for SupportedSqlxPostgresType {
+    fn from(_value: StdOptionOptionSqlxTypesJson<T>) -> Self {
+        SupportedSqlxPostgresType::SqlxTypesJsonT
+    }
+}
+impl<T> StdOptionOptionSqlxTypesJson<T> {
+    pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<sqlx::types::Json<T>>> {
+        value
+            .into_iter()
+            .map(|element| element.into_inner())
+            .collect()
+    }
+}
+// impl<T: std::marker::Send + serde::Serialize> BindQuery for StdOptionOptionSqlxTypesJson<T> {
+//     fn try_increment(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(())
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             }),
+//         }
+//     }
+//     fn try_generate_bind_increments(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+//         let mut increments = std::string::String::default();
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 increments.push_str(&format!("${increment}"));
+//             }
+//             None => {
+//                 return Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                     checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             }
+//         }
+//         Ok(increments)
+//     }
+//     fn bind_value_to_query(
+//         self,
+//         mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.0);
+//         query
+//     }
+// }
+#[derive(Debug, PartialEq)]
+pub struct WhereStdOptionOptionSqlxTypesJson<T> {
+    pub value: StdOptionOptionSqlxTypesJson<T>,
+    pub conjuctive_operator: ConjunctiveOperator,
+}
+impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJson<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "value: {}, conjuctive_operator: {}",
+            self.value, self.conjuctive_operator
+        )
+    }
+}
+// impl<T: std::marker::Send + serde::Serialize> BindQuery for WhereStdOptionOptionSqlxTypesJson<T> {
+//     fn try_increment(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(())
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from("checked_add is None"),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             }),
+//         }
+//     }
+//     fn try_generate_bind_increments(
+//         &self,
+//         increment: &mut std::primitive::u64,
+//     ) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(incr) => {
+//                 *increment = incr;
+//                 Ok(format!("${increment}"))
+//             }
+//             None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+//                 checked_add: std::string::String::from("checked_add is None"),
+//                 code_occurence: error_occurence_lib::code_occurence!(),
+//             }),
+//         }
+//     }
+//     fn bind_value_to_query(
+//         self,
+//         mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(self.value.0);
+//         query
+//     }
+// }
+#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
+    pub value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>,
+    pub conjuctive_operator: ConjunctiveOperator,
+}
+impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "value: {}, conjuctive_operator: {}",
+            self.value, self.conjuctive_operator
+        )
+    }
+}
+impl<T> std::convert::From<WhereStdOptionOptionSqlxTypesJson<T>> for WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
+    fn from(value: WhereStdOptionOptionSqlxTypesJson<T>) -> Self {
+        Self {
+            value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize::from(value.value),
+            conjuctive_operator: value.conjuctive_operator,
+        }
+    }
+}
+//
+impl<T> std::convert::From<WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>> for WhereStdOptionOptionSqlxTypesJson<T> {
+    fn from(value: WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
+        Self {
+            value: StdOptionOptionSqlxTypesJson::from(value.value),
+            conjuctive_operator: value.conjuctive_operator,
+        }
+    }
+}
+//
+#[derive(
+    Debug,
+    PartialEq,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+)]
+pub struct StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>(std::option::Option<SqlxTypesJsonWithSerializeDeserialize<T>>);
+impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self.0)
+    }
+}
+impl<T> std::convert::From<StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>> for StdOptionOptionSqlxTypesJson<T> {
+    fn from(value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
+        match value.0 {
+            Some(value) => Self(Some(SqlxTypesJson::from(value).0)),
+            None => Self(None)
+        }
+    }
+}
+impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
+    fn from(value: StdOptionOptionSqlxTypesJson<T>) -> Self {
+        match value.0 {
+            Some(value) => Self(Some(SqlxTypesJsonWithSerializeDeserialize::from(SqlxTypesJson(value)))),
+            None => Self(None)
+        }
+    }
+}
+//
+
 
 #[derive(Debug, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeOption, postgresql_crud_types_macro_logic_reuse::CommonFromOption, postgresql_crud_types_macro_logic_reuse::CommonOption)]
 pub struct SerdeJsonValue(pub serde_json::Value);
