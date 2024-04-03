@@ -749,7 +749,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "CommonFrom";
+    let proc_macro_name_upper_camel_case = "CommonSpecificFrom";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {e}",
@@ -822,7 +822,7 @@ pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::Token
 pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "CommonTryFrom";
+    let proc_macro_name_upper_camel_case = "CommonSpecificTryFrom";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {e}",
@@ -947,7 +947,7 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
 pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "Common";
+    let proc_macro_name_upper_camel_case = "AsPostgresqlCommon";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {e}",
