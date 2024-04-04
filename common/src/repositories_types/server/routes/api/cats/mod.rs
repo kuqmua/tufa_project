@@ -1656,6 +1656,18 @@ impl std::fmt::Display for DogColumn {
 //         }
 //     }
 // }
+//modification
+impl crate::server::postgres::generate_query::GenerateQuery for DogColumnSelect {
+    fn generate_query(&self) -> std::string::String {
+        match self {
+            Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("std_primitive_bool_as_postgresql_bool"),
+            Self::StdPrimitiveI16AsPostgresqlSmallInt => std::string::String::from("std_primitive_i16_as_postgresql_small_int"),
+            Self::StdPrimitiveI32AsPostgresqlInt => std::string::String::from("std_primitive_i32_as_postgresql_int"),
+            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => std::string::String::from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
+        }
+    }
+}
+//
 //HEREend
 // impl std::default::Default for DogColumnSelect {
 //     fn default() -> Self {
@@ -2893,42 +2905,132 @@ pub struct DogColumnReadPermission {
 //         }
 //     }
 // }
+//modification
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum DogColumnSelect {
+    StdPrimitiveBoolAsPostgresqlBool,
+    StdPrimitiveI16AsPostgresqlSmallInt,
+    StdPrimitiveI32AsPostgresqlInt,
+    StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
+}
+//
 #[derive(Debug, utoipa :: ToSchema)]
 pub struct ReadOnePayload {
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64,
-    pub select: DogColumnSelect,
+    pub select: std::vec::Vec<DogColumnSelect>,//modification
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct ReadOnePayloadWithSerializeDeserialize {
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
-    select: DogColumnSelect,
+    select: std::vec::Vec<DogColumnSelect>,//modification
 }
-impl std::convert::From<ReadOnePayloadWithSerializeDeserialize> for ReadOnePayload {
-    fn from(value: ReadOnePayloadWithSerializeDeserialize) -> Self {
+//modification
+#[derive(
+    Debug,
+    thiserror :: Error,
+    error_occurence_lib :: ErrorOccurence,
+)]
+pub enum ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+    ColumnSelect {
+        #[eo_display_with_serialize_deserialize]
+        column_select: DogColumnSelect,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+//modification
+impl std::convert::TryFrom<ReadOnePayloadWithSerializeDeserialize> for ReadOnePayload {
+    type Error = ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize;
+    fn try_from(value: ReadOnePayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
         let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
             postgresql_crud::StdPrimitiveI64::from(
                 value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
-        let select = value.select;
-        Self {
+        let select = {
+            let mut vec = std::vec::Vec::with_capacity(4);
+            for element in value.select {
+                if vec.contains(&element) {
+                    return Err(Self::Error::ColumnSelect {
+                        column_select: element,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1588,
+                                column: 13,
+                            }),
+                        ),
+                    });
+                }
+                else {
+                    vec.push(element);
+                }
+            }
+            vec
+        };
+        Ok(Self {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             select,
-        }
+        })
     }
 }
-impl std::convert::From<ReadOnePayload> for ReadOnePayloadWithSerializeDeserialize {
-    fn from(value: ReadOnePayload) -> Self {
+
+//modification
+#[derive(
+    Debug,
+    thiserror :: Error,
+    error_occurence_lib :: ErrorOccurence,
+)]
+pub enum ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+    ColumnSelect {
+        #[eo_display_with_serialize_deserialize]
+        column_select: DogColumnSelect,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+//modification
+impl std::convert::TryFrom<ReadOnePayload> for ReadOnePayloadWithSerializeDeserialize {
+    type Error = ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload;
+    fn try_from(value: ReadOnePayload) -> Result<Self, Self::Error> {
         let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
             postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
                 value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             );
-        let select = value.select;
-        Self {
+        let select = {
+            let mut vec = std::vec::Vec::with_capacity(4);
+            for element in value.select {
+                if vec.contains(&element) {
+                    return Err(Self::Error::ColumnSelect {
+                        column_select: element,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_string(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from(
+                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                ),
+                                line: 1588,
+                                column: 13,
+                            }),
+                        ),
+                    });
+                }
+                else {
+                    vec.push(element);
+                }
+            }
+            vec
+        };
+        Ok(Self {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
             select,
-        }
+        })
     }
 }
 #[derive(Debug)]
@@ -3063,6 +3165,13 @@ pub enum TryReadOne {
         no_commit_header: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //modification
+    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+        #[eo_error_occurence]
+        read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryReadOneResponseVariants {
@@ -4233,18 +4342,45 @@ pub enum TryReadOneErrorNamed {
         reqwest: reqwest::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //modification
+    ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+        #[eo_error_occurence]
+        read_one_payload_with_serialize_deserialize_try_from_read_one_payload: ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 pub async fn try_read_one<'a>(
     server_location: &str,
     parameters: ReadOneParameters,
 ) -> Result<DogOptions, TryReadOneErrorNamed> {
-    let payload = match serde_json::to_string(&ReadOnePayloadWithSerializeDeserialize::from(
+    //modification
+    let payload = match ReadOnePayloadWithSerializeDeserialize::try_from(
         parameters.payload,
-    )) {
-        Ok(value) => value,
+    ) {
+        Ok(value) => match serde_json::to_string(&value) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(TryReadOneErrorNamed::SerdeJsonToString {
+                    serde_json_to_string: e,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_string(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from(
+                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                            ),
+                            line: 1588,
+                            column: 13,
+                        }),
+                    ),
+                });
+            }
+        },
         Err(e) => {
-            return Err(TryReadOneErrorNamed::SerdeJsonToString {
-                serde_json_to_string: e,
+            return Err(TryReadOneErrorNamed::ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+                read_one_payload_with_serialize_deserialize_try_from_read_one_payload: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     file!().to_string(),
                     line!(),
@@ -4489,7 +4625,14 @@ pub async fn read_one(
                 TryReadOneResponseVariants,
             >::try_extract_value(payload_extraction_result, &app_state)
             {
-                Ok(value) => ReadOnePayload::from(value),
+                Ok(value) => match ReadOnePayload::try_from(value) {
+                    Ok(value) => value,
+                    Err(e) => {
+                        let e = TryReadOne::from(e);
+                        error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                        return TryReadOneResponseVariants::from(e);
+                    }
+                },
                 Err(e) => {
                     return e;
                 }
@@ -4573,3 +4716,25 @@ impl std::convert::From<crate::server::extractors::commit_extractor::CommitExtra
         }
     }
 }
+//modification
+impl std::convert::From<ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize>
+    for TryReadOne
+{
+    fn from(
+        value: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize,
+    ) -> Self {
+        match value
+        {
+            ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize::ColumnSelect {
+                column_select,
+                code_occurence,
+            } => Self::ColumnSelect {
+                column_select,
+                code_occurence,
+            },
+        }
+    }
+}
+//
+
+    
