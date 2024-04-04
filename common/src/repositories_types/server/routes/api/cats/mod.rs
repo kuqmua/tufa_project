@@ -260,6 +260,7 @@ impl std::convert::From<Dog> for DogOptions {
         }
     }
 }
+//HERE start
 #[derive(Debug)]
 pub struct DogStdPrimitiveBoolAsPostgresqlBool {
     pub std_primitive_bool_as_postgresql_bool:
@@ -376,6 +377,8 @@ pub struct DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIn
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
 }
+//HEREend
+//HEREstart
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum DogStdPrimitiveBoolAsPostgresqlBoolTryFromDogOptionsErrorNamed {
     StdPrimitiveBoolAsPostgresqlBoolIsNone {
@@ -1526,6 +1529,7 @@ DogStdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimiti
         })
     }
 }
+//HEREend
 #[derive(
     Debug,
     serde :: Serialize,
@@ -1564,6 +1568,7 @@ impl std::fmt::Display for DogColumn {
         write!(f, "{}", Self::to_snake_case(self))
     }
 }
+//HEREstart
 #[derive(
     Debug,
     serde :: Serialize,
@@ -1589,6 +1594,8 @@ pub enum DogColumnSelect {
     StdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
     StdPrimitiveBoolAsPostgresqlBoolStdPrimitiveI16AsPostgresqlSmallIntStdPrimitiveI32AsPostgresqlIntStdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey,
 }
+//HEREend
+//HEREstart
 impl crate::server::postgres::generate_query::GenerateQuery for DogColumnSelect {
     fn generate_query(&self) -> std::string::String {
         match self
@@ -1649,6 +1656,7 @@ impl crate::server::postgres::generate_query::GenerateQuery for DogColumnSelect 
         }
     }
 }
+//HEREend
 impl std::default::Default for DogColumnSelect {
     fn default() -> Self {
         Self ::
@@ -1673,6 +1681,7 @@ pub enum DogColumnSelectFromStrErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
+//HERE start
 impl std::str::FromStr for DogColumnSelect {
     type Err = DogColumnSelectFromStrErrorNamed;
     fn from_str(value: &str) -> Result<Self, Self::Err> {
@@ -1749,11 +1758,13 @@ impl std::str::FromStr for DogColumnSelect {
         }
     }
 }
+//HERE end
 impl crate::common::serde_urlencoded::SerdeUrlencodedParameter for DogColumnSelect {
     fn serde_urlencoded_parameter(self) -> std::string::String {
         self.to_string()
     }
 }
+//HEREstart
 impl DogColumnSelect {
     fn options_try_from_sqlx_row<'a, R: sqlx::Row>(&self, row: &'a R) -> sqlx::Result<DogOptions>
     where
@@ -2078,6 +2089,7 @@ impl DogColumnSelect {
         })
     }
 }
+//HERE end
 fn primary_key_try_from_sqlx_row<'a, R: sqlx::Row>(
     row: &'a R,
 ) -> sqlx::Result<postgresql_crud::StdPrimitiveI64>
