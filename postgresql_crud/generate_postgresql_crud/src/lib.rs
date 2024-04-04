@@ -321,7 +321,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let struct_options_token_stream = {
         let serde_skip_serializing_if_value_attribute_token_stream =
-            quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]};
+            quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]};//todo maybe its not correct for nullable\option types
         let field_option_primary_key_token_stream = {
             let inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field.inner_type_with_serialize_deserialize_token_stream;
             quote::quote! {
