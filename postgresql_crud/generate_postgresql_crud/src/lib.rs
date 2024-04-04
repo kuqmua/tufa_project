@@ -626,7 +626,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let column_token_stream = {
-        let column_variants = fields_named
+        let variants = fields_named
             .iter()
             .map(|element| {
                 let field_ident_stringified = element.field_ident.to_string();
@@ -655,7 +655,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #from_str_snake_case_token_stream::#from_str_upper_camel_case_token_stream,
             )]
             pub enum #ident_column_upper_camel_case_token_stream {
-                #(#column_variants),*
+                #(#variants),*
             }
             impl std::fmt::Display for #ident_column_upper_camel_case_token_stream {
                 fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
