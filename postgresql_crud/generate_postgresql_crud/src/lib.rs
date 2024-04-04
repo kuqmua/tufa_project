@@ -3146,7 +3146,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -3155,7 +3155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -3643,7 +3643,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -3652,7 +3652,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -4566,7 +4566,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let mut #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -4575,7 +4575,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -5045,7 +5045,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -5054,7 +5054,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -5788,7 +5788,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -5797,7 +5797,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -6384,7 +6384,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -6393,7 +6393,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -7296,7 +7296,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -7305,7 +7305,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
@@ -7750,7 +7750,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #axum_json_token_stream<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>,
                         #axum_extract_rejection_json_rejection_token_stream,
                     >,
-                ) -> impl #axum_response_into_response_token_stream {
+                ) -> impl #axum_response_into_response_token_stream {//todo return explicit type enum instead
                     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                         #payload_snake_case_token_stream: match #crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream::<
                             #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
@@ -7759,7 +7759,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => #operation_payload_from_or_try_from_token_stream,
                             Err(#error_value_snake_case_token_stream) => {
-                                return #error_value_snake_case_token_stream;
+                                return #error_value_snake_case_token_stream;//todo convert into return enum mannually
                             }
                         },
                     };
