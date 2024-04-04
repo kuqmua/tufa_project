@@ -1,0 +1,83 @@
+# [rustfmt]
+
+# # Indentation
+# indent_width = 4
+
+# # Spacing
+# spaces_between_items = 1
+
+# # Alignment
+# align_items_in_columns = true
+
+# # Namespace
+# namespace_blocks = "always"
+
+# # Control Flow
+
+# # Functions
+# fn_call_style = "rust"
+# fn_name_style = "snake_case"
+# fn_return_style = "on_separate_line"
+
+# # Loops
+# loop_style = "rust"
+
+# # Conditional Statements
+# conditional_stmt_style = "rust"
+
+# # Blocks
+# block_style = "rust"
+
+# # Expressions
+# expression_style = "rust"
+
+# # Type System
+
+# # Type Aliases
+# type_alias_style = "rust"
+
+# # Enums
+# enum_style = "rust"
+
+# # Generics
+# generic_style = "rust"
+
+# # Lifetimes
+# lifetime_style = "rust"
+
+# # Module System
+
+# # Modules
+# module_style = "rust"
+
+# # Import System
+
+# # Imports
+# import_style = "rust"
+
+# # Error Handling
+
+# # Error Types
+# error_type_style = "rust"
+
+# # Error Messages
+# error_message_style = "rust"
+
+# # Debugging
+
+# # Debug Macros
+# debug_macro_style = "rust"
+
+# # Debug Statements
+# debug_stmt_style = "rust"
+
+# # Additional Options
+
+# # Allow unsafe code
+# allow_unsafe = true
+
+# # Allow deprecated items
+# allow_deprecated = true
+
+# # Allow unstable items
+# allow_unstable = true
