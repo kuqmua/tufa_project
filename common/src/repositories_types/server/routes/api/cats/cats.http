@@ -32,11 +32,11 @@ commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 
 POST http://127.0.0.1:8080/dogs/read_one HTTP/1.1
 content-type: application/json
-commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
+commit: 8e554f0f320f752782337a761dd9a1609365c6ed
 
 {
-    "id": "75ef376b-0f75-4a2b-aff2-f61e9f44099a",
-    "select": "IdName"
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 234,
+    "select": ["std_primitive_bool_as_postgresql_bool"]
 }
 
 ### 

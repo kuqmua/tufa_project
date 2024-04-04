@@ -216,18 +216,19 @@ pub struct Dog {
 pub const TABLE_NAME: &str = "dogs";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct DogOptions {
-    #[serde(skip_serializing_if = "Option::is_none")]
+    //todo maybe wrap inner type into value coz double option problem
+    // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
         std::option::Option<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_bool_as_postgresql_bool: std::option::Option<
         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_i16_as_postgresql_small_int: std::option::Option<
         postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_i32_as_postgresql_int: std::option::Option<
         postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
     >,
