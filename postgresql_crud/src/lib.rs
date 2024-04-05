@@ -871,6 +871,7 @@ pub use postgresql_crud_common::BindQuery;
 pub use postgresql_crud_common::RegexFilter;
 pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamed;
 pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize;
+pub use postgresql_crud_common::Value;
 
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 

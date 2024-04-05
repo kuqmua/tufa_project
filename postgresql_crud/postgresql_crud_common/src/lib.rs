@@ -6449,3 +6449,8 @@ impl BindQuery for std::vec::Vec<RegexFilter> {
         query
     }
 }
+//this needed coz serde std::option::Option<std::option::Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct Value<T> {
+    pub value: T
+}
