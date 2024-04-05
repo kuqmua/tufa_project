@@ -351,7 +351,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &primary_key_syn_field
                 .inner_type_with_serialize_deserialize_token_stream;
         let ident_option_variant_primary_key_token_stream = quote::quote! {
-            #primary_key_field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#primary_key_field_ident.0)),
+            #primary_key_field_ident: Some(
+                postgresql_crud::Value {
+                    value: #inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
+                        value.#primary_key_field_ident.0
+                    )
+                }
+            ),
         };
         let ident_option_variants_excluding_primary_key_token_stream =
             fields_named_excluding_primary_key
@@ -361,7 +367,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let inner_type_with_serialize_deserialize_token_stream =
                         &element.inner_type_with_serialize_deserialize_token_stream;
                     quote::quote! {
-                        #field_ident: Some(#inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#field_ident.0))
+                        #field_ident: Some(
+                            postgresql_crud::Value {
+                                value: #inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(value.#field_ident.0)
+                            }
+                        )
                     }
                 });
         quote::quote! {
@@ -7852,7 +7862,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = quote::quote! {
         #table_name_declaration_token_stream
         #struct_options_token_stream
-        // #from_ident_for_ident_options_token_stream
+        #from_ident_for_ident_options_token_stream
         // // #(#structs_variants_token_stream)*
         // // #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
         // #column_token_stream
