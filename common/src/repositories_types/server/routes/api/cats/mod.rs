@@ -214,19 +214,6 @@ pub struct Dog {
 
 ////////////////////////////////////////////////////////////////////////
 //modification
-impl crate::server::postgres::generate_query::GenerateQuery for std::vec::Vec<DogColumn> {
-    fn generate_query(&self) -> std::string::String {
-        let mut value = self.iter().fold(std::string::String::from(""), |mut acc, element| {
-            acc += &crate::server::postgres::generate_query::GenerateQuery::generate_query(element);
-            acc += ",";
-            acc
-        });
-        value.pop();
-        value
-    }
-}
-//
-//modification
 #[derive(Debug)]
 struct WrapperVecColumn(std::vec::Vec<DogColumn>);
 //modification
