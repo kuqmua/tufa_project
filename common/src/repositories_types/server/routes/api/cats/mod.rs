@@ -213,50 +213,64 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
+//modification
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub struct Value<T> {
+    value: T
+}
+
 pub const TABLE_NAME: &str = "dogs";
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct DogOptions {
     //todo maybe wrap inner type into value coz double option problem
     // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        std::option::Option<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
+        std::option::Option<Value<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>>,
     // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_bool_as_postgresql_bool: std::option::Option<
-        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+        Value<postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>,
     >,
     // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_i16_as_postgresql_small_int: std::option::Option<
-        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+        Value<postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize>,
     >,
     // #[serde(skip_serializing_if = "Option::is_none")]
     pub std_primitive_i32_as_postgresql_int: std::option::Option<
-        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+        Value<postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize>,
     >,
 }
 impl std::convert::From<Dog> for DogOptions {
     fn from(value: Dog) -> Self {
         Self {
             std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: Some(
-                postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
-                    value
-                        .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
-                        .0,
-                ),
+                Value {
+                    value: postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
+                        value
+                            .std_primitive_i64_as_postgresql_big_serial_not_null_primary_key
+                            .0,
+                    ),
+                }
             ),
             std_primitive_bool_as_postgresql_bool: Some(
-                postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
-                    value.std_primitive_bool_as_postgresql_bool.0,
-                ),
+                Value {
+                    value: postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+                        value.std_primitive_bool_as_postgresql_bool.0,
+                    ),
+                }
             ),
             std_primitive_i16_as_postgresql_small_int: Some(
-                postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
-                    value.std_primitive_i16_as_postgresql_small_int.0,
-                ),
+                Value {
+                    value: postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
+                        value.std_primitive_i16_as_postgresql_small_int.0,
+                    ),
+                }
             ),
             std_primitive_i32_as_postgresql_int: Some(
-                postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
-                    value.std_primitive_i32_as_postgresql_int.0,
-                ),
+                Value {
+                    value: postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
+                        value.std_primitive_i32_as_postgresql_int.0,
+                    ),
+                }
             ),
         }
     }
@@ -1615,16 +1629,16 @@ impl WrapperVecColumn {
             sqlx::types::Type<R::Database>,
     {
         let mut std_primitive_bool_as_postgresql_bool: std::option::Option<
-            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+            Value<postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize>,
         > = None;
         let mut std_primitive_i16_as_postgresql_small_int: std::option::Option<
-            postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+            Value<postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize>,
         > = None;
         let mut std_primitive_i32_as_postgresql_int: std::option::Option<
-            postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+            Value<postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize>,
         > = None;
         let mut std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::option::Option<
-            postgresql_crud::StdPrimitiveI64WithSerializeDeserialize
+            Value<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>
         > = None;
         //assuming all enum variants are unique
         for element in &self.0 {
@@ -1632,26 +1646,26 @@ impl WrapperVecColumn {
                 DogColumn::StdPrimitiveBoolAsPostgresqlBool => {
                     std_primitive_bool_as_postgresql_bool = {
                         let value: std::option::Option<std::option::Option<std::primitive::bool>> = row.try_get("std_primitive_bool_as_postgresql_bool")?;
-                        value.map(|value|postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value)))
+                        value.map(|value|Value{ value: postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(postgresql_crud::StdOptionOptionStdPrimitiveBool(value))})
                     };
                 },
                 DogColumn::StdPrimitiveI16AsPostgresqlSmallInt => {
                     std_primitive_i16_as_postgresql_small_int = {
                         let value: std::option::Option<std::option::Option<std::primitive::i16>> = row.try_get("std_primitive_i16_as_postgresql_small_int")?;
-                        value.map(|value|postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value)))
+                        value.map(|value|Value{ value: postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(postgresql_crud::StdOptionOptionStdPrimitiveI16(value))})
                     };
                 },
                 DogColumn::StdPrimitiveI32AsPostgresqlInt => {
                     std_primitive_i32_as_postgresql_int = {
                         let value: std::option::Option<std::option::Option<std::primitive::i32>> = row.try_get("std_primitive_i32_as_postgresql_int")?;
-                        value.map(|value|postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value)))
+                        value.map(|value|Value{ value: postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(postgresql_crud::StdOptionOptionStdPrimitiveI32(value))})
                     };
                 },
                 DogColumn::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => {
                     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key = {
                         //modification
                         let value: std::option::Option<std::primitive::i64> = row.try_get("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")?;
-                        value.map(|value|postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(postgresql_crud::StdPrimitiveI64(value)))
+                        value.map(|value|Value{ value: postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(postgresql_crud::StdPrimitiveI64(value))})
                     };
                 },
             }
