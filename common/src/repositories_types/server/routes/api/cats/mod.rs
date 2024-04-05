@@ -214,17 +214,6 @@ pub struct Dog {
 
 ////////////////////////////////////////////////////////////////////////
 //modification
-impl crate::server::postgres::generate_query::GenerateQuery for DogColumn {
-    fn generate_query(&self) -> std::string::String {
-        match self {
-            Self::StdPrimitiveBoolAsPostgresqlBool => std::string::String::from("std_primitive_bool_as_postgresql_bool"),
-            Self::StdPrimitiveI16AsPostgresqlSmallInt => std::string::String::from("std_primitive_i16_as_postgresql_small_int"),
-            Self::StdPrimitiveI32AsPostgresqlInt => std::string::String::from("std_primitive_i32_as_postgresql_int"),
-            Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => std::string::String::from("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"),
-        }
-    }
-}
-//modification
 impl crate::server::postgres::generate_query::GenerateQuery for std::vec::Vec<DogColumn> {
     fn generate_query(&self) -> std::string::String {
         let mut value = self.iter().fold(std::string::String::from(""), |mut acc, element| {
