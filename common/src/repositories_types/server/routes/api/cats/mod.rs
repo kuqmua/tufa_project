@@ -412,18 +412,6 @@ pub struct Dog {
 // }
 //HEREstart
 //HERE end
-fn primary_key_try_from_sqlx_row<'a, R: sqlx::Row>(
-    row: &'a R,
-) -> sqlx::Result<postgresql_crud::StdPrimitiveI64>
-where
-    &'a std::primitive::str: sqlx::ColumnIndex<R>,
-    std::primitive::i64: sqlx::decode::Decode<'a, R::Database>,
-    std::primitive::i64: sqlx::types::Type<R::Database>,
-{
-    let primary_key: std::primitive::i64 =
-        row.try_get("std_primitive_i64_as_postgresql_big_serial_not_null_primary_key")?;
-    Ok(postgresql_crud::StdPrimitiveI64(primary_key))
-}
 fn deserialize_dog_order_by<'de, D>(
     deserializer: D,
 ) -> Result<crate::server::postgres::order_by::OrderBy<DogColumn>, D::Error>
