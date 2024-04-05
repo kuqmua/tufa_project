@@ -320,13 +320,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {struct_options_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let struct_options_token_stream = {
-        let serde_skip_serializing_if_value_attribute_token_stream =
-            quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]};//todo maybe its not correct for nullable\option types
+        // let serde_skip_serializing_if_value_attribute_token_stream = quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]};//todo maybe its not correct for nullable\option types
         let field_option_primary_key_token_stream = {
             let inner_type_with_serialize_deserialize_token_stream = &primary_key_syn_field.inner_type_with_serialize_deserialize_token_stream;
             quote::quote! {
-                #serde_skip_serializing_if_value_attribute_token_stream
-                pub #primary_key_field_ident: std::option::Option<#inner_type_with_serialize_deserialize_token_stream>
+                // #serde_skip_serializing_if_value_attribute_token_stream
+                pub #primary_key_field_ident: std::option::Option<postgresql_crud::Value<#inner_type_with_serialize_deserialize_token_stream>>
             }
         };
         let fields_options_excluding_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element| {
@@ -334,8 +333,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident = &element.field_ident;
             let inner_type_with_serialize_deserialize_token_stream = &element.inner_type_with_serialize_deserialize_token_stream;
             quote::quote!{
-                #serde_skip_serializing_if_value_attribute_token_stream
-                #field_vis #field_ident: std::option::Option<#inner_type_with_serialize_deserialize_token_stream>
+                // #serde_skip_serializing_if_value_attribute_token_stream
+                #field_vis #field_ident: std::option::Option<postgresql_crud::Value<#inner_type_with_serialize_deserialize_token_stream>>
             }
         });
         quote::quote! {
@@ -7853,19 +7852,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = quote::quote! {
         #table_name_declaration_token_stream
         #struct_options_token_stream
-        #from_ident_for_ident_options_token_stream
-        // #(#structs_variants_token_stream)*
-        // #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
-        #column_token_stream
-        #column_select_token_stream
-        #primary_key_try_get_sqlx_row_token_stream
-        #deserialize_ident_order_by_token_stream
-        #order_by_wrapper_token_stream
-        #allow_methods_token_stream
-        #ident_column_read_permission_token_stream
+        // #from_ident_for_ident_options_token_stream
+        // // #(#structs_variants_token_stream)*
+        // // #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
+        // #column_token_stream
+        // #column_select_token_stream
+        // #primary_key_try_get_sqlx_row_token_stream
+        // #deserialize_ident_order_by_token_stream
+        // #order_by_wrapper_token_stream
+        // #allow_methods_token_stream
+        // #ident_column_read_permission_token_stream
         // #[cfg(test)]
         // mod test_try_create_many {
-            #emulate_crud_api_usage_test_token_stream
+            // #emulate_crud_api_usage_test_token_stream
         // }
     };
     // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -7883,7 +7882,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream
+            #common_token_stream
 
             // #create_many_token_stream
             // #create_one_token_stream
