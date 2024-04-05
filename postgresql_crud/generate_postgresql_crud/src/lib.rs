@@ -7865,7 +7865,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #from_ident_for_ident_options_token_stream
         // // #(#structs_variants_token_stream)*
         // // #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
-        // #column_token_stream
+        #column_token_stream
         // #column_select_token_stream
         // #primary_key_try_get_sqlx_row_token_stream
         // #deserialize_ident_order_by_token_stream
