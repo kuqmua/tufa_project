@@ -7917,9 +7917,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #generate_query_token_stream
         #column_select_token_stream
         #primary_key_try_get_sqlx_row_token_stream
-        // #deserialize_ident_order_by_token_stream
-        // #order_by_wrapper_token_stream
-        // #allow_methods_token_stream
+        #deserialize_ident_order_by_token_stream
+        #order_by_wrapper_token_stream
+        #allow_methods_token_stream
         // #ident_column_read_permission_token_stream
         // #[cfg(test)]
         // mod test_try_create_many {
