@@ -4761,7 +4761,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #derive_debug_serialize_deserialize_token_stream
                 pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                     #primary_key_field_ident: #primary_key_inner_type_with_serialize_deserialize_token_stream,
-                    #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                    #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
                 }
             };
             // println!("{payload_with_serialize_deserialize_token_stream}");
@@ -4870,7 +4870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
             quote::quote! {
                 #payload_token_stream
-                // #payload_with_serialize_deserialize_token_stream
+                #payload_with_serialize_deserialize_token_stream
                 // #impl_std_convert_from_or_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                 // #impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
 

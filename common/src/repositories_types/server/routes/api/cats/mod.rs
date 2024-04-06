@@ -412,18 +412,6 @@ pub struct Dog {
 // }
 //HEREstart
 //HERE end
-// #[derive(Debug, utoipa :: ToSchema)]
-// pub struct ReadOnePayload {
-//     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-//         postgresql_crud::StdPrimitiveI64,
-//     pub select: std::vec::Vec<DogColumn>,//modification
-// }
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub struct ReadOnePayloadWithSerializeDeserialize {
-    std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
-    select: std::vec::Vec<DogColumn>,//modification
-}
 //modification
 #[derive(
     Debug,
