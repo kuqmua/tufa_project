@@ -412,62 +412,6 @@ pub struct Dog {
 // }
 //HEREstart
 //HERE end
-//modification
-
-
-//modification
-#[derive(
-    Debug,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed {
-    NotUniqueColumn {
-        #[eo_display_with_serialize_deserialize]
-        not_unique_column: DogColumn,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-//modification
-impl std::convert::TryFrom<ReadOnePayload> for ReadOnePayloadWithSerializeDeserialize {
-    type Error = ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed;
-    fn try_from(value: ReadOnePayload) -> Result<Self, Self::Error> {
-        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
-            postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
-                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            );
-        let select = {
-            let mut vec = std::vec::Vec::with_capacity(4);
-            for element in value.select {
-                if vec.contains(&element) {
-                    return Err(Self::Error::NotUniqueColumn {//modification
-                        not_unique_column: element,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1588,
-                                column: 13,
-                            }),
-                        ),
-                    });
-                }
-                else {
-                    vec.push(element);
-                }
-            }
-            vec
-        };
-        Ok(Self {
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            select,
-        })
-    }
-}
 #[derive(Debug)]
 pub struct ReadOneParameters {
     pub payload: ReadOnePayload,
