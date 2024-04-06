@@ -7920,7 +7920,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #deserialize_ident_order_by_token_stream
         #order_by_wrapper_token_stream
         #allow_methods_token_stream
-        // #ident_column_read_permission_token_stream
+        #ident_column_read_permission_token_stream
         // #[cfg(test)]
         // mod test_try_create_many {
             // #emulate_crud_api_usage_test_token_stream
