@@ -421,7 +421,7 @@ pub struct Dog {
     thiserror :: Error,
     error_occurence_lib :: ErrorOccurence,
 )]
-pub enum ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+pub enum ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed {
     NotUniqueColumn {
         #[eo_display_with_serialize_deserialize]
         not_unique_column: DogColumn,
@@ -430,7 +430,7 @@ pub enum ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
 }
 //modification
 impl std::convert::TryFrom<ReadOnePayload> for ReadOnePayloadWithSerializeDeserialize {
-    type Error = ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload;
+    type Error = ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed;
     fn try_from(value: ReadOnePayload) -> Result<Self, Self::Error> {
         let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
             postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
@@ -1817,9 +1817,9 @@ pub enum TryReadOneErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //modification
-    ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+    ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed {
         #[eo_error_occurence]
-        read_one_payload_with_serialize_deserialize_try_from_read_one_payload: ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload,
+        read_one_payload_with_serialize_deserialize_try_from_read_one_payload: ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //
@@ -1853,7 +1853,7 @@ pub async fn try_read_one<'a>(
             }
         },
         Err(e) => {
-            return Err(TryReadOneErrorNamed::ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+            return Err(TryReadOneErrorNamed::ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed {
                 read_one_payload_with_serialize_deserialize_try_from_read_one_payload: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     file!().to_string(),
