@@ -224,7 +224,7 @@ pub struct ReadManyPayload {
         std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI16>>,
     pub std_primitive_i32_as_postgresql_int:
         std::option::Option<std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI32>>,
-    pub select: DogColumnSelect,
+    pub select: std::vec::Vec<DogColumn>,//modification
     pub order_by: crate::server::postgres::order_by::OrderBy<DogColumn>,
     pub limit: postgresql_crud::StdPrimitiveI64,
     pub offset: postgresql_crud::StdPrimitiveI64,
@@ -245,7 +245,7 @@ pub struct ReadManyPayloadWithSerializeDeserialize {
     std_primitive_i32_as_postgresql_int: std::option::Option<
         std::vec::Vec<postgresql_crud::WhereStdOptionOptionStdPrimitiveI32WithSerializeDeserialize>,
     >,
-    select: DogColumnSelect,
+    select: std::vec::Vec<DogColumn>,//modification
     order_by: crate::server::postgres::order_by::OrderBy<DogColumn>,
     limit: postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
     offset: postgresql_crud::StdPrimitiveI64WithSerializeDeserialize,
@@ -2527,6 +2527,7 @@ pub async fn read_many(
             };
             let mut rows = binded_query.fetch(pg_connection.as_mut());
             let mut vec_values = std::vec::Vec::new();
+            let wrapper_vec_column = WrapperVecColumn(parameters.payload.select);//modification
             while let Some(row) = {
                 match {
                     use futures::TryStreamExt;
@@ -2542,7 +2543,7 @@ pub async fn read_many(
                     }
                 }
             } {
-                match parameters.payload.select.options_try_from_sqlx_row(&row) {
+                match wrapper_vec_column.options_try_from_sqlx_row(&row) {//modification
                     Ok(value) => {
                         vec_values.push(value);
                     }

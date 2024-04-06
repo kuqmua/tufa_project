@@ -754,6 +754,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let wrapper_vec_column_token_stream = quote::quote!{WrapperVecColumn};
     let column_select_token_stream = {
         // let column_select_struct_token_stream = {
         //     let column_select_variants_token_stream = column_variants.iter().map(|column_variant|{
@@ -986,28 +987,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     std::option::Option<#original_type_token_stream>: #sqlx_types_type_database_token_stream,
                 }
             });
-            let wrapper_vec_column_token_stream = quote::quote!{WrapperVecColumn};
             quote::quote! {
-                // impl #ident_column_select_upper_camel_case_token_stream {
-                //     fn #options_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(
-                //         &self,
-                //         row: &'a R,
-                //     ) -> sqlx::Result<#struct_options_ident_token_stream>
-                //     where
-                //         #std_primitive_str_sqlx_column_index_token_stream
-                //         #sqlx_decode_decode_and_sqlx_types_type_primary_key_token_stream
-                //         #(#sqlx_decode_decode_and_sqlx_types_type_with_excluded_primary_key_token_stream)*
-                //     {
-                //         #declaration_primary_key_token_stream
-                //         #(#declaration_excluding_primary_key_token_stream)*
-                //         match self {
-                //             #(#assignment_token_stream)*
-                //         }
-                //         Ok(#struct_options_ident_token_stream {
-                //             #(#option_fields_initiation_token_stream),*
-                //         })
-                //     }
-                // }
                 #[derive(Debug)]
                 struct #wrapper_vec_column_token_stream(std::vec::Vec<#ident_column_upper_camel_case_token_stream>);
                 impl #wrapper_vec_column_token_stream {
@@ -5125,7 +5105,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     #acquire_pool_and_connection_token_stream
                     match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
-                        Ok(row) => match WrapperVecColumn(#select_snake_case_token_stream).#options_try_from_sqlx_row_name_token_stream(&row) {
+                        Ok(row) => match #wrapper_vec_column_token_stream(#select_snake_case_token_stream).#options_try_from_sqlx_row_name_token_stream(&row) {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(value),
                             Err(#error_value_snake_case_token_stream) => {
                                 #from_log_and_return_error_token_stream

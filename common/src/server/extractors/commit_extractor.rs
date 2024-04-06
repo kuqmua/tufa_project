@@ -9,8 +9,8 @@
     // ,
     // crate::repositories_types::server::routes::api::cats::TryCreateOne
     // ,
-    // crate::repositories_types::server::routes::api::cats::TryReadMany
-    // ,
+    crate::repositories_types::server::routes::api::cats::TryReadMany
+    ,
     crate::repositories_types::server::routes::api::cats::TryReadOne
     // ,
     // crate::repositories_types::server::routes::api::cats::TryUpdateMany
