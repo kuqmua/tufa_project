@@ -4733,29 +4733,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             ]
         );
-        //
-    // ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
-    //     #[eo_error_occurence]
-    //     read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-        // let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = {
-        //     let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::unexpected_case_upper_camel_case_stringified();
-        //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
-        //     crate::type_variants_from_request_response_generator::construct_syn_variant(
-        //         proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-        //         &variant_name_upper_camel_case_stringified,
-        //         &code_occurence_field,
-        //         vec![
-        //             (
-        //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
-        //                 &variant_name_snake_case_stringified,
-        //                 std_string_string_syn_punctuated_punctuated.clone()
-        //             )
-        //         ]
-        //     )
-        // };
-        //
         let type_variants_from_request_response_syn_variants = {
             let full_additional_http_status_codes_error_variants =
                 generate_full_additional_http_status_codes_error_variants(
@@ -4972,8 +4949,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ) = {
             let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
             let try_operation_error_named_token_stream = {
-                let expected_type_declaration_token_stream =
-                    generate_expected_type_declaration_token_stream(&operation);
+                let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
+                let operation_payload_with_serialize_deserialize_try_from_operation_payload_token_stream = {
+                    let operation_payload_with_serialize_deserialize_try_from_operation_payload_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(&operation);
+                    let operation_payload_with_serialize_deserialize_try_from_operation_payload_snake_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadSnakeCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(&operation);
+                    let operation_payload_with_serialize_deserialize_try_from_operation_payload_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadWithSerializeDeserializeTryFromSelfPayloadErrorNamedUpperCamelCaseTokenStream::self_payload_with_serialize_deserialize_try_from_self_payload_error_named_upper_camel_case_token_stream(&operation);
+                    quote::quote! {
+                        #operation_payload_with_serialize_deserialize_try_from_operation_payload_upper_camel_case_token_stream {
+                            #eo_error_occurence_attribute_token_stream
+                            #operation_payload_with_serialize_deserialize_try_from_operation_payload_snake_case_token_stream: #operation_payload_with_serialize_deserialize_try_from_operation_payload_error_named_upper_camel_case_token_stream,
+                            #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
+                        }
+                    }
+                };
                 quote::quote! {
                     #derive_debug_thiserror_error_occurence_token_stream
                     pub enum #try_operation_error_named_upper_camel_case_token_stream {
@@ -4983,6 +4971,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #failed_to_get_response_text_declaration_token_stream,
                         #deserialize_response_declaration_token_stream,
                         #reqwest_declaration_token_stream,
+                        #operation_payload_with_serialize_deserialize_try_from_operation_payload_token_stream,
                     }
                 }
             };
@@ -5063,10 +5052,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 quote::quote! {
                     #try_operation_error_named_token_stream
-                    #http_request_token_stream
+                    // #http_request_token_stream
                 },
-                http_request_test_expect_success_token_stream,
-                http_request_test_expect_fail_token_stream,
+                // http_request_test_expect_success_token_stream,
+                // http_request_test_expect_fail_token_stream,
+                proc_macro2::TokenStream::new(),//todo put http_request_test_expect_success_token_stream instead
+                proc_macro2::TokenStream::new(),//todo put http_request_test_expect_fail_token_stream instead
             )
         };
         // println!("{http_request_token_stream}");
@@ -5215,7 +5206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #parameters_token_stream
                 #try_operation_error_with_middleware_error_variants_token_stream
-                // #http_request_token_stream
+                #http_request_token_stream
                 // #route_handler_token_stream
                 // #common_middlewares_error_syn_variants_from_impls
             },

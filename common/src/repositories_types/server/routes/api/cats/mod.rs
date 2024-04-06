@@ -412,60 +412,60 @@ pub struct Dog {
 // }
 //HEREstart
 //HERE end
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryReadOneErrorNamed {
-    SerdeJsonToString {
-        #[eo_display]
-        serde_json_to_string: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ExpectedType {
-        #[eo_display_with_serialize_deserialize]
-        expected_type: TryReadOneWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedStatusCode {
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        #[eo_display_foreign_type]
-        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    FailedToGetResponseText {
-        #[eo_display_foreign_type]
-        reqwest: reqwest::Error,
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeserializeResponse {
-        #[eo_display]
-        serde: serde_json::Error,
-        #[eo_display]
-        status_code: http::StatusCode,
-        #[eo_display_foreign_type]
-        headers: reqwest::header::HeaderMap,
-        #[eo_display_with_serialize_deserialize]
-        response_text: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Reqwest {
-        #[eo_display_foreign_type]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //modification
-    ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed {
-        #[eo_error_occurence]
-        read_one_payload_with_serialize_deserialize_try_from_read_one_payload: ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-}
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum TryReadOneErrorNamed {
+//     SerdeJsonToString {
+//         #[eo_display]
+//         serde_json_to_string: serde_json::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     ExpectedType {
+//         #[eo_display_with_serialize_deserialize]
+//         expected_type: TryReadOneWithSerializeDeserialize,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     UnexpectedStatusCode {
+//         #[eo_display]
+//         status_code: http::StatusCode,
+//         #[eo_display_foreign_type]
+//         headers: reqwest::header::HeaderMap,
+//         #[eo_display_foreign_type]
+//         response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     FailedToGetResponseText {
+//         #[eo_display_foreign_type]
+//         reqwest: reqwest::Error,
+//         #[eo_display]
+//         status_code: http::StatusCode,
+//         #[eo_display_foreign_type]
+//         headers: reqwest::header::HeaderMap,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     DeserializeResponse {
+//         #[eo_display]
+//         serde: serde_json::Error,
+//         #[eo_display]
+//         status_code: http::StatusCode,
+//         #[eo_display_foreign_type]
+//         headers: reqwest::header::HeaderMap,
+//         #[eo_display_with_serialize_deserialize]
+//         response_text: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Reqwest {
+//         #[eo_display_foreign_type]
+//         reqwest: reqwest::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     //modification
+//     ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
+//         #[eo_error_occurence]
+//         read_one_payload_with_serialize_deserialize_try_from_read_one_payload: ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     //
+// }
 pub async fn try_read_one<'a>(
     server_location: &str,
     parameters: ReadOneParameters,
@@ -495,7 +495,7 @@ pub async fn try_read_one<'a>(
             }
         },
         Err(e) => {
-            return Err(TryReadOneErrorNamed::ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayloadErrorNamed {
+            return Err(TryReadOneErrorNamed::ReadOnePayloadWithSerializeDeserializeTryFromReadOnePayload {
                 read_one_payload_with_serialize_deserialize_try_from_read_one_payload: e,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     file!().to_string(),
