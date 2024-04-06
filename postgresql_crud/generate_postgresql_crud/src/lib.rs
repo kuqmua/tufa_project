@@ -4768,9 +4768,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
+                // if let postgresql_crud_common::FromOrTryFrom::TryFrom = primary_key_from_or_try_from {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
-                }
+                // }
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
@@ -5214,7 +5214,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #parameters_token_stream
-                // #try_operation_error_with_middleware_error_variants_token_stream
+                #try_operation_error_with_middleware_error_variants_token_stream
                 // #http_request_token_stream
                 // #route_handler_token_stream
                 // #common_middlewares_error_syn_variants_from_impls
