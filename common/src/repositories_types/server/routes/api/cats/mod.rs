@@ -413,58 +413,7 @@ pub struct Dog {
 //HEREstart
 //HERE end
 //modification
-#[derive(
-    Debug,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
-    NotUniqueColumn {
-        #[eo_display_with_serialize_deserialize]
-        not_unique_column: DogColumn,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-//modification
-impl std::convert::TryFrom<ReadOnePayloadWithSerializeDeserialize> for ReadOnePayload {
-    type Error = ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize;//modification
-    fn try_from(value: ReadOnePayloadWithSerializeDeserialize) -> Result<Self, Self::Error> {
-        let std_primitive_i64_as_postgresql_big_serial_not_null_primary_key =
-            postgresql_crud::StdPrimitiveI64::from(
-                value.std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            );
-        let select = {
-            let mut vec = std::vec::Vec::with_capacity(4);
-            for element in value.select {
-                if vec.contains(&element) {
-                    return Err(Self::Error::NotUniqueColumn {//modification
-                        not_unique_column: element,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_string(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1588,
-                                column: 13,
-                            }),
-                        ),
-                    });
-                }
-                else {
-                    vec.push(element);
-                }
-            }
-            vec
-        };
-        Ok(Self {
-            std_primitive_i64_as_postgresql_big_serial_not_null_primary_key,
-            select,
-        })
-    }
-}
+
 
 //modification
 #[derive(
@@ -652,9 +601,9 @@ pub enum TryReadOne {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //modification
-    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
         #[eo_error_occurence]
-        read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize,
+        read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //
@@ -758,8 +707,8 @@ pub enum TryReadOneResponseVariants {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //modification
-    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
-        read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeWithSerializeDeserialize,
+    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+        read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -930,10 +879,10 @@ impl std::convert::From<TryReadOne> for TryReadOneResponseVariants {
                 code_occurence,
             },
             //modification
-            TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+            TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                 code_occurence,
-            } => Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+            } => Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                 code_occurence,
             }
@@ -1040,7 +989,7 @@ impl std::convert::From<&TryReadOneResponseVariants> for axum::http::StatusCode 
                 code_occurence: _,
             } => axum::http::StatusCode::OK,
             //modification
-            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize: _,
                 code_occurence: _,
             } => axum::http::StatusCode::OK,
@@ -1533,11 +1482,11 @@ impl TryFrom<TryReadOneResponseVariants> for DogOptions {
                 },
             ),
             //modification
-            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                 code_occurence,
             } => Err(
-                TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+                TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
                     read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                     code_occurence,
                 },
@@ -1809,7 +1758,7 @@ impl axum::response::IntoResponse for TryReadOneResponseVariants {
                 res
             }
             //modification
-            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize: _,
                 code_occurence: _,
             } => {
@@ -2243,14 +2192,14 @@ impl std::convert::From<crate::server::extractors::commit_extractor::CommitExtra
     }
 }
 //modification
-impl std::convert::From<ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize>
+impl std::convert::From<ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed>
     for TryReadOne
 {
     fn from(
-        value: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize,
+        value: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
     ) -> Self {
         //modification
-        Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+        Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
             read_one_payload_try_from_read_one_payload_with_serialize_deserialize: value,
             //todo is it that need to have two instances of code_occurence? refactor it
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
