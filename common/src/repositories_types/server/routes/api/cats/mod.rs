@@ -412,10 +412,6 @@ pub struct Dog {
 // }
 //HEREstart
 //HERE end
-#[derive(Debug)]
-pub struct ReadOneParameters {
-    pub payload: ReadOnePayload,
-}
 #[derive(
     Debug,
     thiserror :: Error,

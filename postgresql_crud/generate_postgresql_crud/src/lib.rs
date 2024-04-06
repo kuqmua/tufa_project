@@ -4919,10 +4919,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #impl_std_convert_try_from_operation_payload_with_serialize_deserialize_for_operation_payload_token_stream
                 #impl_std_convert_try_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream
 
-                // #derive_debug_token_stream
-                // pub struct #operation_parameters_upper_camel_case_token_stream {
-                //     pub #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream,
-                // }
+                #derive_debug_token_stream
+                pub struct #operation_parameters_upper_camel_case_token_stream {
+                    pub #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream,
+                }
             }
         };
         // println!("{parameters_token_stream}");
