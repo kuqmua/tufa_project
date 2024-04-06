@@ -213,32 +213,3 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-//modification
-impl std::convert::From<ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed>
-    for TryReadOne
-{
-    fn from(
-        value: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
-    ) -> Self {
-        //modification
-        Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
-            read_one_payload_try_from_read_one_payload_with_serialize_deserialize: value,
-            //todo is it that need to have two instances of code_occurence? refactor it
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
-                line!(),
-                column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from(
-                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                    ),
-                    line: 2298,
-                    column: 13,
-                }),
-            ),
-        }
-    }
-}
-//
-
-    
