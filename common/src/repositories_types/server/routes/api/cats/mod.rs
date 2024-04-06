@@ -541,7 +541,7 @@ pub enum TryReadOne {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //modification
-    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
         #[eo_error_occurence]
         read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -647,7 +647,7 @@ pub enum TryReadOneResponseVariants {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //modification
-    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+    ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
         read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
@@ -819,10 +819,10 @@ impl std::convert::From<TryReadOne> for TryReadOneResponseVariants {
                 code_occurence,
             },
             //modification
-            TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+            TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                 code_occurence,
-            } => Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+            } => Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                 code_occurence,
             }
@@ -929,7 +929,7 @@ impl std::convert::From<&TryReadOneResponseVariants> for axum::http::StatusCode 
                 code_occurence: _,
             } => axum::http::StatusCode::OK,
             //modification
-            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize: _,
                 code_occurence: _,
             } => axum::http::StatusCode::OK,
@@ -1422,11 +1422,11 @@ impl TryFrom<TryReadOneResponseVariants> for DogOptions {
                 },
             ),
             //modification
-            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                 code_occurence,
             } => Err(
-                TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+                TryReadOneWithSerializeDeserialize::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
                     read_one_payload_try_from_read_one_payload_with_serialize_deserialize,
                     code_occurence,
                 },
@@ -1698,7 +1698,7 @@ impl axum::response::IntoResponse for TryReadOneResponseVariants {
                 res
             }
             //modification
-            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+            TryReadOneResponseVariants::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
                 read_one_payload_try_from_read_one_payload_with_serialize_deserialize: _,
                 code_occurence: _,
             } => {
@@ -2139,7 +2139,7 @@ impl std::convert::From<ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserial
         value: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
     ) -> Self {
         //modification
-        Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed {
+        Self::ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
             read_one_payload_try_from_read_one_payload_with_serialize_deserialize: value,
             //todo is it that need to have two instances of code_occurence? refactor it
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(

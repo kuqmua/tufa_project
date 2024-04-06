@@ -4733,6 +4733,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             ]
         );
+        //
+    // ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserialize {
+    //     #[eo_error_occurence]
+    //     read_one_payload_try_from_read_one_payload_with_serialize_deserialize: ReadOnePayloadTryFromReadOnePayloadWithSerializeDeserializeErrorNamed,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+        // let operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant = {
+        //     let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::unexpected_case_upper_camel_case_stringified();
+        //     let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
+        //     crate::type_variants_from_request_response_generator::construct_syn_variant(
+        //         proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+        //         &variant_name_upper_camel_case_stringified,
+        //         &code_occurence_field,
+        //         vec![
+        //             (
+        //                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
+        //                 &variant_name_snake_case_stringified,
+        //                 std_string_string_syn_punctuated_punctuated.clone()
+        //             )
+        //         ]
+        //     )
+        // };
+        //
         let type_variants_from_request_response_syn_variants = {
             let full_additional_http_status_codes_error_variants =
                 generate_full_additional_http_status_codes_error_variants(
