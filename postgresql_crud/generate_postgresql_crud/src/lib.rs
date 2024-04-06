@@ -7923,7 +7923,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #ident_column_read_permission_token_stream
         // #[cfg(test)]
         // mod test_try_create_many {
-            // #emulate_crud_api_usage_test_token_stream
+            #emulate_crud_api_usage_test_token_stream
         // }
     };
     // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
