@@ -412,18 +412,12 @@ pub struct Dog {
 // }
 //HEREstart
 //HERE end
-// pub struct DogColumnReadPermission {
-//     std_primitive_bool_as_postgresql_bool: std::primitive::bool,
-//     std_primitive_i16_as_postgresql_small_int: std::primitive::bool,
-//     std_primitive_i32_as_postgresql_int: std::primitive::bool,
-//     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key: std::primitive::bool,
+// #[derive(Debug, utoipa :: ToSchema)]
+// pub struct ReadOnePayload {
+//     pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
+//         postgresql_crud::StdPrimitiveI64,
+//     pub select: std::vec::Vec<DogColumn>,//modification
 // }
-#[derive(Debug, utoipa :: ToSchema)]
-pub struct ReadOnePayload {
-    pub std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
-        postgresql_crud::StdPrimitiveI64,
-    pub select: std::vec::Vec<DogColumn>,//modification
-}
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct ReadOnePayloadWithSerializeDeserialize {
     std_primitive_i64_as_postgresql_big_serial_not_null_primary_key:
