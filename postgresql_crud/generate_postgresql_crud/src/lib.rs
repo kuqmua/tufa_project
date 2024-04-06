@@ -5069,12 +5069,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 quote::quote! {
                     #try_operation_error_named_token_stream
-                    // #http_request_token_stream
+                    #http_request_token_stream
                 },
-                // http_request_test_expect_success_token_stream,
-                // http_request_test_expect_fail_token_stream,
-                proc_macro2::TokenStream::new(),//todo put http_request_test_expect_success_token_stream instead
-                proc_macro2::TokenStream::new(),//todo put http_request_test_expect_fail_token_stream instead
+                http_request_test_expect_success_token_stream,
+                http_request_test_expect_fail_token_stream,
             )
         };
         // println!("{http_request_token_stream}");
