@@ -139,10 +139,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 DELETE http://127.0.0.1:8080/dogs/delete_one HTTP/1.1
 content-type: application/json
-commit: fcacc76d1575a823d974d8c91c2ba3a307a55eb2
+commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-    "id": "eb939a89-f715-4561-84b7-0aa850ad2537"
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 6
 }
 
 ###
