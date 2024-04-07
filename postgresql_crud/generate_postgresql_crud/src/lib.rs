@@ -5272,7 +5272,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 &primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
                                 &eo_error_occurence_attribute_token_stream,
                             );
-                            let primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream =generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
+                            fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
+                                value: &SynFieldWithAdditionalInfo,
+                                operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+                                code_occurence_snake_case_token_stream: &proc_macro2::TokenStream,
+                                primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
+                            ) -> proc_macro2::TokenStream {
+                                match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
+                                    postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
+                                    postgresql_crud_common::FromOrTryFrom::TryFrom => {
+                                        let field_ident_upper_camel_case_token_stream = {
+                                            //todo its a temporal naming desicion. maybe it can be better
+                                            let value = syn_ident_to_upper_camel_case_stringified(&value.field_ident);
+                                            value.parse::<proc_macro2::TokenStream>()
+                                            .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                        };
+                                        quote::quote!{
+                                            #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream {
+                                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                                                #code_occurence_snake_case_token_stream,
+                                            } => Self::#field_ident_upper_camel_case_token_stream {
+                                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
+                                                #code_occurence_snake_case_token_stream,
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                            let primary_key_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream = generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
                                 &primary_key_syn_field,
                                 &operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream,
                                 &code_occurence_snake_case_token_stream,
@@ -9250,34 +9277,6 @@ fn generate_inner_type_from_or_try_from_inner_type_with_serialize_deserialize_er
                     #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: #with_serialize_deserialize_error_named_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 },//must use comma here
-            }
-        }
-    }
-}
-
-fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
-    value: &SynFieldWithAdditionalInfo,
-    operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
-    code_occurence_snake_case_token_stream: &proc_macro2::TokenStream,
-    primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    match value.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
-        postgresql_crud_common::FromOrTryFrom::From => proc_macro2::TokenStream::new(),
-        postgresql_crud_common::FromOrTryFrom::TryFrom => {
-            let field_ident_upper_camel_case_token_stream = {
-                //todo its a temporal naming desicion. maybe it can be better
-                let value = syn_ident_to_upper_camel_case_stringified(&value.field_ident);
-                value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            quote::quote!{
-                #operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream {
-                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                    #code_occurence_snake_case_token_stream,
-                } => Self::#field_ident_upper_camel_case_token_stream {
-                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream,
-                    #code_occurence_snake_case_token_stream,
-                },
             }
         }
     }
