@@ -48,7 +48,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 }
 
 ### 
-
+ 
 POST http://127.0.0.1:8080/dogs/read_many HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
@@ -67,7 +67,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     }
     # ],
     "order_by": {
-        "column": "std_primitive_i16_as_postgresql_small_int",
+        "column": "std_primitive_i32_as_postgresql_int",
         "order": "desc"
     },
     "limit": 100,

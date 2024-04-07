@@ -658,6 +658,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             })
             .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        let display_variants = fields_named
+            .iter()
+            .map(|element| {
+                let field_ident_stringified = element.field_ident.to_string();
+                let field_ident_quotes_token_stream = format!("\"{field_ident_stringified}\"").parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                let variant_ident_token_stream = {
+                    let variant_ident_stringified = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
+                    variant_ident_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                quote::quote! {
+                    Self::#variant_ident_token_stream => write!(f, #field_ident_quotes_token_stream)
+                }
+            })
+            .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {
             #[derive(
                 #debug_token_stream,
@@ -674,7 +690,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
             impl std::fmt::Display for #ident_column_upper_camel_case_token_stream {
                 fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-                    write!(f, "{}", Self::to_snake_case(self))
+                    match self {
+                        #(#display_variants),*
+                    }
                 }
             }
         }
