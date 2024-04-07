@@ -754,7 +754,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let wrapper_vec_column_token_stream = quote::quote!{WrapperVecColumn};
+    let wrapper_vec_column_upper_camel_case_token_stream = quote::quote!{WrapperVecColumn};
+    let wrapper_vec_column_snake_case_token_stream = quote::quote!{wrapper_vec_column};
     let column_select_token_stream = {
         // let column_select_struct_token_stream = {
         //     let column_select_variants_token_stream = column_variants.iter().map(|column_variant|{
@@ -989,8 +990,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             quote::quote! {
                 #[derive(Debug)]
-                struct #wrapper_vec_column_token_stream(std::vec::Vec<#ident_column_upper_camel_case_token_stream>);
-                impl #wrapper_vec_column_token_stream {
+                struct #wrapper_vec_column_upper_camel_case_token_stream(std::vec::Vec<#ident_column_upper_camel_case_token_stream>);
+                impl #wrapper_vec_column_upper_camel_case_token_stream {
                     fn #options_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(
                         &self, 
                         row: &'a R
@@ -3835,7 +3836,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     pub struct #operation_payload_upper_camel_case_token_stream {
                         pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
-                        pub #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                        pub #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
                         pub #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         pub #limit_token_stream: #limit_and_offset_type_token_stream,
                         pub #offset_token_stream: #limit_and_offset_type_token_stream,
@@ -3856,7 +3857,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     pub struct #operation_payload_with_serialize_deserialize_upper_camel_case_token_stream {
                         #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
-                        #select_snake_case_token_stream: #ident_column_select_upper_camel_case_token_stream,
+                        #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
                         #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         #limit_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
                         #offset_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
@@ -4553,6 +4554,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #acquire_pool_and_connection_token_stream
                         let mut rows = #binded_query_name_token_stream.fetch(#pg_connection_token_stream.as_mut());
                         let mut vec_values = std::vec::Vec::new();
+                        let #wrapper_vec_column_snake_case_token_stream = #wrapper_vec_column_upper_camel_case_token_stream(#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream);
                         while let Some(row) = {
                             match {
                                 #use_futures_try_stream_ext_token_stream;
@@ -4566,7 +4568,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                         } {
-                            match #parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
+                            match #wrapper_vec_column_snake_case_token_stream.#options_try_from_sqlx_row_name_token_stream(&row) {
                                 Ok(value) => {
                                     vec_values.push(value);
                                 }
@@ -5105,7 +5107,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     #acquire_pool_and_connection_token_stream
                     match #binded_query_name_token_stream.fetch_one(#pg_connection_token_stream.as_mut()).await {
-                        Ok(row) => match #wrapper_vec_column_token_stream(#select_snake_case_token_stream).#options_try_from_sqlx_row_name_token_stream(&row) {
+                        Ok(row) => match #wrapper_vec_column_upper_camel_case_token_stream(#select_snake_case_token_stream).#options_try_from_sqlx_row_name_token_stream(&row) {
                             Ok(value) => #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(value),
                             Err(#error_value_snake_case_token_stream) => {
                                 #from_log_and_return_error_token_stream
@@ -7993,7 +7995,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             // #create_many_token_stream
             // #create_one_token_stream
-            // #read_many_token_stream
+            #read_many_token_stream
             #read_one_token_stream
             // #update_many_token_stream
             // #update_one_token_stream
