@@ -54,12 +54,12 @@ fn crud(
             "/update_one",
             axum::routing::patch(common::repositories_types::server::routes::api::cats::update_one),
         )
-        // .route(
-        //     "/delete_many",
-        //     axum::routing::delete(
-        //         common::repositories_types::server::routes::api::cats::delete_many,
-        //     ),
-        // )
+        .route(
+            "/delete_many",
+            axum::routing::delete(
+                common::repositories_types::server::routes::api::cats::delete_many,
+            ),
+        )
         // .route(
         //     "/delete_one",
         //     axum::routing::delete(
