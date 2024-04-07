@@ -1,17 +1,19 @@
 #need to enable vscode rest client  extension https://marketplace.visualstudio.com/items?itemName=humao.rest-client to send requests
- 
+
 POST http://127.0.0.1:8080/dogs/create_many HTTP/1.1
 content-type: application/json
-commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
+commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 [
     {
-        "name": "3333333333",
-        "color": "3333333333"
+        "std_primitive_bool_as_postgresql_bool": true,
+        "std_primitive_i16_as_postgresql_small_int": 45,
+        "std_primitive_i32_as_postgresql_int": null
     },
     {
-        "name": "4444444444",
-        "color": "44444444"
+        "std_primitive_bool_as_postgresql_bool": false,
+        "std_primitive_i16_as_postgresql_small_int": null,
+        "std_primitive_i32_as_postgresql_int": 83
     }
 ]
 
