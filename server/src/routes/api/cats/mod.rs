@@ -44,12 +44,12 @@ fn crud(
             "/read_one",
             axum::routing::post(common::repositories_types::server::routes::api::cats::read_one),
         )
-        // .route(
-        //     "/update_many",
-        //     axum::routing::patch(
-        //         common::repositories_types::server::routes::api::cats::update_many,
-        //     ),
-        // )
+        .route(
+            "/update_many",
+            axum::routing::patch(
+                common::repositories_types::server::routes::api::cats::update_many,
+            ),
+        )
         // .route(
         //     "/update_one",
         //     axum::routing::patch(common::repositories_types::server::routes::api::cats::update_one),

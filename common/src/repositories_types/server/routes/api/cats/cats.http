@@ -90,21 +90,23 @@ commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
 }
 
 ### fix this 
-
+ 
 PATCH http://127.0.0.1:8080/dogs/update_many HTTP/1.1 
 content-type: application/json
-commit: fcacc76d1575a823d974d8c91c2ba3a307a55eb2
+commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 [
     {
-        "id": "f8299485-32d6-4bfd-a486-15540015fd9e",
-        "name": "meowmoew",
-        "color":"meow"
+        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 7,
+        # "std_primitive_bool_as_postgresql_bool": true,
+        "std_primitive_i16_as_postgresql_small_int": null,
+        "std_primitive_i32_as_postgresql_int": 84
     },
     {
-        "id": "eb939a89-f715-4561-84b7-0aa850ad2537",
-        "name": "ffffff",
-        "color":"gfggggggggggggg"
+        "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 8,
+        # "std_primitive_bool_as_postgresql_bool": true,
+        "std_primitive_i16_as_postgresql_small_int": null,
+        "std_primitive_i32_as_postgresql_int": 80
     }
 ]
 
