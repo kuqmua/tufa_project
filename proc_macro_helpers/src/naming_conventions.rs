@@ -1277,9 +1277,9 @@ where
     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1322,9 +1322,9 @@ where
     fn self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_with_serialize_deserialize_try_from_self_payload_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1367,9 +1367,9 @@ where
     fn self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_with_serialize_deserialize_try_from_self_payload_snake_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1413,9 +1413,9 @@ where
     fn self_payload_with_serialize_deserialize_try_from_self_payload_error_named_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_with_serialize_deserialize_try_from_self_payload_error_named_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_with_serialize_deserialize_try_from_self_payload_error_named_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1490,10 +1490,10 @@ where
     fn self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self
+        let value = self
             .self_payload_try_from_self_payload_with_serialize_deserialize_snake_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1523,9 +1523,9 @@ where
     T: TrySelfSnakeCaseStringified,
 {
     fn try_self_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.try_self_snake_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.try_self_snake_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1556,9 +1556,9 @@ where
     T: TrySelfResponseVariantsUpperCamelCaseStringified,
 {
     fn try_self_response_variants_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.try_self_response_variants_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.try_self_response_variants_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1588,9 +1588,9 @@ where
     T: TrySelfUpperCamelCaseStringified,
 {
     fn try_self_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.try_self_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.try_self_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1632,10 +1632,10 @@ where
     fn self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified =
+        let value =
             self.self_payload_element_with_serialize_deserialize_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1666,9 +1666,9 @@ where
     T: SelfPayloadElementUpperCamelCaseStringified,
 {
     fn self_payload_element_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_element_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_element_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1717,9 +1717,9 @@ where
     fn self_payload_element_try_from_self_payload_element_with_serialize_deserialize_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_element_try_from_self_payload_element_with_serialize_deserialize_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_element_try_from_self_payload_element_with_serialize_deserialize_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1800,11 +1800,11 @@ where
     fn self_payload_element_try_from_self_payload_element_with_serialize_deserialize_snake_sase_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self
+        let value = self
             .self_payload_element_try_from_self_payload_element_with_serialize_deserialize_snake_sase_stringified(
             );
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1856,9 +1856,9 @@ where
     fn self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.self_payload_element_try_from_self_payload_element_with_serialize_deserialize_error_named_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1871,15 +1871,15 @@ where
     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
 {
     fn try_self_error_named_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = format!(
+        let value = format!(
             "{}{}{}{}",
             try_upper_camel_case_stringified(),
             self.to_upper_camel_case_stringified(),
             error_upper_camel_case_stringified(),
             named_upper_camel_case_stringified()
         );
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1911,9 +1911,9 @@ where
     T: TrySelfRequestErrorUpperCamelCaseStringified,
 {
     fn try_self_request_error_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.try_self_request_error_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.try_self_request_error_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1952,9 +1952,9 @@ where
     fn payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.payload_try_from_payload_with_serialize_deserialize_error_named_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -1993,9 +1993,9 @@ where
     fn payload_with_serialize_deserialize_try_from_payload_error_named_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.payload_with_serialize_deserialize_try_from_payload_error_named_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.payload_with_serialize_deserialize_try_from_payload_error_named_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -2036,10 +2036,10 @@ where
     fn try_self_with_serialize_deserialize_upper_camel_case_token_stream(
         &self,
     ) -> proc_macro2::TokenStream {
-        let value_stringified =
+        let value =
             self.try_self_with_serialize_deserialize_upper_camel_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -2084,10 +2084,10 @@ where
         &self,
         status_code: &crate::status_code::StatusCode,
     ) -> proc_macro2::TokenStream {
-        let value_stringified =
+        let value =
             self.try_self_response_variants_status_code_stringified(status_code);
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -2120,9 +2120,9 @@ where
     T: TrySelfWithSerializeDeserializeStringified,
 {
     fn try_self_with_serialize_deserialize_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.try_self_with_serialize_deserialize_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.try_self_with_serialize_deserialize_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -2153,9 +2153,9 @@ where
     T: TvfrrExtractionLogicTrySelfSnakeCaseStringified,
 {
     fn tvfrr_extraction_logic_try_self_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value_stringified = self.tvfrr_extraction_logic_try_self_snake_case_stringified();
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.tvfrr_extraction_logic_try_self_snake_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -2202,10 +2202,10 @@ where
         &self,
         test_operation_print_in_info: &crate::TestOperationPrintlnInfo,
     ) -> proc_macro2::TokenStream {
-        let value_stringified =
+        let value =
             self.try_self_snake_case_println_stringified(test_operation_print_in_info);
-        let value_token_stream = value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        let value_token_stream = value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
         quote::quote! {println!(#value_token_stream);}
     }
 }
@@ -2275,10 +2275,10 @@ where
         &self,
         table_name_stringified: &str,
     ) -> proc_macro2::TokenStream {
-        let value_stringified =
+        let value =
             self.swagger_url_path_self_quotes_stringified(table_name_stringified);
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
@@ -2321,9 +2321,9 @@ where
         &self,
         table_name_stringified: &str,
     ) -> proc_macro2::TokenStream {
-        let value_stringified = self.url_handle_self_snake_case_stringified(table_name_stringified);
-        value_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let value = self.url_handle_self_snake_case_stringified(table_name_stringified);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 // fn generate_url_handle_token_stream(
