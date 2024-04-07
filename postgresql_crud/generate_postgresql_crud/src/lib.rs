@@ -645,16 +645,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .iter()
             .map(|element| {
                 let field_ident_stringified = element.field_ident.to_string();
-                let serialize_deserialize_ident_token_stream = format!("\"{field_ident_stringified}\"").parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                let variant_ident_token_stream = {
-                    let variant_ident_stringified = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
-                    variant_ident_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                let serialize_deserialize_ident_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+                    &field_ident_stringified,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                let field_ident_upper_camel_case_token_stream = {
+                    let value_stringified = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
+                    value_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 quote::quote! {
                     #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
-                    #variant_ident_token_stream
+                    #field_ident_upper_camel_case_token_stream
                 }
             })
             .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -662,15 +664,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .iter()
             .map(|element| {
                 let field_ident_stringified = element.field_ident.to_string();
-                let field_ident_quotes_token_stream = format!("\"{field_ident_stringified}\"").parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                let variant_ident_token_stream = {
-                    let variant_ident_stringified = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
-                    variant_ident_stringified.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                let field_ident_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+                    &field_ident_stringified,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
+                let field_ident_upper_camel_case_token_stream = {
+                    let value_stringified = convert_case::Casing::to_case(&field_ident_stringified, convert_case::Case::UpperCamel);
+                    value_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 quote::quote! {
-                    Self::#variant_ident_token_stream => write!(f, #field_ident_quotes_token_stream)
+                    Self::#field_ident_upper_camel_case_token_stream => write!(f, #field_ident_quotes_token_stream)
                 }
             })
             .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
