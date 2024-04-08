@@ -1607,13 +1607,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )],
         )
     };
-    let not_unique_primary_keys_name_token_stream = quote::quote! {not_unique_primary_keys};
+    let not_unique_primary_keys_name_token_stream = proc_macro_helpers::naming_conventions::not_unique_primary_keys_snake_case_token_stream();
     let not_unique_primary_keys_syn_variant = {
-        let variant_name_upper_camel_case_stringified = "NotUniquePrimaryKeys";
+        let variant_name_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::not_unique_primary_keys_upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (

@@ -142,6 +142,9 @@ pub fn key_snake_case_stringified() -> std::string::String {
         &naming_constants::KEY,
     )
 }
+pub fn keys_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::KEYS)
+}
 pub fn keys_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::KEYS,
@@ -815,6 +818,9 @@ pub fn std_upper_camel_case_stringified() -> std::string::String {
 pub fn option_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::OPTION)
 }
+pub fn primary_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PRIMARY)
+}
 pub fn primary_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::PRIMARY,
@@ -1268,6 +1274,34 @@ pub fn primary_keys_snake_case_stringified() -> std::string::String {
 }
 pub fn primary_keys_snake_case_token_stream() -> proc_macro2::TokenStream {
     let value = primary_keys_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn not_unique_primary_keys_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}{}",
+        not_upper_camel_case_stringified(),
+        unique_upper_camel_case_stringified(),
+        primary_upper_camel_case_stringified(),
+        keys_upper_camel_case_stringified(),
+    )
+}
+pub fn not_unique_primary_keys_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = not_unique_primary_keys_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn not_unique_primary_keys_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}_{}_{}",
+        not_snake_case_stringified(),
+        unique_snake_case_stringified(),
+        primary_snake_case_stringified(),
+        keys_snake_case_stringified(),
+    )
+}
+pub fn not_unique_primary_keys_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = not_unique_primary_keys_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
