@@ -1255,10 +1255,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let serde_json_error_token_stream = quote::quote! {serde_json::Error};
     let http_request_error_named_serde_json_to_string_variant_token_stream = quote::quote! {
         #serde_json_to_string_upper_camel_case_token_stream {
             #eo_display_token_stream
-            #serde_json_to_string_snake_case_token_stream: serde_json::Error,
+            #serde_json_to_string_snake_case_token_stream: #serde_json_error_token_stream,
             #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
         }
     };
@@ -2072,7 +2073,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #deserialize_response_upper_camel_case_token_stream {
                     #eo_display_token_stream
-                    #serde_snake_case_token_stream: serde_json::Error,
+                    #serde_snake_case_token_stream: #serde_json_error_token_stream,
                     #eo_display_token_stream
                     #status_code_snake_case_token_stream: #http_status_code_token_stream,
                     #eo_display_foreign_type_token_stream
