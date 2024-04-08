@@ -1,6 +1,5 @@
 mod acquire_pool_and_connection;
 mod check_for_none;
-mod column_names_factorial;
 mod extract_syn_variants_from_proc_macro_attribute;
 mod from_log_and_return_error;
 mod generate_postgres_transaction;
@@ -542,11 +541,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let options_try_from_sqlx_row_name_token_stream = quote::quote! {options_try_from_sqlx_row};
     let crate_common_serde_urlencoded_serde_url_encoded_parameter_token_stream =
         quote::quote! {crate::common::serde_urlencoded::SerdeUrlencodedParameter};
-    let ident_column_select_from_str_error_named_upper_camel_case_token_stream = {
-        let ident_column_select_from_str_error_named_upper_camel_case_stringified = format!("{ident}{column_select_upper_camel_case_stringified}{from_str_upper_camel_case_stringified}{error_named_upper_camel_case_stringified}");
-        ident_column_select_from_str_error_named_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_from_str_error_named_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let postgresql_crud_try_generate_bind_increments_error_named_name_token_stream = {
         let value = format!(
             "{}::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}",
@@ -690,24 +684,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{primary_key_try_get_sqlx_row_token_stream}");
-    // let order_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&order_upper_camel_case_stringified);
-    let order_by_upper_camel_case_stringified = format!(
-        "{}{}",
-        proc_macro_helpers::naming_conventions::order_upper_camel_case_stringified(),
-        proc_macro_helpers::naming_conventions::by_upper_camel_case_stringified()
-    );
-    let order_by_snake_case_stringified =
-        proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-            &order_by_upper_camel_case_stringified,
-        );
-    let order_by_upper_camel_case_token_stream = {
-        order_by_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {order_by_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let order_by_snake_case_token_stream = {
-        order_by_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {order_by_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
+    let order_by_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_stringified();
+    let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_token_stream();
+    let order_by_snake_case_token_stream = proc_macro_helpers::naming_conventions::order_by_snake_case_token_stream();
     let crate_server_postgres_order_by_order_by_token_stream = quote::quote! {crate::server::postgres::#order_by_snake_case_token_stream::#order_by_upper_camel_case_token_stream};
     let crate_server_postgres_order_order_token_stream =
         quote::quote! {crate::server::postgres::order::Order};

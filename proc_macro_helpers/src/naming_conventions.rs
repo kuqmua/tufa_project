@@ -1225,6 +1225,32 @@ pub fn primary_key_snake_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+//
+pub fn order_by_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}",
+        order_upper_camel_case_stringified(),
+        by_upper_camel_case_stringified(),
+    )
+}
+pub fn order_by_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = order_by_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn order_by_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}",
+        order_snake_case_stringified(),
+        by_snake_case_stringified(),
+    )
+}
+pub fn order_by_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = order_by_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+//
 /////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {
