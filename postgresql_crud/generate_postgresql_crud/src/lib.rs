@@ -2165,16 +2165,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     .map(|element| quote::quote! {#element,})
     .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let select_full_variant_token_stream = {
-        let select_full_variant_stringified = fields_named.iter().fold(std::string::String::default(), |mut acc, element| {
+        let value = fields_named.iter().fold(std::string::String::default(), |mut acc, element| {
             acc.push_str(&convert_case::Casing::to_case(&element.field_ident.to_string(), convert_case::Case::UpperCamel));
             acc
         });
-        select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {select_full_variant_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let primary_keys_token_stream = proc_macro_helpers::naming_conventions::primary_keys_snake_case_token_stream();
     let primary_key_token_stream = proc_macro_helpers::naming_conventions::primary_key_snake_case_token_stream();
-    let into_inner_type_vec_snake_case_token_stream = quote::quote! {into_inner_type_vec};
+    let into_inner_type_vec_snake_case_token_stream = {
+        let value = format!(
+            "{}_{}_{}_{}",
+            proc_macro_helpers::naming_conventions::into_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::inner_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::type_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::vec_snake_case_stringified(),
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let (
         limit_and_offset_type_token_stream,
         limit_and_offset_type_with_serialize_deserialize_token_stream,

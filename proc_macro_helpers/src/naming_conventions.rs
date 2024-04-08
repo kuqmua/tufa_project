@@ -820,6 +820,11 @@ pub fn primary_snake_case_stringified() -> std::string::String {
         &naming_constants::PRIMARY,
     )
 }
+pub fn inner_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::INNER,
+    )
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {

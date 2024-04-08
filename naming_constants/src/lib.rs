@@ -123,3 +123,4 @@ pub const MANY: &str = "many";
 pub const STD: &str = "std";
 pub const OPTION: &str = "option";
 pub const PRIMARY: &str = "primary";
+pub const INNER: &str = "inner";
