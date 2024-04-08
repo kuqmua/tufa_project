@@ -1594,11 +1594,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         ]
     );
     let commit_failed_syn_variant = {
-        let variant_name_upper_camel_case_stringified = "CommitFailed";
+        let variant_name_upper_camel_case_stringified = format!(
+            "{}{}",
+            proc_macro_helpers::naming_conventions::commit_upper_camel_case_stringified(),
+            proc_macro_helpers::naming_conventions::failed_upper_camel_case_stringified(),
+        );
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
+            &variant_name_upper_camel_case_stringified,
             &code_occurence_field,
             vec![(
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,

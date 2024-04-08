@@ -505,9 +505,9 @@ pub fn no_upper_camel_case_stringified() -> std::string::String {
 pub fn fields_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::FIELDS)
 }
-// pub fn commit_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::COMMIT)
-// }
+pub fn commit_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::COMMIT)
+}
 pub fn commit_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::COMMIT,
