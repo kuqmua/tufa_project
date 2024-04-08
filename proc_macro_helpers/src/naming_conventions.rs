@@ -831,6 +831,12 @@ pub fn inner_snake_case_stringified() -> std::string::String {
         &naming_constants::INNER,
     )
 }
+pub fn non_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::NON)
+}
+pub fn existing_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::EXISTING)
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {

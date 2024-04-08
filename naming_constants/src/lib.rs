@@ -124,3 +124,5 @@ pub const STD: &str = "std";
 pub const OPTION: &str = "option";
 pub const PRIMARY: &str = "primary";
 pub const INNER: &str = "inner";
+pub const EXISTING: &str = "existing";
+pub const NON: &str = "non";
