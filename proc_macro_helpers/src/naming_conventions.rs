@@ -1174,6 +1174,32 @@ pub fn std_option_option_upper_camel_case_stringified() -> std::string::String {
 //     value.parse::<proc_macro2::TokenStream>()
 //     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
+pub fn wrapper_vec_column_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}{}",
+        wrapper_upper_camel_case_stringified(),
+        vec_upper_camel_case_stringified(),
+        column_upper_camel_case_stringified(),
+    )
+}
+pub fn wrapper_vec_column_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = wrapper_vec_column_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn wrapper_vec_column_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}_{}",
+        wrapper_snake_case_stringified(),
+        vec_snake_case_stringified(),
+        column_snake_case_stringified(),
+    )
+}
+pub fn wrapper_vec_column_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = wrapper_vec_column_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 /////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {

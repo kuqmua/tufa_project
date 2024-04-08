@@ -555,8 +555,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let wrapper_vec_column_upper_camel_case_token_stream = quote::quote!{WrapperVecColumn};
-    let wrapper_vec_column_snake_case_token_stream = quote::quote!{wrapper_vec_column};
+    let wrapper_vec_column_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::wrapper_vec_column_upper_camel_case_token_stream();
+    let wrapper_vec_column_snake_case_token_stream = proc_macro_helpers::naming_conventions::wrapper_vec_column_snake_case_token_stream();
     let options_try_from_sqlx_row_token_stream = {
         let declaration_primary_key_token_stream = {
             let inner_type_with_serialize_deserialize_token_stream =
