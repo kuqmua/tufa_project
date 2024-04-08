@@ -831,45 +831,6 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
     });
     let ident = &ast.ident;
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
-    let ident_snake_case_token_stream = {
-        let value = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.to_string());
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let ident_with_serialize_deserialize_error_named_token_stream = {
-        let value = format!(
-            "{ident}{}{}", 
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_token_stream = {
-        let value = format!("{}{ident}", proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified());
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_with_serialize_deserialize_token_stream = {
-        let value = format!(
-            "{}{ident}{}", 
-            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    let where_ident_with_serialize_deserialize_error_named_token_stream = {
-        let value = format!(
-            "{}{ident}{}{}", 
-            proc_macro_helpers::naming_conventions::where_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::error_named_upper_camel_case_stringified(),
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
-    //
     let ident_with_serialize_deserialize_token_stream = {
         let value = format!("{ident}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified());
         value.parse::<proc_macro2::TokenStream>()
