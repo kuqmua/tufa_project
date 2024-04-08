@@ -675,8 +675,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &primary_key_field_ident.to_string(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        let row_name_token_stream = proc_macro_helpers::naming_conventions::row_snake_case_token_stream();// quote::quote! {row};
-        let primary_key_name_token_stream = quote::quote! {primary_key};
+        let row_name_token_stream = proc_macro_helpers::naming_conventions::row_snake_case_token_stream();
+        let primary_key_name_token_stream = proc_macro_helpers::naming_conventions::primary_key_snake_case_token_stream();
         quote::quote! {
             fn #primary_key_try_from_sqlx_row_name_token_stream<'a, R: #sqlx_row_token_stream>(#row_name_token_stream: &'a R) -> sqlx::Result<#primary_key_inner_type_token_stream>
             where
