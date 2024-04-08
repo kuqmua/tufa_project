@@ -2172,8 +2172,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         select_full_variant_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {select_full_variant_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let primary_keys_token_stream = quote::quote! {primary_keys};
-    let primary_key_token_stream = quote::quote! {primary_key};
+    let primary_keys_token_stream = proc_macro_helpers::naming_conventions::primary_keys_snake_case_token_stream();
+    let primary_key_token_stream = proc_macro_helpers::naming_conventions::primary_key_snake_case_token_stream();
     let into_inner_type_vec_snake_case_token_stream = quote::quote! {into_inner_type_vec};
     let (
         limit_and_offset_type_token_stream,

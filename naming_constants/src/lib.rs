@@ -24,6 +24,7 @@ pub const FROM: &str = "from";
 pub const RESPONSE_VARIANTS: &str = "response_variants";
 pub const PATH: &str = "path";
 pub const KEY: &str = "key";
+pub const KEYS: &str = "keys";
 pub const VALUE: &str = "value";
 pub const VEC: &str = "vec";
 pub const HASHMAP: &str = "HashMap";
