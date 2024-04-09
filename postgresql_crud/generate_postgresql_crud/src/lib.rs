@@ -1917,7 +1917,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_helpers::naming_conventions::acc_snake_case_token_stream();
     let query_name_token_stream =
         proc_macro_helpers::naming_conventions::query_snake_case_token_stream();
-    let underscore_vec_name_stringified = "_vec";
     let update_name_stringified =
         proc_macro_helpers::naming_conventions::update_snake_case_stringified();
     let as_name_stringified = proc_macro_helpers::naming_conventions::as_snake_case_stringified();
@@ -1944,7 +1943,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // let array_name_stringified = "array";
     let select_name_stringified =
         proc_macro_helpers::naming_conventions::select_snake_case_stringified();
-    let order_by_name_stringified = "order by";
+    let order_by_name_stringified = format!(
+        "{} {}",
+        proc_macro_helpers::naming_conventions::order_snake_case_stringified(),
+        proc_macro_helpers::naming_conventions::by_snake_case_stringified()
+    );
     let limit_name_stringified =
         proc_macro_helpers::naming_conventions::limit_snake_case_stringified();
     let offset_name_stringified =
@@ -2691,7 +2694,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let value = fields_named_excluding_primary_key.iter().map(|element| {
                                 let field_ident_underscore_vec_stringified = {
                                     let field_ident = &element.field_ident;
-                                    format!("{field_ident}{underscore_vec_name_stringified}")
+                                    format!("{field_ident}_{}", proc_macro_helpers::naming_conventions::vec_snake_case_stringified())
                                 };
                                 field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -2731,7 +2734,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident_underscore_vec_token_stream = {
                             let field_ident_underscore_vec_stringified = {
                                 let field_ident = &element.field_ident;
-                                format!("{field_ident}{underscore_vec_name_stringified}")
+                                format!("{field_ident}_{}", proc_macro_helpers::naming_conventions::vec_snake_case_stringified())
                             };
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -5429,7 +5432,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     //todo remove () if in fields named only one element
                     let column_vecs_token_stream = fields_named.iter().map(|element|{
-                        let field_ident_underscore_vec_stringified = format!("{}{underscore_vec_name_stringified}", &element.field_ident);
+                        let field_ident_underscore_vec_stringified = format!("{}_{}", &element.field_ident, proc_macro_helpers::naming_conventions::vec_snake_case_stringified());
                         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     });
@@ -5446,7 +5449,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_query_bind_primary_key_vec_token_stream = {
                         let field_ident_underscore_vec_token_stream = {
                             let field_ident_underscore_vec_stringified = format!(
-                                "{primary_key_field_ident}{underscore_vec_name_stringified}"
+                                "{primary_key_field_ident}_{}", proc_macro_helpers::naming_conventions::vec_snake_case_stringified()
                             );
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -5464,7 +5467,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident_underscore_vec_token_stream = {
                             let field_ident_underscore_vec_stringified = {
                                 let field_ident = &element.field_ident;
-                                format!("{field_ident}{underscore_vec_name_stringified}")
+                                format!("{field_ident}_{}", proc_macro_helpers::naming_conventions::vec_snake_case_stringified())
                             };
                             field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
