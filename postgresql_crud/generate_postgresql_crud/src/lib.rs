@@ -1545,7 +1545,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ),
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
-                    "rollback_error",
+                    &format!("{rollback_snake_case_stringified}_error"),
                     sqlx_error_syn_punctuated_punctuated.clone(),
                 ),
             ],
@@ -1584,7 +1584,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ),
             (
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
-                "rollback_error",
+                &format!("{rollback_snake_case_stringified}_error"),
                 sqlx_error_syn_punctuated_punctuated.clone()
             )
         ]
