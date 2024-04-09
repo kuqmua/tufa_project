@@ -1900,7 +1900,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_string_name_token_stream = quote::quote! {query_string};
     let binded_query_name_token_stream = quote::quote! {binded_query};
     let order_by_token_stream = quote::quote! {order_by};
-    let current_vec_len_name_token_stream = quote::quote! {current_vec_len};
+    let current_vec_len_snake_case_token_stream = {
+        let value = format!(
+            "{}_{}_{}",
+            proc_macro_helpers::naming_conventions::current_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::vec_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::len_snake_case_stringified()
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let desirable_upper_camel_case_token_stream =
         proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
     let select_snake_case_token_stream =
@@ -2708,7 +2717,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let column_vecs_with_capacity_token_stream = {
                         let column_vecs_with_capacity_handle_token_stream = {
-                            let value = fields_named_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
+                            let value = fields_named_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case_token_stream)});
                             quote::quote!{#(#value),*}
                         };
                         match is_fields_named_excluding_primary_key_len_equals_one {
@@ -2749,7 +2758,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     quote::quote! {
                         let mut #query_name_token_stream = #sqlx_query_sqlx_postgres_token_stream(&#query_string_name_token_stream);
-                        let #current_vec_len_name_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.len();
+                        let #current_vec_len_snake_case_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.len();
                         let #column_vecs_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.into_iter().fold(#column_vecs_with_capacity_token_stream,
                         |mut #acc_name_token_stream, #element_name_token_stream| {
                             #(#columns_acc_push_elements_token_stream)*
@@ -5436,7 +5445,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         field_ident_underscore_vec_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {field_ident_underscore_vec_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     });
-                    let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_name_token_stream)});
+                    let column_vecs_with_capacity_token_stream = fields_named.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case_token_stream)});
                     let columns_acc_push_elements_token_stream = fields_named.iter().enumerate().map(|(index, element)|{
                         let field_ident = &element.field_ident;
                         let index_token_stream = {
@@ -5484,7 +5493,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     quote::quote! {
                         let mut #query_name_token_stream = #sqlx_query_sqlx_postgres_token_stream(&#query_string_name_token_stream);
-                        let #current_vec_len_name_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.len();
+                        let #current_vec_len_snake_case_token_stream = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.len();
                         let (
                             #(#column_vecs_token_stream),*
                         ) = #parameters_snake_case_token_stream.#payload_snake_case_token_stream.0.into_iter().fold((

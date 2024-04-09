@@ -837,6 +837,16 @@ pub fn non_upper_camel_case_stringified() -> std::string::String {
 pub fn existing_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::EXISTING)
 }
+pub fn current_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::CURRENT,
+    )
+}
+pub fn len_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::LEN,
+    )
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {

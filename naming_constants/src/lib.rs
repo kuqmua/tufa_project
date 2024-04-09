@@ -126,3 +126,5 @@ pub const PRIMARY: &str = "primary";
 pub const INNER: &str = "inner";
 pub const EXISTING: &str = "existing";
 pub const NON: &str = "non";
+pub const CURRENT: &str = "current";
+pub const LEN: &str = "len";
