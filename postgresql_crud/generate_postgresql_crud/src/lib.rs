@@ -686,8 +686,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{primary_key_try_get_sqlx_row_token_stream}");
     let order_by_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_stringified();
     let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_token_stream();
-    let order_by_snake_case_token_stream = proc_macro_helpers::naming_conventions::order_by_snake_case_token_stream();
-    let crate_server_postgres_order_by_order_by_token_stream = quote::quote! {crate::server::postgres::#order_by_snake_case_token_stream::#order_by_upper_camel_case_token_stream};
+    let crate_server_postgres_order_by_order_by_token_stream = quote::quote! {crate::server::postgres::order_by::#order_by_upper_camel_case_token_stream};
     let crate_server_postgres_order_order_token_stream =
         quote::quote! {crate::server::postgres::order::Order};
     let limit_snake_case_token_stream =
@@ -1899,15 +1898,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let pg_connection_token_stream = quote::quote! {pg_connection};
     let query_string_name_token_stream = quote::quote! {query_string};
     let binded_query_name_token_stream = quote::quote! {binded_query};
-    let order_by_snake_case_token_stream = {
-        let value = format!(
-            "{}_{}",
-            proc_macro_helpers::naming_conventions::order_snake_case_stringified(),
-            proc_macro_helpers::naming_conventions::by_snake_case_stringified()
-        );
-        value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    };
     let current_vec_len_snake_case_token_stream = {
         let value = format!(
             "{}_{}_{}",
@@ -3495,6 +3485,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
+        let order_by_snake_case_token_stream = proc_macro_helpers::naming_conventions::order_by_snake_case_token_stream();
         let parameters_token_stream = {
             let payload_token_stream = {
                 let fields_with_excluded_primary_key_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
