@@ -677,8 +677,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // println!("{primary_key_try_get_sqlx_row_token_stream}");
     let order_by_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_stringified();
     let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_token_stream();
-    let crate_server_postgres_order_by_order_by_token_stream = quote::quote! {crate::server::postgres::order_by::#order_by_upper_camel_case_token_stream};
-    let crate_server_postgres_order_order_token_stream = quote::quote! {crate::server::postgres::order::Order};
+    let crate_server_postgres_order_by_order_by_token_stream = quote::quote! {postgresql_crud::#order_by_upper_camel_case_token_stream};
+    let crate_server_postgres_order_order_token_stream = quote::quote! {postgresql_crud::Order};
     let limit_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::limit_snake_case_token_stream();
     let offset_snake_case_token_stream =
