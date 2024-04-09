@@ -521,8 +521,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {ident_column_select_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let options_try_from_sqlx_row_name_token_stream = quote::quote! {options_try_from_sqlx_row};
-    let crate_common_serde_urlencoded_serde_url_encoded_parameter_token_stream =
-        quote::quote! {crate::common::serde_urlencoded::SerdeUrlencodedParameter};
     let postgresql_crud_try_generate_bind_increments_error_named_name_token_stream = {
         let value = format!(
             "{}::TryGenerateBindIncrements{error_named_upper_camel_case_stringified}",
@@ -873,17 +871,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             }
         };
-        let impl_crate_common_serde_urlencoded_serde_urlencoded_parameter_for_ident_order_by_wrapper_token_stream = {
-            quote::quote! {
-                impl #crate_common_serde_urlencoded_serde_url_encoded_parameter_token_stream for #ident_order_by_wrapper_name_token_stream {
-                    fn serde_urlencoded_parameter(self) -> #std_string_string_token_stream {
-                        let column = &self.0.column;
-                        let order = self.0.order.unwrap_or_default();//todo remove this. must be no default
-                        format!("column={column},order={order}")
-                    }
-                }
-            }
-        };
         let ident_order_by_wrapper_from_str_error_named_token_stream = {
             let variants_token_stream = [
                 "ColumnFromStr",
@@ -1140,7 +1127,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         quote::quote! {
             #struct_token_stream
-            #impl_crate_common_serde_urlencoded_serde_urlencoded_parameter_for_ident_order_by_wrapper_token_stream
             #ident_order_by_wrapper_from_str_error_named_token_stream
             #impl_std_str_from_str_for_ident_order_by_wrapper_token_stream
         }
