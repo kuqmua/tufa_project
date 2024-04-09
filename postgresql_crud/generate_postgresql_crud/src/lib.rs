@@ -1899,7 +1899,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let pg_connection_token_stream = quote::quote! {pg_connection};
     let query_string_name_token_stream = quote::quote! {query_string};
     let binded_query_name_token_stream = quote::quote! {binded_query};
-    let order_by_token_stream = quote::quote! {order_by};
+    let order_by_snake_case_token_stream = {
+        let value = format!(
+            "{}_{}",
+            proc_macro_helpers::naming_conventions::order_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::by_snake_case_stringified()
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let current_vec_len_snake_case_token_stream = {
         let value = format!(
             "{}_{}_{}",
@@ -3502,7 +3510,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         pub #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
                         pub #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
-                        pub #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
+                        pub #order_by_snake_case_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         pub #limit_token_stream: #limit_and_offset_type_token_stream,
                         pub #offset_token_stream: #limit_and_offset_type_token_stream,
                     }
@@ -3523,7 +3531,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #primary_key_field_ident: std::option::Option<std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>>,
                         #(#fields_with_excluded_primary_key_token_stream)*
                         #select_snake_case_token_stream: std::vec::Vec<#ident_column_upper_camel_case_token_stream>,
-                        #order_by_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
+                        #order_by_snake_case_token_stream: #crate_server_postgres_order_by_order_by_token_stream<#ident_column_upper_camel_case_token_stream>,
                         #limit_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
                         #offset_token_stream: #limit_and_offset_type_with_serialize_deserialize_token_stream,
                     }
@@ -4098,7 +4106,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         true => "",
                                         false => " ",
                                     };
-                                    let value = &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#order_by_token_stream;
+                                    let value = &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#order_by_snake_case_token_stream;
                                     let order_stringified = match &value.order {
                                         Some(order) => order.to_string(),
                                         None => #crate_server_postgres_order_order_token_stream::default().to_string(),
