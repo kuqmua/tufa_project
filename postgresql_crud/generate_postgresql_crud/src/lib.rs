@@ -216,6 +216,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let primary_key_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        &primary_key_field_ident.to_string(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let fields_named_excluding_primary_key = fields_named
         .clone()
@@ -259,10 +263,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
-    let primary_key_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
-        &primary_key_field_ident.to_string(),
-        &proc_macro_name_upper_camel_case_ident_stringified,
-    );
     let debug_token_stream =
         proc_macro_helpers::naming_conventions::debug_upper_camel_case_token_stream();
     let thiserror_error_token_stream = proc_macro_common::thiserror_error_token_stream();
@@ -479,9 +479,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let postgresql_crud_generate_query_token_stream = quote::quote! {postgresql_crud::GenerateQuery};
     let generate_query_token_stream = {
         let generate_query_token_stream = quote::quote! {generate_query};
-        let crate_server_postgres_generate_query_generate_query_token_stream = quote::quote! {crate::server::postgres::generate_query::GenerateQuery};
         let impl_crate_server_postgres_generate_query_generate_query_for_ident_column_token_stream = {
             let variants_token_stream = fields_named.iter().map(|element|{
                 let field_ident_upper_camel_case_token_stream = {
@@ -497,7 +497,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {Self::#field_ident_upper_camel_case_token_stream => #std_string_string_token_stream::from(#field_ident_string_quotes_token_stream)}
             }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
             quote::quote! {
-                impl #crate_server_postgres_generate_query_generate_query_token_stream for #ident_column_upper_camel_case_token_stream {
+                impl #postgresql_crud_generate_query_token_stream for #ident_column_upper_camel_case_token_stream {
                     fn #generate_query_token_stream(&self) -> #std_string_string_token_stream {
                         match self {
                             #(#variants_token_stream),*
@@ -508,10 +508,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let impl_crate_server_postgres_generate_query_generate_query_for_std_vec_vec_dog_column_token_stream = {
             quote::quote! {
-                impl #crate_server_postgres_generate_query_generate_query_token_stream for std::vec::Vec<#ident_column_upper_camel_case_token_stream> {
+                impl #postgresql_crud_generate_query_token_stream for std::vec::Vec<#ident_column_upper_camel_case_token_stream> {
                     fn #generate_query_token_stream(&self) -> #std_string_string_token_stream {
                         let mut value = self.iter().fold(#std_string_string_token_stream::from(""), |mut acc, element| {
-                            acc += &#crate_server_postgres_generate_query_generate_query_token_stream::#generate_query_token_stream(element);
+                            acc += &#postgresql_crud_generate_query_token_stream::#generate_query_token_stream(element);
                             acc += ",";
                             acc
                         });
@@ -4104,7 +4104,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         format!(
                             #handle_token_stream,
-                            crate::server::postgres::generate_query::GenerateQuery::generate_query(
+                            #postgresql_crud_generate_query_token_stream::generate_query(
                                 &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream
                             ),
                             {
@@ -4751,7 +4751,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         format!(
                             #query_token_stream,
-                            crate::server::postgres::generate_query::GenerateQuery::generate_query(&#select_snake_case_token_stream),
+                            #postgresql_crud_generate_query_token_stream::generate_query(&#select_snake_case_token_stream),
                         )
                     }
                 };
@@ -7725,16 +7725,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
-            #create_one_token_stream
-            #read_many_token_stream
-            #read_one_token_stream
-            #update_many_token_stream
-            #update_one_token_stream
-            #delete_many_token_stream
-            #delete_one_token_stream
+            // #create_many_token_stream
+            // #create_one_token_stream
+            // #read_many_token_stream
+            // #read_one_token_stream
+            // #update_many_token_stream
+            // #update_one_token_stream
+            // #delete_many_token_stream
+            // #delete_one_token_stream
         // }
     };
     // if ident == "" {

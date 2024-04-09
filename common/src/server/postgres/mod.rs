@@ -1,7 +1,6 @@
 pub mod bigserial;
 pub mod bigserial_ids;
 pub mod bind_query;
-pub mod generate_query;
 pub mod order;
 pub mod order_by;
 pub mod postgres_bigint;
