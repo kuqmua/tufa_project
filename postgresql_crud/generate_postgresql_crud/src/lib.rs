@@ -1246,7 +1246,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #app_state_name_token_stream.as_ref(),
         );
     };
-    let serde_json_to_string_upper_camel_case_stringified = "SerdeJsonToString";
+    let serde_json_to_string_upper_camel_case_stringified = format!(
+        "{}{}{}{}",
+        proc_macro_helpers::naming_conventions::serde_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::json_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::to_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::string_upper_camel_case_stringified(),
+    );
     let serde_json_to_string_upper_camel_case_token_stream = serde_json_to_string_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {serde_json_to_string_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let serde_json_to_string_snake_case_token_stream = {

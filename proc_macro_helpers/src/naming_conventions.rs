@@ -778,6 +778,9 @@ pub fn result_snake_case_stringified() -> std::string::String {
         &naming_constants::RESULT,
     )
 }
+pub fn serde_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::SERDE)
+}
 pub fn serde_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::SERDE,
