@@ -1194,7 +1194,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let returning_stringified = "returning";
     let returning_primary_key_stringified =
         format!(" {returning_stringified} {primary_key_field_ident}");
-    let rollback_error_name_token_stream = quote::quote! {rollback_error};
     let returning_primary_key_quotes_token_stream =
         proc_macro_common::generate_quotes::generate_quotes_token_stream(
             &returning_primary_key_stringified,
@@ -1510,20 +1509,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let query_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::query_upper_camel_case_stringified();
+    let query_snake_case_stringified = proc_macro_helpers::naming_conventions::query_snake_case_stringified();
+    let rollback_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::rollback_upper_camel_case_stringified();
+    let rollback_snake_case_stringified = proc_macro_helpers::naming_conventions::rollback_snake_case_stringified();
+    let rollback_error_name_token_stream = quote::quote! {rollback_error};
     let query_and_rollback_failed_syn_variant =
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            "QueryAndRollbackFailed",
+            &format!("{query_upper_camel_case_stringified}And{rollback_upper_camel_case_stringified}Failed"),
             &code_occurence_field,
             vec![
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
-                    "query_error",
+                    &format!("{query_snake_case_stringified}_error"),
                     sqlx_error_syn_punctuated_punctuated.clone(),
                 ),
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
-                    "rollback_error",
+                    &format!("{rollback_snake_case_stringified}_error"),
                     sqlx_error_syn_punctuated_punctuated.clone(),
                 ),
             ],
@@ -1546,23 +1550,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ),
             ],
         );
+    let non_existing_primary_keys_upper_camel_case_stringified = format!(
+        "{}{}{}{}",
+        proc_macro_helpers::naming_conventions::non_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::existing_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::primary_upper_camel_case_stringified(),
+        proc_macro_helpers::naming_conventions::keys_upper_camel_case_stringified(),
+    );
+    let non_existing_primary_keys_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&non_existing_primary_keys_upper_camel_case_stringified);
     let non_existing_primary_keys_syn_variant = {
-        let variant_name_upper_camel_case_stringified = format!(
-            "{}{}{}{}",
-            proc_macro_helpers::naming_conventions::non_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::existing_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::primary_upper_camel_case_stringified(),
-            proc_macro_helpers::naming_conventions::keys_upper_camel_case_stringified(),
-        );
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::type_variants_from_request_response_generator::construct_syn_variant(
             proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
-            &variant_name_upper_camel_case_stringified,
+            &non_existing_primary_keys_upper_camel_case_stringified,
             &code_occurence_field,
             vec![
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,//todo display with serialize deserialize
-                    &variant_name_snake_case_stringified,
+                    &non_existing_primary_keys_snake_case_stringified,
                     primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
                 )
             ]
@@ -1866,6 +1870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let reqwest_client_new_token_stream = quote::quote! {reqwest::Client::new()};
     let axum_extract_state_token_stream = quote::quote! {axum::extract::State};
     let axum_json_token_stream = quote::quote! {axum::Json};
+    //todo remove it after refactor to not support middleware
     let crate_server_routes_helpers_json_extractor_error_json_value_result_extractor_token_stream = quote::quote! {crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor};
     //todo reuse BindQuery path
     let crate_server_postgres_bind_query_bind_query_bind_value_to_query_token_stream = quote::quote! {#postgresql_crud_token_stream::BindQuery::bind_value_to_query};
