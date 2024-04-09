@@ -479,54 +479,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let postgresql_crud_generate_query_token_stream = quote::quote! {postgresql_crud::GenerateQuery};
-    let generate_query_token_stream = {
-        let generate_query_token_stream = quote::quote! {generate_query};
-        let impl_crate_server_postgres_generate_query_generate_query_for_ident_column_token_stream = {
-            let variants_token_stream = fields_named.iter().map(|element|{
-                let field_ident_upper_camel_case_token_stream = {
-                    //todo its a temporal naming desicion. maybe it can be better
-                    let value = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
-                    value.parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
-                    &element.field_ident.to_string(),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                );
-                quote::quote! {Self::#field_ident_upper_camel_case_token_stream => #std_string_string_token_stream::from(#field_ident_string_quotes_token_stream)}
-            }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-            quote::quote! {
-                impl #postgresql_crud_generate_query_token_stream for #ident_column_upper_camel_case_token_stream {
-                    fn #generate_query_token_stream(&self) -> #std_string_string_token_stream {
-                        match self {
-                            #(#variants_token_stream),*
-                        }
-                    }
-                }
-            }
-        };
-        let impl_crate_server_postgres_generate_query_generate_query_for_std_vec_vec_dog_column_token_stream = {
-            quote::quote! {
-                impl #postgresql_crud_generate_query_token_stream for std::vec::Vec<#ident_column_upper_camel_case_token_stream> {
-                    fn #generate_query_token_stream(&self) -> #std_string_string_token_stream {
-                        let mut value = self.iter().fold(#std_string_string_token_stream::from(""), |mut acc, element| {
-                            acc += &#postgresql_crud_generate_query_token_stream::#generate_query_token_stream(element);
-                            acc += ",";
-                            acc
-                        });
-                        value.pop();
-                        value
-                    }
-                }
-            }
-        };
+    let generate_query_vec_column_snake_case_token_stream = quote::quote!{generate_query_vec_column};
+    let generate_query_vec_column_token_stream = {
+        let variants_token_stream = fields_named.iter().map(|element|{
+            let field_ident_upper_camel_case_token_stream = {
+                //todo its a temporal naming desicion. maybe it can be better
+                let value = syn_ident_to_upper_camel_case_stringified(&element.field_ident);
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+                &element.field_ident.to_string(),
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
+            quote::quote! {#ident_column_upper_camel_case_token_stream::#field_ident_upper_camel_case_token_stream => #field_ident_string_quotes_token_stream}
+        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {
-            #impl_crate_server_postgres_generate_query_generate_query_for_ident_column_token_stream
-            #impl_crate_server_postgres_generate_query_generate_query_for_std_vec_vec_dog_column_token_stream
+            fn #generate_query_vec_column_snake_case_token_stream(value: &std::vec::Vec<#ident_column_upper_camel_case_token_stream>) -> #std_string_string_token_stream {
+                let mut value = value.iter().fold(#std_string_string_token_stream::from(""), |mut acc, element| {
+                    acc += match element {
+                        #(#variants_token_stream),*
+                    };
+                    acc += ",";
+                    acc
+                });
+                value.pop();
+                value
+            }
         }
     };
-    // println!("{generate_query_token_stream}");
+    // println!("{generate_query_vec_column_token_stream}");
     let column_select_upper_camel_case_stringified = format!(
         "{}{}",
         proc_macro_helpers::naming_conventions::column_upper_camel_case_stringified(),
@@ -4104,7 +4086,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         format!(
                             #handle_token_stream,
-                            #postgresql_crud_generate_query_token_stream::generate_query(
+                            #generate_query_vec_column_snake_case_token_stream(
                                 &#parameters_snake_case_token_stream.#payload_snake_case_token_stream.#select_snake_case_token_stream
                             ),
                             {
@@ -4751,7 +4733,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         format!(
                             #query_token_stream,
-                            #postgresql_crud_generate_query_token_stream::generate_query(&#select_snake_case_token_stream),
+                            #generate_query_vec_column_snake_case_token_stream(&#select_snake_case_token_stream),
                         )
                     }
                 };
@@ -7698,7 +7680,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // // #(#structs_variants_token_stream)*
         // // #(#impl_std_convert_try_from_ident_options_for_struct_variants_token_stream)*
         #column_token_stream
-        #generate_query_token_stream
+        #generate_query_vec_column_token_stream
         #options_try_from_sqlx_row_token_stream
         #primary_key_try_get_sqlx_row_token_stream
         #deserialize_ident_order_by_token_stream
@@ -7725,16 +7707,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            // #common_token_stream
+            #common_token_stream
 
-            // #create_many_token_stream
-            // #create_one_token_stream
-            // #read_many_token_stream
-            // #read_one_token_stream
-            // #update_many_token_stream
-            // #update_one_token_stream
-            // #delete_many_token_stream
-            // #delete_one_token_stream
+            #create_many_token_stream
+            #create_one_token_stream
+            #read_many_token_stream
+            #read_one_token_stream
+            #update_many_token_stream
+            #update_one_token_stream
+            #delete_many_token_stream
+            #delete_one_token_stream
         // }
     };
     // if ident == "" {
