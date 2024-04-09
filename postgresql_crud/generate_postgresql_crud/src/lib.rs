@@ -642,7 +642,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // println!("{options_try_from_sqlx_row_token_stream}");
     //todo reuse path
-    let crate_server_postgres_postgres_bigint_postgres_bigint_token_stream = quote::quote! {crate::server::postgres::postgres_bigint::PostgresBigint};
     let primary_key_try_from_sqlx_row_name_token_stream = {
         let value = format!(
             "{}_{}_{}_{}_{}_{}",
@@ -3820,8 +3819,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #column_snake_case_token_stream: #ident_column_upper_camel_case_token_stream::Name,
                                     #order_snake_case_token_stream: Some(#crate_server_postgres_order_order_token_stream::#order_initialization_token_stream),//todo remove option here
                                 },
-                                #limit_snake_case_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream(#limit_snake_case_token_stream),
-                                #offset_snake_case_token_stream: #crate_server_postgres_postgres_bigint_postgres_bigint_token_stream(#offset_snake_case_token_stream),
+                                #limit_snake_case_token_stream: #limit_and_offset_type_token_stream(#limit_snake_case_token_stream),
+                                #offset_snake_case_token_stream: #limit_and_offset_type_token_stream(#offset_snake_case_token_stream),
                             }
                         },
                     )
