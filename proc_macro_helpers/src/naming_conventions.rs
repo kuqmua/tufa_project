@@ -115,12 +115,6 @@ pub fn from_snake_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-pub fn response_variants_upper_camel_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::RESPONSE_VARIANTS)
-}
-// pub fn response_variants_snake_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&naming_constants::RESPONSE_VARIANTS)
-// }
 pub fn path_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PATH)
 }
@@ -227,14 +221,6 @@ pub fn variants_upper_camel_case_stringified() -> std::string::String {
 pub fn variants_snake_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
         &naming_constants::VARIANTS,
-    )
-}
-// pub fn tvfrr_extraction_logic_upper_camel_case_stringified() -> std::string::String {
-//     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::TVFRR_EXTRACTION_LOGIC)
-// }
-pub fn tvfrr_extraction_logic_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-        &naming_constants::TVFRR_EXTRACTION_LOGIC,
     )
 }
 pub fn options_upper_camel_case_stringified() -> std::string::String {
@@ -876,6 +862,21 @@ pub fn read_upper_camel_case_stringified() -> std::string::String {
 pub fn permission_upper_camel_case_stringified() -> std::string::String {
     proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PERMISSION)
 }
+pub fn tvfrr_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::TVFRR,
+    )
+}
+pub fn extraction_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::EXTRACTION,
+    )
+}
+pub fn logic_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::LOGIC,
+    )
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
@@ -1349,6 +1350,21 @@ pub fn not_unique_primary_keys_snake_case_token_stream() -> proc_macro2::TokenSt
     let value = not_unique_primary_keys_snake_case_stringified();
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn response_variants_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}",
+        response_upper_camel_case_stringified(),
+        variants_upper_camel_case_stringified(),
+    )
+}
+pub fn tvfrr_extraction_logic_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}_{}",
+        tvfrr_snake_case_stringified(),
+        extraction_snake_case_stringified(),
+        logic_snake_case_stringified(),
+    )
 }
 /////////////////////////////////////////////////////////////////////
 
