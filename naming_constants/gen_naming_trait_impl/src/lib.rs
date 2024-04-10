@@ -63,3 +63,9 @@ pub fn gen_naming_trait_impl(input: proc_macro::TokenStream) -> proc_macro::Toke
     // }
     gen.into()
 }
+
+#[proc_macro]
+pub fn gen_naming_trait_impl_vec(item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    println!("item {item:#?}");
+    quote::quote!{fn answer() -> u32 { 42 }}.into()
+}

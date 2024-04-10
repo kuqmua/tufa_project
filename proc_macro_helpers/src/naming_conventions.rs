@@ -864,11 +864,6 @@ pub fn tvfrr_snake_case_stringified() -> std::string::String {
         &naming_constants::TVFRR,
     )
 }
-pub fn extraction_snake_case_stringified() -> std::string::String {
-    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-        &naming_constants::EXTRACTION,
-    )
-}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
@@ -1354,7 +1349,7 @@ pub fn tvfrr_extraction_logic_snake_case_stringified() -> std::string::String {
     format!(
         "{}_{}_{}",
         tvfrr_snake_case_stringified(),
-        extraction_snake_case_stringified(),
+        <naming_constants::Extraction as naming_constants::Naming>::snake_case_stringified(),
         <naming_constants::Logic as naming_constants::Naming>::snake_case_stringified(),
     )
 }
