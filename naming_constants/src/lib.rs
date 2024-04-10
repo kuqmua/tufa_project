@@ -18,128 +18,130 @@ pub trait Naming {
     fn snake_case_token_stream() -> proc_macro2::TokenStream;
 }
 gen_naming_trait_impl::gen_naming_trait_impl_vec!(
+    // type,
+    // in,
+    // as,
+    // where,
     named,
     unnamed,
-    error
-    // ,
-    // occurence,
-    // string,
-    // parameters,
-    // payload,
-    // element,
-    // try,
-    // from,
-    // path,
-    // key,
-    // keys,
-    // value,
-    // vec,
-    // HashMap,
-    // reference,
-    // with,
-    // serialize,
-    // deserialize,
-    // request,
-    // response,
-    // variants,
-    // options,
-    // code,
-    // config,
-    // is,
-    // none,
-    // str,
-    // uuid,
-    // wrapper,
-    // possible,
-    // source,
-    // display,
-    // foreign,
-    // type,
-    // to,
-    // into,
-    // get,
-    // column,
-    // select,
-    // order,
-    // by,
-    // not,
-    // found,
-    // desirable,
-    // rollback,
-    // limit,
-    // offset,
-    // in,
-    // client,
-    // server,
-    // no,
-    // fields,
-    // commit,
-    // begin,
-    // acc,
-    // query,
-    // update,
-    // as,
-    // set,
-    // insert,
-    // values,
-    // delete,
-    // where,
-    // and,
-    // unnest,
-    // configuration,
-    // database,
-    // io,
-    // tls,
-    // protocol,
-    // row,
-    // index,
-    // out,
-    // of,
-    // bounds,
-    // decode,
-    // pool,
-    // timed,
-    // closed,
-    // worker,
-    // crashed,
-    // migrate,
-    // json,
-    // data,
-    // syntax,
-    // missing,
-    // content,
-    // bytes,
-    // rejection,
-    // expected,
-    // unexpected,
-    // case,
-    // status,
-    // failed,
-    // text,
-    // reqwest,
-    // headers,
-    // result,
-    // serde,
-    // debug,
-    // or,
-    // asc,
-    // desc,
-    // unique,
-    // many,
-    // std,
-    // option,
-    // primary,
-    // inner,
-    // existing,
-    // non,
-    // current,
-    // len,
-    // sqlx,
-    // returning,
-    // app,
-    // state,
-    // permission,
-    // tvfrr
+    error,
+    occurence,
+    string,
+    parameters,
+    payload,
+    element,
+    try,
+    from,
+    path,
+    key,
+    keys,
+    value,
+    vec,
+    HashMap,
+    reference,
+    with,
+    serialize,
+    deserialize,
+    request,
+    response,
+    variants,
+    options,
+    code,
+    config,
+    is,
+    none,
+    str,
+    uuid,
+    wrapper,
+    possible,
+    source,
+    display,
+    foreign,
+    to,
+    into,
+    get,
+    column,
+    select,
+    order,
+    by,
+    not,
+    found,
+    desirable,
+    rollback,
+    limit,
+    offset,
+    client,
+    server,
+    no,
+    fields,
+    commit,
+    begin,
+    acc,
+    query,
+    update,
+    set,
+    insert,
+    values,
+    delete,
+    and,
+    unnest,
+    configuration,
+    database,
+    io,
+    tls,
+    protocol,
+    row,
+    index,
+    out,
+    of,
+    bounds,
+    decode,
+    pool,
+    timed,
+    closed,
+    worker,
+    crashed,
+    migrate,
+    json,
+    data,
+    syntax,
+    missing,
+    content,
+    bytes,
+    rejection,
+    expected,
+    unexpected,
+    case,
+    status,
+    failed,
+    text,
+    reqwest,
+    headers,
+    result,
+    serde,
+    debug,
+    or,
+    asc,
+    desc,
+    unique,
+    many,
+    std,
+    option,
+    primary,
+    inner,
+    existing,
+    non,
+    current,
+    len,
+    sqlx,
+    returning,
+    app,
+    state,
+    permission,
+    tvfrr,
+    read,
+    logic,
+    extraction
 );
 
 pub const NAMED: &str = "named";
@@ -263,398 +265,3 @@ pub const APP: &str = "app";
 pub const STATE: &str = "state";
 pub const PERMISSION: &str = "permission";
 pub const TVFRR: &str = "tvfrr";
-
-
-
-//
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Named;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Unnamed;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Occurence;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct String;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Parameters;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Paylaod;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Element;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Try;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct From;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Path;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Key;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Keys;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Value;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Vec;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Hashmap;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Reference;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct With;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Serialize;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Deserialize;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Request;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Response;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct Variants;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-// #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-// pub struct ;
-//
-#[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-pub struct Read;
-#[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-pub struct Logic;
-#[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
-pub struct Extraction;
