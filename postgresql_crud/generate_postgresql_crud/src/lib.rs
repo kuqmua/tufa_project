@@ -297,7 +297,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &serde_deserialize_token_stream,
             &utoipa_to_schema_token_stream,
         ]);
-    let from_str_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::from_str_upper_camel_case_stringified();
     let from_str_upper_camel_case_token_stream =
         proc_macro_helpers::naming_conventions::from_str_upper_camel_case_token_stream();
     let from_str_snake_case_token_stream =
@@ -673,7 +672,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // println!("{primary_key_try_get_sqlx_row_token_stream}");
-    let order_by_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_stringified();
     let order_by_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::order_by_upper_camel_case_token_stream();
     let postgresql_crud_order_by_token_stream = quote::quote! {postgresql_crud::#order_by_upper_camel_case_token_stream};
     let postgresql_crud_order_token_stream = quote::quote! {postgresql_crud::Order};
@@ -685,8 +683,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_helpers::naming_conventions::order_snake_case_token_stream();
     let column_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::column_snake_case_token_stream();
-    let ident_order_by_wrapper_stringified =
-        format!("{ident}{order_by_upper_camel_case_stringified}{}", proc_macro_helpers::naming_conventions::wrapper_upper_camel_case_stringified());
     let allow_methods_token_stream = {
         let http_method_token_stream = quote::quote!{http::Method};
         quote::quote! {
@@ -747,7 +743,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let use_futures_try_stream_ext_token_stream = quote::quote! {use futures::TryStreamExt};
     let serde_json_to_string_token_stream = quote::quote! {serde_json::to_string};
     // let payload_element_upper_camel_case_stringified = format!("{payload_upper_camel_case_stringified}Element");
-    let returning_stringified = "returning";
+    let returning_stringified = proc_macro_helpers::naming_conventions::returning_snake_case_stringified();
     let returning_primary_key_stringified =
         format!(" {returning_stringified} {primary_key_field_ident}");
     let returning_primary_key_quotes_token_stream =

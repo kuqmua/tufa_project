@@ -129,3 +129,4 @@ pub const NON: &str = "non";
 pub const CURRENT: &str = "current";
 pub const LEN: &str = "len";
 pub const SQLX: &str = "sqlx";
+pub const RETURNING: &str = "returning";

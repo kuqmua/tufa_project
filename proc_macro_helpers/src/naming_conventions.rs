@@ -855,6 +855,11 @@ pub fn sqlx_snake_case_stringified() -> std::string::String {
         &naming_constants::SQLX,
     )
 }
+pub fn returning_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::RETURNING,
+    )
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
