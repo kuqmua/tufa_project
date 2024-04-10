@@ -65,7 +65,13 @@ pub fn gen_naming_trait_impl(input: proc_macro::TokenStream) -> proc_macro::Toke
 }
 
 #[proc_macro]
-pub fn gen_naming_trait_impl_vec(item: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    println!("item {item:#?}");
+pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let parsed_input = syn::parse::Parser::parse2(
+        syn::punctuated::Punctuated::<syn::Expr, syn::Token![,]>::parse_terminated, 
+        proc_macro2::TokenStream::from(input)
+    ).unwrap_or_else(|_| panic!("error 2011cc6c-191e-438c-b3ff-142142bafe11"));
+    for element in parsed_input {
+        println!("1");
+    }
     quote::quote!{fn answer() -> u32 { 42 }}.into()
 }
