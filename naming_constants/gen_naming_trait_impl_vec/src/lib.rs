@@ -9,12 +9,12 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
             return e.into_compile_error().into();//todo expirement with .into_compile_error() https://docs.rs/syn/1.0.109/syn/parse/struct.Error.html#method.into_compile_error
         }
     }.into_iter().map(|element|{
-        let ident = if let syn::Expr::Path(value) = &element {
-            match value.path.segments.len() == 1 {
-                true => &value.path.segments[0].ident,
-                false => {
-                    panic!("052d9f61-2209-45d6-82af-cf7221e5a762");
-                }
+        let ident = if let syn::Expr::Lit(value) = &element {
+            if let syn::Lit::Str(value) = &value.lit {
+                value.value()
+            }
+            else {
+                panic!("052d9f61-2209-45d6-82af-cf7221e5a762");
             }
         }
         else {
