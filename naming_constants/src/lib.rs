@@ -140,7 +140,8 @@ pub const STATE: &str = "state";
 pub const PERMISSION: &str = "permission";
 pub const TVFRR: &str = "tvfrr";
 pub const EXTRACTION: &str = "extraction";
-pub const LOGIC: &str = "logic";
 
 #[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
 pub struct Read;
+#[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
+pub struct Logic;
