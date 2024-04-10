@@ -713,7 +713,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let ident_column_read_permission_name = format!(
                 "{ident}{}{}{}",
                 proc_macro_helpers::naming_conventions::column_upper_camel_case_stringified(),
-                proc_macro_helpers::naming_conventions::read_upper_camel_case_stringified(),
+                <naming_constants::Read as naming_constants::Naming>::upper_camel_case_stringified(),
                 proc_macro_helpers::naming_conventions::permission_upper_camel_case_stringified(),
             );
             ident_column_read_permission_name.parse::<proc_macro2::TokenStream>()
