@@ -263,11 +263,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
         value
     };
-    let debug_token_stream =
-        proc_macro_helpers::naming_conventions::debug_upper_camel_case_token_stream();
+    let debug_token_stream = proc_macro_helpers::naming_conventions::debug_upper_camel_case_token_stream();
     let thiserror_error_token_stream = proc_macro_common::thiserror_error_token_stream();
     let error_occurence_error_occurence_token_stream =
         proc_macro_common::error_occurence_lib_error_occurence_token_stream();
+    let error_value_snake_case_token_stream =
+        proc_macro_common::error_value_snake_case_token_stream();
+    let app_state_name_token_stream = {
+        let value = format!(
+            "{}_{}",
+            proc_macro_helpers::naming_conventions::app_snake_case_stringified(),
+            proc_macro_helpers::naming_conventions::state_snake_case_stringified()
+        );
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let error_log_call_token_stream = quote::quote! {
+        error_occurence_lib::error_log::ErrorLog::error_log(
+            &#error_value_snake_case_token_stream,
+            #app_state_name_token_stream.as_ref(),
+        );
+    };
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
@@ -405,8 +421,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let eo_vec_error_occurence_token_stream =
         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence
             .to_attribute_view_token_stream();
-    let error_value_snake_case_token_stream =
-        proc_macro_common::error_value_snake_case_token_stream();
     let ident_column_upper_camel_case_token_stream = {
         let ident_column_upper_camel_case_stringified = format!(
             "{ident}{}",
@@ -757,13 +771,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let app_state_path = quote::quote! {#postgresql_crud_token_stream::app_state::DynArcGetConfigGetPostgresPoolSendSync}; //todo path
-    let app_state_name_token_stream = quote::quote! {app_state};
-    let error_log_call_token_stream = quote::quote! {
-        error_occurence_lib::error_log::ErrorLog::error_log(
-            &#error_value_snake_case_token_stream,
-            #app_state_name_token_stream.as_ref(),
-        );
-    };
     let serde_json_to_string_upper_camel_case_stringified = format!(
         "{}{}{}{}",
         proc_macro_helpers::naming_conventions::serde_upper_camel_case_stringified(),

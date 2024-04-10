@@ -860,6 +860,16 @@ pub fn returning_snake_case_stringified() -> std::string::String {
         &naming_constants::RETURNING,
     )
 }
+pub fn app_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::APP,
+    )
+}
+pub fn state_snake_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
+        &naming_constants::STATE,
+    )
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
