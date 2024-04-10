@@ -136,4 +136,25 @@ pub const TVFRR: &str = "tvfrr";
 pub const EXTRACTION: &str = "extraction";
 pub const LOGIC: &str = "logic";
 
+pub trait Naming {
+    fn upper_camel_case_stringified() -> &'static str;
+    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream;
+    fn snake_case_stringified() -> &'static str;
+    fn snake_case_token_stream() -> proc_macro2::TokenStream;
+}
+
 pub struct Read;
+impl Naming for Read {
+    fn upper_camel_case_stringified() -> &'static str {
+        "Read"
+    }
+    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+        quote::quote! {Read}
+    }
+    fn snake_case_stringified() -> &'static str {
+        "read"
+    }
+    fn snake_case_token_stream() -> proc_macro2::TokenStream {
+        quote::quote! {read}
+    }
+}
