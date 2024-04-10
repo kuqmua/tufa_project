@@ -132,3 +132,5 @@ pub const SQLX: &str = "sqlx";
 pub const RETURNING: &str = "returning";
 pub const APP: &str = "app";
 pub const STATE: &str = "state";
+pub const READ: &str = "read";
+pub const PERMISSION: &str = "permission";

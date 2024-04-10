@@ -870,6 +870,12 @@ pub fn state_snake_case_stringified() -> std::string::String {
         &naming_constants::STATE,
     )
 }
+pub fn read_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::READ)
+}
+pub fn permission_upper_camel_case_stringified() -> std::string::String {
+    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&naming_constants::PERMISSION)
+}
 //////////////////////////////////////////////////////////////
 
 pub fn serialize_deserialize_upper_camel_case_stringified() -> std::string::String {
