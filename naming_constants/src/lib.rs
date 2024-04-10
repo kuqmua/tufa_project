@@ -11,6 +11,13 @@ pub const STD_STRINGIFIED: &str = "std";
 pub const SQLX_TYPES_UUID_STRINGIFIED: &str = "sqlx::types::Uuid";
 pub const FIELD_IDENT_IS_NONE: &str = "field.ident is None";
 
+pub trait Naming {
+    fn upper_camel_case_stringified() -> &'static str;
+    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream;
+    fn snake_case_stringified() -> &'static str;
+    fn snake_case_token_stream() -> proc_macro2::TokenStream;
+}
+
 pub const NAMED: &str = "named";
 pub const UNNAMED: &str = "unnamed";
 pub const ERROR: &str = "error";
@@ -130,31 +137,10 @@ pub const SQLX: &str = "sqlx";
 pub const RETURNING: &str = "returning";
 pub const APP: &str = "app";
 pub const STATE: &str = "state";
-// pub const READ: &str = "read";
 pub const PERMISSION: &str = "permission";
 pub const TVFRR: &str = "tvfrr";
 pub const EXTRACTION: &str = "extraction";
 pub const LOGIC: &str = "logic";
 
-pub trait Naming {
-    fn upper_camel_case_stringified() -> &'static str;
-    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream;
-    fn snake_case_stringified() -> &'static str;
-    fn snake_case_token_stream() -> proc_macro2::TokenStream;
-}
-
+#[derive(gen_naming_trait_impl::GenNamingTraitImpl)]
 pub struct Read;
-impl Naming for Read {
-    fn upper_camel_case_stringified() -> &'static str {
-        "Read"
-    }
-    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {Read}
-    }
-    fn snake_case_stringified() -> &'static str {
-        "read"
-    }
-    fn snake_case_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {read}
-    }
-}
