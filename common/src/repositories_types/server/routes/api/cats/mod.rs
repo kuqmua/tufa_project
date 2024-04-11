@@ -1598,6 +1598,24 @@ pub async fn try_create_many<'a>(
         }
     }
 }
+
+
+
+//
+pub async fn create_many_wrapper(
+    app_state: axum::extract::State<
+        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+    >,
+    payload_extraction_result: Result<
+        axum::Json<CreateManyPayloadWithSerializeDeserialize>,
+        axum::extract::rejection::JsonRejection,
+    >,
+) -> impl axum::response::IntoResponse {
+    create_many(app_state, payload_extraction_result).await
+}
+//
+
+
 #[utoipa ::
 path(post, path = "/dogs/create_many", operation_id = "/dogs/create_many", tag
 = "dogs",

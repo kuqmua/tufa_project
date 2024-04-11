@@ -30,7 +30,11 @@ fn crud(
         //todo generate axum::Router and make it pub instead of create_many -like router handlers
         .route(
             "/create_many",
-            axum::routing::post(common::repositories_types::server::routes::api::cats::create_many),
+            axum::routing::post(
+                // common::repositories_types::server::routes::api::cats::create_many
+                common::repositories_types::server::routes::api::cats::create_many_wrapper
+            ),
+            
         )
         // .route(
         //     "/create_one",
