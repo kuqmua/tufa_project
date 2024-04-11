@@ -10,7 +10,7 @@ pub async fn commit_checker(
     match app_state.get_enable_api_git_commit_check() {
         true => match req
             .headers()
-            .get(postgresql_crud::COMMIT)
+            .get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified())
             .and_then(|header| header.to_str().ok())
         {
             Some(commit_checker_header) => match commit_checker_header

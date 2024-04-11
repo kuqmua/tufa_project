@@ -1414,7 +1414,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let commit_header_addition_token_stream = quote::quote! {
         .header(
-            postgresql_crud::COMMIT,
+            <naming_constants::Commit as naming_constants::Naming>::snake_case_stringified(),//todo remove it
             git_info::PROJECT_GIT_INFO.commit,
         )
     };

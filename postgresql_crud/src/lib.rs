@@ -1,4 +1,3 @@
-pub const COMMIT: &str = "commit";
 pub use generate_postgresql_crud::additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::create_many_additional_http_status_codes_error_variants;
 pub use generate_postgresql_crud::create_one_additional_http_status_codes_error_variants;
