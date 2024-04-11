@@ -16,8 +16,8 @@ pub fn create_supported_enum_variant(
         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
         naming_constants::SYN_FIELDS,
         naming_constants::SYN_FIELDS,
-        crate::naming_conventions::named_upper_camel_case_stringified(),
-        crate::naming_conventions::unnamed_upper_camel_case_stringified()
+        <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     data_enum
         .variants

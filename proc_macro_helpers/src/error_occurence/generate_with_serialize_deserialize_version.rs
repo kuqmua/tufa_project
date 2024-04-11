@@ -20,10 +20,10 @@ pub fn generate_with_serialize_deserialize_version(
     let with_serialize_deserialize_upper_camel_case =
         crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified();
     // let error_occurence_snake_case = crate::naming_conventions::error_occurence_snake_case();
-    let vec_snake_case = crate::naming_conventions::vec_snake_case_stringified();
-    let hashmap_snake_case = crate::naming_conventions::hashmap_snake_case_stringified();
-    let key_snake_case = crate::naming_conventions::key_upper_camel_case_stringified();
-    let value_snake_case = crate::naming_conventions::value_upper_camel_case_stringified();
+    let vec_snake_case = <naming_constants::Vec as naming_constants::Naming>::snake_case_stringified();
+    let hashmap_snake_case = <naming_constants::HashMap as naming_constants::Naming>::snake_case_stringified();
+    let key_snake_case = <naming_constants::Key as naming_constants::Naming>::upper_camel_case_stringified();
+    let value_snake_case = <naming_constants::Value as naming_constants::Naming>::upper_camel_case_stringified();
     let syn_type_path_stringified = crate::naming_conventions::syn_type_path_stringified();
     let token_stream = match supported_enum_variant {
         crate::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
@@ -257,7 +257,7 @@ pub fn generate_with_serialize_deserialize_version(
                         panic!(
                             "{proc_macro_name_ident_stringified} {}::{} variant fields unnamed len != 1",
                             naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED,
-                            crate::naming_conventions::unnamed_upper_camel_case_stringified()
+                            <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified()
                         );
                     }
                     match unnamed.iter().next() {
@@ -270,7 +270,7 @@ pub fn generate_with_serialize_deserialize_version(
                         "{proc_macro_name_ident_stringified} {} {}::{}",
                         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                         naming_constants::SYN_FIELDS,
-                        crate::naming_conventions::unnamed_upper_camel_case_stringified()
+                        <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified()
                     );
                 };
                 let type_token_stream = if let syn::Type::Path(type_path) = field_type {
@@ -331,10 +331,10 @@ fn inform_use_str_string_in_different_attribute(
         panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {std_string_string_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
     } else if path == string_string_stringified {
         panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {string_string_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
-    } else if path == crate::naming_conventions::string_upper_camel_case_stringified() {
+    } else if path == <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified() {
         panic!(
             "{proc_macro_name_ident_stringified} {wrong_attribute_view} {} {must_be_used_with_stringified} {attribute_to_use_view}",
-            crate::naming_conventions::string_upper_camel_case_stringified()
+            <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
         );
     }
 }
@@ -352,14 +352,14 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
     let str_stringified = "str";
     let string_string_stringified: std::string::String = format!(
         "{}::{}",
-        crate::naming_conventions::string_snake_case_stringified(),
-        crate::naming_conventions::string_upper_camel_case_stringified(),
+        <naming_constants::String as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let std_string_string_stringified = format!(
         "{}::{}::{}",
         naming_constants::STD_STRINGIFIED,
-        crate::naming_conventions::string_snake_case_stringified(),
-        crate::naming_conventions::string_upper_camel_case_stringified()
+        <naming_constants::String as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
     );
     match attribute {
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => {
@@ -503,45 +503,45 @@ pub fn generate_field_type_with_serialize_deserialize_version(
     let std_string_string_stringified = format!(
         "{}::{}::{}",
         naming_constants::STD_STRINGIFIED,
-        crate::naming_conventions::string_snake_case_stringified(),
-        crate::naming_conventions::string_upper_camel_case_stringified()
+        <naming_constants::String as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
     );
     let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let as_std_collections_hashmap_key_type_stringified = format!(
         "as {}::collections::{} key type",
         naming_constants::STD_STRINGIFIED,
-        crate::naming_conventions::hashmap_upper_camel_case_stringified()
+        <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let type_upper_camel_case = "Type";
     let hashmap_value_type_stringified = format!(
         "{}{}{type_upper_camel_case}",
-        crate::naming_conventions::hashmap_upper_camel_case_stringified(),
-        crate::naming_conventions::value_upper_camel_case_stringified()
+        <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Value as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let hashmap_value_type_path_stringified = format!(
         "{hashmap_value_type_stringified}::{}",
-        crate::naming_conventions::path_upper_camel_case_stringified()
+        <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let hashmap_value_type_reference_stringified = format!(
         "{hashmap_value_type_stringified}::{}",
-        crate::naming_conventions::reference_upper_camel_case_stringified()
+        <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let hashmap_key_type_stringified = format!(
         "{}{}{type_upper_camel_case}",
-        crate::naming_conventions::key_upper_camel_case_stringified(),
-        crate::naming_conventions::hashmap_upper_camel_case_stringified()
+        <naming_constants::Key as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let hashmap_key_type_path_stringified = format!(
         "{hashmap_key_type_stringified}::{}",
-        crate::naming_conventions::path_upper_camel_case_stringified()
+        <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let hashmap_key_type_reference_stringified = format!(
         "{hashmap_key_type_stringified}::{}",
-        crate::naming_conventions::reference_upper_camel_case_stringified()
+        <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let vec_element_type_path_stringified = format!(
         "crate::error_occurence::vec_element_type::VecElementType::{}",
-        crate::naming_conventions::path_upper_camel_case_stringified()
+        <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     match attribute {
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => {
@@ -556,7 +556,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     attribute.attribute_view_stringified(),
                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
-                    crate::naming_conventions::path_upper_camel_case_stringified()
+                    <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 )
             }
         },
@@ -584,9 +584,9 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
                     attribute.attribute_view_stringified(),
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
-                    crate::naming_conventions::path_upper_camel_case_stringified(),
+                    <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
-                    crate::naming_conventions::reference_upper_camel_case_stringified()
+                    <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
                 ),
             }
         },
@@ -596,7 +596,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::path_upper_camel_case_stringified()
+                    <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
             quote::quote! {
@@ -616,7 +616,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::path_upper_camel_case_stringified()
+                    <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -633,7 +633,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::path_upper_camel_case_stringified()
+                    <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -660,7 +660,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::vec_upper_camel_case_stringified()
+                    <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -697,7 +697,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::vec_upper_camel_case_stringified()
+                    <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -719,7 +719,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::vec_upper_camel_case_stringified()
+                    <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
             quote::quote! {
@@ -751,7 +751,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::vec_upper_camel_case_stringified()
+                    <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -780,7 +780,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::vec_upper_camel_case_stringified()
+                    <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -871,7 +871,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1010,7 +1010,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1091,7 +1091,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1184,7 +1184,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1277,7 +1277,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1342,7 +1342,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1423,7 +1423,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1485,7 +1485,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                 );
             }
         },
@@ -1550,7 +1550,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                 );
             }
         },
@@ -1615,7 +1615,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
                     attribute.attribute_view_stringified(),
-                    crate::naming_conventions::hashmap_upper_camel_case_stringified()
+                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
         },
@@ -1709,7 +1709,7 @@ pub fn generate_supported_container(
     let syn_type_path_stringified = crate::naming_conventions::syn_type_path_stringified();
     let syn_type_reference = format!(
         "syn::Type::{}",
-        crate::naming_conventions::reference_upper_camel_case_stringified()
+        <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified(),
     );
     let error_message = format!(
         "{} {syn_type_path_stringified} and {syn_type_reference}",
@@ -1727,7 +1727,8 @@ pub fn generate_supported_container(
                 "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().last() {}",
                 naming_constants::IS_NONE_STRINGIFIED
             ));
-            if path_segment.ident == crate::naming_conventions::vec_upper_camel_case_stringified() {
+            if path_segment.ident == <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
+            {
                 let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = &path_segment.arguments {
                     if angle_brackets_generic_arguments.args.len() == 1 {
                         if let syn::GenericArgument::Type(type_handle) =
@@ -1804,7 +1805,7 @@ pub fn generate_supported_container(
                     vec_element_type
                 }
             }
-            else if path_segment.ident == crate::naming_conventions::hashmap_upper_camel_case_stringified() {
+            else if path_segment.ident == <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified() {
                 let (
                     hashmap_key_type,
                     hashmap_value_type

@@ -21,7 +21,7 @@ pub fn type_variants_from_request_response_generator(
     let code_occurence_snake_case_stringified =
         proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
     let desirable_upper_camel_case_token_stream =
-        proc_macro_helpers::naming_conventions::desirable_upper_camel_case_token_stream();
+        <naming_constants::Desirable as naming_constants::Naming>::upper_camel_case_token_stream();
     let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
     let try_operation_response_variants_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseStringified::try_self_response_variants_upper_camel_case_stringified(operation);
     let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(operation);

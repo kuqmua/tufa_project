@@ -11,7 +11,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     );
     let configuration_error_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::configuration_upper_camel_case_stringified();
+            <naming_constants::Configuration as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -29,7 +29,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     //todo move it into custom macro attribute
     let database_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::database_upper_camel_case_stringified();
+            <naming_constants::Database as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -46,7 +46,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     };
     let io_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::io_upper_camel_case_stringified();
+            <naming_constants::Io as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -66,7 +66,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     };
     let tls_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::tls_upper_camel_case_stringified();
+            <naming_constants::Tls as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -83,7 +83,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     };
     let protocol_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::protocol_upper_camel_case_stringified();
+            <naming_constants::Protocol as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -196,7 +196,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     );
     let decode_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::decode_upper_camel_case_stringified();
+            <naming_constants::Decode as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
@@ -264,7 +264,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
     };
     let migrate_syn_variant = {
         let variant_name_upper_camel_case_stringified =
-            crate::naming_conventions::migrate_upper_camel_case_stringified();
+            <naming_constants::Migrate as naming_constants::Naming>::upper_camel_case_stringified();
         let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&variant_name_upper_camel_case_stringified);
         crate::construct_syn_variant::construct_syn_variant(
             crate::status_code::StatusCode::Tvfrr500InternalServerError,
