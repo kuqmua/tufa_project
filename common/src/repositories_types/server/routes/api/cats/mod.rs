@@ -1644,7 +1644,7 @@ pub async fn create_many(
         axum::Json<CreateManyPayloadWithSerializeDeserialize>,
         axum::extract::rejection::JsonRejection,
     >,
-) -> impl axum::response::IntoResponse {
+) -> TryCreateManyResponseVariants {
     let parameters = CreateManyparameters {
         payload:
             match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
