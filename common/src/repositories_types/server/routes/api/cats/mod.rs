@@ -1601,24 +1601,128 @@ pub async fn try_create_many<'a>(
 
 
 
+
+//
+
+//
+
+// struct RequiresState { /* ... */ }
+// #[async_trait]
+// impl<S> FromRequestParts<S> for RequiresState
+// where
+//     String: FromRef<S>,
+//     S: Send + Sync,
+// {
+//     // ...
+//     todo!()
+// }
+// use axum::{
+//     async_trait,
+//     extract::{Request, FromRef, FromRequest, FromRequestParts},
+//     http::request::Parts,
+//     response::{IntoResponse, Response},
+//     body::Body,
+//     Json, RequestExt,
+// };
+
+// struct MyExtractor<T> {
+//     requires_state: postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+//     payload: T,
+// }
+
+// #[async_trait]
+// impl<S, T> FromRequest<S> for MyExtractor<T>
+// where
+//     String: FromRef<S>,
+//     Json<T>: FromRequest<()>,
+//     T: 'static,
+//     S: Send + Sync,
+// {
+//     type Rejection = Response;
+
+//     async fn from_request(mut req: Request, state: &S) -> Result<Self, Self::Rejection> {
+//         let requires_state = req
+//             .extract_parts_with_state::<postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync, _>(state)
+//             .await
+//             .map_err(|err| err.into_response())?;
+
+//         let Json(payload) = req
+//             .extract::<Json<T>, _>()
+//             .await
+//             .map_err(|err| err.into_response())?;
+
+//         Ok(Self {
+//             requires_state,
+//             payload,
+//         })
+//     }
+// }
+
 //
 pub async fn create_many_wrapper(
-    app_state: axum::extract::State<
-        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
-    >,
+    // app_state: axum::extract::State<
+    //     postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+    // >,
     // payload_extraction_result: Result<
     //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
     //     axum::extract::rejection::JsonRejection,
     // >,
     request: axum::extract::Request
+    // `Method` and `HeaderMap` don't consume the request body so they can
+    // put anywhere in the argument list (but before `body`)
+    // method: http::Method,
+    // headers: http::HeaderMap,
+    // `State` is also an extractor so it needs to be before `body`
+    // `String` consumes the request body and thus must be the last extractor
+    // axum::extract::State(state): axum::extract::State<
+    //     postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+    // >,
+    // payload_extraction_result: Result<
+    //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
+    //     axum::extract::rejection::JsonRejection,
+    // >,
+    // body: String,
 ) -> impl axum::response::IntoResponse {
-    let f: &axum::body::Body = request.body();
+    let (parts, body) = request.into_parts();
+    // let g: axum::body::Body = body;
+    //
+    // let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_reader(body.reader())
+    //     .expect("Failed to deserialize JSON");
+    // let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&hyper::body::to_bytes(body).await.unwrap())
+    //     .expect("Failed to deserialize JSON");
+    let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&axum::body::to_bytes(body, 10000).await.unwrap())
+        .expect("Failed to deserialize JSON");
+    println!("{data:#?}");
+
+    // Wrap the data in `axum::Json`
+    // axum::Json(data)
+    //
+    // pub method: Method,
+    // pub uri: Uri,
+    // pub version: Version,
+    // pub headers: HeaderMap<HeaderValue>,
+
+
+    // let f: &axum::body::Body = request.body();
+    // let h: axum::Json<CreateManyPayloadWithSerializeDeserialize> = axum::Json::from_
+    // let axum::Json(payload) = req.extract::<Json<CreateManyPayloadWithSerializeDeserialize>, axum::extract::rejection::JsonRejection>().await
+    //             .map_err(|err| err.into_response())?;
     // let body_stringified = f.to_string();
     // commit_checker_wrapper(
     //     app_state: CommitCheckerAppState,
     //     req: &axum::http::Request<axum::body::Body>,
     // )
-    // create_many(app_state, payload_extraction_result).await
+    // use axum::RequestExt;
+    // let f:Result<
+    //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
+    //     axum::extract::rejection::JsonRejection,
+    // > = req.extract::<axum::Json<CreateManyPayloadWithSerializeDeserialize>, axum::extract::rejection::JsonRejection>().await;
+    
+    // create_many(
+    //     app_state, 
+    //     // payload_extraction_result
+    //     f
+    // ).await
     todo!()
 }
 //
