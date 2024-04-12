@@ -1606,16 +1606,20 @@ pub async fn create_many_wrapper(
     app_state: axum::extract::State<
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
     >,
-    payload_extraction_result: Result<
-        axum::Json<CreateManyPayloadWithSerializeDeserialize>,
-        axum::extract::rejection::JsonRejection,
-    >,
+    // payload_extraction_result: Result<
+    //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
+    //     axum::extract::rejection::JsonRejection,
+    // >,
+    request: axum::extract::Request
 ) -> impl axum::response::IntoResponse {
+    let f: &axum::body::Body = request.body();
+    // let body_stringified = f.to_string();
     // commit_checker_wrapper(
     //     app_state: CommitCheckerAppState,
     //     req: &axum::http::Request<axum::body::Body>,
     // )
-    create_many(app_state, payload_extraction_result).await
+    // create_many(app_state, payload_extraction_result).await
+    todo!()
 }
 //
 
