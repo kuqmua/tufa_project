@@ -1685,8 +1685,12 @@ pub async fn create_many_wrapper(
 ) -> impl axum::response::IntoResponse {
     let (parts, body) = request.into_parts();
     // let g: axum::body::Body = body;
-    let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&axum::body::to_bytes(body, 10000).await.unwrap())
-        .expect("Failed to deserialize JSON");
+    let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(
+        &axum::body::to_bytes(
+            body, 
+            10485760//1 megabyte//todo move it to config or something?
+        ).await.unwrap()
+    ).expect("Failed to deserialize JSON");
     println!("{data:#?}");
     let h = app_state.get_enable_api_git_commit_check();
     println!("{h:#?}");
