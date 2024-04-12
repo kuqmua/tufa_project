@@ -1598,20 +1598,41 @@ pub async fn try_create_many<'a>(
         }
     }
 }
-
+// serde::Serialize, serde::Deserialize
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum CreateManyWrapper {
+    ReachedMaximumSizeOfBody {
+        #[eo_display_with_serialize_deserialize]
+        maximum_size_of_body_limit_in_bytes: std::primitive::usize,
+        size_hint: http_body::SizeHint,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+//
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
     >,
     request: axum::extract::Request
-) -> impl axum::response::IntoResponse {
+) -> TryCreateManyResponseVariants {
     let (parts, body) = request.into_parts();
-    let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(
-        &axum::body::to_bytes(
-            body, 
-            10485760//1 megabyte//todo move it to config or something?
-        ).await.unwrap()
-    ).expect("Failed to deserialize JSON");
+    use axum::body::HttpBody;
+    let size_hint = body.size_hint();
+    println!("size_hint {size_hint:#?}");
+    let maximum_size_of_body_limit_in_bytes = 10485760;
+    let body_bytes = match axum::body::to_bytes(
+        body, 
+        maximum_size_of_body_limit_in_bytes//1 megabyte//todo move it to config or something?
+    ).await {
+        Ok(value) => value,
+        Err(e) => {
+            // let e = TryCreateMany::from(e);
+            // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+            // return TryCreateManyResponseVariants::from(e);
+            todo!()
+        }
+    };
+    let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&body_bytes).expect("Failed to deserialize JSON");
     println!("{data:#?}");
     let h = app_state.get_enable_api_git_commit_check();
     println!("{h:#?}");
