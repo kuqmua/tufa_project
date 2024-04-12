@@ -1660,9 +1660,9 @@ pub async fn try_create_many<'a>(
 
 //
 pub async fn create_many_wrapper(
-    // app_state: axum::extract::State<
-    //     postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
-    // >,
+    app_state: axum::extract::State<
+        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+    >,
     // payload_extraction_result: Result<
     //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
     //     axum::extract::rejection::JsonRejection,
@@ -1685,14 +1685,11 @@ pub async fn create_many_wrapper(
 ) -> impl axum::response::IntoResponse {
     let (parts, body) = request.into_parts();
     // let g: axum::body::Body = body;
-    //
-    // let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_reader(body.reader())
-    //     .expect("Failed to deserialize JSON");
-    // let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&hyper::body::to_bytes(body).await.unwrap())
-    //     .expect("Failed to deserialize JSON");
     let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&axum::body::to_bytes(body, 10000).await.unwrap())
         .expect("Failed to deserialize JSON");
     println!("{data:#?}");
+    let h = app_state.get_enable_api_git_commit_check();
+    println!("{h:#?}");
 
     // Wrap the data in `axum::Json`
     // axum::Json(data)
