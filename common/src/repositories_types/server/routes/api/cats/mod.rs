@@ -1598,17 +1598,43 @@ pub async fn try_create_many<'a>(
         }
     }
 }
-// serde::Serialize, serde::Deserialize
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// 
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub enum CreateManyWrapper {
+    ReachedMaximumSizeOfBody {
+        maximum_size_of_body_limit_in_bytes: std::primitive::usize,
+        size_hint: std::string::String,//todo impl outer serialize+deserialize for http_body::SizeHint ?
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum CreateManyWrapperErrorNamed {
     ReachedMaximumSizeOfBody {
         #[eo_display_with_serialize_deserialize]
         maximum_size_of_body_limit_in_bytes: std::primitive::usize,
+        #[eo_display_foreign_type]
         size_hint: http_body::SizeHint,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-//
+
+impl axum::response::IntoResponse for CreateManyWrapper {
+    fn into_response(self) -> axum::response::Response {
+        match &self {
+            Self::ReachedMaximumSizeOfBody {
+                maximum_size_of_body_limit_in_bytes: _,
+                size_hint: _,
+                code_occurence: _,
+            } => {
+                let mut res = axum::Json(self).into_response(); 
+                *res.status_mut() = axum::http::StatusCode::PAYLOAD_TOO_LARGE;
+                res
+            } 
+        }
+    }
+}
+
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
