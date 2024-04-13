@@ -1645,14 +1645,13 @@ pub async fn create_many_wrapper(
     use axum::body::HttpBody;
     let size_hint = body.size_hint();
     println!("size_hint {size_hint:#?}");
-    let maximum_size_of_body_limit_in_bytes = 10485760;
     let body_bytes = match axum::body::to_bytes(
         body, 
-        maximum_size_of_body_limit_in_bytes//1 megabyte//todo move it to config or something?
+        constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES//1 megabyte//todo move it to config or something?
     ).await {
         Ok(value) => value,
         Err(e) => {
-            // let e = TryCreateMany::from(e);
+            // let e = CreateManyWrapperErrorNamed::from(e);
             // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             // return TryCreateManyResponseVariants::from(e);
             todo!()

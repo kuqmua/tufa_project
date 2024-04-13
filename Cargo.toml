@@ -4,6 +4,7 @@ members = [
   "app_state",
   "common",
   "config_lib",
+  "constants",
   "display_foreign_type",
   "enum_extension",
   "error_occurence_lib",
