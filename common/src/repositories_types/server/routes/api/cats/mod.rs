@@ -1596,10 +1596,8 @@ pub enum CreateManyWrapper {
         check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    ReachedMaximumSizeOfBody {
-        axum_error: std::string::String,
-        maximum_size_of_body_limit_in_bytes: std::primitive::usize,
-        size_hint: std::string::String,//todo impl outer serialize+deserialize for http_body::SizeHint ?
+    CheckBodySize {
+        check_body_size: crate::server::middleware::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //
@@ -1719,13 +1717,9 @@ pub enum CreateManyWrapperErrorNamed {
         check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    ReachedMaximumSizeOfBody {
-        #[eo_display]
-        axum_error: axum::Error,
-        #[eo_display_with_serialize_deserialize]
-        maximum_size_of_body_limit_in_bytes: std::primitive::usize,
-        #[eo_display_foreign_type]
-        size_hint: http_body::SizeHint,
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: crate::server::middleware::check_body_size::CheckBodySizeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -1742,17 +1736,13 @@ impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyWrapper {
                 check_commit: check_commit.into_serialize_deserialize_version(),
                 code_occurence,
             },
-            CreateManyWrapperErrorNamed::ReachedMaximumSizeOfBody {
-                axum_error,
-                maximum_size_of_body_limit_in_bytes,
-                size_hint,
+            CreateManyWrapperErrorNamed::CheckBodySize {
+                check_body_size,
                 code_occurence,
-            } => Self::ReachedMaximumSizeOfBody {
-                axum_error: axum_error.to_string(),
-                maximum_size_of_body_limit_in_bytes,
-                size_hint: error_occurence_lib::DisplayForeignType::display_foreign_type(&size_hint),
+            } => Self::CheckBodySize {
+                check_body_size: check_body_size.into_serialize_deserialize_version(),
                 code_occurence,
-            }
+            },
         }
     }
 }
@@ -1768,10 +1758,8 @@ impl axum::response::IntoResponse for CreateManyWrapper {
                 *res.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 res
             },
-            Self::ReachedMaximumSizeOfBody {
-                axum_error: _,
-                maximum_size_of_body_limit_in_bytes: _,
-                size_hint: _,
+            Self::CheckBodySize {
+                check_body_size: _,
                 code_occurence: _,
             } => {
                 let mut res = axum::Json(self).into_response(); 
@@ -1983,17 +1971,11 @@ pub async fn create_many_wrapper(
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return CreateManyWrapper::from(e);
     }
-    let size_hint = axum::body::HttpBody::size_hint(&body);
-    let body_bytes = match axum::body::to_bytes(
-        body, 
-        constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES//1 megabyte//todo move it to config or something?
-    ).await {
+    let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body).await {
         Ok(value) => value,
         Err(e) => {
-            let e = CreateManyWrapperErrorNamed::ReachedMaximumSizeOfBody {
-                axum_error: e,
-                maximum_size_of_body_limit_in_bytes: constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES,
-                size_hint: size_hint,
+            let e = CreateManyWrapperErrorNamed::CheckBodySize {
+                check_body_size: e,
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
