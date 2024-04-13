@@ -43,3 +43,5 @@ impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for AppState<
         self.project_git_info.get_git_commit_link()
     }
 }
+
+impl<'a> postgresql_crud::app_state::AppState for AppState<'a> {}

@@ -27,10 +27,10 @@ pub enum CheckCommitErrorNamed {
 }
 
 pub fn check_commit(
-    app_state: bool,
+    app_state: &dyn config_lib::config_fields::GetEnableApiGitCommitCheck,
     headers: &axum::http::HeaderMap<axum::http::header::HeaderValue>,
 ) -> Result<(), CheckCommitErrorNamed> {
-    match app_state {
+    match app_state.get_enable_api_git_commit_check() {
         true => match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
             Some(value) => match value.to_str() {
                 Ok(value) => match value == git_info::PROJECT_GIT_INFO.commit {

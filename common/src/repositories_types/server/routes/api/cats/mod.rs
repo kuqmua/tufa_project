@@ -1969,7 +1969,7 @@ pub async fn create_many_wrapper(
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(e) = crate::server::middleware::check_commit::check_commit(
-        *app_state.as_ref().get_enable_api_git_commit_check(),
+        app_state.as_ref(),
         &headers,
     ) {
         let e = CreateManyWrapperErrorNamed::CheckCommit {
@@ -1983,48 +1983,6 @@ pub async fn create_many_wrapper(
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return CreateManyWrapper::from(e);
     }
-    // match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
-    //     Some(value) => match value.to_str() {
-    //         Ok(value) => match value == git_info::PROJECT_GIT_INFO.commit {
-    //             true => (),
-    //             false => {
-    //                 let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
-    //                     commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::CommitExtractorNotEqual {
-    //                         commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
-    //                         commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
-    //                         code_occurence: error_occurence_lib::code_occurence!(),
-    //                     },
-    //                     code_occurence: error_occurence_lib::code_occurence!(),
-    //                 };
-    //                 error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-    //                 return CreateManyWrapper::from(e);
-    //             }
-    //         }
-    //         Err(e) => {
-    //             let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
-    //                 commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::CommitExtractorToStrConversion {
-    //                 commit_to_str_conversion: e,
-    //                 code_occurence: error_occurence_lib::code_occurence!(),
-    //             },
-    //                 code_occurence: error_occurence_lib::code_occurence!(),
-    //             };
-    //             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-    //             return CreateManyWrapper::from(e);
-    //         }
-    //     }
-    //     None => {
-    //         let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
-    //             commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::NoCommitExtractorHeader {
-    //                 no_commit_header: std::string::String::from("no_commit_header"),
-    //                 code_occurence: error_occurence_lib::code_occurence!(),
-    //             },
-    //             code_occurence: error_occurence_lib::code_occurence!(),
-    //         };
-    //         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-    //         return CreateManyWrapper::from(e);
-    //     }
-    // }
-    // println!("{commit_result:#?}");
     let size_hint = axum::body::HttpBody::size_hint(&body);
     println!("size_hint {size_hint:#?}");
     let body_bytes = match axum::body::to_bytes(
