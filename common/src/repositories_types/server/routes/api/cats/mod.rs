@@ -1592,8 +1592,8 @@ pub async fn try_create_many<'a>(
 // 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub enum CreateManyWrapper {
-    CommitExtractorCheck {
-        commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamedWithSerializeDeserialize,
+    CheckCommit {
+        check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ReachedMaximumSizeOfBody {
@@ -1714,9 +1714,9 @@ pub enum CreateManyWrapper {
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateManyWrapperErrorNamed {
-    CommitExtractorCheck {
+    CheckCommit {
         #[eo_error_occurence]
-        commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed,
+        check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ReachedMaximumSizeOfBody {
@@ -1735,11 +1735,11 @@ impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyWrapper {
         value: CreateManyWrapperErrorNamed,
     ) -> Self {
         match value {
-            CreateManyWrapperErrorNamed::CommitExtractorCheck {
-                commit_extractor_check,
+            CreateManyWrapperErrorNamed::CheckCommit {
+                check_commit,
                 code_occurence,
-            } => Self::CommitExtractorCheck {
-                commit_extractor_check: commit_extractor_check.into_serialize_deserialize_version(),
+            } => Self::CheckCommit {
+                check_commit: check_commit.into_serialize_deserialize_version(),
                 code_occurence,
             },
             CreateManyWrapperErrorNamed::ReachedMaximumSizeOfBody {
@@ -1760,8 +1760,8 @@ impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyWrapper {
 impl axum::response::IntoResponse for CreateManyWrapper {
     fn into_response(self) -> axum::response::Response {
         match &self {
-            Self::CommitExtractorCheck {
-                commit_extractor_check,
+            Self::CheckCommit {
+                check_commit,
                 code_occurence,
             } => {
                 let mut res = axum::Json(self).into_response(); 
@@ -1968,47 +1968,62 @@ pub async fn create_many_wrapper(
 ) -> CreateManyWrapper {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
-    match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
-        Some(value) => match value.to_str() {
-            Ok(value) => match value == git_info::PROJECT_GIT_INFO.commit {
-                true => (),
-                false => {
-                    let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
-                        commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::CommitExtractorNotEqual {
-                            commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
-                            commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        },
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    };
-                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                    return CreateManyWrapper::from(e);
-                }
-            }
-            Err(e) => {
-                let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
-                    commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::CommitExtractorToStrConversion {
-                    commit_to_str_conversion: e,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                },
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                };
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-                return CreateManyWrapper::from(e);
-            }
-        }
-        None => {
-            let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
-                commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::NoCommitExtractorHeader {
-                    no_commit_header: std::string::String::from("no_commit_header"),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                },
+    if let Err(e) = crate::server::middleware::check_commit::check_commit(
+        *app_state.as_ref().get_enable_api_git_commit_check(),
+        &headers,
+    ) {
+        let e = CreateManyWrapperErrorNamed::CheckCommit {
+            check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamed::CommitNotEqual {
+                commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
+                commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
                 code_occurence: error_occurence_lib::code_occurence!(),
-            };
-            error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return CreateManyWrapper::from(e);
-        }
+            },
+            code_occurence: error_occurence_lib::code_occurence!(),
+        };
+        error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+        return CreateManyWrapper::from(e);
     }
+    // match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
+    //     Some(value) => match value.to_str() {
+    //         Ok(value) => match value == git_info::PROJECT_GIT_INFO.commit {
+    //             true => (),
+    //             false => {
+    //                 let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
+    //                     commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::CommitExtractorNotEqual {
+    //                         commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
+    //                         commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
+    //                         code_occurence: error_occurence_lib::code_occurence!(),
+    //                     },
+    //                     code_occurence: error_occurence_lib::code_occurence!(),
+    //                 };
+    //                 error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+    //                 return CreateManyWrapper::from(e);
+    //             }
+    //         }
+    //         Err(e) => {
+    //             let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
+    //                 commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::CommitExtractorToStrConversion {
+    //                 commit_to_str_conversion: e,
+    //                 code_occurence: error_occurence_lib::code_occurence!(),
+    //             },
+    //                 code_occurence: error_occurence_lib::code_occurence!(),
+    //             };
+    //             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+    //             return CreateManyWrapper::from(e);
+    //         }
+    //     }
+    //     None => {
+    //         let e = CreateManyWrapperErrorNamed::CommitExtractorCheck {
+    //             commit_extractor_check: crate::server::middleware::commit_checker::CommitExtractorCheckErrorNamed::NoCommitExtractorHeader {
+    //                 no_commit_header: std::string::String::from("no_commit_header"),
+    //                 code_occurence: error_occurence_lib::code_occurence!(),
+    //             },
+    //             code_occurence: error_occurence_lib::code_occurence!(),
+    //         };
+    //         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+    //         return CreateManyWrapper::from(e);
+    //     }
+    // }
     // println!("{commit_result:#?}");
     let size_hint = axum::body::HttpBody::size_hint(&body);
     println!("size_hint {size_hint:#?}");

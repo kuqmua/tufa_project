@@ -1,2 +1,2 @@
-pub mod commit_checker;
+pub mod check_commit;
 //todo request per second middleware
