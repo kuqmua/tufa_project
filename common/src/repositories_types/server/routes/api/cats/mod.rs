@@ -1679,7 +1679,6 @@ pub async fn create_many_wrapper(
                 maximum_size_of_body_limit_in_bytes: constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES,
                 size_hint: size_hint,
                 code_occurence: error_occurence_lib::code_occurence!(),
-                //
             };
             // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             // return TryCreateManyResponseVariants::from(e);
