@@ -9,7 +9,7 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric, ConfigGeneric>
     HashMapDisplayForeignTypeToStringWithConfigToString<'a, ConfigGeneric>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric: crate::to_string_with_config::ToStringWithConfig<'a>,
     ConfigGeneric:
         config_lib::config_fields::GetSourcePlaceType + config_lib::config_fields::GetTimezone,

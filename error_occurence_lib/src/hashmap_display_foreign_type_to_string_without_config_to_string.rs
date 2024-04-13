@@ -8,7 +8,7 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
     HashMapDisplayForeignTypeToStringWithoutConfigToString<'a>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric: crate::to_string_without_config::ToStringWithoutConfig<'a>,
 {
     fn hashmap_display_foreign_type_to_string_without_config_to_string(
@@ -37,7 +37,7 @@ impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
     HashMapToStringDisplayForeignTypeToStringWithoutConfigWithSerializeDeserialize<'a>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
 where
-    HashMapKeyGeneric: crate::display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric:
         crate::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'a>,
 {

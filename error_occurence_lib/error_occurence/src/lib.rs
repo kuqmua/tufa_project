@@ -892,11 +892,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_display_foreign_type_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_snake_case_stringified}::{display_foreign_type_upper_camel_case}");
-                            let error_occurence_lib_display_foreign_type_display_foreign_type_token_stream =
-                            error_occurence_lib_display_foreign_type_display_foreign_type_stringified
+                            let error_occurence_lib_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_upper_camel_case}");
+                            let error_occurence_lib_display_foreign_type_token_stream =
+                            error_occurence_lib_display_foreign_type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_display_foreign_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_display_to_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1333,7 +1333,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1343,7 +1343,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
                                                          #field_ident
                                                     )
                                                 )
@@ -1358,7 +1358,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             )
                                         },
                                         quote::quote! {
-                                            #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                            #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
                                                 &#field_ident
                                             )
                                         },
@@ -1401,7 +1401,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1411,7 +1411,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1421,7 +1421,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -3690,7 +3690,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 #field_ident.into_iter()
                                                 .map(|(k, v)| {
                                                     (
-                                                        #error_occurence_lib_display_foreign_type_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(k),
+                                                        #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(k),
                                                         { v.#into_serialize_deserialize_version_token_stream() },
                                                     )
                                                 })
