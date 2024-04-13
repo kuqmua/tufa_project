@@ -1751,8 +1751,8 @@ impl axum::response::IntoResponse for CreateManyWrapper {
     fn into_response(self) -> axum::response::Response {
         match &self {
             Self::CheckCommit {
-                check_commit,
-                code_occurence,
+                check_commit: _,
+                code_occurence: _,
             } => {
                 let mut res = axum::Json(self).into_response(); 
                 *res.status_mut() = axum::http::StatusCode::BAD_REQUEST;
