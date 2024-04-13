@@ -1658,6 +1658,52 @@ impl axum::response::IntoResponse for CreateManyWrapper {
         }
     }
 }
+//
+impl std::convert::From<TryCreateManyResponseVariants> for CrateMany {
+    fn from(value: TryCreateManyResponseVariants) -> Self {
+        match value {
+            
+        }
+    }
+}
+
+impl std::convert::From<TryCreateManyResponseVariants> for CreateMany {
+    fn from(value: TryCreateManyResponseVariants) -> Self {
+        match value
+        {
+            TryCreateManyResponseVariants :: Desirable(_) => Self::,
+            TryCreateManyResponseVariants ::Configuration { configuration : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants ::Database { database : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: Io{ io : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: Tls{ tls : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: Protocol{ protocol : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: RowNotFound{ row_not_found : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants ::TypeNotFound { type_not_found : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants ::ColumnIndexOutOfBounds{ column_index_out_of_bounds : _, len : _, code_occurence : _ } => Self::,
+            TryCreateManyResponseVariants :: ColumnNotFound { column_not_found : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: ColumnDecode { column_decode_index : _, source_handle : _, code_occurence : _ } => Self::,
+            TryCreateManyResponseVariants :: Decode { decode : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: PoolTimedOut { pool_timed_out : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: PoolClosed { pool_closed : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: WorkerCrashed { worker_crashed : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: Migrate { migrate : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: JsonDataError { json_data_error : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: JsonSyntaxError { json_syntax_error : _, code_occurence : _ } => Self::,
+            TryCreateManyResponseVariants :: MissingJsonContentType { missing_json_content_type : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: BytesRejection { bytes_rejection : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: UnexpectedCase { unexpected_case : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: BindQuery { bind_query : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: _, 
+                code_occurence : _
+            } => Self::,
+            TryCreateManyResponseVariants :: CommitExtractorNotEqual { commit_not_equal : _, commit_to_use : _, code_occurence : _ } => Self::,
+            TryCreateManyResponseVariants :: CommitExtractorToStrConversion { commit_to_str_conversion : _, code_occurence : _ } => Self::, 
+            TryCreateManyResponseVariants :: NoCommitExtractorHeader { no_commit_header : _, code_occurence : _ } => Self::
+        }
+    }
+}
+
 
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
