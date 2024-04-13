@@ -1684,15 +1684,12 @@ pub async fn create_many_wrapper(
             return CreateManyWrapper::from(e);
         }
     };
-    let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&body_bytes).expect("Failed to deserialize JSON");
-    println!("{data:#?}");
     let h = app_state.get_enable_api_git_commit_check();
     println!("{h:#?}");
-    // create_many(
-    //     app_state, 
-    //     // payload_extraction_result
-    //     f
-    // ).await
+    create_many(
+        app_state, 
+        body_bytes
+    ).await;
     todo!()
 }
 //
@@ -1722,23 +1719,34 @@ pub async fn create_many(
     app_state: axum::extract::State<
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
     >,
-    payload_extraction_result: Result<
-        axum::Json<CreateManyPayloadWithSerializeDeserialize>,
-        axum::extract::rejection::JsonRejection,
-    >,
+    // payload_extraction_result: Result<
+    //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
+    //     axum::extract::rejection::JsonRejection,
+    // >,
+    body_bytes: bytes::Bytes,
 ) -> TryCreateManyResponseVariants {
+    // let parameters = CreateManyparameters {
+    //     payload:
+    //         match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+    //             CreateManyPayloadWithSerializeDeserialize,
+    //             TryCreateManyResponseVariants,
+    //         >::try_extract_value(payload_extraction_result, &app_state)
+    //         {
+    //             Ok(value) => CreateManypayload::from(value),
+    //             Err(e) => {
+    //                 return e;
+    //             }
+    //         },
+    // };
     let parameters = CreateManyparameters {
-        payload:
-            match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-                CreateManyPayloadWithSerializeDeserialize,
-                TryCreateManyResponseVariants,
-            >::try_extract_value(payload_extraction_result, &app_state)
-            {
-                Ok(value) => CreateManypayload::from(value),
-                Err(e) => {
-                    return e;
-                }
-            },
+        payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
+            Ok(axum::Json(value)) => CreateManypayload::from(value),
+            Err(e) => {
+                let e = crate::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(e);
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                return TryCreateManyResponseVariants::from(e);
+            }
+        }
     };
     println!("{:#?}", parameters);
     {
