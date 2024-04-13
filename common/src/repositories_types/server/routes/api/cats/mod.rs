@@ -1984,7 +1984,6 @@ pub async fn create_many_wrapper(
         return CreateManyWrapper::from(e);
     }
     let size_hint = axum::body::HttpBody::size_hint(&body);
-    println!("size_hint {size_hint:#?}");
     let body_bytes = match axum::body::to_bytes(
         body, 
         constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES//1 megabyte//todo move it to config or something?
@@ -2001,8 +2000,6 @@ pub async fn create_many_wrapper(
             return CreateManyWrapper::from(e);
         }
     };
-    let h = app_state.get_enable_api_git_commit_check();
-    println!("{h:#?}");
     CreateManyWrapper::from(
         create_many(
             app_state, 
