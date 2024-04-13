@@ -1642,8 +1642,7 @@ pub async fn create_many_wrapper(
     request: axum::extract::Request
 ) -> TryCreateManyResponseVariants {
     let (parts, body) = request.into_parts();
-    use axum::body::HttpBody;
-    let size_hint = body.size_hint();
+    let size_hint = axum::body::HttpBody::size_hint(&body);
     println!("size_hint {size_hint:#?}");
     let body_bytes = match axum::body::to_bytes(
         body, 
