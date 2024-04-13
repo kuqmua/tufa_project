@@ -1664,7 +1664,7 @@ pub async fn create_many_wrapper(
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
     >,
     request: axum::extract::Request
-) -> TryCreateManyResponseVariants {
+) -> CreateManyWrapper {
     let (parts, body) = request.into_parts();
     let size_hint = axum::body::HttpBody::size_hint(&body);
     println!("size_hint {size_hint:#?}");
@@ -1680,9 +1680,8 @@ pub async fn create_many_wrapper(
                 size_hint: size_hint,
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
-            // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            // return TryCreateManyResponseVariants::from(e);
-            todo!()
+            error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+            return CreateManyWrapper::from(e);
         }
     };
     let data: CreateManyPayloadWithSerializeDeserialize = serde_json::from_slice(&body_bytes).expect("Failed to deserialize JSON");

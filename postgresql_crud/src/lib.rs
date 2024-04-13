@@ -895,4 +895,3 @@ pub use postgresql_crud_common::OrderBy;
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 
 pub mod app_state;
-pub mod json_value_extractor;
