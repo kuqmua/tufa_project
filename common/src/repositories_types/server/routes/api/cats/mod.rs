@@ -1602,6 +1602,7 @@ pub async fn try_create_many<'a>(
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub enum CreateManyWrapper {
     ReachedMaximumSizeOfBody {
+        axum_error: std::string::String,
         maximum_size_of_body_limit_in_bytes: std::primitive::usize,
         size_hint: std::string::String,//todo impl outer serialize+deserialize for http_body::SizeHint ?
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -1611,6 +1612,8 @@ pub enum CreateManyWrapper {
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum CreateManyWrapperErrorNamed {
     ReachedMaximumSizeOfBody {
+        #[eo_display]
+        axum_error: axum::Error,
         #[eo_display_with_serialize_deserialize]
         maximum_size_of_body_limit_in_bytes: std::primitive::usize,
         #[eo_display_foreign_type]
@@ -1619,10 +1622,31 @@ pub enum CreateManyWrapperErrorNamed {
     },
 }
 
+impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyWrapper {
+    fn from(
+        value: CreateManyWrapperErrorNamed,
+    ) -> Self {
+        match value {
+            CreateManyWrapperErrorNamed::ReachedMaximumSizeOfBody {
+                axum_error,
+                maximum_size_of_body_limit_in_bytes,
+                size_hint,
+                code_occurence,
+            } => Self::ReachedMaximumSizeOfBody {
+                axum_error: axum_error.to_string(),
+                maximum_size_of_body_limit_in_bytes,
+                size_hint: error_occurence_lib::DisplayForeignType::display_foreign_type(&size_hint),
+                code_occurence,
+            }
+        }
+    }
+}
+
 impl axum::response::IntoResponse for CreateManyWrapper {
     fn into_response(self) -> axum::response::Response {
         match &self {
             Self::ReachedMaximumSizeOfBody {
+                axum_error: _,
                 maximum_size_of_body_limit_in_bytes: _,
                 size_hint: _,
                 code_occurence: _,
@@ -1650,7 +1674,13 @@ pub async fn create_many_wrapper(
     ).await {
         Ok(value) => value,
         Err(e) => {
-            // let e = CreateManyWrapperErrorNamed::from(e);
+            let e = CreateManyWrapperErrorNamed::ReachedMaximumSizeOfBody {
+                axum_error: e,
+                maximum_size_of_body_limit_in_bytes: constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES,
+                size_hint: size_hint,
+                code_occurence: error_occurence_lib::code_occurence!(),
+                //
+            };
             // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             // return TryCreateManyResponseVariants::from(e);
             todo!()
