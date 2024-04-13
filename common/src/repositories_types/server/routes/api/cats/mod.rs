@@ -1183,117 +1183,117 @@ impl axum::response::IntoResponse for TryCreateManyResponseVariants {
     fn into_response(self) -> axum::response::Response {
         match & self
         {
-            TryCreateManyResponseVariants :: Desirable(_) =>
+            Self:: Desirable(_) =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            } TryCreateManyResponseVariants :: Configuration
+            } Self:: Configuration
             { configuration : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: Database
+            }, Self:: Database
             { database : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: Io
+            }, Self:: Io
             { io : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: Tls
+            }, Self:: Tls
             { tls : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: Protocol
+            }, Self:: Protocol
             { protocol : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: RowNotFound
+            }, Self:: RowNotFound
             { row_not_found : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: TypeNotFound
+            }, Self:: TypeNotFound
             { type_not_found : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: ColumnIndexOutOfBounds
+            }, Self:: ColumnIndexOutOfBounds
             { column_index_out_of_bounds : _, len : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: ColumnNotFound
+            }, Self:: ColumnNotFound
             { column_not_found : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: ColumnDecode
+            }, Self:: ColumnDecode
             { column_decode_index : _, source_handle : _, code_occurence : _ }
             =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: Decode
+            }, Self:: Decode
             { decode : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: PoolTimedOut
+            }, Self:: PoolTimedOut
             { pool_timed_out : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: PoolClosed
+            }, Self:: PoolClosed
             { pool_closed : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: WorkerCrashed
+            }, Self:: WorkerCrashed
             { worker_crashed : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: Migrate
+            }, Self:: Migrate
             { migrate : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: JsonDataError
+            }, Self:: JsonDataError
             { json_data_error : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: JsonSyntaxError
+            }, Self:: JsonSyntaxError
             { json_syntax_error : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: MissingJsonContentType
+            }, Self:: MissingJsonContentType
             { missing_json_content_type : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: BytesRejection
+            }, Self:: BytesRejection
             { bytes_rejection : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: UnexpectedCase
+            }, Self:: UnexpectedCase
             { unexpected_case : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: BindQuery
+            }, Self:: BindQuery
             { bind_query : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants ::
+            }, Self::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
@@ -1302,17 +1302,17 @@ impl axum::response::IntoResponse for TryCreateManyResponseVariants {
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: CommitExtractorNotEqual
+            }, Self:: CommitExtractorNotEqual
             { commit_not_equal : _, commit_to_use : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: CommitExtractorToStrConversion
+            }, Self:: CommitExtractorToStrConversion
             { commit_to_str_conversion : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, TryCreateManyResponseVariants :: NoCommitExtractorHeader
+            }, Self:: NoCommitExtractorHeader
             { no_commit_header : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
@@ -1322,7 +1322,7 @@ impl axum::response::IntoResponse for TryCreateManyResponseVariants {
     }
 }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryCreateManyErrorNamed {
+pub enum TryCreateManyErrorNamed {//todo maybe from impl for CreateManyWrapperErrorNamed
     SerdeJsonToString {
         #[eo_display]
         serde_json_to_string: serde_json::Error,
@@ -1607,6 +1607,114 @@ pub enum CreateManyWrapper {
         size_hint: std::string::String,//todo impl outer serialize+deserialize for http_body::SizeHint ?
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    //
+    Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
+    Configuration {
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowNotFound {
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TypeNotFound {
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        column_index_out_of_bounds: usize,
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        column_decode_index: std::string::String,
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolTimedOut {
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+    {
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorNotEqual {
+        commit_not_equal: std::string::String,
+        commit_to_use: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CommitExtractorToStrConversion {
+        commit_to_str_conversion: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoCommitExtractorHeader {
+        no_commit_header: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -1654,52 +1762,183 @@ impl axum::response::IntoResponse for CreateManyWrapper {
                 let mut res = axum::Json(self).into_response(); 
                 *res.status_mut() = axum::http::StatusCode::PAYLOAD_TOO_LARGE;
                 res
-            } 
-        }
-    }
-}
-//
-impl std::convert::From<TryCreateManyResponseVariants> for CrateMany {
-    fn from(value: TryCreateManyResponseVariants) -> Self {
-        match value {
-            
+            },
+            //
+            Self:: Desirable(_) =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            } Self:: Configuration
+            { configuration : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: Database
+            { database : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: Io
+            { io : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: Tls
+            { tls : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: Protocol
+            { protocol : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: RowNotFound
+            { row_not_found : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: TypeNotFound
+            { type_not_found : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: ColumnIndexOutOfBounds
+            { column_index_out_of_bounds : _, len : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: ColumnNotFound
+            { column_not_found : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: ColumnDecode
+            { column_decode_index : _, source_handle : _, code_occurence : _ }
+            =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: Decode
+            { decode : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: PoolTimedOut
+            { pool_timed_out : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: PoolClosed
+            { pool_closed : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: WorkerCrashed
+            { worker_crashed : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: Migrate
+            { migrate : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: JsonDataError
+            { json_data_error : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: JsonSyntaxError
+            { json_syntax_error : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: MissingJsonContentType
+            { missing_json_content_type : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: BytesRejection
+            { bytes_rejection : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: UnexpectedCase
+            { unexpected_case : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: BindQuery
+            { bind_query : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self::
+            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+            {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
+                : _, code_occurence : _
+            } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: CommitExtractorNotEqual
+            { commit_not_equal : _, commit_to_use : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: CommitExtractorToStrConversion
+            { commit_to_str_conversion : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }, Self:: NoCommitExtractorHeader
+            { no_commit_header : _, code_occurence : _ } =>
+            {
+                let mut res = axum :: Json(self).into_response() ; *
+                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+            }
+            //
         }
     }
 }
 
-impl std::convert::From<TryCreateManyResponseVariants> for CreateMany {
+impl std::convert::From<TryCreateManyResponseVariants> for CreateManyWrapper {
     fn from(value: TryCreateManyResponseVariants) -> Self {
-        match value
-        {
-            TryCreateManyResponseVariants :: Desirable(_) => Self::,
-            TryCreateManyResponseVariants ::Configuration { configuration : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants ::Database { database : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: Io{ io : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: Tls{ tls : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: Protocol{ protocol : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: RowNotFound{ row_not_found : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants ::TypeNotFound { type_not_found : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants ::ColumnIndexOutOfBounds{ column_index_out_of_bounds : _, len : _, code_occurence : _ } => Self::,
-            TryCreateManyResponseVariants :: ColumnNotFound { column_not_found : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: ColumnDecode { column_decode_index : _, source_handle : _, code_occurence : _ } => Self::,
-            TryCreateManyResponseVariants :: Decode { decode : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: PoolTimedOut { pool_timed_out : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: PoolClosed { pool_closed : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: WorkerCrashed { worker_crashed : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: Migrate { migrate : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: JsonDataError { json_data_error : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: JsonSyntaxError { json_syntax_error : _, code_occurence : _ } => Self::,
-            TryCreateManyResponseVariants :: MissingJsonContentType { missing_json_content_type : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: BytesRejection { bytes_rejection : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: UnexpectedCase { unexpected_case : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: BindQuery { bind_query : _, code_occurence : _ } => Self::, 
+        match value {
+            TryCreateManyResponseVariants :: Desirable(value) => Self::Desirable(value),
+            TryCreateManyResponseVariants ::Configuration { configuration, code_occurence } => Self::Configuration { configuration, code_occurence }, 
+            TryCreateManyResponseVariants ::Database { database, code_occurence } => Self::Database { database, code_occurence }, 
+            TryCreateManyResponseVariants :: Io{ io, code_occurence } => Self::Io{ io, code_occurence }, 
+            TryCreateManyResponseVariants :: Tls{ tls, code_occurence } => Self::Tls{ tls, code_occurence }, 
+            TryCreateManyResponseVariants :: Protocol{ protocol, code_occurence } => Self::Protocol{ protocol, code_occurence }, 
+            TryCreateManyResponseVariants :: RowNotFound{ row_not_found, code_occurence } => Self::RowNotFound{ row_not_found, code_occurence }, 
+            TryCreateManyResponseVariants ::TypeNotFound { type_not_found, code_occurence } => Self::TypeNotFound { type_not_found, code_occurence }, 
+            TryCreateManyResponseVariants ::ColumnIndexOutOfBounds{ column_index_out_of_bounds, len, code_occurence } => Self::ColumnIndexOutOfBounds{ column_index_out_of_bounds, len, code_occurence },
+            TryCreateManyResponseVariants :: ColumnNotFound { column_not_found, code_occurence } => Self::ColumnNotFound { column_not_found, code_occurence }, 
+            TryCreateManyResponseVariants :: ColumnDecode { column_decode_index, source_handle, code_occurence } => Self::ColumnDecode { column_decode_index, source_handle, code_occurence },
+            TryCreateManyResponseVariants :: Decode { decode, code_occurence } => Self::Decode { decode, code_occurence }, 
+            TryCreateManyResponseVariants :: PoolTimedOut { pool_timed_out, code_occurence } => Self::PoolTimedOut { pool_timed_out, code_occurence }, 
+            TryCreateManyResponseVariants :: PoolClosed { pool_closed, code_occurence } => Self::PoolClosed { pool_closed, code_occurence }, 
+            TryCreateManyResponseVariants :: WorkerCrashed { worker_crashed, code_occurence } => Self::WorkerCrashed { worker_crashed, code_occurence }, 
+            TryCreateManyResponseVariants :: Migrate { migrate, code_occurence } => Self::Migrate { migrate, code_occurence }, 
+            TryCreateManyResponseVariants :: JsonDataError { json_data_error, code_occurence } => Self::JsonDataError { json_data_error, code_occurence }, 
+            TryCreateManyResponseVariants :: JsonSyntaxError { json_syntax_error, code_occurence } => Self::JsonSyntaxError { json_syntax_error, code_occurence },
+            TryCreateManyResponseVariants :: MissingJsonContentType { missing_json_content_type, code_occurence } => Self::MissingJsonContentType { missing_json_content_type, code_occurence }, 
+            TryCreateManyResponseVariants :: BytesRejection { bytes_rejection, code_occurence } => Self::BytesRejection { bytes_rejection, code_occurence }, 
+            TryCreateManyResponseVariants :: UnexpectedCase { unexpected_case, code_occurence } => Self::UnexpectedCase { unexpected_case, code_occurence }, 
+            TryCreateManyResponseVariants :: BindQuery { bind_query, code_occurence } => Self::BindQuery { bind_query, code_occurence }, 
             TryCreateManyResponseVariants :: OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: _, 
-                code_occurence : _
-            } => Self::,
-            TryCreateManyResponseVariants :: CommitExtractorNotEqual { commit_not_equal : _, commit_to_use : _, code_occurence : _ } => Self::,
-            TryCreateManyResponseVariants :: CommitExtractorToStrConversion { commit_to_str_conversion : _, code_occurence : _ } => Self::, 
-            TryCreateManyResponseVariants :: NoCommitExtractorHeader { no_commit_header : _, code_occurence : _ } => Self::
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server, 
+                code_occurence
+            } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server, 
+                code_occurence
+            },
+            TryCreateManyResponseVariants :: CommitExtractorNotEqual { commit_not_equal, commit_to_use, code_occurence } => Self::CommitExtractorNotEqual { commit_not_equal, commit_to_use, code_occurence },
+            TryCreateManyResponseVariants :: CommitExtractorToStrConversion { commit_to_str_conversion, code_occurence } => Self::CommitExtractorToStrConversion { commit_to_str_conversion, code_occurence }, 
+            TryCreateManyResponseVariants :: NoCommitExtractorHeader { no_commit_header, code_occurence } => Self::NoCommitExtractorHeader { no_commit_header, code_occurence }
         }
     }
 }
