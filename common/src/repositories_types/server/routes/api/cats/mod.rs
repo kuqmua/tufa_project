@@ -1961,11 +1961,7 @@ pub async fn create_many_wrapper(
         &headers,
     ) {
         let e = CreateManyWrapperErrorNamed::CheckCommit {
-            check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamed::CommitNotEqual {
-                commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
-                commit_to_use: crate::common::git::get_git_commit_link::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            },
+            check_commit: e,
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
