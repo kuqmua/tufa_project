@@ -73,9 +73,9 @@ fn crud(
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
         //     common::repositories_types::server::routes::api::cats::ALLOW_METHODS,
         // ))
-        .route_layer(axum::middleware::from_fn_with_state(
-            app_state.clone() as common::server::middleware::commit_checker::CommitCheckerAppState,
-            common::server::middleware::commit_checker::commit_checker,
-        ))
+        // .route_layer(axum::middleware::from_fn_with_state(
+        //     app_state.clone() as common::server::middleware::commit_checker::CommitCheckerAppState,
+        //     common::server::middleware::commit_checker::commit_checker,
+        // ))
         .with_state(app_state)
 }
