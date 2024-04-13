@@ -2088,7 +2088,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{impl_std_convert_from_operation_payload_for_operation_payload_with_serialize_deserialize_token_stream}");
             let parameters_token_stream = quote::quote! {
                 #derive_debug_token_stream
-                pub struct #operation_parameters_upper_camel_case_token_stream {
+                pub struct #operation_parameters_upper_camel_case_token_stream {//todo maybe not need additional info, so parameters wrapper potentially can be removed
                     pub #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream,
                 }
             };
