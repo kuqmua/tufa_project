@@ -177,7 +177,7 @@ pub trait GetCodeOccurence {
 pub trait GetCodePath {
     fn get_code_path(
         &self,
-        source_place_type: &config_lib::SourcePlaceType,
+        source_place_type: &app_state::SourcePlaceType,
     ) -> std::string::String;
 }
 
@@ -187,21 +187,21 @@ where
 {
     fn get_code_path(
         &self,
-        source_place_type: &config_lib::SourcePlaceType,
+        source_place_type: &app_state::SourcePlaceType,
     ) -> std::string::String {
         match source_place_type {
-            config_lib::SourcePlaceType::Source => {
+            app_state::SourcePlaceType::Source => {
                 self.form_error_path_directory()
             }
-            config_lib::SourcePlaceType::Github => self.form_error_path_github(),
+            app_state::SourcePlaceType::Github => self.form_error_path_github(),
         }
     }
 }
 
 pub trait CodeOccurencePrepareForLogWithConfig {
     fn code_occurence_prepare_for_log_with_config<
-        ConfigGeneric: config_lib::GetTimezone
-            + config_lib::GetSourcePlaceType
+        ConfigGeneric: app_state::GetTimezone
+            + app_state::GetSourcePlaceType
             + ?Sized,
     >(
         &self,
@@ -214,8 +214,8 @@ where
     SelfGeneric: GetCodePath + GetDuration,
 {
     fn code_occurence_prepare_for_log_with_config<
-        ConfigGeneric: config_lib::GetTimezone
-            + config_lib::GetSourcePlaceType
+        ConfigGeneric: app_state::GetTimezone
+            + app_state::GetSourcePlaceType
             + ?Sized,
     >(
         &self,

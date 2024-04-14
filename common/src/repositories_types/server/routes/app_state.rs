@@ -15,7 +15,7 @@ impl<'a> app_state::GetEnableApiGitCommitCheck for AppState<'a> {
     }
 }
 impl<'a> app_state::GetSourcePlaceType for AppState<'a> {
-    fn get_source_place_type(&self) -> &config_lib::SourcePlaceType {
+    fn get_source_place_type(&self) -> &app_state::SourcePlaceType {
         self.config.get_source_place_type()
     }
 }
@@ -46,8 +46,8 @@ pub type DynArcCombinationOfAppStateLogicTraits =
     std::sync::Arc<dyn CombinationOfAppStateLogicTraits>;
 
 pub trait CombinationOfAppStateLogicTraits:
-    config_lib::GetEnableApiGitCommitCheck
-    + config_lib::GetMaximumSizeOfHttpBodyInBytes 
+    app_state::GetEnableApiGitCommitCheck
+    + app_state::GetMaximumSizeOfHttpBodyInBytes 
     + postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic
     + Send 
     + Sync 

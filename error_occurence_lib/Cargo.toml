@@ -15,6 +15,7 @@ reqwest = {version = "=0.11.17", default-features = false, features = ["json", "
 http-body = {version = "=1.0.0"}
 git_info = {path = "../git_info"}
 config_lib = {path = "../config_lib"}
+app_state = {path = "../app_state"}
 error_occurence = {path = "./error_occurence"}
 naming_constants = {path = "../naming_constants"}
 display_foreign_type = {path = "../display_foreign_type"}

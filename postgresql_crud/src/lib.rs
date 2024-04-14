@@ -896,8 +896,8 @@ pub use postgresql_crud_common::OrderBy;
 
 //todo move and reexport traits
 pub trait CombinationOfTraitsForPostgresqlCrudLogic:
-    config_lib::GetSourcePlaceType
-    + config_lib::GetTimezone
+    app_state::GetSourcePlaceType
+    + app_state::GetTimezone
     + app_state::GetPostgresPool
     + Send
     + Sync

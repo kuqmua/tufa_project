@@ -34,7 +34,7 @@ pub fn generate_getter_traits_for_struct_fields(
             };
             let type_ident = field.ty;
             let path_trait_ident =
-                format!("config_lib::Get{upper_camel_case_field_ident}")
+                format!("app_state::Get{upper_camel_case_field_ident}")
                     .parse::<proc_macro2::TokenStream>()
                     .expect("path_trait_ident parse failed");
             let function_name_ident = format!("get_{field_ident}")

@@ -18,15 +18,15 @@
 
 // pub async fn get_providers_link_parts<'a>(
 //     config: &'static (
-//         impl config_lib::GetProvidersLinkPartsSource
+//         impl app_state::GetProvidersLinkPartsSource
 
-//         + config_lib::GetPathToProviderLinkPartsFolder
-//         + config_lib::GetLogFileExtension
+//         + app_state::GetPathToProviderLinkPartsFolder
+//         + app_state::GetLogFileExtension
 
-//         + config_lib::GetMongoUrl
-//         + config_lib::GetMongoProvidersLinkPartsDbName
-//         + config_lib::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-//         + config_lib::GetMongoProvidersLogsDbCollectionHandleSecondPart
+//         + app_state::GetMongoUrl
+//         + app_state::GetMongoProvidersLinkPartsDbName
+//         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
+//         + app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
 // + std::marker::Send
 // + std::marker::Sync
 //     )

@@ -25,9 +25,9 @@
 // pub async fn init_mongo<'a>(
 //     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     config: &'static (
-//         impl config_lib::GetMongoProvidersLinkPartsDbName
-//         + config_lib::GetMongoUrl
-//         + config_lib::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
+//         impl app_state::GetMongoProvidersLinkPartsDbName
+//         + app_state::GetMongoUrl
+//         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
 // + std::marker::Send
 // + std::marker::Sync
 //     ),

@@ -19,8 +19,8 @@
 
 // pub async fn get_local_providers_link_parts<'a>(
 //     config: &'static (
-//         impl config_lib::GetPathToProviderLinkPartsFolder
-//         + config_lib::GetLogFileExtension
+//         impl app_state::GetPathToProviderLinkPartsFolder
+//         + app_state::GetLogFileExtension
 // + std::marker::Send
 // + std::marker::Sync
 //     )

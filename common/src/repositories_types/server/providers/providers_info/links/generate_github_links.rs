@@ -1,6 +1,6 @@
 pub fn generate_github_links(
     github_names: Vec<String>,
-    config: &'static (impl config_lib::GetGithubToken
+    config: &'static (impl app_state::GetGithubToken
                   + std::marker::Send
                   + std::marker::Sync),
 ) -> Vec<String> {

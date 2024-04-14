@@ -68,15 +68,15 @@
 
 // pub async fn get_providers_posts<'a>(
 //     config: &'static (
-//         impl config_lib::GetGithubToken
-//         + config_lib::GetProvidersLinkPartsSource
+//         impl app_state::GetGithubToken
+//         + app_state::GetProvidersLinkPartsSource
 
-//         + config_lib::GetPathToProviderLinkPartsFolder
-//         + config_lib::GetLogFileExtension
-//         + config_lib::GetMongoUrl
-//         + config_lib::GetMongoProvidersLinkPartsDbName
-//         + config_lib::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-//         + config_lib::GetMongoProvidersLogsDbCollectionHandleSecondPart
+//         + app_state::GetPathToProviderLinkPartsFolder
+//         + app_state::GetLogFileExtension
+//         + app_state::GetMongoUrl
+//         + app_state::GetMongoProvidersLinkPartsDbName
+//         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
+//         + app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
 // + std::marker::Send
 // + std::marker::Sync
 //     )

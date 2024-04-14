@@ -234,8 +234,8 @@
 //     pub async fn get_link_parts_from_local_json_file<'a>(
 //         self,
 //         config: &'static (
-//             impl config_lib::GetPathToProviderLinkPartsFolder
-//             + config_lib::GetLogFileExtension
+//             impl app_state::GetPathToProviderLinkPartsFolder
+//             + app_state::GetLogFileExtension
 // + std::marker::Send
 // + std::marker::Sync
 //         )

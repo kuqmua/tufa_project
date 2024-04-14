@@ -1,7 +1,7 @@
 // pub trait ProviderKindMethods {
 //     fn get_item_handle(&self) -> Option<&'static str>;
 //     fn get_mongo_log_collection_name(&self, config: &'static (
-// impl config_lib::GetMongoProvidersLogsDbCollectionHandleSecondPart
+// impl app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
 // + std::marker::Send
 // + std::marker::Sync
 // )
@@ -9,8 +9,8 @@
 //     fn get_init_local_data_file_path(
 //         &self,
 //         config: &'static (
-//             impl config_lib::GetPathToProviderLinkPartsFolder
-//             + config_lib::GetLogFileExtension
+//             impl app_state::GetPathToProviderLinkPartsFolder
+//             + app_state::GetLogFileExtension
 // + std::marker::Send
 // + std::marker::Sync
 //         )
@@ -19,7 +19,7 @@
 //         &self,
 //         names_vector: Vec<String>,
 //         config: &'static (
-//  impl config_lib::GetGithubToken
+//  impl app_state::GetGithubToken
 // + std::marker::Send
 // + std::marker::Sync
 // )

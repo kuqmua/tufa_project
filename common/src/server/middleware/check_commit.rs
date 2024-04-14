@@ -47,7 +47,7 @@ impl axum::response::IntoResponse for CheckCommitErrorNamed {
 }
 
 pub fn check_commit(
-    app_state: &dyn config_lib::GetEnableApiGitCommitCheck,
+    app_state: &dyn app_state::GetEnableApiGitCommitCheck,
     headers: &axum::http::HeaderMap<axum::http::header::HeaderValue>,
 ) -> Result<(), CheckCommitErrorNamed> {
     match app_state.get_enable_api_git_commit_check() {
