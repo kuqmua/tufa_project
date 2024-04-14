@@ -24,21 +24,21 @@ impl std::fmt::Display for ServerPortErrorNamed {
 impl std::convert::TryFrom<std::primitive::u16> for ServerPort {
     type Error = ServerPortErrorNamed;
     fn try_from(value: std::primitive::u16) -> Result<Self, Self::Error> {
-        if value < constants::SERVER_PORT_MIN_VALUE {
+        if value < server_port_common::SERVER_PORT_MIN_VALUE {
             Err(Self::Error {
-                server_port_min_value: constants::SERVER_PORT_MIN_VALUE,
-                server_port_max_value: constants::SERVER_PORT_MAX_VALUE,
+                server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
+                server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
                 value,
-                message: std::string::String::from(constants::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
+                message: std::string::String::from(server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
-        } else if value <= constants::SERVER_PORT_MAX_VALUE {
+        } else if value <= server_port_common::SERVER_PORT_MAX_VALUE {
             Ok(Self { port: value })
         } else {
             Err(Self::Error {
-                server_port_min_value: constants::SERVER_PORT_MIN_VALUE,
-                server_port_max_value: constants::SERVER_PORT_MAX_VALUE,
+                server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
+                server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
                 value,
-                message: std::string::String::from(constants::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
+                message: std::string::String::from(server_port_common::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
         }
     }
