@@ -11,7 +11,7 @@ pub trait GetBaseUrl {
     fn get_base_url(&self) -> &std::string::String;
 }
 pub trait GetAccessControlMaxAge {
-    fn get_access_control_max_age(&self) -> &usize;
+    fn get_access_control_max_age(&self) -> &std::primitive::usize;
 }
 pub trait GetAccessControlAllowOrigin {
     fn get_access_control_allow_origin(&self) -> &std::string::String;
@@ -44,7 +44,7 @@ pub trait GetSourcePlaceType {
     fn get_source_place_type(&self) -> &crate::source_place_type::SourcePlaceType;
 }
 pub trait GetEnableApiGitCommitCheck {
-    fn get_enable_api_git_commit_check(&self) -> &bool;
+    fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool;
 }
 pub trait GetMaximumSizeOfHttpBodyInBytes {
     fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize;

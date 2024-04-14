@@ -9,7 +9,7 @@ impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppState<'a
 impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppState<'a> {}
 
 impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppState<'a> {
-    fn get_enable_api_git_commit_check(&self) -> &bool {
+    fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool {
         self.config.get_enable_api_git_commit_check()
     }
 }

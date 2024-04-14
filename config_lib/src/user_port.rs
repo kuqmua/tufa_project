@@ -1,7 +1,7 @@
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, getset::Getters)]
 pub struct UserPort {
     #[getset(get = "pub")]
-    port: u16,
+    port: std::primitive::u16,
 }
 
 impl std::fmt::Display for UserPort {
@@ -10,9 +10,9 @@ impl std::fmt::Display for UserPort {
     }
 }
 
-impl std::convert::TryFrom<u16> for UserPort {
-    type Error = u16;
-    fn try_from(value: u16) -> Result<Self, Self::Error> {
+impl std::convert::TryFrom<std::primitive::u16> for UserPort {
+    type Error = std::primitive::u16;
+    fn try_from(value: std::primitive::u16) -> Result<Self, Self::Error> {
         if value < 1024 {
             Err(value)
         } else if value < 49152 {
