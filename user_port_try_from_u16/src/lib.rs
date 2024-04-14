@@ -1,14 +1,12 @@
 #[proc_macro]
-pub fn user_port_try_from_u16(
-    possible_u16_token_stream: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn user_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let valid_port = match possible_u16_token_stream.to_string().parse::<u16>() {
+    let valid_port = match input.to_string().parse::<std::primitive::u16>() {
         Err(e) => panic!("failed to parse input into u16, error: {e}"),
         Ok(possible_port) => {
-            if possible_port < 1024 {
+            if possible_port < constants::SERVER_PORT_MIN_VALUE {
                 panic!("failed to user_port_try_from_u16!(), reason: system port range 0-1023");
-            } else if possible_port < 49152 {
+            } else if possible_port <= constants::SERVER_PORT_MAX_VALUE {
                 possible_port
             } else {
                 panic!(
@@ -24,10 +22,7 @@ pub fn user_port_try_from_u16(
             panic!("failed to parse valid u16 user port to proc_macro2::TokenStream")
         });
     let gen = quote::quote! {
-        UserPort::try_from(#valid_port_token_stream).unwrap()
-        // UserPort {
-        //     port: #valid_port_token_stream
-        // }
+        ServerPort::try_from(#valid_port_token_stream).unwrap()
     };
     // println!("{gen}");
     gen.into()

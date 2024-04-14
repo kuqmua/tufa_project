@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, getset::Getters)]
+#[derive(Debug, Clone, serde::Serialize, getset::Getters)]
 pub struct ServerPort {
     #[getset(get = "pub")]
     port: std::primitive::u16,
@@ -8,33 +8,57 @@ impl std::fmt::Display for ServerPort {
         write!(f, "{}", self.port)
     }
 }
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct ServerPortErrorNamed {
+    server_port_min_value: std::primitive::u16,
+    server_port_max_value: std::primitive::u16,
+    value: std::primitive::u16,
+}
+impl std::fmt::Display for ServerPortErrorNamed {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "server_port_min_value: {}, server_port_max_value: {}, value: {}", self.server_port_min_value, self.server_port_max_value, self.value)
+    }
+}
 impl std::convert::TryFrom<std::primitive::u16> for ServerPort {
-    type Error = std::primitive::u16;
+    type Error = ServerPortErrorNamed;
     fn try_from(value: std::primitive::u16) -> Result<Self, Self::Error> {
-        if value < 1024 {
-            Err(value)
-        } else if value < 49152 {
+        if value < constants::SERVER_PORT_MIN_VALUE {
+            Err(Self::Error {
+                server_port_min_value: constants::SERVER_PORT_MIN_VALUE,
+                server_port_max_value: constants::SERVER_PORT_MAX_VALUE,
+                value,
+            })
+        } else if value <= constants::SERVER_PORT_MAX_VALUE {
             Ok(Self { port: value })
         } else {
-            Err(value)
+            Err(Self::Error {
+                server_port_min_value: constants::SERVER_PORT_MIN_VALUE,
+                server_port_max_value: constants::SERVER_PORT_MAX_VALUE,
+                value,
+            })
         }
     }
 }
-// macro_rules! user_port_try_from_u16_with_possible_runtime_panic{
-//     ($possible_port:expr) => {
-//         if $possible_port < 1024 {
-//             panic!("failed to user_port_try_from_u16!(), reason: system port range 0-1023");
-//         }
-//         else if $possible_port < 49152 {
-//             ServerPort {
-//                 port: $possible_port
-//             }
-//         }
-//         else {
-//             panic!("failed to user_port_try_from_u16!(), reason: ephemeral port range 49152-65535");
-//         }
-//     }
-// }
+impl<'de> serde::Deserialize<'de> for ServerPort {
+    fn deserialize<D>(deserializer: D) -> Result<ServerPort, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let f = match std::primitive::u16::deserialize(deserializer) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(e);
+            }
+        };
+        match Self::try_from(f) {
+            Ok(value) => Ok(value),
+            Err(e) => {
+                // return Err("dsfsdf");
+                todo!()
+            }
+        }
+    }
+}
 pub trait GetServerPort {
     fn get_server_port(&self) -> &ServerPort;
 }
