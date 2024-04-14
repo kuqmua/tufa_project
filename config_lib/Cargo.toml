@@ -16,6 +16,7 @@ strum_macros = {version = "=0.24.3"}
 enum_extension = {path = "../enum_extension"}
 from_str = {path = "../from_str"}
 constants = {path = "../constants"}
+server_port_try_from_u16 = {path = "./server_port_try_from_u16"}
 
 [lints]
 workspace = true

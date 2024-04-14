@@ -65,33 +65,6 @@ time [key] error2
 server/src/preparation/parent.rs:92:29
 server/src/preparation/parent.rs:45:29
 
-### init submodules 
-```
-git submodule init && git submodule update && 
-cd scripts/git_sync_command && git checkout main && cd .. && cd .. &&
-cd src/proc_macros/enum_extension && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/error_occurence && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/from_sqlx_postgres_error && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/from_str && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/generate_getter_traits_for_struct_fields && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/init_from_env && git checkout main && cd .. && cd .. && cd .. &&
-cd src/proc_macros/type_variants_from_reqwest_response && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/svg_component && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/compile_time_git_info && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/config && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/error_occurence_lib && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/proc_macro_common && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/proc_macro_assistants && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/server_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
-cd src/client && git checkout main && cd .. &&  cd .. &&
-cd src/common && git checkout main && cd .. &&  cd .. &&
-cd src/postgresql_crudpostgresql_crud && git checkout main && cd .. &&  cd .. &&
-cd src/server && git checkout main && cd .. &&  cd .. &&
-cd src/telegram_bot && git checkout main && cd .. &&  cd .. &&
-cd src/tufa_grpc_client && git checkout main && cd .. &&  cd .. &&
-cd src/tufa_grpc_server && git checkout main && cd ..  cd ..
-
-
 ```
 ### install cmake for grpc
 ```
