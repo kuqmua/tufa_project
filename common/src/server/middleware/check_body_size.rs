@@ -15,6 +15,22 @@ pub enum CheckBodySizeErrorNamed {
     },
 }
 
+impl axum::response::IntoResponse for CheckBodySizeErrorNamed {
+    fn into_response(self) -> axum::response::Response {
+        let status_code = match &self {
+            Self::ReachedMaximumSizeOfBody {
+                axum_error: _,
+                maximum_size_of_body_limit_in_bytes: _,
+                size_hint: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::PAYLOAD_TOO_LARGE,
+        };
+        let mut res = axum::Json(self.into_serialize_deserialize_version()).into_response(); 
+        *res.status_mut() = status_code;
+        res
+    }
+}
+
 pub async fn check_body_size(body: axum::body::Body) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
     let size_hint = axum::body::HttpBody::size_hint(&body);
     match axum::body::to_bytes(
