@@ -29,7 +29,7 @@ impl<'a> config_lib::config_fields::GetMaximumSizeOfHttpBodyInBytes for AppState
     }
 }
 
-impl<'a> app_state::get_postgres_pool::GetPostgresPool for AppState<'a> {
+impl<'a> app_state::GetPostgresPool for AppState<'a> {
     fn get_postgres_pool(&self) -> &sqlx::PgPool {
         &self.postgres_pool
     }

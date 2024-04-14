@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+config_lib = {path = "../config_lib"}
 
 [lints]
 workspace = true
