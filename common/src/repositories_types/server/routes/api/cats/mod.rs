@@ -305,7 +305,7 @@ pub enum CreateManyResponse {
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum CreateManyWrapperErrorNamed {
+pub enum CreateManyResponseErrorNamed {
     CheckCommit {
         #[eo_error_occurence]
         check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamed,
@@ -318,19 +318,19 @@ pub enum CreateManyWrapperErrorNamed {
     },
 }
 
-impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyResponse {
+impl std::convert::From<CreateManyResponseErrorNamed> for CreateManyResponse {
     fn from(
-        value: CreateManyWrapperErrorNamed,
+        value: CreateManyResponseErrorNamed,
     ) -> Self {
         match value {
-            CreateManyWrapperErrorNamed::CheckCommit {
+            CreateManyResponseErrorNamed::CheckCommit {
                 check_commit,
                 code_occurence,
             } => Self::CheckCommit {
                 check_commit: check_commit.into_serialize_deserialize_version(),
                 code_occurence,
             },
-            CreateManyWrapperErrorNamed::CheckBodySize {
+            CreateManyResponseErrorNamed::CheckBodySize {
                 check_body_size,
                 code_occurence,
             } => Self::CheckBodySize {
@@ -532,7 +532,7 @@ pub async fn create_many_wrapper(
         app_state.as_ref(),
         &headers,
     ) {
-        let e = CreateManyWrapperErrorNamed::CheckCommit {
+        let e = CreateManyResponseErrorNamed::CheckCommit {
             check_commit: e,
             code_occurence: error_occurence_lib::code_occurence!(),
         };
@@ -542,7 +542,7 @@ pub async fn create_many_wrapper(
     let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body).await {
         Ok(value) => value,
         Err(e) => {
-            let e = CreateManyWrapperErrorNamed::CheckBodySize {
+            let e = CreateManyResponseErrorNamed::CheckBodySize {
                 check_body_size: e,
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
