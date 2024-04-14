@@ -1,5 +1,5 @@
 //todo move and reexport traits
-pub trait GetConfigGetPostgresPool:
+pub trait CombinationOfTraitsForPostgresqlCrudLogic:
     config_lib::config_fields::GetEnableApiGitCommitCheck
     + config_lib::config_fields::GetSourcePlaceType
     + config_lib::config_fields::GetTimezone

@@ -7,11 +7,13 @@ pub struct AppState<'a> {
 pub trait AppStatePossibilities:
     crate::server::routes::git_info::GitInfoRouteParameters
     + crate::server::routes::not_found::NotFoundRouteParameters
-    + postgresql_crud::app_state::GetConfigGetPostgresPool
+    + postgresql_crud::app_state::CombinationOfTraitsForPostgresqlCrudLogic
 {
 }
 
-impl<'a> postgresql_crud::app_state::GetConfigGetPostgresPool for AppState<'a> {}
+impl<'a> postgresql_crud::app_state::CombinationOfTraitsForPostgresqlCrudLogic for AppState<'a> {}
+impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppState<'a> {}
+impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppState<'a> {}
 
 impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppState<'a> {
     fn get_enable_api_git_commit_check(&self) -> &bool {
@@ -28,9 +30,6 @@ impl<'a> config_lib::config_fields::GetTimezone for AppState<'a> {
         self.config.get_timezone()
     }
 }
-
-impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppState<'a> {}
-impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppState<'a> {}
 
 impl<'a> app_state::get_postgres_pool::GetPostgresPool for AppState<'a> {
     fn get_postgres_pool(&self) -> &sqlx::PgPool {
