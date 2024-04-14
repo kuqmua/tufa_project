@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "user_port_try_from_u16"
+name = "server_port_try_from_u16"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

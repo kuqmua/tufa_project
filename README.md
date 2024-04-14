@@ -82,7 +82,7 @@ cd src/proc_macros/config && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/error_occurence_lib && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/proc_macro_common && git checkout main && cd .. && cd .. cd .. &&
 cd src/proc_macros/proc_macro_assistants && git checkout main && cd .. && cd .. cd .. &&
-cd src/proc_macros/user_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
+cd src/proc_macros/server_port_try_from_u16 && git checkout main && cd .. && cd .. cd .. &&
 cd src/client && git checkout main && cd .. &&  cd .. &&
 cd src/common && git checkout main && cd .. &&  cd .. &&
 cd src/postgresql_crudpostgresql_crud && git checkout main && cd .. &&  cd .. &&

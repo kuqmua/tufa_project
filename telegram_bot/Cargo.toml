@@ -17,7 +17,7 @@ serde-xml-rs = {version = "=0.6.0"}
 serde_derive = {version = "=1.0"}
 serde_json = {version = "=1.0"}
 common = {path = "../common"}# local dev test without commits version
-user_port_try_from_u16 = {path = "../user_port_try_from_u16"}
+server_port_try_from_u16 = {path = "../server_port_try_from_u16"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 
 [lints]

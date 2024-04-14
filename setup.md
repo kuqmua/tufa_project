@@ -13,7 +13,7 @@
 27. [server](#heading27) 
 28. [telegram_bot](#heading28)
 29. [error_occurence](#heading29)
-30. [user_port_try_from_u16](#heading30)
+30. [server_port_try_from_u16](#heading30)
 32. [from_sqlx_postgres_error](#heading32)
 33. [from_str](#heading32)
 34. [type_variants_from_reqwest_response](#heading35)
@@ -67,7 +67,7 @@ https://github.com/Alexandre-Borghi/yew-highlighting
 
 ## error_occurence <a name="heading29"/> 
 
-## user_port_try_from_u16 <a name="heading30"/> 
+## server_port_try_from_u16 <a name="heading30"/> 
 
 ## type_variants_from_reqwest_response <a name="heading35"/> 
 
