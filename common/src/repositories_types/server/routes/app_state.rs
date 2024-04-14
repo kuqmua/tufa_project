@@ -23,6 +23,11 @@ impl<'a> config_lib::config_fields::GetTimezone for AppState<'a> {
         self.config.get_timezone()
     }
 }
+impl<'a> config_lib::config_fields::GetMaximumSizeOfHttpBodyInBytes for AppState<'a> {
+    fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize {
+        self.config.get_maximum_size_of_http_body_in_bytes()
+    }
+}
 
 impl<'a> app_state::get_postgres_pool::GetPostgresPool for AppState<'a> {
     fn get_postgres_pool(&self) -> &sqlx::PgPool {

@@ -8,5 +8,5 @@ pub trait CombinationOfTraitsForPostgresqlCrudLogic:
 {
 }
 
-pub type DynArcGetConfigGetPostgresPoolSendSync =
+pub type DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync =
     std::sync::Arc<dyn CombinationOfTraitsForPostgresqlCrudLogic + Send + Sync>;

@@ -1427,9 +1427,12 @@ impl std::convert::From<TryCreateManyResponseVariants> for CreateManyResponse {
     }
 }
 
+//
+// config_lib::config_fields::GetMaximumSizeOfHttpBodyInBytes
+//
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
-        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+        postgresql_crud::app_state::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
     >,
     request: axum::extract::Request
 ) -> CreateManyResponse {
@@ -1467,7 +1470,7 @@ pub async fn create_many_wrapper(
 
 pub async fn create_many(
     app_state: axum::extract::State<
-        postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
+        postgresql_crud::app_state::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
     >,
     // payload_extraction_result: Result<
     //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
