@@ -7,6 +7,7 @@ pub struct AppState<'a> {
 impl<'a> postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic for AppState<'a> {}
 impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppState<'a> {}
 impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppState<'a> {}
+impl<'a> CombinationOfAppStateLogicTraits for AppState<'a> {}
 
 impl<'a> app_state::GetEnableApiGitCommitCheck for AppState<'a> {
     fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool {
@@ -41,3 +42,14 @@ impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for AppState<
     }
 }
 
+pub type DynArcCombinationOfAppStateLogicTraits =
+    std::sync::Arc<dyn CombinationOfAppStateLogicTraits>;
+
+pub trait CombinationOfAppStateLogicTraits:
+    config_lib::GetEnableApiGitCommitCheck
+    + config_lib::GetMaximumSizeOfHttpBodyInBytes 
+    + postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic
+    + Send 
+    + Sync 
+{
+}

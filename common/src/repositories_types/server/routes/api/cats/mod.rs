@@ -1427,12 +1427,9 @@ impl std::convert::From<TryCreateManyResponseVariants> for CreateManyResponse {
     }
 }
 
-//
-// config_lib::GetMaximumSizeOfHttpBodyInBytes
-//
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
-        postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+        crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
     >,
     request: axum::extract::Request
 ) -> CreateManyResponse {
@@ -1462,16 +1459,14 @@ pub async fn create_many_wrapper(
     };
     CreateManyResponse::from(
         create_many(
-            app_state, 
+            app_state.as_ref(), 
             body_bytes
         ).await
     )
 }
 
 pub async fn create_many(
-    app_state: axum::extract::State<
-        postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
-    >,
+    app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     // payload_extraction_result: Result<
     //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,
     //     axum::extract::rejection::JsonRejection,
@@ -1510,7 +1505,7 @@ pub async fn create_many(
                 //     },
                 // };
                 let e = crate::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(e);
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                 return TryCreateManyResponseVariants::from(e);
             }
         }
@@ -1563,7 +1558,7 @@ pub async fn create_many(
             Ok(value) => value,
             Err(e) => {
                 let e = TryCreateMany::from(e);
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                 return TryCreateManyResponseVariants::from(e);
             }
         };
@@ -1571,7 +1566,7 @@ pub async fn create_many(
             Ok(value) => value,
             Err(e) => {
                 let e = TryCreateMany::from(e);
-                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                 return TryCreateManyResponseVariants::from(e);
             }
         };
@@ -1587,7 +1582,7 @@ pub async fn create_many(
                 Ok(value) => value,
                 Err(e) => {
                     let e = TryCreateMany::from(e);
-                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                     return TryCreateManyResponseVariants::from(e);
                 }
             }
@@ -1620,7 +1615,7 @@ pub async fn create_many(
                             line : 1267, column : 13,
                         })),
                     } ;
-                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+                    error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                     return TryCreateManyResponseVariants::from(e);
                 }
             }

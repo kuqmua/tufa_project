@@ -5,7 +5,7 @@
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic(post or put)
 
 pub fn routes(
-    app_state: postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+    app_state: common::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
 ) -> axum::Router {
     axum::Router::new().nest(
         &format!(
@@ -19,7 +19,7 @@ pub fn routes(
 // async fn get_root() {}
 
 fn crud(
-    app_state: postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+    app_state: common::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
 ) -> axum::Router {
     axum::Router::new()
         //todo - remove it its just a mock route
