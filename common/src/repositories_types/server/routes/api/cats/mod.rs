@@ -302,20 +302,6 @@ pub enum CreateManyWrapper {
             std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    CommitExtractorNotEqual {
-        commit_not_equal: std::string::String,
-        commit_to_use: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CommitExtractorToStrConversion {
-        commit_to_str_conversion: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NoCommitExtractorHeader {
-        no_commit_header: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -374,7 +360,6 @@ impl axum::response::IntoResponse for CreateManyWrapper {
                 *res.status_mut() = axum::http::StatusCode::PAYLOAD_TOO_LARGE;
                 res
             },
-            //
             Self:: Desirable(_) =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
@@ -494,23 +479,7 @@ impl axum::response::IntoResponse for CreateManyWrapper {
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: CommitExtractorNotEqual
-            { commit_not_equal : _, commit_to_use : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: CommitExtractorToStrConversion
-            { commit_to_str_conversion : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: NoCommitExtractorHeader
-            { no_commit_header : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }
-            //
+            }, 
         }
     }
 }
@@ -551,8 +520,6 @@ impl std::convert::From<TryCreateManyResponseVariants> for CreateManyWrapper {
     }
 }
 
-//
-//
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
