@@ -897,6 +897,7 @@ pub use postgresql_crud_common::OrderBy;
 //todo move and reexport traits
 pub trait CombinationOfTraitsForPostgresqlCrudLogic:
     config_lib::GetEnableApiGitCommitCheck
+    + config_lib::GetMaximumSizeOfHttpBodyInBytes 
     + config_lib::GetSourcePlaceType
     + config_lib::GetTimezone
     + app_state::GetPostgresPool
