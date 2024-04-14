@@ -2444,25 +2444,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -2938,25 +2938,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -2964,7 +2964,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,
         )
@@ -3859,25 +3859,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -3885,7 +3885,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,
         )
@@ -4390,25 +4390,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -4416,7 +4416,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_expect_success_token_stream,
             http_request_test_expect_fail_token_stream,
@@ -5183,25 +5183,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -5209,7 +5209,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,
         )
@@ -5781,25 +5781,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -5807,7 +5807,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,
         )
@@ -6695,25 +6695,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -6721,7 +6721,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,
         )
@@ -7149,25 +7149,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
-        let common_middlewares_error_syn_variants_from_impls =
-            generate_common_middlewares_error_syn_variants_from_impls(
-                common_middlewares_error_syn_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                additional_http_status_codes_error_variants
-                    .iter()
-                    .collect::<std::vec::Vec<&(
-                        syn::Ident,
-                        proc_macro2::TokenStream,
-                        std::vec::Vec<syn::Variant>,
-                    )>>(),
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let common_middlewares_error_syn_variants_from_impls =
+        //     generate_common_middlewares_error_syn_variants_from_impls(
+        //         common_middlewares_error_syn_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         additional_http_status_codes_error_variants
+        //             .iter()
+        //             .collect::<std::vec::Vec<&(
+        //                 syn::Ident,
+        //                 proc_macro2::TokenStream,
+        //                 std::vec::Vec<syn::Variant>,
+        //             )>>(),
+        //         &operation,
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
@@ -7175,7 +7175,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_error_with_middleware_error_variants_token_stream
                 #http_request_token_stream
                 #route_handler_token_stream
-                #common_middlewares_error_syn_variants_from_impls
+                // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,
         )
@@ -7359,62 +7359,62 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
     }
 }
 
-fn generate_common_middlewares_error_syn_variants_from_impls(
-    common_middlewares_error_syn_variants: std::vec::Vec<&(
-        syn::Ident,
-        proc_macro2::TokenStream,
-        std::vec::Vec<syn::Variant>,
-    )>,
-    additional_http_status_codes_error_variants: std::vec::Vec<&(
-        syn::Ident,
-        proc_macro2::TokenStream,
-        std::vec::Vec<syn::Variant>,
-    )>,
-    operation: &Operation,
-    proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> proc_macro2::TokenStream {
-    let error_syn_variants = generate_full_additional_http_status_codes_error_variants(
-        common_middlewares_error_syn_variants,
-        additional_http_status_codes_error_variants,
-    );
-    let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
-    let value = error_syn_variants.iter().map(|element|{
-        let element_path_ident_token_stream = {
-            let element_path_ident_stringified = format!("{}{}", element.1, element.0);
-            element_path_ident_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {element_path_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let variants = element.2.iter().map(|element|{
-            let element_ident = &element.ident;
-            let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
-                &fields_named.named
-            } else {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {element_ident} supports only syn::Fields::Named");
-            };
-            let fields_token_stream = generate_self_fields_token_stream(
-                &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
-                proc_macro_name_upper_camel_case_ident_stringified,
-            );
-            quote::quote! {
-                #element_path_ident_token_stream::#element_ident {
-                    #(#fields_token_stream),*
-                } => Self::#element_ident {
-                    #(#fields_token_stream),*
-                }
-            }
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {
-            impl std::convert::From<#element_path_ident_token_stream> for #try_operation_upper_camel_case_token_stream {
-                fn from(value: #element_path_ident_token_stream) -> Self {
-                    match value {
-                        #(#variants),*
-                    }
-                }
-            }
-        }
-    }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-    quote::quote! {#(#value)*}
-}
+// fn generate_common_middlewares_error_syn_variants_from_impls(
+//     common_middlewares_error_syn_variants: std::vec::Vec<&(
+//         syn::Ident,
+//         proc_macro2::TokenStream,
+//         std::vec::Vec<syn::Variant>,
+//     )>,
+//     additional_http_status_codes_error_variants: std::vec::Vec<&(
+//         syn::Ident,
+//         proc_macro2::TokenStream,
+//         std::vec::Vec<syn::Variant>,
+//     )>,
+//     operation: &Operation,
+//     proc_macro_name_upper_camel_case_ident_stringified: &str,
+// ) -> proc_macro2::TokenStream {
+//     let error_syn_variants = generate_full_additional_http_status_codes_error_variants(
+//         common_middlewares_error_syn_variants,
+//         additional_http_status_codes_error_variants,
+//     );
+//     let try_operation_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfUpperCamelCaseTokenStream::try_self_upper_camel_case_token_stream(operation);
+//     let value = error_syn_variants.iter().map(|element|{
+//         let element_path_ident_token_stream = {
+//             let element_path_ident_stringified = format!("{}{}", element.1, element.0);
+//             element_path_ident_stringified.parse::<proc_macro2::TokenStream>()
+//             .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {element_path_ident_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         };
+//         let variants = element.2.iter().map(|element|{
+//             let element_ident = &element.ident;
+//             let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
+//                 &fields_named.named
+//             } else {
+//                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {element_ident} supports only syn::Fields::Named");
+//             };
+//             let fields_token_stream = generate_self_fields_token_stream(
+//                 &fields_named.iter().collect::<std::vec::Vec<&syn::Field>>() as &[&syn::Field],
+//                 proc_macro_name_upper_camel_case_ident_stringified,
+//             );
+//             quote::quote! {
+//                 #element_path_ident_token_stream::#element_ident {
+//                     #(#fields_token_stream),*
+//                 } => Self::#element_ident {
+//                     #(#fields_token_stream),*
+//                 }
+//             }
+//         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+//         quote::quote! {
+//             impl std::convert::From<#element_path_ident_token_stream> for #try_operation_upper_camel_case_token_stream {
+//                 fn from(value: #element_path_ident_token_stream) -> Self {
+//                     match value {
+//                         #(#variants),*
+//                     }
+//                 }
+//             }
+//         }
+//     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+//     quote::quote! {#(#value)*}
+// }
 
 fn generate_not_unique_field_vec_upper_camel_stringified(
     field_ident: &syn::Ident,

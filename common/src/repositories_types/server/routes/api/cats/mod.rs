@@ -759,28 +759,3 @@ pub async fn create_many(
         TryCreateManyResponseVariants::Desirable(vec_values)
     }
 }
-// impl std::convert::From<crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed>
-//     for TryCreateMany
-// {
-//     fn from(
-//         value: crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed,
-//     ) -> Self {
-//         match value
-//         {
-//             crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
-//             :: CommitExtractorNotEqual
-//             { commit_not_equal, commit_to_use, code_occurence } => Self ::
-//             CommitExtractorNotEqual
-//             { commit_not_equal, commit_to_use, code_occurence },
-//             crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
-//             :: CommitExtractorToStrConversion
-//             { commit_to_str_conversion, code_occurence } => Self ::
-//             CommitExtractorToStrConversion
-//             { commit_to_str_conversion, code_occurence },
-//             crate::server::extractors::commit_extractor::CommitExtractorCheckErrorNamed
-//             :: NoCommitExtractorHeader { no_commit_header, code_occurence } =>
-//             Self :: NoCommitExtractorHeader
-//             { no_commit_header, code_occurence }
-//         }
-//     }
-// }
