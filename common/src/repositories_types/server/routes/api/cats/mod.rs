@@ -1446,7 +1446,7 @@ pub async fn create_many_wrapper(
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return CreateManyResponse::from(e);
     }
-    let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body).await {
+    let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body, constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES).await {
         Ok(value) => value,
         Err(e) => {
             let e = CreateManyResponseErrorNamed::CheckBodySize {

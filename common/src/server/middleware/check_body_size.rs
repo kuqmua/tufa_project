@@ -31,16 +31,16 @@ impl axum::response::IntoResponse for CheckBodySizeErrorNamed {
     }
 }
 
-pub async fn check_body_size(body: axum::body::Body) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
+pub async fn check_body_size(
+    body: axum::body::Body,
+    limit: std::primitive::usize,
+) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
     let size_hint = axum::body::HttpBody::size_hint(&body);
-    match axum::body::to_bytes(
-        body, 
-        constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES//1 megabyte//todo move it to config or something?
-    ).await {
+    match axum::body::to_bytes(body, limit).await {
         Ok(value) => Ok(value),
         Err(e) => Err(CheckBodySizeErrorNamed::ReachedMaximumSizeOfBody {
             axum_error: e,
-            maximum_size_of_body_limit_in_bytes: constants::MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES,
+            maximum_size_of_body_limit_in_bytes: limit,
             size_hint: size_hint,
             code_occurence: error_occurence_lib::code_occurence!(),
         })
