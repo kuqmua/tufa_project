@@ -1,6 +1,3 @@
-pub type CheckCommitAppState =
-    std::sync::Arc<(dyn config_lib::config_fields::GetEnableApiGitCommitCheck + Send + Sync)>;
-
 #[derive(
     Debug,
     thiserror::Error,
@@ -24,6 +21,29 @@ pub enum CheckCommitErrorNamed {
         no_commit_header: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+}
+
+impl axum::response::IntoResponse for CheckCommitErrorNamed {
+    fn into_response(self) -> axum::response::Response {
+        let status_code = match &self {
+            Self::CommitNotEqual {
+                commit_not_equal: _,
+                commit_to_use: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::BAD_REQUEST,
+            Self::CommitToStrConversion {
+                commit_to_str_conversion: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::BAD_REQUEST,
+            Self::NoCommitHeader {
+                no_commit_header: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::BAD_REQUEST,
+        };
+        let mut res = axum::Json(self.into_serialize_deserialize_version()).into_response(); 
+        *res.status_mut() = status_code;
+        res
+    }
 }
 
 pub fn check_commit(
