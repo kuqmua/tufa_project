@@ -2383,14 +2383,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let try_or_try_from_operation_payload_upper_camel_case_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#operation_payload_upper_camel_case_token_stream::#from_snake_case_token_stream(value)},
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
@@ -2416,7 +2416,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -2876,15 +2876,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                //todo different parameters
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     //todo different parameters
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let try_or_try_from_operation_payload_upper_camel_case_token_stream = match fields_named_excluding_primary_key_from_or_try_from {
                 postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#operation_payload_upper_camel_case_token_stream::#from_snake_case_token_stream(value)},
                 postgresql_crud_common::FromOrTryFrom::TryFrom => {
@@ -2910,7 +2910,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -3800,14 +3800,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let field_code_occurence_new_1d57484c_3c67_4f5f_81a6_ec8efc9c6896_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
@@ -3831,7 +3831,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -4337,14 +4337,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let field_code_occurence_new_cd714ff2_3a40_4e0d_8930_e43d2f69ffc0_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
@@ -4352,7 +4352,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -5124,14 +5124,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let field_code_occurence_new_04274f8d_c9a4_41d1_9bdc_39432371c33f_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
@@ -5155,7 +5155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -5722,14 +5722,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let field_code_occurence_new_112d570b_90ed_44d6_a8bf_d855372006cb_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
@@ -5753,7 +5753,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -6636,14 +6636,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let field_code_occurence_new_39b5c2be_b5d4_4d33_b3e9_152543c33dca_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
@@ -6667,7 +6667,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<
@@ -7090,14 +7090,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             // println!("{try_operation_token_stream}");
-            let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
-                &table_name_stringified,
-                &unique_status_codes,
-                &application_json_quotes_token_stream,
-                &table_name_quotes_token_stream,
-                &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
-                &operation,
-            );
+            // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
+            //     &table_name_stringified,
+            //     &unique_status_codes,
+            //     &application_json_quotes_token_stream,
+            //     &table_name_quotes_token_stream,
+            //     &operation_payload_with_serialize_deserialize_upper_camel_case_token_stream,
+            //     &operation,
+            // );
             let field_code_occurence_new_32b2a167_ab66_4ee6_8e59_3839fa83d830_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                 file!(),
                 line!(),
@@ -7121,7 +7121,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             };
             quote::quote! {
-                #swagger_open_api_token_stream
+                // #swagger_open_api_token_stream
                 pub async fn #operation_snake_case_token_stream<'a>(
                     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,
                     #payload_extraction_result_snake_case_token_stream: Result<

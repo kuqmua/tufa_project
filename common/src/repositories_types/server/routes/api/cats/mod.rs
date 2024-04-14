@@ -557,29 +557,7 @@ pub async fn create_many_wrapper(
         ).await
     )
 }
-//
 
-
-#[utoipa ::
-path(post, path = "/dogs/create_many", operation_id = "/dogs/create_many", tag
-= "dogs",
-request_body(content = CreateManyPayload, description =
-"dogs create_many payload", content_type = "application/json"),
-responses((status = 201, description = "created", body =
-TryCreateManyResponseVariantsTvfrr201Created, content_type =
-"application/json"),
-(status = 500, description = "internal server error", body =
-TryCreateManyResponseVariantsTvfrr500InternalServerError, content_type =
-"application/json"),
-(status = 404, description = "not found", body =
-TryCreateManyResponseVariantsTvfrr404NotFound, content_type =
-"application/json"),
-(status = 400, description = "bad request", body =
-TryCreateManyResponseVariantsTvfrr400BadRequest, content_type =
-"application/json"),
-(status = 408, description = "request timeout", body =
-TryCreateManyResponseVariantsTvfrr408RequestTimeout, content_type =
-"application/json")),)]
 pub async fn create_many(
     app_state: axum::extract::State<
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
