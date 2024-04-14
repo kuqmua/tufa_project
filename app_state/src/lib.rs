@@ -1,3 +1,4 @@
+pub use config_lib::ServerPort;
 pub use config_lib::GetServerPort;
 pub use config_lib::GetSocketAddr;
 pub use config_lib::GetHmacSecret;
@@ -11,7 +12,9 @@ pub use config_lib::GetRedisUrl;
 pub use config_lib::GetMongoUrl;
 pub use config_lib::GetDatabaseUrl;
 pub use config_lib::GetStartingCheckLink;
+pub use config_lib::TracingType;
 pub use config_lib::GetTracingType;
+pub use config_lib::SourcePlaceType;
 pub use config_lib::GetSourcePlaceType;
 pub use config_lib::GetEnableApiGitCommitCheck;
 pub use config_lib::GetMaximumSizeOfHttpBodyInBytes;
