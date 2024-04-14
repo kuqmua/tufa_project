@@ -25,7 +25,6 @@ yew-router = {version = "=0.16.0"}
 yewdux = {version = "=0.7.0"}
 yewdux-functional = {version = "=0.1.0"}
 common = {path = "../common"}# local dev test without commits version
-server_port_try_from_u16 = {path = "../server_port_try_from_u16"}
 svg_component = {path = "../svg_component"}
 
 [lints]
