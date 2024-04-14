@@ -6492,3 +6492,60 @@ pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
+
+// impl axum::response::IntoResponse for axum::extract::rejection::JsonRejection {
+//     fn into_response(self) -> axum::response::Response {
+//         // match &self {
+
+//         // }
+//         todo!()
+//     }
+// }
+
+//
+// #[derive(
+//     Debug,
+//     thiserror::Error,
+//     error_occurence_lib::ErrorOccurence,
+// )]
+// pub enum JsonExtractorErrorNamed {
+//     JsonDataError {
+//         #[eo_display_with_serialize_deserialize]
+//         json_data_error: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     JsonSyntaxError {
+//         #[eo_display_with_serialize_deserialize]
+//         json_syntax_error: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     MissingJsonContentType {
+//         #[eo_display_with_serialize_deserialize]
+//         missing_json_content_type: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     BytesRejection {
+//         #[eo_display_with_serialize_deserialize]
+//         bytes_rejection: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NonExhaustiveCase {
+//         #[eo_display_with_serialize_deserialize]
+//         unexpected_case: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+
+// impl std::convert::From<axum::extract::rejection::JsonRejection> for JsonExtractorErrorNamed {
+//     fn from(value: axum::extract::rejection::JsonRejection) -> Self {
+//                 let f = match e {
+//                     axum::extract::rejection::JsonRejectionJsonDataError(value),
+//                     axum::extract::rejection::JsonRejectionJsonSyntaxError(JsonSyntaxError),
+//                     axum::extract::rejection::JsonRejectionMissingJsonContentType(MissingJsonContentType),
+//                     axum::extract::rejection::JsonRejectionBytesRejection(BytesRejection),
+//                 };
+//     }
+// }
+
+
+//
