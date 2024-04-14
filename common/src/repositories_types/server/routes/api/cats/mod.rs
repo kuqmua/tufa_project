@@ -198,97 +198,97 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-#[derive(Debug)]
-pub struct CreateManyPayloadElement {
-    pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdOptionOptionStdPrimitiveBool,
-    pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdOptionOptionStdPrimitiveI16,
-    pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdOptionOptionStdPrimitiveI32,
-}
-#[derive(Debug)]
-pub struct CreateManypayload(pub std::vec::Vec<CreateManyPayloadElement>);
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
-pub struct CreateManyPayloadElementWithSerializeDeserialize {
-    pub std_primitive_bool_as_postgresql_bool:
-        postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
-    pub std_primitive_i16_as_postgresql_small_int:
-        postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
-    pub std_primitive_i32_as_postgresql_int:
-        postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
-}
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub struct CreateManyPayloadWithSerializeDeserialize(
-    std::vec::Vec<CreateManyPayloadElementWithSerializeDeserialize>,
-);
-impl std::convert::From<CreateManyPayloadElementWithSerializeDeserialize>
-    for CreateManyPayloadElement
-{
-    fn from(value: CreateManyPayloadElementWithSerializeDeserialize) -> Self {
-        let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
-                value.std_primitive_bool_as_postgresql_bool,
-            );
-        let std_primitive_i16_as_postgresql_small_int =
-            postgresql_crud::StdOptionOptionStdPrimitiveI16::from(
-                value.std_primitive_i16_as_postgresql_small_int,
-            );
-        let std_primitive_i32_as_postgresql_int =
-            postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
-                value.std_primitive_i32_as_postgresql_int,
-            );
-        Self {
-            std_primitive_bool_as_postgresql_bool,
-            std_primitive_i16_as_postgresql_small_int,
-            std_primitive_i32_as_postgresql_int,
-        }
-    }
-}
-impl std::convert::From<CreateManyPayloadWithSerializeDeserialize> for CreateManypayload {
-    fn from(value: CreateManyPayloadWithSerializeDeserialize) -> Self {
-        let mut elements = std::vec::Vec::with_capacity(value.0.len());
-        for element in value.0 {
-            elements.push(CreateManyPayloadElement::from(element));
-        }
-        Self(elements)
-    }
-}
-impl std::convert::From<CreateManyPayloadElement>
-    for CreateManyPayloadElementWithSerializeDeserialize
-{
-    fn from(value: CreateManyPayloadElement) -> Self {
-        let std_primitive_bool_as_postgresql_bool =
-            postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
-                value.std_primitive_bool_as_postgresql_bool,
-            );
-        let std_primitive_i16_as_postgresql_small_int =
-            postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
-                value.std_primitive_i16_as_postgresql_small_int,
-            );
-        let std_primitive_i32_as_postgresql_int =
-            postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
-                value.std_primitive_i32_as_postgresql_int,
-            );
-        Self {
-            std_primitive_bool_as_postgresql_bool,
-            std_primitive_i16_as_postgresql_small_int,
-            std_primitive_i32_as_postgresql_int,
-        }
-    }
-}
-impl std::convert::From<CreateManypayload> for CreateManyPayloadWithSerializeDeserialize {
-    fn from(value: CreateManypayload) -> Self {
-        Self(
-            value
-                .0
-                .into_iter()
-                .map(|element| CreateManyPayloadElementWithSerializeDeserialize::from(element))
-                .collect::<std::vec::Vec<CreateManyPayloadElementWithSerializeDeserialize>>(),
-        )
-    }
-}
-#[derive(Debug)]
-pub struct CreateManyparameters {
-    pub payload: CreateManypayload,
-}
+// #[derive(Debug)]
+// pub struct CreateManyPayloadElement {
+//     pub std_primitive_bool_as_postgresql_bool: postgresql_crud::StdOptionOptionStdPrimitiveBool,
+//     pub std_primitive_i16_as_postgresql_small_int: postgresql_crud::StdOptionOptionStdPrimitiveI16,
+//     pub std_primitive_i32_as_postgresql_int: postgresql_crud::StdOptionOptionStdPrimitiveI32,
+// }
+// #[derive(Debug)]
+// pub struct CreateManyPayload(pub std::vec::Vec<CreateManyPayloadElement>);
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+// pub struct CreateManyPayloadElementWithSerializeDeserialize {
+//     pub std_primitive_bool_as_postgresql_bool:
+//         postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize,
+//     pub std_primitive_i16_as_postgresql_small_int:
+//         postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize,
+//     pub std_primitive_i32_as_postgresql_int:
+//         postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize,
+// }
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+// pub struct CreateManyPayloadWithSerializeDeserialize(
+//     std::vec::Vec<CreateManyPayloadElementWithSerializeDeserialize>,
+// );
+// impl std::convert::From<CreateManyPayloadElementWithSerializeDeserialize>
+//     for CreateManyPayloadElement
+// {
+//     fn from(value: CreateManyPayloadElementWithSerializeDeserialize) -> Self {
+//         let std_primitive_bool_as_postgresql_bool =
+//             postgresql_crud::StdOptionOptionStdPrimitiveBool::from(
+//                 value.std_primitive_bool_as_postgresql_bool,
+//             );
+//         let std_primitive_i16_as_postgresql_small_int =
+//             postgresql_crud::StdOptionOptionStdPrimitiveI16::from(
+//                 value.std_primitive_i16_as_postgresql_small_int,
+//             );
+//         let std_primitive_i32_as_postgresql_int =
+//             postgresql_crud::StdOptionOptionStdPrimitiveI32::from(
+//                 value.std_primitive_i32_as_postgresql_int,
+//             );
+//         Self {
+//             std_primitive_bool_as_postgresql_bool,
+//             std_primitive_i16_as_postgresql_small_int,
+//             std_primitive_i32_as_postgresql_int,
+//         }
+//     }
+// }
+// impl std::convert::From<CreateManyPayloadWithSerializeDeserialize> for CreateManyPayload {
+//     fn from(value: CreateManyPayloadWithSerializeDeserialize) -> Self {
+//         let mut elements = std::vec::Vec::with_capacity(value.0.len());
+//         for element in value.0 {
+//             elements.push(CreateManyPayloadElement::from(element));
+//         }
+//         Self(elements)
+//     }
+// }
+// impl std::convert::From<CreateManyPayloadElement>
+//     for CreateManyPayloadElementWithSerializeDeserialize
+// {
+//     fn from(value: CreateManyPayloadElement) -> Self {
+//         let std_primitive_bool_as_postgresql_bool =
+//             postgresql_crud::StdOptionOptionStdPrimitiveBoolWithSerializeDeserialize::from(
+//                 value.std_primitive_bool_as_postgresql_bool,
+//             );
+//         let std_primitive_i16_as_postgresql_small_int =
+//             postgresql_crud::StdOptionOptionStdPrimitiveI16WithSerializeDeserialize::from(
+//                 value.std_primitive_i16_as_postgresql_small_int,
+//             );
+//         let std_primitive_i32_as_postgresql_int =
+//             postgresql_crud::StdOptionOptionStdPrimitiveI32WithSerializeDeserialize::from(
+//                 value.std_primitive_i32_as_postgresql_int,
+//             );
+//         Self {
+//             std_primitive_bool_as_postgresql_bool,
+//             std_primitive_i16_as_postgresql_small_int,
+//             std_primitive_i32_as_postgresql_int,
+//         }
+//     }
+// }
+// impl std::convert::From<CreateManyPayload> for CreateManyPayloadWithSerializeDeserialize {
+//     fn from(value: CreateManyPayload) -> Self {
+//         Self(
+//             value
+//                 .0
+//                 .into_iter()
+//                 .map(|element| CreateManyPayloadElementWithSerializeDeserialize::from(element))
+//                 .collect::<std::vec::Vec<CreateManyPayloadElementWithSerializeDeserialize>>(),
+//         )
+//     }
+// }
+// #[derive(Debug)]
+// pub struct CreateManyParameters {
+//     pub payload: CreateManyPayload,
+// }
 #[derive(
     Debug,
     thiserror :: Error,
@@ -1361,7 +1361,7 @@ pub enum TryCreateManyErrorNamed {//todo maybe from impl for CreateManyWrapperEr
 }
 pub async fn try_create_many<'a>(
     server_location: &str,
-    parameters: CreateManyparameters,
+    parameters: CreateManyParameters,
 ) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64>, TryCreateManyErrorNamed> {
     let payload = match serde_json::to_string(&CreateManyPayloadWithSerializeDeserialize::from(
         parameters.payload,
@@ -1991,7 +1991,7 @@ pub async fn create_many_wrapper(
 #[utoipa ::
 path(post, path = "/dogs/create_many", operation_id = "/dogs/create_many", tag
 = "dogs",
-request_body(content = CreateManypayload, description =
+request_body(content = CreateManyPayload, description =
 "dogs create_many payload", content_type = "application/json"),
 responses((status = 201, description = "created", body =
 TryCreateManyResponseVariantsTvfrr201Created, content_type =
@@ -2018,22 +2018,22 @@ pub async fn create_many(
     // >,
     body_bytes: bytes::Bytes,
 ) -> TryCreateManyResponseVariants {
-    // let parameters = CreateManyparameters {
+    // let parameters = CreateManyParameters {
     //     payload:
     //         match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
     //             CreateManyPayloadWithSerializeDeserialize,
     //             TryCreateManyResponseVariants,
     //         >::try_extract_value(payload_extraction_result, &app_state)
     //         {
-    //             Ok(value) => CreateManypayload::from(value),
+    //             Ok(value) => CreateManyPayload::from(value),
     //             Err(e) => {
     //                 return e;
     //             }
     //         },
     // };
-    let parameters = CreateManyparameters {
+    let parameters = CreateManyParameters {
         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
-            Ok(axum::Json(value)) => CreateManypayload::from(value),
+            Ok(axum::Json(value)) => CreateManyPayload::from(value),
             Err(e) => {
                 let e = crate::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(e);
                 error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());

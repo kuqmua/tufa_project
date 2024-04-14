@@ -504,7 +504,7 @@ where
         let value = format!(
             "{}{}",
             self.to_upper_camel_case_stringified(),
-            <naming_constants::Parameters as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Parameters as naming_constants::Naming>::upper_camel_case_stringified(),
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -523,7 +523,7 @@ where
         let value = format!(
             "{}{}",
             self.to_upper_camel_case_stringified(),
-            <naming_constants::Payload as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Payload as naming_constants::Naming>::upper_camel_case_stringified(),
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
