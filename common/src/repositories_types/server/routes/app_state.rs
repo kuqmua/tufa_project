@@ -4,7 +4,7 @@ pub struct AppState<'a> {
     pub project_git_info: &'a git_info::ProjectGitInfo<'a>,
 }
 
-impl<'a> postgresql_crud::app_state::CombinationOfTraitsForPostgresqlCrudLogic for AppState<'a> {}
+impl<'a> postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic for AppState<'a> {}
 impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppState<'a> {}
 impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppState<'a> {}
 

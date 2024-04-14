@@ -1432,7 +1432,7 @@ impl std::convert::From<TryCreateManyResponseVariants> for CreateManyResponse {
 //
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
-        postgresql_crud::app_state::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+        postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
     >,
     request: axum::extract::Request
 ) -> CreateManyResponse {
@@ -1470,7 +1470,7 @@ pub async fn create_many_wrapper(
 
 pub async fn create_many(
     app_state: axum::extract::State<
-        postgresql_crud::app_state::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+        postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
     >,
     // payload_extraction_result: Result<
     //     axum::Json<CreateManyPayloadWithSerializeDeserialize>,

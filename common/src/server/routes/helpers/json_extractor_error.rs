@@ -126,7 +126,7 @@ pub trait JsonValueResultExtractor<OkGeneric, ErrorGeneric> {
     fn try_extract_value(
         self,
         app_state: &axum::extract::State<
-            postgresql_crud::app_state::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+            postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
         >,
     ) -> Result<OkGeneric, ErrorGeneric>;
 }
@@ -141,7 +141,7 @@ where
     fn try_extract_value(
         self,
         app_state: &axum::extract::State<
-            postgresql_crud::app_state::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
+            postgresql_crud::DynArcCombinationOfTraitsForPostgresqlCrudLogicSendSync,
         >,
     ) -> Result<OkGeneric, ErrorGeneric> {
         match self {
