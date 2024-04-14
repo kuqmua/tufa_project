@@ -31,7 +31,6 @@ pub struct ConfigUnchecked {
 )]
 pub struct Config {
     server_port: config_lib::ServerPort,
-    socket_addr: std::string::String,
     hmac_secret: secrecy::Secret<std::string::String>,
     base_url: std::string::String,
     access_control_max_age: usize,
@@ -68,7 +67,6 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
                 });
             }
         };
-        let socket_addr = format!("127.0.0.1:{server_port}");
         let hmac_secret = match value.hmac_secret.is_empty() {
             true => {
                 return Err(Self::Error::HmacSecret {
@@ -173,7 +171,6 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
         let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
         Ok(Self {
             server_port,
-            socket_addr,
             hmac_secret,
             base_url,
             access_control_max_age,

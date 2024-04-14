@@ -1,6 +1,5 @@
-#[derive(Debug, Clone, serde::Serialize, getset::Getters)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct ServerPort {
-    #[getset(get = "pub")]
     port: std::primitive::u16,
 }
 impl std::fmt::Display for ServerPort {
