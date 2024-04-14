@@ -2,27 +2,27 @@
     Debug,
     thiserror::Error,
     error_occurence_lib::ErrorOccurence,
-    type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
+    // type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
 )]
-#[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
-    crate::repositories_types::server::routes::api::cats::TryCreateMany
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryCreateOne
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryReadMany
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryReadOne
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryUpdateMany
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryUpdateOne
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryDeleteMany
-    // ,
-    // crate::repositories_types::server::routes::api::cats::TryDeleteOne
-)]
+// #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
+//     crate::repositories_types::server::routes::api::cats::TryCreateMany
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryCreateOne
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryReadMany
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryReadOne
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryUpdateMany
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryUpdateOne
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryDeleteMany
+//     // ,
+//     // crate::repositories_types::server::routes::api::cats::TryDeleteOne
+// )]
 pub enum CommitExtractorCheckErrorNamed {
-    #[tvfrr_400_bad_request]
+    // #[tvfrr_400_bad_request]
     CommitExtractorNotEqual {
         #[eo_display_with_serialize_deserialize]
         commit_not_equal: std::string::String,
@@ -30,13 +30,13 @@ pub enum CommitExtractorCheckErrorNamed {
         commit_to_use: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    #[tvfrr_400_bad_request]
+    // #[tvfrr_400_bad_request]
     CommitExtractorToStrConversion {
         #[eo_display]
         commit_to_str_conversion: http::header::ToStrError,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    #[tvfrr_400_bad_request]
+    // #[tvfrr_400_bad_request]
     NoCommitExtractorHeader {
         #[eo_display_with_serialize_deserialize]
         no_commit_header: std::string::String,
