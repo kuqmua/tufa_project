@@ -1,12 +1,10 @@
 pub use server_port_try_from_u16::server_port_try_from_u16;
 
 #[derive(Debug, Clone, serde::Serialize)]
-pub struct ServerPort {
-    port: std::primitive::u16,
-}
+pub struct ServerPort(std::primitive::u16);
 impl std::fmt::Display for ServerPort {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.port)
+        write!(f, "{}", self.0)
     }
 }
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -21,6 +19,7 @@ impl std::fmt::Display for ServerPortErrorNamed {
         write!(f, "server_port_min_value: {}, server_port_max_value: {}, value: {}", self.server_port_min_value, self.server_port_max_value, self.value)
     }
 }
+impl std::error::Error for ServerPortErrorNamed {}
 impl std::convert::TryFrom<std::primitive::u16> for ServerPort {
     type Error = ServerPortErrorNamed;
     fn try_from(value: std::primitive::u16) -> Result<Self, Self::Error> {
@@ -32,7 +31,7 @@ impl std::convert::TryFrom<std::primitive::u16> for ServerPort {
                 message: std::string::String::from(server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
         } else if value <= server_port_common::SERVER_PORT_MAX_VALUE {
-            Ok(Self { port: value })
+            Ok(Self(value))
         } else {
             Err(Self::Error {
                 server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
@@ -44,22 +43,19 @@ impl std::convert::TryFrom<std::primitive::u16> for ServerPort {
     }
 }
 impl<'de> serde::Deserialize<'de> for ServerPort {
-    fn deserialize<D>(deserializer: D) -> Result<ServerPort, D::Error>
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let f = match std::primitive::u16::deserialize(deserializer) {
+        let value = match std::primitive::u16::deserialize(deserializer) {
             Ok(value) => value,
             Err(e) => {
                 return Err(e);
             }
         };
-        match Self::try_from(f) {
+        match Self::try_from(value) {
             Ok(value) => Ok(value),
-            Err(e) => {
-                // return Err("dsfsdf");
-                todo!()
-            }
+            Err(e) => Err(serde::de::Error::custom(e))
         }
     }
 }
