@@ -7,7 +7,7 @@
 //         line!(),
 //         column!(),
 //         {
-//             config_lib::config_fields::GetServerPort::get_server_port(
+//             config_lib::GetServerPort::get_server_port(
 //                 *crate::config_mods::config_struct::ConfigUnchecked::default(),
 //             )
 //         },

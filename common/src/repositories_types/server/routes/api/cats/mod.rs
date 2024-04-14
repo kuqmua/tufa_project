@@ -1428,7 +1428,7 @@ impl std::convert::From<TryCreateManyResponseVariants> for CreateManyResponse {
 }
 
 //
-// config_lib::config_fields::GetMaximumSizeOfHttpBodyInBytes
+// config_lib::GetMaximumSizeOfHttpBodyInBytes
 //
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<

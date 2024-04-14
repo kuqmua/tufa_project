@@ -1,20 +1,20 @@
-pub use config_lib::config_fields::GetServerPort;
-pub use config_lib::config_fields::GetSocketAddr;
-pub use config_lib::config_fields::GetHmacSecret;
-pub use config_lib::config_fields::GetBaseUrl;
-pub use config_lib::config_fields::GetAccessControlMaxAge;
-pub use config_lib::config_fields::GetAccessControlAllowOrigin;
-pub use config_lib::config_fields::GetGithubName;
-pub use config_lib::config_fields::GetGithubToken;
-pub use config_lib::config_fields::GetTimezone;
-pub use config_lib::config_fields::GetRedisUrl;
-pub use config_lib::config_fields::GetMongoUrl;
-pub use config_lib::config_fields::GetDatabaseUrl;
-pub use config_lib::config_fields::GetStartingCheckLink;
-pub use config_lib::config_fields::GetTracingType;
-pub use config_lib::config_fields::GetSourcePlaceType;
-pub use config_lib::config_fields::GetEnableApiGitCommitCheck;
-pub use config_lib::config_fields::GetMaximumSizeOfHttpBodyInBytes;
+pub use config_lib::GetServerPort;
+pub use config_lib::GetSocketAddr;
+pub use config_lib::GetHmacSecret;
+pub use config_lib::GetBaseUrl;
+pub use config_lib::GetAccessControlMaxAge;
+pub use config_lib::GetAccessControlAllowOrigin;
+pub use config_lib::GetGithubName;
+pub use config_lib::GetGithubToken;
+pub use config_lib::GetTimezone;
+pub use config_lib::GetRedisUrl;
+pub use config_lib::GetMongoUrl;
+pub use config_lib::GetDatabaseUrl;
+pub use config_lib::GetStartingCheckLink;
+pub use config_lib::GetTracingType;
+pub use config_lib::GetSourcePlaceType;
+pub use config_lib::GetEnableApiGitCommitCheck;
+pub use config_lib::GetMaximumSizeOfHttpBodyInBytes;
 
 pub trait GetPostgresPool {
     fn get_postgres_pool(&self) -> &sqlx::PgPool;

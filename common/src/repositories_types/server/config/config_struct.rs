@@ -19,8 +19,8 @@ pub struct ConfigUnchecked {
 
     starting_check_link: std::string::String, //todo add browser url limit check
 
-    tracing_type: config_lib::config_fields::TracingType,
-    source_place_type: config_lib::config_fields::SourcePlaceType,
+    tracing_type: config_lib::TracingType,
+    source_place_type: config_lib::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
@@ -30,7 +30,7 @@ pub struct ConfigUnchecked {
     generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields, //todo - add 2 attributes - for reference\borrow(&) and for value(move)
 )]
 pub struct Config {
-    server_port: config_lib::config_fields::ServerPort,
+    server_port: config_lib::ServerPort,
     socket_addr: std::string::String,
     hmac_secret: secrecy::Secret<std::string::String>,
     base_url: std::string::String,
@@ -50,8 +50,8 @@ pub struct Config {
 
     starting_check_link: std::string::String, //todo add browser url limit check
 
-    tracing_type: config_lib::config_fields::TracingType,
-    source_place_type: config_lib::config_fields::SourcePlaceType,
+    tracing_type: config_lib::TracingType,
+    source_place_type: config_lib::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
@@ -59,7 +59,7 @@ pub struct Config {
 impl std::convert::TryFrom<ConfigUnchecked> for Config {
     type Error = ConfigCheckErrorNamed;
     fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
-        let server_port = match config_lib::config_fields::ServerPort::try_from(value.server_port) {
+        let server_port = match config_lib::ServerPort::try_from(value.server_port) {
             Ok(value) => value,
             Err(e) => {
                 return Err(Self::Error::ServerPort {
@@ -265,12 +265,12 @@ pub enum ConfigCheckErrorNamed {
     },
     TracingType {
         #[eo_display_with_serialize_deserialize]
-        tracing_type: config_lib::config_fields::TracingType,
+        tracing_type: config_lib::TracingType,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     SourcePlaceType {
         #[eo_display_with_serialize_deserialize]
-        source_place_type: config_lib::config_fields::SourcePlaceType,
+        source_place_type: config_lib::SourcePlaceType,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

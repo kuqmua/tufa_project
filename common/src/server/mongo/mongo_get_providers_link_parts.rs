@@ -24,11 +24,11 @@
 
 // pub async fn mongo_get_providers_link_parts<'a>(
 //     config: &'static (
-//         impl config_lib::config_fields::GetMongoUrl
-//         + config_lib::config_fields::GetMongoProvidersLinkPartsDbName
-//         + config_lib::config_fields::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-//         + config_lib::config_fields::GetMongoProvidersLogsDbCollectionHandleSecondPart
-//         + config_lib::config_fields::GetMongoClient
+//         impl config_lib::GetMongoUrl
+//         + config_lib::GetMongoProvidersLinkPartsDbName
+//         + config_lib::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
+//         + config_lib::GetMongoProvidersLogsDbCollectionHandleSecondPart
+//         + config_lib::GetMongoClient
 //         + std::marker::Send
 //         + std::marker::Sync
 //     )

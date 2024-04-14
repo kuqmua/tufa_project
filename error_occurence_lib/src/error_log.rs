@@ -1,7 +1,7 @@
 pub trait ErrorLog {
     fn error_log<
-        ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
-            + config_lib::config_fields::GetTimezone
+        ConfigGeneric: config_lib::GetSourcePlaceType
+            + config_lib::GetTimezone
             + ?Sized,
     >(
         &self,
@@ -14,8 +14,8 @@ where
     SelfGeneric: crate::to_string_with_config::ToStringWithConfig<'a>,
 {
     fn error_log<
-        ConfigGeneric: config_lib::config_fields::GetSourcePlaceType
-            + config_lib::config_fields::GetTimezone
+        ConfigGeneric: config_lib::GetSourcePlaceType
+            + config_lib::GetTimezone
             + ?Sized,
     >(
         &self,

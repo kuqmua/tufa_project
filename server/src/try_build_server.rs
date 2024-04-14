@@ -216,7 +216,7 @@ pub async fn try_build_server<'a>(
         message: std::string::String::from("shared_message"),
     };
     axum::serve(
-        tokio::net::TcpListener::bind(config_lib::config_fields::GetSocketAddr::get_socket_addr(
+        tokio::net::TcpListener::bind(config_lib::GetSocketAddr::get_socket_addr(
             config,
         ))
         .await

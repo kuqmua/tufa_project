@@ -11,7 +11,7 @@
 
 // impl<SelfGeneric> TryGetRedisSessionStorage for SelfGeneric
 // where
-//     Self: config_lib::config_fields::GetRedisUrl,
+//     Self: config_lib::GetRedisUrl,
 // {
 //     async fn try_get_redis_session_storage(
 //         &self,

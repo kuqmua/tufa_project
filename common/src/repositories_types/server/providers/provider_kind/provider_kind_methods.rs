@@ -13,7 +13,7 @@
 //     fn get_mongo_log_collection_name(
 //         &self,
 //         config: &'static (
-// impl config_lib::config_fields::GetMongoProvidersLogsDbCollectionHandleSecondPart
+// impl config_lib::GetMongoProvidersLogsDbCollectionHandleSecondPart
 // + std::marker::Send
 // + std::marker::Sync
 // )
@@ -33,7 +33,7 @@
 //         &self,
 //         names_vector: Vec<String>,
 //         config: &'static (
-// impl config_lib::config_fields::GetGithubToken
+// impl config_lib::GetGithubToken
 // + std::marker::Send
 // + std::marker::Sync
 // )

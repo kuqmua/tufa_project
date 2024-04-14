@@ -12,7 +12,7 @@ where
     HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric: crate::to_string_with_config::ToStringWithConfig<'a>,
     ConfigGeneric:
-        config_lib::config_fields::GetSourcePlaceType + config_lib::config_fields::GetTimezone,
+        config_lib::GetSourcePlaceType + config_lib::GetTimezone,
 {
     fn hashmap_display_foreign_type_to_string_with_config_to_string(
         &self,
