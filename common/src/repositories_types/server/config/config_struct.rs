@@ -19,8 +19,8 @@ pub struct ConfigUnchecked {
 
     starting_check_link: std::string::String, //todo add browser url limit check
 
-    tracing_type: config_lib::TracingType,
-    source_place_type: config_lib::SourcePlaceType,
+    tracing_type: app_state::TracingType,
+    source_place_type: app_state::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
@@ -30,7 +30,7 @@ pub struct ConfigUnchecked {
     generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields, //todo - add 2 attributes - for reference\borrow(&) and for value(move)
 )]
 pub struct Config {
-    server_port: config_lib::ServerPort,
+    server_port: app_state::ServerPort,
     hmac_secret: secrecy::Secret<std::string::String>,
     base_url: std::string::String,
     access_control_max_age: usize,
@@ -49,8 +49,8 @@ pub struct Config {
 
     starting_check_link: std::string::String, //todo add browser url limit check
 
-    tracing_type: config_lib::TracingType,
-    source_place_type: config_lib::SourcePlaceType,
+    tracing_type: app_state::TracingType,
+    source_place_type: app_state::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
@@ -58,7 +58,7 @@ pub struct Config {
 impl std::convert::TryFrom<ConfigUnchecked> for Config {
     type Error = ConfigCheckErrorNamed;
     fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
-        let server_port = match config_lib::ServerPort::try_from(value.server_port) {
+        let server_port = match app_state::ServerPort::try_from(value.server_port) {
             Ok(value) => value,
             Err(e) => {
                 return Err(Self::Error::ServerPort {
@@ -201,7 +201,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
 pub enum ConfigCheckErrorNamed {
     ServerPort {
         #[eo_display_with_serialize_deserialize]
-        server_port: config_lib::ServerPortErrorNamed,
+        server_port: app_state::ServerPortErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     HmacSecret {
@@ -262,12 +262,12 @@ pub enum ConfigCheckErrorNamed {
     },
     TracingType {
         #[eo_display_with_serialize_deserialize]
-        tracing_type: config_lib::TracingType,
+        tracing_type: app_state::TracingType,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     SourcePlaceType {
         #[eo_display_with_serialize_deserialize]
-        source_place_type: config_lib::SourcePlaceType,
+        source_place_type: app_state::SourcePlaceType,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

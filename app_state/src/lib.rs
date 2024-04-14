@@ -1,3 +1,4 @@
+pub use config_lib::ServerPortErrorNamed;
 pub use config_lib::ServerPort;
 pub use config_lib::GetServerPort;
 pub use config_lib::GetSocketAddr;
