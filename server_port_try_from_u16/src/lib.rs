@@ -5,12 +5,16 @@ pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::T
         Err(e) => panic!("failed to parse input into u16, error: {e}"),
         Ok(possible_port) => {
             if possible_port < constants::SERVER_PORT_MIN_VALUE {
-                panic!("failed to server_port_try_from_u16!(), reason: system port range 0-1023");
+                panic!(
+                    "{}",
+                    constants::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE
+                );
             } else if possible_port <= constants::SERVER_PORT_MAX_VALUE {
                 possible_port
             } else {
                 panic!(
-                    "failed to server_port_try_from_u16!(), reason: ephemeral port range 49152-65535"
+                    "{}",
+                    constants::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE
                 );
             }
         }
