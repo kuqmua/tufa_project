@@ -14,7 +14,7 @@ impl<'a> app_state::GetEnableApiGitCommitCheck for AppState<'a> {
     }
 }
 impl<'a> app_state::GetSourcePlaceType for AppState<'a> {
-    fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType {
+    fn get_source_place_type(&self) -> &config_lib::config_fields::SourcePlaceType {
         self.config.get_source_place_type()
     }
 }

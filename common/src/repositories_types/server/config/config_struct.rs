@@ -20,7 +20,7 @@ pub struct ConfigUnchecked {
     starting_check_link: std::string::String, //todo add browser url limit check
 
     tracing_type: config_lib::tracing_type::TracingType,
-    source_place_type: config_lib::source_place_type::SourcePlaceType,
+    source_place_type: config_lib::config_fields::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
@@ -51,7 +51,7 @@ pub struct Config {
     starting_check_link: std::string::String, //todo add browser url limit check
 
     tracing_type: config_lib::tracing_type::TracingType,
-    source_place_type: config_lib::source_place_type::SourcePlaceType,
+    source_place_type: config_lib::config_fields::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
@@ -270,7 +270,7 @@ pub enum ConfigCheckErrorNamed {
     },
     SourcePlaceType {
         #[eo_display_with_serialize_deserialize]
-        source_place_type: config_lib::source_place_type::SourcePlaceType,
+        source_place_type: config_lib::config_fields::SourcePlaceType,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

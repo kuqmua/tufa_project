@@ -177,7 +177,7 @@ pub trait GetCodeOccurence {
 pub trait GetCodePath {
     fn get_code_path(
         &self,
-        source_place_type: &config_lib::source_place_type::SourcePlaceType,
+        source_place_type: &config_lib::config_fields::SourcePlaceType,
     ) -> std::string::String;
 }
 
@@ -187,13 +187,13 @@ where
 {
     fn get_code_path(
         &self,
-        source_place_type: &config_lib::source_place_type::SourcePlaceType,
+        source_place_type: &config_lib::config_fields::SourcePlaceType,
     ) -> std::string::String {
         match source_place_type {
-            config_lib::source_place_type::SourcePlaceType::Source => {
+            config_lib::config_fields::SourcePlaceType::Source => {
                 self.form_error_path_directory()
             }
-            config_lib::source_place_type::SourcePlaceType::Github => self.form_error_path_github(),
+            config_lib::config_fields::SourcePlaceType::Github => self.form_error_path_github(),
         }
     }
 }
