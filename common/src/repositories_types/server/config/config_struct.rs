@@ -1,15 +1,15 @@
 #[derive(Debug, Default, PartialEq, Eq, init_from_env::InitFromEnv)]
 pub struct ConfigUnchecked {
-    server_port: u16,
+    server_port: std::primitive::u16,
     hmac_secret: std::string::String,
     base_url: std::string::String,
-    access_control_max_age: usize,
+    access_control_max_age: std::primitive::usize,
     access_control_allow_origin: std::string::String,
 
     github_name: std::string::String,
     github_token: std::string::String,
 
-    timezone: i32, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
+    timezone: std::primitive::i32, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
 
     redis_url: std::string::String,
 
@@ -21,7 +21,8 @@ pub struct ConfigUnchecked {
 
     tracing_type: config_lib::tracing_type::TracingType,
     source_place_type: config_lib::source_place_type::SourcePlaceType,
-    enable_api_git_commit_check: bool,
+    enable_api_git_commit_check: std::primitive::bool,
+    maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
 
 #[derive(
@@ -51,7 +52,8 @@ pub struct Config {
 
     tracing_type: config_lib::tracing_type::TracingType,
     source_place_type: config_lib::source_place_type::SourcePlaceType,
-    enable_api_git_commit_check: bool,
+    enable_api_git_commit_check: std::primitive::bool,
+    maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
 
 impl std::convert::TryFrom<ConfigUnchecked> for Config {
@@ -168,6 +170,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
         let tracing_type = value.tracing_type;
         let source_place_type = value.source_place_type;
         let enable_api_git_commit_check = value.enable_api_git_commit_check;
+        let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
         Ok(Self {
             server_port,
             socket_addr,
@@ -192,6 +195,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             tracing_type,
             source_place_type,
             enable_api_git_commit_check,
+            maximum_size_of_http_body_in_bytes,
         })
     }
 }

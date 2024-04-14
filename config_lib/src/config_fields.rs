@@ -46,3 +46,6 @@ pub trait GetSourcePlaceType {
 pub trait GetEnableApiGitCommitCheck {
     fn get_enable_api_git_commit_check(&self) -> &bool;
 }
+pub trait GetMaximumSizeOfHttpBodyInBytes {
+    fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize;
+}
