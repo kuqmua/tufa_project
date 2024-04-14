@@ -199,7 +199,7 @@ pub struct Dog {
 
 ////////////////////////////////////////////////////////////////////////
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub enum CreateManyWrapper {
+pub enum CreateManyResponse {
     CheckCommit {
         check_commit: crate::server::middleware::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -318,7 +318,7 @@ pub enum CreateManyWrapperErrorNamed {
     },
 }
 
-impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyWrapper {
+impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyResponse {
     fn from(
         value: CreateManyWrapperErrorNamed,
     ) -> Self {
@@ -341,7 +341,7 @@ impl std::convert::From<CreateManyWrapperErrorNamed> for CreateManyWrapper {
     }
 }
 
-impl axum::response::IntoResponse for CreateManyWrapper {
+impl axum::response::IntoResponse for CreateManyResponse {
     fn into_response(self) -> axum::response::Response {
         match &self {
             Self::CheckCommit {
@@ -484,7 +484,7 @@ impl axum::response::IntoResponse for CreateManyWrapper {
     }
 }
 
-impl std::convert::From<TryCreateManyResponseVariants> for CreateManyWrapper {
+impl std::convert::From<TryCreateManyResponseVariants> for CreateManyResponse {
     fn from(value: TryCreateManyResponseVariants) -> Self {
         match value {
             TryCreateManyResponseVariants :: Desirable(value) => Self::Desirable(value),
@@ -525,7 +525,7 @@ pub async fn create_many_wrapper(
         postgresql_crud::app_state::DynArcGetConfigGetPostgresPoolSendSync,
     >,
     request: axum::extract::Request
-) -> CreateManyWrapper {
+) -> CreateManyResponse {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(e) = crate::server::middleware::check_commit::check_commit(
@@ -537,7 +537,7 @@ pub async fn create_many_wrapper(
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-        return CreateManyWrapper::from(e);
+        return CreateManyResponse::from(e);
     }
     let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body).await {
         Ok(value) => value,
@@ -547,10 +547,10 @@ pub async fn create_many_wrapper(
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return CreateManyWrapper::from(e);
+            return CreateManyResponse::from(e);
         }
     };
-    CreateManyWrapper::from(
+    CreateManyResponse::from(
         create_many(
             app_state, 
             body_bytes
