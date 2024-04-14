@@ -26,7 +26,8 @@ members = [
   "server",
   "telegram_bot",
   "type_variants_from_reqwest_response",
-  "config_lib/server_port_try_from_u16",
+  "config_lib/server_port",
+  "config_lib/server_port/server_port_try_from_u16",
   "naming_constants/gen_naming_trait_impl_vec",
 ]
 exclude = [
