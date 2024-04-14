@@ -8,22 +8,22 @@ impl<'a> postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic for AppState
 impl<'a> crate::server::routes::git_info::GitInfoRouteParameters for AppState<'a> {}
 impl<'a> crate::server::routes::not_found::NotFoundRouteParameters for AppState<'a> {}
 
-impl<'a> config_lib::config_fields::GetEnableApiGitCommitCheck for AppState<'a> {
+impl<'a> app_state::GetEnableApiGitCommitCheck for AppState<'a> {
     fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool {
         self.config.get_enable_api_git_commit_check()
     }
 }
-impl<'a> config_lib::config_fields::GetSourcePlaceType for AppState<'a> {
+impl<'a> app_state::GetSourcePlaceType for AppState<'a> {
     fn get_source_place_type(&self) -> &config_lib::source_place_type::SourcePlaceType {
         self.config.get_source_place_type()
     }
 }
-impl<'a> config_lib::config_fields::GetTimezone for AppState<'a> {
+impl<'a> app_state::GetTimezone for AppState<'a> {
     fn get_timezone(&self) -> &chrono::FixedOffset {
         self.config.get_timezone()
     }
 }
-impl<'a> config_lib::config_fields::GetMaximumSizeOfHttpBodyInBytes for AppState<'a> {
+impl<'a> app_state::GetMaximumSizeOfHttpBodyInBytes for AppState<'a> {
     fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize {
         self.config.get_maximum_size_of_http_body_in_bytes()
     }
