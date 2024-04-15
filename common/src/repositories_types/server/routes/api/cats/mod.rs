@@ -1877,7 +1877,7 @@ pub async fn create_many(
     //     axum::extract::rejection::JsonRejection,
     // >,
     body_bytes: bytes::Bytes,
-) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany> {
+) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany> {//todo impl GetAxumHttpStatusCode for Wrapper(Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany>)
     // let parameters = CreateManyParameters {
     //     payload:
     //         match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
