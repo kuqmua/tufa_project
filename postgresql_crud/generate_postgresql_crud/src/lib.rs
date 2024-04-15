@@ -2466,10 +2466,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
-                #parameters_token_stream
-                #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream
+                // #parameters_token_stream
+                // #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream
                 // #try_operation_error_with_middleware_error_variants_token_stream
-                #http_request_token_stream
+                // #http_request_token_stream
                 // #route_handler_token_stream
                 // #common_middlewares_error_syn_variants_from_impls
             },
