@@ -1829,7 +1829,7 @@ pub async fn create_many_wrapper(
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
     >,
     request: axum::extract::Request
-) -> CreateManyResponse {
+) -> (axum::http::StatusCode, std::string::String) {//CreateManyResponse
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(e) = crate::server::middleware::check_commit::check_commit(
@@ -1841,7 +1841,8 @@ pub async fn create_many_wrapper(
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-        return CreateManyResponse::from(e);
+        // return CreateManyResponse::from(e);
+        todo!()
     }
     let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
@@ -1851,15 +1852,20 @@ pub async fn create_many_wrapper(
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return CreateManyResponse::from(e);
+            // return CreateManyResponse::from(e);
+            todo!()
         }
     };
     match create_many(app_state.as_ref(), body_bytes).await {
-        Ok(value) => CreateManyResponse::Desirable(value),
+        Ok(value) => 
+        // CreateManyResponse::Desirable(value)
+        todo!()
+        ,
         Err(e) => {
             let e = CreateManyResponseErrorNamed::from(e);
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return CreateManyResponse::from(e);
+            // return CreateManyResponse::from(e);
+            todo!()
         }
     }
 }
