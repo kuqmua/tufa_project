@@ -1,5 +1,6 @@
 #[derive(Debug, Default, PartialEq, Eq, init_from_env::InitFromEnv)]
 pub struct ConfigUnchecked {
+    //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
     server_port: std::primitive::u16,
     hmac_secret: std::string::String,
     base_url: std::string::String,
