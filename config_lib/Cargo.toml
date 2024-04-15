@@ -16,6 +16,7 @@ enum_extension = {path = "../enum_extension"}
 from_str = {path = "../from_str"}
 constants = {path = "../constants"}
 server_port = {path = "./server_port"}
+init_from_env = {path = "./init_from_env"}
 
 [lints]
 workspace = true

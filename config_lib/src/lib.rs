@@ -1,3 +1,4 @@
+pub use init_from_env::InitFromEnv;
 pub use server_port::ServerPort;
 pub use server_port::ServerPortErrorNamed;
 pub use server_port::server_port_try_from_u16;
