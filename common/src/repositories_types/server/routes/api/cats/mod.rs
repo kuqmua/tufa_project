@@ -1568,7 +1568,9 @@ impl axum::response::IntoResponse for CreateManyResponse {
             {
                 let mut res = axum :: Json(self).into_response() ; *
                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            } Self:: Configuration
+            } 
+            
+            Self:: Configuration
             { configuration : _, code_occurence : _ } =>
             {
                 let mut res = axum :: Json(self).into_response() ; *
