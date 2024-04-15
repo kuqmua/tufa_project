@@ -3788,107 +3788,95 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         },
                     }
                 });
-                let enum_fields_logic_for_source_to_string_with_config_iter = enum_fields_logic_for_source_to_string_with_config.iter();
-                let enum_fields_logic_for_source_to_string_without_config_iter = enum_fields_logic_for_source_to_string_without_config.iter();
-                let enum_fields_logic_for_get_code_occurence_iter = enum_fields_logic_for_get_code_occurence.iter();
-                let enum_fields_logic_for_enum_with_serialize_deserialize_iter = enum_fields_logic_for_enum_with_serialize_deserialize.iter();
-                let enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize_iter = enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize.iter();
-                let enum_fields_logic_for_get_code_occurence_with_serialize_deserialize_iter = enum_fields_logic_for_get_code_occurence_with_serialize_deserialize.iter();
-                let enum_fields_logic_for_into_serialize_deserialize_version_iter = enum_fields_logic_for_into_serialize_deserialize_version.iter();
-                let enum_fields_logic_for_compile_time_check_error_occurence_members_iter = enum_fields_logic_for_compile_time_check_error_occurence_members.iter();
-                let format_logic_for_source_to_string_with_or_without_config_stringified = format_logic_for_source_to_string_with_or_without_config.iter()
-                .fold(String::from(""), |mut acc, path_segment| {
-                    acc.push_str(path_segment);
-                    acc
-                });
+                let format_logic_for_source_to_string_with_or_without_config_stringified = format_logic_for_source_to_string_with_or_without_config.iter().fold(
+                    std::string::String::from(""), 
+                    |mut acc, path_segment| {
+                        acc.push_str(path_segment);
+                        acc
+                    }
+                );
                 let start_scope_stringified = "{{";
                 let end_scope_stringified = "}}";
                 let format_logic_for_source_to_string_with_or_without_config_handle_stringified = format!("\"{start_scope_stringified}\n{format_logic_for_source_to_string_with_or_without_config_stringified}{end_scope_stringified}\"");
                 let format_logic_for_source_to_string_with_or_without_config_handle_token_stream = format_logic_for_source_to_string_with_or_without_config_handle_stringified
                 .parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {format_logic_for_source_to_string_with_or_without_config_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                let fields_logic_for_source_to_string_with_config_for_attribute_iter = fields_logic_for_source_to_string_with_config_for_attribute.iter();
-                let fields_logic_for_source_to_string_without_config_for_attribute_iter = fields_logic_for_source_to_string_without_config_for_attribute.iter();
-                let fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute_iter = fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute.iter();
-                let fields_logic_for_into_serialize_deserialize_version_for_attribute_iter = fields_logic_for_into_serialize_deserialize_version_for_attribute.iter();
-                let fields_logic_for_compile_time_check_error_occurence_members_iter = fields_logic_for_compile_time_check_error_occurence_members_for_attribute.iter();
                 logic_for_source_to_string_with_config.push(quote::quote! {
                     #ident::#variant_ident {
-                        #(#enum_fields_logic_for_source_to_string_with_config_iter),*
+                        #(#enum_fields_logic_for_source_to_string_with_config),*
                     } => {
                         format!(
                             #format_logic_for_source_to_string_with_or_without_config_handle_token_stream
                             ,
-                            #(#fields_logic_for_source_to_string_with_config_for_attribute_iter),*
+                            #(#fields_logic_for_source_to_string_with_config_for_attribute),*
                         )
                     }
                 });
                 logic_for_source_to_string_without_config.push(quote::quote! {
                     #ident::#variant_ident {
-                        #(#enum_fields_logic_for_source_to_string_without_config_iter),*
+                        #(#enum_fields_logic_for_source_to_string_without_config),*
                     } => {
                         format!(
                             #format_logic_for_source_to_string_with_or_without_config_handle_token_stream
                             ,
-                            #(#fields_logic_for_source_to_string_without_config_for_attribute_iter),*
+                            #(#fields_logic_for_source_to_string_without_config_for_attribute),*
                         )
                     }
                 });
                 logic_for_get_code_occurence.push(quote::quote! {
                     #ident::#variant_ident {
-                        #(#enum_fields_logic_for_get_code_occurence_iter),*
+                        #(#enum_fields_logic_for_get_code_occurence),*
                     } => {
                         code_occurence
                     }
                 });
                 logic_for_enum_with_serialize_deserialize.push(quote::quote! {
                     #variant_ident {
-                        #(#enum_fields_logic_for_enum_with_serialize_deserialize_iter),*
+                        #(#enum_fields_logic_for_enum_with_serialize_deserialize),*
                     }
                 });
                 logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote! {
                     #ident_with_serialize_deserialize_token_stream::#variant_ident {
-                        #(#enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize_iter),*
+                        #(#enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize),*
                     } => {
                         format!(
                             #format_logic_for_source_to_string_with_or_without_config_handle_token_stream
                             ,
-                            #(#fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute_iter),*
+                            #(#fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute),*
                         )
                     }
                 });
                 logic_for_get_code_occurence_with_serialize_deserialize.push(quote::quote! {
                     #ident_with_serialize_deserialize_token_stream::#variant_ident {
-                        #(#enum_fields_logic_for_get_code_occurence_with_serialize_deserialize_iter),*
+                        #(#enum_fields_logic_for_get_code_occurence_with_serialize_deserialize),*
                     } => {
                         code_occurence
                     }
                 });
                 logic_for_into_serialize_deserialize_version.push(quote::quote! {
                     #ident::#variant_ident {
-                        #(#enum_fields_logic_for_into_serialize_deserialize_version_iter),*
+                        #(#enum_fields_logic_for_into_serialize_deserialize_version),*
                     } => {
                         #ident_with_serialize_deserialize_token_stream::#variant_ident {
-                            #(#fields_logic_for_into_serialize_deserialize_version_for_attribute_iter),*
+                            #(#fields_logic_for_into_serialize_deserialize_version_for_attribute),*
                         }
                     }
                 });
                 logic_for_compile_time_check_error_occurence_members.push(quote::quote! {
                     #ident::#variant_ident {
-                        #(#enum_fields_logic_for_compile_time_check_error_occurence_members_iter),*
+                        #(#enum_fields_logic_for_compile_time_check_error_occurence_members),*
                     } => {
-                        #(#fields_logic_for_compile_time_check_error_occurence_members_iter)*
+                        #(#fields_logic_for_compile_time_check_error_occurence_members_for_attribute)*
                     }
                 });
             });
-            let logic_for_source_to_string_with_config_iter = logic_for_source_to_string_with_config.iter();
-            let logic_for_source_to_string_without_config_iter = logic_for_source_to_string_without_config.iter();
-            let logic_for_get_code_occurence_iter = logic_for_get_code_occurence.iter();
-            // let logic_for_enum_with_serialize_deserialize_iter = logic_for_enum_with_serialize_deserialize.iter();
-            let logic_for_source_to_string_without_config_with_serialize_deserialize_iter = logic_for_source_to_string_without_config_with_serialize_deserialize.iter();
-            let logic_for_get_code_occurence_with_serialize_deserialize_iter = logic_for_get_code_occurence_with_serialize_deserialize.iter();
-            let logic_for_into_serialize_deserialize_version_iter = logic_for_into_serialize_deserialize_version.iter();
-            let logic_for_compile_time_check_error_occurence_members_iter = logic_for_compile_time_check_error_occurence_members.iter();
+            let logic_for_source_to_string_with_config = logic_for_source_to_string_with_config.iter();
+            let logic_for_source_to_string_without_config = logic_for_source_to_string_without_config.iter();
+            let logic_for_get_code_occurence = logic_for_get_code_occurence.iter();
+            let logic_for_source_to_string_without_config_with_serialize_deserialize = logic_for_source_to_string_without_config_with_serialize_deserialize.iter();
+            let logic_for_get_code_occurence_with_serialize_deserialize = logic_for_get_code_occurence_with_serialize_deserialize.iter();
+            let logic_for_into_serialize_deserialize_version = logic_for_into_serialize_deserialize_version.iter();
+            let logic_for_compile_time_check_error_occurence_members = logic_for_compile_time_check_error_occurence_members.iter();
             let get_code_occurence_upper_camel_case = format!("{get_upper_camel_case_stringified}{code_occurence_upper_camel_case_stringified}");
             let get_code_occurence_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_code_occurence_upper_camel_case);
             let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
@@ -3907,7 +3895,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     impl<#generics> #ident<#generics> {
                         fn #compile_time_check_error_occurence_members_token_stream(&self) {
                             match self {
-                                #(#logic_for_compile_time_check_error_occurence_members_iter),*
+                                #(#logic_for_compile_time_check_error_occurence_members),*
                             }
                         }
                     }
@@ -3935,7 +3923,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         config: &#config_generic_token_stream
                     ) -> std::string::String {
                         match self {
-                            #(#logic_for_source_to_string_with_config_iter),*
+                            #(#logic_for_source_to_string_with_config),*
                         }
                     }
                 }
@@ -3946,7 +3934,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 {
                     fn #source_to_string_without_config_token_stream(&self) -> std::string::String {
                         match self {
-                            #(#logic_for_source_to_string_without_config_iter),*
+                            #(#logic_for_source_to_string_without_config),*
                         }
                     }
                 }
@@ -3954,7 +3942,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     fn #get_code_occurence_token_stream(&self) -> &#error_occurence_lib_code_occurence_code_occurence_token_stream
                     {
                         match self {
-                            #(#logic_for_get_code_occurence_iter),*
+                            #(#logic_for_get_code_occurence),*
                         }
                     }
                 }
@@ -3962,7 +3950,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 {
                     fn #source_to_string_without_config_token_stream(&self) -> std::string::String {
                         match self {
-                            #(#logic_for_source_to_string_without_config_with_serialize_deserialize_iter),*
+                            #(#logic_for_source_to_string_without_config_with_serialize_deserialize),*
                         }
                     }
                 }
@@ -3974,14 +3962,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     ) -> &#error_occurence_lib_code_occurence_code_occurence_token_stream
                     {
                         match self {
-                            #(#logic_for_get_code_occurence_with_serialize_deserialize_iter),*
+                            #(#logic_for_get_code_occurence_with_serialize_deserialize),*
                         }
                     }
                 }
                 impl #ident {
                     pub fn #into_serialize_deserialize_version_token_stream(self) -> #ident_with_serialize_deserialize_token_stream {
                         match self {
-                            #(#logic_for_into_serialize_deserialize_version_iter),*
+                            #(#logic_for_into_serialize_deserialize_version),*
                         }
                     }
                 }
