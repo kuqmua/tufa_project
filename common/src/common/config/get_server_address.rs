@@ -4,9 +4,9 @@ pub trait GetServerAddress {
 
 impl<SelfGeneric> GetServerAddress for SelfGeneric
 where
-    Self: app_state::GetServerPort,
+    Self: app_state::GetServerHost + app_state::GetServerPort,
 {
     fn get_server_address(&self) -> std::string::String {
-        format!("127.0.0.1:{}", *self.get_server_port())
+        format!("{}:{}", *self.get_server_host(), *self.get_server_port())
     }
 }
