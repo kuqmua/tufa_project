@@ -1,5 +1,9 @@
 pub use init_from_env::InitFromEnv;
 
+pub trait GetServiceSocketAddress {
+    fn get_service_socket_address(&self) -> &std::net::SocketAddr;
+}
+
 pub trait GetServerHost {
     fn get_server_host(&self) -> &std::string::String;
 }

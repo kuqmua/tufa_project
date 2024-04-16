@@ -1,6 +1,7 @@
 #[derive(Debug, Default, PartialEq, Eq, config_lib::InitFromEnv)]
 pub struct ConfigUnchecked {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
+    service_socket_address: std::string::String,
     server_host: std::string::String,
     server_port: std::primitive::u16,
     hmac_secret: std::string::String,
@@ -32,6 +33,7 @@ pub struct ConfigUnchecked {
     generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields, //todo - add 2 attributes - for reference\borrow(&) and for value(move)
 )]
 pub struct Config {
+    service_socket_address: std::net::SocketAddr,
     server_host: std::string::String,
     server_port: app_state::ServerPort,
     hmac_secret: secrecy::Secret<std::string::String>,
@@ -61,6 +63,15 @@ pub struct Config {
 impl std::convert::TryFrom<ConfigUnchecked> for Config {
     type Error = ConfigCheckErrorNamed;
     fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
+        let service_socket_address =  match <std::net::SocketAddr as std::str::FromStr>::from_str(&value.service_socket_address) {
+            Ok(value) => value,
+            Err(e) => {
+                return Err(Self::Error::ServiceSocketAddress {
+                    server_port: e,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
         let server_host = value.server_host;
         let server_port = match app_state::ServerPort::try_from(value.server_port) {
             Ok(value) => value,
@@ -174,6 +185,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
         let enable_api_git_commit_check = value.enable_api_git_commit_check;
         let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
         Ok(Self {
+            service_socket_address,
             server_host,
             server_port,
             hmac_secret,
@@ -204,6 +216,11 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ConfigCheckErrorNamed {
+    ServiceSocketAddress {
+        #[eo_display]
+        server_port: std::net::AddrParseError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     ServerPort {
         #[eo_display_with_serialize_deserialize]
         server_port: app_state::ServerPortErrorNamed,
