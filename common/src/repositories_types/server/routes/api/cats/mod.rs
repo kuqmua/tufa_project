@@ -1871,14 +1871,11 @@ pub async fn create_many_wrapper(
     todo!()
 }
 
-pub struct CreateManyResult(Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany>);
+pub struct CreateManyDesirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>);
 
-impl postgresql_crud::GetAxumHttpStatusCode for CreateManyResult {
+impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        match &self.0 {
-            Ok(_) => axum::http::StatusCode::CREATED,
-            Err(e) => e.get_axum_http_status_code(),
-        }
+        axum::http::StatusCode::CREATED
     }
 }
 //
@@ -1890,7 +1887,7 @@ pub async fn create_many(
     //     axum::extract::rejection::JsonRejection,
     // >,
     body_bytes: bytes::Bytes,
-) -> CreateManyResult {//todo impl GetAxumHttpStatusCode for Wrapper(Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany>)
+) -> Result<CreateManyDesirable, TryCreateMany> {//todo impl GetAxumHttpStatusCode for Wrapper(Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany>)
     // let parameters = CreateManyParameters {
     //     payload:
     //         match crate::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
@@ -1909,36 +1906,36 @@ pub async fn create_many(
             Ok(axum::Json(value)) => CreateManyPayload::from(value),
             Err(e) => match e {
                 axum::extract::rejection::JsonRejection::JsonDataError(value) => {
-                    return CreateManyResult(Err(TryCreateMany::JsonDataError {
+                    return Err(TryCreateMany::JsonDataError {
                         json_data_error: value,
                         code_occurence: error_occurence_lib::code_occurence!(),
-                    }));
+                    });
                 },
                 axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
-                    return CreateManyResult(Err(TryCreateMany::JsonSyntaxError {
+                    return Err(TryCreateMany::JsonSyntaxError {
                         json_syntax_error: value,
                         code_occurence: error_occurence_lib::code_occurence!(),
-                    }));
+                    });
                 },
                 axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
-                    return CreateManyResult(Err(TryCreateMany::MissingJsonContentType {
+                    return Err(TryCreateMany::MissingJsonContentType {
                         missing_json_content_type: value.to_string(),
                         code_occurence: error_occurence_lib::code_occurence!(),
-                    }));
+                    });
                 },
                 axum::extract::rejection::JsonRejection::BytesRejection(value) => {
-                    return CreateManyResult(Err(TryCreateMany::BytesRejection {
+                    return Err(TryCreateMany::BytesRejection {
                         bytes_rejection: value.to_string(),
                         code_occurence: error_occurence_lib::code_occurence!(),
-                    }));
+                    });
 
                 },
                 // this variant exists coz JsonRejection is non exhaustive
                 _ => {
-                    return CreateManyResult(Err(TryCreateMany::UnexpectedCase {
+                    return Err(TryCreateMany::UnexpectedCase {
                         unexpected_case: std::string::String::from("Unknown error"),//todo reuse
                         code_occurence: error_occurence_lib::code_occurence!(),
-                    }));
+                    });
                 }
             }
         }
@@ -1991,7 +1988,7 @@ pub async fn create_many(
             Ok(value) => value,
             Err(e) => {
                 // let e = 
-                return CreateManyResult(Err(TryCreateMany::from(e)));
+                return Err(TryCreateMany::from(e));
                 // ;
                 // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                 // return TryCreateManyResponseVariants::from(e);
@@ -2001,7 +1998,7 @@ pub async fn create_many(
             Ok(value) => value,
             Err(e) => {
                 // let e = 
-                return CreateManyResult(Err(TryCreateMany::from(e)));
+                return Err(TryCreateMany::from(e));
                 // ;
                 // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                 // return TryCreateManyResponseVariants::from(e);
@@ -2019,7 +2016,7 @@ pub async fn create_many(
                 Ok(value) => value,
                 Err(e) => {
                     // let e = 
-                    return CreateManyResult(Err(TryCreateMany::from(e)));
+                    return Err(TryCreateMany::from(e));
                     // ;
                     // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                     // return TryCreateManyResponseVariants::from(e);
@@ -2041,7 +2038,7 @@ pub async fn create_many(
                 }
                 Err(e) => {
                     // let e = 
-                    return CreateManyResult(Err(TryCreateMany ::
+                    return Err(TryCreateMany ::
                     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
                     {
                         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
@@ -2054,14 +2051,14 @@ pub async fn create_many(
                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
                             line : 1267, column : 13,
                         })),
-                    }));
+                    });
                     // ;
                     // error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state);
                     // return TryCreateManyResponseVariants::from(e);
                 }
             }
         }
-        CreateManyResult(Ok(vec_values))
+        Ok(CreateManyDesirable(vec_values))
         // TryCreateManyResponseVariants::Desirable(vec_values)
     }
 }
