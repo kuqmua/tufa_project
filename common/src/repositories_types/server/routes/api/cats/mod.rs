@@ -1643,6 +1643,7 @@ impl std::convert::From<CreateManyResponseErrorNamed> for CreateManyResponse {
     }
 }
 
+//todo remove it and make struct CreateManyResponseWrapper { status: StatusCode, json: CreateManyResponse } and impl for that axum::response::IntoResponse
 impl axum::response::IntoResponse for CreateManyResponse {
     fn into_response(self) -> axum::response::Response {
         match &self {
@@ -1829,20 +1830,36 @@ pub async fn create_many_wrapper(
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
     >,
     request: axum::extract::Request
-) -> (axum::http::StatusCode, std::string::String) {//CreateManyResponse
+) -> (axum::http::StatusCode, CreateManyResponse) {//CreateManyResponse
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(e) = crate::server::middleware::check_commit::check_commit(
         app_state.as_ref(),
         &headers,
     ) {
+        let status_code  = match &e {
+            crate::server::middleware::check_commit::CheckCommitErrorNamed::CommitNotEqual {
+                commit_not_equal: _,
+                commit_to_use: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::BAD_REQUEST,
+            crate::server::middleware::check_commit::CheckCommitErrorNamed::CommitToStrConversion {
+                commit_to_str_conversion: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::BAD_REQUEST,
+            crate::server::middleware::check_commit::CheckCommitErrorNamed::NoCommitHeader {
+                no_commit_header: _,
+                code_occurence: _,
+            } => axum::http::StatusCode::BAD_REQUEST,
+        };
         let e = CreateManyResponseErrorNamed::CheckCommit {
             check_commit: e,
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+        return (status_code, CreateManyResponse::from(e))
         // return CreateManyResponse::from(e);
-        todo!()
+        // todo!()
     }
     let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
