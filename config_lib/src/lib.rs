@@ -1,4 +1,9 @@
 pub use init_from_env::InitFromEnv;
+
+pub trait GetServerHost {
+    fn get_server_host(&self) -> &std::string::String;
+}
+
 pub use server_port::ServerPort;
 pub use server_port::ServerPortErrorNamed;
 pub use server_port::server_port_try_from_u16;

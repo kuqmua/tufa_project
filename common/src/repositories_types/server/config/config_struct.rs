@@ -1,6 +1,7 @@
 #[derive(Debug, Default, PartialEq, Eq, config_lib::InitFromEnv)]
 pub struct ConfigUnchecked {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
+    server_host: std::string::String,
     server_port: std::primitive::u16,
     hmac_secret: std::string::String,
     base_url: std::string::String,
@@ -31,6 +32,7 @@ pub struct ConfigUnchecked {
     generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields, //todo - add 2 attributes - for reference\borrow(&) and for value(move)
 )]
 pub struct Config {
+    server_host: std::string::String,
     server_port: app_state::ServerPort,
     hmac_secret: secrecy::Secret<std::string::String>,
     base_url: std::string::String,
@@ -59,6 +61,7 @@ pub struct Config {
 impl std::convert::TryFrom<ConfigUnchecked> for Config {
     type Error = ConfigCheckErrorNamed;
     fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
+        let server_host = value.server_host;
         let server_port = match app_state::ServerPort::try_from(value.server_port) {
             Ok(value) => value,
             Err(e) => {
@@ -171,6 +174,7 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
         let enable_api_git_commit_check = value.enable_api_git_commit_check;
         let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
         Ok(Self {
+            server_host,
             server_port,
             hmac_secret,
             base_url,
