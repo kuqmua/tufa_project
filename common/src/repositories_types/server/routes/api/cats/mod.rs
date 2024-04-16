@@ -1870,6 +1870,18 @@ pub async fn create_many_wrapper(
     }
 }
 
+pub struct CreateManyResult(Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>, TryCreateMany>);
+
+impl postgresql_crud::GetAxumHttpStatusCode for CreateManyResult {
+    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
+        match &self.0 {
+            Ok(_) => axum::http::StatusCode::CREATED,
+            Err(e) => e.get_axum_http_status_code(),
+        }
+    }
+}
+//
+
 pub async fn create_many(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     // payload_extraction_result: Result<
