@@ -1,6 +1,4 @@
 SERVICE_SOCKET_ADDRESS="127.0.0.1:8080"
-SERVER_HOST="127.0.0.1" # 127.0.0.1
-SERVER_PORT="8080" # 8080
 HMAC_SECRET="" # super-long-and-secret-random-key-needed-to-verify-message-integrity
 BASE_URL="" # http://127.0.0.1
 ACCESS_CONTROL_MAX_AGE="3600" # Set a maximum time (in seconds) for which this CORS request may be cached

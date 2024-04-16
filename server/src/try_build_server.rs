@@ -213,9 +213,7 @@ pub async fn try_build_server<'a>(
         message: std::string::String::from("shared_message"),
     };
     axum::serve(
-        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(
-            config,
-        ))
+        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config))
         .await
         .unwrap(),
         axum::Router::new()

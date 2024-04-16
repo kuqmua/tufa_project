@@ -2,8 +2,6 @@
 pub struct ConfigUnchecked {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
     service_socket_address: std::string::String,
-    server_host: std::string::String,
-    server_port: std::primitive::u16,
     hmac_secret: std::string::String,
     base_url: std::string::String,
     access_control_max_age: std::primitive::usize,
@@ -34,8 +32,6 @@ pub struct ConfigUnchecked {
 )]
 pub struct Config {
     service_socket_address: std::net::SocketAddr,
-    server_host: std::string::String,
-    server_port: app_state::ServerPort,
     hmac_secret: secrecy::Secret<std::string::String>,
     base_url: std::string::String,
     access_control_max_age: usize,
@@ -67,16 +63,6 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
             Ok(value) => value,
             Err(e) => {
                 return Err(Self::Error::ServiceSocketAddress {
-                    server_port: e,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        let server_host = value.server_host;
-        let server_port = match app_state::ServerPort::try_from(value.server_port) {
-            Ok(value) => value,
-            Err(e) => {
-                return Err(Self::Error::ServerPort {
                     server_port: e,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
@@ -186,8 +172,6 @@ impl std::convert::TryFrom<ConfigUnchecked> for Config {
         let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
         Ok(Self {
             service_socket_address,
-            server_host,
-            server_port,
             hmac_secret,
             base_url,
             access_control_max_age,
@@ -219,11 +203,6 @@ pub enum ConfigCheckErrorNamed {
     ServiceSocketAddress {
         #[eo_display]
         server_port: std::net::AddrParseError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ServerPort {
-        #[eo_display_with_serialize_deserialize]
-        server_port: app_state::ServerPortErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     HmacSecret {

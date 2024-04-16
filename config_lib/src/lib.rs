@@ -4,16 +4,16 @@ pub trait GetServiceSocketAddress {
     fn get_service_socket_address(&self) -> &std::net::SocketAddr;
 }
 
-pub trait GetServerHost {
-    fn get_server_host(&self) -> &std::string::String;
-}
+// pub trait GetServerHost {
+//     fn get_server_host(&self) -> &std::string::String;
+// }
 
 pub use server_port::ServerPort;
 pub use server_port::ServerPortErrorNamed;
 pub use server_port::server_port_try_from_u16;
-pub trait GetServerPort {
-    fn get_server_port(&self) -> &server_port::ServerPort;
-}
+// pub trait GetServerPort {
+//     fn get_server_port(&self) -> &server_port::ServerPort;
+// }
 
 pub trait GetSocketAddr {
     fn get_socket_addr(&self) -> &std::string::String;
