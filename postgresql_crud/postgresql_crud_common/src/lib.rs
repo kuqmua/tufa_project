@@ -6493,10 +6493,6 @@ pub struct OrderBy<ColumnGeneric> {
     pub order: Option<Order>,
 }
 
-pub trait GetAxumHttpStatusCode {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode;
-}
-
 
 
 // impl axum::response::IntoResponse for axum::extract::rejection::JsonRejection {

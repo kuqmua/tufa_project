@@ -892,8 +892,9 @@ pub use postgresql_crud_common::TryGenerateBindIncrementsErrorNamedWithSerialize
 pub use postgresql_crud_common::Value;
 pub use postgresql_crud_common::Order;
 pub use postgresql_crud_common::OrderBy;
-pub use postgresql_crud_common::GetAxumHttpStatusCode;
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
+//
+pub use http_logic::GetAxumHttpStatusCode;
 
 //todo move and reexport traits
 pub trait CombinationOfTraitsForPostgresqlCrudLogic:
