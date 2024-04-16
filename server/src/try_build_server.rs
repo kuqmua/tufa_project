@@ -253,7 +253,7 @@ pub async fn try_build_server<'a>(
             )
             .merge(
                 utoipa_swagger_ui::SwaggerUi::new(
-                    common::global_variables::hardcode::SLASH_SWAGGER_UI,
+                    constants::SLASH_SWAGGER_UI,
                 )
                 .url("/api-docs/openapi.json", {
                     use utoipa::OpenApi;

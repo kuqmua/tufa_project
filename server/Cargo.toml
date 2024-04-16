@@ -73,6 +73,7 @@ generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_fo
 postgresql_crud = {path = "../postgresql_crud"}
 app_state = {path = "../app_state"}
 config_lib = {path = "../config_lib"}
+constants = {path = "../constants"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"

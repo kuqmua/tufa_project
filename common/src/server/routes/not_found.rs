@@ -20,7 +20,7 @@ async fn not_found(
         axum::Json(NotFoundHandle {
             message: format!("No route for {uri}"),
             commit: app_state.get_git_commit_link(),
-            open_api_specification: crate::global_variables::hardcode::SLASH_SWAGGER_UI,
+            open_api_specification: constants::SLASH_SWAGGER_UI,
         }),
     )
 }
