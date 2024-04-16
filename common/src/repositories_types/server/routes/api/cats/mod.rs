@@ -1837,29 +1837,13 @@ pub async fn create_many_wrapper(
         app_state.as_ref(),
         &headers,
     ) {
-        let status_code  = match &e {
-            crate::server::middleware::check_commit::CheckCommitErrorNamed::CommitNotEqual {
-                commit_not_equal: _,
-                commit_to_use: _,
-                code_occurence: _,
-            } => axum::http::StatusCode::BAD_REQUEST,
-            crate::server::middleware::check_commit::CheckCommitErrorNamed::CommitToStrConversion {
-                commit_to_str_conversion: _,
-                code_occurence: _,
-            } => axum::http::StatusCode::BAD_REQUEST,
-            crate::server::middleware::check_commit::CheckCommitErrorNamed::NoCommitHeader {
-                no_commit_header: _,
-                code_occurence: _,
-            } => axum::http::StatusCode::BAD_REQUEST,
-        };
+        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
         let e = CreateManyResponseErrorNamed::CheckCommit {
             check_commit: e,
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return (status_code, CreateManyResponse::from(e))
-        // return CreateManyResponse::from(e);
-        // todo!()
     }
     let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,

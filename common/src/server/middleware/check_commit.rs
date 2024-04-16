@@ -23,9 +23,9 @@ pub enum CheckCommitErrorNamed {
     },
 }
 
-impl axum::response::IntoResponse for CheckCommitErrorNamed {
-    fn into_response(self) -> axum::response::Response {
-        let status_code = match &self {
+impl http_logic::GetAxumHttpStatusCode for CheckCommitErrorNamed {
+    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
+        match self {
             Self::CommitNotEqual {
                 commit_not_equal: _,
                 commit_to_use: _,
@@ -39,10 +39,7 @@ impl axum::response::IntoResponse for CheckCommitErrorNamed {
                 no_commit_header: _,
                 code_occurence: _,
             } => axum::http::StatusCode::BAD_REQUEST,
-        };
-        let mut res = axum::Json(self.into_serialize_deserialize_version()).into_response(); 
-        *res.status_mut() = status_code;
-        res
+        }
     }
 }
 
