@@ -71,6 +71,7 @@ enum_extension = {path = "../enum_extension"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_for_struct_fields"}
 postgresql_crud = {path = "../postgresql_crud"}
+app_state = {path = "../app_state"}
 config_lib = {path = "../config_lib"}
 #
 # async-std = "1.10.0"

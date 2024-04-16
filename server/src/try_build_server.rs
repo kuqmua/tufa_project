@@ -203,7 +203,7 @@ pub async fn try_build_server<'a>(
 ) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
     println!(
         "server running on {}",
-        common::common::config::get_server_address::GetServerAddress::get_server_address(&config)
+        app_state::GetServerAddress::get_server_address(&config)
     );
     let app_state = std::sync::Arc::new(
         common::repositories_types::server::routes::app_state::AppState {
@@ -216,7 +216,7 @@ pub async fn try_build_server<'a>(
         message: std::string::String::from("shared_message"),
     };
     axum::serve(
-        tokio::net::TcpListener::bind(common::common::config::get_server_address::GetServerAddress::get_server_address(
+        tokio::net::TcpListener::bind(app_state::GetServerAddress::get_server_address(
             config,
         ))
         .await

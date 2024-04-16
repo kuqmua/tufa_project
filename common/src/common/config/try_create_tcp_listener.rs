@@ -18,7 +18,7 @@ pub enum TryCreateTcpListenerErrorNamed {
 
 impl<'a, SelfGeneric> TryCreateTcpListener<'a> for SelfGeneric
 where
-    Self: crate::common::config::get_server_address::GetServerAddress,
+    Self: app_state::GetServerAddress,
 {
     fn try_create_tcp_listener(
         &self,
