@@ -25,16 +25,3 @@ pub use config_lib::GetMaximumSizeOfHttpBodyInBytes;
 pub trait GetPostgresPool {
     fn get_postgres_pool(&self) -> &sqlx::PgPool;
 }
-
-pub trait GetServerAddress {
-    fn get_server_address(&self) -> std::string::String;
-}
-
-impl<SelfGeneric> GetServerAddress for SelfGeneric
-where
-    Self: config_lib::GetServerHost + config_lib::GetServerPort,
-{
-    fn get_server_address(&self) -> std::string::String {
-        format!("{}:{}", *self.get_server_host(), *self.get_server_port())
-    }
-}

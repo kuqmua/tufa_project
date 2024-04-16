@@ -18,7 +18,7 @@ pub enum TryCreateTcpListenerErrorNamed {
 
 impl<'a, SelfGeneric> TryCreateTcpListener<'a> for SelfGeneric
 where
-    Self: app_state::GetServerAddress,
+    Self: app_state::GetServiceSocketAddress,
 {
     fn try_create_tcp_listener(
         &self,
@@ -26,7 +26,7 @@ where
         std::net::TcpListener,
         Box<crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed>,
     > {
-        match std::net::TcpListener::bind(self.get_server_address()) {
+        match std::net::TcpListener::bind(self.get_service_socket_address()) {
             Ok(listener) => Ok(listener),
             Err(e) => {
                 Err(Box::new(crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed::TcpListenerBind {

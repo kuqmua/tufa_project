@@ -241,7 +241,7 @@
 //         .expect("inside spawn_app Client::builder().redirect().cookie_store().build() failed");
 //     let test_app = TestApp {
 //         address: {
-//             use common::common::config::get_server_address::GetServerAddress;
+//             use common::common::config::get_service_socket_address::GetServiceSocketAddress;
 //             config.get_server_address()
 //         },
 //         port: application_port,
