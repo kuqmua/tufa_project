@@ -36,7 +36,7 @@ impl<'a> app_state::GetPostgresPool for AppState<'a> {
     }
 }
 
-impl<'a> crate::common::git::get_git_commit_link::GetGitCommitLink for AppState<'a> {
+impl<'a> git_info::GetGitCommitLink for AppState<'a> {
     fn get_git_commit_link(&self) -> std::string::String {
         self.project_git_info.get_git_commit_link()
     }
