@@ -6,10 +6,7 @@
 )]
 #![allow(clippy::too_many_arguments)]
 
-pub mod client;
 pub mod common;
-pub mod global_variables;
-pub mod proc_macros;
 pub mod repositories_types;
 pub mod server;
 
