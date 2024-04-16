@@ -1,6 +1,5 @@
 pub mod extractors;
 // pub mod file_system;
-pub mod middleware;
 // pub mod mongo;
 pub mod net;
 pub mod postgres;

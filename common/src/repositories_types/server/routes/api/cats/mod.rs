@@ -1294,7 +1294,7 @@ pub enum CreateManyResponse {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     CheckBodySize {
-        check_body_size: crate::server::middleware::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //
@@ -1402,7 +1402,7 @@ pub enum CreateManyResponseErrorNamed {
     },
     CheckBodySize {
         #[eo_error_occurence]
-        check_body_size: crate::server::middleware::check_body_size::CheckBodySizeErrorNamed,
+        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     //
@@ -1849,7 +1849,7 @@ pub async fn create_many_wrapper(
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return (status_code, CreateManyResponse::from(e))
     }
-    let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+    let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
         Err(e) => {
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
