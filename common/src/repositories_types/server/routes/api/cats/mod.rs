@@ -1830,6 +1830,10 @@ pub async fn create_many_wrapper(
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
     >,
     request: axum::extract::Request
+
+    //         let mut res = axum::Json(self.into_serialize_deserialize_version()).into_response(); 
+//         *res.status_mut() = status_code;
+//         res
 ) -> (axum::http::StatusCode, CreateManyResponse) {//CreateManyResponse
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
@@ -1848,13 +1852,13 @@ pub async fn create_many_wrapper(
     let body_bytes = match crate::server::middleware::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
         Err(e) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
             let e = CreateManyResponseErrorNamed::CheckBodySize {
                 check_body_size: e,
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            // return CreateManyResponse::from(e);
-            todo!()
+            return (status_code, CreateManyResponse::from(e))
         }
     };
     // match create_many(app_state.as_ref(), body_bytes).await {
