@@ -1644,150 +1644,150 @@ impl std::convert::From<CreateManyResponseErrorNamed> for CreateManyResponse {
 }
 
 //todo remove it and make struct CreateManyResponseWrapper { status: StatusCode, json: CreateManyResponse } and impl for that axum::response::IntoResponse
-impl axum::response::IntoResponse for CreateManyResponse {
-    fn into_response(self) -> axum::response::Response {
-        match &self {
-            Self::CheckCommit {
-                check_commit: _,
-                code_occurence: _,
-            } => {
-                let mut res = axum::Json(self).into_response(); 
-                *res.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                res
-            },
-            Self::CheckBodySize {
-                check_body_size: _,
-                code_occurence: _,
-            } => {
-                let mut res = axum::Json(self).into_response(); 
-                *res.status_mut() = axum::http::StatusCode::PAYLOAD_TOO_LARGE;
-                res
-            },
-            Self:: Desirable(_) =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            } 
+// impl axum::response::IntoResponse for CreateManyResponse {
+//     fn into_response(self) -> axum::response::Response {
+//         match &self {
+//             Self::CheckCommit {
+//                 check_commit: _,
+//                 code_occurence: _,
+//             } => {
+//                 let mut res = axum::Json(self).into_response(); 
+//                 *res.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+//                 res
+//             },
+//             Self::CheckBodySize {
+//                 check_body_size: _,
+//                 code_occurence: _,
+//             } => {
+//                 let mut res = axum::Json(self).into_response(); 
+//                 *res.status_mut() = axum::http::StatusCode::PAYLOAD_TOO_LARGE;
+//                 res
+//             },
+//             Self:: Desirable(_) =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             } 
             
-            Self:: Configuration
-            { configuration : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: Database
-            { database : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: Io
-            { io : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: Tls
-            { tls : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: Protocol
-            { protocol : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: RowNotFound
-            { row_not_found : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: TypeNotFound
-            { type_not_found : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: ColumnIndexOutOfBounds
-            { column_index_out_of_bounds : _, len : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: ColumnNotFound
-            { column_not_found : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: ColumnDecode
-            { column_decode_index : _, source_handle : _, code_occurence : _ }
-            =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: Decode
-            { decode : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: PoolTimedOut
-            { pool_timed_out : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: PoolClosed
-            { pool_closed : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: WorkerCrashed
-            { worker_crashed : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: Migrate
-            { migrate : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: JsonDataError
-            { json_data_error : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: JsonSyntaxError
-            { json_syntax_error : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: MissingJsonContentType
-            { missing_json_content_type : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: BytesRejection
-            { bytes_rejection : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: UnexpectedCase
-            { unexpected_case : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self:: BindQuery
-            { bind_query : _, code_occurence : _ } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, Self::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
-                : _, code_occurence : _
-            } =>
-            {
-                let mut res = axum :: Json(self).into_response() ; *
-                res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
-            }, 
-        }
-    }
-}
+//             Self:: Configuration
+//             { configuration : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: Database
+//             { database : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: Io
+//             { io : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: Tls
+//             { tls : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: Protocol
+//             { protocol : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: RowNotFound
+//             { row_not_found : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: TypeNotFound
+//             { type_not_found : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: ColumnIndexOutOfBounds
+//             { column_index_out_of_bounds : _, len : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: ColumnNotFound
+//             { column_not_found : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: ColumnDecode
+//             { column_decode_index : _, source_handle : _, code_occurence : _ }
+//             =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: Decode
+//             { decode : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: PoolTimedOut
+//             { pool_timed_out : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: PoolClosed
+//             { pool_closed : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: WorkerCrashed
+//             { worker_crashed : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: Migrate
+//             { migrate : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: JsonDataError
+//             { json_data_error : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: JsonSyntaxError
+//             { json_syntax_error : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: MissingJsonContentType
+//             { missing_json_content_type : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: BytesRejection
+//             { bytes_rejection : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: UnexpectedCase
+//             { unexpected_case : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self:: BindQuery
+//             { bind_query : _, code_occurence : _ } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, Self::
+//             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+//             {
+//                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
+//                 : _, code_occurence : _
+//             } =>
+//             {
+//                 let mut res = axum :: Json(self).into_response() ; *
+//                 res.status_mut() = axum :: http :: StatusCode :: CREATED ; res
+//             }, 
+//         }
+//     }
+// }
 
 // impl std::convert::From<TryCreateManyResponseVariants> for CreateManyResponse {
 //     fn from(value: TryCreateManyResponseVariants) -> Self {
@@ -1825,6 +1825,20 @@ impl axum::response::IntoResponse for CreateManyResponse {
 //     }
 // }
 
+pub struct CreateManyResponseWrapper {
+    status_code: axum::http::StatusCode,
+    body: CreateManyResponse,
+}
+
+impl axum::response::IntoResponse for CreateManyResponseWrapper {
+    fn into_response(self) -> axum::response::Response {
+        let mut res = axum::Json(self.body).into_response(); 
+        *res.status_mut() = self.status_code;
+        res
+    }
+}
+
+
 pub async fn create_many_wrapper(
     app_state: axum::extract::State<
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
@@ -1834,7 +1848,7 @@ pub async fn create_many_wrapper(
     //         let mut res = axum::Json(self.into_serialize_deserialize_version()).into_response(); 
 //         *res.status_mut() = status_code;
 //         res
-) -> (axum::http::StatusCode, CreateManyResponse) {//CreateManyResponse
+) -> CreateManyResponseWrapper {//CreateManyResponse
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(e) = route_validators::check_commit::check_commit(
@@ -1847,7 +1861,10 @@ pub async fn create_many_wrapper(
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-        return (status_code, CreateManyResponse::from(e))
+        return CreateManyResponseWrapper {
+            status_code,
+            body: CreateManyResponse::from(e),
+        };
     }
     let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
@@ -1858,22 +1875,30 @@ pub async fn create_many_wrapper(
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return (status_code, CreateManyResponse::from(e))
+            return CreateManyResponseWrapper {
+                status_code,
+                body: CreateManyResponse::from(e),
+            };
         }
     };
-    // match create_many(app_state.as_ref(), body_bytes).await {
-    //     Ok(value) => 
-    //     // CreateManyResponse::Desirable(value)
-    //     todo!()
-    //     ,
-    //     Err(e) => {
-    //         let e = CreateManyResponseErrorNamed::from(e);
-    //         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-    //         // return CreateManyResponse::from(e);
-    //         todo!()
-    //     }
-    // }
-    todo!()
+    match create_many(app_state.as_ref(), body_bytes).await {
+        Ok(value) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
+            return CreateManyResponseWrapper {
+                status_code,
+                body: CreateManyResponse::Desirable(value.0),
+            };
+        },
+        Err(e) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
+            let e = CreateManyResponseErrorNamed::from(e);
+            error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+            return CreateManyResponseWrapper {
+                status_code,
+                body: CreateManyResponse::from(e),
+            };
+        }
+    }
 }
 
 pub struct CreateManyDesirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>);
@@ -1883,7 +1908,6 @@ impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
         axum::http::StatusCode::CREATED
     }
 }
-//
 
 pub async fn create_many(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
