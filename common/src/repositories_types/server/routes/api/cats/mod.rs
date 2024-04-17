@@ -204,7 +204,7 @@ pub struct Dog {
     error_occurence_lib :: ErrorOccurence,
     from_sqlx_postgres_error :: FromSqlxPostgresError,
 )]
-pub enum TryCreateMany {
+pub enum CreateManyGeneratedRouteLogicErrorNamed {
     Configuration {
         #[eo_display_with_serialize_deserialize]
         configuration: std::string::String,
@@ -323,7 +323,7 @@ pub enum TryCreateMany {
     },
 }
 
-impl postgresql_crud::GetAxumHttpStatusCode for TryCreateMany {
+impl postgresql_crud::GetAxumHttpStatusCode for CreateManyGeneratedRouteLogicErrorNamed {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         match self {
             Self::Configuration {
@@ -421,72 +421,72 @@ impl postgresql_crud::GetAxumHttpStatusCode for TryCreateMany {
 }
 
 //
-impl std::convert::From<TryCreateMany> for CreateManyResponseErrorNamed {
-    fn from(value: TryCreateMany) -> Self {
+impl std::convert::From<CreateManyGeneratedRouteLogicErrorNamed> for CreateManyResponseErrorNamed {
+    fn from(value: CreateManyGeneratedRouteLogicErrorNamed) -> Self {
         match value {
-            TryCreateMany :: Configuration
+            CreateManyGeneratedRouteLogicErrorNamed :: Configuration
             { configuration, code_occurence } => Self :: Configuration
             { configuration, code_occurence },
-            TryCreateMany :: Database
+            CreateManyGeneratedRouteLogicErrorNamed :: Database
             { database, code_occurence } => Self :: Database
             { database, code_occurence },
-            TryCreateMany :: Io { io, code_occurence }
+            CreateManyGeneratedRouteLogicErrorNamed :: Io { io, code_occurence }
             => Self :: Io { io, code_occurence },
-            TryCreateMany :: Tls
+            CreateManyGeneratedRouteLogicErrorNamed :: Tls
             { tls, code_occurence } => Self :: Tls { tls, code_occurence },
-            TryCreateMany :: Protocol
+            CreateManyGeneratedRouteLogicErrorNamed :: Protocol
             { protocol, code_occurence } => Self :: Protocol
             { protocol, code_occurence },
-            TryCreateMany :: RowNotFound
+            CreateManyGeneratedRouteLogicErrorNamed :: RowNotFound
             { row_not_found, code_occurence } => Self :: RowNotFound
             { row_not_found, code_occurence },
-            TryCreateMany :: TypeNotFound
+            CreateManyGeneratedRouteLogicErrorNamed :: TypeNotFound
             { type_not_found, code_occurence } => Self :: TypeNotFound
             { type_not_found, code_occurence },
-            TryCreateMany :: ColumnIndexOutOfBounds
+            CreateManyGeneratedRouteLogicErrorNamed :: ColumnIndexOutOfBounds
             { column_index_out_of_bounds, len, code_occurence } => Self ::
             ColumnIndexOutOfBounds
             { column_index_out_of_bounds, len, code_occurence },
-            TryCreateMany :: ColumnNotFound
+            CreateManyGeneratedRouteLogicErrorNamed :: ColumnNotFound
             { column_not_found, code_occurence } => Self :: ColumnNotFound
             { column_not_found, code_occurence },
-            TryCreateMany :: ColumnDecode
+            CreateManyGeneratedRouteLogicErrorNamed :: ColumnDecode
             { column_decode_index, source_handle, code_occurence } => Self ::
             ColumnDecode
             { column_decode_index, source_handle, code_occurence },
-            TryCreateMany :: Decode
+            CreateManyGeneratedRouteLogicErrorNamed :: Decode
             { decode, code_occurence } => Self :: Decode
-            { decode, code_occurence }, TryCreateMany
+            { decode, code_occurence }, CreateManyGeneratedRouteLogicErrorNamed
             :: PoolTimedOut { pool_timed_out, code_occurence } => Self ::
             PoolTimedOut { pool_timed_out, code_occurence },
-            TryCreateMany :: PoolClosed
+            CreateManyGeneratedRouteLogicErrorNamed :: PoolClosed
             { pool_closed, code_occurence } => Self :: PoolClosed
             { pool_closed, code_occurence },
-            TryCreateMany :: WorkerCrashed
+            CreateManyGeneratedRouteLogicErrorNamed :: WorkerCrashed
             { worker_crashed, code_occurence } => Self :: WorkerCrashed
             { worker_crashed, code_occurence },
-            TryCreateMany :: Migrate
+            CreateManyGeneratedRouteLogicErrorNamed :: Migrate
             { migrate, code_occurence } => Self :: Migrate
-            { migrate, code_occurence }, TryCreateMany
+            { migrate, code_occurence }, CreateManyGeneratedRouteLogicErrorNamed
             :: JsonDataError { json_data_error, code_occurence } => Self ::
             JsonDataError { json_data_error, code_occurence },
-            TryCreateMany :: JsonSyntaxError
+            CreateManyGeneratedRouteLogicErrorNamed :: JsonSyntaxError
             { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
             { json_syntax_error, code_occurence },
-            TryCreateMany :: MissingJsonContentType
+            CreateManyGeneratedRouteLogicErrorNamed :: MissingJsonContentType
             { missing_json_content_type, code_occurence } => Self ::
             MissingJsonContentType
             { missing_json_content_type, code_occurence },
-            TryCreateMany :: BytesRejection
+            CreateManyGeneratedRouteLogicErrorNamed :: BytesRejection
             { bytes_rejection, code_occurence } => Self :: BytesRejection
             { bytes_rejection, code_occurence },
-            TryCreateMany :: UnexpectedCase
+            CreateManyGeneratedRouteLogicErrorNamed :: UnexpectedCase
             { unexpected_case, code_occurence } => Self :: UnexpectedCase
             { unexpected_case, code_occurence },
-            TryCreateMany :: BindQuery
+            CreateManyGeneratedRouteLogicErrorNamed :: BindQuery
             { bind_query, code_occurence } => Self :: BindQuery
             { bind_query, code_occurence },
-            TryCreateMany ::
+            CreateManyGeneratedRouteLogicErrorNamed ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
@@ -947,31 +947,31 @@ pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
 pub async fn create_many(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     body_bytes: bytes::Bytes,
-) -> Result<CreateManyDesirable, TryCreateMany> {
+) -> Result<CreateManyDesirable, CreateManyGeneratedRouteLogicErrorNamed> {
     let parameters = CreateManyParameters {
         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
             Ok(axum::Json(value)) => CreateManyPayload::from(value),
             Err(e) => match e {
                 axum::extract::rejection::JsonRejection::JsonDataError(value) => {
-                    return Err(TryCreateMany::JsonDataError {
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed::JsonDataError {
                         json_data_error: value,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 },
                 axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
-                    return Err(TryCreateMany::JsonSyntaxError {
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed::JsonSyntaxError {
                         json_syntax_error: value,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 },
                 axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
-                    return Err(TryCreateMany::MissingJsonContentType {
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed::MissingJsonContentType {
                         missing_json_content_type: value.to_string(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 },
                 axum::extract::rejection::JsonRejection::BytesRejection(value) => {
-                    return Err(TryCreateMany::BytesRejection {
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed::BytesRejection {
                         bytes_rejection: value.to_string(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
@@ -979,7 +979,7 @@ pub async fn create_many(
                 },
                 // this variant exists coz JsonRejection is non exhaustive
                 _ => {
-                    return Err(TryCreateMany::UnexpectedCase {
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed::UnexpectedCase {
                         unexpected_case: std::string::String::from("Unknown error"),//todo reuse
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
@@ -1034,13 +1034,13 @@ pub async fn create_many(
         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
             Ok(value) => value,
             Err(e) => {
-                return Err(TryCreateMany::from(e));
+                return Err(CreateManyGeneratedRouteLogicErrorNamed::from(e));
             }
         };
         let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
             Ok(value) => value,
             Err(e) => {
-                return Err(TryCreateMany::from(e));
+                return Err(CreateManyGeneratedRouteLogicErrorNamed::from(e));
             }
         };
         let mut rows = binded_query.fetch(pg_connection.as_mut());
@@ -1054,7 +1054,7 @@ pub async fn create_many(
             {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(TryCreateMany::from(e));
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed::from(e));
                 }
             }
         } {
@@ -1072,7 +1072,7 @@ pub async fn create_many(
                     );
                 }
                 Err(e) => {
-                    return Err(TryCreateMany ::
+                    return Err(CreateManyGeneratedRouteLogicErrorNamed ::
                     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
                     {
                         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
@@ -1196,7 +1196,7 @@ pub enum TryCreateManyErrorNamed {
     },
     ExpectedType {
         #[eo_display_with_serialize_deserialize]
-        expected_type: TryCreateManyWithSerializeDeserialize,
+        expected_type: CreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     UnexpectedStatusCode {
@@ -1361,7 +1361,6 @@ pub enum TryCreateManyErrorNamed {
             std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    //
 }
 
 pub async fn try_create_many<'a>(
@@ -1912,7 +1911,6 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        //
     }
 }
  
