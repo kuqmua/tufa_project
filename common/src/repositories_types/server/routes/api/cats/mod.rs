@@ -198,11 +198,11 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-pub struct CreateManyResponseWrapper {
+pub struct CreateManyRouteLogicResponse {
     status_code: axum::http::StatusCode,
     body: CreateManyRouteLogicResponseVariants,
 }
-impl axum::response::IntoResponse for CreateManyResponseWrapper {
+impl axum::response::IntoResponse for CreateManyRouteLogicResponse {
     fn into_response(self) -> axum::response::Response {
         let mut res = axum::Json(self.body).into_response(); 
         *res.status_mut() = self.status_code;
@@ -652,7 +652,7 @@ pub async fn create_many_wrapper(
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
     >,
     request: axum::extract::Request
-) -> CreateManyResponseWrapper {
+) -> CreateManyRouteLogicResponse {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(e) = route_validators::check_commit::check_commit(
@@ -665,7 +665,7 @@ pub async fn create_many_wrapper(
             code_occurence: error_occurence_lib::code_occurence!(),
         };
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-        return CreateManyResponseWrapper {
+        return CreateManyRouteLogicResponse {
             status_code,
             body: CreateManyRouteLogicResponseVariants::from(e),
         };
@@ -679,7 +679,7 @@ pub async fn create_many_wrapper(
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return CreateManyResponseWrapper {
+            return CreateManyRouteLogicResponse {
                 status_code,
                 body: CreateManyRouteLogicResponseVariants::from(e),
             };
@@ -688,7 +688,7 @@ pub async fn create_many_wrapper(
     match create_many(app_state.as_ref(), body_bytes).await {
         Ok(value) => {
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
-            return CreateManyResponseWrapper {
+            return CreateManyRouteLogicResponse {
                 status_code,
                 body: CreateManyRouteLogicResponseVariants::Desirable(value.0),
             };
@@ -697,7 +697,7 @@ pub async fn create_many_wrapper(
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
             let e = CreateManyRouteLogicErrorNamed::from(e);
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return CreateManyResponseWrapper {
+            return CreateManyRouteLogicResponse {
                 status_code,
                 body: CreateManyRouteLogicResponseVariants::from(e),
             };
