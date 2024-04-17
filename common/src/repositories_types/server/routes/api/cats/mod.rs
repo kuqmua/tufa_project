@@ -198,227 +198,7 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-#[derive(
-    Debug,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-    from_sqlx_postgres_error :: FromSqlxPostgresError,
-)]
-pub enum CreateManyGeneratedRouteLogicErrorNamed {
-    Configuration {
-        #[eo_display_with_serialize_deserialize]
-        configuration: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Database {
-        #[eo_display_with_serialize_deserialize]
-        database: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Io {
-        #[eo_display]
-        io: std::io::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Tls {
-        #[eo_display_with_serialize_deserialize]
-        tls: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Protocol {
-        #[eo_display_with_serialize_deserialize]
-        protocol: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    RowNotFound {
-        #[eo_display_with_serialize_deserialize]
-        row_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    TypeNotFound {
-        #[eo_display_with_serialize_deserialize]
-        type_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnIndexOutOfBounds {
-        #[eo_display_with_serialize_deserialize]
-        column_index_out_of_bounds: usize,
-        #[eo_display_with_serialize_deserialize]
-        len: usize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnNotFound {
-        #[eo_display_with_serialize_deserialize]
-        column_not_found: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ColumnDecode {
-        #[eo_display_with_serialize_deserialize]
-        column_decode_index: std::string::String,
-        #[eo_display_with_serialize_deserialize]
-        source_handle: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Decode {
-        #[eo_display_with_serialize_deserialize]
-        decode: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PoolTimedOut {
-        #[eo_display_with_serialize_deserialize]
-        pool_timed_out: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    PoolClosed {
-        #[eo_display_with_serialize_deserialize]
-        pool_closed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    WorkerCrashed {
-        #[eo_display_with_serialize_deserialize]
-        worker_crashed: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Migrate {
-        #[eo_display]
-        migrate: sqlx::migrate::MigrateError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonDataError {
-        #[eo_display]
-        json_data_error: axum::extract::rejection::JsonDataError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonSyntaxError {
-        #[eo_display]
-        json_syntax_error: axum::extract::rejection::JsonSyntaxError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        #[eo_display_with_serialize_deserialize]
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        #[eo_display_with_serialize_deserialize]
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        #[eo_display_with_serialize_deserialize]
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        #[eo_error_occurence]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        #[eo_display]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 
-impl postgresql_crud::GetAxumHttpStatusCode for CreateManyGeneratedRouteLogicErrorNamed {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        match self {
-            Self::Configuration {
-                configuration,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,//todo fix status code
-            Self::Database {
-                database,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::Io {
-                io,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::Tls {
-                tls,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::Protocol {
-                protocol,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::TypeNotFound {
-                type_not_found,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::ColumnIndexOutOfBounds {
-                column_index_out_of_bounds,
-                len,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::ColumnNotFound {
-                column_not_found,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::ColumnDecode {
-                column_decode_index,
-                source_handle,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::Decode {
-                decode,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::PoolClosed {
-                pool_closed,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::WorkerCrashed {
-                worker_crashed,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::Migrate {
-                migrate,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::JsonDataError {
-                json_data_error,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::JsonSyntaxError {
-                json_syntax_error,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::MissingJsonContentType {
-                missing_json_content_type,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::BytesRejection {
-                bytes_rejection,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::UnexpectedCase {
-                unexpected_case,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::BindQuery {
-                bind_query,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-            Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence,
-            } => axum::http::StatusCode::CREATED,
-        }
-    }
-}
 
 //
 impl std::convert::From<CreateManyGeneratedRouteLogicErrorNamed> for CreateManyResponseErrorNamed {
@@ -503,7 +283,7 @@ impl std::convert::From<CreateManyGeneratedRouteLogicErrorNamed> for CreateManyR
 
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub enum CreateManyResponse {
+pub enum CreateManyResponseVariants {
     //
     CheckCommit {
         check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
@@ -741,7 +521,7 @@ pub enum CreateManyResponseErrorNamed {
     //
 }
 
-impl std::convert::From<CreateManyResponseErrorNamed> for CreateManyResponse {
+impl std::convert::From<CreateManyResponseErrorNamed> for CreateManyResponseVariants {
     fn from(
         value: CreateManyResponseErrorNamed,
     ) -> Self {
@@ -861,7 +641,7 @@ impl std::convert::From<CreateManyResponseErrorNamed> for CreateManyResponse {
 
 pub struct CreateManyResponseWrapper {
     status_code: axum::http::StatusCode,
-    body: CreateManyResponse,
+    body: CreateManyResponseVariants,
 }
 
 impl axum::response::IntoResponse for CreateManyResponseWrapper {
@@ -892,7 +672,7 @@ pub async fn create_many_wrapper(
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return CreateManyResponseWrapper {
             status_code,
-            body: CreateManyResponse::from(e),
+            body: CreateManyResponseVariants::from(e),
         };
     }
     let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
@@ -906,7 +686,7 @@ pub async fn create_many_wrapper(
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             return CreateManyResponseWrapper {
                 status_code,
-                body: CreateManyResponse::from(e),
+                body: CreateManyResponseVariants::from(e),
             };
         }
     };
@@ -915,7 +695,7 @@ pub async fn create_many_wrapper(
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
             return CreateManyResponseWrapper {
                 status_code,
-                body: CreateManyResponse::Desirable(value.0),
+                body: CreateManyResponseVariants::Desirable(value.0),
             };
         },
         Err(e) => {
@@ -924,8 +704,232 @@ pub async fn create_many_wrapper(
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             return CreateManyResponseWrapper {
                 status_code,
-                body: CreateManyResponse::from(e),
+                body: CreateManyResponseVariants::from(e),
             };
+        }
+    }
+}
+
+///////////////////////////////////////
+
+#[derive(
+    Debug,
+    thiserror :: Error,
+    error_occurence_lib :: ErrorOccurence,
+    from_sqlx_postgres_error :: FromSqlxPostgresError,
+)]
+pub enum CreateManyGeneratedRouteLogicErrorNamed {
+    Configuration {
+        #[eo_display_with_serialize_deserialize]
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        #[eo_display_with_serialize_deserialize]
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        #[eo_display]
+        io: std::io::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        #[eo_display_with_serialize_deserialize]
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        #[eo_display_with_serialize_deserialize]
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowNotFound {
+        #[eo_display_with_serialize_deserialize]
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TypeNotFound {
+        #[eo_display_with_serialize_deserialize]
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        #[eo_display_with_serialize_deserialize]
+        column_index_out_of_bounds: usize,
+        #[eo_display_with_serialize_deserialize]
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        #[eo_display_with_serialize_deserialize]
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        #[eo_display_with_serialize_deserialize]
+        column_decode_index: std::string::String,
+        #[eo_display_with_serialize_deserialize]
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        #[eo_display_with_serialize_deserialize]
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolTimedOut {
+        #[eo_display_with_serialize_deserialize]
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        #[eo_display_with_serialize_deserialize]
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        #[eo_display_with_serialize_deserialize]
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        #[eo_display]
+        migrate: sqlx::migrate::MigrateError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        #[eo_display]
+        json_data_error: axum::extract::rejection::JsonDataError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        #[eo_display]
+        json_syntax_error: axum::extract::rejection::JsonSyntaxError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        #[eo_display_with_serialize_deserialize]
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        #[eo_display_with_serialize_deserialize]
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        #[eo_display_with_serialize_deserialize]
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        #[eo_error_occurence]
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+    {
+        #[eo_display]
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+            sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+
+impl postgresql_crud::GetAxumHttpStatusCode for CreateManyGeneratedRouteLogicErrorNamed {
+    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
+        match self {
+            Self::Configuration {
+                configuration,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,//todo fix status code
+            Self::Database {
+                database,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::Io {
+                io,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::Tls {
+                tls,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::Protocol {
+                protocol,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::Decode {
+                decode,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::Migrate {
+                migrate,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::BindQuery {
+                bind_query,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
+            Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                code_occurence,
+            } => axum::http::StatusCode::CREATED,
         }
     }
 }
@@ -1349,7 +1353,7 @@ pub async fn try_create_many<'a>(
             });
         }
     };
-    let expected_response = match serde_json::from_str::<CreateManyResponse>(&response_text) {
+    let expected_response = match serde_json::from_str::<CreateManyResponseVariants>(&response_text) {
         Ok(value) => value,
         Err(e) => {
             return Err(TryCreateManyErrorNamed::DeserializeResponse {
@@ -1373,14 +1377,14 @@ pub async fn try_create_many<'a>(
         }
     };
     match expected_response {
-        CreateManyResponse::Desirable(value) => Ok(
+        CreateManyResponseVariants::Desirable(value) => Ok(
             value
             .into_iter()
             .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
             .collect()
         ),
         //
-        CreateManyResponse::CheckCommit {
+        CreateManyResponseVariants::CheckCommit {
             check_commit,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::CheckCommit{
@@ -1398,7 +1402,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::CheckBodySize {
+        CreateManyResponseVariants::CheckBodySize {
             check_body_size,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::CheckBodySize{
@@ -1417,7 +1421,7 @@ pub async fn try_create_many<'a>(
             ),
         }),
         //
-        CreateManyResponse::Configuration {
+        CreateManyResponseVariants::Configuration {
             configuration,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Configuration{
@@ -1435,7 +1439,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::Database {
+        CreateManyResponseVariants::Database {
             database,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Database{
@@ -1453,7 +1457,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::Io {
+        CreateManyResponseVariants::Io {
             io,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Io{
@@ -1471,7 +1475,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::Tls {
+        CreateManyResponseVariants::Tls {
             tls,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Tls{
@@ -1489,7 +1493,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::Protocol {
+        CreateManyResponseVariants::Protocol {
             protocol,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Protocol{
@@ -1507,7 +1511,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::RowNotFound {
+        CreateManyResponseVariants::RowNotFound {
             row_not_found,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::RowNotFound{
@@ -1525,7 +1529,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::TypeNotFound {
+        CreateManyResponseVariants::TypeNotFound {
             type_not_found,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::TypeNotFound{
@@ -1543,7 +1547,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::ColumnIndexOutOfBounds {
+        CreateManyResponseVariants::ColumnIndexOutOfBounds {
             column_index_out_of_bounds,
             len,
             code_occurence,
@@ -1563,7 +1567,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::ColumnNotFound {
+        CreateManyResponseVariants::ColumnNotFound {
             column_not_found,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::ColumnNotFound{
@@ -1581,7 +1585,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::ColumnDecode {
+        CreateManyResponseVariants::ColumnDecode {
             column_decode_index,
             source_handle,
             code_occurence,
@@ -1601,7 +1605,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::Decode {
+        CreateManyResponseVariants::Decode {
             decode,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Decode{
@@ -1619,7 +1623,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::PoolTimedOut {
+        CreateManyResponseVariants::PoolTimedOut {
             pool_timed_out,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::PoolTimedOut{
@@ -1637,7 +1641,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::PoolClosed {
+        CreateManyResponseVariants::PoolClosed {
             pool_closed,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::PoolClosed{
@@ -1655,7 +1659,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::WorkerCrashed {
+        CreateManyResponseVariants::WorkerCrashed {
             worker_crashed,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::WorkerCrashed{
@@ -1673,7 +1677,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::Migrate {
+        CreateManyResponseVariants::Migrate {
             migrate,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Migrate{
@@ -1691,7 +1695,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::JsonDataError {
+        CreateManyResponseVariants::JsonDataError {
             json_data_error,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::JsonDataError{
@@ -1709,7 +1713,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::JsonSyntaxError {
+        CreateManyResponseVariants::JsonSyntaxError {
             json_syntax_error,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::JsonSyntaxError{
@@ -1727,7 +1731,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::MissingJsonContentType {
+        CreateManyResponseVariants::MissingJsonContentType {
             missing_json_content_type,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::MissingJsonContentType{
@@ -1745,7 +1749,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::BytesRejection {
+        CreateManyResponseVariants::BytesRejection {
             bytes_rejection,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::BytesRejection{
@@ -1763,7 +1767,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::UnexpectedCase {
+        CreateManyResponseVariants::UnexpectedCase {
             unexpected_case,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::UnexpectedCase{
@@ -1781,7 +1785,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::BindQuery {
+        CreateManyResponseVariants::BindQuery {
             bind_query,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::BindQuery{
@@ -1799,7 +1803,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponse::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+        CreateManyResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer{
