@@ -1355,24 +1355,23 @@ pub async fn try_create_many<'a>(
     let response_text = match response.text().await {
         Ok(response_text) => response_text,
         Err(e) => {
-            // return Err(TryCreateManyErrorNamed::FailedToGetResponseText {
-            //     reqwest: e,
-            //     status_code,
-            //     headers,
-            //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-            //         file!().to_string(),
-            //         line!(),
-            //         column!(),
-            //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-            //             file: std::string::String::from(
-            //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-            //             ),
-            //             line: 1607,
-            //             column: 13,
-            //         }),
-            //     ),
-            // });
-            todo!()
+            return Err(TryCreateManyErrorNamed::FailedToGetResponseText {
+                reqwest: e,
+                status_code,
+                headers,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1607,
+                        column: 13,
+                    }),
+                ),
+            });
         }
     };
     let variants = if status_code == http::StatusCode::CREATED {
