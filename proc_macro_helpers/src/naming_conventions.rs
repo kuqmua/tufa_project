@@ -1652,3 +1652,36 @@ where
 //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {url_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 // }
 //
+
+// CreateManyGeneratedRouteLogicErrorNamed
+// pub trait SelfGeneratedRouteLogicUpperCamelCaseStringified {
+//     fn try_self_generated_route_logic_upper_camel_case_stringified(&self) -> std::string::String;
+// }
+
+// impl<T> TrySelfGeneratedRouteLogicUpperCamelCaseStringified for T
+// where
+//     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+// {
+//     fn try_self_generated_route_logic_upper_camel_case_stringified(&self) -> std::string::String {
+//         format!(
+//             "{}{}",
+//             <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
+//             self.to_upper_camel_case_stringified(),
+//         )
+//     }
+// }
+
+// pub trait TrySelfUpperCamelCaseTokenStream {
+//     fn try_self_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+// }
+
+// impl<T> TrySelfUpperCamelCaseTokenStream for T
+// where
+//     T: TrySelfGeneratedRouteLogicUpperCamelCaseStringified,
+// {
+//     fn try_self_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+//         let value = self.try_self_generated_route_logic_upper_camel_case_stringified();
+//         value.parse::<proc_macro2::TokenStream>()
+//         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//     }
+// }

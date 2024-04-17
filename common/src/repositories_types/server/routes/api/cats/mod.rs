@@ -647,7 +647,7 @@ impl std::convert::From<TryCreateManyGeneratedRouteLogicErrorNamed> for CreateMa
     }
 }
 
-pub async fn create_many_wrapper(
+pub async fn try_create_many_route_logic(
     app_state: axum::extract::State<
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
     >,
@@ -1057,6 +1057,7 @@ impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
     }
 }
 
+//todo remove pub from gen
 pub async fn create_many(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     body_bytes: bytes::Bytes,
