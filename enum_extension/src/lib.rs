@@ -42,14 +42,14 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         }),
         _ => panic!("EnumIntoArray works only on enums"),
     };
-    let name = &ast.ident;
+    let ident = &ast.ident;
     let gen = quote::quote! {
-        impl #name {
+        impl #ident {
             pub fn get_length() -> std::primitive::usize {
                 #len
             }
-            pub fn into_array() -> [#name; #len] {
-                [ #(#name::#variants),* ]
+            pub fn into_array() -> [#ident; #len] {
+                [ #(#ident::#variants),* ]
             }
             pub fn into_vec() -> std::vec::Vec<Self> {
                 let mut self_vec = std::vec::Vec::with_capacity(Self::get_length());
