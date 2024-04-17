@@ -685,7 +685,7 @@ pub async fn try_create_many_route_logic(
             };
         }
     };
-    match create_many(app_state.as_ref(), body_bytes).await {
+    match try_create_many_generated_route_logic(app_state.as_ref(), body_bytes).await {
         Ok(value) => {
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
             return TryCreateManyRouteLogicResponse {
@@ -1050,18 +1050,18 @@ impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogic
     }
 }
 
-pub struct CreateManyDesirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>);
-impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
+pub struct CreateManyGeneratedRouteLogicDesirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>);
+impl postgresql_crud::GetAxumHttpStatusCode for CreateManyGeneratedRouteLogicDesirable {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         axum::http::StatusCode::CREATED
     }
 }
 
 //todo remove pub from gen
-pub async fn create_many(
+pub async fn try_create_many_generated_route_logic(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     body_bytes: bytes::Bytes,
-) -> Result<CreateManyDesirable, TryCreateManyGeneratedRouteLogicErrorNamed> {
+) -> Result<CreateManyGeneratedRouteLogicDesirable, TryCreateManyGeneratedRouteLogicErrorNamed> {
     let parameters = CreateManyParameters {
         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
             Ok(axum::Json(value)) => CreateManyPayload::from(value),
@@ -1203,7 +1203,7 @@ pub async fn create_many(
                 }
             }
         }
-        Ok(CreateManyDesirable(vec_values))
+        Ok(CreateManyGeneratedRouteLogicDesirable(vec_values))
     }
 }
 /////////////////////////////////////////
