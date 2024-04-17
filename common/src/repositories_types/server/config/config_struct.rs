@@ -200,6 +200,11 @@ impl Config {
         }
         #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
         enum ConfigCheckErrorNamed {
+            // ConfigUnchecked {
+            //     #[eo_display]
+            //     config_unchecked_error: ConfigUncheckedError,
+            //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+            // },
             ServiceSocketAddress {
                 #[eo_display]
                 server_port: std::net::AddrParseError,
