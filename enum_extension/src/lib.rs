@@ -45,14 +45,14 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
     let name = &ast.ident;
     let gen = quote::quote! {
         impl #name {
-            pub fn get_length() -> usize {
+            pub fn get_length() -> std::primitive::usize {
                 #len
             }
             pub fn into_array() -> [#name; #len] {
                 [ #(#name::#variants),* ]
             }
-            pub fn into_vec() -> Vec<Self> {
-                let mut self_vec = Vec::with_capacity(Self::get_length());
+            pub fn into_vec() -> std::vec::Vec<Self> {
+                let mut self_vec = std::vec::Vec::with_capacity(Self::get_length());
                 for self_variant in {
                     use strum::IntoEnumIterator;
                     Self::iter()
@@ -61,8 +61,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 }
                 self_vec
             }
-            pub fn into_string_name_and_variant_hashmap() -> std::collections::HashMap<String, Self> {
-                let mut variants_hashmap: std::collections::HashMap<String, Self> =
+            pub fn into_string_name_and_variant_hashmap() -> std::collections::HashMap<std::string::String, Self> {
+                let mut variants_hashmap: std::collections::HashMap<std::string::String, Self> =
                     std::collections::HashMap::with_capacity(Self::get_length());
                 for variant in {
                     use strum::IntoEnumIterator;
@@ -72,8 +72,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 }
                 variants_hashmap
             }
-            pub fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)> {
-                let mut variants_vec = Vec::with_capacity(Self::get_length());
+            pub fn into_string_name_and_variant_tuple_vec() -> std::vec::Vec<(std::string::String, Self)> {
+                let mut variants_vec = std::vec::Vec::with_capacity(Self::get_length());
                 for variant in {
                     use strum::IntoEnumIterator;
                     Self::iter()
