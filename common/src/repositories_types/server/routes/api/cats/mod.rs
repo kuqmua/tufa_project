@@ -198,89 +198,17 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-
-
-//
-impl std::convert::From<CreateManyGeneratedRouteLogicErrorNamed> for CreateManyRouteLogicErrorNamed {
-    fn from(value: CreateManyGeneratedRouteLogicErrorNamed) -> Self {
-        match value {
-            CreateManyGeneratedRouteLogicErrorNamed :: Configuration
-            { configuration, code_occurence } => Self :: Configuration
-            { configuration, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: Database
-            { database, code_occurence } => Self :: Database
-            { database, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: Io { io, code_occurence }
-            => Self :: Io { io, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: Tls
-            { tls, code_occurence } => Self :: Tls { tls, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: Protocol
-            { protocol, code_occurence } => Self :: Protocol
-            { protocol, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: RowNotFound
-            { row_not_found, code_occurence } => Self :: RowNotFound
-            { row_not_found, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: TypeNotFound
-            { type_not_found, code_occurence } => Self :: TypeNotFound
-            { type_not_found, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence } => Self ::
-            ColumnIndexOutOfBounds
-            { column_index_out_of_bounds, len, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: ColumnNotFound
-            { column_not_found, code_occurence } => Self :: ColumnNotFound
-            { column_not_found, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: ColumnDecode
-            { column_decode_index, source_handle, code_occurence } => Self ::
-            ColumnDecode
-            { column_decode_index, source_handle, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: Decode
-            { decode, code_occurence } => Self :: Decode
-            { decode, code_occurence }, CreateManyGeneratedRouteLogicErrorNamed
-            :: PoolTimedOut { pool_timed_out, code_occurence } => Self ::
-            PoolTimedOut { pool_timed_out, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: PoolClosed
-            { pool_closed, code_occurence } => Self :: PoolClosed
-            { pool_closed, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: WorkerCrashed
-            { worker_crashed, code_occurence } => Self :: WorkerCrashed
-            { worker_crashed, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: Migrate
-            { migrate, code_occurence } => Self :: Migrate
-            { migrate, code_occurence }, CreateManyGeneratedRouteLogicErrorNamed
-            :: JsonDataError { json_data_error, code_occurence } => Self ::
-            JsonDataError { json_data_error, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: BytesRejection
-            { bytes_rejection, code_occurence } => Self :: BytesRejection
-            { bytes_rejection, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: UnexpectedCase
-            { unexpected_case, code_occurence } => Self :: UnexpectedCase
-            { unexpected_case, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed :: BindQuery
-            { bind_query, code_occurence } => Self :: BindQuery
-            { bind_query, code_occurence },
-            CreateManyGeneratedRouteLogicErrorNamed ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            } => Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            }
-        }
+pub struct CreateManyResponseWrapper {
+    status_code: axum::http::StatusCode,
+    body: CreateManyRouteLogicResponseVariants,
+}
+impl axum::response::IntoResponse for CreateManyResponseWrapper {
+    fn into_response(self) -> axum::response::Response {
+        let mut res = axum::Json(self.body).into_response(); 
+        *res.status_mut() = self.status_code;
+        res
     }
 }
-
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub enum CreateManyRouteLogicResponseVariants {
@@ -387,6 +315,124 @@ pub enum CreateManyRouteLogicResponseVariants {
             std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+}
+
+impl std::convert::From<CreateManyRouteLogicErrorNamed> for CreateManyRouteLogicResponseVariants {
+    fn from(
+        value: CreateManyRouteLogicErrorNamed,
+    ) -> Self {
+        match value {
+            CreateManyRouteLogicErrorNamed::CheckCommit {
+                check_commit,
+                code_occurence,
+            } => Self::CheckCommit {
+                check_commit: check_commit.into_serialize_deserialize_version(),
+                code_occurence,
+            },
+            CreateManyRouteLogicErrorNamed::CheckBodySize {
+                check_body_size,
+                code_occurence,
+            } => Self::CheckBodySize {
+                check_body_size: check_body_size.into_serialize_deserialize_version(),
+                code_occurence,
+            },
+            //
+            // CreateManyRouteLogicErrorNamed::Desirable(value) => Self::Desirable(value),
+            CreateManyRouteLogicErrorNamed::Configuration {
+                configuration,
+                code_occurence,
+            } => Self::Configuration { configuration, code_occurence },
+            CreateManyRouteLogicErrorNamed::Database {
+                database,
+                code_occurence,
+            } => Self::Database { database, code_occurence },
+            CreateManyRouteLogicErrorNamed::Io {
+                io,
+                code_occurence,
+            } => Self::Io { io: io.to_string(), code_occurence },
+            CreateManyRouteLogicErrorNamed::Tls {
+                tls,
+                code_occurence,
+            } => Self::Tls { tls, code_occurence },
+            CreateManyRouteLogicErrorNamed::Protocol {
+                protocol,
+                code_occurence,
+            } => Self::Protocol { protocol, code_occurence },
+            CreateManyRouteLogicErrorNamed::RowNotFound {
+                row_not_found,
+                code_occurence,
+            } => Self::RowNotFound { row_not_found, code_occurence },
+            CreateManyRouteLogicErrorNamed::TypeNotFound {
+                type_not_found,
+                code_occurence,
+            } => Self::TypeNotFound { type_not_found, code_occurence },
+            CreateManyRouteLogicErrorNamed::ColumnIndexOutOfBounds {
+                column_index_out_of_bounds,
+                len,
+                code_occurence,
+            } => Self::ColumnIndexOutOfBounds { column_index_out_of_bounds, len, code_occurence },
+            CreateManyRouteLogicErrorNamed::ColumnNotFound {
+                column_not_found,
+                code_occurence,
+            } => Self::ColumnNotFound { column_not_found, code_occurence },
+            CreateManyRouteLogicErrorNamed::ColumnDecode {
+                column_decode_index,
+                source_handle,
+                code_occurence,
+            } => Self::ColumnDecode { column_decode_index, source_handle, code_occurence },
+            CreateManyRouteLogicErrorNamed::Decode {
+                decode,
+                code_occurence,
+            } => Self::Decode { decode, code_occurence },
+            CreateManyRouteLogicErrorNamed::PoolTimedOut {
+                pool_timed_out,
+                code_occurence,
+            } => Self::PoolTimedOut { pool_timed_out, code_occurence },
+            CreateManyRouteLogicErrorNamed::PoolClosed {
+                pool_closed,
+                code_occurence,
+            } => Self::PoolClosed { pool_closed, code_occurence },
+            CreateManyRouteLogicErrorNamed::WorkerCrashed {
+                worker_crashed,
+                code_occurence,
+            } => Self::WorkerCrashed { worker_crashed, code_occurence },
+            CreateManyRouteLogicErrorNamed::Migrate {
+                migrate,
+                code_occurence,
+            } => Self::Migrate { migrate: migrate.to_string(), code_occurence },
+            CreateManyRouteLogicErrorNamed::JsonDataError {
+                json_data_error,
+                code_occurence,
+            } => Self::JsonDataError { json_data_error: json_data_error.to_string(), code_occurence },
+            CreateManyRouteLogicErrorNamed::JsonSyntaxError {
+                json_syntax_error,
+                code_occurence,
+            } => Self::JsonSyntaxError { json_syntax_error: json_syntax_error.to_string(), code_occurence },
+            CreateManyRouteLogicErrorNamed::MissingJsonContentType {
+                missing_json_content_type,
+                code_occurence,
+            } => Self::MissingJsonContentType { missing_json_content_type, code_occurence },
+            CreateManyRouteLogicErrorNamed::BytesRejection {
+                bytes_rejection,
+                code_occurence,
+            } => Self::BytesRejection { bytes_rejection, code_occurence },
+            CreateManyRouteLogicErrorNamed::UnexpectedCase {
+                unexpected_case,
+                code_occurence,
+            } => Self::UnexpectedCase { unexpected_case, code_occurence },
+            CreateManyRouteLogicErrorNamed::BindQuery {
+                bind_query,
+                code_occurence,
+            } => Self::BindQuery { bind_query: bind_query.into_serialize_deserialize_version(), code_occurence },
+            CreateManyRouteLogicErrorNamed::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                code_occurence,
+            } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer { 
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server.to_string(), 
+                code_occurence 
+            },
+        }
+    }
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -521,134 +567,83 @@ pub enum CreateManyRouteLogicErrorNamed {
     //
 }
 
-impl std::convert::From<CreateManyRouteLogicErrorNamed> for CreateManyRouteLogicResponseVariants {
-    fn from(
-        value: CreateManyRouteLogicErrorNamed,
-    ) -> Self {
+impl std::convert::From<CreateManyGeneratedRouteLogicErrorNamed> for CreateManyRouteLogicErrorNamed {
+    fn from(value: CreateManyGeneratedRouteLogicErrorNamed) -> Self {
         match value {
-            CreateManyRouteLogicErrorNamed::CheckCommit {
-                check_commit,
-                code_occurence,
-            } => Self::CheckCommit {
-                check_commit: check_commit.into_serialize_deserialize_version(),
-                code_occurence,
-            },
-            CreateManyRouteLogicErrorNamed::CheckBodySize {
-                check_body_size,
-                code_occurence,
-            } => Self::CheckBodySize {
-                check_body_size: check_body_size.into_serialize_deserialize_version(),
-                code_occurence,
-            },
-            //
-            // CreateManyRouteLogicErrorNamed::Desirable(value) => Self::Desirable(value),
-            CreateManyRouteLogicErrorNamed::Configuration {
-                configuration,
-                code_occurence,
-            } => Self::Configuration { configuration, code_occurence },
-            CreateManyRouteLogicErrorNamed::Database {
-                database,
-                code_occurence,
-            } => Self::Database { database, code_occurence },
-            CreateManyRouteLogicErrorNamed::Io {
-                io,
-                code_occurence,
-            } => Self::Io { io: io.to_string(), code_occurence },
-            CreateManyRouteLogicErrorNamed::Tls {
-                tls,
-                code_occurence,
-            } => Self::Tls { tls, code_occurence },
-            CreateManyRouteLogicErrorNamed::Protocol {
-                protocol,
-                code_occurence,
-            } => Self::Protocol { protocol, code_occurence },
-            CreateManyRouteLogicErrorNamed::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound { row_not_found, code_occurence },
-            CreateManyRouteLogicErrorNamed::TypeNotFound {
-                type_not_found,
-                code_occurence,
-            } => Self::TypeNotFound { type_not_found, code_occurence },
-            CreateManyRouteLogicErrorNamed::ColumnIndexOutOfBounds {
-                column_index_out_of_bounds,
-                len,
-                code_occurence,
-            } => Self::ColumnIndexOutOfBounds { column_index_out_of_bounds, len, code_occurence },
-            CreateManyRouteLogicErrorNamed::ColumnNotFound {
-                column_not_found,
-                code_occurence,
-            } => Self::ColumnNotFound { column_not_found, code_occurence },
-            CreateManyRouteLogicErrorNamed::ColumnDecode {
-                column_decode_index,
-                source_handle,
-                code_occurence,
-            } => Self::ColumnDecode { column_decode_index, source_handle, code_occurence },
-            CreateManyRouteLogicErrorNamed::Decode {
-                decode,
-                code_occurence,
-            } => Self::Decode { decode, code_occurence },
-            CreateManyRouteLogicErrorNamed::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut { pool_timed_out, code_occurence },
-            CreateManyRouteLogicErrorNamed::PoolClosed {
-                pool_closed,
-                code_occurence,
-            } => Self::PoolClosed { pool_closed, code_occurence },
-            CreateManyRouteLogicErrorNamed::WorkerCrashed {
-                worker_crashed,
-                code_occurence,
-            } => Self::WorkerCrashed { worker_crashed, code_occurence },
-            CreateManyRouteLogicErrorNamed::Migrate {
-                migrate,
-                code_occurence,
-            } => Self::Migrate { migrate: migrate.to_string(), code_occurence },
-            CreateManyRouteLogicErrorNamed::JsonDataError {
-                json_data_error,
-                code_occurence,
-            } => Self::JsonDataError { json_data_error: json_data_error.to_string(), code_occurence },
-            CreateManyRouteLogicErrorNamed::JsonSyntaxError {
-                json_syntax_error,
-                code_occurence,
-            } => Self::JsonSyntaxError { json_syntax_error: json_syntax_error.to_string(), code_occurence },
-            CreateManyRouteLogicErrorNamed::MissingJsonContentType {
-                missing_json_content_type,
-                code_occurence,
-            } => Self::MissingJsonContentType { missing_json_content_type, code_occurence },
-            CreateManyRouteLogicErrorNamed::BytesRejection {
-                bytes_rejection,
-                code_occurence,
-            } => Self::BytesRejection { bytes_rejection, code_occurence },
-            CreateManyRouteLogicErrorNamed::UnexpectedCase {
-                unexpected_case,
-                code_occurence,
-            } => Self::UnexpectedCase { unexpected_case, code_occurence },
-            CreateManyRouteLogicErrorNamed::BindQuery {
-                bind_query,
-                code_occurence,
-            } => Self::BindQuery { bind_query: bind_query.into_serialize_deserialize_version(), code_occurence },
-            CreateManyRouteLogicErrorNamed::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+            CreateManyGeneratedRouteLogicErrorNamed :: Configuration
+            { configuration, code_occurence } => Self :: Configuration
+            { configuration, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: Database
+            { database, code_occurence } => Self :: Database
+            { database, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: Io { io, code_occurence }
+            => Self :: Io { io, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: Tls
+            { tls, code_occurence } => Self :: Tls { tls, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: Protocol
+            { protocol, code_occurence } => Self :: Protocol
+            { protocol, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: RowNotFound
+            { row_not_found, code_occurence } => Self :: RowNotFound
+            { row_not_found, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: TypeNotFound
+            { type_not_found, code_occurence } => Self :: TypeNotFound
+            { type_not_found, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: ColumnIndexOutOfBounds
+            { column_index_out_of_bounds, len, code_occurence } => Self ::
+            ColumnIndexOutOfBounds
+            { column_index_out_of_bounds, len, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: ColumnNotFound
+            { column_not_found, code_occurence } => Self :: ColumnNotFound
+            { column_not_found, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: ColumnDecode
+            { column_decode_index, source_handle, code_occurence } => Self ::
+            ColumnDecode
+            { column_decode_index, source_handle, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: Decode
+            { decode, code_occurence } => Self :: Decode
+            { decode, code_occurence }, CreateManyGeneratedRouteLogicErrorNamed
+            :: PoolTimedOut { pool_timed_out, code_occurence } => Self ::
+            PoolTimedOut { pool_timed_out, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: PoolClosed
+            { pool_closed, code_occurence } => Self :: PoolClosed
+            { pool_closed, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: WorkerCrashed
+            { worker_crashed, code_occurence } => Self :: WorkerCrashed
+            { worker_crashed, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: Migrate
+            { migrate, code_occurence } => Self :: Migrate
+            { migrate, code_occurence }, CreateManyGeneratedRouteLogicErrorNamed
+            :: JsonDataError { json_data_error, code_occurence } => Self ::
+            JsonDataError { json_data_error, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: JsonSyntaxError
+            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            { json_syntax_error, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: MissingJsonContentType
+            { missing_json_content_type, code_occurence } => Self ::
+            MissingJsonContentType
+            { missing_json_content_type, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: BytesRejection
+            { bytes_rejection, code_occurence } => Self :: BytesRejection
+            { bytes_rejection, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: UnexpectedCase
+            { unexpected_case, code_occurence } => Self :: UnexpectedCase
+            { unexpected_case, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed :: BindQuery
+            { bind_query, code_occurence } => Self :: BindQuery
+            { bind_query, code_occurence },
+            CreateManyGeneratedRouteLogicErrorNamed ::
+            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+            {
                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence,
-            } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer { 
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server.to_string(), 
-                code_occurence 
-            },
+                code_occurence
+            } => Self ::
+            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+            {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                code_occurence
+            }
         }
-    }
-}
-
-pub struct CreateManyResponseWrapper {
-    status_code: axum::http::StatusCode,
-    body: CreateManyRouteLogicResponseVariants,
-}
-
-impl axum::response::IntoResponse for CreateManyResponseWrapper {
-    fn into_response(self) -> axum::response::Response {
-        let mut res = axum::Json(self.body).into_response(); 
-        *res.status_mut() = self.status_code;
-        res
     }
 }
 
@@ -935,13 +930,11 @@ impl postgresql_crud::GetAxumHttpStatusCode for CreateManyGeneratedRouteLogicErr
 }
 
 pub struct CreateManyDesirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>);
-
 impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         axum::http::StatusCode::CREATED
     }
 }
-
 
 pub use postgresql_crud::StdOptionOptionStdPrimitiveBool;
 pub use postgresql_crud::StdOptionOptionStdPrimitiveI16;
