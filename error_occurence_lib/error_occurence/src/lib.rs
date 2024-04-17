@@ -20,6 +20,7 @@
         eo_display_foreign_type,
         eo_display_foreign_type_with_serialize_deserialize,
         eo_error_occurence,
+        //todo error_occurence version for - after errors after deserialization
         eo_vec_display,//todo maybe add version without generation \n for each element?
         eo_vec_display_with_serialize_deserialize,
         eo_vec_display_foreign_type,

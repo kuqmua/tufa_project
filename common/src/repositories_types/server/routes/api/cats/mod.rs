@@ -938,6 +938,12 @@ impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
     }
 }
 
+
+pub use postgresql_crud::StdOptionOptionStdPrimitiveBool;
+pub use postgresql_crud::StdOptionOptionStdPrimitiveI16;
+pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
+// pub use postgresql_crud::StdOptionOptionStdPrimitiveI64;
+
 pub async fn create_many(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     body_bytes: bytes::Bytes,
@@ -1227,7 +1233,137 @@ pub enum TryCreateManyErrorNamed {
         reqwest: reqwest::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+
+    //
+    CheckCommit {
+        #[eo_display_with_serialize_deserialize]
+        check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckBodySize {
+        #[eo_display_with_serialize_deserialize]
+        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
+    Configuration {
+        #[eo_display_with_serialize_deserialize]
+        configuration: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Database {
+        #[eo_display_with_serialize_deserialize]
+        database: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Io {
+        #[eo_display_with_serialize_deserialize]
+        io: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Tls {
+        #[eo_display_with_serialize_deserialize]
+        tls: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Protocol {
+        #[eo_display_with_serialize_deserialize]
+        protocol: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowNotFound {
+        #[eo_display_with_serialize_deserialize]
+        row_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TypeNotFound {
+        #[eo_display_with_serialize_deserialize]
+        type_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnIndexOutOfBounds {
+        #[eo_display_with_serialize_deserialize]
+        column_index_out_of_bounds: usize,
+        #[eo_display_with_serialize_deserialize]
+        len: usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnNotFound {
+        #[eo_display_with_serialize_deserialize]
+        column_not_found: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ColumnDecode {
+        #[eo_display_with_serialize_deserialize]
+        column_decode_index: std::string::String,
+        #[eo_display_with_serialize_deserialize]
+        source_handle: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Decode {
+        #[eo_display_with_serialize_deserialize]
+        decode: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolTimedOut {
+        #[eo_display_with_serialize_deserialize]
+        pool_timed_out: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PoolClosed {
+        #[eo_display_with_serialize_deserialize]
+        pool_closed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    WorkerCrashed {
+        #[eo_display_with_serialize_deserialize]
+        worker_crashed: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Migrate {
+        #[eo_display_with_serialize_deserialize]
+        migrate: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonDataError {
+        #[eo_display_with_serialize_deserialize]
+        json_data_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    JsonSyntaxError {
+        #[eo_display_with_serialize_deserialize]
+        json_syntax_error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MissingJsonContentType {
+        #[eo_display_with_serialize_deserialize]
+        missing_json_content_type: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BytesRejection {
+        #[eo_display_with_serialize_deserialize]
+        bytes_rejection: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    UnexpectedCase {
+        #[eo_display_with_serialize_deserialize]
+        unexpected_case: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        #[eo_display_with_serialize_deserialize]
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+        #[eo_display_with_serialize_deserialize]
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
+
 pub async fn try_create_many<'a>(
     server_location: &str,
     parameters: CreateManyParameters,
@@ -1308,175 +1444,475 @@ pub async fn try_create_many<'a>(
             });
         }
     };
-    let variants = if status_code == http::StatusCode::CREATED {
-        // match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr201Created>(&response_text) {
-        //     Ok(value) => 
-        //         // TryCreateManyResponseVariants::from(value)
-        //         todo!()
-        //         ,
-        //     Err(e) => {
-        //         // return Err(TryCreateManyErrorNamed::DeserializeResponse {
-        //         //     serde: e,
-        //         //     status_code,
-        //         //     headers,
-        //         //     response_text,
-        //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-        //         //         file!().to_string(),
-        //         //         line!(),
-        //         //         column!(),
-        //         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-        //         //             file: std::string::String::from(
-        //         //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-        //         //             ),
-        //         //             line: 1644,
-        //         //             column: 13,
-        //         //         }),
-        //         //     ),
-        //         // });
-        //         todo!()
-        //     }
-        // }
-        todo!()
-    } else if status_code == http::StatusCode::REQUEST_TIMEOUT {
-        // match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr408RequestTimeout>(
-        //     &response_text,
-        // ) {
-        //     Ok(value) => 
-        //         // TryCreateManyResponseVariants::from(value)
-        //         todo!()
-        //         ,
-        //     Err(e) => {
-        //         // return Err(TryCreateManyErrorNamed::DeserializeResponse {
-        //         //     serde: e,
-        //         //     status_code,
-        //         //     headers,
-        //         //     response_text,
-        //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-        //         //         file!().to_string(),
-        //         //         line!(),
-        //         //         column!(),
-        //         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-        //         //             file: std::string::String::from(
-        //         //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-        //         //             ),
-        //         //             line: 1644,
-        //         //             column: 13,
-        //         //         }),
-        //         //     ),
-        //         // });
-        //         todo!()
-        //     }
-        // }
-        todo!()
-    } else if status_code == http::StatusCode::BAD_REQUEST {
-        // match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr400BadRequest>(
-        //     &response_text,
-        // ) {
-        //     Ok(value) => 
-        //         // TryCreateManyResponseVariants::from(value)
-        //         todo!()
-        //         ,
-        //     Err(e) => {
-        //         // return Err(TryCreateManyErrorNamed::DeserializeResponse {
-        //         //     serde: e,
-        //         //     status_code,
-        //         //     headers,
-        //         //     response_text,
-        //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-        //         //         file!().to_string(),
-        //         //         line!(),
-        //         //         column!(),
-        //         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-        //         //             file: std::string::String::from(
-        //         //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-        //         //             ),
-        //         //             line: 1644,
-        //         //             column: 13,
-        //         //         }),
-        //         //     ),
-        //         // });
-        //         todo!()
-        //     }
-        // }
-        todo!()
-    } else if status_code == http::StatusCode::NOT_FOUND {
-        // match serde_json::from_str::<TryCreateManyResponseVariantsTvfrr404NotFound>(&response_text)
-        // {
-        //     Ok(value) => 
-        //         // TryCreateManyResponseVariants::from(value)
-        //         todo!()
-        //         ,
-        //     Err(e) => {
-        //         // return Err(TryCreateManyErrorNamed::DeserializeResponse {
-        //         //     serde: e,
-        //         //     status_code,
-        //         //     headers,
-        //         //     response_text,
-        //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-        //         //         file!().to_string(),
-        //         //         line!(),
-        //         //         column!(),
-        //         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-        //         //             file: std::string::String::from(
-        //         //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-        //         //             ),
-        //         //             line: 1644,
-        //         //             column: 13,
-        //         //         }),
-        //         //     ),
-        //         // });
-        //         todo!()
-        //     }
-        // }
-        todo!()
-    } else {
-        // return Err(TryCreateManyErrorNamed::UnexpectedStatusCode {
-        //     status_code,
-        //     headers,
-        //     response_text_result:
-        //         crate::common::api_request_unexpected_error::ResponseTextResult::ResponseText(
-        //             response_text,
-        //         ),
-        //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-        //         file!().to_string(),
-        //         line!(),
-        //         column!(),
-        //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-        //             file: std::string::String::from(
-        //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-        //             ),
-        //             line: 1572,
-        //             column: 13,
-        //         }),
-        //     ),
-        // });
-        todo!()
+    let expected_response = match serde_json::from_str::<CreateManyResponse>(&response_text) {
+        Ok(value) => value,
+        Err(e) => {
+            return Err(TryCreateManyErrorNamed::DeserializeResponse {
+                serde: e,
+                status_code,
+                headers,
+                response_text,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_string(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1644,
+                        column: 13,
+                    }),
+                ),
+            });
+        }
     };
-    // match std::vec::Vec::<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>::try_from(
-    //     variants,
-    // ) {
-    //     Ok(value) => Ok(value
-    //         .into_iter()
-    //         .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
-    //         .collect()),
-    //     Err(e) => {
-    //         // return Err(TryCreateManyErrorNamed::ExpectedType {
-    //         //     expected_type: e,
-    //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-    //         //         file!().to_string(),
-    //         //         line!(),
-    //         //         column!(),
-    //         //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-    //         //             file: std::string::String::from(
-    //         //                 "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-    //         //             ),
-    //         //             line: 1534,
-    //         //             column: 13,
-    //         //         }),
-    //         //     ),
-    //         // });
-    //         todo!()
-    //     }
-    // }
-    todo!()
+    match expected_response {
+        CreateManyResponse::Desirable(value) => Ok(
+            value
+            .into_iter()
+            .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
+            .collect()
+        ),
+        //
+        CreateManyResponse::CheckCommit {
+            check_commit,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::CheckCommit{
+            check_commit,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::CheckBodySize {
+            check_body_size,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::CheckBodySize{
+            check_body_size,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        //
+        CreateManyResponse::Configuration {
+            configuration,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Configuration{
+            configuration,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::Database {
+            database,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Database{
+            database,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::Io {
+            io,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Io{
+            io,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::Tls {
+            tls,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Tls{
+            tls,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::Protocol {
+            protocol,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Protocol{
+            protocol,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::RowNotFound {
+            row_not_found,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::RowNotFound{
+            row_not_found,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::TypeNotFound {
+            type_not_found,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::TypeNotFound{
+            type_not_found,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::ColumnIndexOutOfBounds {
+            column_index_out_of_bounds,
+            len,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::ColumnIndexOutOfBounds{
+            column_index_out_of_bounds,
+            len,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::ColumnNotFound {
+            column_not_found,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::ColumnNotFound{
+            column_not_found,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::ColumnDecode {
+            column_decode_index,
+            source_handle,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::ColumnDecode{
+            column_decode_index,
+            source_handle,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::Decode {
+            decode,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Decode{
+            decode,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::PoolTimedOut {
+            pool_timed_out,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::PoolTimedOut{
+            pool_timed_out,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::PoolClosed {
+            pool_closed,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::PoolClosed{
+            pool_closed,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::WorkerCrashed {
+            worker_crashed,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::WorkerCrashed{
+            worker_crashed,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::Migrate {
+            migrate,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::Migrate{
+            migrate,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::JsonDataError {
+            json_data_error,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::JsonDataError{
+            json_data_error,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::JsonSyntaxError {
+            json_syntax_error,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::JsonSyntaxError{
+            json_syntax_error,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::MissingJsonContentType {
+            missing_json_content_type,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::MissingJsonContentType{
+            missing_json_content_type,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::BytesRejection {
+            bytes_rejection,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::BytesRejection{
+            bytes_rejection,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::UnexpectedCase {
+            unexpected_case,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::UnexpectedCase{
+            unexpected_case,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::BindQuery {
+            bind_query,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::BindQuery{
+            bind_query,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        CreateManyResponse::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+            code_occurence,
+        } => Err(TryCreateManyErrorNamed::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer{
+            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_string(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from(
+                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                    ),
+                    line: 1644,
+                    column: 13,
+                }),
+            ),
+        }),
+        //
+    }
 }
+ 
