@@ -731,6 +731,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let reexport_postgresql_sqlx_column_types_token_stream = fields_named.iter().map(|element|{
+        let inner_type_token_stream = &element.inner_type_token_stream;
+        quote::quote! {pub use #inner_type_token_stream;}
+    });
     let reference_api_location_test_token_stream = quote::quote! {&api_location};
     let additional_http_status_codes_error_variants_snake_case_stringified =
         "additional_http_status_codes_error_variants";
@@ -7240,6 +7244,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #primary_key_try_get_sqlx_row_token_stream
         #allow_methods_token_stream
         #ident_column_read_permission_token_stream
+        #(#reexport_postgresql_sqlx_column_types_token_stream)*
         // #[cfg(test)]
         // mod test_try_create_many {
             #emulate_crud_api_usage_test_token_stream

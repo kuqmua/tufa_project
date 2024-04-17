@@ -936,11 +936,6 @@ impl postgresql_crud::GetAxumHttpStatusCode for CreateManyDesirable {
     }
 }
 
-pub use postgresql_crud::StdOptionOptionStdPrimitiveBool;
-pub use postgresql_crud::StdOptionOptionStdPrimitiveI16;
-pub use postgresql_crud::StdOptionOptionStdPrimitiveI32;
-// pub use postgresql_crud::StdOptionOptionStdPrimitiveI64;
-
 pub async fn create_many(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
     body_bytes: bytes::Bytes,
