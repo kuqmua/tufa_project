@@ -283,7 +283,7 @@ impl std::convert::From<CreateManyGeneratedRouteLogicErrorNamed> for CreateManyR
 
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub enum CreateManyResponseVariants {
+pub enum CreateManyRouteLogicResponseVariants {
     //
     CheckCommit {
         check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
@@ -521,7 +521,7 @@ pub enum CreateManyRouteLogicErrorNamed {
     //
 }
 
-impl std::convert::From<CreateManyRouteLogicErrorNamed> for CreateManyResponseVariants {
+impl std::convert::From<CreateManyRouteLogicErrorNamed> for CreateManyRouteLogicResponseVariants {
     fn from(
         value: CreateManyRouteLogicErrorNamed,
     ) -> Self {
@@ -641,7 +641,7 @@ impl std::convert::From<CreateManyRouteLogicErrorNamed> for CreateManyResponseVa
 
 pub struct CreateManyResponseWrapper {
     status_code: axum::http::StatusCode,
-    body: CreateManyResponseVariants,
+    body: CreateManyRouteLogicResponseVariants,
 }
 
 impl axum::response::IntoResponse for CreateManyResponseWrapper {
@@ -672,7 +672,7 @@ pub async fn create_many_wrapper(
         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
         return CreateManyResponseWrapper {
             status_code,
-            body: CreateManyResponseVariants::from(e),
+            body: CreateManyRouteLogicResponseVariants::from(e),
         };
     }
     let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
@@ -686,7 +686,7 @@ pub async fn create_many_wrapper(
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             return CreateManyResponseWrapper {
                 status_code,
-                body: CreateManyResponseVariants::from(e),
+                body: CreateManyRouteLogicResponseVariants::from(e),
             };
         }
     };
@@ -695,7 +695,7 @@ pub async fn create_many_wrapper(
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
             return CreateManyResponseWrapper {
                 status_code,
-                body: CreateManyResponseVariants::Desirable(value.0),
+                body: CreateManyRouteLogicResponseVariants::Desirable(value.0),
             };
         },
         Err(e) => {
@@ -704,7 +704,7 @@ pub async fn create_many_wrapper(
             error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             return CreateManyResponseWrapper {
                 status_code,
-                body: CreateManyResponseVariants::from(e),
+                body: CreateManyRouteLogicResponseVariants::from(e),
             };
         }
     }
@@ -1353,7 +1353,7 @@ pub async fn try_create_many<'a>(
             });
         }
     };
-    let expected_response = match serde_json::from_str::<CreateManyResponseVariants>(&response_text) {
+    let expected_response = match serde_json::from_str::<CreateManyRouteLogicResponseVariants>(&response_text) {
         Ok(value) => value,
         Err(e) => {
             return Err(TryCreateManyErrorNamed::DeserializeResponse {
@@ -1377,14 +1377,14 @@ pub async fn try_create_many<'a>(
         }
     };
     match expected_response {
-        CreateManyResponseVariants::Desirable(value) => Ok(
+        CreateManyRouteLogicResponseVariants::Desirable(value) => Ok(
             value
             .into_iter()
             .map(|element| postgresql_crud::StdPrimitiveI64::from(element))
             .collect()
         ),
         //
-        CreateManyResponseVariants::CheckCommit {
+        CreateManyRouteLogicResponseVariants::CheckCommit {
             check_commit,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::CheckCommit{
@@ -1402,7 +1402,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::CheckBodySize {
+        CreateManyRouteLogicResponseVariants::CheckBodySize {
             check_body_size,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::CheckBodySize{
@@ -1421,7 +1421,7 @@ pub async fn try_create_many<'a>(
             ),
         }),
         //
-        CreateManyResponseVariants::Configuration {
+        CreateManyRouteLogicResponseVariants::Configuration {
             configuration,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Configuration{
@@ -1439,7 +1439,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::Database {
+        CreateManyRouteLogicResponseVariants::Database {
             database,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Database{
@@ -1457,7 +1457,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::Io {
+        CreateManyRouteLogicResponseVariants::Io {
             io,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Io{
@@ -1475,7 +1475,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::Tls {
+        CreateManyRouteLogicResponseVariants::Tls {
             tls,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Tls{
@@ -1493,7 +1493,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::Protocol {
+        CreateManyRouteLogicResponseVariants::Protocol {
             protocol,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Protocol{
@@ -1511,7 +1511,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::RowNotFound {
+        CreateManyRouteLogicResponseVariants::RowNotFound {
             row_not_found,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::RowNotFound{
@@ -1529,7 +1529,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::TypeNotFound {
+        CreateManyRouteLogicResponseVariants::TypeNotFound {
             type_not_found,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::TypeNotFound{
@@ -1547,7 +1547,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::ColumnIndexOutOfBounds {
+        CreateManyRouteLogicResponseVariants::ColumnIndexOutOfBounds {
             column_index_out_of_bounds,
             len,
             code_occurence,
@@ -1567,7 +1567,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::ColumnNotFound {
+        CreateManyRouteLogicResponseVariants::ColumnNotFound {
             column_not_found,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::ColumnNotFound{
@@ -1585,7 +1585,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::ColumnDecode {
+        CreateManyRouteLogicResponseVariants::ColumnDecode {
             column_decode_index,
             source_handle,
             code_occurence,
@@ -1605,7 +1605,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::Decode {
+        CreateManyRouteLogicResponseVariants::Decode {
             decode,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Decode{
@@ -1623,7 +1623,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::PoolTimedOut {
+        CreateManyRouteLogicResponseVariants::PoolTimedOut {
             pool_timed_out,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::PoolTimedOut{
@@ -1641,7 +1641,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::PoolClosed {
+        CreateManyRouteLogicResponseVariants::PoolClosed {
             pool_closed,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::PoolClosed{
@@ -1659,7 +1659,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::WorkerCrashed {
+        CreateManyRouteLogicResponseVariants::WorkerCrashed {
             worker_crashed,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::WorkerCrashed{
@@ -1677,7 +1677,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::Migrate {
+        CreateManyRouteLogicResponseVariants::Migrate {
             migrate,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::Migrate{
@@ -1695,7 +1695,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::JsonDataError {
+        CreateManyRouteLogicResponseVariants::JsonDataError {
             json_data_error,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::JsonDataError{
@@ -1713,7 +1713,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::JsonSyntaxError {
+        CreateManyRouteLogicResponseVariants::JsonSyntaxError {
             json_syntax_error,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::JsonSyntaxError{
@@ -1731,7 +1731,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::MissingJsonContentType {
+        CreateManyRouteLogicResponseVariants::MissingJsonContentType {
             missing_json_content_type,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::MissingJsonContentType{
@@ -1749,7 +1749,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::BytesRejection {
+        CreateManyRouteLogicResponseVariants::BytesRejection {
             bytes_rejection,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::BytesRejection{
@@ -1767,7 +1767,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::UnexpectedCase {
+        CreateManyRouteLogicResponseVariants::UnexpectedCase {
             unexpected_case,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::UnexpectedCase{
@@ -1785,7 +1785,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::BindQuery {
+        CreateManyRouteLogicResponseVariants::BindQuery {
             bind_query,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::BindQuery{
@@ -1803,7 +1803,7 @@ pub async fn try_create_many<'a>(
                 }),
             ),
         }),
-        CreateManyResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+        CreateManyRouteLogicResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
             code_occurence,
         } => Err(TryCreateManyErrorNamed::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer{
