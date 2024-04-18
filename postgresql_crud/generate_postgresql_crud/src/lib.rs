@@ -472,7 +472,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #debug_token_stream,
                 #serde_serialize_token_stream,
                 #serde_deserialize_token_stream,
-                enum_extension::EnumExtension,
+                enum_extension_lib::EnumExtension,
                 strum_macros::EnumIter,
                 PartialEq,
                 Eq,

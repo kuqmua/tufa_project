@@ -1428,7 +1428,7 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPost
     Clone,
     strum_macros::Display,
     strum_macros::EnumIter,
-    enum_extension::EnumExtension,
+    enum_extension_lib::EnumExtension,
 )]
 pub enum RustSqlxMapToPostgresTypeVariant {
     StdPrimitiveBoolAsPostgresqlBool,

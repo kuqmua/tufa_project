@@ -54,7 +54,7 @@ git_info = {path = "../git_info"}
 type_variants_from_reqwest_response = {path = "../type_variants_from_reqwest_response"}
 from_str = {path = "../from_str"}
 from_sqlx_postgres_error = {path = "../from_sqlx_postgres_error"}
-enum_extension = {path = "../enum_extension"}
+enum_extension_lib = {path = "../enum_extension_lib"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_for_struct_fields"}
 postgresql_crud = {path = "../postgresql_crud"}

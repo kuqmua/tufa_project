@@ -21,7 +21,7 @@ thiserror = {version = "=1.0.48"}
 postgresql_crud_types_macro_logic_reuse = {path = "./postgresql_crud_types_macro_logic_reuse"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 config_lib = {path = "../../config_lib"}#todo remove config_lib dependency. must be reexport from error_occurence_lib
-enum_extension = {path = "../../enum_extension"}
+enum_extension_lib = {path = "../../enum_extension_lib"}
 proc_macro_common = {path = "../../proc_macro_common"}
 proc_macro_assistants = {path = "../../proc_macro_assistants"}
 proc_macro_helpers = {path = "../../proc_macro_helpers"}

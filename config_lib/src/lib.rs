@@ -67,7 +67,7 @@ pub trait GetStartingCheckLink {
     Debug,
     Clone,
     strum_macros::EnumIter,
-    enum_extension::EnumExtension,
+    enum_extension_lib::EnumExtension,
     serde::Serialize,
     serde::Deserialize,
     PartialEq,
