@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 enum_extension = {path = "./enum_extension"}
+strum = {version = "=0.24.1"}
+convert_case = {version = "=0.6.0"}
 
 [lints]
 workspace = true

@@ -54,7 +54,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
             pub fn into_vec() -> std::vec::Vec<Self> {
                 let mut self_vec = std::vec::Vec::with_capacity(Self::get_length());
                 for element in {
-                    use strum::IntoEnumIterator;
+                    use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
                     self_vec.push(element);
@@ -65,7 +65,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 let mut variants_hashmap: std::collections::HashMap<std::string::String, Self> =
                     std::collections::HashMap::with_capacity(Self::get_length());
                 for element in {
-                    use strum::IntoEnumIterator;
+                    use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
                     variants_hashmap.insert(format!("{}", element), element);
@@ -75,7 +75,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
             pub fn into_string_name_and_variant_tuple_vec() -> std::vec::Vec<(std::string::String, Self)> {
                 let mut variants_vec = std::vec::Vec::with_capacity(Self::get_length());
                 for element in {
-                    use strum::IntoEnumIterator;
+                    use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
                 } {
                     variants_vec.push((format!("{}", element), element));
@@ -84,11 +84,11 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
             }
             //todo - it can be done in compile time
             pub fn to_upper_camel_case(&self) -> std::string::String {
-                convert_case::Casing::to_case(&format!("{:?}", self),convert_case::Case::UpperCamel)
+                enum_extension_lib::Casing::to_case(&format!("{:?}", self),enum_extension_lib::Case::UpperCamel)
             }
             //todo - it can be done in compile time
             pub fn to_snake_case(&self) -> std::string::String {
-                convert_case::Casing::to_case(&format!("{:?}", self),convert_case::Case::Snake)
+                enum_extension_lib::Casing::to_case(&format!("{:?}", self),enum_extension_lib::Case::Snake)
             }
         }
     };
