@@ -32,7 +32,6 @@ serde_path_to_error = {version = "=0.1.12"}
 serde_with = {version = "=3.1.0"}
 serde_urlencoded = {version = "=0.7.1"}
 strum = {version = "=0.24.1"}
-strum_macros = {version = "=0.24.3"}
 thiserror = {version = "=1.0.48"}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 itertools = {version = "=0.10.1"}
