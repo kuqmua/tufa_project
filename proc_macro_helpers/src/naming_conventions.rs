@@ -1653,35 +1653,39 @@ where
 // }
 //
 
-// CreateManyGeneratedRouteLogicErrorNamed
-// pub trait SelfGeneratedRouteLogicUpperCamelCaseStringified {
-//     fn try_self_generated_route_logic_upper_camel_case_stringified(&self) -> std::string::String;
-// }
+pub trait TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseStringified {
+    fn try_self_generated_route_logic_error_named_upper_camel_case_stringified(&self) -> std::string::String;
+}
 
-// impl<T> TrySelfGeneratedRouteLogicUpperCamelCaseStringified for T
-// where
-//     T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
-// {
-//     fn try_self_generated_route_logic_upper_camel_case_stringified(&self) -> std::string::String {
-//         format!(
-//             "{}{}",
-//             <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
-//             self.to_upper_camel_case_stringified(),
-//         )
-//     }
-// }
+impl<T> TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseStringified for T
+where
+    T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+{
+    fn try_self_generated_route_logic_error_named_upper_camel_case_stringified(&self) -> std::string::String {
+        format!(
+            "{}{}{}{}{}{}{}",
+            <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
+            self.to_upper_camel_case_stringified(),
+            <naming_constants::Generated as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Route as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Logic as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
+        )
+    }
+}
 
-// pub trait TrySelfUpperCamelCaseTokenStream {
-//     fn try_self_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
-// }
+pub trait TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseTokenStream {
+    fn try_self_generated_route_logic_error_named_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+}
 
-// impl<T> TrySelfUpperCamelCaseTokenStream for T
-// where
-//     T: TrySelfGeneratedRouteLogicUpperCamelCaseStringified,
-// {
-//     fn try_self_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
-//         let value = self.try_self_generated_route_logic_upper_camel_case_stringified();
-//         value.parse::<proc_macro2::TokenStream>()
-//         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-//     }
-// }
+impl<T> TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseTokenStream for T
+where
+    T: TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseStringified,
+{
+    fn try_self_generated_route_logic_error_named_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.try_self_generated_route_logic_error_named_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}

@@ -141,5 +141,7 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "tvfrr",
     "read",
     "logic",
-    "extraction"
+    "extraction",
+    "generated",
+    "route"
 );
