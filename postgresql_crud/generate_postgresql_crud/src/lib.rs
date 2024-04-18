@@ -2311,7 +2311,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {
                         Self::#variant_ident {
                             #(#fields_anonymous_types_mapped_into_token_stream),*
-                        } => axum::http::StatusCode::CREATED//todo status code
+                        } => #axum_http_status_code_token_stream::CREATED//todo status code
                     }
                 });
                 quote::quote! {
@@ -2324,11 +2324,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let try_operation_generated_route_logic_desirable_token_stream = {
+            let (
+                try_operation_generated_route_logic_desirable_token_stream,
+                impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+            ) = {
                 let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
-                quote::quote! {
-                    pub struct #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>);
-                }
+                let try_operation_generated_route_logic_desirable_token_stream = {
+                    quote::quote! {
+                        pub struct #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>);
+                    }
+                };
+                let impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream = {
+                    quote::quote! {
+                        impl #postgresql_crud_get_axum_http_status_code_token_stream for #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream {
+                            fn #get_axum_http_status_code_snake_case_token_stream(&self) -> #axum_http_status_code_token_stream {
+                                #axum_http_status_code_token_stream::CREATED
+                            }
+                        }
+                    }
+                };
+                (
+                    try_operation_generated_route_logic_desirable_token_stream,
+                    impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+                )
             };
             // println!("{try_operation_generated_route_logic_desirable_token_stream}");
             let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
@@ -2532,7 +2550,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_generated_route_logic_error_named_token_stream
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
                 #try_operation_generated_route_logic_desirable_token_stream
-
+                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+                
                 // #swagger_open_api_token_stream
                 // pub async fn #operation_snake_case_token_stream(
                 //     #app_state_name_token_stream: #axum_extract_state_token_stream<#app_state_path>,

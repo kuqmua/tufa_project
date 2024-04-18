@@ -706,12 +706,6 @@ pub async fn try_create_many_route_logic(
 }
 
 ///////////////////////////////////////
-impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogicDesirable {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        axum::http::StatusCode::CREATED
-    }
-}
-
 //todo remove pub from gen
 pub async fn try_create_many_generated_route_logic(
     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
