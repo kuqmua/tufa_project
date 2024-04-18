@@ -895,6 +895,7 @@ pub use postgresql_crud_common::OrderBy;
 // pub use postgresql_crud_common::StdVecVecStdPrimitiveU8;
 //
 pub use http_logic::GetAxumHttpStatusCode;
+pub use strum_macros::EnumIter;
 
 //todo move and reexport traits
 pub trait CombinationOfTraitsForPostgresqlCrudLogic:

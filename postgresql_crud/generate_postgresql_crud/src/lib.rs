@@ -473,7 +473,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #serde_serialize_token_stream,
                 #serde_deserialize_token_stream,
                 enum_extension_lib::EnumExtension,
-                strum_macros::EnumIter,
+                postgresql_crud::EnumIter,
                 PartialEq,
                 Eq,
                 #from_str_snake_case_token_stream::#from_str_upper_camel_case_token_stream,
