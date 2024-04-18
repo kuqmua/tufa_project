@@ -2582,7 +2582,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // pub async fn try_create_many_generated_route_logic(
                 //     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
                 //     body_bytes: bytes::Bytes,
-                // ) -> Result<TryCreateManyGeneratedRouteLogicDesirable, TryCreateManyGeneratedRouteLogicErrorNamed> {
+                // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, TryCreateManyGeneratedRouteLogicErrorNamed> {
                 //     //maybe rename as TryCreateManyGeneratedRouteLogicParameters
                 //     let parameters = CreateManyParameters {
                 //         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
