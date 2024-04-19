@@ -2241,7 +2241,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            
+            quote::quote! {
+                #try_operation_route_logic_response_token_stream
+            }
         };
         let route_handler_token_stream = {
             let try_operation_generated_route_logic_error_named_token_stream = {
@@ -2619,6 +2621,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // #try_operation_error_with_middleware_error_variants_token_stream
                 // #http_request_token_stream
                 #route_handler_token_stream
+                #try_operation_route_logic_token_stream
                 // #common_middlewares_error_syn_variants_from_impls
             },
             http_request_test_token_stream,

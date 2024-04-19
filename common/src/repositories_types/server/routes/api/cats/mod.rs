@@ -198,10 +198,10 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-pub struct TryCreateManyRouteLogicResponse {
-    status_code: axum::http::StatusCode,
-    body: TryCreateManyRouteLogicResponseVariants,
-}
+// pub struct TryCreateManyRouteLogicResponse {
+//     status_code: axum::http::StatusCode,
+//     body: TryCreateManyRouteLogicResponseVariants,
+// }
 impl axum::response::IntoResponse for TryCreateManyRouteLogicResponse {
     fn into_response(self) -> axum::response::Response {
         let mut res = axum::Json(self.body).into_response(); 
