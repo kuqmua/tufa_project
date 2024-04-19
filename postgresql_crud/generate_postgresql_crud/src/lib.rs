@@ -1800,6 +1800,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_http_status_code_token_stream = quote::quote!{axum::http::StatusCode};
     let postgresql_crud_get_axum_http_status_code_token_stream = quote::quote!{postgresql_crud::GetAxumHttpStatusCode};
     let get_axum_http_status_code_snake_case_token_stream = quote::quote!{get_axum_http_status_code};
+    let app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream = quote::quote!{#app_state_name_token_stream: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,};
+    let body_bytes_bytes_bytes_token_stream = quote::quote!{body_bytes: bytes::Bytes,};
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
@@ -2581,8 +2583,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
                 
                 // pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
-                //     #app_state_name_token_stream: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
-                //     body_bytes: bytes::Bytes,
+                //     #app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream
+                //     #body_bytes_bytes_bytes_token_stream
                 // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, TryCreateManyGeneratedRouteLogicErrorNamed> {
                 //     //maybe rename as TryCreateManyGeneratedRouteLogicParameters
                 //     let parameters = CreateManyParameters {
