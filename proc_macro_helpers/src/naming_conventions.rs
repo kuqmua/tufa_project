@@ -1726,7 +1726,6 @@ where
     }
 }
 
-// try_operation_generated_route_logic_snake_case
 pub trait TrySelfGeneratedRouteLogicSnakeCaseStringified {
     fn try_self_generated_route_logic_snake_case_stringified(&self) -> std::string::String;
 }

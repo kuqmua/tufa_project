@@ -1804,6 +1804,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let body_bytes_bytes_bytes_token_stream = quote::quote!{body_bytes: bytes::Bytes,};
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
+        //maybe rename as TryCreateManyGeneratedRouteLogicParameters
         let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
         let operation_parameters_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfParametersUpperCamelCaseTokenStream::self_parameters_upper_camel_case_token_stream(&operation);
         let operation_payload_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadUpperCamelCaseTokenStream::self_payload_upper_camel_case_token_stream(&operation);
@@ -2354,6 +2355,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let try_operation_generated_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicSnakeCaseTokenStream::try_self_generated_route_logic_snake_case_token_stream(&operation);
+            let try_operation_generated_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseStringified::try_self_generated_route_logic_error_named_upper_camel_case_stringified(&operation);
             let try_operation_token_stream = {
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
@@ -2585,32 +2587,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
                 //     #app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream
                 //     #body_bytes_bytes_bytes_token_stream
-                // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, TryCreateManyGeneratedRouteLogicErrorNamed> {
-                //     //maybe rename as TryCreateManyGeneratedRouteLogicParameters
+                // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
+                //     
                 //     let parameters = CreateManyParameters {
                 //         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
                 //             Ok(axum::Json(value)) => CreateManyPayload::from(value),
                 //             Err(e) => match e {
                 //                 axum::extract::rejection::JsonRejection::JsonDataError(value) => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed::JsonDataError {
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonDataError {
                 //                         json_data_error: value,
                 //                         code_occurence: error_occurence_lib::code_occurence!(),
                 //                     });
                 //                 },
                 //                 axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed::JsonSyntaxError {
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonSyntaxError {
                 //                         json_syntax_error: value,
                 //                         code_occurence: error_occurence_lib::code_occurence!(),
                 //                     });
                 //                 },
                 //                 axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed::MissingJsonContentType {
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::MissingJsonContentType {
                 //                         missing_json_content_type: value.to_string(),
                 //                         code_occurence: error_occurence_lib::code_occurence!(),
                 //                     });
                 //                 },
                 //                 axum::extract::rejection::JsonRejection::BytesRejection(value) => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed::BytesRejection {
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::BytesRejection {
                 //                         bytes_rejection: value.to_string(),
                 //                         code_occurence: error_occurence_lib::code_occurence!(),
                 //                     });             
@@ -2618,7 +2620,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //                 },
                 //                 // this variant exists coz JsonRejection is non exhaustive
                 //                 _ => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed::UnexpectedCase {
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::UnexpectedCase {
                 //                         unexpected_case: std::string::String::from("Unknown error"),//todo reuse
                 //                         code_occurence: error_occurence_lib::code_occurence!(),
                 //                     });
@@ -2673,13 +2675,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
                 //             Ok(value) => value,
                 //             Err(e) => {
-                //                 return Err(TryCreateManyGeneratedRouteLogicErrorNamed::from(e));
+                //                 return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
                 //             }
                 //         };
                 //         let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
                 //             Ok(value) => value,
                 //             Err(e) => {
-                //                 return Err(TryCreateManyGeneratedRouteLogicErrorNamed::from(e));
+                //                 return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
                 //             }
                 //         };
                 //         let mut rows = binded_query.fetch(pg_connection.as_mut());
@@ -2693,7 +2695,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //             {
                 //                 Ok(value) => value,
                 //                 Err(e) => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed::from(e));
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
                 //                 }
                 //             }
                 //         } {
@@ -2711,7 +2713,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //                     );
                 //                 }
                 //                 Err(e) => {
-                //                     return Err(TryCreateManyGeneratedRouteLogicErrorNamed ::
+                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream ::
                 //                     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
                 //                     {
                 //                         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
