@@ -1801,7 +1801,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgresql_crud_get_axum_http_status_code_token_stream = quote::quote!{postgresql_crud::GetAxumHttpStatusCode};
     let get_axum_http_status_code_snake_case_token_stream = quote::quote!{get_axum_http_status_code};
     let app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream = quote::quote!{#app_state_name_token_stream: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,};
-    let body_bytes_bytes_bytes_token_stream = quote::quote!{body_bytes: bytes::Bytes,};
+    let body_bytes_snake_case_token_stream = quote::quote!{body_bytes};
+    let body_bytes_bytes_bytes_token_stream = quote::quote!{#body_bytes_snake_case_token_stream: bytes::Bytes,};
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -2589,10 +2590,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     #body_bytes_bytes_bytes_token_stream
                 // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
                 //     
-                //     let parameters = CreateManyParameters {
-                //         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(&body_bytes) {
-                //             Ok(axum::Json(value)) => CreateManyPayload::from(value),
-                //             Err(e) => match e {
+                //     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                //         #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
+                //             Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
+                //             Err(#error_value_snake_case_token_stream) => match #error_value_snake_case_token_stream {
                 //                 axum::extract::rejection::JsonRejection::JsonDataError(value) => {
                 //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonDataError {
                 //                         json_data_error: value,
@@ -2628,7 +2629,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //             }
                 //         }
                 //     };
-                //     println!("{:#?}", parameters);
+                //     println!("{:#?}", #parameters_snake_case_token_stream);
                 //     {
                 //         let query_string = {
                 //             "insert into dogs (std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) select std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int from unnest($1, $2, $3) as a(std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
@@ -2730,7 +2731,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //                 }
                 //             }
                 //         }
-                //         Ok(TryCreateManyGeneratedRouteLogicDesirable(vec_values))
+                //         Ok(#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(vec_values))
                 //     }
                 // }
             }
