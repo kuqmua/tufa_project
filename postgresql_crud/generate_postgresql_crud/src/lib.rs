@@ -1563,6 +1563,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_helpers::naming_conventions::status_code_snake_case_token_stream();
     let headers_snake_case_token_stream =
         <naming_constants::Headers as naming_constants::Naming>::snake_case_token_stream();
+    let body_snake_case_token_stream = <naming_constants::Body as naming_constants::Naming>::snake_case_token_stream();
     let response_text_result_snake_case_token_stream =
         proc_macro_helpers::naming_conventions::response_text_result_snake_case_token_stream();
     let response_text_snake_case_token_stream =
@@ -2229,6 +2230,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         };
         // println!("{http_request_token_stream}");
+        let try_operation_route_logic_token_stream = {
+            let try_operation_route_logic_response_token_stream = {
+                let try_create_many_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
+                // let f_token_stream =
+                quote::quote! {
+                    pub struct #try_create_many_route_logic_response_upper_camel_case_token_stream {
+                        #status_code_snake_case_token_stream: #axum_http_status_code_token_stream,
+                        #body_snake_case_token_stream: TryCreateManyRouteLogicResponseVariants,
+                    }
+                }
+            };
+            
+        };
         let route_handler_token_stream = {
             let try_operation_generated_route_logic_error_named_token_stream = {
                 let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {

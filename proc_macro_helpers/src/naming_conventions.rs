@@ -1760,3 +1760,38 @@ where
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
+
+pub trait TrySelfRouteLogicResponseUpperCamelCaseStringified {
+    fn try_self_route_logic_response_upper_camel_case_stringified(&self) -> std::string::String;
+}
+
+impl<T> TrySelfRouteLogicResponseUpperCamelCaseStringified for T
+where
+    T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+{
+    fn try_self_route_logic_response_upper_camel_case_stringified(&self) -> std::string::String {
+        format!(
+            "{}{}{}{}{}",
+            <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
+            self.to_upper_camel_case_stringified(),
+            <naming_constants::Route as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Logic as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Response as naming_constants::Naming>::upper_camel_case_stringified(),
+        )
+    }
+}
+
+pub trait TrySelfRouteLogicResponseUpperCamelCaseTokenStream {
+    fn try_self_route_logic_response_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+}
+
+impl<T> TrySelfRouteLogicResponseUpperCamelCaseTokenStream for T
+where
+    T: TrySelfRouteLogicResponseUpperCamelCaseStringified,
+{
+    fn try_self_route_logic_response_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.try_self_route_logic_response_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}

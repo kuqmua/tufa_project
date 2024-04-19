@@ -655,6 +655,9 @@ pub async fn try_create_many_route_logic(
 ) -> TryCreateManyRouteLogicResponse {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
+    //
+    // let now = std::time::Instant::now();
+    //
     if let Err(e) = route_validators::check_commit::check_commit(
         app_state.as_ref(),
         &headers,

@@ -143,5 +143,6 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "logic",
     "extraction",
     "generated",
-    "route"
+    "route",
+    "body"
 );
