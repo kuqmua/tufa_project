@@ -1690,8 +1690,6 @@ where
     }
 }
 
-////
-// TryCreateManyGeneratedRouteLogicDesirable
 pub trait TrySelfGeneratedRouteLogicDesirableUpperCamelCaseStringified {
     fn try_self_generated_route_logic_desirable_upper_camel_case_stringified(&self) -> std::string::String;
 }
@@ -1727,4 +1725,39 @@ where
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
-////
+
+// try_operation_generated_route_logic_snake_case
+pub trait TrySelfGeneratedRouteLogicSnakeCaseStringified {
+    fn try_self_generated_route_logic_snake_case_stringified(&self) -> std::string::String;
+}
+
+impl<T> TrySelfGeneratedRouteLogicSnakeCaseStringified for T
+where
+    T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
+{
+    fn try_self_generated_route_logic_snake_case_stringified(&self) -> std::string::String {
+        format!(
+            "{}_{}_{}_{}_{}",
+            <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
+            self.to_snake_case_stringified(),
+            <naming_constants::Generated as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Route as naming_constants::Naming>::snake_case_stringified(),
+            <naming_constants::Logic as naming_constants::Naming>::snake_case_stringified(),
+        )
+    }
+}
+
+pub trait TrySelfGeneratedRouteLogicSnakeCaseTokenStream {
+    fn try_self_generated_route_logic_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
+}
+
+impl<T> TrySelfGeneratedRouteLogicSnakeCaseTokenStream for T
+where
+    T: TrySelfGeneratedRouteLogicSnakeCaseStringified,
+{
+    fn try_self_generated_route_logic_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.try_self_generated_route_logic_snake_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}

@@ -2351,6 +2351,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_generated_route_logic_desirable_token_stream}");
             let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            let try_operation_generated_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicSnakeCaseTokenStream::try_self_generated_route_logic_snake_case_token_stream(&operation);
             let try_operation_token_stream = {
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
@@ -2579,8 +2580,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // }
 
                 
-                // pub async fn try_create_many_generated_route_logic(
-                //     app_state: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
+                // pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
+                //     #app_state_name_token_stream: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,
                 //     body_bytes: bytes::Bytes,
                 // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, TryCreateManyGeneratedRouteLogicErrorNamed> {
                 //     //maybe rename as TryCreateManyGeneratedRouteLogicParameters
