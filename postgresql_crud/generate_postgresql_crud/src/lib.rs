@@ -1804,6 +1804,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream = quote::quote!{#app_state_name_token_stream: &dyn postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic,};
     let body_bytes_snake_case_token_stream = quote::quote!{body_bytes};
     let body_bytes_bytes_bytes_token_stream = quote::quote!{#body_bytes_snake_case_token_stream: bytes::Bytes,};
+    let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
+    let axum_response_response_token_stream = quote::quote!{axum::response::Response};
+    let into_response_snake_case_token_stream = quote::quote!{into_response};
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -2231,8 +2234,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{http_request_token_stream}");
         let try_operation_route_logic_token_stream = {
+            let try_operation_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
             let try_operation_route_logic_response_token_stream = {
-                let try_operation_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
                 let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(&operation);
                 quote::quote! {
                     pub struct #try_operation_route_logic_response_upper_camel_case_token_stream {
@@ -2241,8 +2244,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            let impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream = {
+                quote::quote! {
+                    impl #axum_response_into_response_token_stream for #try_operation_route_logic_response_upper_camel_case_token_stream {
+                        fn #into_response_snake_case_token_stream(self) -> #axum_response_response_token_stream {
+                            let mut res = axum::Json(self.#body_snake_case_token_stream).#into_response_snake_case_token_stream(); 
+                            *res.status_mut() = self.#status_code_snake_case_token_stream;
+                            res
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
+                #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
             }
         };
         let route_handler_token_stream = {
