@@ -9059,3 +9059,82 @@ fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_de
         }
     }).collect()
 }
+
+fn generate_axum_extract_rejection_json_rejection_handle_token_stream(
+    error_value_snake_case_token_stream: &proc_macro2::TokenStream,
+    try_operation_generated_route_logic_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let field_code_occurence_new_5a4523cb_ad14_4137_a226_679655c943ed_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_65b043ed_1578_4b69_b1ea_4516cf314b39_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_8d6c376c_fe49_4aff_b712_6a4e3265e5d5_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_adee320d_d0a5_4da9_9ae9_87ac6867ed44_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_7e54d0da_66ac_4e42_9b4c_c70ef6af8b4b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    let field_code_occurence_new_346c4341_8750_4bfe_8635_b8718bffc505_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+        file!(),
+        line!(),
+        column!(),
+        &proc_macro_name_upper_camel_case_ident_stringified,
+    );
+    quote::quote!{
+        match #error_value_snake_case_token_stream {
+            axum::extract::rejection::JsonRejection::JsonDataError(value) => {
+                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonDataError {
+                    json_data_error: value,
+                    #field_code_occurence_new_5a4523cb_ad14_4137_a226_679655c943ed_token_stream,
+                });
+            },
+            axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
+                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonSyntaxError {
+                    json_syntax_error: value,
+                    #field_code_occurence_new_65b043ed_1578_4b69_b1ea_4516cf314b39_token_stream,
+                });
+            },
+            axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
+                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::MissingJsonContentType {
+                    missing_json_content_type: value.to_string(),
+                    #field_code_occurence_new_8d6c376c_fe49_4aff_b712_6a4e3265e5d5_token_stream,
+                });
+            },
+            axum::extract::rejection::JsonRejection::BytesRejection(value) => {
+                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::BytesRejection {
+                    bytes_rejection: value.to_string(),
+                    #field_code_occurence_new_adee320d_d0a5_4da9_9ae9_87ac6867ed44_token_stream,
+                });             
+
+            },
+            // this variant exists coz JsonRejection is non exhaustive
+            _ => {
+                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::UnexpectedCase {
+                    unexpected_case: std::string::String::from("Unknown error"),//todo reuse
+                    #field_code_occurence_new_346c4341_8750_4bfe_8635_b8718bffc505_token_stream,
+                });
+            }
+        }
+    }
+}
