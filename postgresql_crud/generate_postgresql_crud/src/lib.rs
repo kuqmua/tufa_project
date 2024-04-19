@@ -2328,11 +2328,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
             let (
                 try_operation_generated_route_logic_desirable_token_stream,
                 impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
             ) = {
-                let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
                 let try_operation_generated_route_logic_desirable_token_stream = {
                     quote::quote! {
                         pub struct #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>);
@@ -2356,7 +2356,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let try_operation_generated_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicSnakeCaseTokenStream::try_self_generated_route_logic_snake_case_token_stream(&operation);
-            let try_operation_generated_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseStringified::try_self_generated_route_logic_error_named_upper_camel_case_stringified(&operation);
+            let try_operation_generated_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_generated_route_logic_error_named_upper_camel_case_token_stream(&operation);
+            let axum_extract_rejection_json_rejection_handle_token_stream = generate_axum_extract_rejection_json_rejection_handle_token_stream(
+                &error_value_snake_case_token_stream,
+                &try_operation_generated_route_logic_error_named_upper_camel_case_token_stream,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+            );
             let try_operation_token_stream = {
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
@@ -2461,17 +2466,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{binded_query_token_stream}");
-                let from_log_and_return_error_token_stream =
-                    crate::from_log_and_return_error::from_log_and_return_error(
-                        &try_operation_upper_camel_case_token_stream,
-                        &error_log_call_token_stream,
-                        &try_operation_response_variants_token_stream,
-                    );
-                let acquire_pool_and_connection_token_stream =
-                    crate::acquire_pool_and_connection::acquire_pool_and_connection(
-                        &from_log_and_return_error_token_stream,
-                        &pg_connection_token_stream,
-                    );
+                let from_log_and_return_error_token_stream = crate::from_log_and_return_error::from_log_and_return_error(
+                    &try_operation_upper_camel_case_token_stream,
+                    &error_log_call_token_stream,
+                    &try_operation_response_variants_token_stream,
+                );
+                let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
+                    &quote::quote! {
+                        return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                    },
+                    &pg_connection_token_stream,
+                );
                 quote::quote! {
                     let #query_string_name_token_stream = {
                         #query_string_token_stream
@@ -2492,9 +2497,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             Ok(value) => value,
                             Err(#error_value_snake_case_token_stream) => {
-                                let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
-                                #error_log_call_token_stream
-                                return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
                             }
                         }
                     } {
@@ -2510,13 +2513,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 );
                             }
                             Err(#error_value_snake_case_token_stream) => {
-                                let #error_value_snake_case_token_stream = #try_operation_upper_camel_case_token_stream::#operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_initialization_token_stream;
-                                #error_log_call_token_stream
-                                return #try_operation_response_variants_token_stream::#from_snake_case_token_stream(#error_value_snake_case_token_stream);
+                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
                             }
                         }
                     }
-                    #try_operation_response_variants_token_stream::#desirable_upper_camel_case_token_stream(vec_values)
+                    Ok(#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(vec_values))
                 }
             };
             // println!("{try_operation_token_stream}");
@@ -2585,155 +2586,122 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // }
 
                 
-                // pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
-                //     #app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream
-                //     #body_bytes_bytes_bytes_token_stream
-                // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
-                //     
-                //     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
-                //         #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
-                //             Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
-                //             Err(#error_value_snake_case_token_stream) => match #error_value_snake_case_token_stream {
-                //                 axum::extract::rejection::JsonRejection::JsonDataError(value) => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonDataError {
-                //                         json_data_error: value,
-                //                         code_occurence: error_occurence_lib::code_occurence!(),
-                //                     });
-                //                 },
-                //                 axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonSyntaxError {
-                //                         json_syntax_error: value,
-                //                         code_occurence: error_occurence_lib::code_occurence!(),
-                //                     });
-                //                 },
-                //                 axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::MissingJsonContentType {
-                //                         missing_json_content_type: value.to_string(),
-                //                         code_occurence: error_occurence_lib::code_occurence!(),
-                //                     });
-                //                 },
-                //                 axum::extract::rejection::JsonRejection::BytesRejection(value) => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::BytesRejection {
-                //                         bytes_rejection: value.to_string(),
-                //                         code_occurence: error_occurence_lib::code_occurence!(),
-                //                     });             
-
-                //                 },
-                //                 // this variant exists coz JsonRejection is non exhaustive
-                //                 _ => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::UnexpectedCase {
-                //                         unexpected_case: std::string::String::from("Unknown error"),//todo reuse
-                //                         code_occurence: error_occurence_lib::code_occurence!(),
-                //                     });
-                //                 }
-                //             }
-                //         }
-                //     };
-                //     println!("{:#?}", #parameters_snake_case_token_stream);
-                //     {
-                //         let query_string = {
-                //             "insert into dogs (std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) select std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int from unnest($1, $2, $3) as a(std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-                //         };
-                //         println!("{}", query_string);
-                //         let binded_query = {
-                //             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-                //             let current_vec_len = parameters.payload.0.len();
-                //             let (
-                //                 std_primitive_bool_as_postgresql_bool_vec,
-                //                 std_primitive_i16_as_postgresql_small_int_vec,
-                //                 std_primitive_i32_as_postgresql_int_vec,
-                //             ) = parameters.payload.0.into_iter().fold(
-                //                 (
-                //                     std::vec::Vec::with_capacity(current_vec_len),
-                //                     std::vec::Vec::with_capacity(current_vec_len),
-                //                     std::vec::Vec::with_capacity(current_vec_len),
-                //                 ),
-                //                 |mut acc, element| {
-                //                     acc.0.push(element.std_primitive_bool_as_postgresql_bool);
-                //                     acc.1
-                //                         .push(element.std_primitive_i16_as_postgresql_small_int);
-                //                     acc.2.push(element.std_primitive_i32_as_postgresql_int);
-                //                     acc
-                //                 },
-                //             );
-                //             query = query.bind(
-                //                 postgresql_crud::StdOptionOptionStdPrimitiveBool::into_inner_type_vec(
-                //                     std_primitive_bool_as_postgresql_bool_vec,
-                //                 ),
-                //             );
-                //             query = query.bind(
-                //                 postgresql_crud::StdOptionOptionStdPrimitiveI16::into_inner_type_vec(
-                //                     std_primitive_i16_as_postgresql_small_int_vec,
-                //                 ),
-                //             );
-                //             query = query.bind(
-                //                 postgresql_crud::StdOptionOptionStdPrimitiveI32::into_inner_type_vec(
-                //                     std_primitive_i32_as_postgresql_int_vec,
-                //                 ),
-                //             );
-                //             query
-                //         };
-                //         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
-                //             Ok(value) => value,
-                //             Err(e) => {
-                //                 return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
-                //             }
-                //         };
-                //         let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
-                //             Ok(value) => value,
-                //             Err(e) => {
-                //                 return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
-                //             }
-                //         };
-                //         let mut rows = binded_query.fetch(pg_connection.as_mut());
-                //         let mut vec_values = std::vec::Vec::new();
-                //         while let Some(row) = {
-                //             match {
-                //                 use futures::TryStreamExt;
-                //                 rows.try_next()
-                //             }
-                //             .await
-                //             {
-                //                 Ok(value) => value,
-                //                 Err(e) => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
-                //                 }
-                //             }
-                //         } {
-                //             match {
-                //                 use sqlx::Row;
-                //                 row.try_get::<std::primitive::i64, &str>(
-                //                     "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
-                //                 )
-                //             } {
-                //                 Ok(value) => {
-                //                     vec_values.push(
-                //                         postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
-                //                             postgresql_crud::StdPrimitiveI64(value),
-                //                         ),
-                //                     );
-                //                 }
-                //                 Err(e) => {
-                //                     return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream ::
-                //                     OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-                //                     {
-                //                         operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
-                //                         : e, code_occurence : error_occurence_lib :: code_occurence
-                //                         :: CodeOccurence ::
-                //                         new(file! ().to_string(), line! (), column! (),
-                //                         Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                //                         {
-                //                             file : std :: string :: String ::
-                //                             from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                //                             line : 1267, column : 13,
-                //                         })),
-                //                     });
-                //                 }
-                //             }
-                //         }
-                //         Ok(#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(vec_values))
-                //     }
-                // }
+                pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
+                    #app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream
+                    #body_bytes_bytes_bytes_token_stream
+                ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
+                    let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                        #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
+                            Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
+                            Err(#error_value_snake_case_token_stream) => #axum_extract_rejection_json_rejection_handle_token_stream,
+                        }
+                    };
+                    println!("{:#?}", #parameters_snake_case_token_stream);
+                    {
+                        #try_operation_token_stream
+                        // let query_string = {
+                        //     "insert into dogs (std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) select std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int from unnest($1, $2, $3) as a(std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+                        // };
+                        // println!("{}", query_string);
+                        // let binded_query = {
+                        //     let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+                        //     let current_vec_len = parameters.payload.0.len();
+                        //     let (
+                        //         std_primitive_bool_as_postgresql_bool_vec,
+                        //         std_primitive_i16_as_postgresql_small_int_vec,
+                        //         std_primitive_i32_as_postgresql_int_vec,
+                        //     ) = parameters.payload.0.into_iter().fold(
+                        //         (
+                        //             std::vec::Vec::with_capacity(current_vec_len),
+                        //             std::vec::Vec::with_capacity(current_vec_len),
+                        //             std::vec::Vec::with_capacity(current_vec_len),
+                        //         ),
+                        //         |mut acc, element| {
+                        //             acc.0.push(element.std_primitive_bool_as_postgresql_bool);
+                        //             acc.1
+                        //                 .push(element.std_primitive_i16_as_postgresql_small_int);
+                        //             acc.2.push(element.std_primitive_i32_as_postgresql_int);
+                        //             acc
+                        //         },
+                        //     );
+                        //     query = query.bind(
+                        //         postgresql_crud::StdOptionOptionStdPrimitiveBool::into_inner_type_vec(
+                        //             std_primitive_bool_as_postgresql_bool_vec,
+                        //         ),
+                        //     );
+                        //     query = query.bind(
+                        //         postgresql_crud::StdOptionOptionStdPrimitiveI16::into_inner_type_vec(
+                        //             std_primitive_i16_as_postgresql_small_int_vec,
+                        //         ),
+                        //     );
+                        //     query = query.bind(
+                        //         postgresql_crud::StdOptionOptionStdPrimitiveI32::into_inner_type_vec(
+                        //             std_primitive_i32_as_postgresql_int_vec,
+                        //         ),
+                        //     );
+                        //     query
+                        // };
+                        // let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+                        //     Ok(value) => value,
+                        //     Err(e) => {
+                        //         return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                        //     }
+                        // };
+                        // let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
+                        //     Ok(value) => value,
+                        //     Err(e) => {
+                        //         return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                        //     }
+                        // };
+                        // let mut rows = binded_query.fetch(pg_connection.as_mut());
+                        // let mut vec_values = std::vec::Vec::new();
+                        // while let Some(row) = {
+                        //     match {
+                        //         use futures::TryStreamExt;
+                        //         rows.try_next()
+                        //     }
+                        //     .await
+                        //     {
+                        //         Ok(value) => value,
+                        //         Err(e) => {
+                        //             return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                        //         }
+                        //     }
+                        // } {
+                        //     match {
+                        //         use sqlx::Row;
+                        //         row.try_get::<std::primitive::i64, &str>(
+                        //             "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+                        //         )
+                        //     } {
+                        //         Ok(value) => {
+                        //             vec_values.push(
+                        //                 postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
+                        //                     postgresql_crud::StdPrimitiveI64(value),
+                        //                 ),
+                        //             );
+                        //         }
+                        //         Err(e) => {
+                        //             return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream ::
+                        //             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+                        //             {
+                        //                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server
+                        //                 : e, code_occurence : error_occurence_lib :: code_occurence
+                        //                 :: CodeOccurence ::
+                        //                 new(file! ().to_string(), line! (), column! (),
+                        //                 Some(error_occurence_lib :: code_occurence :: MacroOccurence
+                        //                 {
+                        //                     file : std :: string :: String ::
+                        //                     from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        //                     line : 1267, column : 13,
+                        //                 })),
+                        //             });
+                        //         }
+                        //     }
+                        // }
+                        // Ok(#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(vec_values))
+                    }
+                }
             }
         };
         // println!("{route_handler_token_stream}");
