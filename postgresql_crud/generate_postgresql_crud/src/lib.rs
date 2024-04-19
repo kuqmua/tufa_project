@@ -2129,6 +2129,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream}");
+        let desirable_type_token_stream = &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream;
         //todo remove injection of middleware logic
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
             &desirable_status_code,
@@ -2235,8 +2236,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{http_request_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
+            let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(&operation);
             let try_operation_route_logic_response_token_stream = {
-                let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(&operation);
                 quote::quote! {
                     pub struct #try_operation_route_logic_response_upper_camel_case_token_stream {
                         #status_code_snake_case_token_stream: #axum_http_status_code_token_stream,
@@ -2255,6 +2256,230 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            //
+            let enum_with_serialize_deserialize_logic_token_stream_handle_token_stream = {
+                let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
+                let enum_with_serialize_deserialize_logic_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
+                    let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
+                    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
+                    let variant_ident = &error_variant.ident;
+                    let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
+                        fields_named
+                    }
+                    else {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+                    };
+                    let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
+                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                            panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                naming_constants::FIELD_IDENT_IS_NONE
+                            )
+                        });
+                        let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
+                            true => {
+                                let code_occurence_type_token_stream = {
+                                    if let syn::Type::Path(type_path) = &field.ty {
+                                        let mut code_occurence_type_repeat_checker = false;
+                                        let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                        .fold(String::from(""), |mut acc, path_segment| {
+                                            let path_segment_ident = &path_segment.ident;
+                                            match *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                                true => {
+                                                    if code_occurence_type_repeat_checker {
+                                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                                    }
+                                                    acc.push_str(&path_segment_ident.to_string());
+                                                    code_occurence_type_repeat_checker = true;
+                                                },
+                                                false => acc.push_str(&format!("{path_segment_ident}::")),
+                                            }
+                                            acc
+                                        });
+                                        if !code_occurence_type_repeat_checker {
+                                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
+                                        }
+                                        code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
+                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                    }
+                                    else {
+                                        let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
+                                        panic!(
+                                            "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
+                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                        );
+                                    }
+                                };
+                                code_occurence_type_token_stream
+                            },
+                            false => {
+                                let attribute = {
+                                    let mut option_attribute = None;
+                                    field.attrs.iter().for_each(|attr|{
+                                        if attr.path.segments.len() == 1 {
+                                            let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
+                                            let attr_ident = match attr.path.segments.iter().next() {
+                                                Some(path_segment) => &path_segment.ident,
+                                                None => panic!("attr.path.segments.iter().next() is None"),
+                                            };
+                                            if let Ok(value) = {
+                                                use std::str::FromStr;
+                                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
+                                            } {
+                                                if option_attribute.is_some() {
+                                                    panic!("{error_message}");
+                                                }
+                                                else {
+                                                    option_attribute = Some(value);
+                                                }
+                                            }
+                                        }//other attributes are not for this proc_macro
+                                    });
+                                    option_attribute.unwrap_or_else(|| panic!(
+                                        "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
+                                        naming_constants::IS_NONE_STRINGIFIED
+                                    ))
+                                };
+                                let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
+                                    field,
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                );
+                                proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                                    attribute,
+                                    supported_container,
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                )
+                            },
+                        };
+                        quote::quote! {#field_ident: #field_type_with_serialize_deserialize}
+                    }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                    quote::quote! {
+                        #variant_ident {
+                            #(#fields_mapped_into_token_stream),*
+                        }
+                    }
+                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                quote::quote! {
+                    #derive_debug_serialize_deserialize_token_stream
+                    pub enum #try_operation_response_variants_upper_camel_case_token_stream {
+                        #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
+                        #(#enum_with_serialize_deserialize_logic_mapped_token_stream),*
+                    }
+                }
+            };
+            //
+            let try_operation_route_logic_response_variants_token_stream = {
+                // println!("{type_variants_from_request_response_syn_variants:#?}");
+                quote::quote! {
+                    #derive_debug_serialize_deserialize_token_stream
+                    pub enum #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
+                        //
+                        CheckCommit {
+                            check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        CheckBodySize {
+                            check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        //
+                        Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
+                        Configuration {
+                            configuration: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Database {
+                            database: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Io {
+                            io: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Tls {
+                            tls: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Protocol {
+                            protocol: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        RowNotFound {
+                            row_not_found: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        TypeNotFound {
+                            type_not_found: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        ColumnIndexOutOfBounds {
+                            column_index_out_of_bounds: usize,
+                            len: usize,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        ColumnNotFound {
+                            column_not_found: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        ColumnDecode {
+                            column_decode_index: std::string::String,
+                            source_handle: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Decode {
+                            decode: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        PoolTimedOut {
+                            pool_timed_out: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        PoolClosed {
+                            pool_closed: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        WorkerCrashed {
+                            worker_crashed: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Migrate {
+                            migrate: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        JsonDataError {
+                            json_data_error: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        JsonSyntaxError {
+                            json_syntax_error: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        MissingJsonContentType {
+                            missing_json_content_type: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        BytesRejection {
+                            bytes_rejection: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        UnexpectedCase {
+                            unexpected_case: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        BindQuery {
+                            bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+                        {
+                            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+                                std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
+                }
+            };
+            //
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
