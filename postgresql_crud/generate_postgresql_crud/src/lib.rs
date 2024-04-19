@@ -2232,12 +2232,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{http_request_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_token_stream = {
-                let try_create_many_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
-                // let f_token_stream =
+                let try_operation_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
+                let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(&operation);
                 quote::quote! {
-                    pub struct #try_create_many_route_logic_response_upper_camel_case_token_stream {
+                    pub struct #try_operation_route_logic_response_upper_camel_case_token_stream {
                         #status_code_snake_case_token_stream: #axum_http_status_code_token_stream,
-                        #body_snake_case_token_stream: TryCreateManyRouteLogicResponseVariants,
+                        #body_snake_case_token_stream: #try_operation_route_logic_response_variants_upper_camel_case_token_stream,
                     }
                 }
             };
