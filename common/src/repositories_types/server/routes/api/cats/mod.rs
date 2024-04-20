@@ -708,6 +708,9 @@ pub async fn try_create_many_route_logic(
 }
 
 /////////////////////////////////////////
+
+
+
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryCreateManyErrorNamed {
     SerdeJsonToString {
@@ -715,11 +718,11 @@ pub enum TryCreateManyErrorNamed {
         serde_json_to_string: serde_json::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    ExpectedType {
-        #[eo_display_with_serialize_deserialize]
-        expected_type: TryCreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    // ExpectedType {
+    //     #[eo_display_with_serialize_deserialize]
+    //     expected_type: TryCreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
     UnexpectedStatusCode {
         #[eo_display]
         status_code: http::StatusCode,
