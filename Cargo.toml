@@ -79,7 +79,7 @@ unused-lifetimes = { level = "allow", priority = 0 } #detects lifetime parameter
 unused-macro-rules = { level = "allow", priority = 0 } #detects macro rules that were not used
 unused-qualifications = { level = "allow", priority = 0 } #detects unnecessarily qualified names
 unused-results = { level = "allow", priority = 0 } #unused result of an expression in a statement
-unused-tuple-struct-fields = { level = "allow", priority = 0 } #detects tuple struct fields that are never read
+dead_code = { level = "allow", priority = 0 } #detects tuple struct fields that are never read
 variant-size-differences = { level = "warn", priority = 0 } #detects enums with widely varying variant sizes
 ambiguous-glob-imports = { level = "warn", priority = 0 } #detects certain glob imports that require reporting an ambiguity error
 ambiguous-glob-reexports = { level = "warn", priority = 0 } #ambiguous glob re-exports
@@ -96,7 +96,6 @@ coherence-leak-check = { level = "warn", priority = 0 } #distinct impls distingu
 confusable-idents = { level = "warn", priority = 0 } #detects visually confusable pairs between identifiers
 const-evaluatable-unchecked = { level = "warn", priority = 0 } #detects a generic constant is used in a type without a emitting a warning
 const-item-mutation = { level = "warn", priority = 0 } #detects attempts to mutate a `const` item
-const-patterns-without-partial-eq = { level = "warn", priority = 0 } #constant in pattern does not implement `PartialEq`
 dead-code = { level = "warn", priority = 0 } #detect unused, unexported items
 deprecated = { level = "warn", priority = 0 } #detects use of deprecated items
 deprecated-where-clause-location = { level = "warn", priority = 0 } #deprecated where clause location
@@ -116,7 +115,6 @@ forgetting-references = { level = "warn", priority = 0 } #calls to `std::mem::fo
 for-loops-over-fallibles = { level = "warn", priority = 0 } #for-looping over an `Option` or a `Result`, which is more clearly expressed as an `if let`
 function-item-references = { level = "warn", priority = 0 } #suggest casting to a function pointer when attempting to take references to function items
 hidden-glob-reexports = { level = "warn", priority = 0 } #name introduced by a private item shadows a name introduced by a public glob re-export
-illegal-floating-point-literal-pattern = { level = "warn", priority = 0 } #floating-point literals cannot be used in patterns
 improper-ctypes = { level = "warn", priority = 0 } #proper use of libc types in foreign modules
 improper-ctypes-definitions = { level = "warn", priority = 0 } #proper use of libc types in foreign item definitions
 incomplete-features = { level = "warn", priority = 0 } #incomplete features that may function improperly in some or all cases
@@ -135,7 +133,6 @@ legacy-derive-helpers = { level = "warn", priority = 0 } #detects derive helper 
 map-unit-fn = { level = "warn", priority = 0 } #`Iterator::map` call that discard the iterator's values
 mixed-script-confusables = { level = "warn", priority = 0 } #detects Unicode scripts whose mixed script confusables codepoints are solely used
 named-arguments-used-positionally = { level = "warn", priority = 0 } #named arguments in format used positionally
-nontrivial-structural-match = { level = "warn", priority = 0 } #constant used in pattern of non-structural-match type and the constant's initializer expression contains values of non-structural-match types
 non-camel-case-types = { level = "warn", priority = 0 } #types, variants, traits and type parameters should have camel case names
 non-fmt-panics = { level = "warn", priority = 0 } #detect single-argument panic!() invocations in which the argument is not a format string
 non-shorthand-field-patterns = { level = "warn", priority = 0 } #using `Struct { x: x }` instead of `Struct { x }` in a pattern
@@ -156,7 +153,6 @@ repr-transparent-external-private-fields = { level = "warn", priority = 0 } #tra
 semicolon-in-expressions-from-macros = { level = "warn", priority = 0 } #trailing semicolon in macro body used as expression
 special-module-name = { level = "warn", priority = 0 } #module declarations for files with a special meaning
 stable-features = { level = "warn", priority = 0 } #stable features found in `#[feature]` directive
-suspicious-auto-trait-impls = { level = "warn", priority = 0 } #the rules governing auto traits have recently changed resulting in potential breakage
 suspicious-double-ref-op = { level = "warn", priority = 0 } #suspicious call of trait method on `&&T`
 temporary-cstring-as-ptr = { level = "warn", priority = 0 } #detects getting the inner pointer of a temporary `CString`
 trivial-bounds = { level = "warn", priority = 0 } #these bounds don't depend on an type parameters
@@ -201,12 +197,10 @@ ambiguous-associated-items = { level = "deny", priority = 0 } #ambiguous associa
 arithmetic-overflow = { level = "deny", priority = 0 } #arithmetic operation overflows
 bindings-with-variant-name = { level = "deny", priority = 0 } #detects pattern bindings with the same name as one of the matched variants
 cenum-impl-drop-cast = { level = "deny", priority = 0 } #a C-like enum implementing Drop is cast
-coinductive-overlap-in-coherence = { level = "deny", priority = 0 } #impls that are not considered to overlap may be considered to overlap in the future
 conflicting-repr-hints = { level = "deny", priority = 0 } #conflicts between `#[repr(..)]` hints that were previously accepted and used in practice
 deprecated-cfg-attr-crate-type-name = { level = "deny", priority = 0 } #detects usage of `#![cfg_attr(..., crate_type/crate_name = "...")]`
 enum-intrinsics-non-enums = { level = "deny", priority = 0 } #detects calls to `core::mem::discriminant` and `core::mem::variant_count` with non-enum types
 ill-formed-attribute-input = { level = "deny", priority = 0 } #ill-formed attribute inputs that were previously accepted and used in practice
-implied-bounds-entailment = { level = "deny", priority = 0 } #impl method assumes more implied bounds than its corresponding trait method
 incomplete-include = { level = "deny", priority = 0 } #trailing content in included file
 ineffective-unstable-trait-impl = { level = "deny", priority = 0 } #detects `#[unstable]` on stable trait implementations for stable types
 invalid-atomic-ordering = { level = "deny", priority = 0 } #usage of invalid atomic ordering in atomic operations and memory fences
