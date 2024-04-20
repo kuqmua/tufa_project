@@ -5,7 +5,7 @@ pub struct ProjectGitInfo<'a> {
     pub commit: &'a str,
 }
 
-pub const PROJECT_GIT_INFO: ProjectGitInfo = compile_time_git_info::compile_time_project_git_info!();
+pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> = compile_time_git_info::compile_time_project_git_info!();
 
 // pub const PROJECT_GIT_INFO: crate::common::git::project_git_info::ProjectGitInfo =
 //     crate::common::git::project_git_info::ProjectGitInfo {
@@ -59,7 +59,7 @@ pub trait GetGitCommitId {
 //     fn get_git_message(&self) -> &'a str;
 // }
 
-impl<'a> GetGitCommitId for ProjectGitInfo<'a> {
+impl GetGitCommitId for ProjectGitInfo<'_> {
     //todo
     fn get_git_commit_id(&self) -> std::string::String {
         self.commit.to_string()

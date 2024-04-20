@@ -44,7 +44,7 @@ pub mod write_token_stream_into_file;
 //     }
 // }
 
-#[derive(proc_macro_assistants::ToSnakeCaseStringified)]
+#[derive(Debug, Clone, Copy, proc_macro_assistants::ToSnakeCaseStringified)]
 pub enum TestOperationPrintlnInfo {
     Start,
     End,

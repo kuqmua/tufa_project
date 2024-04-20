@@ -4,6 +4,7 @@
     PartialEq,
     Eq,
     Clone,
+    Copy,
     Hash,
     proc_macro_assistants::ToUpperCamelCaseStringified,
     proc_macro_assistants::ToSnakeCaseStringified,

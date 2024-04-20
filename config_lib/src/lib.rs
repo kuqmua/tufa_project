@@ -66,6 +66,7 @@ pub trait GetStartingCheckLink {
 #[derive(
     Debug,
     Clone,
+    Copy,
     strum_macros::EnumIter,
     enum_extension_lib::EnumExtension,
     serde::Serialize,
@@ -87,7 +88,7 @@ impl std::default::Default for TracingType {
     }
 }
 impl std::fmt::Display for TracingType {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.to_snake_case())
     }
 }
@@ -98,6 +99,7 @@ pub trait GetTracingType {
 #[derive(
     Debug,
     Clone,
+    Copy,
     PartialEq,
     Eq,
     strum_macros::Display,

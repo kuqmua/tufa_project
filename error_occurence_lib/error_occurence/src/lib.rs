@@ -81,7 +81,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         );
                     }
                 });
-        lifetimes_stringified.pop();
+        let _ = lifetimes_stringified.pop();
         if lifetimes_stringified.contains(&trait_lifetime_stringified) {
             panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
         }
@@ -2352,11 +2352,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                                                     key_reference_ident,
-                                                    key_lifetime_ident
+                                                    key_lifetime_ident: _,
                                                 },
                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                                                     value_reference_ident,
-                                                    value_lifetime_ident
+                                                    value_lifetime_ident: _,
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -2381,13 +2381,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     {
-                                                        get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
-                                                            vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_ident.to_string())],
-                                                            vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())],
-                                                            &mut lifetimes_for_serialize_deserialize,
-                                                                &trait_lifetime_stringified,
-                                                                &proc_macro_name_ident_stringified,
-                                                        );
+                                                        // get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
+                                                        //     vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_ident.to_string())],
+                                                        //     vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())],
+                                                        //     &mut lifetimes_for_serialize_deserialize,
+                                                        //         &trait_lifetime_stringified,
+                                                        //         &proc_macro_name_ident_stringified,
+                                                        // );
                                                         quote::quote!{#[serde(borrow)]}
                                                     },
                                                     quote::quote! {

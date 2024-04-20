@@ -23,7 +23,7 @@ pub fn compile_time_project_git_info(
         .unwrap_or_else(|e| panic!("cannot open {full_path} file, error: \"{e}\""));
     let mut buf_reader = std::io::BufReader::new(file);
     let mut git_logs_head_content = std::string::String::new();
-    std::io::Read::read_to_string(&mut buf_reader, &mut git_logs_head_content)
+    let _ = std::io::Read::read_to_string(&mut buf_reader, &mut git_logs_head_content)
         .unwrap_or_else(|e| panic!("cannot read_to_string from {full_path} file, error: \"{e}\""));
     let hash = match git_logs_head_content.get(0..40) {
         Some(hash) => hash,

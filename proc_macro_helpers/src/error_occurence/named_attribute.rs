@@ -1,6 +1,6 @@
 #[allow(clippy::enum_variant_names)]
 // #[derive(strum_macros::EnumIter, strum_macros::Display)]
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum NamedAttribute {
     EoDisplay,
     EoDisplayWithSerializeDeserialize,

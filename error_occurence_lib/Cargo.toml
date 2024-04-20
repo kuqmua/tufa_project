@@ -9,12 +9,7 @@ edition = "2021"
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 chrono = {version = "=0.4", features = ["serde"]}
 serde = {version = "=1.0", features = ["derive"]}
-serde_derive = {version = "=1.0"}
-tracing = {version = "=0.1", features = ["log", "valuable"]}
-reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
-http-body = {version = "=1.0.0"}
 git_info = {path = "../git_info"}
-config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
 error_occurence = {path = "./error_occurence"}
 naming_constants = {path = "../naming_constants"}

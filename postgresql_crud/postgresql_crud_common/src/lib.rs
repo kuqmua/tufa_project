@@ -4,6 +4,7 @@ fn add_path(value: &str) -> std::string::String {
     format!("{POSTGRESQL_CRUD_SNAKE_CASE}::{value}")
 }
 
+#[derive(Debug, Clone, Copy)]
 pub enum PostgresqlType {
     Bool,
     Char,
@@ -49,6 +50,7 @@ pub enum PostgresqlType {
     JsonB,
 }
 
+#[derive(Debug, Clone, Copy)]
 pub enum PostgresqlTypeWithMetadata {
     Bool,
     BoolNotNull,
@@ -326,6 +328,9 @@ impl PostgresqlTypeWithMetadata {
 }
 
 #[derive(
+    Debug,
+    Clone,
+    Copy,
     strum_macros::Display,
     strum_macros::EnumIter,
     proc_macro_assistants::ToSnakeCaseStringified,
@@ -558,7 +563,7 @@ impl std::convert::From<&SupportedSqlxPostgresType> for SqlxPostgresTypeOrOption
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum SqlxPostgresType {
     StdPrimitiveBool,
     StdPrimitiveI16,
@@ -6438,7 +6443,7 @@ pub enum TryGenerateBindIncrementsErrorNamed {
 pub trait BindQuery {
     fn try_increment(&self, increment: &mut u64) -> Result<(), TryGenerateBindIncrementsErrorNamed>;
     fn try_generate_bind_increments(&self, increment: &mut u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed>;
-    fn bind_value_to_query(self, query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn bind_value_to_query(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
@@ -6473,7 +6478,7 @@ pub enum Order {
 }
 
 impl std::fmt::Display for Order {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Order::Asc => write!(f, "{}", <naming_constants::Asc as naming_constants::Naming>::upper_camel_case_stringified()),
             Order::Desc => write!(f, "{}", <naming_constants::Desc as naming_constants::Naming>::upper_camel_case_stringified()),

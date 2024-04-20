@@ -6,6 +6,6 @@ pub fn vec_lifetime_to_string(
             acc.push_str(&format!("{},", path_segment));
             acc
         });
-    lifetimes_stringified_handle.pop();
+    let _ = lifetimes_stringified_handle.pop();
     format!("<{lifetimes_stringified_handle}>")
 }

@@ -1,4 +1,4 @@
-#[derive(Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum SuportedEnumVariant {
     Named,
     Unnamed,

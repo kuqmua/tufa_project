@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub enum ErrorFieldOrCodeOccurence {
     ErrorField {
         attribute: crate::error_occurence::named_attribute::NamedAttribute,
