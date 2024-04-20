@@ -8,8 +8,8 @@ version = "0.1.0"
 proc-macro = true
 
 [dependencies]
-proc-macro2 = {version = "=1.0.67"}
-quote = {version = "=1.0.33"}
+proc-macro2 = {version = "=1.0.81"}
+quote = {version = "=1.0.36"}
 proc_macro_helpers = {path = "../../../proc_macro_helpers"}
 proc_macro_common = {path = "../../../proc_macro_common"}
 constants = {path = "../../../constants"}

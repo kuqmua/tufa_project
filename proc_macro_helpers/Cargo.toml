@@ -5,9 +5,9 @@ version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
-proc-macro2 = {version = "=1.0.67"}
-quote = {version = "=1.0.33"}
-syn = {version = "=1.0.107"} # activate impl Display trait in proc macros: syn = { version = "1.0.75", features = ["extra-traits"]}
+proc-macro2 = {version = "=1.0.81"}
+quote = {version = "=1.0.36"}
+syn = {version = "=2.0.60"} # activate impl Display trait in proc macros: syn = { version = "1.0.75", features = ["extra-traits"]}
 strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 convert_case = {version = "=0.6.0"}

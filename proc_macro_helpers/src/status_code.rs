@@ -496,8 +496,8 @@ impl TryFrom<&syn::Variant> for StatusCode {
     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
         let mut option_self: Option<Self> = None;
         for element in &value.attrs {
-            if element.path.segments.len() == 1 {
-                match element.path.segments.first() {
+            if element.path().segments.len() == 1 {
+                match element.path().segments.first() {
                     Some(segment) => {
                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
                             match option_self {
@@ -512,7 +512,7 @@ impl TryFrom<&syn::Variant> for StatusCode {
                     }
                     None => {
                         return Err(std::string::String::from(
-                            "element.path.segments.first() is None",
+                            "element.path().segments.first() is None",
                         ));
                     }
                 }
@@ -530,8 +530,8 @@ impl TryFrom<&&syn::Variant> for StatusCode {
     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
         let mut option_self: Option<Self> = None;
         for element in &value.attrs {
-            if element.path.segments.len() == 1 {
-                match element.path.segments.first() {
+            if element.path().segments.len() == 1 {
+                match element.path().segments.first() {
                     Some(segment) => {
                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
                             match option_self {
@@ -546,7 +546,7 @@ impl TryFrom<&&syn::Variant> for StatusCode {
                     }
                     None => {
                         return Err(std::string::String::from(
-                            "element.path.segments.first() is None",
+                            "element.path().segments.first() is None",
                         ));
                     }
                 }
@@ -694,10 +694,10 @@ pub fn get_only_one_status_code(
 ) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
-        if attr.path.segments.len() == 1 {
-            let value = match attr.path.segments.first() {
+        if attr.path().segments.len() == 1 {
+            let value = match attr.path().segments.first() {
                 Some(value) => value,
-                None => panic!("{proc_macro_name_ident_stringified} attr.path.segments.get(0) is None")
+                None => panic!("{proc_macro_name_ident_stringified} attr.path().segments.get(0) is None")
             };
             if let Ok(named_attribute) = StatusCode::try_from(&value.ident.to_string()) {
                 if option_self.is_some() {

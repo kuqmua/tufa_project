@@ -54,8 +54,8 @@ pub fn type_variants_from_request_response_generator(
                     false => {
                         let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
                         for element in &field.attrs {
-                            if element.path.segments.len() == 1 {
-                                let segment = element.path.segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path.segments.get(0) is None")});
+                            if element.path().segments.len() == 1 {
+                                let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
                                 if let Ok(value) = {
                                     use std::str::FromStr;
                                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
@@ -237,11 +237,11 @@ pub fn type_variants_from_request_response_generator(
                         let attribute = {
                             let mut option_attribute = None;
                             field.attrs.iter().for_each(|attr|{
-                                if attr.path.segments.len() == 1 {
+                                if attr.path().segments.len() == 1 {
                                     let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                    let attr_ident = match attr.path.segments.iter().next() {
+                                    let attr_ident = match attr.path().segments.iter().next() {
                                         Some(path_segment) => &path_segment.ident,
-                                        None => panic!("attr.path.segments.iter().next() is None"),
+                                        None => panic!("attr.path().segments.iter().next() is None"),
                                     };
                                     if let Ok(value) = {
                                         use std::str::FromStr;
@@ -425,11 +425,11 @@ pub fn type_variants_from_request_response_generator(
                                 let attribute = {
                                     let mut option_attribute = None;
                                     field.attrs.iter().for_each(|attr|{
-                                        if attr.path.segments.len() == 1 {
+                                        if attr.path().segments.len() == 1 {
                                             let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                            let attr_ident = match attr.path.segments.iter().next() {
+                                            let attr_ident = match attr.path().segments.iter().next() {
                                                 Some(path_segment) => &path_segment.ident,
-                                                None => panic!("attr.path.segments.iter().next() is None"),
+                                                None => panic!("attr.path().segments.iter().next() is None"),
                                             };
                                             if let Ok(value) = {
                                                 use std::str::FromStr;
@@ -703,7 +703,7 @@ pub fn construct_syn_variant(
     fields: std::vec::Vec<(
         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute,
         &str,
-        syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2>,
+        syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
 ) -> syn::Variant {
     syn::Variant {
@@ -712,10 +712,8 @@ pub fn construct_syn_variant(
                 spans: [proc_macro2::Span::call_site()],
             },
             style: syn::AttrStyle::Outer,
-            bracket_token: syn::token::Bracket {
-                span: proc_macro2::Span::call_site(),
-            },
-            path: syn::Path {
+            bracket_token: syn::token::Bracket::default(),
+            meta: syn::Meta::Path(syn::Path {
                 leading_colon: None,
                 segments: {
                     let mut handle = syn::punctuated::Punctuated::new();
@@ -725,14 +723,11 @@ pub fn construct_syn_variant(
                         });
                     handle
                 },
-            },
-            tokens: proc_macro2::TokenStream::new(),
+            }),
         }],
         ident: syn::Ident::new(variant_name, proc_macro2::Span::call_site()),
         fields: syn::Fields::Named(syn::FieldsNamed {
-            brace_token: syn::token::Brace {
-                span: proc_macro2::Span::call_site(),
-            },
+            brace_token: syn::token::Brace::default(),
             named: {
                 let mut handle = fields.into_iter().fold(
                     syn::punctuated::Punctuated::new(),
@@ -743,10 +738,8 @@ pub fn construct_syn_variant(
                                     spans: [proc_macro2::Span::call_site()],
                                 },
                                 style: syn::AttrStyle::Outer,
-                                bracket_token: syn::token::Bracket {
-                                    span: proc_macro2::Span::call_site(),
-                                },
-                                path: syn::Path {
+                                bracket_token: syn::token::Bracket::default(),
+                                meta: syn::Meta::Path(syn::Path {
                                     leading_colon: None,
                                     segments: {
                                         let mut handle = syn::punctuated::Punctuated::new();
@@ -759,10 +752,10 @@ pub fn construct_syn_variant(
                                         });
                                         handle
                                     },
-                                },
-                                tokens: proc_macro2::TokenStream::new(),
+                                }),
                             }],
                             vis: syn::Visibility::Inherited,
+                            mutability: syn::FieldMutability::None,
                             ident: Some(syn::Ident::new(element.1, proc_macro2::Span::call_site())),
                             colon_token: Some(syn::token::Colon {
                                 spans: [proc_macro2::Span::call_site()],

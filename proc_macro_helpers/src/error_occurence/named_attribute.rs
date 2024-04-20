@@ -58,8 +58,8 @@ impl TryFrom<&syn::Field> for NamedAttribute {
     fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
         let mut error_occurence_attribute: Option<Self> = None;
         for element in &value.attrs {
-            if element.path.segments.len() == 1 {
-                match element.path.segments.first() {
+            if element.path().segments.len() == 1 {
+                match element.path().segments.first() {
                     Some(value) => {
                         if let Ok(value) = {
                             use std::str::FromStr;
@@ -80,7 +80,7 @@ impl TryFrom<&syn::Field> for NamedAttribute {
                     }
                     None => {
                         return Err(std::string::String::from(
-                            "element.path.segments.first() is None",
+                            "element.path().segments.first() is None",
                         ));
                     }
                 }
@@ -98,8 +98,8 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
     fn try_from(value: &&syn::Field) -> Result<Self, Self::Error> {
         let mut error_occurence_attribute: Option<Self> = None;
         for element in &value.attrs {
-            if element.path.segments.len() == 1 {
-                match element.path.segments.first() {
+            if element.path().segments.len() == 1 {
+                match element.path().segments.first() {
                     Some(value) => {
                         if let Ok(value) = {
                             use std::str::FromStr;
@@ -120,7 +120,7 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
                     }
                     None => {
                         return Err(std::string::String::from(
-                            "element.path.segments.first() is None",
+                            "element.path().segments.first() is None",
                         ));
                     }
                 }

@@ -738,7 +738,7 @@ where
 pub trait SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated {
     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
         &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2>;
+    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>;
 }
 
 impl<T> SelfPayloadTryFromSelfPayloadWithSerializeDeserializeUpperCamelCasePunctuated for T
@@ -747,8 +747,8 @@ where
 {
     fn self_payload_try_from_self_payload_with_serialize_deserialize_upper_camel_case_punctuated(
         &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2> {
-        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>::new();
+    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
         handle.push_value(
             syn::PathSegment {
                 ident: proc_macro2::Ident::new(
@@ -1049,7 +1049,7 @@ pub trait SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeUpp
 {
     fn self_payload_element_try_from_self_payload_element_with_serialize_deserialize_upper_camel_case_punctuated(
         &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2>;
+    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>;
 }
 
 impl<T> SelfPayloadElementTryFromSelfPayloadElementWithSerializeDeserializeUpperCamelCasePunctuated
@@ -1059,8 +1059,8 @@ where
 {
     fn self_payload_element_try_from_self_payload_element_with_serialize_deserialize_upper_camel_case_punctuated(
         &self,
-    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2> {
-        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>::new();
+    ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
+        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
         handle.push_value(
             syn::PathSegment {
                 ident: proc_macro2::Ident::new(

@@ -654,11 +654,8 @@ pub async fn try_create_many_route_logic(
 ) -> TryCreateManyRouteLogicResponse {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
-    //
-    // let now = std::time::Instant::now();
-    //
     if let Err(e) = route_validators::check_commit::check_commit(
-        app_state.as_ref(),
+        *app_state.get_enable_api_git_commit_check(),
         &headers,
     ) {
         let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
@@ -687,24 +684,25 @@ pub async fn try_create_many_route_logic(
             };
         }
     };
-    match try_create_many_generated_route_logic(app_state.as_ref(), body_bytes).await {
-        Ok(value) => {
-            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
-            return TryCreateManyRouteLogicResponse {
-                status_code,
-                body: TryCreateManyRouteLogicResponseVariants::Desirable(value.0),
-            };
-        },
-        Err(e) => {
-            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
-            let e = TryCreateManyRouteLogicErrorNamed::from(e);
-            error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
-            return TryCreateManyRouteLogicResponse {
-                status_code,
-                body: TryCreateManyRouteLogicResponseVariants::from(e),
-            };
-        }
-    }
+    todo!()
+    // match try_create_many_generated_route_logic(app_state.as_ref(), body_bytes).await {
+    //     Ok(value) => {
+    //         let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
+    //         return TryCreateManyRouteLogicResponse {
+    //             status_code,
+    //             body: TryCreateManyRouteLogicResponseVariants::Desirable(value.0),
+    //         };
+    //     },
+    //     Err(e) => {
+    //         let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
+    //         let e = TryCreateManyRouteLogicErrorNamed::from(e);
+    //         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+    //         return TryCreateManyRouteLogicResponse {
+    //             status_code,
+    //             body: TryCreateManyRouteLogicResponseVariants::from(e),
+    //         };
+    //     }
+    // }
 }
 
 /////////////////////////////////////////

@@ -65,10 +65,10 @@ pub fn generate_getter_traits_for_struct_fields(
 // let type_ident_string = match type_ident.clone() {
 //                 syn::Type::Path(path) => {
 //                     //todo not a full logic
-//                     match path.path.segments.len() {
-//                         1 => format!("{}", path.path.segments[0].ident),
+//                     match path.path().segments.len() {
+//                         1 => format!("{}", path.path().segments[0].ident),
 //                         _ => panic!(
-//                             "GenerateGetterTraitsForStructFields path.path.segments.len() != 1"
+//                             "GenerateGetterTraitsForStructFields path.path().segments.len() != 1"
 //                         ),
 //                     }
 //                 }

@@ -343,9 +343,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let attribute = {
                                     let mut option_attribute = None;
                                     field.attrs.iter().for_each(|attr|{
-                                        if attr.path.segments.len() == 1 {
+                                        if attr.path().segments.len() == 1 {
                                             let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                            if attr.path.segments[0].ident == attribute_display_stringified {
+                                            if attr.path().segments[0].ident == attribute_display_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -353,7 +353,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_display_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_display_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -361,7 +361,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_display_foreign_type_stringified {
+                                            else if attr.path().segments[0].ident == attribute_display_foreign_type_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -369,7 +369,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -377,7 +377,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_error_occurence_stringified {
+                                            else if attr.path().segments[0].ident == attribute_error_occurence_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -385,7 +385,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_vec_display_stringified {
+                                            else if attr.path().segments[0].ident == attribute_vec_display_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -393,7 +393,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_vec_display_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_vec_display_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -401,7 +401,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_vec_display_foreign_type_stringified {
+                                            else if attr.path().segments[0].ident == attribute_vec_display_foreign_type_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -409,7 +409,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -417,7 +417,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_vec_error_occurence_stringified {
+                                            else if attr.path().segments[0].ident == attribute_vec_error_occurence_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -425,7 +425,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -433,7 +433,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -441,7 +441,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -449,7 +449,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -457,7 +457,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -465,7 +465,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -473,7 +473,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -481,7 +481,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -489,7 +489,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }
@@ -497,7 +497,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize);
                                                 }
                                             }
-                                            else if attr.path.segments[0].ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
+                                            else if attr.path().segments[0].ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
                                                 if option_attribute.is_some() {
                                                     panic!("{error_message}");
                                                 }

@@ -113,11 +113,11 @@ pub fn generate_with_serialize_deserialize_version(
                             let attribute = {
                                 let mut option_attribute = None;
                                 field.attrs.iter().for_each(|attr|{
-                                    if attr.path.segments.len() == 1 {
+                                    if attr.path().segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path.segments.iter().next() {
+                                        let attr_ident = match attr.path().segments.iter().next() {
                                             Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path.segments.iter().next() is None"),
+                                            None => panic!("attr.path().segments.iter().next() is None"),
                                         };
                                         if let Ok(value) = {
                                             use std::str::FromStr;

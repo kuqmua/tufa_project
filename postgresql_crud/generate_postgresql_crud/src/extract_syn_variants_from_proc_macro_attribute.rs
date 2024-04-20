@@ -16,13 +16,13 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
             &additional_http_status_codes_error_variant_path,
             proc_macro_name_upper_camel_case_ident_stringified,
         );
-    match additional_http_status_codes_error_variants_attribute.path.segments.len() == 2 {
+    match additional_http_status_codes_error_variants_attribute.path().segments.len() == 2 {
         true => {
-            let first_ident = &additional_http_status_codes_error_variants_attribute.path.segments.first().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path.segments.get(0) is None")
+            let first_ident = &additional_http_status_codes_error_variants_attribute.path().segments.first().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path().segments.get(0) is None")
             }).ident;
-            let second_ident = &additional_http_status_codes_error_variants_attribute.path.segments.last().unwrap_or_else(|| {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path.segments.get(0) is None")
+            let second_ident = &additional_http_status_codes_error_variants_attribute.path().segments.last().unwrap_or_else(|| {
+                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path().segments.get(0) is None")
             }).ident;
             let possible_additional_http_status_codes_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
             if additional_http_status_codes_error_variant_path != possible_additional_http_status_codes_error_variants_attribute_path {
@@ -31,10 +31,11 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
         },
         false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no {additional_http_status_codes_error_variant_path} path")
     }
-    let mut additional_http_status_codes_error_variants_attribute_tokens_stringified =
-        additional_http_status_codes_error_variants_attribute
-            .tokens
-            .to_string();
+    // println!("{additional_http_status_codes_error_variants_attribute:#?}");
+    let mut additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_string();//todo
+        // additional_http_status_codes_error_variants_attribute
+        //     .tokens
+        //     .to_string();
     let additional_http_status_codes_error_variants_attribute_tokens_stringified_len =
         additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
     let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified =
@@ -57,7 +58,7 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} parse additional_http_status_codes_error_variants_attribute_tokens failed {e}");
                     });
                     let option_path_sttribute = element_derive_input.attrs.iter().find(|element|{
-                        let element_path = &element.path;
+                        let element_path = &element.path();
                         let element_path_token_stream = quote::quote!{#element_path};
                         let element_path_stringified = element_path_token_stream.to_string();
                         element_path_stringified == "path"
@@ -66,7 +67,8 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
                         Some(value) => value,
                         None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no path attribute"),
                     };
-                    let path_to_additional_variant_enum_stringified = &path_attribute.tokens.to_string();
+                    let path_to_additional_variant_enum_stringified = "{}".to_string();//todo
+                    // &path_attribute.tokens.to_string();
                     let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified[1..(path_to_additional_variant_enum_stringified.len()- 1)];//todo maybe check
                     let path_to_additional_variant_enum_without_brackets_token_stream = path_to_additional_variant_enum_without_brackets_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_to_additional_variant_enum_without_brackets_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));

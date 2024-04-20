@@ -158,7 +158,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                         match value.path.segments[0].arguments {
                             syn::PathArguments::None => (),
-                            _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path.segments[0].arguments != syn::PathArguments::None")
+                            _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path().segments[0].arguments != syn::PathArguments::None")
                         }
                         let _maybe_generic_token_stream = match &value.path.segments[1].arguments {
                             syn::PathArguments::None => quote::quote!{},
@@ -994,6 +994,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let code_occurence_field = syn::Field {
         attrs: vec![],
         vis: syn::Visibility::Inherited,
+        mutability: syn::FieldMutability::None,
         ident: Some(
             syn::Ident::new("code_occurence", proc_macro2::Span::call_site())
         ),
@@ -2227,11 +2228,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let attribute = {
                                     let mut option_attribute = None;
                                     field.attrs.iter().for_each(|attr|{
-                                        if attr.path.segments.len() == 1 {
+                                        if attr.path().segments.len() == 1 {
                                             let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                            let attr_ident = match attr.path.segments.iter().next() {
+                                            let attr_ident = match attr.path().segments.iter().next() {
                                                 Some(path_segment) => &path_segment.ident,
-                                                None => panic!("attr.path.segments.iter().next() is None"),
+                                                None => panic!("attr.path().segments.iter().next() is None"),
                                             };
                                             if let Ok(value) = {
                                                 use std::str::FromStr;
@@ -2369,8 +2370,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             false => {
                                 let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
                                 for element in &field.attrs {
-                                    if element.path.segments.len() == 1 {
-                                        let segment = element.path.segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path.segments.get(0) is None")});
+                                    if element.path().segments.len() == 1 {
+                                        let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
                                         if let Ok(value) = {
                                             use std::str::FromStr;
                                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
@@ -2489,8 +2490,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             false => {
                                 let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
                                 for element in &field.attrs {
-                                    if element.path.segments.len() == 1 {
-                                        let segment = element.path.segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path.segments.get(0) is None")});
+                                    if element.path().segments.len() == 1 {
+                                        let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
                                         if let Ok(value) = {
                                             use std::str::FromStr;
                                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
@@ -2876,11 +2877,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //                     let attribute = {
             //                         let mut option_attribute = None;
             //                         field.attrs.iter().for_each(|attr|{
-            //                     if attr.path.segments.len() == 1 {
+            //                     if attr.path().segments.len() == 1 {
             //                         let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-            //                         let attr_ident = match attr.path.segments.iter().next() {
+            //                         let attr_ident = match attr.path().segments.iter().next() {
             //                             Some(path_segment) => &path_segment.ident,
-            //                             None => panic!("attr.path.segments.iter().next() is None"),
+            //                             None => panic!("attr.path().segments.iter().next() is None"),
             //                         };
             //                         if let Ok(value) = {
             //                             use std::str::FromStr;
@@ -7860,18 +7861,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 fn generate_std_vec_vec_syn_punctuated_punctuated(
     parts_vec: &[&str],
     proc_macro_name_upper_camel_case_ident_stringified: &str,
-) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::Colon2> {
+) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
     let parts_vec_len = parts_vec.len();
     match parts_vec_len >= 1 {
         true => {
-            let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>::new();
+            let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
             handle.push_value(
                 syn::PathSegment {
                     ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
                     arguments: syn::PathArguments::None,
                 }
             );
-            handle.push_punct(syn::token::Colon2{
+            handle.push_punct(syn::token::PathSep{
                 spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
             });
             handle.push_value(
@@ -7880,7 +7881,7 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
                     arguments: syn::PathArguments::None,
                 }
             );
-            handle.push_punct(syn::token::Colon2{
+            handle.push_punct(syn::token::PathSep{
                 spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
             });
             handle.push_value(
@@ -7899,7 +7900,7 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
                                     leading_colon: None,
                                     segments: {
                                         let parts_vec_len_minus_one = parts_vec_len - 1;
-                                        let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::Colon2>::new();
+                                        let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                                         for (index, element) in parts_vec.iter().enumerate() {
                                             std_vec_vec_generic_type.push_value(
                                                 syn::PathSegment {
@@ -7909,7 +7910,7 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
                                             );
                                             match index < parts_vec_len_minus_one {
                                                 true => {
-                                                    std_vec_vec_generic_type.push_punct(syn::token::Colon2{
+                                                    std_vec_vec_generic_type.push_punct(syn::token::PathSep{
                                                         spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
                                                     });
                                                 }
@@ -8146,11 +8147,11 @@ fn generate_http_request_many_token_stream(
                             let attribute = {
                                 let mut option_attribute = None;
                                 field.attrs.iter().for_each(|attr|{
-                                    if attr.path.segments.len() == 1 {
+                                    if attr.path().segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path.segments.iter().next() {
+                                        let attr_ident = match attr.path().segments.iter().next() {
                                             Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path.segments.iter().next() is None"),
+                                            None => panic!("attr.path().segments.iter().next() is None"),
                                         };
                                         if let Ok(value) = {
                                             use std::str::FromStr;
@@ -8471,11 +8472,11 @@ fn generate_try_operation_token_stream(
                             let attribute = {
                                 let mut option_attribute = None;
                                 field.attrs.iter().for_each(|attr|{
-                                    if attr.path.segments.len() == 1 {
+                                    if attr.path().segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path.segments.iter().next() {
+                                        let attr_ident = match attr.path().segments.iter().next() {
                                             Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path.segments.iter().next() is None"),
+                                            None => panic!("attr.path().segments.iter().next() is None"),
                                         };
                                         if let Ok(value) = {
                                             use std::str::FromStr;
@@ -8857,7 +8858,7 @@ fn generate_std_string_string_error_syn_variant(
     code_occurence_field: &syn::Field,
     std_string_string_syn_punctuated_punctuated: syn::punctuated::Punctuated<
         syn::PathSegment,
-        syn::token::Colon2,
+        syn::token::PathSep,
     >,
 ) -> syn::Variant {
     let variant_name_snake_case_stringified =
@@ -8926,7 +8927,7 @@ impl<'a> std::convert::From<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
                         }
                         match value.path.segments[0].arguments {
                             syn::PathArguments::None => (),
-                            _ => panic!("{name} value.path.segments[0].arguments != syn::PathArguments::None")
+                            _ => panic!("{name} value.path().segments[0].arguments != syn::PathArguments::None")
                         }
                         let rust_sqlx_map_to_postgres_type_variant =
                             match postgresql_crud_common::RustSqlxMapToPostgresTypeVariant::try_from(

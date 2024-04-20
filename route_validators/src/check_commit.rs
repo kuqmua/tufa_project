@@ -44,10 +44,14 @@ impl http_logic::GetAxumHttpStatusCode for CheckCommitErrorNamed {
 }
 
 pub fn check_commit(
-    app_state: &dyn app_state::GetEnableApiGitCommitCheck,
+    // app_state: &dyn app_state::GetEnableApiGitCommitCheck,
+    enable_api_git_commit_check: bool,
     headers: &axum::http::HeaderMap<axum::http::header::HeaderValue>,
 ) -> Result<(), CheckCommitErrorNamed> {
-    match app_state.get_enable_api_git_commit_check() {
+    match 
+        // app_state.get_enable_api_git_commit_check() 
+        enable_api_git_commit_check
+    {
         true => match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
             Some(value) => match value.to_str() {
                 Ok(value) => match value == git_info::PROJECT_GIT_INFO.commit {
