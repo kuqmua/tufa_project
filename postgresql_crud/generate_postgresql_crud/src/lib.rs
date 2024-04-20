@@ -2257,8 +2257,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             //
-            let enum_with_serialize_deserialize_logic_token_stream_handle_token_stream = {
-                let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
+            let try_operation_route_logic_response_variants_token_stream = {
+                // let try_operation_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsUpperCamelCaseTokenStream::try_self_response_variants_upper_camel_case_token_stream(&operation);
                 let enum_with_serialize_deserialize_logic_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
                     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
                     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
@@ -2361,19 +2361,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {
                     #derive_debug_serialize_deserialize_token_stream
-                    pub enum #try_operation_response_variants_upper_camel_case_token_stream {
-                        #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
-                        #(#enum_with_serialize_deserialize_logic_mapped_token_stream),*
-                    }
-                }
-            };
-            //
-            let try_operation_route_logic_response_variants_token_stream = {
-                // println!("{type_variants_from_request_response_syn_variants:#?}");
-                quote::quote! {
-                    #derive_debug_serialize_deserialize_token_stream
                     pub enum #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
-                        //
+                        //todo add from additional_http_status_codes_error_variants
                         CheckCommit {
                             check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -2383,106 +2372,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
                         //
-                        Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
-                        Configuration {
-                            configuration: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Database {
-                            database: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Io {
-                            io: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Tls {
-                            tls: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Protocol {
-                            protocol: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        RowNotFound {
-                            row_not_found: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        TypeNotFound {
-                            type_not_found: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        ColumnIndexOutOfBounds {
-                            column_index_out_of_bounds: usize,
-                            len: usize,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        ColumnNotFound {
-                            column_not_found: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        ColumnDecode {
-                            column_decode_index: std::string::String,
-                            source_handle: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Decode {
-                            decode: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        PoolTimedOut {
-                            pool_timed_out: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        PoolClosed {
-                            pool_closed: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        WorkerCrashed {
-                            worker_crashed: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Migrate {
-                            migrate: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        JsonDataError {
-                            json_data_error: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        JsonSyntaxError {
-                            json_syntax_error: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        MissingJsonContentType {
-                            missing_json_content_type: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        BytesRejection {
-                            bytes_rejection: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        UnexpectedCase {
-                            unexpected_case: std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        BindQuery {
-                            bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-                        {
-                            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-                                std::string::String,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
+                        #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
+                        #(#enum_with_serialize_deserialize_logic_mapped_token_stream),*
                     }
                 }
             };
-            //
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
+                #try_operation_route_logic_response_variants_token_stream
             }
         };
         let route_handler_token_stream = {
