@@ -2147,93 +2147,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &reqwest_declaration_token_stream,
         );
         // println!("{try_operation_error_with_middleware_error_variants_token_stream}");
-        let (http_request_token_stream, http_request_test_token_stream) = {
-            let try_operation_error_named_token_stream = {
-                let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
-                quote::quote! {
-                    #derive_debug_thiserror_error_occurence_token_stream
-                    pub enum #try_operation_error_named_upper_camel_case_token_stream {
-                        //todo remove request_error variant
-                        #http_request_error_named_serde_json_to_string_variant_token_stream,
-                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream
-                        #expected_type_declaration_token_stream,
-                        #unexpected_status_code_declaration_token_stream,
-                        #failed_to_get_response_text_declaration_token_stream,
-                        #deserialize_response_declaration_token_stream,
-                        #reqwest_declaration_token_stream,
-                    }
-                }
-            };
-            // println!("{try_operation_error_named_token_stream}");
-            let http_request_token_stream = generate_http_request_many_token_stream(
-                &server_location_name_token_stream,
-                &str_ref_token_stream,
-                &serde_json_to_string_token_stream,
-                &serde_json_to_string_variant_initialization_token_stream,
-                &reqwest_client_new_token_stream,
-                &commit_header_addition_token_stream,
-                &content_type_application_json_header_addition_token_stream,
-                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream,
-                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream,
-                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
-                &table_name_stringified,
-                &operation,
-                &proc_macro_name_upper_camel_case_ident_stringified,
-                &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
-                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
-                &deserialize_response_initialization_token_stream,
-                &unexpected_status_code_initialization_token_stream,
-                &reqwest_initialization_token_stream,
-                &failed_to_get_response_text_initialization_token_stream,
-                &expected_type_initialization_token_stream,
-                &primary_key_syn_field,
-                &from_snake_case_token_stream,
-                &from_str_snake_case_token_stream,
-            );
-            let http_request_test_token_stream = {
-                let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
-                    let field_ident = &element.field_ident;
-                    let field_type = &element.field.ty;
-                    quote::quote!{
-                        #field_ident: #field_type::default()
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let test_content_token_stream = quote::quote! {
-                    let #primary_keys_token_stream = match #try_operation_snake_case_token_stream(
-                        #reference_api_location_test_token_stream,
-                        #operation_parameters_upper_camel_case_token_stream {
-                            #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream(vec![
-                                #operation_payload_element_upper_camel_case_token_stream{
-                                    #(#element_fields_initialization_token_stream),*
-                                }
-                            ])
-                        },
-                    )
-                    .await
-                    {
-                        Ok(value) => {
-                            println!("{value:#?}");
-                            value
-                        },
-                        Err(#error_value_snake_case_token_stream) => panic!(
-                            "{}",
-                            #error_value_snake_case_token_stream
-                        ),//todo remove panic maybe?
-                    };
-                };
-                proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
-            };
-            (
-                quote::quote! {
-                    #try_operation_error_named_token_stream
-                    #http_request_token_stream
-                },
-                http_request_test_token_stream,
-            )
-        };
-        // println!("{http_request_token_stream}");
         let try_operation_route_logic_token_stream = {
             let try_operation_route_logic_response_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseUpperCamelCaseTokenStream::try_self_route_logic_response_upper_camel_case_token_stream(&operation);
             let try_operation_route_logic_response_variants_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicResponseVariantsUpperCamelCaseTokenStream::try_self_route_logic_response_variants_upper_camel_case_token_stream(&operation);
@@ -2512,7 +2425,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            //
             let impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream = {
                 let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
                     let variant_ident = &error_variant.ident;
@@ -2904,6 +2816,93 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         // println!("{route_handler_token_stream}");
+        let (http_request_token_stream, http_request_test_token_stream) = {
+            let try_operation_error_named_token_stream = {
+                let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
+                let expected_type_declaration_token_stream = generate_expected_type_declaration_token_stream(&operation);
+                quote::quote! {
+                    #derive_debug_thiserror_error_occurence_token_stream
+                    pub enum #try_operation_error_named_upper_camel_case_token_stream {
+                        //todo remove request_error variant
+                        #http_request_error_named_serde_json_to_string_variant_token_stream,
+                        #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_hadle_token_stream
+                        #expected_type_declaration_token_stream,
+                        #unexpected_status_code_declaration_token_stream,
+                        #failed_to_get_response_text_declaration_token_stream,
+                        #deserialize_response_declaration_token_stream,
+                        #reqwest_declaration_token_stream,
+                    }
+                }
+            };
+            // println!("{try_operation_error_named_token_stream}");
+            let http_request_token_stream = generate_http_request_many_token_stream(
+                &server_location_name_token_stream,
+                &str_ref_token_stream,
+                &serde_json_to_string_token_stream,
+                &serde_json_to_string_variant_initialization_token_stream,
+                &reqwest_client_new_token_stream,
+                &commit_header_addition_token_stream,
+                &content_type_application_json_header_addition_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_upper_camel_case_token_stream,
+                &operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_initialization_token_stream,
+                &table_name_stringified,
+                &operation,
+                &proc_macro_name_upper_camel_case_ident_stringified,
+                &type_variants_from_request_response_syn_variants,
+                &desirable_status_code,
+                &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
+                &deserialize_response_initialization_token_stream,
+                &unexpected_status_code_initialization_token_stream,
+                &reqwest_initialization_token_stream,
+                &failed_to_get_response_text_initialization_token_stream,
+                &expected_type_initialization_token_stream,
+                &primary_key_syn_field,
+                &from_snake_case_token_stream,
+                &from_str_snake_case_token_stream,
+            );
+            let http_request_test_token_stream = {
+                let element_fields_initialization_token_stream = fields_named_excluding_primary_key.iter().map(|element|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.field.ty;
+                    quote::quote!{
+                        #field_ident: #field_type::default()
+                    }
+                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                let test_content_token_stream = quote::quote! {
+                    let #primary_keys_token_stream = match #try_operation_snake_case_token_stream(
+                        #reference_api_location_test_token_stream,
+                        #operation_parameters_upper_camel_case_token_stream {
+                            #payload_snake_case_token_stream: #operation_payload_upper_camel_case_token_stream(vec![
+                                #operation_payload_element_upper_camel_case_token_stream{
+                                    #(#element_fields_initialization_token_stream),*
+                                }
+                            ])
+                        },
+                    )
+                    .await
+                    {
+                        Ok(value) => {
+                            println!("{value:#?}");
+                            value
+                        },
+                        Err(#error_value_snake_case_token_stream) => panic!(
+                            "{}",
+                            #error_value_snake_case_token_stream
+                        ),//todo remove panic maybe?
+                    };
+                };
+                proc_macro_helpers::naming_conventions::WrapIntoStartEndPrintlnSelfTokenStream::wrap_into_start_end_println_self_token_stream(&operation, &test_content_token_stream)
+            };
+            (
+                quote::quote! {
+                    #try_operation_error_named_token_stream
+                    #http_request_token_stream
+                },
+                http_request_test_token_stream,
+            )
+        };
+        // println!("{http_request_token_stream}");
         // let common_middlewares_error_syn_variants_from_impls =
         //     generate_common_middlewares_error_syn_variants_from_impls(
         //         common_middlewares_error_syn_variants
