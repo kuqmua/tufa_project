@@ -18,7 +18,7 @@ pub fn generate_postgres_transaction(
     try_ident_upper_camel_case_token_stream: &proc_macro2::TokenStream,
     error_log_call_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
-    primary_key_syn_field_with_additional_info: &crate::SynFieldWithAdditionalInfo,
+    primary_key_syn_field_with_additional_info: &crate::SynFieldWithAdditionalInfo<'_>,
 ) -> proc_macro2::TokenStream {
     let error_value_snake_case_token_stream =
         proc_macro_common::error_value_snake_case_token_stream();

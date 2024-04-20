@@ -139,7 +139,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             fields_named.named
                 .iter()
                 .map(|element| SynFieldWithAdditionalInfo::from(element))
-                .collect::<std::vec::Vec<SynFieldWithAdditionalInfo>>()
+                .collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>()
         } else {
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
         }
@@ -5277,7 +5277,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             let impl_std_convert_from_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_token_stream_for_operation_payload_try_from_operation_payload_with_serialize_deserialize_error_named_token_stream = {
                                 fn generate_operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream(
-                                    value: &SynFieldWithAdditionalInfo,
+                                    value: &SynFieldWithAdditionalInfo<'_>,
                                     operation_payload_element_try_from_operation_payload_element_with_serialize_deserialize_error_named_upper_camel_case_token_stream: &proc_macro2::TokenStream,
                                     code_occurence_snake_case_token_stream: &proc_macro2::TokenStream,
                                     primary_key_supported_sqlx_postgres_type_snake_case_token_stream: &proc_macro2::TokenStream,
@@ -8058,7 +8058,7 @@ fn generate_http_request_many_token_stream(
     reqwest_initialization_token_stream: &proc_macro2::TokenStream,
     failed_to_get_response_text_initialization_token_stream: &proc_macro2::TokenStream,
     expected_type_initialization_token_stream: &proc_macro2::TokenStream,
-    primary_key_syn_field: &SynFieldWithAdditionalInfo,
+    primary_key_syn_field: &SynFieldWithAdditionalInfo<'_>,
     from_snake_case_token_stream: &proc_macro2::TokenStream,
     from_str_snake_case_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
@@ -9010,7 +9010,7 @@ impl<'a> std::convert::From<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
     }
 }
 
-fn generate_pub_field_ident_field_type_token_stream(element: &SynFieldWithAdditionalInfo) -> proc_macro2::TokenStream {
+fn generate_pub_field_ident_field_type_token_stream(element: &SynFieldWithAdditionalInfo<'_>) -> proc_macro2::TokenStream {
     let field_ident = &element.field_ident;
     let inner_type_token_stream = &element.inner_type_token_stream;
     quote::quote! {
