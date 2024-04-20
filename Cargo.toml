@@ -39,47 +39,47 @@ exclude = [
 ]
 
 [workspace.lints.rust]
-unsafe_code = { level = "allow", priority = 0 }
-absolute-paths-not-starting-with-crate = { level = "allow", priority = 0 } #fully qualified paths that start with a module name instead of `crate`, `self`, or an extern crate name
+unsafe_code = { level = "deny", priority = 0 }
+absolute-paths-not-starting-with-crate = { level = "deny", priority = 0 } #fully qualified paths that start with a module name instead of `crate`, `self`, or an extern crate name
 box-pointers = { level = "allow", priority = 0 } #use of owned (Box type) heap memory
-deprecated-in-future = { level = "allow", priority = 0 } #detects use of items that will be deprecated in a future version
-elided-lifetimes-in-paths = { level = "allow", priority = 0 } #hidden lifetime parameters in types are deprecated
-explicit-outlives-requirements = { level = "allow", priority = 0 } #outlives requirements can be inferred
-ffi-unwind-calls = { level = "allow", priority = 0 } #call to foreign functions or function pointers with FFI-unwind ABI
-# fuzzy-provenance-casts = { level = "allow", priority = 0 } #a fuzzy integer to pointer cast is used
-keyword-idents = { level = "allow", priority = 0 } #detects edition keywords being used as an identifier
-let-underscore-drop = { level = "allow", priority = 0 } #non-binding let on a type that implements `Drop`
-# lossy-provenance-casts = { level = "allow", priority = 0 } #a lossy pointer to integer cast is used
-macro-use-extern-crate = { level = "allow", priority = 0 } #the `#[macro_use]` attribute is now deprecated in favor of using macros via the module system
-meta-variable-misuse = { level = "allow", priority = 0 } #possible meta-variable misuse at macro definition
-missing-abi = { level = "allow", priority = 0 } #No declared ABI for extern declaration
-missing-copy-implementations = { level = "allow", priority = 0 } #detects potentially-forgotten implementations of `Copy`
-missing-debug-implementations = { level = "allow", priority = 0 } #detects missing implementations of Debug
+deprecated-in-future = { level = "deny", priority = 0 } #detects use of items that will be deprecated in a future version
+elided-lifetimes-in-paths = { level = "deny", priority = 0 } #hidden lifetime parameters in types are deprecated
+explicit-outlives-requirements = { level = "deny", priority = 0 } #outlives requirements can be inferred
+ffi-unwind-calls = { level = "deny", priority = 0 } #call to foreign functions or function pointers with FFI-unwind ABI
+# fuzzy-provenance-casts = { level = "deny", priority = 0 } #a fuzzy integer to pointer cast is used
+keyword-idents = { level = "deny", priority = 0 } #detects edition keywords being used as an identifier
+let-underscore-drop = { level = "deny", priority = 0 } #non-binding let on a type that implements `Drop`
+# lossy-provenance-casts = { level = "deny", priority = 0 } #a lossy pointer to integer cast is used
+macro-use-extern-crate = { level = "deny", priority = 0 } #the `#[macro_use]` attribute is now deprecated in favor of using macros via the module system
+meta-variable-misuse = { level = "deny", priority = 0 } #possible meta-variable misuse at macro definition
+missing-abi = { level = "deny", priority = 0 } #No declared ABI for extern declaration
+missing-copy-implementations = { level = "deny", priority = 0 } #detects potentially-forgotten implementations of `Copy`
+missing-debug-implementations = { level = "deny", priority = 0 } #detects missing implementations of Debug
 missing-docs = { level = "allow", priority = 0 } #detects missing documentation for public members
-# multiple-supertrait-upcastable = { level = "allow", priority = 0 } #detect when an object-safe trait has multiple supertraits
-# must-not-suspend = { level = "allow", priority = 0 } #use of a `#[must_not_suspend]` value across a yield point
-non-ascii-idents = { level = "allow", priority = 0 } #detects non-ASCII identifiers
-# non-exhaustive-omitted-patterns = { level = "allow", priority = 0 } #detect when patterns of types marked `non_exhaustive` are missed
-rust-2021-incompatible-closure-captures = { level = "allow", priority = 0 } #detects closures affected by Rust 2021 changes
-rust-2021-incompatible-or-patterns = { level = "allow", priority = 0 } #detects usage of old versions of or-patterns
-rust-2021-prefixes-incompatible-syntax = { level = "allow", priority = 0 } #identifiers that will be parsed as a prefix in Rust 2021
-rust-2021-prelude-collisions = { level = "allow", priority = 0 } #detects the usage of trait methods which are ambiguous with traits added to the prelude in future editions
-single-use-lifetimes = { level = "allow", priority = 0 } #detects lifetime parameters that are only used once
-trivial-casts = { level = "allow", priority = 0 } #detects trivial casts which could be removed
-trivial-numeric-casts = { level = "allow", priority = 0 } #detects trivial casts of numeric types which could be removed
-# unnameable-types = { level = "allow", priority = 0 } #effective visibility of a type is larger than the area in which it can be named
-unreachable-pub = { level = "allow", priority = 0 } #`pub` items not reachable from crate root
-unsafe-code = { level = "allow", priority = 0 } #usage of `unsafe` code and other potentially unsound constructs
-unsafe-op-in-unsafe-fn = { level = "allow", priority = 0 } #unsafe operations in unsafe functions without an explicit unsafe block are deprecated
-unstable-features = { level = "allow", priority = 0 } #enabling unstable features (deprecated. do not use)
-unused-crate-dependencies = { level = "allow", priority = 0 } #crate dependencies that are never used
-unused-extern-crates = { level = "allow", priority = 0 } #extern crates that are never used
-unused-import-braces = { level = "allow", priority = 0 } #unnecessary braces around an imported item
-unused-lifetimes = { level = "allow", priority = 0 } #detects lifetime parameters that are never used
-unused-macro-rules = { level = "allow", priority = 0 } #detects macro rules that were not used
+# multiple-supertrait-upcastable = { level = "deny", priority = 0 } #detect when an object-safe trait has multiple supertraits
+# must-not-suspend = { level = "deny", priority = 0 } #use of a `#[must_not_suspend]` value across a yield point
+non-ascii-idents = { level = "deny", priority = 0 } #detects non-ASCII identifiers
+# non-exhaustive-omitted-patterns = { level = "deny", priority = 0 } #detect when patterns of types marked `non_exhaustive` are missed
+rust-2021-incompatible-closure-captures = { level = "deny", priority = 0 } #detects closures affected by Rust 2021 changes
+rust-2021-incompatible-or-patterns = { level = "deny", priority = 0 } #detects usage of old versions of or-patterns
+rust-2021-prefixes-incompatible-syntax = { level = "deny", priority = 0 } #identifiers that will be parsed as a prefix in Rust 2021
+rust-2021-prelude-collisions = { level = "deny", priority = 0 } #detects the usage of trait methods which are ambiguous with traits added to the prelude in future editions
+single-use-lifetimes = { level = "deny", priority = 0 } #detects lifetime parameters that are only used once
+trivial-casts = { level = "deny", priority = 0 } #detects trivial casts which could be removed
+trivial-numeric-casts = { level = "deny", priority = 0 } #detects trivial casts of numeric types which could be removed
+# unnameable-types = { level = "deny", priority = 0 } #effective visibility of a type is larger than the area in which it can be named
+unreachable-pub = { level = "deny", priority = 0 } #`pub` items not reachable from crate root
+unsafe-code = { level = "deny", priority = 0 } #usage of `unsafe` code and other potentially unsound constructs
+unsafe-op-in-unsafe-fn = { level = "deny", priority = 0 } #unsafe operations in unsafe functions without an explicit unsafe block are deprecated
+unstable-features = { level = "deny", priority = 0 } #enabling unstable features (deprecated. do not use)
+unused-crate-dependencies = { level = "deny", priority = 0 } #crate dependencies that are never used
+unused-extern-crates = { level = "deny", priority = 0 } #extern crates that are never used
+unused-import-braces = { level = "deny", priority = 0 } #unnecessary braces around an imported item
+unused-lifetimes = { level = "deny", priority = 0 } #detects lifetime parameters that are never used
+unused-macro-rules = { level = "deny", priority = 0 } #detects macro rules that were not used
 unused-qualifications = { level = "allow", priority = 0 } #detects unnecessarily qualified names
-unused-results = { level = "allow", priority = 0 } #unused result of an expression in a statement
-dead_code = { level = "allow", priority = 0 } #detects tuple struct fields that are never read
+unused-results = { level = "deny", priority = 0 } #unused result of an expression in a statement
+dead_code = { level = "deny", priority = 0 } #detects tuple struct fields that are never read
 variant-size-differences = { level = "warn", priority = 0 } #detects enums with widely varying variant sizes
 ambiguous-glob-imports = { level = "warn", priority = 0 } #detects certain glob imports that require reporting an ambiguity error
 ambiguous-glob-reexports = { level = "warn", priority = 0 } #ambiguous glob re-exports
@@ -185,7 +185,7 @@ unused-imports = { level = "warn", priority = 0 } #imports that are never used
 unused-labels = { level = "warn", priority = 0 } #detects labels that are never used
 unused-macros = { level = "warn", priority = 0 } #detects macros that were not used
 unused-must-use = { level = "warn", priority = 0 } #unused result of a type flagged as `#[must_use]`
-unused-mut = { level = "allow", priority = 0 } #detect mut variables which don't need to be mutable
+unused-mut = { level = "deny", priority = 0 } #detect mut variables which don't need to be mutable
 unused-parens = { level = "warn", priority = 0 } #`if`, `match`, `while` and `return` do not need parentheses
 unused-unsafe = { level = "warn", priority = 0 } #unnecessary use of an `unsafe` block
 unused-variables = { level = "warn", priority = 0 } #detect variables which are not used in any way
@@ -230,106 +230,106 @@ unknown-crate-types = { level = "deny", priority = 0 } #unknown crate type found
 useless-deprecated = { level = "deny", priority = 0 } #detects deprecation attributes with no effect
 
 [workspace.lints.clippy]#usage "cargo clippy"
-absolute_paths = { level = "allow", priority = 0 }
+absolute_paths = { level = "deny", priority = 0 }
 absurd_extreme_comparisons = { level = "deny", priority = 0 }
-alloc_instead_of_core = { level = "allow", priority = 0 }
-allow_attributes = { level = "allow", priority = 0 }
-allow_attributes_without_reason = { level = "allow", priority = 0 }
+alloc_instead_of_core = { level = "deny", priority = 0 }
+allow_attributes = { level = "deny", priority = 0 }
+allow_attributes_without_reason = { level = "deny", priority = 0 }
 almost_complete_range = { level = "warn", priority = 0 }
 almost_swapped = { level = "deny", priority = 0 }
 approx_constant = { level = "deny", priority = 0 }
 arc_with_non_send_sync = { level = "warn", priority = 0 }
-arithmetic_side_effects = { level = "allow", priority = 0 }
-as_conversions = { level = "allow", priority = 0 }
-as_ptr_cast_mut = { level = "allow", priority = 0 }
-as_underscore = { level = "allow", priority = 0 }
+arithmetic_side_effects = { level = "deny", priority = 0 }
+as_conversions = { level = "deny", priority = 0 }
+as_ptr_cast_mut = { level = "deny", priority = 0 }
+as_underscore = { level = "deny", priority = 0 }
 assertions_on_constants = { level = "warn", priority = 0 }
-assertions_on_result_states = { level = "allow", priority = 0 }
+assertions_on_result_states = { level = "deny", priority = 0 }
 assign_op_pattern = { level = "warn", priority = 0 }
 async_yields_async = { level = "deny", priority = 0 }
 await_holding_invalid_type = { level = "warn", priority = 0 }
 await_holding_lock = { level = "warn", priority = 0 }
 await_holding_refcell_ref = { level = "warn", priority = 0 }
 bad_bit_mask = { level = "deny", priority = 0 }
-big_endian_bytes = { level = "allow", priority = 0 }
+big_endian_bytes = { level = "deny", priority = 0 }
 bind_instead_of_map = { level = "warn", priority = 0 }
 blanket_clippy_restriction_lints = { level = "warn", priority = 0 }
 blocks_in_if_conditions = { level = "warn", priority = 0 }
 bool_assert_comparison = { level = "warn", priority = 0 }
 bool_comparison = { level = "warn", priority = 0 }
-bool_to_int_with_if = { level = "allow", priority = 0 }
-borrow_as_ptr = { level = "allow", priority = 0 }
+bool_to_int_with_if = { level = "deny", priority = 0 }
+borrow_as_ptr = { level = "deny", priority = 0 }
 borrow_deref_ref = { level = "warn", priority = 0 }
 borrow_interior_mutable_const = { level = "warn", priority = 0 }
 borrowed_box = { level = "warn", priority = 0 }
 box_collection = { level = "warn", priority = 0 }
 box_default = { level = "warn", priority = 0 }
 boxed_local = { level = "warn", priority = 0 }
-branches_sharing_code = { level = "allow", priority = 0 }
+branches_sharing_code = { level = "deny", priority = 0 }
 builtin_type_shadow = { level = "warn", priority = 0 }
 bytes_count_to_len = { level = "warn", priority = 0 }
 bytes_nth = { level = "warn", priority = 0 }
-cargo_common_metadata = { level = "allow", priority = 0 }
-case_sensitive_file_extension_comparisons = { level = "allow", priority = 0 }
+cargo_common_metadata = { level = "deny", priority = 0 }
+case_sensitive_file_extension_comparisons = { level = "deny", priority = 0 }
 cast_abs_to_unsigned = { level = "warn", priority = 0 }
 cast_enum_constructor = { level = "warn", priority = 0 }
 cast_enum_truncation = { level = "warn", priority = 0 }
-cast_lossless = { level = "allow", priority = 0 }
+cast_lossless = { level = "deny", priority = 0 }
 cast_nan_to_int = { level = "warn", priority = 0 }
-cast_possible_truncation = { level = "allow", priority = 0 }
-cast_possible_wrap = { level = "allow", priority = 0 }
-cast_precision_loss = { level = "allow", priority = 0 }
-cast_ptr_alignment = { level = "allow", priority = 0 }
-cast_sign_loss = { level = "allow", priority = 0 }
+cast_possible_truncation = { level = "deny", priority = 0 }
+cast_possible_wrap = { level = "deny", priority = 0 }
+cast_precision_loss = { level = "deny", priority = 0 }
+cast_ptr_alignment = { level = "deny", priority = 0 }
+cast_sign_loss = { level = "deny", priority = 0 }
 cast_slice_different_sizes = { level = "deny", priority = 0 }
 cast_slice_from_raw_parts = { level = "warn", priority = 0 }
 char_lit_as_u8 = { level = "warn", priority = 0 }
 chars_last_cmp = { level = "warn", priority = 0 }
 chars_next_cmp = { level = "warn", priority = 0 }
-checked_conversions = { level = "allow", priority = 0 }
-clear_with_drain = { level = "allow", priority = 0 }
+checked_conversions = { level = "deny", priority = 0 }
+clear_with_drain = { level = "deny", priority = 0 }
 clone_on_copy = { level = "warn", priority = 0 }
-clone_on_ref_ptr = { level = "allow", priority = 0 }
-cloned_instead_of_copied = { level = "allow", priority = 0 }
+clone_on_ref_ptr = { level = "deny", priority = 0 }
+cloned_instead_of_copied = { level = "deny", priority = 0 }
 cmp_null = { level = "warn", priority = 0 }
 cmp_owned = { level = "warn", priority = 0 }
-cognitive_complexity = { level = "allow", priority = 0 }
+cognitive_complexity = { level = "deny", priority = 0 }
 collapsible_else_if = { level = "warn", priority = 0 }
 collapsible_if = { level = "warn", priority = 0 }
 collapsible_match = { level = "warn", priority = 0 }
 collapsible_str_replace = { level = "warn", priority = 0 }
-collection_is_never_read = { level = "allow", priority = 0 }
+collection_is_never_read = { level = "deny", priority = 0 }
 comparison_chain = { level = "warn", priority = 0 }
 comparison_to_empty = { level = "warn", priority = 0 }
-copy_iterator = { level = "allow", priority = 0 }
+copy_iterator = { level = "deny", priority = 0 }
 crate_in_macro_def = { level = "warn", priority = 0 }
-create_dir = { level = "allow", priority = 0 }
+create_dir = { level = "deny", priority = 0 }
 crosspointer_transmute = { level = "warn", priority = 0 }
-dbg_macro = { level = "allow", priority = 0 }
-debug_assert_with_mut_call = { level = "allow", priority = 0 }
-decimal_literal_representation = { level = "allow", priority = 0 }
+dbg_macro = { level = "deny", priority = 0 }
+debug_assert_with_mut_call = { level = "deny", priority = 0 }
+decimal_literal_representation = { level = "deny", priority = 0 }
 declare_interior_mutable_const = { level = "warn", priority = 0 }
 default_constructed_unit_structs = { level = "warn", priority = 0 }
 default_instead_of_iter_empty = { level = "warn", priority = 0 }
-default_numeric_fallback = { level = "allow", priority = 0 }
-default_trait_access = { level = "allow", priority = 0 }
-default_union_representation = { level = "allow", priority = 0 }
+default_numeric_fallback = { level = "deny", priority = 0 }
+default_trait_access = { level = "deny", priority = 0 }
+default_union_representation = { level = "deny", priority = 0 }
 deprecated_cfg_attr = { level = "warn", priority = 0 }
 deprecated_semver = { level = "deny", priority = 0 }
 deref_addrof = { level = "warn", priority = 0 }
-deref_by_slicing = { level = "allow", priority = 0 }
+deref_by_slicing = { level = "deny", priority = 0 }
 derivable_impls = { level = "warn", priority = 0 }
 derive_ord_xor_partial_ord = { level = "deny", priority = 0 }
-derive_partial_eq_without_eq = { level = "allow", priority = 0 }
+derive_partial_eq_without_eq = { level = "deny", priority = 0 }
 derived_hash_with_manual_eq = { level = "deny", priority = 0 }
 disallowed_macros = { level = "warn", priority = 0 }
 disallowed_methods = { level = "warn", priority = 0 }
 disallowed_names = { level = "warn", priority = 0 }
-disallowed_script_idents = { level = "allow", priority = 0 }
+disallowed_script_idents = { level = "deny", priority = 0 }
 disallowed_types = { level = "warn", priority = 0 }
 diverging_sub_expression = { level = "warn", priority = 0 }
-doc_link_with_quotes = { level = "allow", priority = 0 }
-doc_markdown = { level = "allow", priority = 0 }
+doc_link_with_quotes = { level = "deny", priority = 0 }
+doc_markdown = { level = "deny", priority = 0 }
 double_comparisons = { level = "warn", priority = 0 }
 double_must_use = { level = "warn", priority = 0 }
 double_neg = { level = "warn", priority = 0 }
@@ -339,179 +339,179 @@ drop_non_drop = { level = "warn", priority = 0 }
 duplicate_mod = { level = "warn", priority = 0 }
 duplicate_underscore_argument = { level = "warn", priority = 0 }
 duration_subsec = { level = "warn", priority = 0 }
-else_if_without_else = { level = "allow", priority = 0 }
-empty_drop = { level = "allow", priority = 0 }
-empty_enum = { level = "allow", priority = 0 }
-empty_line_after_doc_comments = { level = "allow", priority = 0 }
-empty_line_after_outer_attr = { level = "allow", priority = 0 }
+else_if_without_else = { level = "deny", priority = 0 }
+empty_drop = { level = "deny", priority = 0 }
+empty_enum = { level = "deny", priority = 0 }
+empty_line_after_doc_comments = { level = "deny", priority = 0 }
+empty_line_after_outer_attr = { level = "deny", priority = 0 }
 empty_loop = { level = "warn", priority = 0 }
-empty_structs_with_brackets = { level = "allow", priority = 0 }
+empty_structs_with_brackets = { level = "deny", priority = 0 }
 enum_clike_unportable_variant = { level = "deny", priority = 0 }
-enum_glob_use = { level = "allow", priority = 0 }
+enum_glob_use = { level = "deny", priority = 0 }
 enum_variant_names = { level = "warn", priority = 0 }
 eq_op = { level = "deny", priority = 0 }
-equatable_if_let = { level = "allow", priority = 0 }
+equatable_if_let = { level = "deny", priority = 0 }
 erasing_op = { level = "deny", priority = 0 }
 err_expect = { level = "warn", priority = 0 }
-error_impl_error = { level = "allow", priority = 0 }
+error_impl_error = { level = "deny", priority = 0 }
 excessive_nesting = { level = "warn", priority = 0 }
 excessive_precision = { level = "warn", priority = 0 }
-exhaustive_enums = { level = "allow", priority = 0 }
-exhaustive_structs = { level = "allow", priority = 0 }
-exit = { level = "allow", priority = 0 }
+exhaustive_enums = { level = "deny", priority = 0 }
+exhaustive_structs = { level = "deny", priority = 0 }
+exit = { level = "deny", priority = 0 }
 expect_fun_call = { level = "warn", priority = 0 }
-expect_used = { level = "allow", priority = 0 }
-expl_impl_clone_on_copy = { level = "allow", priority = 0 }
+expect_used = { level = "deny", priority = 0 }
+expl_impl_clone_on_copy = { level = "deny", priority = 0 }
 explicit_auto_deref = { level = "warn", priority = 0 }
 explicit_counter_loop = { level = "warn", priority = 0 }
-explicit_deref_methods = { level = "allow", priority = 0 }
-explicit_into_iter_loop = { level = "allow", priority = 0 }
-explicit_iter_loop = { level = "allow", priority = 0 }
+explicit_deref_methods = { level = "deny", priority = 0 }
+explicit_into_iter_loop = { level = "deny", priority = 0 }
+explicit_iter_loop = { level = "deny", priority = 0 }
 explicit_write = { level = "warn", priority = 0 }
 extend_with_drain = { level = "warn", priority = 0 }
 extra_unused_lifetimes = { level = "warn", priority = 0 }
 extra_unused_type_parameters = { level = "warn", priority = 0 }
-fallible_impl_from = { level = "allow", priority = 0 }
+fallible_impl_from = { level = "deny", priority = 0 }
 field_reassign_with_default = { level = "warn", priority = 0 }
-filetype_is_file = { level = "allow", priority = 0 }
+filetype_is_file = { level = "deny", priority = 0 }
 filter_map_bool_then = { level = "warn", priority = 0 }
 filter_map_identity = { level = "warn", priority = 0 }
-filter_map_next = { level = "allow", priority = 0 }
+filter_map_next = { level = "deny", priority = 0 }
 filter_next = { level = "warn", priority = 0 }
 flat_map_identity = { level = "warn", priority = 0 }
-flat_map_option = { level = "allow", priority = 0 }
-float_arithmetic = { level = "allow", priority = 0 }
-float_cmp = { level = "allow", priority = 0 }
-float_cmp_const = { level = "allow", priority = 0 }
+flat_map_option = { level = "deny", priority = 0 }
+float_arithmetic = { level = "deny", priority = 0 }
+float_cmp = { level = "deny", priority = 0 }
+float_cmp_const = { level = "deny", priority = 0 }
 float_equality_without_abs = { level = "warn", priority = 0 }
 fn_address_comparisons = { level = "deny", priority = 0 }
-fn_params_excessive_bools = { level = "allow", priority = 0 }
+fn_params_excessive_bools = { level = "deny", priority = 0 }
 fn_to_numeric_cast = { level = "warn", priority = 0 }
-fn_to_numeric_cast_any = { level = "allow", priority = 0 }
+fn_to_numeric_cast_any = { level = "deny", priority = 0 }
 fn_to_numeric_cast_with_truncation = { level = "warn", priority = 0 }
 for_kv_map = { level = "warn", priority = 0 }
 forget_non_drop = { level = "warn", priority = 0 }
 format_collect = { level = "warn", priority = 0 }
 format_in_format_args = { level = "warn", priority = 0 }
-format_push_string = { level = "allow", priority = 0 }
+format_push_string = { level = "deny", priority = 0 }
 four_forward_slashes = { level = "warn", priority = 0 }
-from_iter_instead_of_collect = { level = "allow", priority = 0 }
+from_iter_instead_of_collect = { level = "deny", priority = 0 }
 from_over_into = { level = "warn", priority = 0 }
 from_raw_with_void_ptr = { level = "warn", priority = 0 }
 from_str_radix_10 = { level = "warn", priority = 0 }
-future_not_send = { level = "allow", priority = 0 }
+future_not_send = { level = "deny", priority = 0 }
 get_first = { level = "warn", priority = 0 }
 get_last_with_len = { level = "warn", priority = 0 }
-get_unwrap = { level = "allow", priority = 0 }
-host_endian_bytes = { level = "allow", priority = 0 }
+get_unwrap = { level = "deny", priority = 0 }
+host_endian_bytes = { level = "deny", priority = 0 }
 identity_op = { level = "warn", priority = 0 }
 if_let_mutex = { level = "deny", priority = 0 }
-if_not_else = { level = "allow", priority = 0 }
+if_not_else = { level = "deny", priority = 0 }
 if_same_then_else = { level = "warn", priority = 0 }
-if_then_some_else_none = { level = "allow", priority = 0 }
+if_then_some_else_none = { level = "deny", priority = 0 }
 ifs_same_cond = { level = "deny", priority = 0 }
-ignored_unit_patterns = { level = "allow", priority = 0 }
+ignored_unit_patterns = { level = "deny", priority = 0 }
 impl_hash_borrow_with_str_and_bytes = { level = "deny", priority = 0 }
-impl_trait_in_params = { level = "allow", priority = 0 }
-implicit_clone = { level = "allow", priority = 0 }
-implicit_hasher = { level = "allow", priority = 0 }
-implicit_return = { level = "allow", priority = 0 }
+impl_trait_in_params = { level = "deny", priority = 0 }
+implicit_clone = { level = "deny", priority = 0 }
+implicit_hasher = { level = "deny", priority = 0 }
+implicit_return = { level = "deny", priority = 0 }
 implicit_saturating_add = { level = "warn", priority = 0 }
 implicit_saturating_sub = { level = "warn", priority = 0 }
-implied_bounds_in_impls = { level = "allow", priority = 0 }
+implied_bounds_in_impls = { level = "deny", priority = 0 }
 impossible_comparisons = { level = "deny", priority = 0 }
-imprecise_flops = { level = "allow", priority = 0 }
+imprecise_flops = { level = "deny", priority = 0 }
 inconsistent_digit_grouping = { level = "warn", priority = 0 }
-inconsistent_struct_constructor = { level = "allow", priority = 0 }
-index_refutable_slice = { level = "allow", priority = 0 }
-indexing_slicing = { level = "allow", priority = 0 }
+inconsistent_struct_constructor = { level = "deny", priority = 0 }
+index_refutable_slice = { level = "deny", priority = 0 }
+indexing_slicing = { level = "deny", priority = 0 }
 ineffective_bit_mask = { level = "deny", priority = 0 }
-inefficient_to_string = { level = "allow", priority = 0 }
+inefficient_to_string = { level = "deny", priority = 0 }
 infallible_destructuring_match = { level = "warn", priority = 0 }
 infinite_iter = { level = "deny", priority = 0 }
 inherent_to_string = { level = "warn", priority = 0 }
 inherent_to_string_shadow_display = { level = "deny", priority = 0 }
 init_numbered_fields = { level = "warn", priority = 0 }
-inline_always = { level = "allow", priority = 0 }
-inline_asm_x86_att_syntax = { level = "allow", priority = 0 }
-inline_asm_x86_intel_syntax = { level = "allow", priority = 0 }
+inline_always = { level = "deny", priority = 0 }
+inline_asm_x86_att_syntax = { level = "deny", priority = 0 }
+inline_asm_x86_intel_syntax = { level = "deny", priority = 0 }
 inline_fn_without_body = { level = "deny", priority = 0 }
 inspect_for_each = { level = "warn", priority = 0 }
 int_plus_one = { level = "warn", priority = 0 }
-integer_division = { level = "allow", priority = 0 }
+integer_division = { level = "deny", priority = 0 }
 into_iter_on_ref = { level = "warn", priority = 0 }
-into_iter_without_iter = { level = "allow", priority = 0 }
+into_iter_without_iter = { level = "deny", priority = 0 }
 invalid_null_ptr_usage = { level = "deny", priority = 0 }
 invalid_regex = { level = "deny", priority = 0 }
-invalid_upcast_comparisons = { level = "allow", priority = 0 }
+invalid_upcast_comparisons = { level = "deny", priority = 0 }
 invisible_characters = { level = "deny", priority = 0 }
 is_digit_ascii_radix = { level = "warn", priority = 0 }
-items_after_statements = { level = "allow", priority = 0 }
+items_after_statements = { level = "deny", priority = 0 }
 items_after_test_module = { level = "warn", priority = 0 }
 iter_cloned_collect = { level = "warn", priority = 0 }
 iter_count = { level = "warn", priority = 0 }
 iter_kv_map = { level = "warn", priority = 0 }
 iter_next_loop = { level = "deny", priority = 0 }
 iter_next_slice = { level = "warn", priority = 0 }
-iter_not_returning_iterator = { level = "allow", priority = 0 }
+iter_not_returning_iterator = { level = "deny", priority = 0 }
 iter_nth = { level = "warn", priority = 0 }
 iter_nth_zero = { level = "warn", priority = 0 }
-iter_on_empty_collections = { level = "allow", priority = 0 }
-iter_on_single_items = { level = "allow", priority = 0 }
+iter_on_empty_collections = { level = "deny", priority = 0 }
+iter_on_single_items = { level = "deny", priority = 0 }
 iter_out_of_bounds = { level = "warn", priority = 0 }
-iter_over_hash_type = { level = "allow", priority = 0 }
+iter_over_hash_type = { level = "deny", priority = 0 }
 iter_overeager_cloned = { level = "warn", priority = 0 }
 iter_skip_next = { level = "warn", priority = 0 }
 iter_skip_zero = { level = "deny", priority = 0 }
-iter_with_drain = { level = "allow", priority = 0 }
-iter_without_into_iter = { level = "allow", priority = 0 }
+iter_with_drain = { level = "deny", priority = 0 }
+iter_without_into_iter = { level = "deny", priority = 0 }
 iterator_step_by_zero = { level = "deny", priority = 0 }
 join_absolute_paths = { level = "warn", priority = 0 }
 just_underscores_and_digits = { level = "warn", priority = 0 }
 large_const_arrays = { level = "warn", priority = 0 }
-large_digit_groups = { level = "allow", priority = 0 }
+large_digit_groups = { level = "deny", priority = 0 }
 large_enum_variant = { level = "warn", priority = 0 }
-large_futures = { level = "allow", priority = 0 }
-large_include_file = { level = "allow", priority = 0 }
-large_stack_arrays = { level = "allow", priority = 0 }
-large_stack_frames = { level = "allow", priority = 0 }
-large_types_passed_by_value = { level = "allow", priority = 0 }
+large_futures = { level = "deny", priority = 0 }
+large_include_file = { level = "deny", priority = 0 }
+large_stack_arrays = { level = "deny", priority = 0 }
+large_stack_frames = { level = "deny", priority = 0 }
+large_types_passed_by_value = { level = "deny", priority = 0 }
 len_without_is_empty = { level = "warn", priority = 0 }
 len_zero = { level = "warn", priority = 0 }
 let_and_return = { level = "warn", priority = 0 }
 let_underscore_future = { level = "warn", priority = 0 }
 let_underscore_lock = { level = "deny", priority = 0 }
-let_underscore_must_use = { level = "allow", priority = 0 }
-let_underscore_untyped = { level = "allow", priority = 0 }
+let_underscore_must_use = { level = "deny", priority = 0 }
+let_underscore_untyped = { level = "deny", priority = 0 }
 let_unit_value = { level = "warn", priority = 0 }
 let_with_type_underscore = { level = "warn", priority = 0 }
 lines_filter_map_ok = { level = "warn", priority = 0 }
-linkedlist = { level = "allow", priority = 0 }
-little_endian_bytes = { level = "allow", priority = 0 }
-lossy_float_literal = { level = "allow", priority = 0 }
-macro_use_imports = { level = "allow", priority = 0 }
+linkedlist = { level = "deny", priority = 0 }
+little_endian_bytes = { level = "deny", priority = 0 }
+lossy_float_literal = { level = "deny", priority = 0 }
+macro_use_imports = { level = "deny", priority = 0 }
 main_recursion = { level = "warn", priority = 0 }
-manual_assert = { level = "allow", priority = 0 }
+manual_assert = { level = "deny", priority = 0 }
 manual_async_fn = { level = "warn", priority = 0 }
 manual_bits = { level = "warn", priority = 0 }
-manual_clamp = { level = "allow", priority = 0 }
+manual_clamp = { level = "deny", priority = 0 }
 manual_filter = { level = "warn", priority = 0 }
 manual_filter_map = { level = "warn", priority = 0 }
 manual_find = { level = "warn", priority = 0 }
 manual_find_map = { level = "warn", priority = 0 }
 manual_flatten = { level = "warn", priority = 0 }
 manual_hash_one = { level = "warn", priority = 0 }
-manual_instant_elapsed = { level = "allow", priority = 0 }
+manual_instant_elapsed = { level = "deny", priority = 0 }
 manual_is_ascii_check = { level = "warn", priority = 0 }
 manual_is_finite = { level = "warn", priority = 0 }
 manual_is_infinite = { level = "warn", priority = 0 }
-manual_let_else = { level = "allow", priority = 0 }
+manual_let_else = { level = "deny", priority = 0 }
 manual_main_separator_str = { level = "warn", priority = 0 }
 manual_map = { level = "warn", priority = 0 }
 manual_memcpy = { level = "warn", priority = 0 }
 manual_next_back = { level = "warn", priority = 0 }
 manual_non_exhaustive = { level = "warn", priority = 0 }
-manual_ok_or = { level = "allow", priority = 0 }
+manual_ok_or = { level = "deny", priority = 0 }
 manual_range_contains = { level = "warn", priority = 0 }
 manual_range_patterns = { level = "warn", priority = 0 }
 manual_rem_euclid = { level = "warn", priority = 0 }
@@ -520,90 +520,90 @@ manual_saturating_arithmetic = { level = "warn", priority = 0 }
 manual_slice_size_calculation = { level = "warn", priority = 0 }
 manual_split_once = { level = "warn", priority = 0 }
 manual_str_repeat = { level = "warn", priority = 0 }
-manual_string_new = { level = "allow", priority = 0 }
+manual_string_new = { level = "deny", priority = 0 }
 manual_strip = { level = "warn", priority = 0 }
 manual_swap = { level = "warn", priority = 0 }
 manual_try_fold = { level = "warn", priority = 0 }
 manual_unwrap_or = { level = "warn", priority = 0 }
 manual_while_let_some = { level = "warn", priority = 0 }
-many_single_char_names = { level = "allow", priority = 0 }
+many_single_char_names = { level = "deny", priority = 0 }
 map_clone = { level = "warn", priority = 0 }
 map_collect_result_unit = { level = "warn", priority = 0 }
 map_entry = { level = "warn", priority = 0 }
-map_err_ignore = { level = "allow", priority = 0 }
+map_err_ignore = { level = "deny", priority = 0 }
 map_flatten = { level = "warn", priority = 0 }
 map_identity = { level = "warn", priority = 0 }
-map_unwrap_or = { level = "allow", priority = 0 }
+map_unwrap_or = { level = "deny", priority = 0 }
 match_as_ref = { level = "warn", priority = 0 }
-match_bool = { level = "allow", priority = 0 }
+match_bool = { level = "deny", priority = 0 }
 match_like_matches_macro = { level = "warn", priority = 0 }
-match_on_vec_items = { level = "allow", priority = 0 }
+match_on_vec_items = { level = "deny", priority = 0 }
 match_overlapping_arm = { level = "warn", priority = 0 }
 match_ref_pats = { level = "warn", priority = 0 }
 match_result_ok = { level = "warn", priority = 0 }
-match_same_arms = { level = "allow", priority = 0 }
+match_same_arms = { level = "deny", priority = 0 }
 match_single_binding = { level = "warn", priority = 0 }
 match_str_case_mismatch = { level = "deny", priority = 0 }
-match_wild_err_arm = { level = "allow", priority = 0 }
-match_wildcard_for_single_variants = { level = "allow", priority = 0 }
-maybe_infinite_iter = { level = "allow", priority = 0 }
+match_wild_err_arm = { level = "deny", priority = 0 }
+match_wildcard_for_single_variants = { level = "deny", priority = 0 }
+maybe_infinite_iter = { level = "deny", priority = 0 }
 maybe_misused_cfg = { level = "warn", priority = 0 }
-mem_forget = { level = "allow", priority = 0 }
+mem_forget = { level = "deny", priority = 0 }
 mem_replace_option_with_none = { level = "warn", priority = 0 }
 mem_replace_with_default = { level = "warn", priority = 0 }
 mem_replace_with_uninit = { level = "deny", priority = 0 }
-min_ident_chars = { level = "allow", priority = 0 }
+min_ident_chars = { level = "deny", priority = 0 }
 min_max = { level = "deny", priority = 0 }
 mismatched_target_os = { level = "deny", priority = 0 }
-mismatching_type_param_order = { level = "allow", priority = 0 }
+mismatching_type_param_order = { level = "deny", priority = 0 }
 misnamed_getters = { level = "warn", priority = 0 }
 misrefactored_assign_op = { level = "warn", priority = 0 }
-missing_assert_message = { level = "allow", priority = 0 }
-missing_asserts_for_indexing = { level = "allow", priority = 0 }
-missing_const_for_fn = { level = "allow", priority = 0 }
-missing_docs_in_private_items = { level = "allow", priority = 0 }
+missing_assert_message = { level = "deny", priority = 0 }
+missing_asserts_for_indexing = { level = "deny", priority = 0 }
+missing_const_for_fn = { level = "deny", priority = 0 }
+missing_docs_in_private_items = { level = "deny", priority = 0 }
 missing_enforced_import_renames = { level = "warn", priority = 0 }
-missing_errors_doc = { level = "allow", priority = 0 }
-missing_fields_in_debug = { level = "allow", priority = 0 }
-missing_inline_in_public_items = { level = "allow", priority = 0 }
-missing_panics_doc = { level = "allow", priority = 0 }
+missing_errors_doc = { level = "deny", priority = 0 }
+missing_fields_in_debug = { level = "deny", priority = 0 }
+missing_inline_in_public_items = { level = "deny", priority = 0 }
+missing_panics_doc = { level = "deny", priority = 0 }
 missing_safety_doc = { level = "warn", priority = 0 }
 missing_spin_loop = { level = "warn", priority = 0 }
-missing_trait_methods = { level = "allow", priority = 0 }
+missing_trait_methods = { level = "deny", priority = 0 }
 mistyped_literal_suffixes = { level = "deny", priority = 0 }
 mixed_case_hex_literals = { level = "warn", priority = 0 }
-mixed_read_write_in_expression = { level = "allow", priority = 0 }
-mod_module_files = { level = "allow", priority = 0 }
+mixed_read_write_in_expression = { level = "deny", priority = 0 }
+mod_module_files = { level = "deny", priority = 0 }
 module_inception = { level = "warn", priority = 0 }
-module_name_repetitions = { level = "allow", priority = 0 }
-modulo_arithmetic = { level = "allow", priority = 0 }
+module_name_repetitions = { level = "deny", priority = 0 }
+modulo_arithmetic = { level = "deny", priority = 0 }
 modulo_one = { level = "deny", priority = 0 }
 multi_assignments = { level = "warn", priority = 0 }
-multiple_crate_versions = { level = "allow", priority = 0 }
-multiple_inherent_impl = { level = "allow", priority = 0 }
-multiple_unsafe_ops_per_block = { level = "allow", priority = 0 }
-must_use_candidate = { level = "allow", priority = 0 }
+multiple_crate_versions = { level = "deny", priority = 0 }
+multiple_inherent_impl = { level = "deny", priority = 0 }
+multiple_unsafe_ops_per_block = { level = "deny", priority = 0 }
+must_use_candidate = { level = "deny", priority = 0 }
 must_use_unit = { level = "warn", priority = 0 }
 mut_from_ref = { level = "deny", priority = 0 }
-mut_mut = { level = "allow", priority = 0 }
+mut_mut = { level = "deny", priority = 0 }
 mut_mutex_lock = { level = "warn", priority = 0 }
 mut_range_bound = { level = "warn", priority = 0 }
 mutable_key_type = { level = "warn", priority = 0 }
-mutex_atomic = { level = "allow", priority = 0 }
-mutex_integer = { level = "allow", priority = 0 }
-naive_bytecount = { level = "allow", priority = 0 }
+mutex_atomic = { level = "deny", priority = 0 }
+mutex_integer = { level = "deny", priority = 0 }
+naive_bytecount = { level = "deny", priority = 0 }
 needless_arbitrary_self_type = { level = "warn", priority = 0 }
-needless_bitwise_bool = { level = "allow", priority = 0 }
+needless_bitwise_bool = { level = "deny", priority = 0 }
 needless_bool = { level = "warn", priority = 0 }
 needless_bool_assign = { level = "warn", priority = 0 }
 needless_borrow = { level = "warn", priority = 0 }
 needless_borrowed_reference = { level = "warn", priority = 0 }
 needless_borrows_for_generic_args = { level = "warn", priority = 0 }
-needless_collect = { level = "allow", priority = 0 }
-needless_continue = { level = "allow", priority = 0 }
+needless_collect = { level = "deny", priority = 0 }
+needless_continue = { level = "deny", priority = 0 }
 needless_doctest_main = { level = "warn", priority = 0 }
 needless_else = { level = "warn", priority = 0 }
-needless_for_each = { level = "allow", priority = 0 }
+needless_for_each = { level = "deny", priority = 0 }
 needless_if = { level = "warn", priority = 0 }
 needless_late_init = { level = "warn", priority = 0 }
 needless_lifetimes = { level = "warn", priority = 0 }
@@ -611,36 +611,36 @@ needless_match = { level = "warn", priority = 0 }
 needless_option_as_deref = { level = "warn", priority = 0 }
 needless_option_take = { level = "warn", priority = 0 }
 needless_parens_on_range_literals = { level = "warn", priority = 0 }
-needless_pass_by_ref_mut = { level = "allow", priority = 0 }
-needless_pass_by_value = { level = "allow", priority = 0 }
+needless_pass_by_ref_mut = { level = "deny", priority = 0 }
+needless_pass_by_value = { level = "deny", priority = 0 }
 needless_pub_self = { level = "warn", priority = 0 }
 needless_question_mark = { level = "warn", priority = 0 }
 needless_range_loop = { level = "warn", priority = 0 }
-needless_raw_string_hashes = { level = "allow", priority = 0 }
-needless_raw_strings = { level = "allow", priority = 0 }
+needless_raw_string_hashes = { level = "deny", priority = 0 }
+needless_raw_strings = { level = "deny", priority = 0 }
 needless_return = { level = "warn", priority = 0 }
 needless_return_with_question_mark = { level = "warn", priority = 0 }
 needless_splitn = { level = "warn", priority = 0 }
 needless_update = { level = "warn", priority = 0 }
 neg_cmp_op_on_partial_ord = { level = "warn", priority = 0 }
 neg_multiply = { level = "warn", priority = 0 }
-negative_feature_names = { level = "allow", priority = 0 }
+negative_feature_names = { level = "deny", priority = 0 }
 never_loop = { level = "deny", priority = 0 }
 new_ret_no_self = { level = "warn", priority = 0 }
 new_without_default = { level = "warn", priority = 0 }
 no_effect = { level = "warn", priority = 0 }
 no_effect_replace = { level = "warn", priority = 0 }
-no_effect_underscore_binding = { level = "allow", priority = 0 }
-no_mangle_with_rust_abi = { level = "allow", priority = 0 }
-non_ascii_literal = { level = "allow", priority = 0 }
+no_effect_underscore_binding = { level = "deny", priority = 0 }
+no_mangle_with_rust_abi = { level = "deny", priority = 0 }
+non_ascii_literal = { level = "deny", priority = 0 }
 non_canonical_clone_impl = { level = "warn", priority = 0 }
 non_canonical_partial_ord_impl = { level = "warn", priority = 0 }
 non_minimal_cfg = { level = "warn", priority = 0 }
 non_octal_unix_permissions = { level = "deny", priority = 0 }
-non_send_fields_in_send_ty = { level = "allow", priority = 0 }
+non_send_fields_in_send_ty = { level = "deny", priority = 0 }
 nonminimal_bool = { level = "warn", priority = 0 }
 nonsensical_open_options = { level = "deny", priority = 0 }
-nonstandard_macro_braces = { level = "allow", priority = 0 }
+nonstandard_macro_braces = { level = "deny", priority = 0 }
 not_unsafe_ptr_arg_deref = { level = "deny", priority = 0 }
 obfuscated_if_else = { level = "warn", priority = 0 }
 octal_escapes = { level = "warn", priority = 0 }
@@ -650,137 +650,137 @@ op_ref = { level = "warn", priority = 0 }
 option_as_ref_deref = { level = "warn", priority = 0 }
 option_env_unwrap = { level = "deny", priority = 0 }
 option_filter_map = { level = "warn", priority = 0 }
-option_if_let_else = { level = "allow", priority = 0 }
+option_if_let_else = { level = "deny", priority = 0 }
 option_map_or_none = { level = "warn", priority = 0 }
 option_map_unit_fn = { level = "warn", priority = 0 }
-option_option = { level = "allow", priority = 0 }
-or_fun_call = { level = "allow", priority = 0 }
+option_option = { level = "deny", priority = 0 }
+or_fun_call = { level = "deny", priority = 0 }
 or_then_unwrap = { level = "warn", priority = 0 }
 out_of_bounds_indexing = { level = "deny", priority = 0 }
 overflow_check_conditional = { level = "warn", priority = 0 }
 overly_complex_bool_expr = { level = "deny", priority = 0 }
-panic = { level = "allow", priority = 0 }
-panic_in_result_fn = { level = "allow", priority = 0 }
+panic = { level = "deny", priority = 0 }
+panic_in_result_fn = { level = "deny", priority = 0 }
 panicking_unwrap = { level = "deny", priority = 0 }
-partial_pub_fields = { level = "allow", priority = 0 }
+partial_pub_fields = { level = "deny", priority = 0 }
 partialeq_ne_impl = { level = "warn", priority = 0 }
 partialeq_to_none = { level = "warn", priority = 0 }
-path_buf_push_overwrite = { level = "allow", priority = 0 }
+path_buf_push_overwrite = { level = "deny", priority = 0 }
 path_ends_with_ext = { level = "warn", priority = 0 }
-pattern_type_mismatch = { level = "allow", priority = 0 }
+pattern_type_mismatch = { level = "deny", priority = 0 }
 permissions_set_readonly_false = { level = "warn", priority = 0 }
 possible_missing_comma = { level = "deny", priority = 0 }
 precedence = { level = "warn", priority = 0 }
 print_in_format_impl = { level = "warn", priority = 0 }
 print_literal = { level = "warn", priority = 0 }
-print_stderr = { level = "allow", priority = 0 }
-print_stdout = { level = "allow", priority = 0 }
+print_stderr = { level = "deny", priority = 0 }
+print_stdout = { level = "deny", priority = 0 }
 print_with_newline = { level = "warn", priority = 0 }
 println_empty_string = { level = "warn", priority = 0 }
 ptr_arg = { level = "warn", priority = 0 }
-ptr_as_ptr = { level = "allow", priority = 0 }
-ptr_cast_constness = { level = "allow", priority = 0 }
+ptr_as_ptr = { level = "deny", priority = 0 }
+ptr_cast_constness = { level = "deny", priority = 0 }
 ptr_eq = { level = "warn", priority = 0 }
 ptr_offset_with_cast = { level = "warn", priority = 0 }
-pub_use = { level = "allow", priority = 0 }
-pub_with_shorthand = { level = "allow", priority = 0 }
-pub_without_shorthand = { level = "allow", priority = 0 }
+pub_use = { level = "deny", priority = 0 }
+pub_with_shorthand = { level = "deny", priority = 0 }
+pub_without_shorthand = { level = "deny", priority = 0 }
 question_mark = { level = "warn", priority = 0 }
-question_mark_used = { level = "allow", priority = 0 }
-range_minus_one = { level = "allow", priority = 0 }
-range_plus_one = { level = "allow", priority = 0 }
+question_mark_used = { level = "deny", priority = 0 }
+range_minus_one = { level = "deny", priority = 0 }
+range_plus_one = { level = "deny", priority = 0 }
 range_zip_with_len = { level = "warn", priority = 0 }
-rc_buffer = { level = "allow", priority = 0 }
+rc_buffer = { level = "deny", priority = 0 }
 rc_clone_in_vec_init = { level = "warn", priority = 0 }
-rc_mutex = { level = "allow", priority = 0 }
+rc_mutex = { level = "deny", priority = 0 }
 read_line_without_trim = { level = "deny", priority = 0 }
-read_zero_byte_vec = { level = "allow", priority = 0 }
-readonly_write_lock = { level = "allow", priority = 0 }
+read_zero_byte_vec = { level = "deny", priority = 0 }
+readonly_write_lock = { level = "deny", priority = 0 }
 recursive_format_impl = { level = "deny", priority = 0 }
 redundant_allocation = { level = "warn", priority = 0 }
 redundant_as_str = { level = "warn", priority = 0 }
 redundant_async_block = { level = "warn", priority = 0 }
 redundant_at_rest_pattern = { level = "warn", priority = 0 }
-redundant_clone = { level = "allow", priority = 0 }
+redundant_clone = { level = "deny", priority = 0 }
 redundant_closure = { level = "warn", priority = 0 }
 redundant_closure_call = { level = "warn", priority = 0 }
-redundant_closure_for_method_calls = { level = "allow", priority = 0 }
+redundant_closure_for_method_calls = { level = "deny", priority = 0 }
 redundant_comparisons = { level = "deny", priority = 0 }
-redundant_else = { level = "allow", priority = 0 }
-redundant_feature_names = { level = "allow", priority = 0 }
+redundant_else = { level = "deny", priority = 0 }
+redundant_feature_names = { level = "deny", priority = 0 }
 redundant_field_names = { level = "warn", priority = 0 }
 redundant_guards = { level = "warn", priority = 0 }
 redundant_locals = { level = "deny", priority = 0 }
 redundant_pattern = { level = "warn", priority = 0 }
 redundant_pattern_matching = { level = "warn", priority = 0 }
-redundant_pub_crate = { level = "allow", priority = 0 }
+redundant_pub_crate = { level = "deny", priority = 0 }
 redundant_slicing = { level = "warn", priority = 0 }
 redundant_static_lifetimes = { level = "warn", priority = 0 }
-redundant_type_annotations = { level = "allow", priority = 0 }
-ref_binding_to_reference = { level = "allow", priority = 0 }
-ref_option_ref = { level = "allow", priority = 0 }
-ref_patterns = { level = "allow", priority = 0 }
+redundant_type_annotations = { level = "deny", priority = 0 }
+ref_binding_to_reference = { level = "deny", priority = 0 }
+ref_option_ref = { level = "deny", priority = 0 }
+ref_patterns = { level = "deny", priority = 0 }
 repeat_once = { level = "warn", priority = 0 }
 reserve_after_initialization = { level = "warn", priority = 0 }
-rest_pat_in_fully_bound_structs = { level = "allow", priority = 0 }
+rest_pat_in_fully_bound_structs = { level = "deny", priority = 0 }
 result_large_err = { level = "warn", priority = 0 }
 result_map_or_into_option = { level = "warn", priority = 0 }
 result_map_unit_fn = { level = "warn", priority = 0 }
 result_unit_err = { level = "warn", priority = 0 }
-return_self_not_must_use = { level = "allow", priority = 0 }
+return_self_not_must_use = { level = "deny", priority = 0 }
 reversed_empty_ranges = { level = "deny", priority = 0 }
-same_functions_in_if_condition = { level = "allow", priority = 0 }
+same_functions_in_if_condition = { level = "deny", priority = 0 }
 same_item_push = { level = "warn", priority = 0 }
-same_name_method = { level = "allow", priority = 0 }
+same_name_method = { level = "deny", priority = 0 }
 search_is_some = { level = "warn", priority = 0 }
 seek_from_current = { level = "warn", priority = 0 }
 seek_to_start_instead_of_rewind = { level = "warn", priority = 0 }
 self_assignment = { level = "deny", priority = 0 }
 self_named_constructors = { level = "warn", priority = 0 }
-self_named_module_files = { level = "allow", priority = 0 }
-semicolon_if_nothing_returned = { level = "allow", priority = 0 }
-semicolon_inside_block = { level = "allow", priority = 0 }
-semicolon_outside_block = { level = "allow", priority = 0 }
-separated_literal_suffix = { level = "allow", priority = 0 }
+self_named_module_files = { level = "deny", priority = 0 }
+semicolon_if_nothing_returned = { level = "deny", priority = 0 }
+semicolon_inside_block = { level = "deny", priority = 0 }
+semicolon_outside_block = { level = "deny", priority = 0 }
+separated_literal_suffix = { level = "deny", priority = 0 }
 serde_api_misuse = { level = "deny", priority = 0 }
-shadow_reuse = { level = "allow", priority = 0 }
-shadow_same = { level = "allow", priority = 0 }
-shadow_unrelated = { level = "allow", priority = 0 }
+shadow_reuse = { level = "deny", priority = 0 }
+shadow_same = { level = "deny", priority = 0 }
+shadow_unrelated = { level = "deny", priority = 0 }
 short_circuit_statement = { level = "warn", priority = 0 }
 should_implement_trait = { level = "warn", priority = 0 }
-should_panic_without_expect = { level = "allow", priority = 0 }
-significant_drop_in_scrutinee = { level = "allow", priority = 0 }
-significant_drop_tightening = { level = "allow", priority = 0 }
-similar_names = { level = "allow", priority = 0 }
-single_call_fn = { level = "allow", priority = 0 }
+should_panic_without_expect = { level = "deny", priority = 0 }
+significant_drop_in_scrutinee = { level = "deny", priority = 0 }
+significant_drop_tightening = { level = "deny", priority = 0 }
+similar_names = { level = "deny", priority = 0 }
+single_call_fn = { level = "deny", priority = 0 }
 single_char_add_str = { level = "warn", priority = 0 }
-single_char_lifetime_names = { level = "allow", priority = 0 }
+single_char_lifetime_names = { level = "deny", priority = 0 }
 single_char_pattern = { level = "warn", priority = 0 }
 single_component_path_imports = { level = "warn", priority = 0 }
 single_element_loop = { level = "warn", priority = 0 }
 single_match = { level = "warn", priority = 0 }
-single_match_else = { level = "allow", priority = 0 }
+single_match_else = { level = "deny", priority = 0 }
 single_range_in_vec_init = { level = "warn", priority = 0 }
 size_of_in_element_count = { level = "deny", priority = 0 }
 size_of_ref = { level = "warn", priority = 0 }
 skip_while_next = { level = "warn", priority = 0 }
 slow_vector_initialization = { level = "warn", priority = 0 }
-stable_sort_primitive = { level = "allow", priority = 0 }
-std_instead_of_alloc = { level = "allow", priority = 0 }
-std_instead_of_core = { level = "allow", priority = 0 }
-str_to_string = { level = "allow", priority = 0 }
-string_add = { level = "allow", priority = 0 }
-string_add_assign = { level = "allow", priority = 0 }
+stable_sort_primitive = { level = "deny", priority = 0 }
+std_instead_of_alloc = { level = "deny", priority = 0 }
+std_instead_of_core = { level = "deny", priority = 0 }
+str_to_string = { level = "deny", priority = 0 }
+string_add = { level = "deny", priority = 0 }
+string_add_assign = { level = "deny", priority = 0 }
 string_extend_chars = { level = "warn", priority = 0 }
 string_from_utf8_as_bytes = { level = "warn", priority = 0 }
-string_lit_as_bytes = { level = "allow", priority = 0 }
-string_lit_chars_any = { level = "allow", priority = 0 }
-string_slice = { level = "allow", priority = 0 }
-string_to_string = { level = "allow", priority = 0 }
+string_lit_as_bytes = { level = "deny", priority = 0 }
+string_lit_chars_any = { level = "deny", priority = 0 }
+string_slice = { level = "deny", priority = 0 }
+string_to_string = { level = "deny", priority = 0 }
 strlen_on_c_strings = { level = "warn", priority = 0 }
-struct_excessive_bools = { level = "allow", priority = 0 }
-struct_field_names = { level = "allow", priority = 0 }
-suboptimal_flops = { level = "allow", priority = 0 }
+struct_excessive_bools = { level = "deny", priority = 0 }
+struct_field_names = { level = "deny", priority = 0 }
+suboptimal_flops = { level = "deny", priority = 0 }
 suspicious_arithmetic_impl = { level = "warn", priority = 0 }
 suspicious_assignment_formatting = { level = "warn", priority = 0 }
 suspicious_command_arg_space = { level = "warn", priority = 0 }
@@ -788,23 +788,23 @@ suspicious_doc_comments = { level = "warn", priority = 0 }
 suspicious_else_formatting = { level = "warn", priority = 0 }
 suspicious_map = { level = "warn", priority = 0 }
 suspicious_op_assign_impl = { level = "warn", priority = 0 }
-suspicious_operation_groupings = { level = "allow", priority = 0 }
+suspicious_operation_groupings = { level = "deny", priority = 0 }
 suspicious_splitn = { level = "deny", priority = 0 }
 suspicious_to_owned = { level = "warn", priority = 0 }
 suspicious_unary_op_formatting = { level = "warn", priority = 0 }
-suspicious_xor_used_as_pow = { level = "allow", priority = 0 }
+suspicious_xor_used_as_pow = { level = "deny", priority = 0 }
 swap_ptr_to_ref = { level = "warn", priority = 0 }
 tabs_in_doc_comments = { level = "warn", priority = 0 }
 temporary_assignment = { level = "warn", priority = 0 }
-tests_outside_test_module = { level = "allow", priority = 0 }
+tests_outside_test_module = { level = "deny", priority = 0 }
 to_digit_is_some = { level = "warn", priority = 0 }
 to_string_in_format_args = { level = "warn", priority = 0 }
-todo = { level = "allow", priority = 0 }
+todo = { level = "deny", priority = 0 }
 too_many_arguments = { level = "warn", priority = 0 }
-too_many_lines = { level = "allow", priority = 0 }
+too_many_lines = { level = "deny", priority = 0 }
 toplevel_ref_arg = { level = "warn", priority = 0 }
-trailing_empty_array = { level = "allow", priority = 0 }
-trait_duplication_in_bounds = { level = "allow", priority = 0 }
+trailing_empty_array = { level = "deny", priority = 0 }
+trait_duplication_in_bounds = { level = "deny", priority = 0 }
 transmute_bytes_to_str = { level = "warn", priority = 0 }
 transmute_float_to_int = { level = "warn", priority = 0 }
 transmute_int_to_bool = { level = "warn", priority = 0 }
@@ -813,96 +813,96 @@ transmute_int_to_float = { level = "warn", priority = 0 }
 transmute_int_to_non_zero = { level = "warn", priority = 0 }
 transmute_null_to_fn = { level = "deny", priority = 0 }
 transmute_num_to_bytes = { level = "warn", priority = 0 }
-transmute_ptr_to_ptr = { level = "allow", priority = 0 }
+transmute_ptr_to_ptr = { level = "deny", priority = 0 }
 transmute_ptr_to_ref = { level = "warn", priority = 0 }
-transmute_undefined_repr = { level = "allow", priority = 0 }
+transmute_undefined_repr = { level = "deny", priority = 0 }
 transmutes_expressible_as_ptr_casts = { level = "warn", priority = 0 }
 transmuting_null = { level = "deny", priority = 0 }
 trim_split_whitespace = { level = "warn", priority = 0 }
-trivial_regex = { level = "allow", priority = 0 }
-trivially_copy_pass_by_ref = { level = "allow", priority = 0 }
-try_err = { level = "allow", priority = 0 }
-tuple_array_conversions = { level = "allow", priority = 0 }
+trivial_regex = { level = "deny", priority = 0 }
+trivially_copy_pass_by_ref = { level = "deny", priority = 0 }
+try_err = { level = "deny", priority = 0 }
+tuple_array_conversions = { level = "deny", priority = 0 }
 type_complexity = { level = "warn", priority = 0 }
 type_id_on_box = { level = "warn", priority = 0 }
-type_repetition_in_bounds = { level = "allow", priority = 0 }
-unchecked_duration_subtraction = { level = "allow", priority = 0 }
-undocumented_unsafe_blocks = { level = "allow", priority = 0 }
-unicode_not_nfc = { level = "allow", priority = 0 }
-unimplemented = { level = "allow", priority = 0 }
+type_repetition_in_bounds = { level = "deny", priority = 0 }
+unchecked_duration_subtraction = { level = "deny", priority = 0 }
+undocumented_unsafe_blocks = { level = "deny", priority = 0 }
+unicode_not_nfc = { level = "deny", priority = 0 }
+unimplemented = { level = "deny", priority = 0 }
 uninit_assumed_init = { level = "deny", priority = 0 }
 uninit_vec = { level = "deny", priority = 0 }
-uninlined_format_args = { level = "allow", priority = 0 }
+uninlined_format_args = { level = "deny", priority = 0 }
 unit_arg = { level = "warn", priority = 0 }
 unit_cmp = { level = "deny", priority = 0 }
 unit_hash = { level = "deny", priority = 0 }
 unit_return_expecting_ord = { level = "deny", priority = 0 }
-unnecessary_box_returns = { level = "allow", priority = 0 }
+unnecessary_box_returns = { level = "deny", priority = 0 }
 unnecessary_cast = { level = "warn", priority = 0 }
 unnecessary_fallible_conversions = { level = "warn", priority = 0 }
 unnecessary_filter_map = { level = "warn", priority = 0 }
 unnecessary_find_map = { level = "warn", priority = 0 }
 unnecessary_fold = { level = "warn", priority = 0 }
-unnecessary_join = { level = "allow", priority = 0 }
+unnecessary_join = { level = "deny", priority = 0 }
 unnecessary_lazy_evaluations = { level = "warn", priority = 0 }
 unnecessary_literal_unwrap = { level = "warn", priority = 0 }
 unnecessary_map_on_constructor = { level = "warn", priority = 0 }
 unnecessary_mut_passed = { level = "warn", priority = 0 }
 unnecessary_operation = { level = "warn", priority = 0 }
 unnecessary_owned_empty_strings = { level = "warn", priority = 0 }
-unnecessary_safety_comment = { level = "allow", priority = 0 }
-unnecessary_safety_doc = { level = "allow", priority = 0 }
-unnecessary_self_imports = { level = "allow", priority = 0 }
+unnecessary_safety_comment = { level = "deny", priority = 0 }
+unnecessary_safety_doc = { level = "deny", priority = 0 }
+unnecessary_self_imports = { level = "deny", priority = 0 }
 unnecessary_sort_by = { level = "warn", priority = 0 }
-unnecessary_struct_initialization = { level = "allow", priority = 0 }
+unnecessary_struct_initialization = { level = "deny", priority = 0 }
 unnecessary_to_owned = { level = "warn", priority = 0 }
 unnecessary_unwrap = { level = "warn", priority = 0 }
-unnecessary_wraps = { level = "allow", priority = 0 }
-unneeded_field_pattern = { level = "allow", priority = 0 }
+unnecessary_wraps = { level = "deny", priority = 0 }
+unneeded_field_pattern = { level = "deny", priority = 0 }
 unneeded_wildcard_pattern = { level = "warn", priority = 0 }
-unnested_or_patterns = { level = "allow", priority = 0 }
-unreachable = { level = "allow", priority = 0 }
-unreadable_literal = { level = "allow", priority = 0 }
-unsafe_derive_deserialize = { level = "allow", priority = 0 }
+unnested_or_patterns = { level = "deny", priority = 0 }
+unreachable = { level = "deny", priority = 0 }
+unreadable_literal = { level = "deny", priority = 0 }
+unsafe_derive_deserialize = { level = "deny", priority = 0 }
 unsafe_removed_from_name = { level = "warn", priority = 0 }
-unseparated_literal_suffix = { level = "allow", priority = 0 }
+unseparated_literal_suffix = { level = "deny", priority = 0 }
 unsound_collection_transmute = { level = "deny", priority = 0 }
-unused_async = { level = "allow", priority = 0 }
+unused_async = { level = "deny", priority = 0 }
 unused_enumerate_index = { level = "warn", priority = 0 }
 unused_format_specs = { level = "warn", priority = 0 }
 unused_io_amount = { level = "deny", priority = 0 }
-unused_peekable = { level = "allow", priority = 0 }
-unused_rounding = { level = "allow", priority = 0 }
-unused_self = { level = "allow", priority = 0 }
+unused_peekable = { level = "deny", priority = 0 }
+unused_rounding = { level = "deny", priority = 0 }
+unused_self = { level = "deny", priority = 0 }
 unused_unit = { level = "warn", priority = 0 }
 unusual_byte_groupings = { level = "warn", priority = 0 }
-unwrap_in_result = { level = "allow", priority = 0 }
+unwrap_in_result = { level = "deny", priority = 0 }
 unwrap_or_default = { level = "warn", priority = 0 }
-unwrap_used = { level = "allow", priority = 0 }
+unwrap_used = { level = "deny", priority = 0 }
 upper_case_acronyms = { level = "warn", priority = 0 }
-use_debug = { level = "allow", priority = 0 }
-use_self = { level = "allow", priority = 0 }
-used_underscore_binding = { level = "allow", priority = 0 }
+use_debug = { level = "deny", priority = 0 }
+use_self = { level = "deny", priority = 0 }
+used_underscore_binding = { level = "deny", priority = 0 }
 useless_asref = { level = "warn", priority = 0 }
 useless_attribute = { level = "deny", priority = 0 }
 useless_conversion = { level = "warn", priority = 0 }
 useless_format = { level = "warn", priority = 0 }
-useless_let_if_seq = { level = "allow", priority = 0 }
+useless_let_if_seq = { level = "deny", priority = 0 }
 useless_transmute = { level = "warn", priority = 0 }
 useless_vec = { level = "warn", priority = 0 }
 vec_box = { level = "warn", priority = 0 }
 vec_init_then_push = { level = "warn", priority = 0 }
 vec_resize_to_zero = { level = "deny", priority = 0 }
-verbose_bit_mask = { level = "allow", priority = 0 }
-verbose_file_reads = { level = "allow", priority = 0 }
+verbose_bit_mask = { level = "deny", priority = 0 }
+verbose_file_reads = { level = "deny", priority = 0 }
 vtable_address_comparisons = { level = "deny", priority = 0 }
 waker_clone_wake = { level = "warn", priority = 0 }
 while_immutable_condition = { level = "deny", priority = 0 }
 while_let_loop = { level = "warn", priority = 0 }
 while_let_on_iterator = { level = "warn", priority = 0 }
-wildcard_dependencies = { level = "allow", priority = 0 }
-wildcard_enum_match_arm = { level = "allow", priority = 0 }
-wildcard_imports = { level = "allow", priority = 0 }
+wildcard_dependencies = { level = "deny", priority = 0 }
+wildcard_enum_match_arm = { level = "deny", priority = 0 }
+wildcard_imports = { level = "deny", priority = 0 }
 wildcard_in_or_patterns = { level = "warn", priority = 0 }
 write_literal = { level = "warn", priority = 0 }
 write_with_newline = { level = "warn", priority = 0 }
@@ -912,5 +912,5 @@ wrong_transmute = { level = "deny", priority = 0 }
 zero_divided_by_zero = { level = "warn", priority = 0 }
 zero_prefixed_literal = { level = "warn", priority = 0 }
 zero_ptr = { level = "warn", priority = 0 }
-zero_sized_map_values = { level = "allow", priority = 0 }
+zero_sized_map_values = { level = "deny", priority = 0 }
 zst_offset = { level = "deny", priority = 0 }
