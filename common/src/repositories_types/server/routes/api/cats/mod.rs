@@ -317,124 +317,122 @@ pub struct Dog {
 //     },
 // }
 
-//
-impl std::convert::From<TryCreateManyRouteLogicErrorNamed> for TryCreateManyRouteLogicResponseVariants {
-    fn from(
-        value: TryCreateManyRouteLogicErrorNamed,
-    ) -> Self {
-        match value.into_serialize_deserialize_version() {
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
-                check_commit,
-                code_occurence,
-            } => Self::CheckCommit {
-                check_commit: check_commit,
-                code_occurence,
-            },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
-                check_body_size,
-                code_occurence,
-            } => Self::CheckBodySize {
-                check_body_size: check_body_size,
-                code_occurence,
-            },
-            //
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Configuration {
-                configuration,
-                code_occurence,
-            } => Self::Configuration { configuration, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Database {
-                database,
-                code_occurence,
-            } => Self::Database { database, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Io {
-                io,
-                code_occurence,
-            } => Self::Io { io: io.to_string(), code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Tls {
-                tls,
-                code_occurence,
-            } => Self::Tls { tls, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Protocol {
-                protocol,
-                code_occurence,
-            } => Self::Protocol { protocol, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::RowNotFound {
-                row_not_found,
-                code_occurence,
-            } => Self::RowNotFound { row_not_found, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::TypeNotFound {
-                type_not_found,
-                code_occurence,
-            } => Self::TypeNotFound { type_not_found, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::ColumnIndexOutOfBounds {
-                column_index_out_of_bounds,
-                len,
-                code_occurence,
-            } => Self::ColumnIndexOutOfBounds { column_index_out_of_bounds, len, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::ColumnNotFound {
-                column_not_found,
-                code_occurence,
-            } => Self::ColumnNotFound { column_not_found, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::ColumnDecode {
-                column_decode_index,
-                source_handle,
-                code_occurence,
-            } => Self::ColumnDecode { column_decode_index, source_handle, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Decode {
-                decode,
-                code_occurence,
-            } => Self::Decode { decode, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::PoolTimedOut {
-                pool_timed_out,
-                code_occurence,
-            } => Self::PoolTimedOut { pool_timed_out, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::PoolClosed {
-                pool_closed,
-                code_occurence,
-            } => Self::PoolClosed { pool_closed, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::WorkerCrashed {
-                worker_crashed,
-                code_occurence,
-            } => Self::WorkerCrashed { worker_crashed, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Migrate {
-                migrate,
-                code_occurence,
-            } => Self::Migrate { migrate: migrate.to_string(), code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonDataError {
-                json_data_error,
-                code_occurence,
-            } => Self::JsonDataError { json_data_error: json_data_error.to_string(), code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonSyntaxError {
-                json_syntax_error,
-                code_occurence,
-            } => Self::JsonSyntaxError { json_syntax_error: json_syntax_error.to_string(), code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::MissingJsonContentType {
-                missing_json_content_type,
-                code_occurence,
-            } => Self::MissingJsonContentType { missing_json_content_type, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BytesRejection {
-                bytes_rejection,
-                code_occurence,
-            } => Self::BytesRejection { bytes_rejection, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::UnexpectedCase {
-                unexpected_case,
-                code_occurence,
-            } => Self::UnexpectedCase { unexpected_case, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
-                bind_query,
-                code_occurence,
-            } => Self::BindQuery { bind_query: bind_query, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence,
-            } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer { 
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server.to_string(), 
-                code_occurence 
-            },
-        }
-    }
-}
-//
+// impl std::convert::From<TryCreateManyRouteLogicErrorNamed> for TryCreateManyRouteLogicResponseVariants {
+//     fn from(
+//         value: TryCreateManyRouteLogicErrorNamed,
+//     ) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
+//                 check_commit,
+//                 code_occurence,
+//             } => Self::CheckCommit {
+//                 check_commit: check_commit,
+//                 code_occurence,
+//             },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
+//                 check_body_size,
+//                 code_occurence,
+//             } => Self::CheckBodySize {
+//                 check_body_size: check_body_size,
+//                 code_occurence,
+//             },
+//             //
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Configuration {
+//                 configuration,
+//                 code_occurence,
+//             } => Self::Configuration { configuration, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Database {
+//                 database,
+//                 code_occurence,
+//             } => Self::Database { database, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Io {
+//                 io,
+//                 code_occurence,
+//             } => Self::Io { io: io.to_string(), code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Tls {
+//                 tls,
+//                 code_occurence,
+//             } => Self::Tls { tls, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Protocol {
+//                 protocol,
+//                 code_occurence,
+//             } => Self::Protocol { protocol, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::RowNotFound {
+//                 row_not_found,
+//                 code_occurence,
+//             } => Self::RowNotFound { row_not_found, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::TypeNotFound {
+//                 type_not_found,
+//                 code_occurence,
+//             } => Self::TypeNotFound { type_not_found, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::ColumnIndexOutOfBounds {
+//                 column_index_out_of_bounds,
+//                 len,
+//                 code_occurence,
+//             } => Self::ColumnIndexOutOfBounds { column_index_out_of_bounds, len, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::ColumnNotFound {
+//                 column_not_found,
+//                 code_occurence,
+//             } => Self::ColumnNotFound { column_not_found, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::ColumnDecode {
+//                 column_decode_index,
+//                 source_handle,
+//                 code_occurence,
+//             } => Self::ColumnDecode { column_decode_index, source_handle, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Decode {
+//                 decode,
+//                 code_occurence,
+//             } => Self::Decode { decode, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::PoolTimedOut {
+//                 pool_timed_out,
+//                 code_occurence,
+//             } => Self::PoolTimedOut { pool_timed_out, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::PoolClosed {
+//                 pool_closed,
+//                 code_occurence,
+//             } => Self::PoolClosed { pool_closed, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::WorkerCrashed {
+//                 worker_crashed,
+//                 code_occurence,
+//             } => Self::WorkerCrashed { worker_crashed, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Migrate {
+//                 migrate,
+//                 code_occurence,
+//             } => Self::Migrate { migrate: migrate.to_string(), code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonDataError {
+//                 json_data_error,
+//                 code_occurence,
+//             } => Self::JsonDataError { json_data_error: json_data_error.to_string(), code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonSyntaxError {
+//                 json_syntax_error,
+//                 code_occurence,
+//             } => Self::JsonSyntaxError { json_syntax_error: json_syntax_error.to_string(), code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::MissingJsonContentType {
+//                 missing_json_content_type,
+//                 code_occurence,
+//             } => Self::MissingJsonContentType { missing_json_content_type, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BytesRejection {
+//                 bytes_rejection,
+//                 code_occurence,
+//             } => Self::BytesRejection { bytes_rejection, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::UnexpectedCase {
+//                 unexpected_case,
+//                 code_occurence,
+//             } => Self::UnexpectedCase { unexpected_case, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
+//                 bind_query,
+//                 code_occurence,
+//             } => Self::BindQuery { bind_query: bind_query, code_occurence },
+//             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+//                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+//                 code_occurence,
+//             } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer { 
+//                 operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server: operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server.to_string(), 
+//                 code_occurence 
+//             },
+//         }
+//     }
+// }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryCreateManyRouteLogicErrorNamed {

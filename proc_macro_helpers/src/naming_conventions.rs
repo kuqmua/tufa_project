@@ -1831,3 +1831,78 @@ where
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
+
+pub trait TrySelfRouteLogicErrorNamedUpperCamelCaseStringified {
+    fn try_self_route_logic_error_named_upper_camel_case_stringified(&self) -> std::string::String;
+}
+
+impl<T> TrySelfRouteLogicErrorNamedUpperCamelCaseStringified for T
+where
+    T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+{
+    fn try_self_route_logic_error_named_upper_camel_case_stringified(&self) -> std::string::String {
+        format!(
+            "{}{}{}{}{}{}",
+            <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
+            self.to_upper_camel_case_stringified(),
+            <naming_constants::Route as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Logic as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
+        )
+    }
+}
+
+pub trait TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream {
+    fn try_self_route_logic_error_named_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+}
+
+impl<T> TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream for T
+where
+    T: TrySelfRouteLogicErrorNamedUpperCamelCaseStringified,
+{
+    fn try_self_route_logic_error_named_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.try_self_route_logic_error_named_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}
+
+pub trait TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified {
+    fn try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(&self) -> std::string::String;
+}
+
+impl<T> TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified for T
+where
+    T: proc_macro_common::naming_conventions::ToUpperCamelCaseStringified,
+{
+    fn try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(&self) -> std::string::String {
+        format!(
+            "{}{}{}{}{}{}{}{}{}",
+            <naming_constants::Try as naming_constants::Naming>::upper_camel_case_stringified(),
+            self.to_upper_camel_case_stringified(),
+            <naming_constants::Route as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Logic as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::With as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Serialize as naming_constants::Naming>::upper_camel_case_stringified(),
+            <naming_constants::Deserialize as naming_constants::Naming>::upper_camel_case_stringified(),
+        )
+    }
+}
+
+pub trait TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream {
+    fn try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream;
+}
+
+impl<T> TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream for T
+where
+    T: TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified,
+{
+    fn try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified();
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+}
