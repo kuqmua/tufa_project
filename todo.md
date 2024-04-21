@@ -831,7 +831,7 @@ fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
 ```
 use std::num::ParseIntError;
 use std::str::FromStr;
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 enum ParsePosNonzeroError {
     Creation(CreationError),
     ParseInt(ParseIntError),
@@ -853,9 +853,9 @@ impl FromStr for PositiveNonzeroInteger {
         Ok(PositiveNonzeroInteger::new(x)?)
     }
 }
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 struct PositiveNonzeroInteger(u64);
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 enum CreationError {
     Negative,
     Zero,

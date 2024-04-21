@@ -1,4 +1,4 @@
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Eq)]
 pub enum RequestResult {
     NotExecuted,
     Pending,

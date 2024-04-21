@@ -4,32 +4,32 @@ use crate::components::ant_design::svg::helpers::svg_type::SvgType;
 use yew::virtual_dom::AttrValue;
 use yew::{function_component, html, Callback, Properties};
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum AvatarShape {
     Circle,
     Square,
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum AvatarSizeType {
     Large,
     Small,
     Default,
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum AvatarSize {
     Number(u16),
     Type(AvatarSizeType),
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum AvatarContent {
     Icon(SvgType),
     Image(AvatarImage),
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct AvatarImage {
     pub src: AttrValue,
     // pub src_set	a list of sources to use for different screen resolutions	string	-	3.11.0 //no examples for it yet in antd docs

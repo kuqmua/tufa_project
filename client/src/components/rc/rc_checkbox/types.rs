@@ -63,7 +63,7 @@ impl fmt::Display for InputType {
     }
 }
 
-#[derive(PartialEq, Properties, Clone)]
+#[derive(PartialEq, Eq, Properties, Clone)]
 pub struct RcCheckBoxProps {
     pub prefix_cls: Option<String>,
     pub class_name: Option<String>,
@@ -89,7 +89,7 @@ pub struct RcCheckBoxProps {
     pub value: Option<String>,
 }
 
-#[derive(PartialEq, Properties, Clone)]
+#[derive(PartialEq, Eq, Properties, Clone)]
 pub struct CustomCheckBoxProps {
     pub prefix_cls: Option<String>,
     pub class_name: Option<String>,

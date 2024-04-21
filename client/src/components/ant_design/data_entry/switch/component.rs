@@ -37,7 +37,7 @@
 // // export type SwitchChangeEventHandler = (checked: boolean, event: MouseEvent) => void;
 // // export type SwitchClickEventHandler = SwitchChangeEventHandler;
 
-// #[derive(PartialEq, Properties, Clone)]
+// #[derive(PartialEq, Eq, Properties, Clone)]
 // pub struct SwitchProps {
 //     pub prefix_cls: Option<String>,
 //     pub size: Option<SwitchSize>,

@@ -48,13 +48,13 @@ pub fn make_prefix_map(style_prop: &str, event_name: &str) -> HashMap<String, st
 //   return prefixes;
 // }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct Prefixes {
     pub animationend: HashMap<String, std::string::String>,
     pub transitionend: HashMap<String, std::string::String>,
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct Win {
     pub animationend: HashMap<String, std::string::String>,
     pub transitionend: HashMap<String, std::string::String>,

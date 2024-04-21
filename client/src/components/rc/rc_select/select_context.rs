@@ -18,7 +18,7 @@ use yew::Properties;
 // import type { FlattenOptionData } from './interface';
 // import type { BaseOptionType, FieldNames, OnActiveValue, OnInternalSelect } from './Select';
 
-#[derive(PartialEq, Clone)] //Eq,
+#[derive(PartialEq, Eq, Clone)] //Eq,
 pub struct SelectContextProps {
     // pub options: BaseOptionType[],
     // pub flatten_options: FlattenOptionData<BaseOptionType>[],

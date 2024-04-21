@@ -96,7 +96,7 @@ pub fn get_built_in_placements(
     ])
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct RefTriggerProps {
     pub get_popup_element: Callback<Html>, //() => HTMLDivElement
 }
@@ -145,7 +145,7 @@ pub struct AlignType {
     pub ignore_shake: Option<bool>,
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct SelectTriggerProps {
     pub prefix_cls: std::string::String,
     pub children: Children,
@@ -169,7 +169,7 @@ pub struct SelectTriggerProps {
     pub on_popup_mouse_enter: Callback<()>,
 }
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct RefTriggerPropsAndSelectTriggerProps {
     pub get_popup_element: Callback<Html>, //() => HTMLDivElement
     //

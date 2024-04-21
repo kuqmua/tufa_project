@@ -5,24 +5,24 @@ use std::{
 use web_sys::MouseEvent;
 use yew::{Callback, Properties};
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum Percent {
     Number(f64),
     NumberVec(Vec<f64>),
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct CountSpace {
     pub count: f64,
     pub space: f64,
 }
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum Steps {
     Number(f64),
     CountSpace(CountSpace),
 }
 
-#[derive(PartialEq, Properties, Clone)]
+#[derive(PartialEq, Eq, Properties, Clone)]
 pub struct ProgressProps {
     pub id: Option<String>,
     pub stroke_width: Option<f64>,

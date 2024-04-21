@@ -279,7 +279,7 @@ pub fn badge(props: &BadgeProps) -> Html {
     }
 }
 
-#[derive(Properties, PartialEq, Eq)]
+#[derive(Properties, PartialEq, Eq, Eq)]
 pub struct BadgeNumbersProps {
     pub numeric: Numeric,
 }

@@ -1,4 +1,4 @@
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Eq)]
 pub enum ExpanderStatus {
     Closed,
     Share,

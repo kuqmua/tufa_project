@@ -40,7 +40,7 @@ impl std::fmt::Display for Color {
     }
 }
 
-#[derive(Clone, PartialEq, Default)]
+#[derive(Clone, PartialEq, Eq, Default)]
 pub struct ContextProviderStruct {
     pub data: std::string::String,
 }

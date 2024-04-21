@@ -35,7 +35,7 @@ pub enum Size {
     Large,
 }
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct ButtonProps {
     pub disabled: Option<()>, //or maybe explicit bool?
     pub ghost: Option<()>,

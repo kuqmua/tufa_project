@@ -54,7 +54,7 @@ impl ExpanderChangingStyleState {
     }
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct ExpanderChangingStyle {
     pub display: std::string::String,
     pub transform: std::string::String,

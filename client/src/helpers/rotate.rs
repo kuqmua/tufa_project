@@ -1,4 +1,4 @@
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct Rotate {
     degrees: u16,
 }

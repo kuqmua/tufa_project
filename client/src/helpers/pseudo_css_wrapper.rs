@@ -1,4 +1,4 @@
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct PseudoCssWrapper {
     pub style: std::collections::HashMap<String, std::string::String>,
 }

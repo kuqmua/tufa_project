@@ -5,7 +5,7 @@ use web_sys::MouseEvent;
 use yew::Callback;
 use yew::{function_component, html, Html, Properties};
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct ExpanderProps {
     pub callback: Callback<MouseEvent>,
     pub style_state: ExpanderChangingStyleState,

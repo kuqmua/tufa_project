@@ -59,7 +59,7 @@ static TARGET_OFFSET: &'static [i32; 2] = &[0, 0];
 
 // const targetOffset = [0, 0];
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum ZeroOrOne {
     Zero,
     One,
@@ -74,7 +74,7 @@ impl ZeroOrOne {
     }
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct AdjustOverflow {
     adjust_x: Option<ZeroOrOne>,
     adjust_y: Option<ZeroOrOne>,
@@ -85,13 +85,13 @@ pub struct AdjustOverflow {
 //   adjustY?: 0 | 1;
 // }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum AdjustOverflowOrBool {
     AdjustOverflow(AdjustOverflow),
     Boolean(bool),
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct PlacementsConfig {
     pub arrow_width: Option<i32>,
     pub horizontal_arrow_shift: Option<i32>,
@@ -156,7 +156,7 @@ pub fn get_overflow_options(
 //   };
 // }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct PointsOffset {
     pub points: [PointsValue; 2],
     pub offset: [i32; 2],
@@ -165,7 +165,7 @@ pub struct PointsOffset {
     pub ignore_shake: Option<bool>,
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum PointsValue {
     Cr,
     Cl,

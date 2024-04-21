@@ -14,7 +14,7 @@ use yew::Properties;
 //   group?: boolean;
 // }
 
-#[derive(PartialEq, Properties, Clone)]
+#[derive(PartialEq, Eq, Properties, Clone)]
 pub struct FlattenOptionData {
     pub label: Option<Html>,
     // pub data: OptionType;

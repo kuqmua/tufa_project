@@ -1,4 +1,4 @@
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum Theme {
     Outlined,
     Filled,

@@ -4,7 +4,7 @@ use crate::helpers::rotate::Rotate;
 use yew::virtual_dom::AttrValue;
 use yew::Properties;
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct SvgProps {
     pub height: Option<AttrValue>,
     pub width: Option<AttrValue>,

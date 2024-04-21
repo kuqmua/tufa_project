@@ -4,7 +4,7 @@ use yew::Children;
 // import type * as React from 'react';
 // import type { DefaultOptionType } from './Select';
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct OptionProps {
     //todo
     pub children: Children,

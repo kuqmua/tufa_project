@@ -8,7 +8,7 @@ use yew::Html;
 use yew::NodeRef;
 use yew::Properties;
 
-#[derive(PartialEq, Properties, Clone)]
+#[derive(PartialEq, Eq, Properties, Clone)]
 pub struct RcSwitchProps {
     pub class: Option<String>,
     pub prefix_cls: Option<String>,

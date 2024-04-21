@@ -2,7 +2,7 @@ use crate::components::authorization::center_form_wrapper::CenterFormWrapper;
 use crate::components::authorization::sign_up::component::SignUp;
 use yew::{function_component, html, ChildrenWithProps, Properties};
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct SignUpPageProps {
     #[prop_or_default]
     children: ChildrenWithProps<SignUp>,

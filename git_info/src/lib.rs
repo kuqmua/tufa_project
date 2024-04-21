@@ -1,5 +1,5 @@
 #[derive(
-    Debug, serde_derive::Serialize, serde_derive::Deserialize, Clone, Eq, Hash, PartialEq, Default,
+    Debug, serde_derive::Serialize, serde_derive::Deserialize, Clone, Hash, PartialEq, Eq, Default,
 )]
 pub struct ProjectGitInfo<'a> {
     pub commit: &'a str,

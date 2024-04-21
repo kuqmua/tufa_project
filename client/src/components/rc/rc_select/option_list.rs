@@ -32,7 +32,7 @@ use yew::Properties;
 // // export interface OptionListProps<OptionsType extends object[]> {
 // export type OptionListProps = Record<string, never>;
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct RefOptionListProps {
     pub on_key_down: Callback<KeyboardEvent>,
     pub on_key_up: Callback<KeyboardEvent>,

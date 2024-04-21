@@ -8,7 +8,7 @@ use yew::Html;
 use yew::NodeRef;
 use yew::Properties;
 
-#[derive(PartialEq, Properties, Clone)]
+#[derive(PartialEq, Eq, Properties, Clone)]
 pub struct CustomSwitchProps {
     pub class: Option<String>,
     pub disabled: Option<()>,

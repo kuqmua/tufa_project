@@ -21,7 +21,7 @@ pub fn percent_to_array(value: Percent) -> Vec<f64> {
 
 pub const VIEW_BOX_SIZE: f64 = 100.0;
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct CircleStyle {
     pub stroke: Option<String>,
     pub stroke_dash_array: std::string::String,
