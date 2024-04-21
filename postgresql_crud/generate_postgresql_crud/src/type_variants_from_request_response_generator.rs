@@ -221,7 +221,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                 }
                                 code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             }
                             else {
                                 let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
@@ -409,7 +409,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                         }
                                         code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                     }
                                     else {
                                         let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
@@ -482,7 +482,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                     let try_operation_response_variants_status_code_stingified = format!("{try_operation_response_variants_upper_camel_case_stringified}{key}");
                     try_operation_response_variants_status_code_stingified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {try_operation_response_variants_status_code_stingified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {try_operation_response_variants_status_code_stingified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 // let try_operation_response_variants_desirable_attribute_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &status_code_attribute);
                 // let try_operation_response_variants_attribute_token_stream = crate::generate_try_operation_response_variants_desirable_attribute_token_stream(
@@ -616,7 +616,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                 format!("{try_operation_upper_camel_case_token_stream}StatusCodesChecker");
             enum_status_codes_checker_upper_camel_case_stringified
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {enum_status_codes_checker_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {enum_status_codes_checker_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         let enum_status_codes_checker_name_logic_token_stream_handle_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant_attribute| {
                 let variant_ident = &error_variant_attribute.ident;
@@ -626,7 +626,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                     let variant_ident_attribute_upper_camel_case_stringified = format!("{variant_ident}{error_variant_attribute}");
                     variant_ident_attribute_upper_camel_case_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_attribute_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident_attribute_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 quote::quote! {
                     #variant_ident_attribute_upper_camel_case_token_stream,

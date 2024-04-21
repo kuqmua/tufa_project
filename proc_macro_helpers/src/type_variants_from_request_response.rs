@@ -7,7 +7,7 @@ pub fn generate_enum_status_codes_checker_upper_camel_case_token_stream(
     let enum_status_codes_checker_name_stringified = format!("{ident}{STATUS_CODES_CHECKER}");
     enum_status_codes_checker_name_stringified
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {enum_status_codes_checker_name_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {enum_status_codes_checker_name_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
 
 pub fn generate_tvfrr_extraction_logic_snake_case_token_stream(
@@ -21,7 +21,7 @@ pub fn generate_tvfrr_extraction_logic_snake_case_token_stream(
         .unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_ident_stringified} {tvfrr_extraction_logic_stringified} {}",
-                proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
 }
@@ -36,7 +36,7 @@ pub fn generate_ident_request_error_upper_camel_case_token_stream(
         .unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_ident_stringified} {ident_request_error_stringified} {}",
-                proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
 }
@@ -51,7 +51,7 @@ pub fn generate_try_from_response_ident_snake_case_token_stream(
         .unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_ident_stringified} {try_from_response_stringified} {}",
-                proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
 }

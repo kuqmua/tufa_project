@@ -23,7 +23,7 @@ pub mod write_token_stream_into_file;
 //     fn to_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
 //         let value_snake_case_stringified = proc_macro_helpers::naming_conventions::ToSnakeCase::to_snake_case(self);
 //         value_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-//         .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         .unwrap_or_else(|_| panic!("{value_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 
@@ -40,7 +40,7 @@ pub mod write_token_stream_into_file;
 //             self.to_upper_camel_case()
 //         );
 //         value.parse::<proc_macro2::TokenStream>()
-//         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+//         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 //     }
 // }
 

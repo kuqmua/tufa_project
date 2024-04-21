@@ -218,7 +218,7 @@ pub fn generate_with_serialize_deserialize_version(
                                 let code_occurence_type_stringified = field_type.to_string();
                                 code_occurence_type_stringified
                                 .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {code_occurence_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {code_occurence_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
                             enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
                                 #field_ident: #code_occurence_type_token_stream
@@ -280,7 +280,7 @@ pub fn generate_with_serialize_deserialize_version(
                     );
                     type_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 }
                 else {
                     panic!(
@@ -567,7 +567,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         let type_stringified = format!("{path}{}",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     }
                 },
                 crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident, lifetime_ident: _ } => {
@@ -609,7 +609,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     let type_stringified = format!("{path}{}",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                         type_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 }
             }
             else {
@@ -626,7 +626,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     let type_stringified = format!("{path}{with_serialize_deserialize_upper_camel_case}");
                     type_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 }
             }
             else {
@@ -646,7 +646,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     let type_stringified = format!("{path}<{std_string_string_stringified}>");
                     type_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 }
                 else {
                     panic!(
@@ -674,7 +674,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         let type_stringified = format!("{path}<{element_path}{}>",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     crate::error_occurence::vec_element_type::VecElementType::Reference { reference_ident, lifetime_ident: _lifetime_ident } => {
                         crate::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -688,7 +688,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             let type_stringified = format!("{path}<{std_string_string_stringified}>");
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                 }
@@ -736,7 +736,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         let type_stringified = format!("{path}<{element_path}{}>",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     }
                 }
                 else {
@@ -765,7 +765,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         let type_stringified = format!("{path}<{element_path}{with_serialize_deserialize_upper_camel_case}{}>",  crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     }
                 }
                 else {
@@ -809,7 +809,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         );
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     }
                 };
                 match (hashmap_key_type, hashmap_value_type) {
@@ -852,7 +852,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -908,7 +908,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -943,7 +943,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -970,7 +970,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -1001,7 +1001,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                 }
@@ -1031,7 +1031,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         );
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     }
                 };
                 match (hashmap_key_type, hashmap_value_type) {
@@ -1073,7 +1073,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         );
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
@@ -1128,7 +1128,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -1165,7 +1165,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                                 );
                                 type_stringified
                                 .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             }
                     },
                     (
@@ -1221,7 +1221,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -1258,7 +1258,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                            );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -1291,7 +1291,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
                     type_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 match (hashmap_key_type, hashmap_value_type) {
                     (
@@ -1369,7 +1369,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         );
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
@@ -1394,7 +1394,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             );
                             type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         }
                     },
                     (
@@ -1447,7 +1447,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
@@ -1512,7 +1512,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         );
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
@@ -1577,7 +1577,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         );
                         type_stringified
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {

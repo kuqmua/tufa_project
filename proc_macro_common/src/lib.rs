@@ -1,5 +1,5 @@
 pub mod generate_quotes;
-pub mod global_variables;
+pub mod constants;
 pub mod naming_conventions;
 pub mod panic_location;
 
@@ -16,7 +16,7 @@ pub fn generate_function_name_upper_camel_case_token_stream(
         .unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {value} {}",
-                crate::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
 }
@@ -32,7 +32,7 @@ pub fn generate_function_name_snake_case_token_stream(
         .unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {value} {}",
-                crate::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
 }

@@ -40,9 +40,9 @@ pub(crate) fn check_for_none(
         )
     };
     let none_elements_token_stream = none_elements.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {none_elements} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {none_elements} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let match_elements_token_stream = match_elements.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {match_elements} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {match_elements} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let response_variant_token_stream = {
         let field_code_occurence_new_23fdf468_0468_4c5c_8670_08f6f747e417_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),

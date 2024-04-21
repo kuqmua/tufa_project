@@ -45,7 +45,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
         panic!(
             "{proc_macro_name} {}",
-            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+            proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
     let error_occurence_snake_case =
@@ -87,7 +87,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         }
         lifetimes_stringified
         .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lifetimes_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lifetimes_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let named_snake_case = <naming_constants::Named as naming_constants::Naming>::snake_case_stringified();
     let unnamed_upper_camel_case =
@@ -99,19 +99,19 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         );
     let trait_lifetime_token_stream = trait_lifetime_stringified
         .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {trait_lifetime_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {trait_lifetime_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let with_serialize_deserialize_upper_camel_case = proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified();
     let ident_with_serialize_deserialize_stringified =
         format!("{ident}{with_serialize_deserialize_upper_camel_case}");
     let ident_with_serialize_deserialize_token_stream = ident_with_serialize_deserialize_stringified
         .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {ident_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {ident_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let config_upper_camel_case_stringified =
         <naming_constants::Config as naming_constants::Naming>::upper_camel_case_stringified();
     let config_generic_upper_camel_case = format!("{config_upper_camel_case_stringified}Generic");
     let config_generic_token_stream = config_generic_upper_camel_case
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {config_generic_upper_camel_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {config_generic_upper_camel_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let source_upper_camel_case_stringified =
         <naming_constants::Source as naming_constants::Naming>::upper_camel_case_stringified();
     let to_string_upper_camel_case = format!(
@@ -136,23 +136,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         format!("{error_occurence_snake_case}_{named_snake_case}");
     let error_occurence_named_token_stream = error_occurence_named_snake_case
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_named_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_named_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let error_occurence_unnamed_upper_camel_case =
         format!("{proc_macro_name}{unnamed_upper_camel_case}");
     let error_occurence_unnamed_snake_case =
         format!("{error_occurence_snake_case}_{unnamed_snake_case_stringified}");
     let error_occurence_unnamed_token_stream = error_occurence_unnamed_snake_case
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_unnamed_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_unnamed_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let error_occurence_lib_stringified = "error_occurence_lib";
     let error_occurence_lib_error_occurence_named_error_occurence_named_stringified = format!("{error_occurence_lib_stringified}::{error_occurence_named_snake_case}::{error_occurence_named_upper_camel_case}");
     let error_occurence_lib_error_occurence_named_error_occurence_named_token_stream = error_occurence_lib_error_occurence_named_error_occurence_named_stringified
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_error_occurence_named_error_occurence_named_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_error_occurence_named_error_occurence_named_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let error_occurence_lib_error_occurence_unnamed_error_occurence_unnamed_stringified = format!("{error_occurence_lib_stringified}::{error_occurence_unnamed_snake_case}::{error_occurence_unnamed_upper_camel_case}");
     let error_occurence_lib_error_occurence_unnamed_error_occurence_unnamed_token_stream = error_occurence_lib_error_occurence_unnamed_error_occurence_unnamed_stringified
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_error_occurence_unnamed_error_occurence_unnamed_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_error_occurence_unnamed_error_occurence_unnamed_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let to_string_without_config_upper_camel_case = format!(
         "{to_string_upper_camel_case}{}out{config_upper_camel_case_stringified}",
         <naming_constants::With as naming_constants::Naming>::upper_camel_case_stringified()
@@ -164,11 +164,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let error_occurence_lib_to_string_without_config_to_string_without_config_stringified = format!("{error_occurence_lib_stringified}::{to_string_without_config_snake_case_stringified}::{to_string_without_config_upper_camel_case}");
     let error_occurence_lib_to_string_without_config_to_string_without_config_token_stream = error_occurence_lib_to_string_without_config_to_string_without_config_stringified
     .parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified = format!("{error_occurence_lib_to_string_without_config_to_string_without_config_stringified}{with_serialize_deserialize_upper_camel_case}");
     let error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream = error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified
     .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let crate_common_config_stringified = "config_lib"; //crate::common::config
     let crate_common_config_path_stringified =
         format!("{crate_common_config_stringified}::");
@@ -177,13 +177,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let crate_common_config_path_get_source_place_type_stringified = format!("{crate_common_config_path_stringified}{get_upper_camel_case_stringified}{source_upper_camel_case_stringified}PlaceType");
     let crate_common_config_path_get_source_place_type_token_stream =
     crate_common_config_path_get_source_place_type_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_path_get_source_place_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_path_get_source_place_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let crate_common_config_path_get_timezone_stringified = format!(
         "{crate_common_config_path_stringified}{get_upper_camel_case_stringified}Timezone"
     );
     let crate_common_config_path_get_timezone_token_stream =
     crate_common_config_path_get_timezone_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_path_get_timezone_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_config_path_get_timezone_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let source_snake_case_stringified =
         proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
             &source_upper_camel_case_stringified,
@@ -196,10 +196,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         format!("{source_snake_case_stringified}_{to_string_with_config_snake_case_stringified}");
     let source_to_string_with_config_token_stream =
     source_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_with_config_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let to_string_without_config_token_stream =
     to_string_without_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let with_serialize_deserialize_snake_case =
         proc_macro_helpers::naming_conventions::with_serialize_deserialize_snake_case_stringified();
     let to_string_without_config_with_serialize_deserialize_stringified = format!(
@@ -207,7 +207,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     );
     let to_string_without_config_with_serialize_deserialize_token_stream =
     to_string_without_config_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let into_upper_camel_case_stringified =
         <naming_constants::Into as naming_constants::Naming>::upper_camel_case_stringified();
     let into_snake_case_stringified =
@@ -223,7 +223,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     );
     let into_serialize_deserialize_version_token_stream = into_serialize_deserialize_version_stringified
     .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {into_serialize_deserialize_version_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {into_serialize_deserialize_version_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let supports_only_supported_container_stringified =
         proc_macro_helpers::naming_conventions::supports_only_supported_container_stringified();
     let syn_type_path_stringified =
@@ -232,14 +232,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         format!("_compile_time_check_{error_occurence_snake_case}_members");
     let compile_time_check_error_occurence_members_token_stream = compile_time_check_error_occurence_members_stringified
     .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {compile_time_check_error_occurence_members_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {compile_time_check_error_occurence_members_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let error_occurence_lib_to_string_with_config_to_string_with_config_stringified = format!("{error_occurence_lib_stringified}::{to_string_with_config_snake_case_stringified}::{to_string_with_config_upper_camel_case}");
     let error_occurence_lib_to_string_with_config_to_string_with_config_token_stream =
     error_occurence_lib_to_string_with_config_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_with_config_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_with_config_to_string_with_config_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let to_string_with_config_token_stream =
     to_string_with_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_with_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_with_config_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let key_snake_case = <naming_constants::Key as naming_constants::Naming>::upper_camel_case_stringified();
     let value_snake_case =
         <naming_constants::Value as naming_constants::Naming>::upper_camel_case_stringified();
@@ -817,17 +817,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let source_to_string_without_config_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&source_to_string_without_config_upper_camel_case);
             let source_to_string_without_config_token_stream =
             source_to_string_without_config_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_without_config_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {source_to_string_without_config_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             //
             let error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified = format!("{error_occurence_lib_stringified}::{source_to_string_without_config_snake_case_stringified}::{source_to_string_without_config_upper_camel_case}");
             let error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream =
             error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_without_config_source_to_string_without_config_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             //
             let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified = format!("{error_occurence_lib_stringified}::{source_to_string_with_config_stringified}::{source_to_string_with_config_upper_camel_case}");
             let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream =
             error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_source_to_string_with_config_source_to_string_with_config_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let mut lifetimes_for_serialize_deserialize = Vec::with_capacity(generics_len);
             let mut logic_for_source_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_source_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
@@ -860,7 +860,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let unused_argument_handle_stringified = format!("_unused_argument_{index}");
                     let unused_argument_handle_token_stream = unused_argument_handle_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {unused_argument_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {unused_argument_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                     let to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&to_string_upper_camel_case);
                     let hashmap_display_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
                     match error_or_code_occurence {
@@ -872,31 +872,31 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let field_name_with_field_value_stringified = format!("\"{field_ident}: {{}}\"");
                                 field_name_with_field_value_stringified
                                 .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {field_name_with_field_value_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {field_name_with_field_value_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
                             let display_foreign_type_snake_case_token_stream =
                             display_foreign_type_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {display_foreign_type_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {display_foreign_type_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let to_string_token_stream = to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let lines_space_backslash_upper_camel_case = "LinesSpaceBackslash";
                             let lines_space_backslash_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&lines_space_backslash_upper_camel_case);
                             let lines_space_backslash_snake_case_token_stream =
                             lines_space_backslash_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lines_space_backslash_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lines_space_backslash_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified = format!("{error_occurence_lib_stringified}::{lines_space_backslash_snake_case_stringified}::{lines_space_backslash_upper_camel_case}");
                             let error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream =
                             error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_upper_camel_case}");
                             let error_occurence_lib_display_foreign_type_token_stream =
                             error_occurence_lib_display_foreign_type_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_display_to_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -905,7 +905,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let vec_display_to_string_snake_case_token_stream =
                             vec_display_to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             //
 
 
@@ -913,12 +913,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_vec_display_to_string_vec_display_to_string_token_stream =
                             error_occurence_lib_vec_display_to_string_vec_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_to_string_vec_display_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_to_string_vec_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_display_to_string_snake_case_token_stream =
                             hashmap_display_display_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified = format!(
                                 "{error_occurence_lib_stringified}::{hashmap_display_display_to_string_snake_case}::{}{display_upper_camel_case_stringified}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -926,13 +926,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_token_stream =
                             error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
                             hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified = format!(
                                 "{error_occurence_lib_stringified}::{hashmap_display_to_string_without_config_to_string_snake_case}::{}{display_upper_camel_case_stringified}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}{with_serialize_deserialize_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -940,7 +940,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_token_stream =
                             error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&<naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified());
                             let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
                             let std_stringified = "std";
@@ -948,7 +948,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let hashmap_display_display_foreign_type_to_string_snake_case_token_stream =
                             hashmap_display_display_foreign_type_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified = format!(
                                 "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_to_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -956,7 +956,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream =
                             error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_element_type_path_stringified = format!(
                                 "proc_macro_helpers::error_occurence::vec_element_type::VecElementType::{}",
                                 <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
@@ -969,17 +969,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let vec_display_foreign_type_to_string_snake_case_token_stream =
                             vec_display_foreign_type_to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_to_string_snake_case_stringified}::{vec_display_foreign_type_to_string_upper_camel_case}");
                             let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream =
                             error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_foreign_type_display_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_foreign_type_display_to_string_snake_case_token_stream =
                             hashmap_display_foreign_type_display_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified = format!(
                                 "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -987,12 +987,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream =
                             error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream =
                             hashmap_display_foreign_type_display_foreign_type_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified = format!(
                                 "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}", 
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1000,7 +1000,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream =
                             error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let as_std_collections_hashmap_key_type_stringified = format!(
                                 "as {std_stringified}::collections::{} key type",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1073,7 +1073,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let vec_display_into_vec_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_into_vec_string_upper_camel_case);
                             let vec_display_into_vec_string_token_stream = vec_display_into_vec_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_into_vec_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_into_vec_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_into_hashmap_string_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -1084,12 +1084,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let hashmap_display_display_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
                             let hashmap_display_display_into_hashmap_string_string_token_stream = hashmap_display_display_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_display_into_hashmap_string_string_snake_case}::{hashmap_display_display_into_hashmap_string_string_upper_camel_case}");
                             let error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_token_stream =
                             error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_foreign_type_into_hashmap_string_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -1100,11 +1100,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
                             let hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream = hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case}::{hashmap_display_display_foreign_type_into_hashmap_string_string_upper_camel_case}");
                             let crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream = crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_into_hashmap_display_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -1115,11 +1115,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_display_into_hashmap_display_string_snake_case}::{hashmap_display_display_into_hashmap_display_string_upper_camel_case}");
                             let error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_token_stream = error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_display_string_hashmap_display_display_into_hashmap_display_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_into_hashmap_display_string_token_stream =
                             hashmap_display_display_into_hashmap_display_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_display_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_foreign_type_display_into_hashmap_string_string_upper_camel_case = format!(
                                 "{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -1131,10 +1131,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case}::{hashmap_display_foreign_type_display_into_hashmap_string_string_upper_camel_case}");
                             let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream = error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream = hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
 
                             //
                             let (
@@ -1212,7 +1212,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     let type_stringified = format!("{path}{}", proc_macro_helpers::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     vec_lifetime,
@@ -1379,7 +1379,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 let type_stringified = format!("{path}{}", proc_macro_helpers::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                                                 type_stringified
                                                 .parse::<proc_macro2::TokenStream>()
-                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                             },
                                             get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                 vec_lifetime,
@@ -1448,7 +1448,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 let type_stringified = format!("{path}{with_serialize_deserialize_upper_camel_case}");
                                                 type_stringified
                                                 .parse::<proc_macro2::TokenStream>()
-                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                             },
                                             get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                 vec_lifetime,
@@ -1528,7 +1528,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             let type_stringified = format!("{path}<{std_string_string_stringified}>");
                                             type_stringified
                                             .parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                         }
                                         else {
                                             panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
@@ -1544,7 +1544,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_into_vec_string_snake_case_stringified}::{vec_display_into_vec_string_upper_camel_case}");
                                     let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_token_stream = error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -1604,7 +1604,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     let type_stringified = format!("{path}<{element_path}{}>", proc_macro_helpers::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     vec_lifetime,
@@ -1630,13 +1630,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 let error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_token_stream =
                                                 error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified
                                                 .parse::<proc_macro2::TokenStream>()
-                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_into_vec_string_vec_display_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                                 (
                                                     {
                                                         let type_stringified = format!("{path}<{std_string_string_stringified}>");
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     {
                                                         proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -1728,12 +1728,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let vec_display_foreign_type_into_vec_string_snake_case_token_stream =
                                     vec_display_foreign_type_into_vec_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_into_vec_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_into_vec_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_into_vec_string_snake_case_stringified}::{vec_display_foreign_type_into_vec_string_upper_camel_case}");
                                     let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream =
                                     error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -1791,7 +1791,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     let type_stringified = format!("{path}<{element_path}{}>", proc_macro_helpers::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     vec_lifetime,
@@ -1868,7 +1868,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     let type_stringified = format!("{path}<{element_path}{with_serialize_deserialize_upper_camel_case}{}>", proc_macro_helpers::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&vec_lifetime));
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     vec_lifetime,
@@ -1897,12 +1897,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let vec_to_string_without_config_to_string_snake_case_token_stream =
                                     vec_to_string_without_config_to_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_without_config_to_string_snake_case_stringified}::{vec_to_string_without_config_to_string_upper_camel_case}");
                                     let error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_token_stream =
                                     error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case = format!(
                                         "{}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}{with_serialize_deserialize_upper_camel_case}",
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1911,12 +1911,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
                                     vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_without_config_to_string_snake_case_stringified}::{vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case}");
                                     let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_token_stream =
                                     error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let vec_to_string_with_config_to_string_upper_camel_case = format!(
                                         "{}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1925,10 +1925,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_vec_to_string_with_config_to_string_vec_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_with_config_to_string_snake_case_stringified}::{vec_to_string_with_config_to_string_upper_camel_case}");
                                     let error_occurence_lib_vec_to_string_with_config_to_string_vec_to_string_with_config_to_string_token_stream = error_occurence_lib_vec_to_string_with_config_to_string_vec_to_string_with_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_with_config_to_string_vec_to_string_with_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_with_config_to_string_vec_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let vec_to_string_with_config_to_string_token_stream = vec_to_string_with_config_to_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_with_config_to_string_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_with_config_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -2017,7 +2017,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     );
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     key_vec_lifetime,
@@ -2045,7 +2045,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 {
                                                     proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -2224,7 +2224,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
                                                         key_vec_lifetime,
@@ -2273,7 +2273,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
                                                         key_vec_lifetime,
@@ -2314,7 +2314,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     {
                                                         proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -2334,13 +2334,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         let hashmap_display_display_into_hashmap_string_display_token_stream =
                                                         hashmap_display_display_into_hashmap_string_display_snake_case
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                                         let error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified =
                                                         format!("{error_occurence_lib_stringified}::{hashmap_display_display_into_hashmap_string_display_snake_case}::{hashmap_display_display_into_hashmap_string_display_upper_camel_case}");
                                                         let error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_token_stream =
                                                         error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                                         quote::quote! {
                                                             #error_occurence_lib_hashmap_display_display_into_hashmap_string_display_hashmap_display_display_into_hashmap_string_display_token_stream::#hashmap_display_display_into_hashmap_string_display_token_stream(
                                                                 #field_ident
@@ -2378,7 +2378,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     {
                                                         // get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
@@ -2474,7 +2474,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream =
                                             hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case
                                             .parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                             let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified = format!(
                                                 "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
                                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -2484,7 +2484,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream =
                                             error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified
                                             .parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                             (
                                                 {
                                                     let type_stringified = format!(
@@ -2493,7 +2493,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     );
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     key_vec_lifetime,
@@ -2524,7 +2524,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     );
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 {
                                                     proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -2682,7 +2682,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
                                                         key_vec_lifetime,
@@ -2731,7 +2731,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     {
                                                         proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -2853,7 +2853,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_addition(
                                                         key_vec_lifetime,
@@ -2906,7 +2906,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     {
                                                         proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -2946,7 +2946,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let hashmap_display_to_string_without_config_to_string_snake_case_token_stream =
                                     hashmap_display_to_string_without_config_to_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_without_config_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_without_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_stringified = format!(
                                         "{error_occurence_lib_stringified}::{hashmap_display_to_string_without_config_to_string_snake_case}::{}{display_upper_camel_case_stringified}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
                                         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -2954,7 +2954,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_token_stream =
                                     error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_hashmap_display_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let hashmap_display_to_string_with_config_to_string_upper_camel_case = format!(
                                         "{}{display_upper_camel_case_stringified}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
                                         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -2963,10 +2963,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_hashmap_display_to_string_with_config_to_string_hashmap_display_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_to_string_with_config_to_string_snake_case}::{hashmap_display_to_string_with_config_to_string_upper_camel_case}");
                                     let error_occurence_lib_hashmap_display_to_string_with_config_to_string_hashmap_display_to_string_with_config_to_string_token_stream = error_occurence_lib_hashmap_display_to_string_with_config_to_string_hashmap_display_to_string_with_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_with_config_to_string_hashmap_display_to_string_with_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_with_config_to_string_hashmap_display_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let hashmap_display_to_string_with_config_to_string_token_stream = hashmap_display_to_string_with_config_to_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_with_config_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_string_with_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -3024,7 +3024,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
                                             type_stringified
                                             .parse::<proc_macro2::TokenStream>()
-                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                         };
                                         match (hashmap_key_type, hashmap_value_type) {
                                             (
@@ -3154,7 +3154,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream =
                                                 hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case
                                                 .parse::<proc_macro2::TokenStream>()
-                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                                 let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified = format!(
                                                     "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{display_upper_camel_case_stringified}",
                                                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -3164,7 +3164,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream =
                                                 error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified
                                                 .parse::<proc_macro2::TokenStream>()
-                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                                 (
                                                     {
                                                         let type_stringified = format!(
@@ -3173,7 +3173,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                         value_vec_lifetime,
@@ -3212,7 +3212,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                         );
                                                         type_stringified
                                                         .parse::<proc_macro2::TokenStream>()
-                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                     },
                                                     get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                         vec![proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_ident.to_string())],
@@ -3318,7 +3318,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
                                                 type_stringified
                                                 .parse::<proc_macro2::TokenStream>()
-                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                             },
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {
@@ -3363,7 +3363,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream =
                                     hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified = format!(
                                         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
                                         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -3374,7 +3374,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream =
                                     error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -3445,7 +3445,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     );
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     value_vec_lifetime,
@@ -3502,11 +3502,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_foreign_type_snake_case_stringified}");
                                     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_token_stream = hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_upper_camel_case}");
                                     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_token_stream = error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -3580,7 +3580,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     );
                                                     type_stringified
                                                     .parse::<proc_macro2::TokenStream>()
-                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                                 },
                                                 get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_addition(
                                                     value_vec_lifetime,
@@ -3632,7 +3632,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream =
                                     hashmap_display_foreign_type_to_string_without_config_to_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_without_config_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_without_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified = format!(
                                         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_without_config_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
                                         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -3640,7 +3640,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream =
                                     error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let hashmap_display_foreign_type_to_string_with_config_to_string_upper_camel_case = format!(
                                         "{}{display_foreign_type_upper_camel_case}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
                                         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -3649,10 +3649,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     let error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_with_config_to_string_snake_case}::{hashmap_display_foreign_type_to_string_with_config_to_string_upper_camel_case}");
                                     let error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_token_stream = error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let hashmap_display_foreign_type_to_string_with_config_to_string_token_stream = hashmap_display_foreign_type_to_string_with_config_to_string_snake_case
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_with_config_to_string_snake_case} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_with_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
@@ -3756,7 +3756,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 format!("{field_type}{with_serialize_deserialize_upper_camel_case}");
                                 code_occurence_type_with_serialize_deserialize_stringified
                                 .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {code_occurence_type_with_serialize_deserialize_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {code_occurence_type_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
                             enum_fields_logic_for_source_to_string_with_config.push(quote::quote! {
                                 #field_ident: #unused_argument_handle_token_stream
@@ -3801,7 +3801,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let format_logic_for_source_to_string_with_or_without_config_handle_stringified = format!("\"{start_scope_stringified}\n{format_logic_for_source_to_string_with_or_without_config_stringified}{end_scope_stringified}\"");
                 let format_logic_for_source_to_string_with_or_without_config_handle_token_stream = format_logic_for_source_to_string_with_or_without_config_handle_stringified
                 .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {format_logic_for_source_to_string_with_or_without_config_handle_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {format_logic_for_source_to_string_with_or_without_config_handle_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 logic_for_source_to_string_with_config.push(quote::quote! {
                     #ident::#variant_ident {
                         #(#enum_fields_logic_for_source_to_string_with_config),*
@@ -3883,14 +3883,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
             let error_occurence_lib_get_code_occurence_get_code_occurence_token_stream =
             error_occurence_lib_get_code_occurence_get_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let error_occurence_lib_code_occurence_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{code_occurence_upper_camel_case_stringified}");
             let error_occurence_lib_code_occurence_code_occurence_token_stream =
             error_occurence_lib_code_occurence_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_code_occurence_code_occurence_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_code_occurence_code_occurence_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let get_code_occurence_token_stream =
             get_code_occurence_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {get_code_occurence_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {get_code_occurence_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let compile_time_check_error_occurence_members_impl_token_stream = match should_generate_impl_compile_time_check_error_occurence_members {
                 true => quote::quote!{
                     impl<#generics> #ident<#generics> {
@@ -4030,7 +4030,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     );
                     type_stringified
                     .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 }
                 else {
                     panic!("{proc_macro_name_ident_stringified} {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED)

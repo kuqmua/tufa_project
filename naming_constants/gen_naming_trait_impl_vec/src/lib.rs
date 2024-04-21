@@ -26,11 +26,11 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
             let ident_upper_camel_case_quotes_token_stream = {
                 let value = format!("\"{ident_upper_camel_case_stringified}\"");
                 value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let ident_upper_camel_case_token_stream = {
                 ident_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{ident_upper_camel_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                .unwrap_or_else(|_| panic!("{ident_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             (
                 ident_upper_camel_case_quotes_token_stream,
@@ -42,11 +42,11 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
             let ident_snake_case_quotes_token_stream = {
                 let value = format!("\"{ident_snake_case_stringified}\"");
                 value.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let ident_snake_case_token_stream = {
                 ident_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| panic!("{ident_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                .unwrap_or_else(|_| panic!("{ident_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             (
                 ident_snake_case_quotes_token_stream,

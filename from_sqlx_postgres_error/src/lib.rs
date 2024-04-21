@@ -5,7 +5,7 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
         panic!(
             "{}",
-            proc_macro_common::global_variables::hardcode::AST_PARSE_FAILED
+            proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
     let ident = &ast.ident;

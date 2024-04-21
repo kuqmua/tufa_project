@@ -26,7 +26,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let variant_ident_snake_case_token_stream = {
             let variant_ident_snake_case_stringified = convert_case::Casing::to_case(&format!("\"{variant_ident}\""), convert_case::Case::Snake);
             variant_ident_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {variant_ident_snake_case_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {variant_ident_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
         };
         quote::quote! {
             #variant_ident_snake_case_token_stream => Ok(Self::#variant_ident),
@@ -48,7 +48,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             "\"Invalid {ident}, expected one of {error_variants_stringified} found {{value}}\""
         );
         error_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_stringified} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let gen = quote::quote! {
         impl std::str::FromStr for #ident {

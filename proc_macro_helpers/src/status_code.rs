@@ -488,7 +488,7 @@ impl StatusCode {
     pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{self}]");
         value.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 

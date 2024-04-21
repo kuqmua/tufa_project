@@ -12,7 +12,7 @@ pub fn generate_quotes_token_stream(
         .unwrap_or_else(|_| {
             panic!(
                 "{proc_macro_name_upper_camel_case_ident_stringified} {value} {}",
-                crate::global_variables::hardcode::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                crate::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
             )
         })
 }
