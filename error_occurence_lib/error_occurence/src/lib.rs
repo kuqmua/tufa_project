@@ -832,7 +832,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let mut logic_for_source_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_source_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_get_code_occurence: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
-            let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
+            // let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_source_to_string_without_config_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_get_code_occurence_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
@@ -845,7 +845,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let mut enum_fields_logic_for_source_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_source_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_get_code_occurence: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
-                let mut enum_fields_logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
+                // let mut enum_fields_logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_get_code_occurence_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
@@ -3721,9 +3721,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             enum_fields_logic_for_get_code_occurence.push(quote::quote!{
                                 #field_ident: #unused_argument_handle_token_stream
                             });
-                            enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
-                                #field_ident: #field_type_with_serialize_deserialize_token_stream
-                            });
+                            // enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
+                            //     #field_ident: #field_type_with_serialize_deserialize_token_stream
+                            // });
                             enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote!{
                                 #field_ident
                             });
@@ -3767,9 +3767,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             enum_fields_logic_for_get_code_occurence.push(quote::quote!{
                                 #field_ident
                             });
-                            enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
-                                #field_ident: #code_occurence_type_with_serialize_deserialize_token_stream
-                            });
+                            // enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
+                            //     #field_ident: #code_occurence_type_with_serialize_deserialize_token_stream
+                            // });
                             enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote!{
                                 #field_ident: #unused_argument_handle_token_stream
                             });
@@ -3831,11 +3831,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         code_occurence
                     }
                 });
-                logic_for_enum_with_serialize_deserialize.push(quote::quote! {
-                    #variant_ident {
-                        #(#enum_fields_logic_for_enum_with_serialize_deserialize),*
-                    }
-                });
+                // logic_for_enum_with_serialize_deserialize.push(quote::quote! {
+                //     #variant_ident {
+                //         #(#enum_fields_logic_for_enum_with_serialize_deserialize),*
+                //     }
+                // });
                 logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote! {
                     #ident_with_serialize_deserialize_token_stream::#variant_ident {
                         #(#enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize),*
@@ -4004,7 +4004,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let data_enum_variants_len = data_enum.variants.len();
             let mut logic_for_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
-            let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
+            // let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_to_string_without_config_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_compile_time_check_error_occurence_members: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
@@ -4045,11 +4045,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         i.#to_string_without_config_token_stream()
                     }
                 });
-                logic_for_enum_with_serialize_deserialize.push({
-                    quote::quote!{
-                        #variant_ident(#type_token_stream)
-                    }
-                });
+                // logic_for_enum_with_serialize_deserialize.push({
+                //     quote::quote!{
+                //         #variant_ident(#type_token_stream)
+                //     }
+                // });
                 logic_for_to_string_without_config_with_serialize_deserialize.push(quote::quote!{
                     #ident_with_serialize_deserialize_token_stream::#variant_ident(i) => {
                          i.#to_string_without_config_with_serialize_deserialize_token_stream()

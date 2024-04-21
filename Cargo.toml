@@ -293,7 +293,7 @@ collapsible_else_if = { level = "deny", priority = 0 }
 collapsible_if = { level = "deny", priority = 0 }
 collapsible_match = { level = "deny", priority = 0 }
 collapsible_str_replace = { level = "deny", priority = 0 }
-collection_is_never_read = { level = "allow", priority = 0 }
+collection_is_never_read = { level = "deny", priority = 0 }
 comparison_chain = { level = "deny", priority = 0 }
 comparison_to_empty = { level = "deny", priority = 0 }
 const_is_empty = { level = "deny", priority = 0 }
