@@ -189,10 +189,10 @@ unused-mut = { level = "deny", priority = 0 } #detect mut variables which don't 
 unused-parens = { level = "deny", priority = 0 } #`if`, `match`, `while` and `return` do not need parentheses
 unused-unsafe = { level = "deny", priority = 0 } #unnecessary use of an `unsafe` block
 unused-variables = { level = "warn", priority = 0 } #detect variables which are not used in any way
-useless-ptr-null-checks = { level = "warn", priority = 0 } #useless checking of non-null-typed pointer
+useless-ptr-null-checks = { level = "deny", priority = 0 } #useless checking of non-null-typed pointer
 warnings = { level = "warn", priority = 0 } #mass-change the level for lints which produce warnings
-where-clauses-object-safety = { level = "warn", priority = 0 } #checks the object safety of where clauses
-while-true = { level = "warn", priority = 0 } #suggest using `loop { }` instead of `while true { }`
+where-clauses-object-safety = { level = "deny", priority = 0 } #checks the object safety of where clauses
+while-true = { level = "deny", priority = 0 } #suggest using `loop { }` instead of `while true { }`
 ambiguous-associated-items = { level = "deny", priority = 0 } #ambiguous associated items
 arithmetic-overflow = { level = "deny", priority = 0 } #arithmetic operation overflows
 bindings-with-variant-name = { level = "deny", priority = 0 } #detects pattern bindings with the same name as one of the matched variants
