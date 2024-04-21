@@ -38,7 +38,7 @@ pub async fn check_body_size(
         Err(e) => Err(CheckBodySizeErrorNamed::ReachedMaximumSizeOfBody {
             axum_error: e,
             maximum_size_of_body_limit_in_bytes: limit,
-            size_hint: size_hint,
+            size_hint,
             code_occurence: error_occurence_lib::code_occurence!(),
         })
     }
