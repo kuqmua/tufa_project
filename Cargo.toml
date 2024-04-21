@@ -224,7 +224,7 @@ unknown-crate-types = { level = "deny", priority = 0 } #unknown crate type found
 useless-deprecated = { level = "deny", priority = 0 } #detects deprecation attributes with no effect
 
 [workspace.lints.clippy]#usage "cargo clippy"
-absolute_paths = { level = "deny", priority = 0 }
+absolute_paths = { level = "allow", priority = 0 }
 absurd_extreme_comparisons = { level = "deny", priority = 0 }
 alloc_instead_of_core = { level = "deny", priority = 0 }
 allow_attributes = { level = "deny", priority = 0 }
@@ -250,7 +250,6 @@ big_endian_bytes = { level = "deny", priority = 0 }
 bind_instead_of_map = { level = "deny", priority = 0 }
 blanket_clippy_restriction_lints = { level = "deny", priority = 0 }
 blocks_in_conditions = { level = "deny", priority = 0 }
-blocks_in_if_conditions = { level = "deny", priority = 0 }
 bool_assert_comparison = { level = "deny", priority = 0 }
 bool_comparison = { level = "deny", priority = 0 }
 bool_to_int_with_if = { level = "deny", priority = 0 }
@@ -265,7 +264,7 @@ branches_sharing_code = { level = "deny", priority = 0 }
 builtin_type_shadow = { level = "deny", priority = 0 }
 bytes_count_to_len = { level = "deny", priority = 0 }
 bytes_nth = { level = "deny", priority = 0 }
-cargo_common_metadata = { level = "deny", priority = 0 }
+cargo_common_metadata = { level = "allow", priority = 0 }
 case_sensitive_file_extension_comparisons = { level = "deny", priority = 0 }
 cast_abs_to_unsigned = { level = "deny", priority = 0 }
 cast_enum_constructor = { level = "deny", priority = 0 }
@@ -417,7 +416,7 @@ impl_hash_borrow_with_str_and_bytes = { level = "deny", priority = 0 }
 impl_trait_in_params = { level = "deny", priority = 0 }
 implicit_clone = { level = "deny", priority = 0 }
 implicit_hasher = { level = "deny", priority = 0 }
-implicit_return = { level = "deny", priority = 0 }
+implicit_return = { level = "allow", priority = 0 }
 implicit_saturating_add = { level = "deny", priority = 0 }
 implicit_saturating_sub = { level = "deny", priority = 0 }
 implied_bounds_in_impls = { level = "deny", priority = 0 }
@@ -569,7 +568,7 @@ missing_docs_in_private_items = { level = "deny", priority = 0 }
 missing_enforced_import_renames = { level = "deny", priority = 0 }
 missing_errors_doc = { level = "deny", priority = 0 }
 missing_fields_in_debug = { level = "deny", priority = 0 }
-missing_inline_in_public_items = { level = "deny", priority = 0 }
+missing_inline_in_public_items = { level = "allow", priority = 0 }
 missing_panics_doc = { level = "deny", priority = 0 }
 missing_safety_doc = { level = "deny", priority = 0 }
 missing_spin_loop = { level = "deny", priority = 0 }
@@ -583,10 +582,10 @@ module_name_repetitions = { level = "deny", priority = 0 }
 modulo_arithmetic = { level = "deny", priority = 0 }
 modulo_one = { level = "deny", priority = 0 }
 multi_assignments = { level = "deny", priority = 0 }
-multiple_crate_versions = { level = "deny", priority = 0 }
+multiple_crate_versions = { level = "allow", priority = 0 }
 multiple_inherent_impl = { level = "deny", priority = 0 }
 multiple_unsafe_ops_per_block = { level = "deny", priority = 0 }
-must_use_candidate = { level = "deny", priority = 0 }
+must_use_candidate = { level = "allow", priority = 0 }
 must_use_unit = { level = "deny", priority = 0 }
 mut_from_ref = { level = "deny", priority = 0 }
 mut_mut = { level = "deny", priority = 0 }
