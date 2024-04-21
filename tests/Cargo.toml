@@ -1,0 +1,15 @@
+[package]
+name = "tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
+serde = {version = "=1.0", features = ["derive"]}
+serde_json = {version = "=1.0"}
+toml = {version = "=0.8.12"}
