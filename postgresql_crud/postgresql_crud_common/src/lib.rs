@@ -3720,117 +3720,115 @@ impl Default for TestNewType<Something> {
         let sqlx_types_chrono_naive_time_handle =
             sqlx::types::chrono::NaiveTime::from_hms_opt(10, 10, 10).unwrap();
         let sqlx_types_chrono_naive_date_time_handle = sqlx::types::chrono::NaiveDateTime::new(
-            sqlx_types_chrono_naive_date_handle.clone(), //todo
-            sqlx_types_chrono_naive_time_handle.clone(),
+            sqlx_types_chrono_naive_date_handle,
+            sqlx_types_chrono_naive_time_handle,
         );
         let sqlx_types_time_primitive_date_time_handle = sqlx::types::time::PrimitiveDateTime::new(
-            sqlx_types_time_date_handle.clone(), //todo
-            sqlx_types_time_time_handle.clone(), //todo
+            sqlx_types_time_date_handle,
+            sqlx_types_time_time_handle,
         );
         let sqlx_types_chrono_fixed_offset_handle =
-            sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle.clone()).unwrap();
+            sqlx::types::chrono::FixedOffset::west_opt(std_primitive_i32_handle).unwrap();
         let sqlx_types_time_offset_date_time_handle =
             sqlx::types::time::OffsetDateTime::from_unix_timestamp(std::primitive::i64::default())
                 .unwrap();
         let sqlx_types_decimal_handle = sqlx::types::Decimal::try_new(
-            std_primitive_i64_handle.clone(),
-            std_primitive_u32_handle.clone(),
+            std_primitive_i64_handle,
+            std_primitive_u32_handle,
         )
         .unwrap();
         let sqlx_types_chrono_utc_handle = sqlx::types::chrono::Utc;
         let sqlx_types_big_decimal_handle = sqlx::types::BigDecimal::new(
             num_bigint::BigInt::new(
                 num_bigint::Sign::Plus,
-                vec![std_primitive_u32_handle.clone()],
+                vec![std_primitive_u32_handle],
             ),
-            std_primitive_i64_handle.clone(),
+            std_primitive_i64_handle,
         );
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle =
             sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time_handle.clone(),
-                sqlx_types_chrono_utc_handle.clone(),
+                sqlx_types_chrono_naive_date_time_handle,
+                sqlx_types_chrono_utc_handle,
             );
         let sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle =
             sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time_handle.clone(),
-                sqlx_types_chrono_fixed_offset_handle.clone(),
+                sqlx_types_chrono_naive_date_time_handle,
+                sqlx_types_chrono_fixed_offset_handle,
             );
         let std_ops_bound_std_primitive_i64_handle =
-            std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle.clone());
+            std::ops::Bound::<std::primitive::i64>::Included(std_primitive_i64_handle);
         let std_ops_bound_std_primitive_i32_handle =
-            std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle.clone());
+            std::ops::Bound::<std::primitive::i32>::Included(std_primitive_i32_handle);
         let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle =
             std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>::Included(
-                sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle.clone(),
+                sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle,
             );
         let std_ops_bound_sqlx_types_time_primitive_date_time_handle =
             std::ops::Bound::<sqlx::types::time::PrimitiveDateTime>::Included(
-                sqlx_types_time_primitive_date_time_handle.clone(),
+                sqlx_types_time_primitive_date_time_handle,
             );
         let std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle =
             std::ops::Bound::<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>::Included(
-                sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle.clone(),
+                sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle,
             );
         let std_ops_bound_sqlx_types_time_offset_date_time_handle =
             std::ops::Bound::<sqlx::types::time::OffsetDateTime>::Included(
-                sqlx_types_time_offset_date_time_handle.clone(),
+                sqlx_types_time_offset_date_time_handle,
             );
         let std_ops_bound_sqlx_types_chrono_naive_date_handle =
             std::ops::Bound::<sqlx::types::chrono::NaiveDate>::Included(
-                sqlx_types_chrono_naive_date_handle.clone(),
+                sqlx_types_chrono_naive_date_handle,
             );
         let std_ops_bound_sqlx_types_time_date_handle =
             std::ops::Bound::<sqlx::types::time::Date>::Included(
-                sqlx_types_time_date_handle.clone(),
+                sqlx_types_time_date_handle,
             );
         let std_ops_bound_sqlx_types_big_decimal_handle =
             std::ops::Bound::<sqlx::types::BigDecimal>::Included(
                 sqlx_types_big_decimal_handle.clone(),
             );
         let std_ops_bound_sqlx_types_decimal_handle =
-            std::ops::Bound::<sqlx::types::Decimal>::Included(sqlx_types_decimal_handle.clone());
+            std::ops::Bound::<sqlx::types::Decimal>::Included(sqlx_types_decimal_handle);
         let std_ops_bound_sqlx_types_chrono_naive_date_time_handle =
             std::ops::Bound::<sqlx::types::chrono::NaiveDateTime>::Included(
-                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_naive_date_time_handle,
             );
         let std_primitive_bool = StdPrimitiveBool(true);
         let std_primitive_i16 = StdPrimitiveI16(std::primitive::i16::default());
-        let std_primitive_i32 = StdPrimitiveI32(std_primitive_i32_handle.clone());
-        let std_primitive_i64 = StdPrimitiveI64(std_primitive_i64_handle.clone());
+        let std_primitive_i32 = StdPrimitiveI32(std_primitive_i32_handle);
+        let std_primitive_i64 = StdPrimitiveI64(std_primitive_i64_handle);
         let std_primitive_f32 = StdPrimitiveF32(std::primitive::f32::default());
         let std_primitive_f64 = StdPrimitiveF64(std::primitive::f64::default());
         let std_string_string = StdStringString(std_string_string_handle.clone());
         let std_vec_vec_std_primitive_u8 =
-            StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle.clone()]);
+            StdVecVecStdPrimitiveU8(vec![std_primitive_u8_handle]);
         let sqlx_postgres_types_pg_interval =
             SqlxPostgresTypesPgInterval(sqlx::postgres::types::PgInterval {
-                months: std_primitive_i32_handle.clone(),
-                days: std_primitive_i32_handle.clone(),
-                microseconds: std_primitive_i64_handle.clone(),
+                months: std_primitive_i32_handle,
+                days: std_primitive_i32_handle,
+                microseconds: std_primitive_i64_handle,
             });
         let sqlx_postgres_types_pg_range_std_primitive_i64 =
             SqlxPostgresTypesPgRangeStdPrimitiveI64(sqlx::postgres::types::PgRange::<
                 std::primitive::i64,
             > {
-                start: std_ops_bound_std_primitive_i64_handle.clone(),
-                end: std_ops_bound_std_primitive_i64_handle.clone(),
+                start: std_ops_bound_std_primitive_i64_handle,
+                end: std_ops_bound_std_primitive_i64_handle,
             });
         let sqlx_postgres_types_pg_range_std_primitive_i32 =
             SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange::<
                 std::primitive::i32,
             > {
-                start: std_ops_bound_std_primitive_i32_handle.clone(),
-                end: std_ops_bound_std_primitive_i32_handle.clone(),
+                start: std_ops_bound_std_primitive_i32_handle,
+                end: std_ops_bound_std_primitive_i32_handle,
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
             SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
                 sqlx::postgres::types::PgRange::<
                     sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
                 > {
-                    start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle
-                        .clone(),
-                    end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle
-                        .clone(),
+                    start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle,
+                    end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_handle,
                 },
             );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local =
@@ -3838,46 +3836,44 @@ impl Default for TestNewType<Something> {
                 sqlx::postgres::types::PgRange::<
                     sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
                 > {
-                    start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle
-                        .clone(),
-                    end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle
-                        .clone(),
+                    start: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle,
+                    end: std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_handle,
                 },
             );
         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
             SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::OffsetDateTime,
             > {
-                start: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
-                end: std_ops_bound_sqlx_types_time_offset_date_time_handle.clone(),
+                start: std_ops_bound_sqlx_types_time_offset_date_time_handle,
+                end: std_ops_bound_sqlx_types_time_offset_date_time_handle,
             });
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time =
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::NaiveDateTime,
             > {
-                start: std_ops_bound_sqlx_types_chrono_naive_date_time_handle.clone(),
-                end: std_ops_bound_sqlx_types_chrono_naive_date_time_handle.clone(),
+                start: std_ops_bound_sqlx_types_chrono_naive_date_time_handle,
+                end: std_ops_bound_sqlx_types_chrono_naive_date_time_handle,
             });
         let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
             SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
                 sqlx::postgres::types::PgRange::<sqlx::types::time::PrimitiveDateTime> {
-                    start: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
-                    end: std_ops_bound_sqlx_types_time_primitive_date_time_handle.clone(),
+                    start: std_ops_bound_sqlx_types_time_primitive_date_time_handle,
+                    end: std_ops_bound_sqlx_types_time_primitive_date_time_handle,
                 },
             );
         let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
             SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::chrono::NaiveDate,
             > {
-                start: std_ops_bound_sqlx_types_chrono_naive_date_handle.clone(),
-                end: std_ops_bound_sqlx_types_chrono_naive_date_handle.clone(),
+                start: std_ops_bound_sqlx_types_chrono_naive_date_handle,
+                end: std_ops_bound_sqlx_types_chrono_naive_date_handle,
             });
         let sqlx_postgres_types_pg_range_sqlx_types_time_date =
             SqlxPostgresTypesPgRangeSqlxTypesTimeDate(sqlx::postgres::types::PgRange::<
                 sqlx::types::time::Date,
             > {
-                start: std_ops_bound_sqlx_types_time_date_handle.clone(),
-                end: std_ops_bound_sqlx_types_time_date_handle.clone(),
+                start: std_ops_bound_sqlx_types_time_date_handle,
+                end: std_ops_bound_sqlx_types_time_date_handle,
             });
         let sqlx_postgres_types_pg_range_sqlx_types_big_decimal =
             SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(sqlx::postgres::types::PgRange::<
@@ -3890,53 +3886,53 @@ impl Default for TestNewType<Something> {
             SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
                 sqlx::types::Decimal,
             > {
-                start: std_ops_bound_sqlx_types_decimal_handle.clone(),
-                end: std_ops_bound_sqlx_types_decimal_handle.clone(),
+                start: std_ops_bound_sqlx_types_decimal_handle,
+                end: std_ops_bound_sqlx_types_decimal_handle,
             });
         let sqlx_postgres_types_pg_money = SqlxPostgresTypesPgMoney(
-            sqlx::postgres::types::PgMoney(std_primitive_i64_handle.clone()),
+            sqlx::postgres::types::PgMoney(std_primitive_i64_handle),
         );
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
             sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
         let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx_types_big_decimal_handle.clone());
-        let sqlx_types_decimal = SqlxTypesDecimal(sqlx_types_decimal_handle.clone());
+        let sqlx_types_decimal = SqlxTypesDecimal(sqlx_types_decimal_handle);
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
             SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::Utc,
             >::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time_handle.clone(),
-                sqlx_types_chrono_utc_handle.clone(),
+                sqlx_types_chrono_naive_date_time_handle,
+                sqlx_types_chrono_utc_handle,
             ));
         let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
             SqlxTypesChronoDateTimeSqlxTypesChronoLocal(sqlx::types::chrono::DateTime::<
                 sqlx::types::chrono::Local,
             >::from_naive_utc_and_offset(
-                sqlx_types_chrono_naive_date_time_handle.clone(),
+                sqlx_types_chrono_naive_date_time_handle,
                 sqlx_types_chrono_fixed_offset_handle,
             ));
         let sqlx_types_chrono_naive_date_time =
-            SqlxTypesChronoNaiveDateTime(sqlx_types_chrono_naive_date_time_handle.clone());
+            SqlxTypesChronoNaiveDateTime(sqlx_types_chrono_naive_date_time_handle);
         let sqlx_types_chrono_naive_date =
-            SqlxTypesChronoNaiveDate(sqlx_types_chrono_naive_date_handle.clone());
+            SqlxTypesChronoNaiveDate(sqlx_types_chrono_naive_date_handle);
         let sqlx_types_chrono_naive_time =
-            SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time_handle.clone());
+            SqlxTypesChronoNaiveTime(sqlx_types_chrono_naive_time_handle);
         let sqlx_postgres_types_pg_time_tz =
             SqlxPostgresTypesPgTimeTz(sqlx::postgres::types::PgTimeTz {
-                time: sqlx_types_time_time_handle.clone(),
+                time: sqlx_types_time_time_handle,
                 offset: sqlx::types::time::UtcOffset::from_hms(
-                    std_primitive_i8_handle.clone(),
-                    std_primitive_i8_handle.clone(),
-                    std_primitive_i8_handle.clone(),
+                    std_primitive_i8_handle,
+                    std_primitive_i8_handle,
+                    std_primitive_i8_handle,
                 )
                 .unwrap(),
             });
         let sqlx_types_time_primitive_date_time =
-            SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time_handle.clone());
+            SqlxTypesTimePrimitiveDateTime(sqlx_types_time_primitive_date_time_handle);
         let sqlx_types_time_offset_date_time =
-            SqlxTypesTimeOffsetDateTime(sqlx_types_time_offset_date_time_handle.clone());
-        let sqlx_types_time_date = SqlxTypesTimeDate(sqlx_types_time_date_handle.clone());
-        let sqlx_types_time_time = SqlxTypesTimeTime(sqlx_types_time_time_handle.clone());
+            SqlxTypesTimeOffsetDateTime(sqlx_types_time_offset_date_time_handle);
+        let sqlx_types_time_date = SqlxTypesTimeDate(sqlx_types_time_date_handle);
+        let sqlx_types_time_time = SqlxTypesTimeTime(sqlx_types_time_time_handle);
         let sqlx_types_uuid_uuid = SqlxTypesUuidUuid(sqlx::types::uuid::Uuid::from_u128(
             std::primitive::u128::default(),
         ));
@@ -3944,37 +3940,37 @@ impl Default for TestNewType<Something> {
             SqlxTypesIpnetworkIpNetwork(sqlx::types::ipnetwork::IpNetwork::V6(
                 sqlx::types::ipnetwork::Ipv6Network::new(
                     std::net::Ipv6Addr::new(
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
-                        std_primitive_u16_handle.clone(),
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
+                        std_primitive_u16_handle,
                     ),
-                    std_primitive_u8_handle.clone(),
+                    std_primitive_u8_handle,
                 )
                 .unwrap(),
             ));
         let std_net_ip_addr = StdNetIpAddr(std::net::IpAddr::V6(core::net::Ipv6Addr::new(
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
-            std_primitive_u16_handle.clone(),
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
+            std_primitive_u16_handle,
         )));
         let sqlx_types_mac_address_mac_address =
             SqlxTypesMacAddressMacAddress(sqlx::types::mac_address::MacAddress::new([
-                std_primitive_u8_handle.clone(),
-                std_primitive_u8_handle.clone(),
-                std_primitive_u8_handle.clone(),
-                std_primitive_u8_handle.clone(),
-                std_primitive_u8_handle.clone(),
-                std_primitive_u8_handle.clone(),
+                std_primitive_u8_handle,
+                std_primitive_u8_handle,
+                std_primitive_u8_handle,
+                std_primitive_u8_handle,
+                std_primitive_u8_handle,
+                std_primitive_u8_handle,
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(Something {

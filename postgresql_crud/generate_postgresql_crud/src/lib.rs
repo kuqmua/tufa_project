@@ -8659,12 +8659,12 @@ fn generate_unique_status_codes(
 ) -> std::vec::Vec<proc_macro_helpers::status_code::StatusCode> {
     let mut value =
         std::vec::Vec::with_capacity(type_variants_from_request_response_syn_variants.len());
-    value.push(desirable_status_code.clone());
+    value.push(*desirable_status_code);
     type_variants_from_request_response_syn_variants.iter().for_each(|element|{
         let variant_ident = &element.ident;
         let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
         .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
-        match value.contains(&error_variant_status_code) {
+        match value.contains(&&error_variant_status_code) {
             true => (),
             false => {
                 value.push(error_variant_status_code);
