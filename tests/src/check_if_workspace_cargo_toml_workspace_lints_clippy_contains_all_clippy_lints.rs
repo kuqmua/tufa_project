@@ -20,9 +20,11 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
     #[derive(Debug, serde::Deserialize)]
     struct Lint {
         id: std::string::String,
+        group: std::string::String,
     }
     let clippy_lints_from_docs = serde_json::from_str::<std::vec::Vec<Lint>>(&body).unwrap()
         .into_iter()
+        .filter(|element|element.group != "deprecated")
         .map(|element|element.id)
         .collect::<std::vec::Vec<std::string::String>>();
     let mut lints_not_in_file = vec![];
