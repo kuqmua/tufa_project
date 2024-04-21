@@ -4,7 +4,7 @@
 //todo header Retry-After logic
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic(post or put)
 
-pub fn routes(
+pub(crate) fn routes(
     app_state: common::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
 ) -> axum::Router {
     axum::Router::new().nest(

@@ -166,11 +166,11 @@ async fn middleware_message_example(axum::Extension(shared_data): axum::Extensio
 
 #[derive(Clone)]
 struct SharedData {
-    pub message: std::string::String,
+    pub(crate) message: std::string::String,
 }
 
 #[derive(Clone)] //or maybe add Clone to AppInfo too to solve possible problem?
-struct HeaderMessage(pub std::string::String);
+struct HeaderMessage(pub(crate) std::string::String);
 
 async fn read_middleware_custom_header(
     axum::Extension(message): axum::Extension<HeaderMessage>,
@@ -197,7 +197,7 @@ async fn read_middleware_custom_header(
 // }
 
 //todo - make it async trait after async trait stabilization
-pub async fn try_build_server<'a>(
+pub async fn try_build_server(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     config: &'static common::repositories_types::server::config::config_struct::Config,
 ) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
