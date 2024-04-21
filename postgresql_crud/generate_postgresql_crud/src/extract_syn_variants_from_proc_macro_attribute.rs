@@ -1,4 +1,4 @@
-pub fn extract_syn_variants_from_proc_macro_attribute(
+pub(crate) fn extract_syn_variants_from_proc_macro_attribute(
     ast: &syn::DeriveInput,
     proc_macro_attribute_name: &str,
     proc_macro_name_snake_case: &str,
@@ -32,7 +32,7 @@ pub fn extract_syn_variants_from_proc_macro_attribute(
         false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no {additional_http_status_codes_error_variant_path} path")
     }
     // println!("{additional_http_status_codes_error_variants_attribute:#?}");
-    let mut additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_string();//todo
+    let additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_string();//todo
         // additional_http_status_codes_error_variants_attribute
         //     .tokens
         //     .to_string();

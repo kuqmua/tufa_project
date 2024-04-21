@@ -16,7 +16,7 @@ pub enum TryCreateTcpListenerErrorNamed {
     },
 }
 
-impl<'a, SelfGeneric> TryCreateTcpListener<'a> for SelfGeneric
+impl<SelfGeneric> TryCreateTcpListener<'_> for SelfGeneric
 where
     Self: app_state::GetServiceSocketAddress,
 {

@@ -885,7 +885,7 @@ pub enum TryCreateManyErrorNamed {
     },
 }
 
-pub async fn try_create_many<'a>(
+pub async fn try_create_many(
     server_location: &str,//todo rename as endpoint location
     parameters: CreateManyParameters,
 ) -> Result<std::vec::Vec<postgresql_crud::StdPrimitiveI64>, TryCreateManyErrorNamed> {

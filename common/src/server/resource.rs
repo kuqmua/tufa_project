@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, PartialEq, Eq, from_str::FromStr)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, from_str::FromStr)]
 pub enum Resource {
     Local,
     Mongodb,

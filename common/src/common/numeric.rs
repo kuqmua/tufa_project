@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Numeric {
     Zero,
     One,
@@ -13,7 +13,7 @@ pub enum Numeric {
 }
 
 impl std::fmt::Display for Numeric {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Numeric::Zero => write!(f, "0"),
             Numeric::One => write!(f, "1"),

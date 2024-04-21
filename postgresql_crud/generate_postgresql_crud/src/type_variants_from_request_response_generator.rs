@@ -1,5 +1,5 @@
 #[allow(clippy::too_many_arguments)]
-pub fn type_variants_from_request_response_generator(
+pub(crate) fn type_variants_from_request_response_generator(
     desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     error_named_derive_token_stream: &proc_macro2::TokenStream,
@@ -471,7 +471,7 @@ pub fn type_variants_from_request_response_generator(
                             value.push(error_variant);
                         },
                         None => {
-                            acc.insert(error_variant_status_code, vec![error_variant]);
+                            drop(acc.insert(error_variant_status_code, vec![error_variant]));
                         }
                     }
                     acc
@@ -696,7 +696,7 @@ pub fn type_variants_from_request_response_generator(
     }
 }
 
-pub fn construct_syn_variant(
+pub(crate) fn construct_syn_variant(
     tvfrr_status_code: proc_macro_helpers::status_code::StatusCode,
     variant_name: &str,
     code_occurence_field: &syn::Field,

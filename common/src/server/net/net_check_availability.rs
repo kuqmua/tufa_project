@@ -12,7 +12,7 @@ pub enum NetCheckAvailabilityErrorNamed {
     },
 }
 
-pub async fn net_check_availability<'a>(
+pub async fn net_check_availability(
     config: &'static (impl app_state::GetStartingCheckLink
                   + std::marker::Send
                   + std::marker::Sync),

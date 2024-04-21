@@ -1,4 +1,4 @@
-pub fn acquire_pool_and_connection(
+pub(crate) fn acquire_pool_and_connection(
     from_log_and_return_error_token_stream: &proc_macro2::TokenStream,
     pg_connection_token_stream: &proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {

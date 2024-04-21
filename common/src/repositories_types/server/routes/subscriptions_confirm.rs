@@ -1,4 +1,4 @@
-#[derive(serde::Deserialize)]
+#[derive(Debug, serde::Deserialize)]
 pub struct Parameters {
     pub subscription_token: std::string::String,
 }

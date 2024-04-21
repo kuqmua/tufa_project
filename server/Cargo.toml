@@ -14,15 +14,14 @@ path = "src/main.rs"
 axum = {version = "=0.7.4", features = ["macros"]}
 tower = {version = "=0.4.13"}
 tower-http = {version = "=0.5.0", features = ["trace", "fs", "cors"]}
-argon2 = {version = "=0.4.0", features = ["std"]}
-base64 = {version = "=0.21.0"}
-bytes = {version = "=1.2.1"}
+# argon2 = {version = "=0.4.0", features = ["std"]}
+# base64 = {version = "=0.21.0"}
+# bytes = {version = "=1.2.1"}
 chrono = {version = "=0.4", features = ["serde"]}
-config = {version = "=0.13.3"}
-convert_case = {version = "=0.6.0"}
-dotenv = {version = "=0.15.0"}
-env_logger = {version = "=0.10.0"}
-futures = {version = "=0.3.28"}
+# config = {version = "=0.13.3"}
+# dotenv = {version = "=0.15.0"}
+# env_logger = {version = "=0.10.0"}
+# futures = {version = "=0.3.28"}
 hex = {version = "=0.4"}
 hmac = {version = "=0.12", features = ["std"]}
 html_parser = {version ="=0.6.2" }
@@ -59,7 +58,7 @@ tracing-subscriber = {version = "=0.3", features = ["registry", "env-filter"]}
 unicode-segmentation = {version = "=1"}
 urlencoding = {version = "=2.1.3"}
 uuid = {version = "=0.8", features = ["v4", "serde"]}
-futures-util = {version = "=0.3.28"}
+# futures-util = {version = "=0.3.28"}
 # uuid = {version = "1.2.2", features = ["v4", "serde"]}
 validator = {version = "=0.16.0"}
 valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
@@ -67,12 +66,10 @@ utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
 git_info = {path = "../git_info"}
 common = {path = "../common"}# local dev test without commits version
-enum_extension_lib = {path = "../enum_extension_lib"}
+# enum_extension_lib = {path = "../enum_extension_lib"}
 error_occurence_lib = {path = "../error_occurence_lib"}
-generate_getter_traits_for_struct_fields = {path = "../generate_getter_traits_for_struct_fields"}
 postgresql_crud = {path = "../postgresql_crud"}
 app_state = {path = "../app_state"}
-config_lib = {path = "../config_lib"}
 constants = {path = "../constants"}
 #
 # async-std = "1.10.0"

@@ -1,4 +1,4 @@
-#[derive(serde::Deserialize)]
+#[derive(Debug, serde::Deserialize)]
 pub struct FormData {
     pub title: std::string::String,
     pub text_content: std::string::String,
