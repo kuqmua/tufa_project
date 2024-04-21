@@ -186,7 +186,7 @@ unused-labels = { level = "deny", priority = 0 } #detects labels that are never 
 unused-macros = { level = "deny", priority = 0 } #detects macros that were not used
 unused-must-use = { level = "deny", priority = 0 } #unused result of a type flagged as `#[must_use]`
 unused-mut = { level = "deny", priority = 0 } #detect mut variables which don't need to be mutable
-unused-parens = { level = "warn", priority = 0 } #`if`, `match`, `while` and `return` do not need parentheses
+unused-parens = { level = "deny", priority = 0 } #`if`, `match`, `while` and `return` do not need parentheses
 unused-unsafe = { level = "warn", priority = 0 } #unnecessary use of an `unsafe` block
 unused-variables = { level = "warn", priority = 0 } #detect variables which are not used in any way
 useless-ptr-null-checks = { level = "warn", priority = 0 } #useless checking of non-null-typed pointer
