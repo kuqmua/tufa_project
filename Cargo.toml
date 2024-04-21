@@ -109,43 +109,43 @@ dyn-drop = { level = "deny", priority = 0 } #trait objects of the form `dyn Drop
 elided-lifetimes-in-associated-constant = { level = "deny", priority = 0 } #elided lifetimes cannot be used in associated constants in impls
 ellipsis-inclusive-range-patterns = { level = "deny", priority = 0 } #`...` range patterns are deprecated
 exported-private-dependencies = { level = "deny", priority = 0 } #public interface leaks type from a private dependency
-forbidden-lint-groups = { level = "warn", priority = 0 } #applying forbid to lint-groups
-forgetting-copy-types = { level = "warn", priority = 0 } #calls to `std::mem::forget` with a value that implements Copy
-forgetting-references = { level = "warn", priority = 0 } #calls to `std::mem::forget` with a reference instead of an owned value
-for-loops-over-fallibles = { level = "warn", priority = 0 } #for-looping over an `Option` or a `Result`, which is more clearly expressed as an `if let`
-function-item-references = { level = "warn", priority = 0 } #suggest casting to a function pointer when attempting to take references to function items
-hidden-glob-reexports = { level = "warn", priority = 0 } #name introduced by a private item shadows a name introduced by a public glob re-export
-improper-ctypes = { level = "warn", priority = 0 } #proper use of libc types in foreign modules
-improper-ctypes-definitions = { level = "warn", priority = 0 } #proper use of libc types in foreign item definitions
-incomplete-features = { level = "warn", priority = 0 } #incomplete features that may function improperly in some or all cases
-indirect-structural-match = { level = "warn", priority = 0 } #constant used in pattern contains value of non-structural-match type in a field or a variant
-inline-no-sanitize = { level = "warn", priority = 0 } #detects incompatible use of `#[inline(always)]` and `#[no_sanitize(...)]`
-internal-features = { level = "warn", priority = 0 } #internal features are not supposed to be used
-invalid-doc-attributes = { level = "warn", priority = 0 } #detects invalid `#[doc(...)]` attributes
-invalid-from-utf8 = { level = "warn", priority = 0 } #using a non UTF-8 literal in `std::str::from_utf8`
-invalid-macro-export-arguments = { level = "warn", priority = 0 } #"invalid_parameter" isn't a valid argument for `#[macro_export]`
-invalid-nan-comparisons = { level = "warn", priority = 0 } #detects invalid floating point NaN comparisons
-invalid-value = { level = "warn", priority = 0 } #an invalid value is being created (such as a null reference)
-irrefutable-let-patterns = { level = "warn", priority = 0 } #detects irrefutable patterns in `if let` and `while let` statements
-large-assignments = { level = "warn", priority = 0 } #detects large moves or copies
-late-bound-lifetime-arguments = { level = "warn", priority = 0 } #detects generic lifetime arguments in path segments with late bound lifetime parameters
-legacy-derive-helpers = { level = "warn", priority = 0 } #detects derive helper attributes that are used before they are introduced
-map-unit-fn = { level = "warn", priority = 0 } #`Iterator::map` call that discard the iterator's values
-mixed-script-confusables = { level = "warn", priority = 0 } #detects Unicode scripts whose mixed script confusables codepoints are solely used
-named-arguments-used-positionally = { level = "warn", priority = 0 } #named arguments in format used positionally
-non-camel-case-types = { level = "warn", priority = 0 } #types, variants, traits and type parameters should have camel case names
-non-fmt-panics = { level = "warn", priority = 0 } #detect single-argument panic!() invocations in which the argument is not a format string
-non-shorthand-field-patterns = { level = "warn", priority = 0 } #using `Struct { x: x }` instead of `Struct { x }` in a pattern
-non-snake-case = { level = "warn", priority = 0 } #variables, methods, functions, lifetime parameters and modules should have snake case names
-non-upper-case-globals = { level = "warn", priority = 0 } #static constants should have uppercase identifiers
-noop-method-call = { level = "warn", priority = 0 } #detects the use of well-known noop methods
-no-mangle-generic-items = { level = "warn", priority = 0 } #generic items must be mangled
-opaque-hidden-inferred-bound = { level = "warn", priority = 0 } #detects the use of nested `impl Trait` types in associated type bounds that are not general enough
-overlapping-range-endpoints = { level = "warn", priority = 0 } #detects range patterns with overlapping endpoints
-path-statements = { level = "warn", priority = 0 } #path statements with no effect
-pointer-structural-match = { level = "warn", priority = 0 } #pointers are not structural-match
-private-bounds = { level = "warn", priority = 0 } #private type in secondary interface of an item
-private-interfaces = { level = "warn", priority = 0 } #private type in primary interface of an item
+forbidden-lint-groups = { level = "deny", priority = 0 } #applying forbid to lint-groups
+forgetting-copy-types = { level = "deny", priority = 0 } #calls to `std::mem::forget` with a value that implements Copy
+forgetting-references = { level = "deny", priority = 0 } #calls to `std::mem::forget` with a reference instead of an owned value
+for-loops-over-fallibles = { level = "deny", priority = 0 } #for-looping over an `Option` or a `Result`, which is more clearly expressed as an `if let`
+function-item-references = { level = "deny", priority = 0 } #suggest casting to a function pointer when attempting to take references to function items
+hidden-glob-reexports = { level = "deny", priority = 0 } #name introduced by a private item shadows a name introduced by a public glob re-export
+improper-ctypes = { level = "deny", priority = 0 } #proper use of libc types in foreign modules
+improper-ctypes-definitions = { level = "deny", priority = 0 } #proper use of libc types in foreign item definitions
+incomplete-features = { level = "deny", priority = 0 } #incomplete features that may function improperly in some or all cases
+indirect-structural-match = { level = "deny", priority = 0 } #constant used in pattern contains value of non-structural-match type in a field or a variant
+inline-no-sanitize = { level = "deny", priority = 0 } #detects incompatible use of `#[inline(always)]` and `#[no_sanitize(...)]`
+internal-features = { level = "deny", priority = 0 } #internal features are not supposed to be used
+invalid-doc-attributes = { level = "deny", priority = 0 } #detects invalid `#[doc(...)]` attributes
+invalid-from-utf8 = { level = "deny", priority = 0 } #using a non UTF-8 literal in `std::str::from_utf8`
+invalid-macro-export-arguments = { level = "deny", priority = 0 } #"invalid_parameter" isn't a valid argument for `#[macro_export]`
+invalid-nan-comparisons = { level = "deny", priority = 0 } #detects invalid floating point NaN comparisons
+invalid-value = { level = "deny", priority = 0 } #an invalid value is being created (such as a null reference)
+irrefutable-let-patterns = { level = "deny", priority = 0 } #detects irrefutable patterns in `if let` and `while let` statements
+large-assignments = { level = "deny", priority = 0 } #detects large moves or copies
+late-bound-lifetime-arguments = { level = "deny", priority = 0 } #detects generic lifetime arguments in path segments with late bound lifetime parameters
+legacy-derive-helpers = { level = "deny", priority = 0 } #detects derive helper attributes that are used before they are introduced
+map-unit-fn = { level = "deny", priority = 0 } #`Iterator::map` call that discard the iterator's values
+mixed-script-confusables = { level = "deny", priority = 0 } #detects Unicode scripts whose mixed script confusables codepoints are solely used
+named-arguments-used-positionally = { level = "deny", priority = 0 } #named arguments in format used positionally
+non-camel-case-types = { level = "deny", priority = 0 } #types, variants, traits and type parameters should have camel case names
+non-fmt-panics = { level = "deny", priority = 0 } #detect single-argument panic!() invocations in which the argument is not a format string
+non-shorthand-field-patterns = { level = "deny", priority = 0 } #using `Struct { x: x }` instead of `Struct { x }` in a pattern
+non-snake-case = { level = "deny", priority = 0 } #variables, methods, functions, lifetime parameters and modules should have snake case names
+non-upper-case-globals = { level = "deny", priority = 0 } #static constants should have uppercase identifiers
+noop-method-call = { level = "deny", priority = 0 } #detects the use of well-known noop methods
+no-mangle-generic-items = { level = "deny", priority = 0 } #generic items must be mangled
+opaque-hidden-inferred-bound = { level = "deny", priority = 0 } #detects the use of nested `impl Trait` types in associated type bounds that are not general enough
+overlapping-range-endpoints = { level = "deny", priority = 0 } #detects range patterns with overlapping endpoints
+path-statements = { level = "deny", priority = 0 } #path statements with no effect
+pointer-structural-match = { level = "deny", priority = 0 } #pointers are not structural-match
+private-bounds = { level = "deny", priority = 0 } #private type in secondary interface of an item
+private-interfaces = { level = "deny", priority = 0 } #private type in primary interface of an item
 redundant-semicolons = { level = "warn", priority = 0 } #detects unnecessary trailing semicolons
 refining-impl-trait = { level = "warn", priority = 0 } #impl trait in impl method signature does not match trait method signature
 renamed-and-removed-lints = { level = "warn", priority = 0 } #lints that have been renamed or removed
