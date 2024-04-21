@@ -20,15 +20,12 @@ pub fn compile_time_project_git_info(
     let file_name = "FETCH_HEAD";
     let full_path = format!("{path}/{file_name}");
     let file = std::fs::File::open(std::path::Path::new(&full_path))
-        .unwrap_or_else(|e| panic!("cannot open {full_path} file, error: \"{e}\""));
+        .unwrap_or_else(|error| panic!("cannot open {full_path} file, error: \"{error}\""));
     let mut buf_reader = std::io::BufReader::new(file);
     let mut git_logs_head_content = std::string::String::new();
     let _ = std::io::Read::read_to_string(&mut buf_reader, &mut git_logs_head_content)
-        .unwrap_or_else(|e| panic!("cannot read_to_string from {full_path} file, error: \"{e}\""));
-    let hash = match git_logs_head_content.get(0..40) {
-        Some(hash) => hash,
-        None => panic!("{full_path} file content length < 40"),
-    };
+        .unwrap_or_else(|error| panic!("cannot read_to_string from {full_path} file, error: \"{error}\""));
+    let hash = git_logs_head_content.get(0..40).map_or_else(|| { panic!("{full_path} file content length < 40"); }, |value| value);
     //todo check if its a valid commit id.
     let commit_id_token_stream = format!("\"{hash}\"")
         .parse::<proc_macro2::TokenStream>()

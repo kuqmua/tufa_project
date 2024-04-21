@@ -358,10 +358,10 @@ error_impl_error = { level = "deny", priority = 0 }
 excessive_nesting = { level = "deny", priority = 0 }
 excessive_precision = { level = "deny", priority = 0 }
 exhaustive_enums = { level = "deny", priority = 0 }
-exhaustive_structs = { level = "deny", priority = 0 }
+exhaustive_structs = { level = "allow", priority = 0 }
 exit = { level = "deny", priority = 0 }
 expect_fun_call = { level = "deny", priority = 0 }
-expect_used = { level = "deny", priority = 0 }
+expect_used = { level = "allow", priority = 0 }
 expl_impl_clone_on_copy = { level = "deny", priority = 0 }
 explicit_auto_deref = { level = "deny", priority = 0 }
 explicit_counter_loop = { level = "deny", priority = 0 }
@@ -670,7 +670,7 @@ partialeq_ne_impl = { level = "deny", priority = 0 }
 partialeq_to_none = { level = "deny", priority = 0 }
 path_buf_push_overwrite = { level = "deny", priority = 0 }
 path_ends_with_ext = { level = "deny", priority = 0 }
-pattern_type_mismatch = { level = "deny", priority = 0 }
+pattern_type_mismatch = { level = "allow", priority = 0 }
 permissions_set_readonly_false = { level = "deny", priority = 0 }
 possible_missing_comma = { level = "deny", priority = 0 }
 precedence = { level = "deny", priority = 0 }
@@ -685,7 +685,7 @@ ptr_as_ptr = { level = "deny", priority = 0 }
 ptr_cast_constness = { level = "deny", priority = 0 }
 ptr_eq = { level = "deny", priority = 0 }
 ptr_offset_with_cast = { level = "deny", priority = 0 }
-pub_use = { level = "deny", priority = 0 }
+pub_use = { level = "allow", priority = 0 }
 pub_with_shorthand = { level = "deny", priority = 0 }
 pub_without_shorthand = { level = "deny", priority = 0 }
 question_mark = { level = "deny", priority = 0 }
@@ -746,7 +746,7 @@ semicolon_inside_block = { level = "deny", priority = 0 }
 semicolon_outside_block = { level = "deny", priority = 0 }
 separated_literal_suffix = { level = "deny", priority = 0 }
 serde_api_misuse = { level = "deny", priority = 0 }
-shadow_reuse = { level = "deny", priority = 0 }
+shadow_reuse = { level = "allow", priority = 0 }
 shadow_same = { level = "deny", priority = 0 }
 shadow_unrelated = { level = "deny", priority = 0 }
 short_circuit_statement = { level = "deny", priority = 0 }
@@ -903,7 +903,7 @@ while_immutable_condition = { level = "deny", priority = 0 }
 while_let_loop = { level = "deny", priority = 0 }
 while_let_on_iterator = { level = "deny", priority = 0 }
 wildcard_dependencies = { level = "deny", priority = 0 }
-wildcard_enum_match_arm = { level = "deny", priority = 0 }
+wildcard_enum_match_arm = { level = "allow", priority = 0 }
 wildcard_imports = { level = "deny", priority = 0 }
 wildcard_in_or_patterns = { level = "deny", priority = 0 }
 write_literal = { level = "deny", priority = 0 }

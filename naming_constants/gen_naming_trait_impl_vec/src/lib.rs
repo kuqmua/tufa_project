@@ -5,8 +5,8 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
         proc_macro2::TokenStream::from(input)
     ) {
         Ok(value) => value,
-        Err(e) => {
-            return e.into_compile_error().into();//todo expirement with .into_compile_error() https://docs.rs/syn/1.0.109/syn/parse/struct.Error.html#method.into_compile_error
+        Err(error) => {
+            return error.into_compile_error().into();//todo expirement with .into_compile_error() https://docs.rs/syn/1.0.109/syn/parse/struct.Error.html#method.into_compile_error
         }
     }.into_iter().map(|element|{
         let ident = if let syn::Expr::Lit(value) = &element {
@@ -20,9 +20,8 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
         else {
             panic!("04ae46d6-1450-4006-901f-f56181711340");
         };
-        let ident_stringified = ident.to_string();
         let (ident_upper_camel_case_quotes_token_stream, ident_upper_camel_case_token_stream) = {
-            let ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ident_stringified);
+            let ident_upper_camel_case_stringified = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&ident.as_str());
             let ident_upper_camel_case_quotes_token_stream = {
                 let value = format!("\"{ident_upper_camel_case_stringified}\"");
                 value.parse::<proc_macro2::TokenStream>()
@@ -38,7 +37,7 @@ pub fn gen_naming_trait_impl_vec(input: proc_macro::TokenStream) -> proc_macro::
             )
         };
         let (ident_snake_case_quotes_token_stream, ident_snake_case_token_stream) = {
-            let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident_stringified);
+            let ident_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&ident.as_str());
             let ident_snake_case_quotes_token_stream = {
                 let value = format!("\"{ident_snake_case_stringified}\"");
                 value.parse::<proc_macro2::TokenStream>()

@@ -17,9 +17,9 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
         _ => panic!("EnumVariantCount only works on Enums"),
     };
     let variants = match ast.data {
-        syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
-            let variant_ident = v.ident;
-            match v.fields {
+        syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|element| {
+            let variant_ident = element.ident;
+            match element.fields {
                 syn::Fields::Named(fields_named) => {
                     let generated = fields_named.named.into_iter().map(|field| {
                         let field_ident = field.ident; //todo maybe unwrap_or_else panic?

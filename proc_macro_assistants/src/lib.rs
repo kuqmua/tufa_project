@@ -11,9 +11,9 @@ enum Operation {
 pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "ToUpperCamelCaseStringified";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case_stringified} {}: {e}",
+            "{proc_macro_name_upper_camel_case_stringified} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -75,9 +75,9 @@ only works if all enum variants without fields like this
 pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "ToSnakeCaseStringified";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case_stringified} {}: {e}",
+            "{proc_macro_name_upper_camel_case_stringified} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -140,9 +140,9 @@ pub fn to_screaming_snake_case_stringified(
 ) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case_stringified = "ToScreamingSnakeCaseStringified";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case_stringified} {}: {e}",
+            "{proc_macro_name_upper_camel_case_stringified} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });

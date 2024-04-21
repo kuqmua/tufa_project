@@ -2,7 +2,7 @@
 pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let valid_port = match input.to_string().parse::<std::primitive::u16>() {
-        Err(e) => panic!("failed to parse input into u16, error: {e}"),
+        Err(error) => panic!("failed to parse input into u16, error: {error}"),
         Ok(possible_port) => {
             if possible_port < server_port_common::SERVER_PORT_MIN_VALUE {
                 panic!(
