@@ -97,18 +97,18 @@ confusable-idents = { level = "deny", priority = 0 } #detects visually confusabl
 const-evaluatable-unchecked = { level = "deny", priority = 0 } #detects a generic constant is used in a type without a emitting a warning
 const-item-mutation = { level = "deny", priority = 0 } #detects attempts to mutate a `const` item
 dead-code = { level = "warn", priority = 0 } #detect unused, unexported items
-deprecated = { level = "warn", priority = 0 } #detects use of deprecated items
-deprecated-where-clause-location = { level = "warn", priority = 0 } #deprecated where clause location
-deref-into-dyn-supertrait = { level = "warn", priority = 0 } #`Deref` implementation usage with a supertrait trait object for output might be shadowed in the future
-deref-nullptr = { level = "warn", priority = 0 } #detects when an null pointer is dereferenced
-dropping-copy-types = { level = "warn", priority = 0 } #calls to `std::mem::drop` with a value that implements Copy
-dropping-references = { level = "warn", priority = 0 } #calls to `std::mem::drop` with a reference instead of an owned value
-drop-bounds = { level = "warn", priority = 0 } #bounds of the form `T: Drop` are most likely incorrect
-duplicate-macro-attributes = { level = "warn", priority = 0 } #duplicated attribute
-dyn-drop = { level = "warn", priority = 0 } #trait objects of the form `dyn Drop` are useless
-elided-lifetimes-in-associated-constant = { level = "warn", priority = 0 } #elided lifetimes cannot be used in associated constants in impls
-ellipsis-inclusive-range-patterns = { level = "warn", priority = 0 } #`...` range patterns are deprecated
-exported-private-dependencies = { level = "warn", priority = 0 } #public interface leaks type from a private dependency
+deprecated = { level = "deny", priority = 0 } #detects use of deprecated items
+deprecated-where-clause-location = { level = "deny", priority = 0 } #deprecated where clause location
+deref-into-dyn-supertrait = { level = "deny", priority = 0 } #`Deref` implementation usage with a supertrait trait object for output might be shadowed in the future
+deref-nullptr = { level = "deny", priority = 0 } #detects when an null pointer is dereferenced
+dropping-copy-types = { level = "deny", priority = 0 } #calls to `std::mem::drop` with a value that implements Copy
+dropping-references = { level = "deny", priority = 0 } #calls to `std::mem::drop` with a reference instead of an owned value
+drop-bounds = { level = "deny", priority = 0 } #bounds of the form `T: Drop` are most likely incorrect
+duplicate-macro-attributes = { level = "deny", priority = 0 } #duplicated attribute
+dyn-drop = { level = "deny", priority = 0 } #trait objects of the form `dyn Drop` are useless
+elided-lifetimes-in-associated-constant = { level = "deny", priority = 0 } #elided lifetimes cannot be used in associated constants in impls
+ellipsis-inclusive-range-patterns = { level = "deny", priority = 0 } #`...` range patterns are deprecated
+exported-private-dependencies = { level = "deny", priority = 0 } #public interface leaks type from a private dependency
 forbidden-lint-groups = { level = "warn", priority = 0 } #applying forbid to lint-groups
 forgetting-copy-types = { level = "warn", priority = 0 } #calls to `std::mem::forget` with a value that implements Copy
 forgetting-references = { level = "warn", priority = 0 } #calls to `std::mem::forget` with a reference instead of an owned value
