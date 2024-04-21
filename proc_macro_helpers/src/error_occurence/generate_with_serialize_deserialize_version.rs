@@ -376,10 +376,6 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
                 );
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay => {
             if let crate::error_occurence::supported_container::SupportedContainer::Vec {
                 path: _,
@@ -397,10 +393,6 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
                 );
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
             if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
                 path: _,
@@ -454,10 +446,6 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
                 }
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
             if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
                 path: _,
@@ -482,9 +470,21 @@ fn attribute_supported_container_inform_use_str_string_in_different_attribute(
                 );
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => (),
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence |    
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize |
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => (),
     }
 }
@@ -1628,7 +1628,6 @@ fn modify_lifetimes_for_serialize_deserialize(
     lifetimes_for_serialize_deserialize: &mut std::vec::Vec<std::string::String>,
 ) {
     match attribute {
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => {
             if let crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident: _, lifetime_ident } = supported_container {
                 crate::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -1637,23 +1636,24 @@ fn modify_lifetimes_for_serialize_deserialize(
                 );
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => (),
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize |
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => (),
     }
 }
@@ -1663,42 +1663,42 @@ fn modify_should_generate_impl_compile_time_check_error_occurence_members(
     should_generate_impl_compile_time_check_error_occurence_members: &mut bool,
 ) {
     match attribute {
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => {
             if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => {
             if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => {
             if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => (),
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => (),
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
             if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;
             }
         },
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => (),
     }
 }
 
