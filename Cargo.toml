@@ -146,40 +146,40 @@ path-statements = { level = "deny", priority = 0 } #path statements with no effe
 pointer-structural-match = { level = "deny", priority = 0 } #pointers are not structural-match
 private-bounds = { level = "deny", priority = 0 } #private type in secondary interface of an item
 private-interfaces = { level = "deny", priority = 0 } #private type in primary interface of an item
-redundant-semicolons = { level = "warn", priority = 0 } #detects unnecessary trailing semicolons
-refining-impl-trait = { level = "warn", priority = 0 } #impl trait in impl method signature does not match trait method signature
-renamed-and-removed-lints = { level = "warn", priority = 0 } #lints that have been renamed or removed
-repr-transparent-external-private-fields = { level = "warn", priority = 0 } #transparent type contains an external ZST that is marked #[non_exhaustive] or contains private fields
-semicolon-in-expressions-from-macros = { level = "warn", priority = 0 } #trailing semicolon in macro body used as expression
-special-module-name = { level = "warn", priority = 0 } #module declarations for files with a special meaning
-stable-features = { level = "warn", priority = 0 } #stable features found in `#[feature]` directive
-suspicious-double-ref-op = { level = "warn", priority = 0 } #suspicious call of trait method on `&&T`
-temporary-cstring-as-ptr = { level = "warn", priority = 0 } #detects getting the inner pointer of a temporary `CString`
-trivial-bounds = { level = "warn", priority = 0 } #these bounds don't depend on an type parameters
-type-alias-bounds = { level = "warn", priority = 0 } #bounds in type aliases are not enforced
-tyvar-behind-raw-pointer = { level = "warn", priority = 0 } #raw pointer to an inference variable
-uncommon-codepoints = { level = "warn", priority = 0 } #detects uncommon Unicode codepoints in identifiers
-unconditional-recursion = { level = "warn", priority = 0 } #functions that cannot return without calling themselves
-undefined-naked-function-abi = { level = "warn", priority = 0 } #undefined naked function ABI
-unexpected-cfgs = { level = "warn", priority = 0 } #detects unexpected names and values in `#[cfg]` conditions
-# unfulfilled-lint-expectations = { level = "warn", priority = 0 } #unfulfilled lint expectation
-ungated-async-fn-track-caller = { level = "warn", priority = 0 } #enabling track_caller on an async fn is a no-op unless the async_fn_track_caller feature is enabled
-uninhabited-static = { level = "warn", priority = 0 } #uninhabited static
-unknown-lints = { level = "warn", priority = 0 } #unrecognized lint attribute
-# unknown-or-malformed-diagnostic-attributes = { level = "warn", priority = 0 } #unrecognized or malformed diagnostic attribute
-unnameable-test-items = { level = "warn", priority = 0 } #detects an item that cannot be named being marked as `#[test_case]`
-unreachable-code = { level = "warn", priority = 0 } #detects unreachable code paths
-unreachable-patterns = { level = "warn", priority = 0 } #detects unreachable patterns
-unstable-name-collisions = { level = "warn", priority = 0 } #detects name collision with an existing but unstable method
-unstable-syntax-pre-expansion = { level = "warn", priority = 0 } #unstable syntax can change at any point in the future, causing a hard error!
-unsupported-calling-conventions = { level = "warn", priority = 0 } #use of unsupported calling convention
-unused-allocation = { level = "warn", priority = 0 } #detects unnecessary allocations that can be eliminated
-unused-assignments = { level = "warn", priority = 0 } #detect assignments that will never be read
-unused-associated-type-bounds = { level = "warn", priority = 0 } #detects unused `Foo = Bar` bounds in `dyn Trait<Foo = Bar>`
-unused-attributes = { level = "warn", priority = 0 } #detects attributes that were not used by the compiler
-unused-braces = { level = "warn", priority = 0 } #unnecessary braces around an expression
-unused-comparisons = { level = "warn", priority = 0 } #comparisons made useless by limits of the types involved
-unused-doc-comments = { level = "warn", priority = 0 } #detects doc comments that aren't used by rustdoc
+redundant-semicolons = { level = "deny", priority = 0 } #detects unnecessary trailing semicolons
+refining-impl-trait = { level = "deny", priority = 0 } #impl trait in impl method signature does not match trait method signature
+renamed-and-removed-lints = { level = "deny", priority = 0 } #lints that have been renamed or removed
+repr-transparent-external-private-fields = { level = "deny", priority = 0 } #transparent type contains an external ZST that is marked #[non_exhaustive] or contains private fields
+semicolon-in-expressions-from-macros = { level = "deny", priority = 0 } #trailing semicolon in macro body used as expression
+special-module-name = { level = "deny", priority = 0 } #module declarations for files with a special meaning
+stable-features = { level = "deny", priority = 0 } #stable features found in `#[feature]` directive
+suspicious-double-ref-op = { level = "deny", priority = 0 } #suspicious call of trait method on `&&T`
+temporary-cstring-as-ptr = { level = "deny", priority = 0 } #detects getting the inner pointer of a temporary `CString`
+trivial-bounds = { level = "deny", priority = 0 } #these bounds don't depend on an type parameters
+type-alias-bounds = { level = "deny", priority = 0 } #bounds in type aliases are not enforced
+tyvar-behind-raw-pointer = { level = "deny", priority = 0 } #raw pointer to an inference variable
+uncommon-codepoints = { level = "deny", priority = 0 } #detects uncommon Unicode codepoints in identifiers
+unconditional-recursion = { level = "deny", priority = 0 } #functions that cannot return without calling themselves
+undefined-naked-function-abi = { level = "deny", priority = 0 } #undefined naked function ABI
+unexpected-cfgs = { level = "deny", priority = 0 } #detects unexpected names and values in `#[cfg]` conditions
+# unfulfilled-lint-expectations = { level = "deny", priority = 0 } #unfulfilled lint expectation
+ungated-async-fn-track-caller = { level = "deny", priority = 0 } #enabling track_caller on an async fn is a no-op unless the async_fn_track_caller feature is enabled
+uninhabited-static = { level = "deny", priority = 0 } #uninhabited static
+unknown-lints = { level = "deny", priority = 0 } #unrecognized lint attribute
+# unknown-or-malformed-diagnostic-attributes = { level = "deny", priority = 0 } #unrecognized or malformed diagnostic attribute
+unnameable-test-items = { level = "deny", priority = 0 } #detects an item that cannot be named being marked as `#[test_case]`
+unreachable-code = { level = "deny", priority = 0 } #detects unreachable code paths
+unreachable-patterns = { level = "deny", priority = 0 } #detects unreachable patterns
+unstable-name-collisions = { level = "deny", priority = 0 } #detects name collision with an existing but unstable method
+unstable-syntax-pre-expansion = { level = "deny", priority = 0 } #unstable syntax can change at any point in the future, causing a hard error!
+unsupported-calling-conventions = { level = "deny", priority = 0 } #use of unsupported calling convention
+unused-allocation = { level = "deny", priority = 0 } #detects unnecessary allocations that can be eliminated
+unused-assignments = { level = "deny", priority = 0 } #detect assignments that will never be read
+unused-associated-type-bounds = { level = "deny", priority = 0 } #detects unused `Foo = Bar` bounds in `dyn Trait<Foo = Bar>`
+unused-attributes = { level = "deny", priority = 0 } #detects attributes that were not used by the compiler
+unused-braces = { level = "deny", priority = 0 } #unnecessary braces around an expression
+unused-comparisons = { level = "deny", priority = 0 } #comparisons made useless by limits of the types involved
+unused-doc-comments = { level = "deny", priority = 0 } #detects doc comments that aren't used by rustdoc
 unused-features = { level = "warn", priority = 0 } #unused features found in crate-level `#[feature]` directives
 unused-imports = { level = "warn", priority = 0 } #imports that are never used
 unused-labels = { level = "warn", priority = 0 } #detects labels that are never used
