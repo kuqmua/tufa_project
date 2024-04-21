@@ -80,22 +80,22 @@ unused-macro-rules = { level = "deny", priority = 0 } #detects macro rules that 
 unused-qualifications = { level = "allow", priority = 0 } #detects unnecessarily qualified names
 unused-results = { level = "deny", priority = 0 } #unused result of an expression in a statement
 dead_code = { level = "deny", priority = 0 } #detects tuple struct fields that are never read
-variant-size-differences = { level = "warn", priority = 0 } #detects enums with widely varying variant sizes
-ambiguous-glob-imports = { level = "warn", priority = 0 } #detects certain glob imports that require reporting an ambiguity error
-ambiguous-glob-reexports = { level = "warn", priority = 0 } #ambiguous glob re-exports
-anonymous-parameters = { level = "warn", priority = 0 } #detects anonymous parameters
-array-into-iter = { level = "warn", priority = 0 } #detects calling `into_iter` on arrays in Rust 2015 and 2018
-asm-sub-register = { level = "warn", priority = 0 } #using only a subset of a register for inline asm inputs
-async-fn-in-trait = { level = "warn", priority = 0 } #use of `async fn` in definition of a publicly-reachable trait
-bad-asm-style = { level = "warn", priority = 0 } #incorrect use of inline assembly
-bare-trait-objects = { level = "warn", priority = 0 } #suggest using `dyn Trait` for trait objects
-break-with-label-and-loop = { level = "warn", priority = 0 } #`break` expression with label and unlabeled loop as value expression
-byte-slice-in-packed-struct-with-derive = { level = "warn", priority = 0 } #`[u8]` or `str` used in a packed struct with `derive`
-clashing-extern-declarations = { level = "warn", priority = 0 } #detects when an extern fn has been declared with the same name but different types
-coherence-leak-check = { level = "warn", priority = 0 } #distinct impls distinguished only by the leak-check code
-confusable-idents = { level = "warn", priority = 0 } #detects visually confusable pairs between identifiers
-const-evaluatable-unchecked = { level = "warn", priority = 0 } #detects a generic constant is used in a type without a emitting a warning
-const-item-mutation = { level = "warn", priority = 0 } #detects attempts to mutate a `const` item
+variant-size-differences = { level = "deny", priority = 0 } #detects enums with widely varying variant sizes
+ambiguous-glob-imports = { level = "deny", priority = 0 } #detects certain glob imports that require reporting an ambiguity error
+ambiguous-glob-reexports = { level = "deny", priority = 0 } #ambiguous glob re-exports
+anonymous-parameters = { level = "deny", priority = 0 } #detects anonymous parameters
+array-into-iter = { level = "deny", priority = 0 } #detects calling `into_iter` on arrays in Rust 2015 and 2018
+asm-sub-register = { level = "deny", priority = 0 } #using only a subset of a register for inline asm inputs
+async-fn-in-trait = { level = "deny", priority = 0 } #use of `async fn` in definition of a publicly-reachable trait
+bad-asm-style = { level = "deny", priority = 0 } #incorrect use of inline assembly
+bare-trait-objects = { level = "deny", priority = 0 } #suggest using `dyn Trait` for trait objects
+break-with-label-and-loop = { level = "deny", priority = 0 } #`break` expression with label and unlabeled loop as value expression
+byte-slice-in-packed-struct-with-derive = { level = "deny", priority = 0 } #`[u8]` or `str` used in a packed struct with `derive`
+clashing-extern-declarations = { level = "deny", priority = 0 } #detects when an extern fn has been declared with the same name but different types
+coherence-leak-check = { level = "deny", priority = 0 } #distinct impls distinguished only by the leak-check code
+confusable-idents = { level = "deny", priority = 0 } #detects visually confusable pairs between identifiers
+const-evaluatable-unchecked = { level = "deny", priority = 0 } #detects a generic constant is used in a type without a emitting a warning
+const-item-mutation = { level = "deny", priority = 0 } #detects attempts to mutate a `const` item
 dead-code = { level = "warn", priority = 0 } #detect unused, unexported items
 deprecated = { level = "warn", priority = 0 } #detects use of deprecated items
 deprecated-where-clause-location = { level = "warn", priority = 0 } #deprecated where clause location
