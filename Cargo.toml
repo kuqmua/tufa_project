@@ -284,7 +284,7 @@ chars_next_cmp = { level = "deny", priority = 0 }
 checked_conversions = { level = "deny", priority = 0 }
 clear_with_drain = { level = "deny", priority = 0 }
 clone_on_copy = { level = "deny", priority = 0 }
-clone_on_ref_ptr = { level = "allow", priority = 0 }
+clone_on_ref_ptr = { level = "deny", priority = 0 }
 cloned_instead_of_copied = { level = "deny", priority = 0 }
 cmp_null = { level = "deny", priority = 0 }
 cmp_owned = { level = "deny", priority = 0 }

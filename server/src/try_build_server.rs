@@ -235,10 +235,10 @@ pub async fn try_build_server(
                 axum::routing::get(middleware_message_example),
             )
             .layer(axum::Extension(shared_data))
-            .merge(common::server::routes::routes(app_state.clone()))
-            .merge(crate::routes::api::routes(app_state.clone()))
+            .merge(common::server::routes::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
+            .merge(crate::routes::api::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
             .merge(common::server::routes::not_found::not_found_route(
-                app_state.clone(),
+                std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state),
             ))
             // .fallback_service(routes_static())
             .layer(
