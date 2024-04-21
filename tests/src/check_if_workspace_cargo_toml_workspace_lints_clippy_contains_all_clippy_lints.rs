@@ -28,12 +28,21 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
         .map(|element|element.id)
         .collect::<std::vec::Vec<std::string::String>>();
     let mut lints_not_in_file = vec![];
-    for element in clippy_lints_from_docs {
+    for element in &clippy_lints_from_docs {
         if !lints_vec_from_file.contains(&&element) {
             lints_not_in_file.push(element);
         }
     }
     if lints_not_in_file.len() != 0 {
         panic!("this clippy lints are not in the [workspace.lints.clippy]: {lints_not_in_file:#?}")
+    }
+    let mut outdated_lints_in_file = vec![];
+    for element in &lints_vec_from_file {
+        if !clippy_lints_from_docs.contains(&&element) {
+            outdated_lints_in_file.push(element);
+        }
+    }
+    if outdated_lints_in_file.len() != 0 {
+        panic!("this clippy lints are outdated but still in [workspace.lints.clippy]: {outdated_lints_in_file:#?}")
     }
 }

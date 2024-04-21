@@ -898,7 +898,6 @@ vec_init_then_push = { level = "deny", priority = 0 }
 vec_resize_to_zero = { level = "deny", priority = 0 }
 verbose_bit_mask = { level = "deny", priority = 0 }
 verbose_file_reads = { level = "deny", priority = 0 }
-vtable_address_comparisons = { level = "deny", priority = 0 }
 waker_clone_wake = { level = "deny", priority = 0 }
 while_immutable_condition = { level = "deny", priority = 0 }
 while_let_loop = { level = "deny", priority = 0 }
