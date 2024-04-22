@@ -5,9 +5,9 @@ pub trait HashMapDisplayForeignTypeToStringWithConfigToString<'a, ConfigGeneric>
     ) -> std::string::String;
 }
 
-impl<'a, HashMapKeyGeneric, HashMapValueGeneric, ConfigGeneric>
+impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher, ConfigGeneric>
     HashMapDisplayForeignTypeToStringWithConfigToString<'a, ConfigGeneric>
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric: crate::to_string_with_config::ToStringWithConfig<'a>,

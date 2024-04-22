@@ -4,9 +4,9 @@ pub trait HashMapDisplayForeignTypeDisplayForeignTypeIntoHashMapStringString {
     ) -> std::collections::HashMap<String, std::string::String>;
 }
 
-impl<HashMapKeyGeneric, HashMapValueGeneric>
+impl<HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher>
     HashMapDisplayForeignTypeDisplayForeignTypeIntoHashMapStringString
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric:
         display_foreign_type::DisplayForeignType + std::cmp::Eq + std::hash::Hash,

@@ -4,8 +4,8 @@ pub trait HashMapDisplayDisplayIntoHashMapStringString {
     ) -> std::collections::HashMap<String, std::string::String>;
 }
 
-impl<HashMapKeyGeneric, HashMapValueGeneric> HashMapDisplayDisplayIntoHashMapStringString
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+impl<HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher> HashMapDisplayDisplayIntoHashMapStringString
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: std::fmt::Display + std::cmp::Eq + std::hash::Hash,
     HashMapValueGeneric: std::fmt::Display,

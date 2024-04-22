@@ -4,9 +4,9 @@ pub trait HashMapDisplayForeignTypeToStringWithoutConfigToString<'a> {
     ) -> std::string::String;
 }
 
-impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
+impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher>
     HashMapDisplayForeignTypeToStringWithoutConfigToString<'a>
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric: crate::to_string_without_config::ToStringWithoutConfig<'a>,
@@ -33,9 +33,9 @@ pub trait HashMapToStringDisplayForeignTypeToStringWithoutConfigWithSerializeDes
     ) -> std::string::String;
 }
 
-impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
+impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher>
     HashMapToStringDisplayForeignTypeToStringWithoutConfigWithSerializeDeserialize<'a>
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
     HashMapValueGeneric:

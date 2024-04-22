@@ -2,8 +2,8 @@ pub trait HashMapDisplayDisplayForeignTypeToString {
     fn hashmap_display_display_foreign_type_to_string(&self) -> std::string::String;
 }
 
-impl<HashMapKeyGeneric, HashMapValueGeneric> HashMapDisplayDisplayForeignTypeToString
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+impl<HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher> HashMapDisplayDisplayForeignTypeToString
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: std::fmt::Display,
     HashMapValueGeneric: display_foreign_type::DisplayForeignType,

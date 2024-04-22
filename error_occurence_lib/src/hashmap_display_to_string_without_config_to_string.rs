@@ -2,8 +2,8 @@ pub trait HashMapDisplayToStringWithoutConfigToString<'a> {
     fn hashmap_display_to_string_without_config_to_string(&self) -> std::string::String;
 }
 
-impl<'a, HashMapKeyGeneric, HashMapValueGeneric> HashMapDisplayToStringWithoutConfigToString<'a>
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher> HashMapDisplayToStringWithoutConfigToString<'a>
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: std::fmt::Display,
     HashMapValueGeneric: crate::to_string_without_config::ToStringWithoutConfig<'a>,
@@ -28,9 +28,9 @@ pub trait HashMapDisplayToStringWithoutConfigToStringWithSerializeDeserialize<'a
     ) -> std::string::String;
 }
 
-impl<'a, HashMapKeyGeneric, HashMapValueGeneric>
+impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher>
     HashMapDisplayToStringWithoutConfigToStringWithSerializeDeserialize<'a>
-    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric>
+    for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
     HashMapKeyGeneric: std::fmt::Display,
     HashMapValueGeneric:
