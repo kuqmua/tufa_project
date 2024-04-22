@@ -5,7 +5,7 @@ pub fn generate_path_from_segments(
         acc.push_str(&format!("{}::", elem.ident));
         acc
     });
-    let _ = segments_stringified.pop();
-    let _ = segments_stringified.pop();
+    let _: std::option::Option<std::primitive::char> = segments_stringified.pop();
+    let _: std::option::Option<std::primitive::char> = segments_stringified.pop();
     segments_stringified
 }

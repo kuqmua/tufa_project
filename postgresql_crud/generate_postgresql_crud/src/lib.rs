@@ -2622,8 +2622,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
                                 acc
                             });
-                        let _ = column_increments.pop();
-                        let _ = column_increments.pop();
+                        let _: std::option::Option<std::primitive::char> = column_increments.pop();
+                        let _: std::option::Option<std::primitive::char> = column_increments.pop();
                         column_increments
                     };
                     let query_stringified = format!(

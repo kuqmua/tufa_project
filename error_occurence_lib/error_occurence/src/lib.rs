@@ -81,7 +81,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         );
                     }
                 });
-        let _ = lifetimes_stringified.pop();
+        let _: std::option::Option<std::primitive::char> = lifetimes_stringified.pop();
         if lifetimes_stringified.contains(&trait_lifetime_stringified) {
             panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
         }

@@ -78,7 +78,7 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                                     string_handle.push_str(&format!("{}:", seg.ident));
                                 }
                                 if !string_handle.is_empty() {
-                                    let _ = string_handle.pop();
+                                    let _: std::option::Option<std::primitive::char> = string_handle.pop();
                                 }
                             }
                             string_handle

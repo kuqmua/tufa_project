@@ -485,7 +485,7 @@ let_and_return = { level = "deny", priority = 0 }
 let_underscore_future = { level = "deny", priority = 0 }
 let_underscore_lock = { level = "deny", priority = 0 }
 let_underscore_must_use = { level = "deny", priority = 0 }
-let_underscore_untyped = { level = "allow", priority = 0 }
+let_underscore_untyped = { level = "deny", priority = 0 }
 let_unit_value = { level = "deny", priority = 0 }
 let_with_type_underscore = { level = "deny", priority = 0 }
 lines_filter_map_ok = { level = "deny", priority = 0 }
