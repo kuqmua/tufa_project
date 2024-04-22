@@ -372,7 +372,7 @@ explicit_write = { level = "deny", priority = 0 }
 extend_with_drain = { level = "deny", priority = 0 }
 extra_unused_lifetimes = { level = "deny", priority = 0 }
 extra_unused_type_parameters = { level = "deny", priority = 0 }
-fallible_impl_from = { level = "allow", priority = 0 }
+fallible_impl_from = { level = "deny", priority = 0 }
 field_reassign_with_default = { level = "deny", priority = 0 }
 filetype_is_file = { level = "deny", priority = 0 }
 filter_map_bool_then = { level = "deny", priority = 0 }
