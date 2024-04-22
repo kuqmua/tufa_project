@@ -40,7 +40,9 @@ pub(crate) fn extract_syn_variants_from_proc_macro_attribute(
         additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
     let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified =
         &additional_http_status_codes_error_variants_attribute_tokens_stringified
-            [1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1)]; //todo maybe check
+        .get(1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1))
+        .expect("slice not found");
+    // [1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1)]; //todo maybe check
     additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified.split(';').collect::<Vec<&str>>()
         .iter().fold(std::vec::Vec::<(
             syn::Ident,
@@ -69,7 +71,9 @@ pub(crate) fn extract_syn_variants_from_proc_macro_attribute(
                     };
                     let path_to_additional_variant_enum_stringified = "{}".to_string();//todo
                     // &path_attribute.tokens.to_string();
-                    let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified[1..(path_to_additional_variant_enum_stringified.len()- 1)];//todo maybe check
+                    let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified
+                        .get(1..(path_to_additional_variant_enum_stringified.len() - 1))
+                        .expect("slice not found");
                     let path_to_additional_variant_enum_without_brackets_token_stream = path_to_additional_variant_enum_without_brackets_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_to_additional_variant_enum_without_brackets_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                     let element_ident = element_derive_input.ident;//todo check if error type even exists (with empty functions)

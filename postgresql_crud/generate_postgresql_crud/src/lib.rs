@@ -153,21 +153,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             match &element.field.ty {
                 syn::Type::Path(value) => match value.path.segments.len() == 2 {
                     true => {
-                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                        if value.path.segments.first().expect("no first value in punctuated").ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
                             panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
                         }
-                        match value.path.segments[0].arguments {
+                        match value.path.segments.first().expect("no first value in punctuated").arguments {
                             syn::PathArguments::None => (),
                             _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path().segments[0].arguments != syn::PathArguments::None")
                         }
-                        let _maybe_generic_token_stream = match &value.path.segments[1].arguments {
+                        let _maybe_generic_token_stream = match &value.path.segments.iter().nth(1).expect("no second element").arguments {
                             syn::PathArguments::None => quote::quote!{},
                             syn::PathArguments::AngleBracketed(value) => {
                                 quote::quote!{#value}//< test_mod :: Something >
                             },
                             syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} does not support syn::PathArguments::Parenthesized"),
                         };
-                        match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&value.path.segments[1].ident.to_string()) {
+                        match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&value.path.segments.iter().nth(1).expect("no second element").ident.to_string()) {
                             Ok(value) => {
                                 if postgresql_crud_common::RustSqlxMapToPostgresTypeVariantPrimaryKey::try_from(&value).is_ok() {
                                     match primary_key_field_option {
@@ -8924,25 +8924,37 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             syn::Type::Path(value) => {
                 match value.path.segments.len() == 2 {
                     true => {
-                        if value.path.segments[0].ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                        let first = match value.path.segments.first() {
+                            Some(value) => value,
+                            None => {
+                                return Err(std::string::String::from("no first value in punctuated"));
+                            }
+                        };
+                        if first.ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
                             return Err(format!("{name} field_type is not syn::Type::Path"));
                         }
-                        match value.path.segments[0].arguments {
+                        match first.arguments {
                             syn::PathArguments::None => (),
                             _ => {
                                 return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
                             }
                         }
+                        let second_element = match value.path.segments.iter().nth(1) {
+                            Some(value) => value,
+                            None => {
+                                return Err(std::string::String::from("no second element"));
+                            }
+                        };
                         let rust_sqlx_map_to_postgres_type_variant =
                             match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(
-                                &value.path.segments[1].ident.to_string(),
+                                &second_element.ident.to_string(),
                             ) {
                                 Ok(value) => value,
                                 Err(e) => {
                                     return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"));
                                 },
                             };
-                        let maybe_generic_token_stream = match &value.path.segments[1].arguments {
+                        let maybe_generic_token_stream = match &second_element.arguments {
                             syn::PathArguments::None => quote::quote! {},
                             syn::PathArguments::AngleBracketed(value) => {
                                 quote::quote! {#value} //< test_mod :: Something >
@@ -8975,7 +8987,7 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(format!("{name} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -8984,7 +8996,7 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(format!("{name} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -8993,7 +9005,7 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(format!("{name} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -9002,7 +9014,7 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(format!("{name} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -9012,7 +9024,7 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(format!("{name} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -9021,7 +9033,7 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
                 Err(e) => {
-                    return Err(format!("{name} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
