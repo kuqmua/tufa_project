@@ -424,7 +424,7 @@ impossible_comparisons = { level = "deny", priority = 0 }
 imprecise_flops = { level = "deny", priority = 0 }
 incompatible_msrv = { level = "deny", priority = 0 }
 inconsistent_digit_grouping = { level = "deny", priority = 0 }
-inconsistent_struct_constructor = { level = "allow", priority = 0 }
+inconsistent_struct_constructor = { level = "deny", priority = 0 }
 index_refutable_slice = { level = "deny", priority = 0 }
 indexing_slicing = { level = "allow", priority = 0 }
 ineffective_bit_mask = { level = "deny", priority = 0 }
