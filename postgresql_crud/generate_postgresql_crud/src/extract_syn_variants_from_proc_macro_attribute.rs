@@ -25,9 +25,7 @@ pub(crate) fn extract_syn_variants_from_proc_macro_attribute(
                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} additional_http_status_codes_error_variants_attribute.path().segments.get(0) is None")
             }).ident;
             let possible_additional_http_status_codes_error_variants_attribute_path = format!("{first_ident}::{second_ident}");
-            if additional_http_status_codes_error_variant_path != possible_additional_http_status_codes_error_variants_attribute_path {
-                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} {possible_additional_http_status_codes_error_variants_attribute_path} is not {additional_http_status_codes_error_variant_path}")
-            }
+            assert!(additional_http_status_codes_error_variant_path == possible_additional_http_status_codes_error_variants_attribute_path, "{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} {possible_additional_http_status_codes_error_variants_attribute_path} is not {additional_http_status_codes_error_variant_path}")
         },
         false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no {additional_http_status_codes_error_variant_path} path")
     }

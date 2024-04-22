@@ -76,9 +76,7 @@ pub fn generate_with_serialize_deserialize_version(
                                                 let path_segment_ident = &path_segment.ident;
                                                 match *path_segment_ident == code_occurence_upper_camel_case {
                                                     true => {
-                                                        if code_occurence_type_repeat_checker {
-                                                            panic!("{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case} inside type path");
-                                                        }
+                                                        assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case} inside type path");
                                                         acc.push_str(&path_segment_ident.to_string());
                                                         code_occurence_type_repeat_checker = true;
                                                     },
@@ -86,9 +84,7 @@ pub fn generate_with_serialize_deserialize_version(
                                                 }
                                                 acc
                                             });
-                                            if !code_occurence_type_repeat_checker {
-                                                panic!("{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case} named field");
-                                            }
+                                            assert!(code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case} named field");
                                             code_occurence_segments_stringified_handle
                                         },
                                         crate::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
@@ -253,13 +249,11 @@ pub fn generate_with_serialize_deserialize_version(
                 let variant_ident = &variant.ident;
                 let field_type = if let syn::Fields::Unnamed(fields_unnamed) = &variant.fields {
                     let unnamed = &fields_unnamed.unnamed;
-                    if unnamed.len() != 1 {
-                        panic!(
-                            "{proc_macro_name_ident_stringified} {}::{} variant fields unnamed len != 1",
-                            naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED,
-                            <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified()
-                        );
-                    }
+                    assert!(unnamed.len() == 1, 
+                        "{proc_macro_name_ident_stringified} {}::{} variant fields unnamed len != 1",
+                        naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED,
+                        <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified()
+                    );
                     match unnamed.iter().next() {
                         Some(field) => &field.ty,
                         None => panic!("unnamed.iter().next() is None"),

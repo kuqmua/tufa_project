@@ -9,9 +9,7 @@ pub fn create_supported_enum_variant(
     proc_macro_name_ident_stringified: &std::string::String,
 ) -> SuportedEnumVariant {
     let mut all_equal: Option<SuportedEnumVariant> = None;
-    if data_enum.variants.is_empty() {
-        panic!("{proc_macro_name_ident_stringified} enum variants are empty");
-    }
+    assert!(!data_enum.variants.is_empty(), "{proc_macro_name_ident_stringified} enum variants are empty");
     let error_message = format!("{proc_macro_name_ident_stringified} {} enums where all variants are {}::{} or all variants are {}::{}",
         naming_constants::SUPPORTS_ONLY_STRINGIFIED,
         naming_constants::SYN_FIELDS,
@@ -25,9 +23,7 @@ pub fn create_supported_enum_variant(
         .for_each(|variant| match &variant.fields {
             syn::Fields::Named(_) => match &all_equal {
                 Some(supported_variant) => {
-                    if *supported_variant == SuportedEnumVariant::Unnamed {
-                        panic!("{error_message}");
-                    }
+                    assert!(!(*supported_variant == SuportedEnumVariant::Unnamed), "{error_message}");
                 }
                 None => {
                     all_equal = Some(SuportedEnumVariant::Named);
@@ -35,9 +31,7 @@ pub fn create_supported_enum_variant(
             },
             syn::Fields::Unnamed(_) => match &all_equal {
                 Some(supported_variant) => {
-                    if *supported_variant == SuportedEnumVariant::Named {
-                        panic!("{error_message}");
-                    }
+                    assert!(!(*supported_variant == SuportedEnumVariant::Named), "{error_message}");
                 }
                 None => {
                     all_equal = Some(SuportedEnumVariant::Unnamed);

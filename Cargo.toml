@@ -494,7 +494,7 @@ little_endian_bytes = { level = "deny", priority = 0 }
 lossy_float_literal = { level = "deny", priority = 0 }
 macro_use_imports = { level = "deny", priority = 0 }
 main_recursion = { level = "deny", priority = 0 }
-manual_assert = { level = "allow", priority = 0 }
+manual_assert = { level = "deny", priority = 0 }
 manual_async_fn = { level = "deny", priority = 0 }
 manual_bits = { level = "deny", priority = 0 }
 manual_clamp = { level = "deny", priority = 0 }

@@ -82,9 +82,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }
                 });
         let _: std::option::Option<std::primitive::char> = lifetimes_stringified.pop();
-        if lifetimes_stringified.contains(&trait_lifetime_stringified) {
-            panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
-        }
+        assert!(!lifetimes_stringified.contains(&trait_lifetime_stringified), "{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
         lifetimes_stringified
         .parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {lifetimes_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -309,9 +307,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     let path_segment_ident = &path_segment.ident;
                                                     match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                                         true => {
-                                                            if code_occurence_type_repeat_checker {
-                                                                panic!("{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                            }
+                                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
                                                             acc.push_str(&path_segment_ident.to_string());
                                                             code_occurence_type_repeat_checker = true;
                                                         },
@@ -319,9 +315,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     }
                                                     acc
                                                 });
-                                                if !code_occurence_type_repeat_checker {
-                                                    panic!("{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                                }
+                                                assert!(code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                                 code_occurence_segments_stringified_handle
                                             },
                                             proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
@@ -4018,12 +4012,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let variant_ident = &variant.ident;
                 let field_type = if let syn::Fields::Unnamed(fields_unnamed) = &variant.fields {
                     let unnamed = &fields_unnamed.unnamed;
-                    if unnamed.len() != 1 {
-                        panic!(
-                            "{proc_macro_name_ident_stringified} {}::{unnamed_upper_camel_case} variant fields unnamed len != 1",
-                            naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED
-                        );
-                    }
+                    assert!(unnamed.len() == 1, 
+                       "{proc_macro_name_ident_stringified} {}::{unnamed_upper_camel_case} variant fields unnamed len != 1",
+                        naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED
+                    );
                     &unnamed.first().expect("no first value in punctuated").ty
                 }
                 else {
@@ -4194,9 +4186,7 @@ fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_add
     };
     vec_lifetime.into_iter().for_each(|k|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(specified_lifetime) = k {
-            if &specified_lifetime == trait_lifetime_stringified {
-                panic!("{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
-            }
+            assert!(&specified_lifetime != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                 specified_lifetime,
                 lifetimes_for_serialize_deserialize
@@ -4236,9 +4226,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     let error_message = "must not contain reserved by macro lifetime name:";
     key_vec_lifetime.into_iter().for_each(|k|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_specified) = k {
-            if &key_lifetime_specified == trait_lifetime_stringified {
-                panic!("{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
-            }
+            assert!(&key_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                 key_lifetime_specified,
                 lifetimes_for_serialize_deserialize
@@ -4247,9 +4235,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     });
     value_vec_lifetime.into_iter().for_each(|v|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_specified) = v {
-            if &value_lifetime_specified == trait_lifetime_stringified {
-                panic!("{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
-            }
+            assert!(&value_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                 value_lifetime_specified,
                 lifetimes_for_serialize_deserialize
