@@ -413,7 +413,7 @@ if_then_some_else_none = { level = "deny", priority = 0 }
 ifs_same_cond = { level = "deny", priority = 0 }
 ignored_unit_patterns = { level = "deny", priority = 0 }
 impl_hash_borrow_with_str_and_bytes = { level = "deny", priority = 0 }
-impl_trait_in_params = { level = "allow", priority = 0 }
+impl_trait_in_params = { level = "deny", priority = 0 }
 implicit_clone = { level = "deny", priority = 0 }
 implicit_hasher = { level = "allow", priority = 0 }
 implicit_return = { level = "allow", priority = 0 }

@@ -1,8 +1,10 @@
-pub fn generate_github_links(
+pub fn generate_github_links<
+    T: app_state::GetGithubToken
+    + std::marker::Send
+    + std::marker::Sync
+>(
     github_names: Vec<String>,
-    config: &'static (impl app_state::GetGithubToken
-                  + std::marker::Send
-                  + std::marker::Sync),
+    config: T,
 ) -> Vec<String> {
     github_names
         .iter()

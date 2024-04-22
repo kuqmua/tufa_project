@@ -12,10 +12,8 @@ pub enum NetCheckAvailabilityErrorNamed {
     },
 }
 
-pub async fn net_check_availability(
-    config: &'static (impl app_state::GetStartingCheckLink
-                  + std::marker::Send
-                  + std::marker::Sync),
+pub async fn net_check_availability<T: app_state::GetStartingCheckLink + std::marker::Send + std::marker::Sync>(
+    config: T,
 ) -> Result<(), Box<NetCheckAvailabilityErrorNamed>> {
     match reqwest::get(config.get_starting_check_link()).await {
         Err(e) => Err(Box::new(NetCheckAvailabilityErrorNamed::ReqwestGet {

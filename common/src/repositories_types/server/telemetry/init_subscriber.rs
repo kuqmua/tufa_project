@@ -1,5 +1,5 @@
-pub fn init_subscriber(
-    subscriber: impl tracing::Subscriber + Send + Sync,
+pub fn init_subscriber<T: tracing::Subscriber + Send + Sync>(
+    subscriber: T,
 ) -> Result<
     (),
     crate::repositories_types::server::telemetry::init_subcriber_error_enum::InitSubcriberErrorEnum,
