@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SuportedEnumVariant {
     Named,
     Unnamed,
@@ -25,7 +25,7 @@ pub fn create_supported_enum_variant(
         .for_each(|variant| match &variant.fields {
             syn::Fields::Named(_) => match &all_equal {
                 Some(supported_variant) => {
-                    if let SuportedEnumVariant::Unnamed = supported_variant {
+                    if *supported_variant == SuportedEnumVariant::Unnamed {
                         panic!("{error_message}");
                     }
                 }
@@ -35,7 +35,7 @@ pub fn create_supported_enum_variant(
             },
             syn::Fields::Unnamed(_) => match &all_equal {
                 Some(supported_variant) => {
-                    if let SuportedEnumVariant::Named = supported_variant {
+                    if *supported_variant == SuportedEnumVariant::Named {
                         panic!("{error_message}");
                     }
                 }

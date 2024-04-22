@@ -244,7 +244,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let mut value = postgresql_crud_common::FromOrTryFrom::From;
         for element in &fields_named {
             let from_or_try_from = element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
-            if let postgresql_crud_common::FromOrTryFrom::TryFrom = from_or_try_from {
+            if from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                 value = from_or_try_from;
                 break;
             }
@@ -256,7 +256,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let mut value = postgresql_crud_common::FromOrTryFrom::From;
         for element in &fields_named_excluding_primary_key {
             let from_or_try_from = element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
-            if let postgresql_crud_common::FromOrTryFrom::TryFrom = from_or_try_from {
+            if from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                 value = from_or_try_from;
                 break;
             }
@@ -1860,7 +1860,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 type_variants_from_request_response.push(&bind_query_syn_variant);
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = fields_named_excluding_primary_key_from_or_try_from {
+                if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response
@@ -3103,7 +3103,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = fields_named_excluding_primary_key_from_or_try_from {
+                if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
@@ -3602,7 +3602,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 type_variants_from_request_response.push(&not_unique_primary_keys_syn_variant);
                 type_variants_from_request_response.push(&bind_query_syn_variant);
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = &fields_named_from_or_try_from {
+                if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response
@@ -5063,7 +5063,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
                     .push(&non_existing_primary_keys_and_failed_rollback_syn_variant);
                 type_variants_from_request_response.push(&query_and_rollback_failed_syn_variant);
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = fields_named_from_or_try_from {
+                if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response
@@ -5840,7 +5840,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 type_variants_from_request_response.push(&bind_query_syn_variant);
                 type_variants_from_request_response.push(&no_payload_fields_syn_variant);
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = fields_named_from_or_try_from {
+                if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
@@ -6450,7 +6450,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .push(&primary_key_from_row_and_failed_rollback_syn_variant);
                 type_variants_from_request_response.push(&commit_failed_syn_variant);
                 type_variants_from_request_response.push(&query_and_rollback_failed_syn_variant);
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = &fields_named_from_or_try_from {
+                if fields_named_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
@@ -7347,7 +7347,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     type_variants_from_request_response.push(element);
                 }
                 //todo why no bind query error here?
-                if let postgresql_crud_common::FromOrTryFrom::TryFrom = &primary_key_from_or_try_from {
+                if primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
                     type_variants_from_request_response.push(&operation_payload_try_from_operation_payload_with_serialize_deserialize_syn_variant);
                 }
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);

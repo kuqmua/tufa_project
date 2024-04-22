@@ -2136,7 +2136,7 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FromOrTryFrom {
     From,
     TryFrom,
