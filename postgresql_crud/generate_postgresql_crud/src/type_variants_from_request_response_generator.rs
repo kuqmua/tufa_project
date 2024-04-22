@@ -207,9 +207,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                                     let path_segment_ident = &path_segment.ident;
                                     match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                         true => {
-                                            if code_occurence_type_repeat_checker {
-                                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                            }
+                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
                                             acc.push_str(&path_segment_ident.to_string());
                                             code_occurence_type_repeat_checker = true;
                                         },
@@ -217,9 +215,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                                     }
                                     acc
                                 });
-                                if !code_occurence_type_repeat_checker {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                }
+                                assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                 code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             }
@@ -395,9 +391,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                                             let path_segment_ident = &path_segment.ident;
                                             match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                                 true => {
-                                                    if code_occurence_type_repeat_checker {
-                                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                    }
+                                                    assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
                                                     acc.push_str(&path_segment_ident.to_string());
                                                     code_occurence_type_repeat_checker = true;
                                                 },
@@ -405,9 +399,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                                             }
                                             acc
                                         });
-                                        if !code_occurence_type_repeat_checker {
-                                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                        }
+                                        assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                         code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
                                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                     }

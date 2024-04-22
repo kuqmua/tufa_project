@@ -153,9 +153,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             match &element.field.ty {
                 syn::Type::Path(value) => match value.path.segments.len() == 2 {
                     true => {
-                        if value.path.segments.first().expect("no first value in punctuated").ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
-                        }
+                        assert!(value.path.segments.first().expect("no first value in punctuated").ident == postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, "{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
                         match value.path.segments.first().expect("no first value in punctuated").arguments {
                             syn::PathArguments::None => (),
                             _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path().segments[0].arguments != syn::PathArguments::None")
@@ -228,11 +226,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .map(|element| SynFieldWithAdditionalInfo::from(element))
         .collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>();
     let fields_named_len = fields_named.len();
-    if fields_named_len <= 1 {
-        panic!(
-            "{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1"
-        );
-    }
+    assert!(fields_named_len > 1, "{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1");
     let field_named_len_token_stream = {
         let value = fields_named_len.to_string();
         value.parse::<proc_macro2::TokenStream>()
@@ -2198,9 +2192,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             let path_segment_ident = &path_segment.ident;
                                             match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                                 true => {
-                                                    if code_occurence_type_repeat_checker {
-                                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                    }
+                                                    assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
                                                     acc.push_str(&path_segment_ident.to_string());
                                                     code_occurence_type_repeat_checker = true;
                                                 },
@@ -2208,9 +2200,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             }
                                             acc
                                         });
-                                        if !code_occurence_type_repeat_checker {
-                                            panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                        }
+                                        assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                         code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
                                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                     }
@@ -8111,9 +8101,7 @@ fn generate_http_request_many_token_stream(
                                         let path_segment_ident = &path_segment.ident;
                                         match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                             true => {
-                                                if code_occurence_type_repeat_checker {
-                                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                }
+                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
                                                 acc.push_str(&path_segment_ident.to_string());
                                                 code_occurence_type_repeat_checker = true;
                                             },
@@ -8121,9 +8109,7 @@ fn generate_http_request_many_token_stream(
                                         }
                                         acc
                                     });
-                                    if !code_occurence_type_repeat_checker {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                    }
+                                    assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                     code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                 }
@@ -8194,9 +8180,7 @@ fn generate_http_request_many_token_stream(
             },
         );
         let unique_status_codes_len = hashmap_unique_status_codes.len();
-        if unique_status_codes_len < 1 {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
-        }
+        assert!(unique_status_codes_len >= 1, "{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
         let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
         let unique_status_codes = hashmap_unique_status_codes
             .into_keys()
@@ -8263,9 +8247,7 @@ fn generate_http_request_many_token_stream(
                 },
             }
         });
-        if !is_last_element_found {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
-        }
+        assert!(is_last_element_found, "{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
         status_code_enums_try_from_variants
     };
     let primary_key_inner_type_token_stream = &primary_key_syn_field.inner_type_token_stream;
@@ -8436,9 +8418,7 @@ fn generate_try_operation_token_stream(
                                         let path_segment_ident = &path_segment.ident;
                                         match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                             true => {
-                                                if code_occurence_type_repeat_checker {
-                                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                }
+                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
                                                 acc.push_str(&path_segment_ident.to_string());
                                                 code_occurence_type_repeat_checker = true;
                                             },
@@ -8446,9 +8426,7 @@ fn generate_try_operation_token_stream(
                                         }
                                         acc
                                     });
-                                    if !code_occurence_type_repeat_checker {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                    }
+                                    assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
                                     code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                 }
@@ -8519,9 +8497,7 @@ fn generate_try_operation_token_stream(
             },
         );
         let unique_status_codes_len = hashmap_unique_status_codes.len();
-        if unique_status_codes_len < 1 {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
-        }
+        assert!(unique_status_codes_len >= 1, "{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
         let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
         let unique_status_codes = hashmap_unique_status_codes
             .into_keys()
@@ -8582,9 +8558,7 @@ fn generate_try_operation_token_stream(
                 },
             }
         });
-        if !is_last_element_found {
-            panic!("{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
-        }
+        assert!(is_last_element_found, "{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
         status_code_enums_try_from_variants
     };
     quote::quote! {
