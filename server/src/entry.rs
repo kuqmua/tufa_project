@@ -33,6 +33,9 @@ pub fn entry(config: &'static common::repositories_types::server::config::config
                     eprintln!("server stopped");
                     error_occurence_lib::error_log::ErrorLog::error_log(&*e, &config);
                 }
+                else {
+                    //clippy lint forces to add empty else
+                }
             }
         }
     }

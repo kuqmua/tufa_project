@@ -504,7 +504,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 else {
                                                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence);
                                                 }
-                                            }//other attributes are not for this proc_macro
+                                            }
+                                            else {
+                                                //clippy lint forces to add empty else
+                                            }
                                         }//other attributes are not for this proc_macro
                                     });
                                     option_attribute.unwrap_or_else(|| panic!(
@@ -1062,6 +1065,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         "{proc_macro_name_ident_stringified} {wrong_attribute_view} {} {must_be_used_with_stringified} {attribute_to_use_view}",
                                         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                     );
+                                }
+                                else {
+                                    //clippy lint forces to add empty else
                                 }
                             };
                             let vec_display_into_vec_string_upper_camel_case: std::string::String = format!(

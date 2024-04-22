@@ -337,6 +337,9 @@ fn inform_use_str_string_in_different_attribute(
             <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
         );
     }
+    else {
+        //clippy lint forces to add empty else
+    }
 }
 
 fn attribute_supported_container_inform_use_str_string_in_different_attribute(

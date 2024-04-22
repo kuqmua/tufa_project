@@ -338,7 +338,7 @@ duplicate_underscore_argument = { level = "deny", priority = 0 }
 duplicated_attributes = { level = "deny", priority = 0 }
 duration_subsec = { level = "deny", priority = 0 }
 eager_transmute = { level = "deny", priority = 0 }
-else_if_without_else = { level = "allow", priority = 0 }
+else_if_without_else = { level = "deny", priority = 0 }
 empty_docs = { level = "deny", priority = 0 }
 empty_drop = { level = "deny", priority = 0 }
 empty_enum = { level = "deny", priority = 0 }
