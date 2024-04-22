@@ -400,7 +400,7 @@ from_iter_instead_of_collect = { level = "deny", priority = 0 }
 from_over_into = { level = "deny", priority = 0 }
 from_raw_with_void_ptr = { level = "deny", priority = 0 }
 from_str_radix_10 = { level = "deny", priority = 0 }
-future_not_send = { level = "allow", priority = 0 }
+future_not_send = { level = "deny", priority = 0 }
 get_first = { level = "deny", priority = 0 }
 get_last_with_len = { level = "deny", priority = 0 }
 get_unwrap = { level = "deny", priority = 0 }
