@@ -96,13 +96,13 @@ constants = {path = "../constants"}
 
 [dev-dependencies]
 # claim = {version = "=0.5"}
-fake = {version = "=2.3"}
-linkify = {version = "=0.8"}
-reqwest = {version = "=0.11"}
-serde_json = {version = "=1"}
-serde_urlencoded = {version = "=0.7.1"}
+# fake = {version = "=2.3"}
+# linkify = {version = "=0.8"}
+# reqwest = {version = "=0.11"}
+# serde_json = {version = "=1"}
+# serde_urlencoded = {version = "=0.7.1"}
 tokio = {version = "=1.29.1", features = ["rt", "macros", "rt-multi-thread"]}
-wiremock = {version = "=0.5.2"}
+# wiremock = {version = "=0.5.2"}
 
 # ###########################
 # # custom linker dependencies
