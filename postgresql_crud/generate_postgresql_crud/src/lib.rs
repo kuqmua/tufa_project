@@ -128,7 +128,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
     let table_name_stringified = pluralizer::pluralize(&ident_snake_case_stringified, 2, false);
     let table_name_quotes_token_stream =
-        proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        proc_macro_common::generate_quotes::token_stream(
             &table_name_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -216,7 +216,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let primary_key_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+    let primary_key_field_ident_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
         &primary_key_field_ident.to_string(),
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
@@ -284,26 +284,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
     let serde_deserialize_token_stream = proc_macro_common::serde_deserialize_token_stream();
     let derive_debug_token_stream =
-        proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[&debug_token_stream]);
+        proc_macro_helpers::wrap_derive::token_stream(&[&debug_token_stream]);
     let derive_debug_thiserror_error_occurence_token_stream =
-        proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[
+        proc_macro_helpers::wrap_derive::token_stream(&[
             &debug_token_stream,
             &thiserror_error_token_stream,
             &error_occurence_error_occurence_token_stream,
         ]);
     let derive_debug_to_schema_token_stream =
-        proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[
+        proc_macro_helpers::wrap_derive::token_stream(&[
             &debug_token_stream,
             &utoipa_to_schema_token_stream,
         ]);
     let derive_debug_serialize_deserialize_token_stream =
-        proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[
+        proc_macro_helpers::wrap_derive::token_stream(&[
             &debug_token_stream,
             &serde_serialize_token_stream,
             &serde_deserialize_token_stream,
         ]);
     let derive_debug_serialize_deserialize_to_schema_token_stream =
-        proc_macro_helpers::wrap_derive::wrap_derive_token_stream(&[
+        proc_macro_helpers::wrap_derive::token_stream(&[
             &debug_token_stream,
             &serde_serialize_token_stream,
             &serde_deserialize_token_stream,
@@ -430,7 +430,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .iter()
             .map(|element| {
                 let field_ident_stringified = element.field_ident.to_string();
-                let serialize_deserialize_ident_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+                let serialize_deserialize_ident_token_stream = proc_macro_common::generate_quotes::token_stream(
                     &field_ident_stringified,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
@@ -449,7 +449,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             .iter()
             .map(|element| {
                 let field_ident_stringified = element.field_ident.to_string();
-                let field_ident_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+                let field_ident_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                     &field_ident_stringified,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 );
@@ -495,7 +495,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                 &element.field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
@@ -564,7 +564,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
-            let primary_key_field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+            let primary_key_field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                 &primary_key_field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
@@ -585,7 +585,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let original_type_token_stream = &element.original_type_token_stream;
-            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+            let field_ident_string_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
                 &element.field_ident.to_string(),
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
@@ -663,7 +663,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let primary_key_try_get_sqlx_row_token_stream = {
-        let primary_key_str_token_stream = proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        let primary_key_str_token_stream = proc_macro_common::generate_quotes::token_stream(
             &primary_key_field_ident.to_string(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -766,7 +766,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let returning_primary_key_stringified =
         format!(" {returning_stringified} {primary_key_field_ident}");
     let returning_primary_key_quotes_token_stream =
-        proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        proc_macro_common::generate_quotes::token_stream(
             &returning_primary_key_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -1422,7 +1422,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let application_json_quotes_token_stream =
-        proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        proc_macro_common::generate_quotes::token_stream(
             "application/json",
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -1500,7 +1500,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let where_name_stringified =
         <naming_constants::Where as naming_constants::Naming>::snake_case_stringified();
     let where_name_qoutes_token_stream =
-        proc_macro_common::generate_quotes::generate_quotes_token_stream(
+        proc_macro_common::generate_quotes::token_stream(
             &where_name_stringified,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -8678,7 +8678,7 @@ fn generate_swagger_open_api_token_stream(
         );
     let request_body_token_stream = {
         let request_body_description_token_stream = {
-            let value = proc_macro_common::generate_quotes::generate_quotes_stringified(&format!(
+            let value = proc_macro_common::generate_quotes::stringified(&format!(
                 "{table_name_stringified} {} {}",
                 proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(operation),
                 <naming_constants::Payload as naming_constants::Naming>::snake_case_stringified()

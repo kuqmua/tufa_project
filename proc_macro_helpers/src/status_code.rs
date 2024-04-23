@@ -689,7 +689,7 @@ impl TryFrom<&std::string::String> for StatusCode {
     }
 }
 
-pub fn get_only_one_status_code(
+pub fn get_only_one(
     variant: &syn::Variant,
     proc_macro_name_ident_stringified: &std::string::String,
 ) -> StatusCode {

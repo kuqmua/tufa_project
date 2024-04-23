@@ -91,7 +91,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let unnamed_upper_camel_case =
         <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified();
     let supported_enum_variant =
-        proc_macro_helpers::error_occurence::supported_enum_variant::create_supported_enum_variant(
+        proc_macro_helpers::error_occurence::supported_enum_variant::create(
             &data_enum,
             &proc_macro_name_ident_stringified,
         );
@@ -163,10 +163,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let error_occurence_lib_to_string_without_config_to_string_without_config_token_stream = error_occurence_lib_to_string_without_config_to_string_without_config_stringified
     .parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    let error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified = format!("{error_occurence_lib_to_string_without_config_to_string_without_config_stringified}{with_serialize_deserialize_upper_camel_case}");
-    let error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream = error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified
+    let error_occurence_lib_to_string_without_config_with_serialize_deserialize_stringified = format!("{error_occurence_lib_to_string_without_config_to_string_without_config_stringified}{with_serialize_deserialize_upper_camel_case}");
+    let error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream = error_occurence_lib_to_string_without_config_with_serialize_deserialize_stringified
     .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let crate_common_config_stringified = "config_lib"; //crate::common::config
     let crate_common_config_path_stringified =
         format!("{crate_common_config_stringified}::");
@@ -200,12 +200,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let with_serialize_deserialize_snake_case =
         proc_macro_helpers::naming_conventions::with_serialize_deserialize_snake_case_stringified();
-    let to_string_without_config_with_serialize_deserialize_stringified = format!(
+    let with_serialize_deserialize_stringified = format!(
         "{to_string_without_config_snake_case_stringified}_{with_serialize_deserialize_snake_case}"
     );
-    let to_string_without_config_with_serialize_deserialize_token_stream =
-    to_string_without_config_with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_without_config_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+    let with_serialize_deserialize_token_stream =
+    with_serialize_deserialize_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
     let into_upper_camel_case_stringified =
         <naming_constants::Into as naming_constants::Naming>::upper_camel_case_stringified();
     let into_snake_case_stringified =
@@ -828,7 +828,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let mut logic_for_source_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_get_code_occurence: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             // let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
-            let mut logic_for_source_to_string_without_config_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
+            let mut logic_for_source_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_get_code_occurence_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_compile_time_check_error_occurence_members: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
@@ -841,14 +841,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let mut enum_fields_logic_for_source_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_get_code_occurence: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 // let mut enum_fields_logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
-                let mut enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
+                let mut enum_fields_logic_for_source_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_get_code_occurence_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_compile_time_check_error_occurence_members: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut format_logic_for_source_to_string_with_or_without_config: Vec<&str> = Vec::with_capacity(fields_vec.len());
                 let mut fields_logic_for_source_to_string_with_config_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut fields_logic_for_source_to_string_without_config_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
-                let mut fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
+                let mut fields_logic_for_source_with_serialize_deserialize_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut fields_logic_for_into_serialize_deserialize_version_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut fields_logic_for_compile_time_check_error_occurence_members_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 fields_vec.into_iter().enumerate().for_each(|(index, (field_ident, error_or_code_occurence))|{
@@ -1138,7 +1138,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             let (
                                 logic_for_source_to_string_with_config_for_attribute,
                                 logic_for_source_to_string_without_config_for_attribute,
-                                logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute,
+                                logic_for_source_with_serialize_deserialize_for_attribute,
                                 logic_for_into_serialize_deserialize_version_for_attribute,
                                 field_type_with_serialize_deserialize_token_stream,
                                 _serde_borrow_attribute_token_stream,
@@ -1489,7 +1489,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_token_stream(
+                                                    #error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream::#with_serialize_deserialize_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1901,20 +1901,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
                                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_vec_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                    let vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case = format!(
+                                    let with_serialize_deserialize_upper_camel_case = format!(
                                         "{}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}{with_serialize_deserialize_upper_camel_case}",
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                     );
-                                    let vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case);
-                                    let vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
-                                    vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified
+                                    let with_serialize_deserialize_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&with_serialize_deserialize_upper_camel_case);
+                                    let with_serialize_deserialize_snake_case_token_stream =
+                                    with_serialize_deserialize_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                    let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_without_config_to_string_snake_case_stringified}::{vec_to_string_without_config_to_string_with_serialize_deserialize_upper_camel_case}");
-                                    let error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_token_stream =
-                                    error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {with_serialize_deserialize_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    let error_occurence_lib_with_serialize_deserialize_with_serialize_deserialize_stringified = format!("{error_occurence_lib_stringified}::{vec_to_string_without_config_to_string_snake_case_stringified}::{with_serialize_deserialize_upper_camel_case}");
+                                    let error_occurence_lib_with_serialize_deserialize_with_serialize_deserialize_token_stream =
+                                    error_occurence_lib_with_serialize_deserialize_with_serialize_deserialize_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_with_serialize_deserialize_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     let vec_to_string_with_config_to_string_upper_camel_case = format!(
                                         "{}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1953,7 +1953,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_to_string_without_config_to_string_with_serialize_deserialize_vec_to_string_without_config_to_string_with_serialize_deserialize_token_stream::#vec_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream(
+                                                    #error_occurence_lib_with_serialize_deserialize_with_serialize_deserialize_token_stream::#with_serialize_deserialize_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -3722,7 +3722,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             // enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
                             //     #field_ident: #field_type_with_serialize_deserialize_token_stream
                             // });
-                            enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote!{
+                            enum_fields_logic_for_source_with_serialize_deserialize.push(quote::quote!{
                                 #field_ident
                             });
                             enum_fields_logic_for_get_code_occurence_with_serialize_deserialize.push(quote::quote!{
@@ -3737,7 +3737,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             format_logic_for_source_to_string_with_or_without_config.push("{}");
                             fields_logic_for_source_to_string_with_config_for_attribute.push(logic_for_source_to_string_with_config_for_attribute);
                             fields_logic_for_source_to_string_without_config_for_attribute.push(logic_for_source_to_string_without_config_for_attribute);
-                            fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute.push(logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute);
+                            fields_logic_for_source_with_serialize_deserialize_for_attribute.push(logic_for_source_with_serialize_deserialize_for_attribute);
                             fields_logic_for_into_serialize_deserialize_version_for_attribute.push(quote::quote!{
                                 #field_ident: #logic_for_into_serialize_deserialize_version_for_attribute
                             });
@@ -3768,7 +3768,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             // enum_fields_logic_for_enum_with_serialize_deserialize.push(quote::quote!{
                             //     #field_ident: #code_occurence_type_with_serialize_deserialize_token_stream
                             // });
-                            enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote!{
+                            enum_fields_logic_for_source_with_serialize_deserialize.push(quote::quote!{
                                 #field_ident: #unused_argument_handle_token_stream
                             });
                             enum_fields_logic_for_get_code_occurence_with_serialize_deserialize.push(quote::quote!{
@@ -3834,14 +3834,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 //         #(#enum_fields_logic_for_enum_with_serialize_deserialize),*
                 //     }
                 // });
-                logic_for_source_to_string_without_config_with_serialize_deserialize.push(quote::quote! {
+                logic_for_source_with_serialize_deserialize.push(quote::quote! {
                     #ident_with_serialize_deserialize_token_stream::#variant_ident {
-                        #(#enum_fields_logic_for_source_to_string_without_config_with_serialize_deserialize),*
+                        #(#enum_fields_logic_for_source_with_serialize_deserialize),*
                     } => {
                         format!(
                             #format_logic_for_source_to_string_with_or_without_config_handle_token_stream
                             ,
-                            #(#fields_logic_for_source_to_string_without_config_with_serialize_deserialize_for_attribute),*
+                            #(#fields_logic_for_source_with_serialize_deserialize_for_attribute),*
                         )
                     }
                 });
@@ -3872,23 +3872,22 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let logic_for_source_to_string_with_config = logic_for_source_to_string_with_config.iter();
             let logic_for_source_to_string_without_config = logic_for_source_to_string_without_config.iter();
             let logic_for_get_code_occurence = logic_for_get_code_occurence.iter();
-            let logic_for_source_to_string_without_config_with_serialize_deserialize = logic_for_source_to_string_without_config_with_serialize_deserialize.iter();
+            let logic_for_source_with_serialize_deserialize = logic_for_source_with_serialize_deserialize.iter();
             let logic_for_get_code_occurence_with_serialize_deserialize = logic_for_get_code_occurence_with_serialize_deserialize.iter();
             let logic_for_into_serialize_deserialize_version = logic_for_into_serialize_deserialize_version.iter();
             let logic_for_compile_time_check_error_occurence_members = logic_for_compile_time_check_error_occurence_members.iter();
-            let get_code_occurence_upper_camel_case = format!("{get_upper_camel_case_stringified}{code_occurence_upper_camel_case_stringified}");
-            let get_code_occurence_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_code_occurence_upper_camel_case);
-            let error_occurence_lib_get_code_occurence_get_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{get_code_occurence_upper_camel_case}");
-            let error_occurence_lib_get_code_occurence_get_code_occurence_token_stream =
-            error_occurence_lib_get_code_occurence_get_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_get_code_occurence_get_code_occurence_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            let get_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&get_upper_camel_case_stringified);
+            let error_occurence_lib_code_occurence_get_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{get_upper_camel_case_stringified}");
+            let error_occurence_lib_code_occurence_get_token_stream =
+            error_occurence_lib_code_occurence_get_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_code_occurence_get_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let error_occurence_lib_code_occurence_code_occurence_stringified = format!("{error_occurence_lib_stringified}::{code_occurence_snake_case_stringified}::{code_occurence_upper_camel_case_stringified}");
             let error_occurence_lib_code_occurence_code_occurence_token_stream =
             error_occurence_lib_code_occurence_code_occurence_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_code_occurence_code_occurence_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-            let get_code_occurence_token_stream =
-            get_code_occurence_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {get_code_occurence_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+            let get_token_stream =
+            get_snake_case_stringified.parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {get_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let compile_time_check_error_occurence_members_impl_token_stream = if should_generate_impl_compile_time_check_error_occurence_members {
                 quote::quote!{
                     impl<#generics> #ident<#generics> {
@@ -3939,8 +3938,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         }
                     }
                 }
-                impl #error_occurence_lib_get_code_occurence_get_code_occurence_token_stream for #ident {
-                    fn #get_code_occurence_token_stream(&self) -> &#error_occurence_lib_code_occurence_code_occurence_token_stream
+                impl #error_occurence_lib_code_occurence_get_token_stream for #ident {
+                    fn #get_token_stream(&self) -> &#error_occurence_lib_code_occurence_code_occurence_token_stream
                     {
                         match self {
                             #(#logic_for_get_code_occurence),*
@@ -3951,14 +3950,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 {
                     fn #source_to_string_without_config_token_stream(&self) -> std::string::String {
                         match self {
-                            #(#logic_for_source_to_string_without_config_with_serialize_deserialize),*
+                            #(#logic_for_source_with_serialize_deserialize),*
                         }
                     }
                 }
-                impl #error_occurence_lib_get_code_occurence_get_code_occurence_token_stream
+                impl #error_occurence_lib_code_occurence_get_token_stream
                     for #ident_with_serialize_deserialize_token_stream
                 {
-                    fn #get_code_occurence_token_stream(
+                    fn #get_token_stream(
                         &self
                     ) -> &#error_occurence_lib_code_occurence_code_occurence_token_stream
                     {
@@ -4005,7 +4004,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let mut logic_for_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             // let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
-            let mut logic_for_to_string_without_config_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
+            let mut logic_for_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             let mut logic_for_compile_time_check_error_occurence_members: Vec<proc_macro2::TokenStream> = Vec::with_capacity(data_enum_variants_len);
             data_enum.variants.iter().for_each(|variant|{
@@ -4048,9 +4047,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 //         #variant_ident(#type_token_stream)
                 //     }
                 // });
-                logic_for_to_string_without_config_with_serialize_deserialize.push(quote::quote!{
+                logic_for_with_serialize_deserialize.push(quote::quote!{
                     #ident_with_serialize_deserialize_token_stream::#variant_ident(i) => {
-                         i.#to_string_without_config_with_serialize_deserialize_token_stream()
+                         i.#with_serialize_deserialize_token_stream()
                     }
                 });
                 logic_for_into_serialize_deserialize_version.push(quote::quote!{
@@ -4067,7 +4066,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let logic_for_to_string_with_config_generated = logic_for_to_string_with_config.iter();
             let logic_for_to_string_without_config_generated = logic_for_to_string_without_config.iter();
             // let logic_for_enum_with_serialize_deserialize_generated = logic_for_enum_with_serialize_deserialize.iter();
-            let logic_for_to_string_without_config_with_serialize_deserialize_generated = logic_for_to_string_without_config_with_serialize_deserialize.iter();
+            let logic_for_with_serialize_deserialize_generated = logic_for_with_serialize_deserialize.iter();
             let logic_for_into_serialize_deserialize_version_generated = logic_for_into_serialize_deserialize_version.iter();
             let logic_for_compile_time_check_error_occurence_members_generated = logic_for_compile_time_check_error_occurence_members.iter();
             quote::quote! {
@@ -4103,14 +4102,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }
                 }
                 impl<#trait_lifetime_token_stream>
-                    #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream<
+                    #error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream<
                         #trait_lifetime_token_stream
                     >
                     for #ident_with_serialize_deserialize_token_stream
                 {
-                    fn #to_string_without_config_with_serialize_deserialize_token_stream(&self) -> std::string::String {
+                    fn #with_serialize_deserialize_token_stream(&self) -> std::string::String {
                         match self {
-                            #(#logic_for_to_string_without_config_with_serialize_deserialize_generated),*
+                            #(#logic_for_with_serialize_deserialize_generated),*
                         }
                     }
                 }
@@ -4137,7 +4136,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         write!(
                             f,
                             "{}", 
-                            #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_token_stream(
+                            #error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream::#with_serialize_deserialize_token_stream(
                                 self
                             )
                         )

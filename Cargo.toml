@@ -578,7 +578,7 @@ mixed_case_hex_literals = { level = "deny", priority = 0 }
 mixed_read_write_in_expression = { level = "deny", priority = 0 }
 mod_module_files = { level = "allow", priority = 0 }
 module_inception = { level = "deny", priority = 0 }
-module_name_repetitions = { level = "allow", priority = 0 }
+module_name_repetitions = { level = "deny", priority = 0 }
 modulo_arithmetic = { level = "deny", priority = 0 }
 modulo_one = { level = "deny", priority = 0 }
 multi_assignments = { level = "deny", priority = 0 }

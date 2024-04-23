@@ -4,7 +4,7 @@ pub enum SuportedEnumVariant {
     Unnamed,
 }
 
-pub fn create_supported_enum_variant(
+pub fn create(
     data_enum: &syn::DataEnum,
     proc_macro_name_ident_stringified: &std::string::String,
 ) -> SuportedEnumVariant {

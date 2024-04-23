@@ -12,7 +12,7 @@ pub trait ToStringWithConfig<'a> {
 impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
 where
     SelfGeneric: crate::source_to_string_with_config::SourceToStringWithConfig<'a>
-        + crate::code_occurence::GetCodeOccurence,
+        + crate::code_occurence::Get,
 {
     fn to_string_with_config<
         ConfigGeneric: app_state::GetSourcePlaceType
@@ -24,8 +24,8 @@ where
     ) -> std::string::String {
         crate::helpers::source_and_code_occurence_formatter(
             self.source_to_string_with_config(config),
-            crate::code_occurence::CodeOccurencePrepareForLogWithConfig::code_occurence_prepare_for_log_with_config(
-                self.get_code_occurence(),
+            crate::code_occurence::PrepareForLogWithConfig::prepare_for_log_with_config(
+                self.get(),
                 config
             )
         )
