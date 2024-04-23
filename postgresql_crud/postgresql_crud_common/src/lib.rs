@@ -1176,88 +1176,90 @@ impl SupportedSqlxPostgresType {
     }
     fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         match self {
-            Self::StdPrimitiveBool => FromOrTryFrom::From,
-            Self::StdOptionOptionStdPrimitiveBool => FromOrTryFrom::From,
-            Self::StdPrimitiveI16 => FromOrTryFrom::From,
-            Self::StdOptionOptionStdPrimitiveI16 => FromOrTryFrom::From,
-            Self::StdPrimitiveI32 => FromOrTryFrom::From,
-            Self::StdOptionOptionStdPrimitiveI32 => FromOrTryFrom::From,
-            Self::StdPrimitiveI64 => FromOrTryFrom::From,
-            Self::StdOptionOptionStdPrimitiveI64 => FromOrTryFrom::From,
-            Self::StdPrimitiveF32 => FromOrTryFrom::From,
-            Self::StdOptionOptionStdPrimitiveF32 => FromOrTryFrom::From,
-            Self::StdPrimitiveF64 => FromOrTryFrom::From,
-            Self::StdOptionOptionStdPrimitiveF64 => FromOrTryFrom::From,
-            Self::StdStringString => FromOrTryFrom::From,
-            Self::StdOptionOptionStdStringString => FromOrTryFrom::From,
-            Self::StdVecVecStdPrimitiveU8 => FromOrTryFrom::From,
-            Self::StdOptionOptionStdVecVecStdPrimitiveU8 => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgInterval => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgInterval => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI64 => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI32 => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => FromOrTryFrom::TryFrom,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => FromOrTryFrom::TryFrom,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeDate => FromOrTryFrom::TryFrom,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesBigDecimal => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesDecimal => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgMoney => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgMoney => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgCiText => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxPostgresTypesPgCiText => FromOrTryFrom::From,
-            Self::SqlxTypesBigDecimal => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesBigDecimal => FromOrTryFrom::From,
-            Self::SqlxTypesDecimal => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesDecimal => FromOrTryFrom::From,
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtc => FromOrTryFrom::From,
-            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesChronoDateTimeSqlxTypesChronoLocal => FromOrTryFrom::From,
-            Self::SqlxTypesChronoNaiveDateTime => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesChronoNaiveDateTime => FromOrTryFrom::From,
-            Self::SqlxTypesChronoNaiveDate => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesChronoNaiveDate => FromOrTryFrom::From,
-            Self::SqlxTypesChronoNaiveTime => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesChronoNaiveTime => FromOrTryFrom::From,
-            Self::SqlxPostgresTypesPgTimeTz => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxPostgresTypesPgTimeTz => FromOrTryFrom::TryFrom,
-            Self::SqlxTypesTimePrimitiveDateTime => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxTypesTimePrimitiveDateTime => FromOrTryFrom::TryFrom,
-            Self::SqlxTypesTimeOffsetDateTime => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxTypesTimeOffsetDateTime => FromOrTryFrom::TryFrom,
-            Self::SqlxTypesTimeDate => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxTypesTimeDate => FromOrTryFrom::TryFrom,
-            Self::SqlxTypesTimeTime => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxTypesTimeTime => FromOrTryFrom::TryFrom,
-            Self::SqlxTypesUuidUuid => FromOrTryFrom::TryFrom,
-            Self::StdOptionOptionSqlxTypesUuidUuid => FromOrTryFrom::TryFrom,
-            Self::SqlxTypesIpnetworkIpNetwork => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesIpnetworkIpNetwork => FromOrTryFrom::From,
-            Self::StdNetIpAddr => FromOrTryFrom::From,
-            Self::StdOptionOptionStdNetIpAddr => FromOrTryFrom::From,
-            Self::SqlxTypesMacAddressMacAddress => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesMacAddressMacAddress => FromOrTryFrom::From,
-            Self::SqlxTypesBitVec => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesBitVec => FromOrTryFrom::From,
-            Self::SqlxTypesJsonT => FromOrTryFrom::From,
-            Self::StdOptionOptionSqlxTypesJsonT => FromOrTryFrom::From,
-            Self::SerdeJsonValue => FromOrTryFrom::From,
+            Self::StdPrimitiveBool |
+            Self::StdOptionOptionStdPrimitiveBool |
+            Self::StdPrimitiveI16 |
+            Self::StdOptionOptionStdPrimitiveI16 |
+            Self::StdPrimitiveI32 |
+            Self::StdOptionOptionStdPrimitiveI32 |
+            Self::StdPrimitiveI64 |
+            Self::StdOptionOptionStdPrimitiveI64 |
+            Self::StdPrimitiveF32 |
+            Self::StdOptionOptionStdPrimitiveF32 |
+            Self::StdPrimitiveF64 |
+            Self::StdOptionOptionStdPrimitiveF64 |
+            Self::StdStringString |
+            Self::StdOptionOptionStdStringString |
+            Self::StdVecVecStdPrimitiveU8 |
+            Self::StdOptionOptionStdVecVecStdPrimitiveU8 |
+            Self::SqlxPostgresTypesPgInterval |
+            Self::StdOptionOptionSqlxPostgresTypesPgInterval |
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI64 |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI64 |
+            Self::SqlxPostgresTypesPgRangeStdPrimitiveI32 |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI32 |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesBigDecimal |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesDecimal |
+            Self::SqlxPostgresTypesPgMoney |
+            Self::StdOptionOptionSqlxPostgresTypesPgMoney |
+            Self::SqlxPostgresTypesPgCiText |
+            Self::StdOptionOptionSqlxPostgresTypesPgCiText |
+            Self::SqlxTypesBigDecimal |
+            Self::StdOptionOptionSqlxTypesBigDecimal |
+            Self::SqlxTypesDecimal |
+            Self::StdOptionOptionSqlxTypesDecimal |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::StdOptionOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtc |
+            Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::StdOptionOptionSqlxTypesChronoDateTimeSqlxTypesChronoLocal |
+            Self::SqlxTypesChronoNaiveDateTime |
+            Self::StdOptionOptionSqlxTypesChronoNaiveDateTime |
+            Self::SqlxTypesChronoNaiveDate |
+            Self::StdOptionOptionSqlxTypesChronoNaiveDate |
+            Self::SqlxTypesChronoNaiveTime |
+            Self::StdOptionOptionSqlxTypesChronoNaiveTime |
+            Self::SqlxTypesIpnetworkIpNetwork |
+            Self::StdOptionOptionSqlxTypesIpnetworkIpNetwork |
+            Self::StdNetIpAddr |
+            Self::StdOptionOptionStdNetIpAddr |
+            Self::SqlxTypesMacAddressMacAddress |
+            Self::StdOptionOptionSqlxTypesMacAddressMacAddress |
+            Self::SqlxTypesBitVec |
+            Self::StdOptionOptionSqlxTypesBitVec |
+            Self::SqlxTypesJsonT |
+            Self::StdOptionOptionSqlxTypesJsonT |
+            Self::SerdeJsonValue |
             Self::StdOptionOptionSerdeJsonValue => FromOrTryFrom::From,
+
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
+            Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
+            Self::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeDate |
+            Self::SqlxPostgresTypesPgTimeTz |
+            Self::StdOptionOptionSqlxPostgresTypesPgTimeTz |
+            Self::SqlxTypesTimePrimitiveDateTime |
+            Self::StdOptionOptionSqlxTypesTimePrimitiveDateTime |
+            Self::SqlxTypesTimeOffsetDateTime |
+            Self::StdOptionOptionSqlxTypesTimeOffsetDateTime |
+            Self::SqlxTypesTimeDate |
+            Self::StdOptionOptionSqlxTypesTimeDate |
+            Self::SqlxTypesTimeTime |
+            Self::StdOptionOptionSqlxTypesTimeTime |
+            Self::SqlxTypesUuidUuid |
+            Self::StdOptionOptionSqlxTypesUuidUuid => FromOrTryFrom::TryFrom,
+            
         }
     }
 }
@@ -1976,162 +1978,165 @@ impl std::convert::TryFrom<&RustSqlxMapToPostgresTypeVariant> for RustSqlxMapToP
     type Error = ();
     fn try_from(value: &RustSqlxMapToPostgresTypeVariant) -> Result<Self, Self::Error> {
         match value {
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull => Err(()),
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull |
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2 => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2NotNull => Err(()),
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerialNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2 |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2NotNull |
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlIntNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerialNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4 => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4NotNull => Err(()),
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlIntNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerialNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4 |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4NotNull |
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull => Err(()),
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull |
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlReal |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlRealNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4 |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4NotNull |
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecision |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8 |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8NotNull |
+
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarchar |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarcharNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharN |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiText |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiTextNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlBytea |
+            RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgIntervalAsPostgresqlInterval |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgMoneyAsPostgresqlMoney |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgCiTextAsPostgresqlCiText |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBigDecimalAsPostgresqlNumeric |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBigDecimalAsPostgresqlNumericNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumeric |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumericNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDate |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTime |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz |
+            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDate |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDateNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTime |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTimeNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInet |
+            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInetNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidr |
+            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidrNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBit |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBit |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB |
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull |
+
+            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson |
+            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull |
+            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonB |
+            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonBNotNull => Err(()),
+
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => Ok(Self::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlReal => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlRealNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4 => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4NotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecision => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8 => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8NotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarchar => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarcharNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharN => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiText => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiTextNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlBytea => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlByteaNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgIntervalAsPostgresqlIntervalNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8RangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4RangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTsTzRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTsTzRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeAsPostgresqlTsTzRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTsRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTsRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRangeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgMoneyAsPostgresqlMoneyNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgCiTextAsPostgresqlCiText => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgCiTextAsPostgresqlCiTextNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBigDecimalAsPostgresqlNumeric => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBigDecimalAsPostgresqlNumericNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumeric => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesDecimalAsPostgresqlNumericNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDate => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveDateAsPostgresqlDateNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTime => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesChronoNaiveTimeAsPostgresqlTimeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTz => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxPostgresTypesPgTimeTzAsPostgresqlTimeTzNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTz => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeOffsetDateTimeAsPostgresqlTimestampTzNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDate => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeDateAsPostgresqlDateNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTime => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => Err(()),
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Ok(Self::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey),
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInet => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInetNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidr => Err(()),
-            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidrNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBit => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBit => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull => Err(()),
-
-            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonB => Err(()),
-            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonBNotNull => Err(()),
+            
         }
     }
 }
