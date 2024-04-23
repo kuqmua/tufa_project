@@ -538,7 +538,7 @@ map_flatten = { level = "deny", priority = 0 }
 map_identity = { level = "deny", priority = 0 }
 map_unwrap_or = { level = "deny", priority = 0 }
 match_as_ref = { level = "deny", priority = 0 }
-match_bool = { level = "allow", priority = 0 }
+match_bool = { level = "deny", priority = 0 }
 match_like_matches_macro = { level = "deny", priority = 0 }
 match_on_vec_items = { level = "deny", priority = 0 }
 match_overlapping_arm = { level = "deny", priority = 0 }

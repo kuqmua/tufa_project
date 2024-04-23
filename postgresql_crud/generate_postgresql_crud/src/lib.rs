@@ -151,8 +151,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let mut primary_key_field_option = None;
         for element in &fields_named {
             match &element.field.ty {
-                syn::Type::Path(value) => match value.path.segments.len() == 2 {
-                    true => {
+                syn::Type::Path(value) => {
+                    if value.path.segments.len() == 2 {
                         assert!(value.path.segments.first().expect("no first value in punctuated").ident == postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, "{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
                         match value.path.segments.first().expect("no first value in punctuated").arguments {
                             syn::PathArguments::None => (),
@@ -178,8 +178,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             },
                             Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed {e}")
                         }
-                    },
-                    false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                    }
+                    else {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                    }
                 },
                 _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
             }
@@ -2355,30 +2357,30 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 naming_constants::FIELD_IDENT_IS_NONE
                             )
                         });
-                        let error_occurence_attribute = match *field_ident == *proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified() {
-                            true => quote::quote! {},
-                            false => {
-                                let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
-                                for element in &field.attrs {
-                                    if element.path().segments.len() == 1 {
-                                        let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
-                                        if let Ok(value) = {
-                                            use std::str::FromStr;
-                                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
-                                        } {
-                                            match error_occurence_attribute {
-                                                Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
-                                                None => {
-                                                    error_occurence_attribute = Some(value);
-                                                }
+                        let error_occurence_attribute = if *field_ident == *proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified() {
+                            proc_macro2::TokenStream::new()
+                        }
+                        else {
+                            let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
+                            for element in &field.attrs {
+                                if element.path().segments.len() == 1 {
+                                    let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
+                                    if let Ok(value) = {
+                                        use std::str::FromStr;
+                                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
+                                    } {
+                                        match error_occurence_attribute {
+                                            Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
+                                            None => {
+                                                error_occurence_attribute = Some(value);
                                             }
                                         }
                                     }
                                 }
-                                match error_occurence_attribute {
-                                    Some(value) => value.to_attribute_view_token_stream(),
-                                    None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
-                                }
+                            }
+                            match error_occurence_attribute {
+                                Some(value) => value.to_attribute_view_token_stream(),
+                                None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
                             }
                         };
                         let field_type = &field.ty;
@@ -2475,30 +2477,30 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 naming_constants::FIELD_IDENT_IS_NONE
                             )
                         });
-                        let error_occurence_attribute = match *field_ident == *proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified() {
-                            true => quote::quote! {},
-                            false => {
-                                let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
-                                for element in &field.attrs {
-                                    if element.path().segments.len() == 1 {
-                                        let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
-                                        if let Ok(value) = {
-                                            use std::str::FromStr;
-                                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
-                                        } {
-                                            match error_occurence_attribute {
-                                                Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
-                                                None => {
-                                                    error_occurence_attribute = Some(value);
-                                                }
+                        let error_occurence_attribute = if *field_ident == *proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified() {
+                            proc_macro2::TokenStream::new()
+                        }
+                        else {
+                            let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
+                            for element in &field.attrs {
+                                if element.path().segments.len() == 1 {
+                                    let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
+                                    if let Ok(value) = {
+                                        use std::str::FromStr;
+                                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
+                                    } {
+                                        match error_occurence_attribute {
+                                            Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
+                                            None => {
+                                                error_occurence_attribute = Some(value);
                                             }
                                         }
                                     }
                                 }
-                                match error_occurence_attribute {
-                                    Some(value) => value.to_attribute_view_token_stream(),
-                                    None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
-                                }
+                            }
+                            match error_occurence_attribute {
+                                Some(value) => value.to_attribute_view_token_stream(),
+                                None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
                             }
                         };
                         let field_type = &field.ty;
@@ -2596,13 +2598,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
                         let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                        match incremented_index == fields_named_excluding_primary_key_len {
-                            true => {
-                                acc.push_str(&format!("{field_ident}"));
-                            },
-                            false => {
-                                acc.push_str(&format!("{field_ident}{dot_space}"));
-                            },
+                        if incremented_index == fields_named_excluding_primary_key_len {
+                            acc.push_str(&format!("{field_ident}"));
+                        }
+                        else {
+                            acc.push_str(&format!("{field_ident}{dot_space}"));
                         }
                         acc
                     });
@@ -2636,9 +2636,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             });
                             quote::quote!{#(#value),*}
                         };
-                        match is_fields_named_excluding_primary_key_len_equals_one {
-                            true => column_vecs_handle_token_stream,
-                            false => quote::quote!{(#column_vecs_handle_token_stream)}
+                        if is_fields_named_excluding_primary_key_len_equals_one {
+                            column_vecs_handle_token_stream
+                        }
+                        else {
+                            quote::quote!{(#column_vecs_handle_token_stream)}
                         }
                     };
                     let column_vecs_with_capacity_token_stream = {
@@ -2646,21 +2648,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let value = fields_named_excluding_primary_key.iter().map(|_|quote::quote!{std::vec::Vec::with_capacity(#current_vec_len_snake_case_token_stream)});
                             quote::quote!{#(#value),*}
                         };
-                        match is_fields_named_excluding_primary_key_len_equals_one {
-                            true => column_vecs_with_capacity_handle_token_stream,
-                            false => quote::quote!{(#column_vecs_with_capacity_handle_token_stream)}
+                        if is_fields_named_excluding_primary_key_len_equals_one {
+                            column_vecs_with_capacity_handle_token_stream
+                        }
+                        else {
+                            quote::quote!{(#column_vecs_with_capacity_handle_token_stream)}
                         }
                     };
                     let columns_acc_push_elements_token_stream = fields_named_excluding_primary_key.iter().enumerate().map(|(index, element)|{
                         let field_ident = &element.field_ident;
-                        let index_token_stream = match is_fields_named_excluding_primary_key_len_equals_one {
-                            true => proc_macro2::TokenStream::new(),
-                            false => {
-                                let index_stringified = index.to_string();
-                                let value_token_stream = index_stringified.parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                quote::quote!{.#value_token_stream}
-                            }
+                        let index_token_stream = if is_fields_named_excluding_primary_key_len_equals_one {
+                            proc_macro2::TokenStream::new()
+                        }
+                        else {
+                            let index_stringified = index.to_string();
+                            let value_token_stream = index_stringified.parse::<proc_macro2::TokenStream>()
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            quote::quote!{.#value_token_stream}
                         };
                         //space need to to concat token stream correctly
                         quote::quote!{#acc_name_token_stream #index_token_stream.push(#element_name_token_stream.#field_ident);}
@@ -3272,15 +3276,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         ), |mut acc, (index, element)| {
                             let field_ident = &element.field_ident;
                             let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                            match incremented_index == fields_named_excluding_primary_key_len {
-                                true => {
-                                    acc.0.push_str(&format!("{field_ident}"));
-                                    acc.1.push_str(&format!("${incremented_index}"));
-                                },
-                                false => {
-                                    acc.0.push_str(&format!("{field_ident}{dot_space}"));
-                                    acc.1.push_str(&format!("${incremented_index}{dot_space}"));
-                                },
+                            if incremented_index == fields_named_excluding_primary_key_len {
+                                acc.0.push_str(&format!("{field_ident}"));
+                                acc.1.push_str(&format!("${incremented_index}"));
+                            }
+                            else {
+                                acc.0.push_str(&format!("{field_ident}{dot_space}"));
+                                acc.1.push_str(&format!("${incremented_index}{dot_space}"));
                             }
                             acc
                         })
@@ -5440,11 +5442,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let query_string_token_stream = {
                     let column_names = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                        let possible_dot_space = match (
+                        let possible_dot_space = if (
                             index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
                         ) == fields_named_len {
-                            true => "",
-                            false => dot_space,
+                            ""
+                        }
+                        else {
+                            dot_space
                         };
                         acc.push_str(&format!("{}{possible_dot_space}", &element.field_ident));
                         acc
@@ -8091,76 +8095,74 @@ fn generate_http_request_many_token_stream(
                             naming_constants::FIELD_IDENT_IS_NONE
                         )
                     });
-                    let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
-                        true => {
-                            let code_occurence_type_token_stream = {
-                                if let syn::Type::Path(type_path) = &field.ty {
-                                    let mut code_occurence_type_repeat_checker = false;
-                                    let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                    .fold(std::string::String::new(), |mut acc, path_segment| {
-                                        let path_segment_ident = &path_segment.ident;
-                                        match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                            true => {
-                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                acc.push_str(&path_segment_ident.to_string());
-                                                code_occurence_type_repeat_checker = true;
-                                            },
-                                            false => acc.push_str(&format!("{path_segment_ident}::")),
-                                        }
-                                        acc
-                                    });
-                                    assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                    code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                }
-                                else {
-                                    let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
-                                    panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED
-                                    );
-                                }
-                            };
-                            code_occurence_type_token_stream
-                        },
-                        false => {
-                            let attribute = {
-                                let mut option_attribute = None;
-                                field.attrs.iter().for_each(|attr|{
-                                    if attr.path().segments.len() == 1 {
-                                        let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path().segments.iter().next() {
-                                            Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path().segments.iter().next() is None"),
-                                        };
-                                        if let Ok(value) = {
-                                            use std::str::FromStr;
-                                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
-                                        } {
-                                            if option_attribute.is_some() {
-                                                panic!("{error_message}");
-                                            }
-                                            else {
-                                                option_attribute = Some(value);
-                                            }
-                                        }
-                                    }//other attributes are not for this proc_macro
+                    let field_type_with_serialize_deserialize = if *field_ident == *code_occurence_snake_case_stringified {
+                        let code_occurence_type_token_stream = {
+                            if let syn::Type::Path(type_path) = &field.ty {
+                                let mut code_occurence_type_repeat_checker = false;
+                                let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                .fold(std::string::String::new(), |mut acc, path_segment| {
+                                    let path_segment_ident = &path_segment.ident;
+                                    match *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                        true => {
+                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                            acc.push_str(&path_segment_ident.to_string());
+                                            code_occurence_type_repeat_checker = true;
+                                        },
+                                        false => acc.push_str(&format!("{path_segment_ident}::")),
+                                    }
+                                    acc
                                 });
-                                option_attribute.unwrap_or_else(|| panic!(
-                                    "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                    naming_constants::IS_NONE_STRINGIFIED
-                                ))
-                            };
-                            let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                                field,
-                                proc_macro_name_upper_camel_case_ident_stringified,
-                            );
-                            proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
-                                attribute,
-                                supported_container,
-                                proc_macro_name_upper_camel_case_ident_stringified,
-                            )
-                        },
+                                assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
+                                code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            }
+                            else {
+                                let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
+                                panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                );
+                            }
+                        };
+                        code_occurence_type_token_stream
+                    }
+                    else {
+                        let attribute = {
+                            let mut option_attribute = None;
+                            field.attrs.iter().for_each(|attr|{
+                                if attr.path().segments.len() == 1 {
+                                    let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
+                                    let attr_ident = match attr.path().segments.iter().next() {
+                                        Some(path_segment) => &path_segment.ident,
+                                        None => panic!("attr.path().segments.iter().next() is None"),
+                                    };
+                                    if let Ok(value) = {
+                                        use std::str::FromStr;
+                                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
+                                    } {
+                                        if option_attribute.is_some() {
+                                            panic!("{error_message}");
+                                        }
+                                        else {
+                                            option_attribute = Some(value);
+                                        }
+                                    }
+                                }//other attributes are not for this proc_macro
+                            });
+                            option_attribute.unwrap_or_else(|| panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
+                                naming_constants::IS_NONE_STRINGIFIED
+                            ))
+                        };
+                        let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
+                            field,
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                            attribute,
+                            supported_container,
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        )
                     };
                     (field_ident.clone(), field_type_with_serialize_deserialize)
                 }).collect::<Vec<(syn::Ident, proc_macro2::TokenStream)>>();
@@ -8222,29 +8224,28 @@ fn generate_http_request_many_token_stream(
         .for_each(|(index, status_code_attribute)|{
             let try_operation_response_variants_desirable_attribute_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &status_code_attribute);
             let http_status_code_token_stream = status_code_attribute.to_http_status_code_token_stream();
-            match index == unique_status_codes_len_minus_one{
-                true => {
-                    is_last_element_found = true;
-                    status_code_enums_try_from_variants.push(quote::quote! {
-                        else {
-                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#unexpected_status_code_initialization_token_stream);
-                        }
-                    });
-                },
-                false => {
-                    if *desirable_status_code != status_code_attribute {
-                        status_code_enums_try_from_variants.push(quote::quote! {
-                            else if status_code == #http_status_code_token_stream {
-                                match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
-                                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
-                                    Err(#error_value_snake_case_token_stream) => {
-                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
-                                    }
-                                }
-                            }
-                        });
+            if index == unique_status_codes_len_minus_one{
+                is_last_element_found = true;
+                status_code_enums_try_from_variants.push(quote::quote! {
+                    else {
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#unexpected_status_code_initialization_token_stream);
                     }
-                },
+                });
+            }
+            else if *desirable_status_code != status_code_attribute {
+                status_code_enums_try_from_variants.push(quote::quote! {
+                    else if status_code == #http_status_code_token_stream {
+                        match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                            Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
+                            Err(#error_value_snake_case_token_stream) => {
+                                return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
+                            }
+                        }
+                    }
+                });
+            }
+            else {
+                //clippy lint forces to add empty else
             }
         });
         assert!(is_last_element_found, "{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
@@ -8408,76 +8409,74 @@ fn generate_try_operation_token_stream(
                             naming_constants::FIELD_IDENT_IS_NONE
                         )
                     });
-                    let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
-                        true => {
-                            let code_occurence_type_token_stream = {
-                                if let syn::Type::Path(type_path) = &field.ty {
-                                    let mut code_occurence_type_repeat_checker = false;
-                                    let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                    .fold(std::string::String::new(), |mut acc, path_segment| {
-                                        let path_segment_ident = &path_segment.ident;
-                                        match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                            true => {
-                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                acc.push_str(&path_segment_ident.to_string());
-                                                code_occurence_type_repeat_checker = true;
-                                            },
-                                            false => acc.push_str(&format!("{path_segment_ident}::")),
-                                        }
-                                        acc
-                                    });
-                                    assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                    code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                }
-                                else {
-                                    let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
-                                    panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED
-                                    );
-                                }
-                            };
-                            code_occurence_type_token_stream
-                        },
-                        false => {
-                            let attribute = {
-                                let mut option_attribute = None;
-                                field.attrs.iter().for_each(|attr|{
-                                    if attr.path().segments.len() == 1 {
-                                        let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path().segments.iter().next() {
-                                            Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path().segments.iter().next() is None"),
-                                        };
-                                        if let Ok(value) = {
-                                            use std::str::FromStr;
-                                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
-                                        } {
-                                            if option_attribute.is_some() {
-                                                panic!("{error_message}");
-                                            }
-                                            else {
-                                                option_attribute = Some(value);
-                                            }
-                                        }
-                                    }//other attributes are not for this proc_macro
+                    let field_type_with_serialize_deserialize = if *field_ident == *code_occurence_snake_case_stringified {
+                        let code_occurence_type_token_stream = {
+                            if let syn::Type::Path(type_path) = &field.ty {
+                                let mut code_occurence_type_repeat_checker = false;
+                                let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                .fold(std::string::String::new(), |mut acc, path_segment| {
+                                    let path_segment_ident = &path_segment.ident;
+                                    if *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                        assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                        acc.push_str(&path_segment_ident.to_string());
+                                        code_occurence_type_repeat_checker = true;
+                                    }
+                                    else {
+                                        acc.push_str(&format!("{path_segment_ident}::"));
+                                    }
+                                    acc
                                 });
-                                option_attribute.unwrap_or_else(|| panic!(
-                                    "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                    naming_constants::IS_NONE_STRINGIFIED
-                                ))
-                            };
-                            let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                                field,
-                                proc_macro_name_upper_camel_case_ident_stringified,
-                            );
-                            proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
-                                attribute,
-                                supported_container,
-                                proc_macro_name_upper_camel_case_ident_stringified,
-                            )
-                        },
+                                assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
+                                code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
+                                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            }
+                            else {
+                                let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
+                                panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                );
+                            }
+                        };
+                        code_occurence_type_token_stream
+                    }
+                    else {
+                        let attribute = {
+                            let mut option_attribute = None;
+                            field.attrs.iter().for_each(|attr|{
+                                if attr.path().segments.len() == 1 {
+                                    let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
+                                    let attr_ident = match attr.path().segments.iter().next() {
+                                        Some(path_segment) => &path_segment.ident,
+                                        None => panic!("attr.path().segments.iter().next() is None"),
+                                    };
+                                    if let Ok(value) = {
+                                        use std::str::FromStr;
+                                        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
+                                    } {
+                                        if option_attribute.is_some() {
+                                            panic!("{error_message}");
+                                        }
+                                        else {
+                                            option_attribute = Some(value);
+                                        }
+                                    }
+                                }//other attributes are not for this proc_macro
+                            });
+                            option_attribute.unwrap_or_else(|| panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
+                                naming_constants::IS_NONE_STRINGIFIED
+                            ))
+                        };
+                        let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
+                            field,
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                            attribute,
+                            supported_container,
+                            proc_macro_name_upper_camel_case_ident_stringified,
+                        )
                     };
                     (field_ident.clone(), field_type_with_serialize_deserialize)
                 }).collect::<Vec<(syn::Ident, proc_macro2::TokenStream)>>();
@@ -8533,29 +8532,28 @@ fn generate_try_operation_token_stream(
         .for_each(|(index, status_code_attribute)|{
             let try_operation_response_variants_desirable_attribute_token_stream = proc_macro_helpers::naming_conventions::TrySelfResponseVariantsStatusCodeTokenStream::try_self_response_variants_status_code_token_stream(operation, &status_code_attribute);
             let http_status_code_token_stream = status_code_attribute.to_http_status_code_token_stream();
-            match index == unique_status_codes_len_minus_one{
-                true => {
-                    is_last_element_found = true;
-                    status_code_enums_try_from_variants.push(quote::quote! {
-                        else {
-                            return Err(#try_operation_error_named_upper_camel_case_token_stream::#unexpected_status_code_initialization_token_stream);
-                        }
-                    });
-                },
-                false => {
-                    if *desirable_status_code != status_code_attribute {
-                        status_code_enums_try_from_variants.push(quote::quote! {
-                            else if status_code == #http_status_code_token_stream {
-                                match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
-                                    Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
-                                    Err(#error_value_snake_case_token_stream) => {
-                                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
-                                    }
-                                }
-                            }
-                        });
+            if index == unique_status_codes_len_minus_one{
+                is_last_element_found = true;
+                status_code_enums_try_from_variants.push(quote::quote! {
+                    else {
+                        return Err(#try_operation_error_named_upper_camel_case_token_stream::#unexpected_status_code_initialization_token_stream);
                     }
-                },
+                });
+            }
+            else if *desirable_status_code != status_code_attribute {
+                status_code_enums_try_from_variants.push(quote::quote! {
+                    else if status_code == #http_status_code_token_stream {
+                        match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
+                            Ok(value) => #try_operation_response_variants_upper_camel_case_token_stream::#from_snake_case_token_stream(value),
+                            Err(#error_value_snake_case_token_stream) => {
+                                return Err(#try_operation_error_named_upper_camel_case_token_stream::#deserialize_response_initialization_token_stream);
+                            }
+                        }
+                    }
+                });
+            }
+            else {
+                //clippy lint forces to add empty else
             }
         });
         assert!(is_last_element_found, "{proc_macro_name_upper_camel_case_ident_stringified} false = is_last_element_found");
@@ -8638,11 +8636,8 @@ fn generate_unique_status_codes(
         let variant_ident = &element.ident;
         let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
         .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
-        match value.contains(&&error_variant_status_code) {
-            true => (),
-            false => {
-                value.push(error_variant_status_code);
-            }
+        if !value.contains(&&error_variant_status_code) {
+            value.push(error_variant_status_code);
         }
     });
     value
@@ -8896,55 +8891,53 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
         };
         let (rust_sqlx_map_to_postgres_type_variant, maybe_generic_token_stream) = match &value.ty {
             syn::Type::Path(value) => {
-                match value.path.segments.len() == 2 {
-                    true => {
-                        let first = match value.path.segments.first() {
-                            Some(value) => value,
-                            None => {
-                                return Err(std::string::String::from("no first value in punctuated"));
-                            }
-                        };
-                        if first.ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
-                            return Err(format!("{name} field_type is not syn::Type::Path"));
+                if value.path.segments.len() == 2 {
+                    let first = match value.path.segments.first() {
+                        Some(value) => value,
+                        None => {
+                            return Err(std::string::String::from("no first value in punctuated"));
                         }
-                        match first.arguments {
-                            syn::PathArguments::None => (),
-                            _ => {
-                                return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
-                            }
-                        }
-                        let second_element = match value.path.segments.iter().nth(1) {
-                            Some(value) => value,
-                            None => {
-                                return Err(std::string::String::from("no second element"));
-                            }
-                        };
-                        let rust_sqlx_map_to_postgres_type_variant =
-                            match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(
-                                &second_element.ident.to_string(),
-                            ) {
-                                Ok(value) => value,
-                                Err(e) => {
-                                    return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"));
-                                },
-                            };
-                        let maybe_generic_token_stream = match &second_element.arguments {
-                            syn::PathArguments::None => quote::quote! {},
-                            syn::PathArguments::AngleBracketed(value) => {
-                                quote::quote! {#value} //< test_mod :: Something >
-                            }
-                            syn::PathArguments::Parenthesized(_) => {
-                                return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
-                            }
-                        };
-                        (
-                            rust_sqlx_map_to_postgres_type_variant,
-                            maybe_generic_token_stream,
-                        )
+                    };
+                    if first.ident != postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE {
+                        return Err(format!("{name} field_type is not syn::Type::Path"));
                     }
-                    false => {
-                        return Err(std::string::String::from("value.path.segments.len() != 2"));
-                    },
+                    match first.arguments {
+                        syn::PathArguments::None => (),
+                        _ => {
+                            return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
+                        }
+                    }
+                    let second_element = match value.path.segments.iter().nth(1) {
+                        Some(value) => value,
+                        None => {
+                            return Err(std::string::String::from("no second element"));
+                        }
+                    };
+                    let rust_sqlx_map_to_postgres_type_variant =
+                        match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(
+                            &second_element.ident.to_string(),
+                        ) {
+                            Ok(value) => value,
+                            Err(e) => {
+                                return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"));
+                            },
+                        };
+                    let maybe_generic_token_stream = match &second_element.arguments {
+                        syn::PathArguments::None => quote::quote! {},
+                        syn::PathArguments::AngleBracketed(value) => {
+                            quote::quote! {#value} //< test_mod :: Something >
+                        }
+                        syn::PathArguments::Parenthesized(_) => {
+                            return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
+                        }
+                    };
+                    (
+                        rust_sqlx_map_to_postgres_type_variant,
+                        maybe_generic_token_stream,
+                    )
+                }
+                else {
+                    return Err(std::string::String::from("value.path.segments.len() != 2"));
                 }
             }
             _ => {

@@ -295,495 +295,493 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             "{proc_macro_name_ident_stringified} field.ident {}",
                             naming_constants::IS_NONE_STRINGIFIED
                         ));
-                        let error_or_code_occurence = match field_ident == *code_occurence_snake_case_stringified {
-                            true => {
-                                let (code_occurence_type_stringified, code_occurence_lifetime) = {
-                                    if let syn::Type::Path(type_path) = &field.ty {
-                                        (
-                                            {
-                                                let mut code_occurence_type_repeat_checker = false;
-                                                let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                                .fold(std::string::String::new(), |mut acc, path_segment| {
-                                                    let path_segment_ident = &path_segment.ident;
-                                                    match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                                        true => {
-                                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                            acc.push_str(&path_segment_ident.to_string());
-                                                            code_occurence_type_repeat_checker = true;
-                                                        },
-                                                        false => acc.push_str(&format!("{path_segment_ident}::")),
-                                                    }
-                                                    acc
-                                                });
-                                                assert!(code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                                code_occurence_segments_stringified_handle
-                                            },
-                                            proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                                &type_path.path.segments,
-                                                &proc_macro_name_ident_stringified
-                                            ),
-                                        )
-                                      }
-                                    else {
-                                        panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                    }
-                                };
-                                proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
-                                    field_type: code_occurence_type_stringified,
-                                    vec_lifetime: code_occurence_lifetime
+                        let error_or_code_occurence = if field_ident == *code_occurence_snake_case_stringified {
+                            let (code_occurence_type_stringified, code_occurence_lifetime) = {
+                                if let syn::Type::Path(type_path) = &field.ty {
+                                    (
+                                        {
+                                            let mut code_occurence_type_repeat_checker = false;
+                                            let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                            .fold(std::string::String::new(), |mut acc, path_segment| {
+                                                let path_segment_ident = &path_segment.ident;
+                                                if *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                                    assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                                    acc.push_str(&path_segment_ident.to_string());
+                                                    code_occurence_type_repeat_checker = true;
+                                                }
+                                                else {
+                                                    acc.push_str(&format!("{path_segment_ident}::"));
+                                                }
+                                                acc
+                                            });
+                                            assert!(code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
+                                            code_occurence_segments_stringified_handle
+                                        },
+                                        proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
+                                            &type_path.path.segments,
+                                            &proc_macro_name_ident_stringified
+                                        ),
+                                    )
+                                  }
+                                else {
+                                    panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                 }
-                            },
-                            false => {
-                                let attribute = {
-                                    let mut option_attribute = None;
-                                    field.attrs.iter().for_each(|attr|{
-                                        if attr.path().segments.len() == 1 {
-                                            let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                            if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
-                                                }
+                            };
+                            proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
+                                field_type: code_occurence_type_stringified,
+                                vec_lifetime: code_occurence_lifetime
+                            }
+                        }
+                        else {
+                            let attribute = {
+                                let mut option_attribute = None;
+                                field.attrs.iter().for_each(|attr|{
+                                    if attr.path().segments.len() == 1 {
+                                        let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
+                                        if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_error_occurence_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_error_occurence_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_error_occurence_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType);
-                                                }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize);
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize);
-                                                }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_error_occurence_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
                                             }
-                                            else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize);
+                                            }
+                                        }
+                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence);
+                                            }
+                                        }
+                                        else {
+                                            //clippy lint forces to add empty else
+                                        }
+                                    }//other attributes are not for this proc_macro
+                                });
+                                option_attribute.unwrap_or_else(|| panic!(
+                                    "{proc_macro_name_ident_stringified} option attribute {}",
+                                    naming_constants::IS_NONE_STRINGIFIED
+                                ))
+                            };
+                            let syn_type_reference = format!(
+                                "syn::Type::{}",
+                                <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified()
+                            );
+                            let error_message = format!("{} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                            let supported_container = match field.ty {
+                                syn::Type::Path(type_path) => {
+                                    let path = proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments);
+                                    let vec_lifetime = proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
+                                        &type_path.path.segments,
+                                        &proc_macro_name_ident_stringified
+                                    );
+                                    let path_segment = type_path.path.segments.into_iter().last()
+                                    .unwrap_or_else(|| panic!(
+                                        "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().last() {}",
+                                        naming_constants::IS_NONE_STRINGIFIED
+                                    ));
+                                    if path_segment.ident == <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified() {
+                                        let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
+                                            if angle_brackets_generic_arguments.args.len() == 1 {
+                                                if let syn::GenericArgument::Type(type_handle) =
+                                                    angle_brackets_generic_arguments.args
+                                                    .into_iter().next()
+                                                    .unwrap_or_else(|| panic!(
+                                                        "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.into_iter().nth(0) {}",
+                                                        naming_constants::IS_NONE_STRINGIFIED
+                                                    ))
+                                                {
+                                                    match type_handle {
+                                                        syn::Type::Path(type_path) => proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path{
+                                                            element_path: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
+                                                            vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
+                                                                &type_path.path.segments,
+                                                                &proc_macro_name_ident_stringified
+                                                            )
+                                                        },
+                                                        syn::Type::Reference(type_reference) => {
+                                                            let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
+                                                                if type_path.path.segments.len() == 1 {
+                                                                    type_path.path.segments
+                                                                    .into_iter().next()
+                                                                    .unwrap_or_else(|| panic!(
+                                                                        "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
+                                                                        naming_constants::IS_NONE_STRINGIFIED
+                                                                    ))
+                                                                    .ident
+                                                                }
+                                                                else {
+                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
+                                                                }
+                                                            }
+                                                            else {
+                                                                panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                                            };
+                                                            proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Reference {
+                                                                reference_ident,
+                                                                lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
+                                                                    "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
+                                                                    naming_constants::IS_NONE_STRINGIFIED
+                                                                )).ident
+                                                            }
+                                                        },
+                                                        _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
+                                                    }
                                                 }
                                                 else {
-                                                    option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence);
+                                                    panic!(
+                                                        "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                                        naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                                                    );
                                                 }
                                             }
                                             else {
-                                                //clippy lint forces to add empty else
+                                                panic!("{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.len() == 1");
                                             }
-                                        }//other attributes are not for this proc_macro
-                                    });
-                                    option_attribute.unwrap_or_else(|| panic!(
-                                        "{proc_macro_name_ident_stringified} option attribute {}",
-                                        naming_constants::IS_NONE_STRINGIFIED
-                                    ))
-                                };
-                                let syn_type_reference = format!(
-                                    "syn::Type::{}",
-                                    <naming_constants::Reference as naming_constants::Naming>::upper_camel_case_stringified()
-                                );
-                                let error_message = format!("{} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                let supported_container = match field.ty {
-                                    syn::Type::Path(type_path) => {
-                                        let path = proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments);
-                                        let vec_lifetime = proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                            &type_path.path.segments,
-                                            &proc_macro_name_ident_stringified
-                                        );
-                                        let path_segment = type_path.path.segments.into_iter().last()
-                                        .unwrap_or_else(|| panic!(
-                                            "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().last() {}",
-                                            naming_constants::IS_NONE_STRINGIFIED
-                                        ));
-                                        if path_segment.ident == <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified() {
-                                            let vec_element_type = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
-                                                if angle_brackets_generic_arguments.args.len() == 1 {
-                                                    if let syn::GenericArgument::Type(type_handle) =
-                                                        angle_brackets_generic_arguments.args
-                                                        .into_iter().next()
-                                                        .unwrap_or_else(|| panic!(
-                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.into_iter().nth(0) {}",
+                                        }
+                                        else {
+                                            panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                        };
+                                        proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec{
+                                            path,
+                                            vec_element_type
+                                        }
+                                    }
+                                    else if path_segment.ident == <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified() {
+                                        let (
+                                            hashmap_key_type,
+                                            hashmap_value_type
+                                        ) = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
+                                            if angle_brackets_generic_arguments.args.len() == 2 {
+                                                let (
+                                                    key_generic_argument,
+                                                    value_generic_argument
+                                                ) = {
+                                                    let mut key_generic_argument_option = None;
+                                                    let mut value_generic_argument_option = None;
+                                                    angle_brackets_generic_arguments.args
+                                                    .into_iter()
+                                                    .enumerate()
+                                                    .for_each(|(index, generic_argument)|{
+                                                        match index {
+                                                            0 => {
+                                                                key_generic_argument_option = Some(generic_argument);
+                                                            }
+                                                            1 => {
+                                                                value_generic_argument_option = Some(generic_argument);
+                                                            }
+                                                            _ => panic!("{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.len() != 2")
+                                                        }
+                                                    });
+                                                    (
+                                                        key_generic_argument_option.unwrap_or_else(|| panic!(
+                                                            "{proc_macro_name_ident_stringified} key_generic_argument_option {}",
+                                                            naming_constants::IS_NONE_STRINGIFIED
+                                                        )),
+                                                        value_generic_argument_option.unwrap_or_else(|| panic!(
+                                                            "{proc_macro_name_ident_stringified} value_generic_argument_option {}",
                                                             naming_constants::IS_NONE_STRINGIFIED
                                                         ))
-                                                    {
-                                                        match type_handle {
-                                                            syn::Type::Path(type_path) => proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path{
-                                                                element_path: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
-                                                                vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
+                                                    )
+                                                };
+                                                let hashmap_key_type
+                                                = if let syn::GenericArgument::Type(type_handle) =
+                                                    key_generic_argument
+                                                {
+                                                    match type_handle {
+                                                        syn::Type::Path(type_path) => {
+                                                            proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path{
+                                                                key_segments_stringified: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
+                                                                key_vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
                                                                     &type_path.path.segments,
                                                                     &proc_macro_name_ident_stringified
                                                                 )
-                                                            },
-                                                            syn::Type::Reference(type_reference) => {
-                                                                let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                                                    if type_path.path.segments.len() == 1 {
-                                                                        type_path.path.segments
-                                                                        .into_iter().next()
-                                                                        .unwrap_or_else(|| panic!(
-                                                                            "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                                            naming_constants::IS_NONE_STRINGIFIED
-                                                                        ))
-                                                                        .ident
-                                                                    }
-                                                                    else {
-                                                                        panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
-                                                                    }
-                                                                }
-                                                                else {
-                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                                                };
-                                                                proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Reference {
-                                                                    reference_ident,
-                                                                    lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
-                                                                        "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                                        naming_constants::IS_NONE_STRINGIFIED
-                                                                    )).ident
-                                                                }
-                                                            },
-                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
-                                                        }
-                                                    }
-                                                    else {
-                                                        panic!(
-                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                                                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
-                                                        );
-                                                    }
-                                                }
-                                                else {
-                                                    panic!("{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.len() == 1");
-                                                }
-                                            }
-                                            else {
-                                                panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                            };
-                                            proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec{
-                                                path,
-                                                vec_element_type
-                                            }
-                                        }
-                                        else if path_segment.ident == <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified() {
-                                            let (
-                                                hashmap_key_type,
-                                                hashmap_value_type
-                                            ) = if let syn::PathArguments::AngleBracketed(angle_brackets_generic_arguments) = path_segment.arguments {
-                                                if angle_brackets_generic_arguments.args.len() == 2 {
-                                                    let (
-                                                        key_generic_argument,
-                                                        value_generic_argument
-                                                    ) = {
-                                                        let mut key_generic_argument_option = None;
-                                                        let mut value_generic_argument_option = None;
-                                                        angle_brackets_generic_arguments.args
-                                                        .into_iter()
-                                                        .enumerate()
-                                                        .for_each(|(index, generic_argument)|{
-                                                            match index {
-                                                                0 => {
-                                                                    key_generic_argument_option = Some(generic_argument);
-                                                                }
-                                                                1 => {
-                                                                    value_generic_argument_option = Some(generic_argument);
-                                                                }
-                                                                _ => panic!("{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.len() != 2")
                                                             }
-                                                        });
-                                                        (
-                                                            key_generic_argument_option.unwrap_or_else(|| panic!(
-                                                                "{proc_macro_name_ident_stringified} key_generic_argument_option {}",
-                                                                naming_constants::IS_NONE_STRINGIFIED
-                                                            )),
-                                                            value_generic_argument_option.unwrap_or_else(|| panic!(
-                                                                "{proc_macro_name_ident_stringified} value_generic_argument_option {}",
-                                                                naming_constants::IS_NONE_STRINGIFIED
-                                                            ))
-                                                        )
-                                                    };
-                                                    let hashmap_key_type
-                                                    = if let syn::GenericArgument::Type(type_handle) =
-                                                        key_generic_argument
-                                                    {
-                                                        match type_handle {
-                                                            syn::Type::Path(type_path) => {
-                                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path{
-                                                                    key_segments_stringified: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
-                                                                    key_vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                                                        &type_path.path.segments,
-                                                                        &proc_macro_name_ident_stringified
-                                                                    )
-                                                                }
-                                                            },
-                                                            syn::Type::Reference(type_reference) => {
-                                                                let key_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                                                    if type_path.path.segments.len() == 1 {
-                                                                        type_path.path.segments
-                                                                        .into_iter().next()
-                                                                        .unwrap_or_else(|| panic!(
-                                                                            "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                                            naming_constants::IS_NONE_STRINGIFIED
-                                                                        ))
-                                                                        .ident
-                                                                    }
-                                                                    else {
-                                                                        panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
-                                                                    }
+                                                        },
+                                                        syn::Type::Reference(type_reference) => {
+                                                            let key_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
+                                                                if type_path.path.segments.len() == 1 {
+                                                                    type_path.path.segments
+                                                                    .into_iter().next()
+                                                                    .unwrap_or_else(|| panic!(
+                                                                        "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
+                                                                        naming_constants::IS_NONE_STRINGIFIED
+                                                                    ))
+                                                                    .ident
                                                                 }
                                                                 else {
-                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                                                };
-                                                                proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                                                                    key_reference_ident,
-                                                                    key_lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
-                                                                        "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                                        naming_constants::IS_NONE_STRINGIFIED
-                                                                    )).ident
+                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
                                                                 }
-                                                            },
-                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
-                                                        }
+                                                            }
+                                                            else {
+                                                                panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                                            };
+                                                            proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+                                                                key_reference_ident,
+                                                                key_lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
+                                                                    "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
+                                                                    naming_constants::IS_NONE_STRINGIFIED
+                                                                )).ident
+                                                            }
+                                                        },
+                                                        _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                     }
-                                                    else {
-                                                        panic!(
-                                                            "{proc_macro_name_ident_stringified} key_generic_argument {} {}", 
-                                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                                                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
-                                                        );
-                                                    };
-                                                    let hashmap_value_type = if let syn::GenericArgument::Type(type_handle) = value_generic_argument {
-                                                        match type_handle {
-                                                            syn::Type::Path(type_path) => {
-                                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path{
-                                                                    value_segments_stringified: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
-                                                                    value_vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                                                        &type_path.path.segments,
-                                                                        &proc_macro_name_ident_stringified
-                                                                    )
-                                                                }
-                                                            },
-                                                            syn::Type::Reference(type_reference) => {
-                                                                let value_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                                                    if type_path.path.segments.len() == 1 {
-                                                                        type_path.path.segments
-                                                                        .into_iter().next()
-                                                                        .unwrap_or_else(|| panic!(
-                                                                            "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                                            naming_constants::IS_NONE_STRINGIFIED
-                                                                        ))
-                                                                        .ident
-                                                                    }
-                                                                    else {
-                                                                        panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
-                                                                    }
-                                                                }
-                                                                else {
-                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                                                };
-                                                               proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                                                                    value_reference_ident,
-                                                                    value_lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
-                                                                        "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                                        naming_constants::IS_NONE_STRINGIFIED
-                                                                    )).ident
-                                                                }
-                                                            },
-                                                            _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
-                                                        }
-                                                    }
-                                                    else {
-                                                        panic!(
-                                                            "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                                                            naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
-                                                        );
-                                                    };
-                                                    (
-                                                        hashmap_key_type,
-                                                        hashmap_value_type,
-                                                    )
                                                 }
                                                 else {
-                                                    panic!("{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.len() == 2");
+                                                    panic!(
+                                                        "{proc_macro_name_ident_stringified} key_generic_argument {} {}", 
+                                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                                        naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                                                    );
+                                                };
+                                                let hashmap_value_type = if let syn::GenericArgument::Type(type_handle) = value_generic_argument {
+                                                    match type_handle {
+                                                        syn::Type::Path(type_path) => {
+                                                           proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path{
+                                                                value_segments_stringified: proc_macro_helpers::error_occurence::generate_path_from_segments::generate_path_from_segments(&type_path.path.segments),
+                                                                value_vec_lifetime: proc_macro_helpers::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
+                                                                    &type_path.path.segments,
+                                                                    &proc_macro_name_ident_stringified
+                                                                )
+                                                            }
+                                                        },
+                                                        syn::Type::Reference(type_reference) => {
+                                                            let value_reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
+                                                                if type_path.path.segments.len() == 1 {
+                                                                    type_path.path.segments
+                                                                    .into_iter().next()
+                                                                    .unwrap_or_else(|| panic!(
+                                                                        "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
+                                                                        naming_constants::IS_NONE_STRINGIFIED
+                                                                    ))
+                                                                    .ident
+                                                                }
+                                                                else {
+                                                                    panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
+                                                                }
+                                                            }
+                                                            else {
+                                                                panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                                            };
+                                                           proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                                                                value_reference_ident,
+                                                                value_lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
+                                                                    "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
+                                                                    naming_constants::IS_NONE_STRINGIFIED
+                                                                )).ident
+                                                            }
+                                                        },
+                                                        _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
+                                                    }
                                                 }
+                                                else {
+                                                    panic!(
+                                                        "{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args[0] {} {}", naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+                                                        naming_constants::SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED
+                                                    );
+                                                };
+                                                (
+                                                    hashmap_key_type,
+                                                    hashmap_value_type,
+                                                )
                                             }
                                             else {
-                                                panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-                                            };
-                                            proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap{
-                                                path,
-                                                hashmap_key_type,
-                                                hashmap_value_type
+                                                panic!("{proc_macro_name_ident_stringified} angle_brackets_generic_arguments.args.len() == 2");
                                             }
                                         }
                                         else {
-                                            proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path{
-                                                path,
-                                                vec_lifetime,
-                                            }
-                                        }
-                                    },
-                                    syn::Type::Reference(type_reference) => {
-                                        let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
-                                            if type_path.path.segments.len() == 1 {
-                                                type_path.path.segments
-                                                .into_iter().next()
-                                                .unwrap_or_else(|| panic!(
-                                                    "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
-                                                    naming_constants::IS_NONE_STRINGIFIED
-                                                ))
-                                                .ident
-                                            }
-                                            else {
-                                                panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
-                                            }
-                                        }
-                                        else {
-                                            panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} path_segment.arguments {} syn::PathArguments::AngleBracketed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         };
-                                        proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Reference{
-                                            reference_ident,
-                                            lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
-                                                "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
-                                                naming_constants::IS_NONE_STRINGIFIED
-                                            )).ident,
+                                        proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap{
+                                            path,
+                                            hashmap_key_type,
+                                            hashmap_value_type
                                         }
-                                    },
-                                    _ => panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {error_message}"),
-                                };
-                                proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
-                                    attribute,
-                                    supported_container,
-                                }
-                            },
+                                    }
+                                    else {
+                                        proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path{
+                                            path,
+                                            vec_lifetime,
+                                        }
+                                    }
+                                },
+                                syn::Type::Reference(type_reference) => {
+                                    let reference_ident = if let syn::Type::Path(type_path) = *type_reference.elem {
+                                        if type_path.path.segments.len() == 1 {
+                                            type_path.path.segments
+                                            .into_iter().next()
+                                            .unwrap_or_else(|| panic!(
+                                                "{proc_macro_name_ident_stringified} type_path.path.segments.into_iter().nth(0) {}",
+                                                naming_constants::IS_NONE_STRINGIFIED
+                                            ))
+                                            .ident
+                                        }
+                                        else {
+                                            panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_path.path.segments.len() != 1");
+                                        }
+                                    }
+                                    else {
+                                        panic!("{proc_macro_name_ident_stringified} {syn_type_reference} type_reference.elem {} {syn_type_path_stringified}", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                    };
+                                    proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Reference{
+                                        reference_ident,
+                                        lifetime_ident: type_reference.lifetime.unwrap_or_else(|| panic!(
+                                            "{proc_macro_name_ident_stringified} {syn_type_reference} lifetime {}",
+                                            naming_constants::IS_NONE_STRINGIFIED
+                                        )).ident,
+                                    }
+                                },
+                                _ => panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {error_message}"),
+                            };
+                            proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
+                                attribute,
+                                supported_container,
+                            }
                         };
                         (
                             field_ident,
@@ -3891,8 +3889,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let get_code_occurence_token_stream =
             get_code_occurence_snake_case_stringified.parse::<proc_macro2::TokenStream>()
             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {get_code_occurence_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-            let compile_time_check_error_occurence_members_impl_token_stream = match should_generate_impl_compile_time_check_error_occurence_members {
-                true => quote::quote!{
+            let compile_time_check_error_occurence_members_impl_token_stream = if should_generate_impl_compile_time_check_error_occurence_members {
+                quote::quote!{
                     impl<#generics> #ident<#generics> {
                         fn #compile_time_check_error_occurence_members_token_stream(&self) {
                             match self {
@@ -3900,8 +3898,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             }
                         }
                     }
-                },
-                false => proc_macro2::TokenStream::new(),
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
             };
             quote::quote! {
                 impl<

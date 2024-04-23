@@ -48,19 +48,23 @@ pub fn check_commit(
     enable_api_git_commit_check: bool,
     headers: &axum::http::HeaderMap<axum::http::header::HeaderValue>,
 ) -> Result<(), CheckCommitErrorNamed> {
-    match 
+    if 
         // app_state.get_enable_api_git_commit_check() 
         enable_api_git_commit_check
     {
-        true => match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
+        match headers.get(<naming_constants::Commit as naming_constants::Naming>::snake_case_stringified()) {
             Some(value) => match value.to_str() {
-                Ok(value) => match value == git_info::PROJECT_GIT_INFO.commit {
-                    true => Ok(()),
-                    false => Err(CheckCommitErrorNamed::CommitNotEqual {
-                        commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
-                        commit_to_use: git_info::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
+                Ok(value) => {
+                    if value == git_info::PROJECT_GIT_INFO.commit {
+                        Ok(())
+                    }
+                    else {
+                        Err(CheckCommitErrorNamed::CommitNotEqual {
+                            commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
+                            commit_to_use: git_info::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        })
+                    }
                 }
                 Err(e) => Err(CheckCommitErrorNamed::CommitToStrConversion {
                     commit_to_str_conversion: e,
@@ -72,6 +76,8 @@ pub fn check_commit(
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
-        false => Ok(())
+    }
+    else {
+        Ok(())
     }
 }

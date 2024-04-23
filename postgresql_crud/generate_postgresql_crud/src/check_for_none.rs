@@ -7,12 +7,14 @@ pub(crate) fn check_for_none(
     should_exclude_primary_key: bool,
 ) -> proc_macro2::TokenStream {
     let (none_elements, match_elements) = {
-        let fields_named_handle = match should_exclude_primary_key {
-            true => fields_named
+        let fields_named_handle = if should_exclude_primary_key {
+            fields_named
                 .iter()
                 .filter(|field| **field != id_field)
-                .collect::<Vec<&&syn::Field>>(),
-            false => fields_named.iter().collect::<Vec<&&syn::Field>>(),
+                .collect::<Vec<&&syn::Field>>()
+        }
+        else {
+            fields_named.iter().collect::<Vec<&&syn::Field>>()
         };
         let fields_named_handle_len = fields_named_handle.len();
         fields_named_handle.iter().enumerate().fold(

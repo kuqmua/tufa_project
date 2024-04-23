@@ -8,13 +8,17 @@ pub fn generate_with_serialize_deserialize_version(
     implements_this_error: bool,
     is_pub: bool,
 ) -> proc_macro2::TokenStream {
-    let this_error_token_stream = match implements_this_error {
-        true => quote::quote! { thiserror::Error, },
-        false => proc_macro2::TokenStream::new(),
+    let this_error_token_stream = if implements_this_error {
+        quote::quote! { thiserror::Error, }
+    }
+    else {
+        proc_macro2::TokenStream::new()
     };
-    let is_pub_token_stream = match is_pub {
-        true => quote::quote! { pub },
-        false => proc_macro2::TokenStream::new(),
+    let is_pub_token_stream = if is_pub {
+        quote::quote! { pub }
+    }
+    else {
+        proc_macro2::TokenStream::new()
     };
     let variants_len = variants.len();
     let with_serialize_deserialize_upper_camel_case =
@@ -64,84 +68,82 @@ pub fn generate_with_serialize_deserialize_version(
                         )
                     });
                     let code_occurence_snake_case = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&code_occurence_upper_camel_case);
-                    let error_or_code_occurence = match *field_ident == *code_occurence_snake_case {
-                        true => {
-                            let (code_occurence_type_stringified, code_occurence_lifetime) = {
-                                if let syn::Type::Path(type_path) = &field.ty {
-                                    (
-                                        {
-                                            let mut code_occurence_type_repeat_checker = false;
-                                            let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                            .fold(std::string::String::new(), |mut acc, path_segment| {
-                                                let path_segment_ident = &path_segment.ident;
-                                                match *path_segment_ident == code_occurence_upper_camel_case {
-                                                    true => {
-                                                        assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case} inside type path");
-                                                        acc.push_str(&path_segment_ident.to_string());
-                                                        code_occurence_type_repeat_checker = true;
-                                                    },
-                                                    false => acc.push_str(&format!("{path_segment_ident}::")),
-                                                }
-                                                acc
-                                            });
-                                            assert!(code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case} named field");
-                                            code_occurence_segments_stringified_handle
-                                        },
-                                        crate::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
-                                            &type_path.path.segments,
-                                            proc_macro_name_ident_stringified
-                                        ),
-                                    )
-                                }
-                                else {
-                                    panic!(
-                                        "{proc_macro_name_ident_stringified} {code_occurence_snake_case} {} {syn_type_path_stringified}",
-                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED
-                                    );
-                                }
-                            };
-                            crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
-                                field_type: code_occurence_type_stringified,
-                                vec_lifetime: code_occurence_lifetime
-                            }
-                        },
-                        false => {
-                            let attribute = {
-                                let mut option_attribute = None;
-                                field.attrs.iter().for_each(|attr|{
-                                    if attr.path().segments.len() == 1 {
-                                        let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path().segments.iter().next() {
-                                            Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path().segments.iter().next() is None"),
-                                        };
-                                        if let Ok(value) = {
-                                            use std::str::FromStr;
-                                            crate::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
-                                        } {
-                                            if option_attribute.is_some() {
-                                                panic!("{error_message}");
+                    let error_or_code_occurence = if *field_ident == *code_occurence_snake_case {
+                        let (code_occurence_type_stringified, code_occurence_lifetime) = {
+                            if let syn::Type::Path(type_path) = &field.ty {
+                                (
+                                    {
+                                        let mut code_occurence_type_repeat_checker = false;
+                                        let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                        .fold(std::string::String::new(), |mut acc, path_segment| {
+                                            let path_segment_ident = &path_segment.ident;
+                                            if *path_segment_ident == code_occurence_upper_camel_case {
+                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case} inside type path");
+                                                acc.push_str(&path_segment_ident.to_string());
+                                                code_occurence_type_repeat_checker = true;
                                             }
                                             else {
-                                                option_attribute = Some(value);
+                                                acc.push_str(&format!("{path_segment_ident}::"));
                                             }
-                                        }
-                                    }//other attributes are not for this proc_macro
-                                });
-                                option_attribute.unwrap_or_else(|| panic!(
-                                    "{proc_macro_name_ident_stringified} option attribute {}",
-                                    naming_constants::IS_NONE_STRINGIFIED
-                                ))
-                            };
-                            let supported_container = generate_supported_container(
-                                field,
-                                proc_macro_name_ident_stringified,
-                            );
-                            crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
-                                attribute,
-                                supported_container,
+                                            acc
+                                        });
+                                        assert!(code_occurence_type_repeat_checker, "{proc_macro_name_ident_stringified} no {code_occurence_upper_camel_case} named field");
+                                        code_occurence_segments_stringified_handle
+                                    },
+                                    crate::error_occurence::form_last_arg_lifetime_vec::form_last_arg_lifetime_vec(
+                                        &type_path.path.segments,
+                                        proc_macro_name_ident_stringified
+                                    ),
+                                )
                             }
-                        },
+                            else {
+                                panic!(
+                                    "{proc_macro_name_ident_stringified} {code_occurence_snake_case} {} {syn_type_path_stringified}",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                );
+                            }
+                        };
+                        crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
+                            field_type: code_occurence_type_stringified,
+                            vec_lifetime: code_occurence_lifetime
+                        }
+                    }
+                    else {
+                        let attribute = {
+                            let mut option_attribute = None;
+                            field.attrs.iter().for_each(|attr|{
+                                if attr.path().segments.len() == 1 {
+                                    let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
+                                    let attr_ident = match attr.path().segments.iter().next() {
+                                        Some(path_segment) => &path_segment.ident,
+                                        None => panic!("attr.path().segments.iter().next() is None"),
+                                    };
+                                    if let Ok(value) = {
+                                        use std::str::FromStr;
+                                        crate::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
+                                    } {
+                                        if option_attribute.is_some() {
+                                            panic!("{error_message}");
+                                        }
+                                        else {
+                                            option_attribute = Some(value);
+                                        }
+                                    }
+                                }//other attributes are not for this proc_macro
+                            });
+                            option_attribute.unwrap_or_else(|| panic!(
+                                "{proc_macro_name_ident_stringified} option attribute {}",
+                                naming_constants::IS_NONE_STRINGIFIED
+                            ))
+                        };
+                        let supported_container = generate_supported_container(
+                            field,
+                            proc_macro_name_ident_stringified,
+                        );
+                        crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
+                            attribute,
+                            supported_container,
+                        }
                     };
                     (
                         field_ident.clone(),
