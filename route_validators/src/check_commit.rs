@@ -66,8 +66,8 @@ pub fn check_commit(
                         })
                     }
                 }
-                Err(e) => Err(CheckCommitErrorNamed::CommitToStrConversion {
-                    commit_to_str_conversion: e,
+                Err(error) => Err(CheckCommitErrorNamed::CommitToStrConversion {
+                    commit_to_str_conversion: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
             }

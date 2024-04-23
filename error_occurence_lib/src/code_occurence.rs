@@ -98,9 +98,9 @@ impl GetMacroOccurence for CodeOccurence {
 }
 
 impl std::fmt::Display for CodeOccurence {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
-            f,
+            formatter,
             "{}",
             CodeOccurencePrepareForLogWithoutConfig::code_occurence_prepare_for_log_without_config(
                 self

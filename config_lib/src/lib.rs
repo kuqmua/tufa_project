@@ -88,8 +88,8 @@ impl std::default::Default for TracingType {
     }
 }
 impl std::fmt::Display for TracingType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.to_snake_case())
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.to_snake_case())
     }
 }
 pub trait GetTracingType {

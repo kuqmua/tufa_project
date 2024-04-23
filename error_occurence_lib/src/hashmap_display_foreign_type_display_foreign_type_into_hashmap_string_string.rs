@@ -16,7 +16,7 @@ where
         self,
     ) -> std::collections::HashMap<String, std::string::String> {
         self.into_iter()
-            .map(|(k, v)| (k.display_foreign_type(), v.display_foreign_type()))
+            .map(|(key, value)| (key.display_foreign_type(), value.display_foreign_type()))
             .collect()
     }
 }

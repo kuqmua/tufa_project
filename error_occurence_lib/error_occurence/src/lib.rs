@@ -4184,8 +4184,8 @@ fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_add
             proc_macro2::TokenStream::new()
         }
     };
-    vec_lifetime.into_iter().for_each(|k|{
-        if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(specified_lifetime) = k {
+    vec_lifetime.into_iter().for_each(|element|{
+        if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(specified_lifetime) = element {
             assert!(&specified_lifetime != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                 specified_lifetime,
@@ -4221,8 +4221,8 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
         ) => proc_macro2::TokenStream::new(),
     };
     let error_message = "must not contain reserved by macro lifetime name:";
-    key_vec_lifetime.into_iter().for_each(|k|{
-        if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_specified) = k {
+    key_vec_lifetime.into_iter().for_each(|element|{
+        if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_specified) = element {
             assert!(&key_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                 key_lifetime_specified,
@@ -4230,8 +4230,8 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
             );
         }
     });
-    value_vec_lifetime.into_iter().for_each(|v|{
-        if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_specified) = v {
+    value_vec_lifetime.into_iter().for_each(|element|{
+        if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_specified) = element {
             assert!(&value_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                 value_lifetime_specified,

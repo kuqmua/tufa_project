@@ -3673,8 +3673,8 @@ impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::UtcOffset::from_hms(value.hours, value.minutes, value.seconds) {
             Ok(value) => Ok(value),
-            Err(e) => Err(Self::Error::TimeErrorComponentRange {
-                time_error_component_range: e,
+            Err(error) => Err(Self::Error::TimeErrorComponentRange {
+                time_error_component_range: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
@@ -4191,8 +4191,8 @@ impl std::convert::From<SqlxPostgresTypesPgInterval>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "months: {}, days: {}, microseconds: {}", self.months, self.days, self.microseconds)
     }
 }
 impl AsPostgresqlInterval for SqlxPostgresTypesPgInterval {}
@@ -4228,8 +4228,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI64>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
@@ -4264,8 +4264,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeStdPrimitiveI32>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
@@ -4426,8 +4426,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc {}
@@ -4565,8 +4565,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypes
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
@@ -4622,12 +4622,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -4648,12 +4648,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -4671,9 +4671,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Included(value.0),
                         std::ops::Bound::Unbounded,
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -4688,12 +4688,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -4714,12 +4714,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -4737,9 +4737,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Excluded(value.0),
                         std::ops::Bound::Unbounded,
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -4751,9 +4751,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Unbounded,
                         std::ops::Bound::Included(value.0),
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -4765,9 +4765,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Unbounded,
                         std::ops::Bound::Excluded(value.0),
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -4815,8 +4815,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime {}
@@ -4913,8 +4913,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
@@ -4967,12 +4967,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -4993,12 +4993,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5016,9 +5016,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Included(value.0),
                         std::ops::Bound::Unbounded,
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5033,12 +5033,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5059,12 +5059,12 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5082,9 +5082,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Excluded(value.0),
                         std::ops::Bound::Unbounded,
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5096,9 +5096,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Unbounded,
                         std::ops::Bound::Included(value.0),
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5110,9 +5110,9 @@ impl std::convert::TryFrom<
                         std::ops::Bound::Unbounded,
                         std::ops::Bound::Excluded(value.0),
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5160,8 +5160,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime {}
@@ -5255,8 +5255,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
@@ -5305,12 +5305,12 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5331,12 +5331,12 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Included(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5354,9 +5354,9 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Included(value.0),
                         std::ops::Bound::Unbounded,
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5371,12 +5371,12 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Included(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5397,12 +5397,12 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Excluded(start_value.0),
                         std::ops::Bound::Excluded(end_value.0),
                     ),
-                    (Ok(_), Err(e)) => return Err(Self::Error::End { 
-                        end: e,
+                    (Ok(_), Err(error)) => return Err(Self::Error::End { 
+                        end: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
-                    (Err(e), Ok(_)) => return Err(Self::Error::Start { 
-                        start: e,
+                    (Err(error), Ok(_)) => return Err(Self::Error::Start { 
+                        start: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }),
                     (Err(start_error), Err(end_error)) => {
@@ -5420,9 +5420,9 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Excluded(value.0),
                         std::ops::Bound::Unbounded,
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5434,9 +5434,9 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Unbounded,
                         std::ops::Bound::Included(value.0),
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5448,9 +5448,9 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
                         std::ops::Bound::Unbounded,
                         std::ops::Bound::Excluded(value.0),
                     ),
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::Start { 
-                            start: e,
+                            start: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -5498,8 +5498,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesTimeDate>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
@@ -5573,8 +5573,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesBigDecimal>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
@@ -5632,8 +5632,8 @@ impl std::convert::From<SqlxPostgresTypesPgRangeSqlxTypesDecimal>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "start: {:?}, end: {:?}", self.start, self.end)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "start: {:?}, end: {:?}", self.start, self.end)
     }
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
@@ -5657,8 +5657,8 @@ impl std::convert::From<SqlxPostgresTypesPgMoney>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgMoneyWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
     }
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
@@ -5682,8 +5682,8 @@ impl std::convert::From<SqlxPostgresTypesPgCiText>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgCiTextWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
     }
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
@@ -5713,8 +5713,8 @@ impl std::convert::From<SqlxTypesBigDecimal> for SqlxTypesBigDecimalWithSerializ
     }
 }
 impl std::fmt::Display for SqlxTypesBigDecimalWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "digits: {:?}, scale: {:?}", self.digits, self.scale)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "digits: {:?}, scale: {:?}", self.digits, self.scale)
     }
 }
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
@@ -5786,15 +5786,15 @@ impl std::convert::TryFrom<SqlxPostgresTypesPgTimeTzWithSerializeDeserialize> fo
             sqlx::types::time::UtcOffset::try_from(value.offset),
         ) {
             (Ok(time), Ok(offset)) => (time.0, offset),
-            (Err(e), Ok(_)) => {
+            (Err(error), Ok(_)) => {
                 return Err(Self::Error::Time { 
-                    time: e,
+                    time: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-            (Ok(_), Err(e)) => {
+            (Ok(_), Err(error)) => {
                 return Err(Self::Error::Offset { 
-                    offset: e,
+                    offset: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
@@ -5823,8 +5823,8 @@ impl std::convert::From<SqlxPostgresTypesPgTimeTz>
     }
 }
 impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "time: {}, offset: {:?}", self.time, self.offset)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "time: {}, offset: {:?}", self.time, self.offset)
     }
 }
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
@@ -5866,15 +5866,15 @@ impl std::convert::TryFrom<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializ
             SqlxTypesTimeTime::try_from(value.time),
         ) {
             (Ok(date), Ok(time)) => (date, time),
-            (Err(e), Ok(_)) => {
+            (Err(error), Ok(_)) => {
                 return Err(Self::Error::Date { 
-                    date: e,
+                    date: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-            (Ok(_), Err(e)) => {
+            (Ok(_), Err(error)) => {
                 return Err(Self::Error::Time { 
-                    time: e,
+                    time: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
@@ -5907,8 +5907,8 @@ impl std::convert::From<SqlxTypesTimePrimitiveDateTime>
     }
 }
 impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "date: {}, time: {}", self.date, self.time)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "date: {}, time: {}", self.date, self.time)
     }
 }
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
@@ -5935,8 +5935,8 @@ impl std::convert::TryFrom<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize> 
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::OffsetDateTime::from_unix_timestamp(value.0) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(Self::Error::TimeErrorComponentRange {
-                time_error_component_range: e,
+            Err(error) => Err(Self::Error::TimeErrorComponentRange {
+                time_error_component_range: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
@@ -5950,8 +5950,8 @@ impl std::convert::From<SqlxTypesTimeOffsetDateTime>
     }
 }
 impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
     }
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
@@ -5983,8 +5983,8 @@ impl std::convert::TryFrom<SqlxTypesTimeDateWithSerializeDeserialize> for SqlxTy
             value.day,
         ) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(Self::Error::TimeErrorComponentRange {
-                time_error_component_range: e,
+            Err(error) => Err(Self::Error::TimeErrorComponentRange {
+                time_error_component_range: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
@@ -6002,8 +6002,8 @@ impl std::convert::From<SqlxTypesTimeDate>
     }
 }
 impl std::fmt::Display for SqlxTypesTimeDateWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "year: {}, month: {:?}, day: {}", self.year, self.month, self.day)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "year: {}, month: {:?}, day: {}", self.year, self.month, self.day)
     }
 }
 impl AsPostgresqlDate for SqlxTypesTimeDate {}
@@ -6033,8 +6033,8 @@ impl std::convert::TryFrom<SqlxTypesTimeTimeWithSerializeDeserialize> for SqlxTy
     ) -> Result<Self, Self::Error> {
         match sqlx::types::time::Time::from_hms(value.hour, value.minute, value.second) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(Self::Error::TimeErrorComponentRange{
-                time_error_component_range: e,
+            Err(error) => Err(Self::Error::TimeErrorComponentRange{
+                time_error_component_range: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
@@ -6050,8 +6050,8 @@ impl std::convert::From<SqlxTypesTimeTime> for SqlxTypesTimeTimeWithSerializeDes
     }
 }
 impl std::fmt::Display for SqlxTypesTimeTimeWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "hour: {}, minute: {}, second: {}", self.hour, self.minute, self.second)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "hour: {}, minute: {}, second: {}", self.hour, self.minute, self.second)
     }
 }
 impl AsPostgresqlTime for SqlxTypesTimeTime {}
@@ -6076,8 +6076,8 @@ impl std::convert::TryFrom<SqlxTypesUuidUuidWithSerializeDeserialize> for SqlxTy
     ) -> Result<Self, Self::Error> {
         match sqlx::types::uuid::Uuid::try_parse(&value.0) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(Self::Error::SqlxTypesUuidError{
-                sqlx_types_uuid_error: e,
+            Err(error) => Err(Self::Error::SqlxTypesUuidError{
+                sqlx_types_uuid_error: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         }
@@ -6089,8 +6089,8 @@ impl std::convert::From<SqlxTypesUuidUuid> for SqlxTypesUuidUuidWithSerializeDes
     }
 }
 impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
     }
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
@@ -6124,8 +6124,8 @@ impl std::convert::From<SqlxTypesMacAddressMacAddress>
     }
 }
 impl std::fmt::Display for SqlxTypesMacAddressMacAddressWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
     }
 }
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
@@ -6151,8 +6151,8 @@ impl std::convert::From<SqlxTypesBitVec> for SqlxTypesBitVecWithSerializeDeseria
     }
 }
 impl std::fmt::Display for SqlxTypesBitVecWithSerializeDeserialize {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
     }
 }
 impl AsPostgresqlBit for SqlxTypesBitVec {}
@@ -6245,7 +6245,7 @@ where
     fn decode(value: sqlx::postgres::PgValueRef<'a>) -> Result<Self, sqlx::error::BoxDynError> {
         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
             Ok(value) => Ok(Self(value)),
-            Err(e) => Err(e),
+            Err(error) => Err(error),
         }
     }
 }
@@ -6339,8 +6339,8 @@ impl<T> SqlxTypesJson<T> {
 pub struct StdOptionOptionSqlxTypesJson<T>(pub std::option::Option<sqlx::types::Json<T>>);
 ////////////////////////////
 impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJson<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
     }
 }
 impl<T> StdOptionOptionSqlxTypesJson<T> {
@@ -6426,9 +6426,9 @@ pub struct WhereStdOptionOptionSqlxTypesJson<T> {
     pub conjuctive_operator: ConjunctiveOperator,
 }
 impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJson<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
-            f,
+            formatter,
             "value: {}, conjuctive_operator: {}",
             self.value, self.conjuctive_operator
         )
@@ -6479,9 +6479,9 @@ pub struct WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
     pub conjuctive_operator: ConjunctiveOperator,
 }
 impl<T: std::fmt::Debug> std::fmt::Display for WhereStdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
-            f,
+            formatter,
             "value: {}, conjuctive_operator: {}",
             self.value, self.conjuctive_operator
         )
@@ -6514,8 +6514,8 @@ impl<T> std::convert::From<WhereStdOptionOptionSqlxTypesJsonWithSerializeDeseria
 )]
 pub struct StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>(std::option::Option<SqlxTypesJsonWithSerializeDeserialize<T>>);
 impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self.0)
     }
 }
 impl<T> std::convert::From<StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>> for StdOptionOptionSqlxTypesJson<T> {
@@ -6659,11 +6659,11 @@ pub enum ConjunctiveOperator {
 }
 
 impl std::fmt::Display for ConjunctiveOperator {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ConjunctiveOperator::Or => write!(f, "{}", <naming_constants::Or as naming_constants::Naming>::upper_camel_case_stringified()),
+            ConjunctiveOperator::Or => write!(formatter, "{}", <naming_constants::Or as naming_constants::Naming>::upper_camel_case_stringified()),
             ConjunctiveOperator::And => {
-                write!(f, "{}", <naming_constants::And as naming_constants::Naming>::upper_camel_case_stringified())
+                write!(formatter, "{}", <naming_constants::And as naming_constants::Naming>::upper_camel_case_stringified())
             }
         }
     }
@@ -6684,10 +6684,10 @@ pub enum Order {
 }
 
 impl std::fmt::Display for Order {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Order::Asc => write!(f, "{}", <naming_constants::Asc as naming_constants::Naming>::upper_camel_case_stringified()),
-            Order::Desc => write!(f, "{}", <naming_constants::Desc as naming_constants::Naming>::upper_camel_case_stringified()),
+            Order::Asc => write!(formatter, "{}", <naming_constants::Asc as naming_constants::Naming>::upper_camel_case_stringified()),
+            Order::Desc => write!(formatter, "{}", <naming_constants::Desc as naming_constants::Naming>::upper_camel_case_stringified()),
         }
     }
 }

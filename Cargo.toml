@@ -555,7 +555,7 @@ mem_forget = { level = "deny", priority = 0 }
 mem_replace_option_with_none = { level = "deny", priority = 0 }
 mem_replace_with_default = { level = "deny", priority = 0 }
 mem_replace_with_uninit = { level = "deny", priority = 0 }
-min_ident_chars = { level = "allow", priority = 0 }
+min_ident_chars = { level = "deny", priority = 0 }
 min_max = { level = "deny", priority = 0 }
 mismatched_target_os = { level = "deny", priority = 0 }
 mismatching_type_param_order = { level = "deny", priority = 0 }

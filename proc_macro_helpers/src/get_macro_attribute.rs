@@ -6,7 +6,7 @@ pub fn get_macro_attribute<'a>(
     let option_attribute = attrs.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
-            stringified_path.retain(|c| !c.is_whitespace());
+            stringified_path.retain(|value| !value.is_whitespace());
             stringified_path
         }
     });

@@ -14,6 +14,6 @@ where
     fn hashmap_display_display_into_hashmap_display_string(
         self,
     ) -> std::collections::HashMap<HashMapKeyGeneric, std::string::String> {
-        self.into_iter().map(|(k, v)| (k, v.to_string())).collect()
+        self.into_iter().map(|(key, value)| (key, value.to_string())).collect()
     }
 }

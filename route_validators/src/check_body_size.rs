@@ -35,8 +35,8 @@ pub async fn check_body_size(
     let size_hint = axum::body::HttpBody::size_hint(&body);
     match axum::body::to_bytes(body, limit).await {
         Ok(value) => Ok(value),
-        Err(e) => Err(CheckBodySizeErrorNamed::ReachedMaximumSizeOfBody {
-            axum_error: e,
+        Err(error) => Err(CheckBodySizeErrorNamed::ReachedMaximumSizeOfBody {
+            axum_error: error,
             maximum_size_of_body_limit_in_bytes: limit,
             size_hint,
             code_occurence: error_occurence_lib::code_occurence!(),
