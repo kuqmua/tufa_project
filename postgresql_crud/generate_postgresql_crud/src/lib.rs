@@ -2184,76 +2184,74 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 naming_constants::FIELD_IDENT_IS_NONE
                             )
                         });
-                        let field_type_with_serialize_deserialize = match *field_ident == *code_occurence_snake_case_stringified {
-                            true => {
-                                let code_occurence_type_token_stream = {
-                                    if let syn::Type::Path(type_path) = &field.ty {
-                                        let mut code_occurence_type_repeat_checker = false;
-                                        let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                        .fold(std::string::String::new(), |mut acc, path_segment| {
-                                            let path_segment_ident = &path_segment.ident;
-                                            match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                                true => {
-                                                    assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                    acc.push_str(&path_segment_ident.to_string());
-                                                    code_occurence_type_repeat_checker = true;
-                                                },
-                                                false => acc.push_str(&format!("{path_segment_ident}::")),
-                                            }
-                                            acc
-                                        });
-                                        assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
-                                        code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
-                                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                    }
-                                    else {
-                                        let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
-                                        panic!(
-                                            "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
-                                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
-                                        );
-                                    }
-                                };
-                                code_occurence_type_token_stream
-                            },
-                            false => {
-                                let attribute = {
-                                    let mut option_attribute = None;
-                                    field.attrs.iter().for_each(|attr|{
-                                        if attr.path().segments.len() == 1 {
-                                            let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                            let attr_ident = match attr.path().segments.iter().next() {
-                                                Some(path_segment) => &path_segment.ident,
-                                                None => panic!("attr.path().segments.iter().next() is None"),
-                                            };
-                                            if let Ok(value) = {
-                                                use std::str::FromStr;
-                                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
-                                            } {
-                                                if option_attribute.is_some() {
-                                                    panic!("{error_message}");
-                                                }
-                                                else {
-                                                    option_attribute = Some(value);
-                                                }
-                                            }
-                                        }//other attributes are not for this proc_macro
+                        let field_type_with_serialize_deserialize = if *field_ident == *code_occurence_snake_case_stringified {
+                            let code_occurence_type_token_stream = {
+                                if let syn::Type::Path(type_path) = &field.ty {
+                                    let mut code_occurence_type_repeat_checker = false;
+                                    let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
+                                    .fold(std::string::String::new(), |mut acc, path_segment| {
+                                        let path_segment_ident = &path_segment.ident;
+                                        match *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                            true => {
+                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                                acc.push_str(&path_segment_ident.to_string());
+                                                code_occurence_type_repeat_checker = true;
+                                            },
+                                            false => acc.push_str(&format!("{path_segment_ident}::")),
+                                        }
+                                        acc
                                     });
-                                    option_attribute.unwrap_or_else(|| panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-                                        naming_constants::IS_NONE_STRINGIFIED
-                                    ))
-                                };
-                                let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
-                                    field,
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                );
-                                proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
-                                    attribute,
-                                    supported_container,
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                )
-                            },
+                                    assert!(code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} no {code_occurence_upper_camel_case_stringified} named field");
+                                    code_occurence_segments_stringified_handle.parse::<proc_macro2::TokenStream>()
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_segments_stringified_handle} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                }
+                                else {
+                                    let syn_type_path_stringified = proc_macro_helpers::naming_conventions::syn_type_path_stringified();
+                                    panic!(
+                                        "{proc_macro_name_upper_camel_case_ident_stringified} {code_occurence_snake_case_stringified} {} {syn_type_path_stringified}",
+                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                    );
+                                }
+                            };
+                            code_occurence_type_token_stream
+                        }
+                        else {
+                            let attribute = {
+                                let mut option_attribute = None;
+                                field.attrs.iter().for_each(|attr|{
+                                    if attr.path().segments.len() == 1 {
+                                        let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
+                                        let attr_ident = match attr.path().segments.iter().next() {
+                                            Some(path_segment) => &path_segment.ident,
+                                            None => panic!("attr.path().segments.iter().next() is None"),
+                                        };
+                                        if let Ok(value) = {
+                                            use std::str::FromStr;
+                                            proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
+                                        } {
+                                            if option_attribute.is_some() {
+                                                panic!("{error_message}");
+                                            }
+                                            else {
+                                                option_attribute = Some(value);
+                                            }
+                                        }
+                                    }//other attributes are not for this proc_macro
+                                });
+                                option_attribute.unwrap_or_else(|| panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
+                                    naming_constants::IS_NONE_STRINGIFIED
+                                ))
+                            };
+                            let supported_container = proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_supported_container(
+                                field,
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            );
+                            proc_macro_helpers::error_occurence::generate_with_serialize_deserialize_version::generate_field_type_with_serialize_deserialize_version(
+                                attribute,
+                                supported_container,
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            )
                         };
                         quote::quote! {#field_ident: #field_type_with_serialize_deserialize}
                     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -7851,75 +7849,72 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
     let parts_vec_len = parts_vec.len();
-    match parts_vec_len >= 1 {
-        true => {
-            let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-            handle.push_value(
-                syn::PathSegment {
-                    ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::None,
-                }
-            );
-            handle.push_punct(syn::token::PathSep{
-                spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-            });
-            handle.push_value(
-                syn::PathSegment {
-                    ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::None,
-                }
-            );
-            handle.push_punct(syn::token::PathSep{
-                spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-            });
-            handle.push_value(
-                syn::PathSegment {
-                    ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments{
-                        colon2_token: None,
-                        lt_token: syn::token::Lt{
-                            spans: [proc_macro2::Span::call_site()],
-                        },
-                        args: {
-                            let mut handle = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
-                            handle.push(syn::GenericArgument::Type(syn::Type::Path(syn::TypePath{
-                                qself: None,
-                                path: syn::Path {
-                                    leading_colon: None,
-                                    segments: {
-                                        let parts_vec_len_minus_one = parts_vec_len - 1;
-                                        let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                                        for (index, element) in parts_vec.iter().enumerate() {
-                                            std_vec_vec_generic_type.push_value(
-                                                syn::PathSegment {
-                                                    ident: proc_macro2::Ident::new(element, proc_macro2::Span::call_site()),
-                                                    arguments: syn::PathArguments::None,
-                                                }
-                                            );
-                                            match index < parts_vec_len_minus_one {
-                                                true => {
-                                                    std_vec_vec_generic_type.push_punct(syn::token::PathSep{
-                                                        spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
-                                                    });
-                                                }
-                                                false => ()
+    if parts_vec_len >= 1 {
+        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+        handle.push_value(
+            syn::PathSegment {
+                ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
+                arguments: syn::PathArguments::None,
+            }
+        );
+        handle.push_punct(syn::token::PathSep{
+            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+        });
+        handle.push_value(
+            syn::PathSegment {
+                ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
+                arguments: syn::PathArguments::None,
+            }
+        );
+        handle.push_punct(syn::token::PathSep{
+            spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+        });
+        handle.push_value(
+            syn::PathSegment {
+                ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
+                arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments{
+                    colon2_token: None,
+                    lt_token: syn::token::Lt{
+                        spans: [proc_macro2::Span::call_site()],
+                    },
+                    args: {
+                        let mut handle = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
+                        handle.push(syn::GenericArgument::Type(syn::Type::Path(syn::TypePath{
+                            qself: None,
+                            path: syn::Path {
+                                leading_colon: None,
+                                segments: {
+                                    let parts_vec_len_minus_one = parts_vec_len - 1;
+                                    let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
+                                    for (index, element) in parts_vec.iter().enumerate() {
+                                        std_vec_vec_generic_type.push_value(
+                                            syn::PathSegment {
+                                                ident: proc_macro2::Ident::new(element, proc_macro2::Span::call_site()),
+                                                arguments: syn::PathArguments::None,
                                             }
+                                        );
+                                        if index < parts_vec_len_minus_one {
+                                            std_vec_vec_generic_type.push_punct(syn::token::PathSep{
+                                                spans: [proc_macro2::Span::call_site(),proc_macro2::Span::call_site()],
+                                            });
                                         }
-                                        std_vec_vec_generic_type
-                                    },
+                                    }
+                                    std_vec_vec_generic_type
                                 },
-                            })));
-                            handle
-                        },
-                        gt_token: syn::token::Gt {
-                            spans: [proc_macro2::Span::call_site()],
-                        },
-                    }),
-                }
-            );
-            handle
-        },
-        false => panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
+                            },
+                        })));
+                        handle
+                    },
+                    gt_token: syn::token::Gt {
+                        spans: [proc_macro2::Span::call_site()],
+                    },
+                }),
+            }
+        );
+        handle
+    }
+    else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}")
     }
 }
 
@@ -8102,13 +8097,13 @@ fn generate_http_request_many_token_stream(
                                 let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
                                 .fold(std::string::String::new(), |mut acc, path_segment| {
                                     let path_segment_ident = &path_segment.ident;
-                                    match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                        true => {
-                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                            acc.push_str(&path_segment_ident.to_string());
-                                            code_occurence_type_repeat_checker = true;
-                                        },
-                                        false => acc.push_str(&format!("{path_segment_ident}::")),
+                                    if *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                        assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                        acc.push_str(&path_segment_ident.to_string());
+                                        code_occurence_type_repeat_checker = true;
+                                    }
+                                    else {
+                                        acc.push_str(&format!("{path_segment_ident}::"));
                                     }
                                     acc
                                 });

@@ -49,30 +49,30 @@ pub(crate) fn type_variants_from_request_response_generator(
                         naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
-                let error_occurence_attribute = match *field_ident == *code_occurence_snake_case_stringified {
-                    true => quote::quote! {},
-                    false => {
-                        let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
-                        for element in &field.attrs {
-                            if element.path().segments.len() == 1 {
-                                let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
-                                if let Ok(value) = {
-                                    use std::str::FromStr;
-                                    proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
-                                } {
-                                    match error_occurence_attribute {
-                                        Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
-                                        None => {
-                                            error_occurence_attribute = Some(value);
-                                        }
+                let error_occurence_attribute = if *field_ident == *code_occurence_snake_case_stringified {
+                    proc_macro2::TokenStream::new()
+                }
+                else {
+                    let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::named_attribute::NamedAttribute> = None;
+                    for element in &field.attrs {
+                        if element.path().segments.len() == 1 {
+                            let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
+                            if let Ok(value) = {
+                                use std::str::FromStr;
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
+                            } {
+                                match error_occurence_attribute {
+                                    Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
+                                    None => {
+                                        error_occurence_attribute = Some(value);
                                     }
                                 }
                             }
                         }
-                        match error_occurence_attribute {
-                            Some(value) => value.to_attribute_view_token_stream(),
-                            None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
-                        }
+                    }
+                    match error_occurence_attribute {
+                        Some(value) => value.to_attribute_view_token_stream(),
+                        None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
                     }
                 };
                 let field_type = &field.ty;
@@ -205,13 +205,13 @@ pub(crate) fn type_variants_from_request_response_generator(
                                 let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
                                 .fold(std::string::String::new(), |mut acc, path_segment| {
                                     let path_segment_ident = &path_segment.ident;
-                                    match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                        true => {
-                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                            acc.push_str(&path_segment_ident.to_string());
-                                            code_occurence_type_repeat_checker = true;
-                                        },
-                                        false => acc.push_str(&format!("{path_segment_ident}::")),
+                                    if *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                        assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                        acc.push_str(&path_segment_ident.to_string());
+                                        code_occurence_type_repeat_checker = true;
+                                    }
+                                    else {
+                                        acc.push_str(&format!("{path_segment_ident}::"));
                                     }
                                     acc
                                 });
