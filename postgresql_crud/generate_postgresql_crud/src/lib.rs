@@ -2191,13 +2191,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
                                     .fold(std::string::String::new(), |mut acc, path_segment| {
                                         let path_segment_ident = &path_segment.ident;
-                                        match *path_segment_ident == code_occurence_upper_camel_case_stringified {
-                                            true => {
-                                                assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
-                                                acc.push_str(&path_segment_ident.to_string());
-                                                code_occurence_type_repeat_checker = true;
-                                            },
-                                            false => acc.push_str(&format!("{path_segment_ident}::")),
+                                        if *path_segment_ident == code_occurence_upper_camel_case_stringified {
+                                            assert!(!code_occurence_type_repeat_checker, "{proc_macro_name_upper_camel_case_ident_stringified} code_occurence_ident detected more than one {code_occurence_upper_camel_case_stringified} inside type path");
+                                            acc.push_str(&path_segment_ident.to_string());
+                                            code_occurence_type_repeat_checker = true;
+                                        }
+                                        else {
+                                            acc.push_str(&format!("{path_segment_ident}::"));
                                         }
                                         acc
                                     });
@@ -5453,20 +5453,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     let column_increments = fields_named.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
                         let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                        let possible_dot_space = match (incremented_index) == fields_named_len {
-                            true => "",
-                            false => dot_space,
+                        let possible_dot_space = if (incremented_index) == fields_named_len {
+                            ""
+                        }
+                        else {
+                            dot_space
                         };
                         acc.push_str(&format!("${incremented_index}{possible_dot_space}"));
                         acc
                     });
                     let declarations = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
-                        let possible_dot_space = match (
+                        let possible_dot_space = if (
                             index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
                         ) == fields_named_excluding_primary_key_len {
-                            true => "",
-                            false => dot_space,
+                            ""
+                        }
+                        else {
+                            dot_space
                         };
                         acc.push_str(&format!("{field_ident} = data.{field_ident}{possible_dot_space}"));
                         acc
@@ -6060,11 +6064,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         fields_named_excluding_primary_key.iter().enumerate().map(|(index, element)| {
                             let field_ident = &element.field_ident;
                             let handle_token_stream = {
-                                let possible_dot_space = match (
+                                let possible_dot_space = if (
                                     index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))
                                 ) == fields_named_excluding_primary_key_len {
-                                    true => "",
-                                    false => dot_space,
+                                    ""
+                                }
+                                else {
+                                    dot_space
                                 };
                                 let handle_stringified = format!("\"{field_ident} = ${{increment}}{possible_dot_space}\"");
                                 handle_stringified.parse::<proc_macro2::TokenStream>()
@@ -6708,9 +6714,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 let parameters_match_primary_key_some_other_none_token_stream = fields_named.iter().map(|element| {
                     let field_ident = &element.field_ident;
-                    match field_ident == primary_key_field_ident {
-                        true => quote::quote!{Some(#primary_key_field_ident)},
-                        false => quote::quote!{None}
+                    if field_ident == primary_key_field_ident {
+                        quote::quote!{Some(#primary_key_field_ident)}
+                    }
+                    else {
+                        quote::quote!{None}
                     }
                 });
                 let from_log_and_return_error_token_stream =

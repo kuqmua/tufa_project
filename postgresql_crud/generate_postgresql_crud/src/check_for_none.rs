@@ -29,9 +29,11 @@ pub(crate) fn check_for_none(
                         naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
-                let possible_dot_space = match (index + 1) == fields_named_handle_len {
-                    true => "",
-                    false => dot_space,
+                let possible_dot_space = if (index + 1) == fields_named_handle_len {
+                    ""
+                }
+                else {
+                    dot_space
                 };
                 acc.0.push_str(&format!("None{possible_dot_space}"));
                 acc.1.push_str(&format!(

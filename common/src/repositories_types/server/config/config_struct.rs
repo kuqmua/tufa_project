@@ -69,54 +69,53 @@ impl Config {
                         });
                     }
                 };
-                let hmac_secret = match value.hmac_secret.is_empty() {
-                    true => {
-                        return Err(Self::Error::HmacSecret {
-                            hmac_secret: value.hmac_secret,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => secrecy::Secret::new(value.hmac_secret),
+                let hmac_secret = if value.hmac_secret.is_empty() {
+                    return Err(Self::Error::HmacSecret {
+                        hmac_secret: value.hmac_secret,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    secrecy::Secret::new(value.hmac_secret)
                 };
-                let base_url = match value.base_url.is_empty() {
-                    true => {
-                        return Err(Self::Error::BaseUrl {
-                            base_url: value.base_url,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => value.base_url,
+                let base_url = if value.base_url.is_empty() {
+                    return Err(Self::Error::BaseUrl {
+                        base_url: value.base_url,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    value.base_url
                 };
                 let access_control_max_age = value.access_control_max_age;
-                let access_control_allow_origin = match value.access_control_allow_origin.is_empty() {
-                    true => {
-                        return Err(Self::Error::AccessControlAllowOrigin {
-                            access_control_allow_origin: value.access_control_allow_origin,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        }); //todo - maybe add check if its uri\url
-                    }
-                    false => value.access_control_allow_origin,
+                let access_control_allow_origin = if value.access_control_allow_origin.is_empty() {
+                    return Err(Self::Error::AccessControlAllowOrigin {
+                        access_control_allow_origin: value.access_control_allow_origin,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }); //todo - maybe add check if its uri\url
+                }
+                else {
+                    value.access_control_allow_origin
                 };
         
-                let github_name = match value.github_name.is_empty() {
-                    true => {
-                        return Err(Self::Error::GithubName {
-                            github_name: value.github_name,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => value.github_name,
+                let github_name = if value.github_name.is_empty() {
+                    return Err(Self::Error::GithubName {
+                        github_name: value.github_name,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    value.github_name
                 };
-                let github_token = match value.github_token.is_empty() {
-                    true => {
-                        return Err(Self::Error::GithubToken {
-                            github_token: value.github_token,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => value.github_token,
+                let github_token = if value.github_token.is_empty() {
+                    return Err(Self::Error::GithubToken {
+                        github_token: value.github_token,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    value.github_token
                 };
-        
                 let timezone = match chrono::FixedOffset::east_opt(value.timezone) {
                     Some(fixed_offset) => fixed_offset,
                     None => {
@@ -126,47 +125,43 @@ impl Config {
                         });
                     }
                 };
-        
-                let redis_url = match value.redis_url.is_empty() {
-                    true => {
-                        return Err(Self::Error::RedisUrl {
-                            redis_url: value.redis_url,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => secrecy::Secret::new(value.redis_url),
+                let redis_url = if value.redis_url.is_empty() {
+                    return Err(Self::Error::RedisUrl {
+                        redis_url: value.redis_url,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    secrecy::Secret::new(value.redis_url)
                 };
-        
-                let mongo_url = match value.mongo_url.is_empty() {
-                    true => {
-                        return Err(Self::Error::MongoUrl {
-                            mongo_url: value.mongo_url,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => secrecy::Secret::new(value.mongo_url),
+                let mongo_url = if value.mongo_url.is_empty() {
+                    return Err(Self::Error::MongoUrl {
+                        mongo_url: value.mongo_url,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    secrecy::Secret::new(value.mongo_url)
                 };
-        
-                let database_url = match value.database_url.is_empty() {
-                    true => {
-                        return Err(Self::Error::DatabaseUrl {
-                            database_url: value.database_url,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => secrecy::Secret::new(value.database_url),
+                let database_url = if value.database_url.is_empty() {
+                    return Err(Self::Error::DatabaseUrl {
+                        database_url: value.database_url,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    secrecy::Secret::new(value.database_url)
                 }; //postgres_url = value.; naming required by sqlx::query::query!
         
-                let starting_check_link = match value.starting_check_link.is_empty() {
-                    true => {
-                        return Err(Self::Error::StartingCheckLink {
-                            starting_check_link: value.starting_check_link,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                    false => value.starting_check_link,
+                let starting_check_link = if value.starting_check_link.is_empty() {
+                    return Err(Self::Error::StartingCheckLink {
+                        starting_check_link: value.starting_check_link,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else {
+                    value.starting_check_link
                 }; //todo add browser url limit check
-        
                 let tracing_type = value.tracing_type;
                 let source_place_type = value.source_place_type;
                 let enable_api_git_commit_check = value.enable_api_git_commit_check;
