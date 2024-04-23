@@ -143,91 +143,91 @@ pub enum PostgresqlTypeWithMetadata {
 impl std::convert::From<&PostgresqlTypeWithMetadata> for PostgresqlType {
     fn from(value: &PostgresqlTypeWithMetadata) -> Self {
         match value {
-            PostgresqlTypeWithMetadata::Bool => Self::Bool,
+            PostgresqlTypeWithMetadata::Bool |
             PostgresqlTypeWithMetadata::BoolNotNull => Self::Bool,
-            PostgresqlTypeWithMetadata::Char => Self::Char,
+            PostgresqlTypeWithMetadata::Char |
             PostgresqlTypeWithMetadata::CharNotNull => Self::Char,
-            PostgresqlTypeWithMetadata::SmallInt => Self::SmallInt,
+            PostgresqlTypeWithMetadata::SmallInt |
             PostgresqlTypeWithMetadata::SmallIntNotNull => Self::SmallInt,
-            PostgresqlTypeWithMetadata::SmallSerial => Self::SmallSerial,
+            PostgresqlTypeWithMetadata::SmallSerial |
             PostgresqlTypeWithMetadata::SmallSerialNotNull => Self::SmallSerial,
-            PostgresqlTypeWithMetadata::Int2 => Self::Int2,
+            PostgresqlTypeWithMetadata::Int2 |
             PostgresqlTypeWithMetadata::Int2NotNull => Self::Int2,
-            PostgresqlTypeWithMetadata::Int => Self::Int,
+            PostgresqlTypeWithMetadata::Int |
             PostgresqlTypeWithMetadata::IntNotNull => Self::Int,
-            PostgresqlTypeWithMetadata::Serial => Self::Serial,
+            PostgresqlTypeWithMetadata::Serial |
             PostgresqlTypeWithMetadata::SerialNotNull => Self::Serial,
-            PostgresqlTypeWithMetadata::Int4 => Self::Int4,
+            PostgresqlTypeWithMetadata::Int4 |
             PostgresqlTypeWithMetadata::Int4NotNull => Self::Int4,
-            PostgresqlTypeWithMetadata::BigInt => Self::BigInt,
+            PostgresqlTypeWithMetadata::BigInt |
             PostgresqlTypeWithMetadata::BigIntNotNull => Self::BigInt,
-            PostgresqlTypeWithMetadata::BigSerial => Self::BigSerial,
-            PostgresqlTypeWithMetadata::BigSerialNotNull => Self::BigSerial,
+            PostgresqlTypeWithMetadata::BigSerial |
+            PostgresqlTypeWithMetadata::BigSerialNotNull |
             PostgresqlTypeWithMetadata::BigSerialNotNullPrimaryKey => Self::BigSerial,
-            PostgresqlTypeWithMetadata::Int8 => Self::Int8,
+            PostgresqlTypeWithMetadata::Int8 |
             PostgresqlTypeWithMetadata::Int8NotNull => Self::Int8,
-            PostgresqlTypeWithMetadata::Real => Self::Real,
+            PostgresqlTypeWithMetadata::Real |
             PostgresqlTypeWithMetadata::RealNotNull => Self::Real,
-            PostgresqlTypeWithMetadata::Float4 => Self::Float4,
+            PostgresqlTypeWithMetadata::Float4 |
             PostgresqlTypeWithMetadata::Float4NotNull => Self::Float4,
-            PostgresqlTypeWithMetadata::DoublePrecision => Self::DoublePrecision,
+            PostgresqlTypeWithMetadata::DoublePrecision |
             PostgresqlTypeWithMetadata::DoublePrecisionNotNull => Self::DoublePrecision,
-            PostgresqlTypeWithMetadata::Float8 => Self::Float8,
+            PostgresqlTypeWithMetadata::Float8 |
             PostgresqlTypeWithMetadata::Float8NotNull => Self::Float8,
-            PostgresqlTypeWithMetadata::Varchar => Self::Varchar,
+            PostgresqlTypeWithMetadata::Varchar |
             PostgresqlTypeWithMetadata::VarcharNotNull => Self::Varchar,
-            PostgresqlTypeWithMetadata::CharN => Self::CharN,
+            PostgresqlTypeWithMetadata::CharN |
             PostgresqlTypeWithMetadata::CharNNotNull => Self::CharN,
-            PostgresqlTypeWithMetadata::Text => Self::Text,
+            PostgresqlTypeWithMetadata::Text |
             PostgresqlTypeWithMetadata::TextNotNull => Self::Text,
-            PostgresqlTypeWithMetadata::CiText => Self::CiText,
+            PostgresqlTypeWithMetadata::CiText |
             PostgresqlTypeWithMetadata::CiTextNotNull => Self::CiText,
-            PostgresqlTypeWithMetadata::Bytea => Self::Bytea,
+            PostgresqlTypeWithMetadata::Bytea |
             PostgresqlTypeWithMetadata::ByteaNotNull => Self::Bytea,
-            PostgresqlTypeWithMetadata::Interval => Self::Interval,
+            PostgresqlTypeWithMetadata::Interval |
             PostgresqlTypeWithMetadata::IntervalNotNull => Self::Interval,
-            PostgresqlTypeWithMetadata::Int8Range => Self::Int8Range,
+            PostgresqlTypeWithMetadata::Int8Range |
             PostgresqlTypeWithMetadata::Int8RangeNotNull => Self::Int8Range,
-            PostgresqlTypeWithMetadata::Int4Range => Self::Int4Range,
+            PostgresqlTypeWithMetadata::Int4Range |
             PostgresqlTypeWithMetadata::Int4RangeNotNull => Self::Int4Range,
-            PostgresqlTypeWithMetadata::TsRange => Self::TsRange,
+            PostgresqlTypeWithMetadata::TsRange |
             PostgresqlTypeWithMetadata::TsRangeNotNull => Self::TsRange,
-            PostgresqlTypeWithMetadata::TsTzRange => Self::TsTzRange,
+            PostgresqlTypeWithMetadata::TsTzRange |
             PostgresqlTypeWithMetadata::TsTzRangeNotNull => Self::TsTzRange,
-            PostgresqlTypeWithMetadata::DateRange => Self::DateRange,
+            PostgresqlTypeWithMetadata::DateRange |
             PostgresqlTypeWithMetadata::DateRangeNotNull => Self::DateRange,
-            PostgresqlTypeWithMetadata::NumRange => Self::NumRange,
+            PostgresqlTypeWithMetadata::NumRange |
             PostgresqlTypeWithMetadata::NumRangeNotNull => Self::NumRange,
-            PostgresqlTypeWithMetadata::Money => Self::Money,
+            PostgresqlTypeWithMetadata::Money |
             PostgresqlTypeWithMetadata::MoneyNotNull => Self::Money,
-            PostgresqlTypeWithMetadata::Numeric => Self::Numeric,
+            PostgresqlTypeWithMetadata::Numeric |
             PostgresqlTypeWithMetadata::NumericNotNull => Self::Numeric,
-            PostgresqlTypeWithMetadata::TimestampTz => Self::TimestampTz,
+            PostgresqlTypeWithMetadata::TimestampTz |
             PostgresqlTypeWithMetadata::TimestampTzNotNull => Self::TimestampTz,
-            PostgresqlTypeWithMetadata::Date => Self::Date,
+            PostgresqlTypeWithMetadata::Date |
             PostgresqlTypeWithMetadata::DateNotNull => Self::Date,
-            PostgresqlTypeWithMetadata::Time => Self::Time,
+            PostgresqlTypeWithMetadata::Time |
             PostgresqlTypeWithMetadata::TimeNotNull => Self::Time,
-            PostgresqlTypeWithMetadata::TimeTz => Self::TimeTz,
+            PostgresqlTypeWithMetadata::TimeTz |
             PostgresqlTypeWithMetadata::TimeTzNotNull => Self::TimeTz,
-            PostgresqlTypeWithMetadata::Timestamp => Self::Timestamp,
+            PostgresqlTypeWithMetadata::Timestamp |
             PostgresqlTypeWithMetadata::TimestampNotNull => Self::Timestamp,
-            PostgresqlTypeWithMetadata::Uuid => Self::Uuid,
-            PostgresqlTypeWithMetadata::UuidNotNull => Self::Uuid,
+            PostgresqlTypeWithMetadata::Uuid |
+            PostgresqlTypeWithMetadata::UuidNotNull |
             PostgresqlTypeWithMetadata::UuidNotNullPrimaryKey => Self::Uuid,
-            PostgresqlTypeWithMetadata::Inet => Self::Inet,
+            PostgresqlTypeWithMetadata::Inet |
             PostgresqlTypeWithMetadata::InetNotNull => Self::Inet,
-            PostgresqlTypeWithMetadata::Cidr => Self::Cidr,
+            PostgresqlTypeWithMetadata::Cidr |
             PostgresqlTypeWithMetadata::CidrNotNull => Self::Cidr,
-            PostgresqlTypeWithMetadata::MacAddr => Self::MacAddr,
+            PostgresqlTypeWithMetadata::MacAddr |
             PostgresqlTypeWithMetadata::MacAddrNotNull => Self::MacAddr,
-            PostgresqlTypeWithMetadata::Bit => Self::Bit,
+            PostgresqlTypeWithMetadata::Bit |
             PostgresqlTypeWithMetadata::BitNotNull => Self::Bit,
-            PostgresqlTypeWithMetadata::VarBit => Self::VarBit,
+            PostgresqlTypeWithMetadata::VarBit |
             PostgresqlTypeWithMetadata::VarBitNotNull => Self::VarBit,
-            PostgresqlTypeWithMetadata::Json => Self::Json,
+            PostgresqlTypeWithMetadata::Json |
             PostgresqlTypeWithMetadata::JsonNotNull => Self::Json,
-            PostgresqlTypeWithMetadata::JsonB => Self::JsonB,
+            PostgresqlTypeWithMetadata::JsonB |
             PostgresqlTypeWithMetadata::JsonBNotNull => Self::JsonB,
         }
     }
@@ -237,91 +237,91 @@ impl PostgresqlTypeWithMetadata {
     //todo add NOT NULL or not? or add different method and Primary Key
     pub fn postgresql_naming(&self) -> &str {
         match self {
-            Self::Bool => "BOOL",
+            Self::Bool |
             Self::BoolNotNull => "BOOL",
-            Self::Char => "CHAR",
+            Self::Char |
             Self::CharNotNull => "CHAR",
-            Self::SmallInt => "SMALLINT",
+            Self::SmallInt |
             Self::SmallIntNotNull => "SMALLINT",
-            Self::SmallSerial => "SMALLSERIAL",
+            Self::SmallSerial |
             Self::SmallSerialNotNull => "SMALLSERIAL",
-            Self::Int2 => "INT2",
+            Self::Int2 |
             Self::Int2NotNull => "INT2",
-            Self::Int => "INT",
+            Self::Int |
             Self::IntNotNull => "INT",
-            Self::Serial => "SERIAL",
+            Self::Serial |
             Self::SerialNotNull => "SERIAL",
-            Self::Int4 => "INT4",
+            Self::Int4 |
             Self::Int4NotNull => "INT4",
-            Self::BigInt => "BIGINT",
+            Self::BigInt |
             Self::BigIntNotNull => "BIGINT",
-            Self::BigSerial => "BIGSERIAL",
-            Self::BigSerialNotNull => "BIGSERIAL",
+            Self::BigSerial |
+            Self::BigSerialNotNull |
             Self::BigSerialNotNullPrimaryKey => "BIGSERIAL",
-            Self::Int8 => "INT8",
+            Self::Int8 |
             Self::Int8NotNull => "INT8",
-            Self::Real => "REAL",
+            Self::Real |
             Self::RealNotNull => "REAL",
-            Self::Float4 => "FLOAT4",
+            Self::Float4 |
             Self::Float4NotNull => "FLOAT4",
-            Self::DoublePrecision => "DOUBLE PRECISION",
+            Self::DoublePrecision |
             Self::DoublePrecisionNotNull => "DOUBLE PRECISION",
-            Self::Float8 => "FLOAT8",
+            Self::Float8 |
             Self::Float8NotNull => "FLOAT8",
-            Self::Varchar => "VARCHAR",
+            Self::Varchar |
             Self::VarcharNotNull => "VARCHAR",
-            Self::CharN => "CHAR(N)",
+            Self::CharN |
             Self::CharNNotNull => "CHAR(N)",
-            Self::Text => "TEXT",
+            Self::Text |
             Self::TextNotNull => "TEXT",
-            Self::CiText => "CITEXT",
+            Self::CiText |
             Self::CiTextNotNull => "CITEXT",
-            Self::Bytea => "BYTEA",
+            Self::Bytea |
             Self::ByteaNotNull => "BYTEA",
-            Self::Interval => "INTERVAL",
+            Self::Interval |
             Self::IntervalNotNull => "INTERVAL",
-            Self::Int8Range => "INT8RANGE",
+            Self::Int8Range |
             Self::Int8RangeNotNull => "INT8RANGE",
-            Self::Int4Range => "INT4RANGE",
+            Self::Int4Range |
             Self::Int4RangeNotNull => "INT4RANGE",
-            Self::TsRange => "TSRANGE",
+            Self::TsRange |
             Self::TsRangeNotNull => "TSRANGE",
-            Self::TsTzRange => "TSTZRANGE",
+            Self::TsTzRange |
             Self::TsTzRangeNotNull => "TSTZRANGE",
-            Self::DateRange => "DATERANGE",
+            Self::DateRange |
             Self::DateRangeNotNull => "DATERANGE",
-            Self::NumRange => "NUMRANGE",
+            Self::NumRange |
             Self::NumRangeNotNull => "NUMRANGE",
-            Self::Money => "MONEY",
+            Self::Money |
             Self::MoneyNotNull => "MONEY",
-            Self::Numeric => "NUMERIC",
+            Self::Numeric |
             Self::NumericNotNull => "NUMERIC",
-            Self::TimestampTz => "TIMESTAMPTZ",
+            Self::TimestampTz |
             Self::TimestampTzNotNull => "TIMESTAMPTZ",
-            Self::Date => "DATE",
+            Self::Date |
             Self::DateNotNull => "DATE",
-            Self::Time => "TIME",
+            Self::Time |
             Self::TimeNotNull => "TIME",
-            Self::TimeTz => "TIMETZ",
+            Self::TimeTz |
             Self::TimeTzNotNull => "TIMETZ",
-            Self::Timestamp => "TIMESTAMP",
+            Self::Timestamp |
             Self::TimestampNotNull => "TIMESTAMP",
-            Self::Uuid => "UUID",
-            Self::UuidNotNull => "UUID",
+            Self::Uuid |
+            Self::UuidNotNull |
             Self::UuidNotNullPrimaryKey => "UUID",
-            Self::Inet => "INET",
+            Self::Inet |
             Self::InetNotNull => "INET",
-            Self::Cidr => "CIDR",
+            Self::Cidr |
             Self::CidrNotNull => "CIDR",
-            Self::MacAddr => "MACADDR",
+            Self::MacAddr |
             Self::MacAddrNotNull => "MACADDR",
-            Self::Bit => "BIT",
+            Self::Bit |
             Self::BitNotNull => "BIT",
-            Self::VarBit => "VARBIT",
+            Self::VarBit |
             Self::VarBitNotNull => "VARBIT",
-            Self::Json => "JSON",
+            Self::Json |
             Self::JsonNotNull => "JSON",
-            Self::JsonB => "JSONB",
+            Self::JsonB |
             Self::JsonBNotNull => "JSONB",
         }
     }
@@ -441,7 +441,7 @@ impl std::convert::From<&SqlxPostgresType> for SupportedSqlxPostgresType {
             SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
             SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
             SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+            SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
             SqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
             SqlxPostgresType::SqlxPostgresTypesPgMoney => Self::SqlxPostgresTypesPgMoney,
             SqlxPostgresType::SqlxPostgresTypesPgCiText => Self::SqlxPostgresTypesPgCiText,
@@ -611,87 +611,87 @@ pub enum SqlxPostgresType {
 impl SqlxPostgresType {
     pub fn from_supported_sqlx_postgres_type_removing_option(value: &SupportedSqlxPostgresType) -> Self {
         match value {
-            SupportedSqlxPostgresType::StdPrimitiveBool => Self::StdPrimitiveBool,
+            SupportedSqlxPostgresType::StdPrimitiveBool |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveBool => Self::StdPrimitiveBool,
-            SupportedSqlxPostgresType::StdPrimitiveI16 => Self::StdPrimitiveI16,
+            SupportedSqlxPostgresType::StdPrimitiveI16 |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveI16 => Self::StdPrimitiveI16,
-            SupportedSqlxPostgresType::StdPrimitiveI32 => Self::StdPrimitiveI32,
+            SupportedSqlxPostgresType::StdPrimitiveI32 |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveI32 => Self::StdPrimitiveI32,
-            SupportedSqlxPostgresType::StdPrimitiveI64 => Self::StdPrimitiveI64,
+            SupportedSqlxPostgresType::StdPrimitiveI64 |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveI64 => Self::StdPrimitiveI64,
-            SupportedSqlxPostgresType::StdPrimitiveF32 => Self::StdPrimitiveF32,
+            SupportedSqlxPostgresType::StdPrimitiveF32 |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveF32 => Self::StdPrimitiveF32,
-            SupportedSqlxPostgresType::StdPrimitiveF64 => Self::StdPrimitiveF64,
+            SupportedSqlxPostgresType::StdPrimitiveF64 |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveF64 => Self::StdPrimitiveF64,
-            SupportedSqlxPostgresType::StdStringString => Self::StdStringString,
+            SupportedSqlxPostgresType::StdStringString |
             SupportedSqlxPostgresType::StdOptionOptionStdStringString => Self::StdStringString,
-            SupportedSqlxPostgresType::StdVecVecStdPrimitiveU8 => Self::StdVecVecStdPrimitiveU8,
+            SupportedSqlxPostgresType::StdVecVecStdPrimitiveU8 |
             SupportedSqlxPostgresType::StdOptionOptionStdVecVecStdPrimitiveU8 => Self::StdVecVecStdPrimitiveU8,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgInterval => Self::SqlxPostgresTypesPgInterval,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgInterval |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgInterval => Self::SqlxPostgresTypesPgInterval,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI64 |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI64 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeStdPrimitiveI32 |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeStdPrimitiveI32 => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime => Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesTimeDate |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesTimeDate => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesBigDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgRangeSqlxTypesDecimal |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgRangeSqlxTypesDecimal => Self::SqlxPostgresTypesPgRangeSqlxTypesDecimal,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney => Self::SqlxPostgresTypesPgMoney,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgMoney |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgMoney => Self::SqlxPostgresTypesPgMoney,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText => Self::SqlxPostgresTypesPgCiText,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgCiText |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgCiText => Self::SqlxPostgresTypesPgCiText,
-            SupportedSqlxPostgresType::SqlxTypesBigDecimal => Self::SqlxTypesBigDecimal,
+            SupportedSqlxPostgresType::SqlxTypesBigDecimal |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesBigDecimal => Self::SqlxTypesBigDecimal,
-            SupportedSqlxPostgresType::SqlxTypesDecimal => Self::SqlxTypesDecimal,
+            SupportedSqlxPostgresType::SqlxTypesDecimal |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesDecimal => Self::SqlxTypesDecimal,
-            SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+            SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoUtc |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtc => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
-            SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+            SupportedSqlxPostgresType::SqlxTypesChronoDateTimeSqlxTypesChronoLocal |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesChronoDateTimeSqlxTypesChronoLocal => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
-            SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime => Self::SqlxTypesChronoNaiveDateTime,
+            SupportedSqlxPostgresType::SqlxTypesChronoNaiveDateTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesChronoNaiveDateTime => Self::SqlxTypesChronoNaiveDateTime,
-            SupportedSqlxPostgresType::SqlxTypesChronoNaiveDate => Self::SqlxTypesChronoNaiveDate,
+            SupportedSqlxPostgresType::SqlxTypesChronoNaiveDate |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesChronoNaiveDate => Self::SqlxTypesChronoNaiveDate,
-            SupportedSqlxPostgresType::SqlxTypesChronoNaiveTime => Self::SqlxTypesChronoNaiveTime,
+            SupportedSqlxPostgresType::SqlxTypesChronoNaiveTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesChronoNaiveTime => Self::SqlxTypesChronoNaiveTime,
-            SupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz => Self::SqlxPostgresTypesPgTimeTz,
+            SupportedSqlxPostgresType::SqlxPostgresTypesPgTimeTz |
             SupportedSqlxPostgresType::StdOptionOptionSqlxPostgresTypesPgTimeTz => Self::SqlxPostgresTypesPgTimeTz,
-            SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime => Self::SqlxTypesTimePrimitiveDateTime,
+            SupportedSqlxPostgresType::SqlxTypesTimePrimitiveDateTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesTimePrimitiveDateTime => Self::SqlxTypesTimePrimitiveDateTime,
-            SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime => Self::SqlxTypesTimeOffsetDateTime,
+            SupportedSqlxPostgresType::SqlxTypesTimeOffsetDateTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesTimeOffsetDateTime => Self::SqlxTypesTimeOffsetDateTime,
-            SupportedSqlxPostgresType::SqlxTypesTimeDate => Self::SqlxTypesTimeDate,
+            SupportedSqlxPostgresType::SqlxTypesTimeDate |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesTimeDate => Self::SqlxTypesTimeDate,
-            SupportedSqlxPostgresType::SqlxTypesTimeTime => Self::SqlxTypesTimeTime,
+            SupportedSqlxPostgresType::SqlxTypesTimeTime |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesTimeTime => Self::SqlxTypesTimeTime,
-            SupportedSqlxPostgresType::SqlxTypesUuidUuid => Self::SqlxTypesUuidUuid,
+            SupportedSqlxPostgresType::SqlxTypesUuidUuid |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesUuidUuid => Self::SqlxTypesUuidUuid,
-            SupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork => Self::SqlxTypesIpnetworkIpNetwork,
+            SupportedSqlxPostgresType::SqlxTypesIpnetworkIpNetwork |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesIpnetworkIpNetwork => Self::SqlxTypesIpnetworkIpNetwork,
-            SupportedSqlxPostgresType::StdNetIpAddr => Self::StdNetIpAddr,
+            SupportedSqlxPostgresType::StdNetIpAddr |
             SupportedSqlxPostgresType::StdOptionOptionStdNetIpAddr => Self::StdNetIpAddr,
-            SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
+            SupportedSqlxPostgresType::SqlxTypesMacAddressMacAddress |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesMacAddressMacAddress => Self::SqlxTypesMacAddressMacAddress,
-            SupportedSqlxPostgresType::SqlxTypesBitVec => Self::SqlxTypesBitVec,
+            SupportedSqlxPostgresType::SqlxTypesBitVec |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesBitVec => Self::SqlxTypesBitVec,
-            SupportedSqlxPostgresType::SqlxTypesJsonT => Self::SqlxTypesJsonT,
+            SupportedSqlxPostgresType::SqlxTypesJsonT |
             SupportedSqlxPostgresType::StdOptionOptionSqlxTypesJsonT => Self::SqlxTypesJsonT,
-            SupportedSqlxPostgresType::SerdeJsonValue => Self::SerdeJsonValue,
+            SupportedSqlxPostgresType::SerdeJsonValue |
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Self::SerdeJsonValue,
         }
     }
@@ -1273,45 +1273,51 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPost
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBool => Self::StdOptionOptionStdPrimitiveBool,
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveBoolAsPostgresqlBoolNotNull => Self::StdPrimitiveBool,
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt => Self::StdOptionOptionStdPrimitiveI16,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull => Self::StdPrimitiveI16,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial => Self::StdOptionOptionStdPrimitiveI16,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerialNotNull => Self::StdPrimitiveI16,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallInt |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerial |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2 => Self::StdOptionOptionStdPrimitiveI16,
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallIntNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlSmallSerialNotNull |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI16AsPostgresqlInt2NotNull => Self::StdPrimitiveI16,
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt => Self::StdOptionOptionStdPrimitiveI32,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlIntNotNull => Self::StdPrimitiveI32,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial => Self::StdOptionOptionStdPrimitiveI32,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerialNotNull => Self::StdPrimitiveI32,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerial |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4 => Self::StdOptionOptionStdPrimitiveI32,
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlIntNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlSerialNotNull |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI32AsPostgresqlInt4NotNull => Self::StdPrimitiveI32,
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt => Self::StdOptionOptionStdPrimitiveI64,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull => Self::StdPrimitiveI64,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial => Self::StdOptionOptionStdPrimitiveI64,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull => Self::StdPrimitiveI64,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey => Self::StdPrimitiveI64,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigInt |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerial |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8 => Self::StdOptionOptionStdPrimitiveI64,
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigIntNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKey |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveI64AsPostgresqlInt8NotNull => Self::StdPrimitiveI64,
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlReal => Self::StdOptionOptionStdPrimitiveF32,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlRealNotNull => Self::StdPrimitiveF32,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlReal |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4 => Self::StdOptionOptionStdPrimitiveF32,
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlRealNotNull |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveF32AsPostgresqlFloat4NotNull => Self::StdPrimitiveF32,
 
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecision => Self::StdOptionOptionStdPrimitiveF64,
-            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull => Self::StdPrimitiveF64,
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecision |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8 => Self::StdOptionOptionStdPrimitiveF64,
+
+            RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlDoublePrecisionNotNull |
             RustSqlxMapToPostgresTypeVariant::StdPrimitiveF64AsPostgresqlFloat8NotNull => Self::StdPrimitiveF64,
 
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarchar => Self::StdOptionOptionStdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarcharNotNull => Self::StdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharN => Self::StdOptionOptionStdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull => Self::StdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText => Self::StdOptionOptionStdStringString,
-            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull => Self::StdStringString,
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarchar |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharN |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlText |
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiText => Self::StdOptionOptionStdStringString,
+
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlVarcharNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCharNNotNull |
+            RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlTextNotNull |
             RustSqlxMapToPostgresTypeVariant::StdStringStringAsPostgresqlCiTextNotNull => Self::StdStringString,
 
             RustSqlxMapToPostgresTypeVariant::StdVecVecStdPrimitiveU8AsPostgresqlBytea => Self::StdOptionOptionStdVecVecStdPrimitiveU8,
@@ -1396,35 +1402,40 @@ impl std::convert::From<&RustSqlxMapToPostgresTypeVariant> for SupportedSqlxPost
             RustSqlxMapToPostgresTypeVariant::SqlxTypesTimeTimeAsPostgresqlTimeNotNull => Self::SqlxTypesTimeTime,
 
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuid => Self::StdOptionOptionSqlxTypesUuidUuid,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull => Self::SqlxTypesUuidUuid,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesUuidUuidAsPostgresqlUuidNotNullPrimaryKey => Self::SqlxTypesUuidUuid,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => Self::StdOptionOptionSqlxTypesIpnetworkIpNetwork,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull => Self::SqlxTypesIpnetworkIpNetwork,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => Self::StdOptionOptionSqlxTypesIpnetworkIpNetwork,
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlInetNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidrNotNull => Self::SqlxTypesIpnetworkIpNetwork,
 
-            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInet => Self::StdOptionOptionStdNetIpAddr,
-            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInetNotNull => Self::StdNetIpAddr,
+            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInet |
             RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidr => Self::StdOptionOptionStdNetIpAddr,
+
+            RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlInetNotNull |
             RustSqlxMapToPostgresTypeVariant::StdNetIpAddrAsPostgresqlCidrNotNull => Self::StdNetIpAddr,
 
             RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr => Self::StdOptionOptionSqlxTypesMacAddressMacAddress,
             RustSqlxMapToPostgresTypeVariant::SqlxTypesMacAddressMacAddressAsPostgresqlMacAddrNotNull => Self::SqlxTypesMacAddressMacAddress,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBit => Self::StdOptionOptionSqlxTypesBitVec,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull => Self::SqlxTypesBitVec,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBit |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBit => Self::StdOptionOptionSqlxTypesBitVec,
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlBitNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesBitVecAsPostgresqlVarBitNotNull => Self::SqlxTypesBitVec,
 
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson => Self::StdOptionOptionSqlxTypesJsonT,
-            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull => Self::SqlxTypesJsonT,
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJson |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonB => Self::StdOptionOptionSqlxTypesJsonT,
+
+            RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonNotNull |
             RustSqlxMapToPostgresTypeVariant::SqlxTypesJsonTAsPostgresqlJsonBNotNull => Self::SqlxTypesJsonT,
 
-            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson => Self::StdOptionOptionSerdeJsonValue,
-            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull => Self::SerdeJsonValue,
+            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJson |
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonB => Self::StdOptionOptionSerdeJsonValue,
+
+            RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonNotNull |
             RustSqlxMapToPostgresTypeVariant::SerdeJsonValueAsPostgresqlJsonBNotNull => Self::SerdeJsonValue,
         }
     }
