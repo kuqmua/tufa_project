@@ -523,7 +523,7 @@ manual_saturating_arithmetic = { level = "deny", priority = 0 }
 manual_slice_size_calculation = { level = "deny", priority = 0 }
 manual_split_once = { level = "deny", priority = 0 }
 manual_str_repeat = { level = "deny", priority = 0 }
-manual_string_new = { level = "allow", priority = 0 }
+manual_string_new = { level = "deny", priority = 0 }
 manual_strip = { level = "deny", priority = 0 }
 manual_swap = { level = "deny", priority = 0 }
 manual_try_fold = { level = "deny", priority = 0 }

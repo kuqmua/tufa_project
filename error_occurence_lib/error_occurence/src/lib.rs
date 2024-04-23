@@ -70,7 +70,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             ast.generics
                 .params
                 .iter()
-                .fold(String::from(""), |mut acc, gen_param| {
+                .fold(std::string::String::new(), |mut acc, gen_param| {
                     if let syn::GenericParam::Lifetime(lifetime_deref) = gen_param {
                         acc.push_str(&format!("'{},", lifetime_deref.lifetime.ident));
                         acc
@@ -303,7 +303,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             {
                                                 let mut code_occurence_type_repeat_checker = false;
                                                 let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                                .fold(String::from(""), |mut acc, path_segment| {
+                                                .fold(std::string::String::new(), |mut acc, path_segment| {
                                                     let path_segment_ident = &path_segment.ident;
                                                     match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                                         true => {

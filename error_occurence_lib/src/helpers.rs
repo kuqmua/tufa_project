@@ -14,7 +14,7 @@ pub fn lines_space_backslash_addition<T: std::fmt::Display>(value: T) -> std::st
     value
         .to_string()
         .lines()
-        .fold(String::from(""), |mut acc, line| {
+        .fold(std::string::String::new(), |mut acc, line| {
             acc.push_str(&format!(" {}\n", line));
             acc
         })

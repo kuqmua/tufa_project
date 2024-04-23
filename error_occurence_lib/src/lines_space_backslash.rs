@@ -9,7 +9,7 @@ where
     fn lines_space_backslash(&self) -> std::string::String {
         self.to_string()
             .lines()
-            .fold(String::from(""), |mut acc, line| {
+            .fold(std::string::String::new(), |mut acc, line| {
                 acc.push_str(&format!(" {}\n", line));
                 acc
             })

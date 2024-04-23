@@ -2188,7 +2188,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     if let syn::Type::Path(type_path) = &field.ty {
                                         let mut code_occurence_type_repeat_checker = false;
                                         let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                        .fold(String::from(""), |mut acc, path_segment| {
+                                        .fold(std::string::String::new(), |mut acc, path_segment| {
                                             let path_segment_ident = &path_segment.ident;
                                             match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                                 true => {
@@ -8097,7 +8097,7 @@ fn generate_http_request_many_token_stream(
                                 if let syn::Type::Path(type_path) = &field.ty {
                                     let mut code_occurence_type_repeat_checker = false;
                                     let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                    .fold(String::from(""), |mut acc, path_segment| {
+                                    .fold(std::string::String::new(), |mut acc, path_segment| {
                                         let path_segment_ident = &path_segment.ident;
                                         match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                             true => {
@@ -8414,7 +8414,7 @@ fn generate_try_operation_token_stream(
                                 if let syn::Type::Path(type_path) = &field.ty {
                                     let mut code_occurence_type_repeat_checker = false;
                                     let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                    .fold(String::from(""), |mut acc, path_segment| {
+                                    .fold(std::string::String::new(), |mut acc, path_segment| {
                                         let path_segment_ident = &path_segment.ident;
                                         match *path_segment_ident == code_occurence_upper_camel_case_stringified {
                                             true => {

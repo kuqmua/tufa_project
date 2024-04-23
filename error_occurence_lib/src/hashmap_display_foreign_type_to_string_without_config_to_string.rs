@@ -15,7 +15,7 @@ where
         &self,
     ) -> std::string::String {
         crate::helpers::error_occurence_hashmap_formatter(self.iter().fold(
-            String::from(""),
+            std::string::String::new(),
             |mut acc, (key, value)| {
                 acc.push_str(&crate::helpers::stringified_lines_error_hashmap_element(
                     key.display_foreign_type(),
@@ -45,7 +45,7 @@ where
         &self,
     ) -> std::string::String {
         crate::helpers::error_occurence_hashmap_formatter(self.iter().fold(
-            String::from(""),
+            std::string::String::new(),
             |mut acc, (key, value)| {
                 acc.push_str(&crate::helpers::stringified_lines_error_hashmap_element(
                     key.display_foreign_type(),

@@ -72,7 +72,7 @@ pub fn generate_with_serialize_deserialize_version(
                                         {
                                             let mut code_occurence_type_repeat_checker = false;
                                             let code_occurence_segments_stringified_handle = type_path.path.segments.iter()
-                                            .fold(String::from(""), |mut acc, path_segment| {
+                                            .fold(std::string::String::new(), |mut acc, path_segment| {
                                                 let path_segment_ident = &path_segment.ident;
                                                 match *path_segment_ident == code_occurence_upper_camel_case {
                                                     true => {
