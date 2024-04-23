@@ -18,9 +18,9 @@ where
         {
             Ok(mongo_client_options) => match mongodb::Client::with_options(mongo_client_options) {
                 Ok(client) => Ok(client),
-                Err(e) => Err(TryGetMongoClientError::MongoDB(e)),
+                Err(error) => Err(TryGetMongoClientError::MongoDB(e)),
             },
-            Err(e) => Err(TryGetMongoClientError::MongoDB(e)),
+            Err(error) => Err(TryGetMongoClientError::MongoDB(e)),
         }
     }
 }

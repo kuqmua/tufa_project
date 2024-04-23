@@ -20,9 +20,9 @@ pub async fn mongo_drop_empty_db<'a>(
 ) -> Result<(), Box<crate::server::mongo::mongo_drop_empty_db::MongoDropEmptyDbErrorNamed>> {
     let db = mongo_client.database(db_name);
     match db.list_collection_names(None).await {
-        Err(e) => Err(Box::new(
+        Err(error) => Err(Box::new(
             crate::server::mongo::mongo_drop_empty_db::MongoDropEmptyDbErrorNamed::MongoDB {
-                mongodb: e,
+                mongodb: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             },
         )),
@@ -36,10 +36,10 @@ pub async fn mongo_drop_empty_db<'a>(
                     }
                 ));
             }
-            if let Err(e) = db.drop(None).await {
+            if let Err(error) = db.drop(None).await {
                 return Err(Box::new(
                     crate::server::mongo::mongo_drop_empty_db::MongoDropEmptyDbErrorNamed::MongoDB {
-                        mongodb: e,
+                        mongodb: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }
                 ));

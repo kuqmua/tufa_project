@@ -48,11 +48,11 @@
 //         .await
 //         .into_iter()
 //         .filter_map(|(pk, result)| match result {
-//             Err(e) => Some((
+//             Err(error) => Some((
 //                 pk.to_string(),
 //                 crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorUnnamed::CountDocumentsOrigin(
 //                     crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorCountDocumentsErrorNamed::CountDocuments {
-//                         error: e,
+//                         error,
 //                         code_occurence: error_occurence_lib::code_occurence!(),
 //                     }
 //                 ),

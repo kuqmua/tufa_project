@@ -143,7 +143,7 @@
 //         let mut async_fetch_links_error_vec = Vec::new();
 //         for (link, result) in vec_to_return {
 //             match result {
-//                 Err(e) => {
+//                 Err(error) => {
 //                     async_fetch_links_error_vec.push((link.to_string(), e));
 //                 }
 //                 Ok(str) => {
@@ -164,7 +164,7 @@
 //         let mut no_items_error_vec = Vec::new();
 //         for (link, response_text) in half_success_vec {
 //             match crate::repositories_types::server::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct(response_text, link, self) {
-//                 Err(e) => no_items_error_vec.push((link.to_string(), FetchAndParseProviderDataErrorUnnamed::NoItems(e))),
+//                 Err(error) => no_items_error_vec.push((link.to_string(), FetchAndParseProviderDataErrorUnnamed::NoItems(e))),
 //                 Ok(post_struct) => {
 //                     success_vec.push(post_struct); //todo maybe add link here?
 //                 }
@@ -244,27 +244,27 @@
 //             use crate::repositories_types::server::traits::provider_kind_methods::ProviderKindMethods;
 //             self.get_init_local_data_file_path(config)
 //         }).await {
-//             Err(e) => Err(Box::new(
+//             Err(error) => Err(Box::new(
 //                 GetLinkPartsFromLocalJsonFileErrorNamed::TokioFsFileOpen {
-//                     tokio_fs_file_open: e,
+//                     tokio_fs_file_open: error,
 //                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }
 //             )),
 //             Ok(mut file) => {
 //                 let mut content = Vec::new();
-//                 if let Err(e) = tokio::io::AsyncReadExt::read_to_end(&mut file, &mut content).await
+//                 if let Err(error) = tokio::io::AsyncReadExt::read_to_end(&mut file, &mut content).await
 //                 {
 //                     return Err(Box::new(
 //                         GetLinkPartsFromLocalJsonFileErrorNamed::TokioIoAsyncReadExtReadToEnd {
-//                             tokio_io_async_read_ext_read_to_end: e,
+//                             tokio_io_async_read_ext_read_to_end: error,
 //                             code_occurence: error_occurence_lib::code_occurence!()
 //                         }
 //                     ));
 //                 }
 //                 match serde_json::from_slice::<ProvidersInitJsonSchema>(&content) {
-//                     Err(e) => Err(Box::new(
+//                     Err(error) => Err(Box::new(
 //                         GetLinkPartsFromLocalJsonFileErrorNamed::SerdeJsonFromSlice {
-//                             serde_json_from_slice: e,
+//                             serde_json_from_slice: error,
 //                             code_occurence: error_occurence_lib::code_occurence!()
 //                         }
 //                     )),
@@ -334,13 +334,13 @@
 //     ) -> Result<Vec<String>, MongoGetProviderLinkPartsErrorNamed> {
 //         todo!()
 //         // match mongodb::options::ClientOptions::parse(crate::global_variables::runtime::config::CONFIG.get_mongo_url()).await {
-//         //     Err(e) => Err(Box::new(MongoGetProviderLinkPartsErrorNamed::ClientOptionsParse {
-//         //         mongo: e,
+//         //     Err(error) => Err(Box::new(MongoGetProviderLinkPartsErrorNamed::ClientOptionsParse {
+//         //         mongo: error,
 //         //         code_occurence: error_occurence_lib::code_occurence!()
 //         //     })),
 //         //     Ok(client_options) => match mongodb::Client::with_options(client_options) {
-//         //         Err(e) => Err(Box::new(MongoGetProviderLinkPartsErrorNamed::ClientWithOptions {
-//         //             mongo: e,
+//         //         Err(error) => Err(Box::new(MongoGetProviderLinkPartsErrorNamed::ClientWithOptions {
+//         //             mongo: error,
 //         //             code_occurence: error_occurence_lib::code_occurence!()
 //         //         })),
 //         //         Ok(client) => Ok({
@@ -353,9 +353,9 @@
 //         //             )
 //         //             .await
 //         //             {
-//         //                 Err(e) => Err(Box::new(
+//         //                 Err(error) => Err(Box::new(
 //         //                     MongoGetProviderLinkPartsErrorNamed::MongoGetDocumentsAsStringVector {
-//         //                         source: e,
+//         //                         source: error,
 //         //                 })),
 //         //                 Ok(vec_of_strings) => Ok(vec_of_strings),
 //         //             }

@@ -41,9 +41,9 @@
 //     > {
 //         let db = config.get_mongo_client().database("providers_link_parts");
 //         match db.list_collection_names(None).await {
-//             Err(e) => Err(
+//             Err(error) => Err(
 //                 crate::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
-//                     mongodb: e,
+//                     mongodb: error,
 //                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }
 //             ),
@@ -93,7 +93,7 @@
 //                 > = std::collections::HashMap::new();
 //                 for (pk, result) in result_get_documents_hashmap.into_iter() {
 //                     match result {
-//                         Err(e) => {
+//                         Err(error) => {
 //                             error_hashmap.insert(
 //                                 pk.to_string(),
 //                                 crate::server::mongo::mongo_get_providers_link_parts::MongoGetDocumentsAsStringVectorErrorUnnamed::MongoGetDocumentsAsStringVector(*e)

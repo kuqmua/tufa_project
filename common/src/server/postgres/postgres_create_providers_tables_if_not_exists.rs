@@ -24,7 +24,7 @@
 //         })).await
 //         .into_iter()
 //         .filter_map(|(pk, result)| {
-//             if let Err(e) = result {
+//             if let Err(error) = result {
 //                 return Some((pk.to_string(), e));
 //             }
 //             None

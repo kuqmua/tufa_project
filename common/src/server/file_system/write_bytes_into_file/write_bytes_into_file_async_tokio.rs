@@ -12,27 +12,27 @@ pub async fn write_bytes_into_file_async_tokio<'a>(
     bytes: &[u8],
 ) -> Result<(), Box<WriteBytesIntoFileAsyncTokioErrorNamed>> {
     if let Some(prefix) = path.parent() {
-        if let Err(e) = std::fs::create_dir_all(prefix) {
+        if let Err(error) = std::fs::create_dir_all(prefix) {
             return Err(Box::new(
                 WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
-                    std_io_error: e,
+                    std_io_error: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 },
             ));
         }
     }
     match tokio::fs::File::open(path).await {
-        Err(e) => Err(Box::new(
+        Err(error) => Err(Box::new(
             WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
-                std_io_error: e,
+                std_io_error: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             },
         )),
         Ok(mut file) => {
-            if let Err(e) = tokio::io::AsyncWriteExt::write_all(&mut file, bytes).await {
+            if let Err(error) = tokio::io::AsyncWriteExt::write_all(&mut file, bytes).await {
                 return Err(Box::new(
                     WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
-                        std_io_error: e,
+                        std_io_error: error,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     },
                 ));

@@ -46,7 +46,7 @@ pub fn select(props: &SelectProps) -> Html {
         //         Some(document) => {
         //             match document.query_selector(&format!("#{}", genereted_id_cloned)) {
         //                 //something to test creation dom method, no actual need in created element
-        //                 Err(e) => {
+        //                 Err(error) => {
         //                     log!("eeerror ", e);
         //                     None
         //                 }
@@ -125,7 +125,7 @@ pub fn select(props: &SelectProps) -> Html {
 // </script>
 // ///////////////////////////////////
 // let s: Option<i32> = match document.query_selector("select_id")) {
-//     Err(e) => None
+//     Err(error) => None
 //     Ok(option_element) => match option_element {
 //         None => None,
 //         Some(element) => {//тип Element

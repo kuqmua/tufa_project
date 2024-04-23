@@ -15,10 +15,10 @@ pub async fn mongo_drop_collection<'a>(
     let collection: mongodb::Collection<mongodb::bson::Document> = mongo_client
         .database(db_name)
         .collection(db_collection_name);
-    if let Err(e) = collection.drop(None).await {
+    if let Err(error) = collection.drop(None).await {
         return Err(Box::new(
             crate::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed::MongoDB {
-                mongodb: e,
+                mongodb: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             },
         ));

@@ -50,12 +50,12 @@
 //     .await
 //     .into_iter()
 //     .filter_map(|(pk, result)| {
-//         if let Err(e) = result {
+//         if let Err(error) = result {
 //             return Some((
 //                 pk.to_string(),
 //                 crate::server::postgres::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed::PostgresInsertLinkPartsIntoProvidersTablesOriginHandle(
 //                     crate::server::postgres::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed::Postgres {
-//                         error: e,
+//                         error,
 //                         code_occurence: error_occurence_lib::code_occurence!()
 //                     }
 //                 )

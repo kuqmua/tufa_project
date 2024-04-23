@@ -20,7 +20,7 @@
 //         .await
 //         {
 //             Ok(redis_session_store) => Ok(redis_session_store),
-//             Err(e) => Err(TryGetRedisSessionStorageError::Redis(format!("{e}"))),
+//             Err(error) => Err(TryGetRedisSessionStorageError::Redis(format!("{e}"))),
 //         }
 //     }
 // }

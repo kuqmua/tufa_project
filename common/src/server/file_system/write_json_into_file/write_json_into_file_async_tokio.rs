@@ -17,10 +17,10 @@ pub async fn write_json_into_file_async_tokio(
     json_object: serde_json::Value,
 ) -> Result<(), Box<WriteJsonIntoFileAsyncTokioErrorNamed>> {
     match serde_json::to_string_pretty(&json_object) {
-        Err(e) => {
+        Err(error) => {
             Err(Box::new(
                 WriteJsonIntoFileAsyncTokioErrorNamed::SerdeJson {
-                    serde_json_error: e, 
+                    serde_json_error: error, 
                     code_occurence: error_occurence_lib::code_occurence!() 
                 },
             ))
@@ -31,7 +31,7 @@ pub async fn write_json_into_file_async_tokio(
                 stringified_json.as_bytes(),
             )
             .await {
-                Err(e) => {
+                Err(error) => {
                     Err(Box::new(
                         WriteJsonIntoFileAsyncTokioErrorNamed::WriteBytesIntoFile {
                             write_bytes_into_file: *e, 

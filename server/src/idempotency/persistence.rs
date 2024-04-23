@@ -22,9 +22,9 @@
 //     .fetch_optional(pool)
 //     .await
 //     {
-//         Err(e) => {
+//         Err(error) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::PostgresSelect {
-//                 postgres_select: e,
+//                 postgres_select: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
@@ -32,13 +32,13 @@
 //     };
 //     if let Some(r) = saved_response {
 //         match r.response_status_code.try_into() {
-//             Err(e) => Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::TryFromIntError {
-//                 try_from_int_error: e,
+//             Err(error) => Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::TryFromIntError {
+//                 try_from_int_error: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             }),
 //             Ok(status_code_as_u16) => match actix_web::http::StatusCode::from_u16(status_code_as_u16) {
-//                 Err(e) => Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::InvalidStatusCode {
-//                     invalid_status_code: e,
+//                 Err(error) => Err(common::repositories_types::server::idempotency::persistence::GetSavedResponseErrorNamed::InvalidStatusCode {
+//                     invalid_status_code: error,
 //                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 }),
 //                 Ok(status_code) => {
@@ -69,7 +69,7 @@
 //     let (response_head, body) = http_response.into_parts();
 //     // `MessageBody::Error` is not `Send` + `Sync`,
 //     let body = match actix_web::body::to_bytes(body).await {
-//         Err(e) => {
+//         Err(error) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed::BodyToBytes {
 //                 body_to_bytes: e.into(),
 //                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -87,7 +87,7 @@
 //         }
 //         h
 //     };
-//     if let Err(e) = sqlx::query_unchecked!(
+//     if let Err(error) = sqlx::query_unchecked!(
 //         r#"
 //         UPDATE idempotency
 //         SET
@@ -108,13 +108,13 @@
 //     .await
 //     {
 //         return Err(common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed::PostgtesUpdate {
-//             postgres_update: e,
+//             postgres_update: error,
 //             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     };
-//     if let Err(e) = transaction.commit().await {
+//     if let Err(error) = transaction.commit().await {
 //         return Err(common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed::PostgtesTransactionCommit {
-//             postgres_transaction_commit: e,
+//             postgres_transaction_commit: error,
 //             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
@@ -135,9 +135,9 @@
 //     >,
 // > {
 //     let mut transaction = match pool.begin().await {
-//         Err(e) => {
+//         Err(error) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::PostgresPoolBegin {
-//                 pool_begin_error: e,
+//                 pool_begin_error: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
@@ -159,9 +159,9 @@
 //     .execute(&mut transaction)
 //     .await
 //     {
-//         Err(e) => {
+//         Err(error) => {
 //             return Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::PostgresInsert {
-//                 insert: e,
+//                 insert: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
@@ -175,9 +175,9 @@
 //         )
 //     } else {
 //         match get_saved_response(pool, idempotency_key, user_id).await {
-//             Err(e) => {
+//             Err(error) => {
 //                 return Err(common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed::GetSavedResponse {
-//                     get_saved_response: e,
+//                     get_saved_response: error,
 //                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 });
 //             },

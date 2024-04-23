@@ -12,28 +12,28 @@ pub fn write_bytes_into_file_sync(
     bytes: std::string::String,
 ) -> Result<(), Box<WriteBytesIntoFileSyncErrorNamed>> {
     if let Some(prefix) = path.parent() {
-        if let Err(e) = std::fs::create_dir_all(prefix) {
+        if let Err(error) = std::fs::create_dir_all(prefix) {
             return Err(Box::new(WriteBytesIntoFileSyncErrorNamed::StdIo {
-                std_io_error: e,
+                std_io_errord: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }));
         }
     }
     match std::fs::File::create(path) {
-        Err(e) => Err(Box::new(WriteBytesIntoFileSyncErrorNamed::StdIo {
-            std_io_error: e,
+        Err(error) => Err(Box::new(WriteBytesIntoFileSyncErrorNamed::StdIo {
+            std_io_errord: error,
             code_occurence: error_occurence_lib::code_occurence!(),
         })),
         Ok(mut file) => {
-            if let Err(e) = std::io::Write::write_all(&mut file, bytes.as_bytes()) {
+            if let Err(error) = std::io::Write::write_all(&mut file, bytes.as_bytes()) {
                 return Err(Box::new(WriteBytesIntoFileSyncErrorNamed::StdIo {
-                    std_io_error: e,
+                    std_io_errord: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }));
             }
-            if let Err(e) = file.sync_all() {
+            if let Err(error) = file.sync_all() {
                 return Err(Box::new(WriteBytesIntoFileSyncErrorNamed::StdIo {
-                    std_io_error: e,
+                    std_io_errord: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }));
             }

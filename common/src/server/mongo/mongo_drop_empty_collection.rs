@@ -30,9 +30,9 @@ pub async fn mongo_drop_empty_collection<'a>(
         .count_documents(None, None)
         .await 
     {
-        Err(e) => Err(Box::new(
+        Err(error) => Err(Box::new(
             crate::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
-                mongodb: e,
+                mongodb: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             }
         )),
@@ -46,10 +46,10 @@ pub async fn mongo_drop_empty_collection<'a>(
                     }
                 ))
             } else {
-                if let Err(e) = collection.drop(None).await {
+                if let Err(error) = collection.drop(None).await {
                     return Err(Box::new(
                         crate::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
-                            mongodb: e,
+                            mongodb: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         }
                     ));

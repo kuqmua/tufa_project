@@ -35,7 +35,7 @@
 //         std::collections::HashMap::with_capacity(count_provider_links_tables_error_vec.len());
 //     for (pk, result) in count_provider_links_tables_error_vec {
 //         match result {
-//             Err(e) => {
+//             Err(error) => {
 //                 count_provider_links_tables_error_hashmap.insert(pk.to_string(), e);
 //             }
 //             Ok((count,)) => {

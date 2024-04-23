@@ -33,14 +33,14 @@
 //     ),
 // ) -> Result<(), Box<crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed>>{
 //     match crate::server::mongo::mongo_client_options_parse::mongo_client_options_parse(config).await {
-//         Err(e) => Err(Box::new(
+//         Err(error) => Err(Box::new(
 //             crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed::ClientOptionsParse {
 //                 client_options_parse: *e,
 //                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         )),
 //         Ok(client_options) => match crate::server::mongo::mongo_client_with_options::mongo_client_with_options(client_options) {
-//             Err(e) => Err(Box::new(
+//             Err(error) => Err(Box::new(
 //                 crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed::ClientWithOptions {
 //                     client_with_options: *e,
 //                     code_occurence: error_occurence_lib::code_occurence!()
@@ -48,7 +48,7 @@
 //             )),
 //             Ok(client) => {
 //                 let db = client.database("providers_link_parts");
-//                 if let Err(e) = crate::server::mongo::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty(
+//                 if let Err(error) = crate::server::mongo::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty(
 //                     providers_json_local_data_hashmap.clone(),
 //                     &db,
 //                 )
@@ -61,7 +61,7 @@
 //                         }
 //                     ));
 //                 }
-//                 if let Err(e) =
+//                 if let Err(error) =
 //                     crate::server::mongo::mongo_insert_many::mongo_insert_many(providers_json_local_data_hashmap, db, config).await
 //                 {
 //                     return Err(Box::new(

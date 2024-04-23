@@ -3,9 +3,9 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserialize";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -102,9 +102,9 @@ pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonFrom";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -181,9 +181,9 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonTryFrom";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -280,9 +280,9 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 Ok(Self {
                     value: match #ident::try_from(value.value) {
                         Ok(value) => value,
-                        Err(e) => {
+                        Err(error) => {
                             return Err(Self::Error::#ident {
-                                #ident_snake_case_token_stream: e,
+                                #ident_snake_case_token_stream: error,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
                         }  
@@ -309,8 +309,8 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             value: #std_option_option_ident_token_stream(Some(value_two.0)),
                             conjuctive_operator: value.conjuctive_operator,
                         }),
-                        Err(e) => Err(Self::Error::#ident {
-                            #ident_snake_case_token_stream: e,
+                        Err(error) => Err(Self::Error::#ident {
+                            #ident_snake_case_token_stream: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })
                     },
@@ -334,9 +334,9 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "Common";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -460,7 +460,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         //     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         //         match sqlx::Decode::<sqlx::Postgres>::decode(value) {
         //             Ok(value) => Ok(Self(value)),
-        //             Err(e) => Err(e),
+        //             Err(error) => Err(error),
         //         }
         //     }
         // }
@@ -750,9 +750,9 @@ pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::Token
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonSpecificFrom";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -823,9 +823,9 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonSpecificTryFrom";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -882,7 +882,7 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
                 match value.0 {
                     Some(value) => match #ident::try_from(value) {
                         Ok(value) => Ok(Self(Some(value.0))),
-                        Err(e) => Err(e)
+                        Err(error) => Err(error)
                     },
                     None => Ok(Self(None))
                 }
@@ -909,9 +909,9 @@ pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::Token
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "AsPostgresqlCommon";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });

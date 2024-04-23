@@ -61,9 +61,9 @@
 //     .fetch_one(pool)
 //     .await {
 //         Ok(row) => Ok(row.username),
-//         Err(e) => Err(
+//         Err(error) => Err(
 //             common::repositories_types::server::routes::admin::dashboard::GetUsernameErrorNamed::PostgresQuery {
-//                 get_username: e,
+//                 get_username: error,
 //                 code_occurence: error_occurence_lib::code_occurence!()
 //             }
 //         ),

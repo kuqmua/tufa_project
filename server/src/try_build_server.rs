@@ -263,7 +263,7 @@ pub async fn try_build_server(
             .into_make_service(),
     )
     .await
-    .unwrap_or_else(|e| panic!("axum builder serve await failed {e:#?}"));
+    .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
     Ok(())
 }
 

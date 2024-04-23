@@ -95,10 +95,10 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 generated_functions.push(quote::quote! {
                     let #enum_variant_ident_value: #enum_variant_type;
                     match std::env::var(#env_var_name_as_screaming_snake_case_string) {
-                        Err(e) => {
+                        Err(error) => {
                             return Err(#error_ident {
                                 source: #error_enum_ident::#error_std_env_var_ident(#error_std_env_var_enum_ident::#enum_variant_ident {
-                                    source: e,
+                                    source: error,
                                     env_var_name: #env_var_name_as_screaming_snake_case_string,
                                 }),
                                 was_dotenv_enable,

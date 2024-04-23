@@ -52,8 +52,8 @@ pub(crate) fn extract_syn_variants_from_proc_macro_attribute(
                 .into();
             let element_token_stream_stringified = element_token_stream.to_string();
             if !element_token_stream_stringified.is_empty() {
-                let element_derive_input: syn::DeriveInput = syn::parse(element_token_stream).unwrap_or_else(|e| {
-                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} parse additional_http_status_codes_error_variants_attribute_tokens failed {e}");
+                let element_derive_input: syn::DeriveInput = syn::parse(element_token_stream).unwrap_or_else(|error| {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} parse additional_http_status_codes_error_variants_attribute_tokens failed {error}");
                 });
                 let option_path_sttribute = element_derive_input.attrs.iter().find(|element|{
                     let element_path = &element.path();

@@ -48,7 +48,7 @@
 //         std::collections::HashMap::with_capacity(result_vec.len());
 //     for (pk, result) in result_vec {
 //         match result {
-//             Err(e) => {
+//             Err(error) => {
 //                 errors_hashmap.insert(pk.to_string(), GetLocalProvidersLinkPartsErrorUnnamed::GetLinkPartsFromLocalJsonFile(*e));
 //             }
 //             Ok(vec) => {

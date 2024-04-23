@@ -23,9 +23,9 @@ pub async fn mongo_get_documents_as_string_vector(
     option_aggregation: Option<mongodb::bson::Document>,
 ) -> Result<Vec<String>, Box<crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed>>{
     match collection.aggregate(option_aggregation, None).await {
-        Err(e) => Err(Box::new(
+        Err(error) => Err(Box::new(
             crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed::MongoDB {
-                mongodb: e,
+                mongodb: error,
                 code_occurence: error_occurence_lib::code_occurence!()
             }
         )),
@@ -33,10 +33,10 @@ pub async fn mongo_get_documents_as_string_vector(
             let mut vec_of_strings: Vec<String> = Vec::new();
             loop {
                 match futures::stream::TryStreamExt::try_next(&mut cursor).await {
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Box::new(
                             crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed::MongoDB {
-                                mongodb: e,
+                                mongodb: error,
                                 code_occurence: error_occurence_lib::code_occurence!()
                             }
                         ));

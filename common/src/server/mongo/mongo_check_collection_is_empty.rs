@@ -23,8 +23,8 @@ pub async fn mongo_check_collection_is_empty<'a>(
         .count_documents(None, None)
         .await
     {
-        Err(e) => Err(Box::new(MongoCheckCollectionIsEmptyErrorNamed::MongoDB {
-            mongodb: e,
+        Err(error) => Err(Box::new(MongoCheckCollectionIsEmptyErrorNamed::MongoDB {
+            mongodb: error,
             code_occurence: error_occurence_lib::code_occurence!(),
         })),
         Ok(documents_number) => {

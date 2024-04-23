@@ -654,33 +654,33 @@ pub async fn try_create_many_route_logic(
 ) -> TryCreateManyRouteLogicResponse {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
-    if let Err(e) = route_validators::check_commit::check_commit(
+    if let Err(error) = route_validators::check_commit::check_commit(
         *app_state.get_enable_api_git_commit_check(),
         &headers,
     ) {
-        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
-        let e = TryCreateManyRouteLogicErrorNamed::CheckCommit {
-            check_commit: e,
+        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+        let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+            check_commit: error,
             code_occurence: error_occurence_lib::code_occurence!(),
         };
-        error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+        error_occurence_lib::error_log::ErrorLog::error_log(&error, app_state.as_ref());
         return TryCreateManyRouteLogicResponse {
             status_code,
-            body: TryCreateManyRouteLogicResponseVariants::from(e),
+            body: TryCreateManyRouteLogicResponseVariants::from(error),
         };
     }
     let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
-        Err(e) => {
-            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
-            let e = TryCreateManyRouteLogicErrorNamed::CheckBodySize {
-                check_body_size: e,
+        Err(error) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+            let error = TryCreateManyRouteLogicErrorNamed::CheckBodySize {
+                check_body_size: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
-            error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
+            error_occurence_lib::error_log::ErrorLog::error_log(&error, app_state.as_ref());
             return TryCreateManyRouteLogicResponse {
                 status_code,
-                body: TryCreateManyRouteLogicResponseVariants::from(e),
+                body: TryCreateManyRouteLogicResponseVariants::from(error),
             };
         }
     };
@@ -693,7 +693,7 @@ pub async fn try_create_many_route_logic(
     //             body: TryCreateManyRouteLogicResponseVariants::Desirable(value.0),
     //         };
     //     },
-    //     Err(e) => {
+    //     Err(error) => {
     //         let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&e);
     //         let e = TryCreateManyRouteLogicErrorNamed::from(e);
     //         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
@@ -893,9 +893,9 @@ pub async fn try_create_many(
         parameters.payload,
     )) {
         Ok(value) => value,
-        Err(e) => {
+        Err(error) => {
             return Err(TryCreateManyErrorNamed::SerdeJsonToString {
-                serde_json_to_string: e,
+                serde_json_to_string: error,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     file!().to_string(),
                     line!(),
@@ -923,9 +923,9 @@ pub async fn try_create_many(
         .send();
     let response = match future.await {
         Ok(response) => response,
-        Err(e) => {
+        Err(error) => {
             return Err(TryCreateManyErrorNamed::Reqwest {
-                reqwest: e,
+                reqwest: error,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                     file!().to_string(),
                     line!(),
@@ -945,9 +945,9 @@ pub async fn try_create_many(
     let headers = response.headers().clone();
     let response_text = match response.text().await {
         Ok(response_text) => response_text,
-        Err(e) => {
+        Err(error) => {
             return Err(TryCreateManyErrorNamed::FailedToGetResponseText {
-                reqwest: e,
+                reqwest: error,
                 status_code,
                 headers,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
@@ -967,9 +967,9 @@ pub async fn try_create_many(
     };
     let expected_response = match serde_json::from_str::<TryCreateManyRouteLogicResponseVariants>(&response_text) {
         Ok(value) => value,
-        Err(e) => {
+        Err(error) => {
             return Err(TryCreateManyErrorNamed::DeserializeResponse {
-                serde: e,
+                serde: error,
                 status_code,
                 headers,
                 response_text,

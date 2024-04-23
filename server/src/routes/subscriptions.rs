@@ -13,9 +13,9 @@
 // > {
 //     let new_subscriber: common::repositories_types::server::domain::NewSubscriber =
 //         match form.0.try_into() {
-//             Err(e) => {
+//             Err(error) => {
 //                 return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::TryIntoNewSubscriber {
-//                 try_into_new_subscriber: e,
+//                 try_into_new_subscriber: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //             }
@@ -23,9 +23,9 @@
 //         };
 //     //"Failed to acquire a Postgres connection from the pool"
 //     let mut transaction = match app_state.postgres_pool.begin().await {
-//         Err(e) => {
+//         Err(error) => {
 //             return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::PostgresPoolBegin {
-//                 postgres_pool_begin: e,
+//                 postgres_pool_begin: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
@@ -33,9 +33,9 @@
 //     };
 //     //"Failed to insert new subscriber in the database."
 //     let subscriber_id = match insert_subscriber(&mut transaction, &new_subscriber).await {
-//         Err(e) => {
+//         Err(error) => {
 //             return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::InsertSubscriber {
-//                 insert_subscriber: e,
+//                 insert_subscriber: error,
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             });
 //         }
@@ -43,21 +43,21 @@
 //     };
 //     let subscription_token = common::repositories_types::server::routes::subscriptions::generate_subscription_token();
 //     //"Failed to store the confirmation token for a new subscriber."
-//     if let Err(e) = store_token(&mut transaction, subscriber_id, &subscription_token).await {
+//     if let Err(error) = store_token(&mut transaction, subscriber_id, &subscription_token).await {
 //         return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::StoreToken {
-//             store_token: e,
+//             store_token: error,
 //             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     //"Failed to commit SQL transaction to store a new subscriber."
-//     if let Err(e) = transaction.commit().await {
+//     if let Err(error) = transaction.commit().await {
 //         return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::PostgresTransactionCommit {
-//             postgres_transaction_commit: e,
+//             postgres_transaction_commit: error,
 //             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }
 //     //"Failed to send a confirmation email."
-//     if let Err(e) = common::repositories_types::server::routes::send_confirmation_email(
+//     if let Err(error) = common::repositories_types::server::routes::send_confirmation_email(
 //         &email_client,
 //         new_subscriber,
 //         &base_url,
@@ -66,7 +66,7 @@
 //     .await
 //     {
 //         return Err(common::repositories_types::server::routes::subscriptions::SubscribeErrorNamed::SendConfirmationEmail {
-//             send_confirmation_email: e,
+//             send_confirmation_email: error,
 //             code_occurence: error_occurence_lib::code_occurence!(),
 //         });
 //     }

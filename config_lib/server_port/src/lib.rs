@@ -49,13 +49,13 @@ impl<'de> serde::Deserialize<'de> for ServerPort {
     {
         let value = match std::primitive::u16::deserialize(deserializer) {
             Ok(value) => value,
-            Err(e) => {
-                return Err(e);
+            Err(error) => {
+                return Err(error);
             }
         };
         match Self::try_from(value) {
             Ok(value) => Ok(value),
-            Err(e) => Err(serde::de::Error::custom(e))
+            Err(error) => Err(serde::de::Error::custom(error))
         }
     }
 }

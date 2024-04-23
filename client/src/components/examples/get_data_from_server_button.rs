@@ -45,10 +45,10 @@ pub fn get_data_from_server_button() -> Html {
                                         state_cloned.username = l.second;
                                         state.set(state_cloned);
                                     }
-                                    Err(e) => log!(format!("2err {:#?}", e)),
+                                    Err(error) => log!(format!("2err {:#?}", e)),
                                 }
                             }
-                            Err(e) => log!(format!("1err {:#?}", e)),
+                            Err(error) => log!(format!("1err {:#?}", e)),
                         }
                         log!("ok {:#?}", k.body());
                     }

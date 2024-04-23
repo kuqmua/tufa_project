@@ -30,7 +30,7 @@ pub async fn start_bot() {
                 println!("OK {value:#?}");
                 value
             }
-            Err(e) => panic!("{}", e),
+            Err(error) => panic!("{}", e),
         };
         println!("-------trycreate_many end-------");
         // println!("-------tryread_many start-------");
@@ -54,7 +54,7 @@ pub async fn start_bot() {
         //     }
         // },).await
         // {
-        //     Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+        //     Ok(value) => { println! ("{value:#?}") ; value }, Err(error) => panic!
         //     ("{}", e)
         // } ;
         // println!("-------tryread_many end-------");
@@ -79,7 +79,7 @@ pub async fn start_bot() {
         // .await
         // {
         //     Ok(value) => println!("{value:#?}"),
-        //     Err(e) => panic!("{}", e),
+        //     Err(error) => panic!("{}", e),
         // }
         // println!("-------tryupdate_many end-------");
         // println!("-------tryread_many start-------");
@@ -103,7 +103,7 @@ pub async fn start_bot() {
         //     }
         // },).await
         // {
-        //     Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+        //     Ok(value) => { println! ("{value:#?}") ; value }, Err(error) => panic!
         //     ("{}", e)
         // } ;
         // println!("-------tryread_many end-------");
@@ -122,7 +122,7 @@ pub async fn start_bot() {
         // .await
         // {
         //     Ok(value) => println!("{value:#?}"),
-        //     Err(e) => panic!("{}", e),
+        //     Err(error) => panic!("{}", e),
         // }
         // println!("-------trydelete_many end-------");
         // println!("-------tryread_many start-------");
@@ -146,7 +146,7 @@ pub async fn start_bot() {
         //     }
         // },).await
         // {
-        //     Ok(value) => { println! ("{value:#?}") ; value }, Err(e) => panic!
+        //     Ok(value) => { println! ("{value:#?}") ; value }, Err(error) => panic!
         //     ("{}", e)
         // } ;
         // println!("-------tryread_many end-------");
@@ -166,7 +166,7 @@ pub async fn start_bot() {
         //         println!("{value:#?}");
         //         value
         //     }
-        //     Err(e) => panic!("{}", e),
+        //     Err(error) => panic!("{}", e),
         // };
         // println!("-------trycreate_one end-------");
         // println!("-------tryread_one start-------");
@@ -180,7 +180,7 @@ pub async fn start_bot() {
         //         StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime
         //     }
         // },).await
-        // { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
+        // { Ok(value) => println! ("{value:#?}"), Err(error) => panic! ("{}", e) } ;
         // println!("-------tryread_one end-------");
         // println!("-------tryupdate_one start-------");
         // let primary_key = match try_update_one(
@@ -201,7 +201,7 @@ pub async fn start_bot() {
         //         println!("{value:#?}");
         //         value
         //     }
-        //     Err(e) => panic!("{}", e),
+        //     Err(error) => panic!("{}", e),
         // };
         // println!("-------tryupdate_one end-------");
         // println!("-------tryread_one start-------");
@@ -215,7 +215,7 @@ pub async fn start_bot() {
         //         StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime
         //     }
         // },).await
-        // { Ok(value) => println! ("{value:#?}"), Err(e) => panic! ("{}", e) } ;
+        // { Ok(value) => println! ("{value:#?}"), Err(error) => panic! ("{}", e) } ;
         // println!("-------tryread_one end-------");
         // println!("-------trydelete_one start-------");
         // match try_delete_one(
@@ -230,7 +230,7 @@ pub async fn start_bot() {
         // .await
         // {
         //     Ok(value) => println!("{value:#?}"),
-        //     Err(e) => panic!("{}", e),
+        //     Err(error) => panic!("{}", e),
         // }
         // println!("-------trydelete_one end-------");
         // println!("-------tryread_one start-------");
@@ -244,7 +244,7 @@ pub async fn start_bot() {
         //         StdPrimitiveI64AsPostgresqlBigSerialNotNullPrimaryKeySqlxTypesTimeTimeAsPostgresqlTime
         //     }
         // },).await
-        // { Ok(value) => panic! ("{value:#?}"), Err(e) => println! ("{}", e) } ;
+        // { Ok(value) => panic! ("{value:#?}"), Err(error) => println! ("{}", e) } ;
         // println!("-------tryread_one end-------");
     //
     // let bot = teloxide::Bot::from_env();

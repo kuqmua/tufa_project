@@ -20,7 +20,7 @@
 //                 },
 //             ).await {
 //                 Ok(posts_vec) => (pk, Ok(posts_vec)),
-//                 Err(e) => (pk, Err(*e)),
+//                 Err(error) => (pk, Err(*e)),
 //             }
 //         });
 //     let posts_and_errors_to_return = futures::future::join_all(tasks_vec)

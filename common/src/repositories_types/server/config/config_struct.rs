@@ -62,9 +62,9 @@ impl Config {
             fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
                 let service_socket_address =  match <std::net::SocketAddr as std::str::FromStr>::from_str(&value.service_socket_address) {
                     Ok(value) => value,
-                    Err(e) => {
+                    Err(error) => {
                         return Err(Self::Error::ServiceSocketAddress {
-                            server_port: e,
+                            server_port: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         });
                     }
@@ -272,8 +272,8 @@ impl Config {
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             },
         }
-        let f = ConfigUnchecked::new().unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"));
-        Self::try_from(f).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))
+        let config_unchecked = ConfigUnchecked::new().unwrap_or_else(|error| panic!("failed to ConfigUnchecked::new(), reason: {error:#?}"));
+        Self::try_from(config_unchecked).unwrap_or_else(|error| panic!("failed to Config try_from ConfigUnchecked, reason: {error}"))
     }
 }
 

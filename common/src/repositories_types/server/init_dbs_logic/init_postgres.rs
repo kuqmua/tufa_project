@@ -35,7 +35,7 @@
 //         + std::marker::Sync
 //     )
 // ) -> Result<(), Box<crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed>> {
-//     if let Err(e) = crate::server::postgres::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists(
+//     if let Err(error) = crate::server::postgres::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists(
 //         &providers_json_local_data_hashmap,
 //         config,
 //     )
@@ -48,7 +48,7 @@
 //             }
 //         ));
 //     }
-//     if let Err(e) = crate::server::postgres::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty(
+//     if let Err(error) = crate::server::postgres::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty(
 //         &providers_json_local_data_hashmap,
 //         config,
 //     )
@@ -61,7 +61,7 @@
 //             }
 //         ));
 //     }
-//     if let Err(e) = crate::server::postgres::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables(
+//     if let Err(error) = crate::server::postgres::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables(
 //         &providers_json_local_data_hashmap,
 //         config
 //     )
@@ -74,7 +74,7 @@
 //             }
 //         ));
 //     }
-//     if let Err(e) = crate::server::postgres::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
+//     if let Err(error) = crate::server::postgres::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
 //         &providers_json_local_data_hashmap,
 //         config,
 //     )
@@ -86,7 +86,7 @@
 //             }
 //     ));
 //     }
-//     if let Err(e) = crate::server::postgres::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables(
+//     if let Err(error) = crate::server::postgres::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables(
 //         &providers_json_local_data_hashmap,
 //         config,
 //     )

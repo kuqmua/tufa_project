@@ -262,7 +262,7 @@ instead of gloo console log </br>
 </script>
 
 let s: Option<i32> = match document.query_selector("select_id")) {
-    Err(e) => None
+    Err(error) => None
     Ok(option_element) => match option_element {
         None => None,
         Some(element) => {//type Element

@@ -149,7 +149,7 @@ mod something {
                     one: value.one.to_string(),
                     two: value.two,
                 }),
-                Err(e) => Err(e),
+                Err(error) => Err(error),
             }
         }
         pub const fn compile_time_check(
@@ -160,7 +160,7 @@ mod something {
                     one: value.one,
                     two: value.two,
                 },
-                Err(e) => match e {
+                Err(error) => match e {
                     SomethingError::IsBatman => panic!("is batman"),
                     SomethingError::IsNegative => panic!("is negative"),
                 },

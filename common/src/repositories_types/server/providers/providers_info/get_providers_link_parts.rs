@@ -44,10 +44,10 @@
 //             Ok(success_hashmap) => Ok(success_hashmap),
 //         },
 //         crate::server::resource::Resource::Mongodb => match crate::server::mongo::mongo_get_providers_link_parts::mongo_get_providers_link_parts(config).await {
-//             Err(e) => Err(Box::new(
+//             Err(error) => Err(Box::new(
 
 //                 GetProvidersLinkPartsErrorNamed::MongoGetProvidersLinkParts {
-//                     mongo_get_providers_link_parts: e,
+//                     mongo_get_providers_link_parts: error,
 //                     code_occurence: error_occurence_lib::code_occurence!(),
 //                 },
 //             )),

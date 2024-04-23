@@ -25,8 +25,8 @@
 //         // pk.check_link()
 //         "https://www.google.com/"
 //     }).await {
-//         Err(e) => Err(Box::new(RssPartErrorNamed::CheckLinkStatusCodeError {
-//             reqwest_error: e,
+//         Err(error) => Err(Box::new(RssPartErrorNamed::CheckLinkStatusCodeError {
+//             reqwest_error: error,
 //             code_occurence: error_occurence_lib::code_occurence!()
 //         })),
 //         Ok(res) => {
@@ -38,7 +38,7 @@
 //                 }));
 //             }
 //             // match crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
-//             //     Err(e) => Err(Box::new(RssPartErrorNamed::FetchAndParseProviderData {
+//             //     Err(error) => Err(Box::new(RssPartErrorNamed::FetchAndParseProviderData {
 //             //         source: *e,
 //             //         code_occurence: error_occurence_lib::code_occurence!()
 //             //     })),

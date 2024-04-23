@@ -223,8 +223,8 @@
 //     };
 //     let config = crate::global_variables::runtime::config::CONFIG.get_or_init(|| common::repositories_types::server::config::config_struct::Config::try_from(
 //         common::repositories_types::server::config::config_struct::ConfigUnchecked::new()
-//         .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
-//     ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}")));
+//         .unwrap_or_else(|error| panic!("failed to ConfigUnchecked::new(), reason: {error:#?}"))
+//     ).unwrap_or_else(|error| panic!("failed to Config try_from ConfigUnchecked, reason: {e}")));
 //     configure_database(config).await;
 //     let application = crate::try_build_server::Application::build(
 //         //try_build_server

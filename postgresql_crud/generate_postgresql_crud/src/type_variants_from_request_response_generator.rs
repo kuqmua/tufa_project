@@ -365,7 +365,7 @@ pub(crate) fn type_variants_from_request_response_generator(
                 |mut acc, element| {
                     let variant_ident = &element.ident;
                     let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
-                    .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
+                    .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
                     let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
                         fields_named
                     }
@@ -609,7 +609,7 @@ pub(crate) fn type_variants_from_request_response_generator(
         let enum_status_codes_checker_name_logic_token_stream_handle_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant_attribute| {
                 let variant_ident = &error_variant_attribute.ident;
                 let error_variant_attribute = proc_macro_helpers::status_code::StatusCode::try_from(error_variant_attribute)
-                .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
+                .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
                 let variant_ident_attribute_upper_camel_case_token_stream = {
                     let variant_ident_attribute_upper_camel_case_stringified = format!("{variant_ident}{error_variant_attribute}");
                     variant_ident_attribute_upper_camel_case_stringified

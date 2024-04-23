@@ -25,7 +25,7 @@ pub fn post_data_to_server_button() -> Html {
                     .send()
                     .await
                 {
-                    Err(e) => {
+                    Err(error) => {
                         request_result_another_cloned.set(RequestResult::Error);
                         log!("error 57435634753434 ", e.to_string());
                     }

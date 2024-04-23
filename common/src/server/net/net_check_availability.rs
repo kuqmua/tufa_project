@@ -16,8 +16,8 @@ pub async fn net_check_availability<T: app_state::GetStartingCheckLink + std::ma
     config: T,
 ) -> Result<(), Box<NetCheckAvailabilityErrorNamed>> {
     match reqwest::get(config.get_starting_check_link()).await {
-        Err(e) => Err(Box::new(NetCheckAvailabilityErrorNamed::ReqwestGet {
-            reqwest_get: e,
+        Err(error) => Err(Box::new(NetCheckAvailabilityErrorNamed::ReqwestGet {
+            reqwest_get: error,
             code_occurence: error_occurence_lib::code_occurence!(),
         })),
         Ok(res) => {

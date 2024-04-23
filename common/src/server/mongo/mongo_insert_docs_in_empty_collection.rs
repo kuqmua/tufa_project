@@ -23,9 +23,9 @@ pub async fn mongo_insert_docs_in_empty_collection<'a>(
         .database(db_name_handle)
         .collection(&db_collection_handle);
     match collection.count_documents(None, None).await {
-        Err(e) => Err(Box::new(
+        Err(error) => Err(Box::new(
             MongoInsertDocsInEmptyCollectionErrorNamed::MongoDB {
-                mongodb: e,
+                mongodb: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             },
         )),
@@ -38,7 +38,7 @@ pub async fn mongo_insert_docs_in_empty_collection<'a>(
                     },
                 ))
             } else {
-                if let Err(e) = collection
+                if let Err(error) = collection
                     .insert_many(
                         vec_of_values
                             .iter()
@@ -50,7 +50,7 @@ pub async fn mongo_insert_docs_in_empty_collection<'a>(
                 {
                     return Err(Box::new(
                         MongoInsertDocsInEmptyCollectionErrorNamed::MongoDB {
-                            mongodb: e,
+                            mongodb: error,
                             code_occurence: error_occurence_lib::code_occurence!(),
                         },
                     ));

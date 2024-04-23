@@ -113,9 +113,9 @@ pub fn additional_http_status_codes_error_variants(
 pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "GeneratePostgresqlCrud";
-    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|e| {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
-            "{proc_macro_name_upper_camel_case} {}: {e}",
+            "{proc_macro_name_upper_camel_case} {}: {error}",
             proc_macro_common::constants::AST_PARSE_FAILED
         )
     });
@@ -138,7 +138,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             fields_named.named
                 .iter()
-                .map(|element| SynFieldWithAdditionalInfo::try_from(element).unwrap_or_else(|e|panic!("SynFieldWithAdditionalInfo::try_from(element) failed {e}")))
+                .map(|element| SynFieldWithAdditionalInfo::try_from(element).unwrap_or_else(|error|panic!("SynFieldWithAdditionalInfo::try_from(element) failed {error}")))
                 .collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>()
         } else {
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
@@ -176,7 +176,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                             },
-                            Err(e) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed {e}")
+                            Err(error) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} RustSqlxMapToPostgresTypeVariant::try_from failed {error}")
                         }
                     }
                     else {
@@ -6586,9 +6586,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                         Ok(value) => {
                                                             values.push(value);
                                                         }
-                                                        Err(e) => {
+                                                        Err(error) => {
                                                             return Err(Self::Error::#primary_key_field_ident_upper_camel_case_token_stream {
-                                                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                                                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
                                                                 #field_code_occurence_new_5215e422_9693_4c9e_937e_759f477a20c7_token_stream,
                                                             });
                                                         }
@@ -8086,7 +8086,7 @@ fn generate_http_request_many_token_stream(
             |mut acc, element| {
                 let variant_ident = &element.ident;
                 let error_variant_attribute = proc_macro_helpers::status_code::StatusCode::try_from(element)
-                .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
+                .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
                 let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
                     fields_named
                 }
@@ -8400,7 +8400,7 @@ fn generate_try_operation_token_stream(
             |mut acc, element| {
                 let variant_ident = &element.ident;
                 let error_variant_attribute = proc_macro_helpers::status_code::StatusCode::try_from(element)
-                .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
+                .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
                 let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
                     fields_named
                 }
@@ -8640,7 +8640,7 @@ fn generate_unique_status_codes(
     type_variants_from_request_response_syn_variants.iter().for_each(|element|{
         let variant_ident = &element.ident;
         let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
-        .unwrap_or_else(|e| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {e}")});
+        .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
         if !value.contains(&&error_variant_status_code) {
             value.push(error_variant_status_code);
         }
@@ -8923,8 +8923,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
                             &second_element.ident.to_string(),
                         ) {
                             Ok(value) => value,
-                            Err(e) => {
-                                return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {e}"));
+                            Err(error) => {
+                                return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
                             },
                         };
                     let maybe_generic_token_stream = match &second_element.arguments {
@@ -8958,8 +8958,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             let value = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
-                Err(e) => {
-                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                Err(error) => {
+                    return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -8967,8 +8967,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             let value = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""); //todo generic for json
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
-                Err(e) => {
-                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                Err(error) => {
+                    return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -8976,8 +8976,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             let value = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_stringified(""); //todo generic for json
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
-                Err(e) => {
-                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                Err(error) => {
+                    return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -8985,8 +8985,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             let value = &rust_sqlx_map_to_postgres_type_variant.get_inner_type_with_serialize_deserialize_error_named_stringified(""); //todo generic for json
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
-                Err(e) => {
-                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                Err(error) => {
+                    return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -8995,8 +8995,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
-                Err(e) => {
-                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                Err(error) => {
+                    return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -9004,8 +9004,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
             let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_with_serialize_deserialize_stringified("");//todo json generics
             match value.parse::<proc_macro2::TokenStream>() {
                 Ok(value) => value,
-                Err(e) => {
-                    return Err(format!("{name} {value} {} {e:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                Err(error) => {
+                    return Err(format!("{name} {value} {} {error:#?}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 }
             }
         };
@@ -9069,9 +9069,9 @@ fn generate_let_field_ident_value_field_ident_try_from_token_stream(//todo renam
                 quote::quote!{
                     match #inner_type_token_stream::#try_from_snake_case_token_stream(#inner_token_stream) {
                         Ok(value) => value,
-                        Err(e) => {
+                        Err(error) => {
                             return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                                #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
                                 #field_code_occurence_new_token_stream
                             });
                         }
@@ -9127,9 +9127,9 @@ fn generate_let_option_field_ident_value_option_field_ident_try_from_token_strea
                     match #inner_token_stream {
                         Some(value) => match #inner_type_token_stream::try_from(value) {
                             Ok(value) => Some(value),
-                            Err(e) => {
+                            Err(error) => {
                                 return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                                    #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
                                     #field_code_occurence_new_token_stream
                                 });
                             }
@@ -9197,9 +9197,9 @@ fn generate_option_vec_where_inner_type_from_or_try_from_option_vec_where_inner_
                                 Ok(value) => {
                                     values.push(value);
                                 }
-                                Err(e) => {
+                                Err(error) => {
                                     return Err(Self::Error::#field_ident_upper_camel_case_token_stream {
-                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream: e,
+                                        #primary_key_supported_sqlx_postgres_type_snake_case_token_stream; error,
                                         #field_code_occurence_new_68674e53_54cf_4cfe_b532_2e4aecda32c5_token_stream,
                                     });
                                 }

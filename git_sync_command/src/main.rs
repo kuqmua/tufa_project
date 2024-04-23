@@ -13,7 +13,7 @@ fn main() {
         .expect("cannot convert parent_dir_pathbuf to string");
     let canonicalize_pathbuf = match std::fs::canonicalize(&parent_dir_pathbuf) {
         Ok(pathbuf) => pathbuf,
-        Err(e) => panic!("error: {e}, path: {parent_dir_pathbuf_as_string}"),
+        Err(error) => panic!("error: {e}, path: {parent_dir_pathbuf_as_string}"),
     };
     let canonicalize_pathbuf_as_string = canonicalize_pathbuf
         .into_os_string()
@@ -46,12 +46,12 @@ fn main() {
         // let error_vec_arc_mutex_arc_cloned = std::sync::Arc::clone(&error_vec_arc_mutex);
         let canonicalize_pathbuf_as_string_cloned = canonicalize_pathbuf_as_string.clone();
         // let handle = std::thread::spawn(move || {
-        if let Err(e) = commands(canonicalize_pathbuf_as_string_cloned, path) {
+        if let Err(error) = commands(canonicalize_pathbuf_as_string_cloned, path) {
             // let mut error_vec_arc_mutex_arc_cloned_locked = error_vec_arc_mutex_arc_cloned
             //     .lock()
             //     .expect("cannot lock error_vec_arc_mutex_arc_cloned");
             // error_vec_arc_mutex_arc_cloned_locked.push(e);
-            panic!("command error: {e:#?}")
+            panic!("command error: {error:#?}")
         }
         // });
         // threads_vector.push(handle);
@@ -123,7 +123,7 @@ fn commands(
 ) -> Result<(), CommandError> {
     let path = format!("{}/{}", canonicalize_pathbuf_as_string, path);
     println!("start {}", path);
-    if let Err(e) = std::process::Command::new("git")
+    if let Err(error) = std::process::Command::new("git")
         .args(["checkout", "."])
         .current_dir(&path)
         .output()
@@ -134,7 +134,7 @@ fn commands(
         });
     }
     println!("git checkout . {}", path);
-    if let Err(e) = std::process::Command::new("git")
+    if let Err(error) = std::process::Command::new("git")
         .args(["submodule", "update", "--init", "--recursive"])
         .current_dir(&path)
         .output()
@@ -145,7 +145,7 @@ fn commands(
         });
     }
     println!("git submodule update --init --recursive {}", path);
-    if let Err(e) = std::process::Command::new("git")
+    if let Err(error) = std::process::Command::new("git")
         .args(["pull"])
         .current_dir(&path)
         .output()
@@ -156,7 +156,7 @@ fn commands(
         });
     }
     println!("git pull {}", path);
-    if let Err(e) = std::process::Command::new("git")
+    if let Err(error) = std::process::Command::new("git")
         .args(["checkout", "main"])
         .current_dir(&path)
         .output()
@@ -167,7 +167,7 @@ fn commands(
         });
     }
     println!("git checkout main {}", path);
-    if let Err(e) = std::process::Command::new("cargo")
+    if let Err(error) = std::process::Command::new("cargo")
         .args(["build"])
         .current_dir(&path)
         .output()

@@ -13,8 +13,8 @@
 // //                 println!("drop fail with flag");
 // //             }
 // //         }
-// //         Err(e) => {
-// //             println!("drop fail with error {e:#?}",);
+// //         Err(error) => {
+// //             println!("drop fail with error {error:#?}",);
 // //         }
 // //     }
 
@@ -83,7 +83,7 @@
 // ) -> Result<(), Box<GetProviderPostsErrorNamed>> {
 //     todo!()
 //     // match crate::repositories_types::server::providers::providers_info::get_providers_link_parts::get_providers_link_parts(config).await {
-//     //     Err(e) => Err(Box::new(
+//     //     Err(error) => Err(Box::new(
 //     //         GetProviderPostsErrorNamed::GetLocalProvidersLinkParts {
 //     //             get_providers_link_parts: *e,
 //     //             code_occurence: error_occurence_lib::code_occurence!()
@@ -91,7 +91,7 @@
 //     //     )),
 //     //     Ok(providers_link_parts) => {
 //     //         match crate::repositories_types::server::providers::check_providers_link_parts_on_empty::check_providers_link_parts_on_empty(providers_link_parts) {
-//     //             Err(e) => {
+//     //             Err(error) => {
 //     //                 return Err(Box::new(
 //     //                     GetProviderPostsErrorNamed::CheckProvidersLinkPartsEmpty {
 //     //                         check_providers_link_parts_empty: *e,
@@ -105,7 +105,7 @@
 //     //                 let mut success_hashmap = std::collections::HashMap::with_capacity(hm.len());
 //     //                 for (key, value) in hm {
 //     //                     match value {
-//     //                         Err(e) => {
+//     //                         Err(error) => {
 //     //                             error_hashmap.insert(key.to_string(), GetProviderPostsErrorUnnamed::GetNewProvidersPosts(e));
 //     //                         }
 //     //                         Ok(vec) => {
@@ -133,10 +133,10 @@
 //     //         // //                 });
 //     //         // //                 match wrong_cases_thread.join() {
 //     //         // //                     Ok(_) => {}
-//     //         // //                     Err(e) => {}
+//     //         // //                     Err(error) => {}
 //     //         // //                 }
 //     //         // //             }
-//     //         // //             Err(e) => {}
+//     //         // //             Err(error) => {}
 //     //         // //         }
 //     //         // //     }
 //     //         // // }

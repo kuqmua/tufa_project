@@ -87,12 +87,12 @@
 //     > = std::collections::HashMap::new();
 //     for (pk, string_vec, result) in count_provider_links_tables_error_vec {
 //         match result {
-//             Err(e) => {
+//             Err(error) => {
 //                 count_provider_links_tables_error_hashmap.insert(
 //                     pk.to_string(),
 //                  PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed::Postgres(
 //                         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxNamed::Postgres {
-//                             error: e,
+//                             error,
 //                             code_occurence: error_occurence_lib::code_occurence!()
 //                         }
 //                     )

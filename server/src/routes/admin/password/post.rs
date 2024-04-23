@@ -28,7 +28,7 @@
 //         username,
 //         password: form.0.current_password,
 //     };
-//     if let Err(e) =
+//     if let Err(error) =
 //         crate::authentication::validate_credentials(credentials, &app_state.postgres_pool).await
 //     {
 //         //todo - add to body deserialized version?
