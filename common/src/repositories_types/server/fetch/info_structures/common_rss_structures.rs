@@ -97,7 +97,7 @@ pub struct CommonRssPost {
     //twitter specific
 }
 impl CommonRssPost {
-    pub fn initialize_with_params(
+    pub const fn initialize_with_params(
         title: Option<String>,
         link: Option<String>,
         description: Option<String>,
@@ -301,7 +301,7 @@ pub struct GithubInfoFromHtml {
 }
 
 impl GithubInfoFromHtml {
-    pub fn initialize_with_params(
+    pub const fn initialize_with_params(
         avatar_link: Option<String>,
         author: Option<String>,
         action: Option<String>,

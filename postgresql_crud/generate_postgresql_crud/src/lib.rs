@@ -8727,7 +8727,7 @@ enum Operation {
 }
 
 impl Operation {
-    fn http_method(&self) -> OperationHttpMethod {
+    const fn http_method(&self) -> OperationHttpMethod {
         match self {
             Self::CreateMany |
             Self::CreateOne |

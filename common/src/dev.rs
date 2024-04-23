@@ -13,7 +13,7 @@
 //     street: std::string::String,
 // }
 
-pub fn dev() {
+pub const fn dev() {
     // let user = User {
     //     name: "Arwen Undomiel".to_string(),
     //     age: 3000,

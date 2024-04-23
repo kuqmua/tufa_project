@@ -563,7 +563,7 @@ misnamed_getters = { level = "deny", priority = 0 }
 misrefactored_assign_op = { level = "deny", priority = 0 }
 missing_assert_message = { level = "deny", priority = 0 }
 missing_asserts_for_indexing = { level = "deny", priority = 0 }
-missing_const_for_fn = { level = "allow", priority = 0 }
+missing_const_for_fn = { level = "deny", priority = 0 }
 missing_docs_in_private_items = { level = "allow", priority = 0 }
 missing_enforced_import_renames = { level = "deny", priority = 0 }
 missing_errors_doc = { level = "allow", priority = 0 }

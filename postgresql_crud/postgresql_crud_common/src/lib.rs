@@ -235,7 +235,7 @@ impl std::convert::From<&PostgresqlTypeWithMetadata> for PostgresqlType {
 
 impl PostgresqlTypeWithMetadata {
     //todo add NOT NULL or not? or add different method and Primary Key
-    pub fn postgresql_naming(&self) -> &str {
+    pub const fn postgresql_naming(&self) -> &str {
         match self {
             Self::Bool |
             Self::BoolNotNull => "BOOL",
@@ -609,7 +609,7 @@ pub enum SqlxPostgresType {
 }
 
 impl SqlxPostgresType {
-    pub fn from_supported_sqlx_postgres_type_removing_option(value: &SupportedSqlxPostgresType) -> Self {
+    pub const fn from_supported_sqlx_postgres_type_removing_option(value: &SupportedSqlxPostgresType) -> Self {
         match value {
             SupportedSqlxPostgresType::StdPrimitiveBool |
             SupportedSqlxPostgresType::StdOptionOptionStdPrimitiveBool => Self::StdPrimitiveBool,
@@ -1177,7 +1177,7 @@ impl SupportedSqlxPostgresType {
             )
         })
     }
-    fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
+    const fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
         match self {
             Self::StdPrimitiveBool |
             Self::StdOptionOptionStdPrimitiveBool |
