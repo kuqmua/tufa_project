@@ -52,7 +52,7 @@ pub(crate) fn check_for_none(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             NoPayloadFields {

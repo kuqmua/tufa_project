@@ -578,7 +578,7 @@ mixed_case_hex_literals = { level = "deny", priority = 0 }
 mixed_read_write_in_expression = { level = "deny", priority = 0 }
 mod_module_files = { level = "allow", priority = 0 }
 module_inception = { level = "deny", priority = 0 }
-module_name_repetitions = { level = "deny", priority = 0 }
+module_name_repetitions = { level = "allow", priority = 0 }
 modulo_arithmetic = { level = "deny", priority = 0 }
 modulo_one = { level = "deny", priority = 0 }
 multi_assignments = { level = "deny", priority = 0 }
@@ -599,7 +599,7 @@ needless_arbitrary_self_type = { level = "deny", priority = 0 }
 needless_bitwise_bool = { level = "deny", priority = 0 }
 needless_bool = { level = "deny", priority = 0 }
 needless_bool_assign = { level = "deny", priority = 0 }
-needless_borrow = { level = "allow", priority = 0 }
+needless_borrow = { level = "deny", priority = 0 }
 needless_borrowed_reference = { level = "deny", priority = 0 }
 needless_borrows_for_generic_args = { level = "deny", priority = 0 }
 needless_collect = { level = "allow", priority = 0 }

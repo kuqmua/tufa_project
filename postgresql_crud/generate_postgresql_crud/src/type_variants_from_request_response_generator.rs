@@ -586,7 +586,7 @@ pub(crate) fn type_variants_from_request_response_generator(
     };
     let ident_request_error_logic_token_stream_handle_token_stream = {
         let expected_type_declaration_token_stream =
-            generate_expected_type_declaration_token_stream(&operation);
+            generate_expected_type_declaration_token_stream(operation);
         quote::quote! {
             #error_named_derive_token_stream
             pub enum #try_operation_request_error_upper_camel_case_token_stream {

@@ -36,7 +36,7 @@ pub(crate) fn generate_postgres_transaction(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             QueryAndRollbackFailed {
@@ -51,7 +51,7 @@ pub(crate) fn generate_postgres_transaction(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             PrimaryKeyFromRowAndFailedRollback {
@@ -66,7 +66,7 @@ pub(crate) fn generate_postgres_transaction(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             NonExistingPrimaryKeys {
@@ -80,7 +80,7 @@ pub(crate) fn generate_postgres_transaction(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             NonExistingPrimaryKeysAndFailedRollback {
@@ -95,7 +95,7 @@ pub(crate) fn generate_postgres_transaction(
             file!(),
             line!(),
             column!(),
-            &proc_macro_name_upper_camel_case_ident_stringified,
+            proc_macro_name_upper_camel_case_ident_stringified,
         );
         quote::quote! {
             CommitFailed {
