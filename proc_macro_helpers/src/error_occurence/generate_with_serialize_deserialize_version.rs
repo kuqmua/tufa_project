@@ -1662,21 +1662,9 @@ fn modify_should_generate_impl_compile_time_check_error_occurence_members(
     should_generate_impl_compile_time_check_error_occurence_members: &mut bool,
 ) {
     match attribute {
-        crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => {
-            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
-                *should_generate_impl_compile_time_check_error_occurence_members = true;
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence => {
-            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
-                *should_generate_impl_compile_time_check_error_occurence_members = true;
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => {
-            if !(*should_generate_impl_compile_time_check_error_occurence_members) {
-                *should_generate_impl_compile_time_check_error_occurence_members = true;
-            }
-        },
+        crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence |
+        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
         crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
             if !(*should_generate_impl_compile_time_check_error_occurence_members) {
                 *should_generate_impl_compile_time_check_error_occurence_members = true;

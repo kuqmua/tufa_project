@@ -544,7 +544,7 @@ match_on_vec_items = { level = "deny", priority = 0 }
 match_overlapping_arm = { level = "deny", priority = 0 }
 match_ref_pats = { level = "deny", priority = 0 }
 match_result_ok = { level = "deny", priority = 0 }
-match_same_arms = { level = "allow", priority = 0 }
+match_same_arms = { level = "deny", priority = 0 }
 match_single_binding = { level = "deny", priority = 0 }
 match_str_case_mismatch = { level = "deny", priority = 0 }
 match_wild_err_arm = { level = "deny", priority = 0 }

@@ -30,11 +30,11 @@ impl http_logic::GetAxumHttpStatusCode for CheckCommitErrorNamed {
                 commit_not_equal: _,
                 commit_to_use: _,
                 code_occurence: _,
-            } => axum::http::StatusCode::BAD_REQUEST,
+            } |
             Self::CommitToStrConversion {
                 commit_to_str_conversion: _,
                 code_occurence: _,
-            } => axum::http::StatusCode::BAD_REQUEST,
+            } |
             Self::NoCommitHeader {
                 no_commit_header: _,
                 code_occurence: _,

@@ -4207,16 +4207,13 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
     let value_lifetime_enum = vec_lifetime_to_lifetime(&value_vec_lifetime);
     let token_stream = match (key_lifetime_enum, value_lifetime_enum) {
         (
-            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
-            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
-        ) => quote::quote! {#[serde(borrow)]},
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_) |
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_)
+        ) |
         (
             proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
-            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
-        ) => quote::quote! {#[serde(borrow)]},
-        (
-            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
-            proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(_),
+            proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified
         ) => quote::quote! {#[serde(borrow)]},
         (
             proc_macro_helpers::error_occurence::lifetime::Lifetime::NotSpecified,
