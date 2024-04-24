@@ -707,7 +707,7 @@ redundant_at_rest_pattern = { level = "deny", priority = 0 }
 redundant_clone = { level = "deny", priority = 0 }
 redundant_closure = { level = "allow", priority = 0 }
 redundant_closure_call = { level = "deny", priority = 0 }
-redundant_closure_for_method_calls = { level = "allow", priority = 0 }
+redundant_closure_for_method_calls = { level = "deny", priority = 0 }
 redundant_comparisons = { level = "deny", priority = 0 }
 redundant_else = { level = "deny", priority = 0 }
 redundant_feature_names = { level = "deny", priority = 0 }

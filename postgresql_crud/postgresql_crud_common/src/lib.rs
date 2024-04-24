@@ -6268,7 +6268,7 @@ impl<T> SqlxTypesJson<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
         value
             .into_iter()
-            .map(|element| element.into_inner())
+            .map(SqlxTypesJson::into_inner)
             .collect()
     }
 }
@@ -6373,7 +6373,7 @@ impl<T> StdOptionOptionSqlxTypesJson<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<sqlx::types::Json<T>>> {
         value
             .into_iter()
-            .map(|element| element.into_inner())
+            .map(StdOptionOptionSqlxTypesJson::into_inner)
             .collect()
     }
 }
