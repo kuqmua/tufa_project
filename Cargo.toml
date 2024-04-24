@@ -771,7 +771,7 @@ slow_vector_initialization = { level = "deny", priority = 0 }
 stable_sort_primitive = { level = "deny", priority = 0 }
 std_instead_of_alloc = { level = "allow", priority = 0 }
 std_instead_of_core = { level = "allow", priority = 0 }
-str_to_string = { level = "allow", priority = 0 }
+str_to_string = { level = "allow", priority = 0 } # utoipa macro contains .to_string() tokens. thats why its allowed
 string_add = { level = "deny", priority = 0 }
 string_add_assign = { level = "deny", priority = 0 }
 string_extend_chars = { level = "deny", priority = 0 }

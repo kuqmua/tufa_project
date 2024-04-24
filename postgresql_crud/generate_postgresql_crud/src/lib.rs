@@ -455,7 +455,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                 };
                 quote::quote! {
-                    Self::#field_ident_upper_camel_case_token_stream => write!(f, #field_ident_quotes_token_stream)
+                    Self::#field_ident_upper_camel_case_token_stream => write!(formatter, #field_ident_quotes_token_stream)
                 }
             })
             .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -474,7 +474,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #(#variants),*
             }
             impl std::fmt::Display for #ident_column_upper_camel_case_token_stream {
-                fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
                     match self {
                         #(#display_variants),*
                     }
@@ -753,7 +753,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no {additional_http_status_codes_error_variant_path} path")
         }
         // println!("{additional_http_status_codes_error_variants_attribute:#?}");
-        let additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_string();//todo
+        let additional_http_status_codes_error_variants_attribute_tokens_stringified = "{}".to_owned();//todo
             // additional_http_status_codes_error_variants_attribute
             //     .tokens
             //     .to_string();
@@ -785,7 +785,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         element_path_stringified == "path"
                     });
                     let path_attribute = option_path_sttribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no path attribute"), |value| value);
-                    let path_to_additional_variant_enum_stringified = "{}".to_string();//todo
+                    let path_to_additional_variant_enum_stringified = "{}".to_owned();//todo
                     // &path_attribute.tokens.to_string();
                     let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified
                         .get(1..(path_to_additional_variant_enum_stringified.len() - 1))

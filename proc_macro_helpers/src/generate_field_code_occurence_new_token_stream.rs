@@ -21,7 +21,7 @@ pub fn generate_field_code_occurence_new_token_stream(
         };
         quote::quote! {
             error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {

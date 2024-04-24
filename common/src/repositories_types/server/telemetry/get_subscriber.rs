@@ -15,7 +15,7 @@ where
         tracing_subscriber::EnvFilter::new(config.get_tracing_type().to_string())
     });
     let formatting_layer =
-        tracing_bunyan_formatter::BunyanFormattingLayer::new(name.to_string(), sink);
+        tracing_bunyan_formatter::BunyanFormattingLayer::new(name.to_owned(), sink);
     {
         use tracing_subscriber::layer::SubscriberExt;
         tracing_subscriber::Registry::default()

@@ -127,7 +127,7 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                     sqlx::Error::Database(database) => {
                         Self::Database {
-                            database: database.message().to_string(),
+                            database: database.message().to_owned(),
                             #field_code_occurence_new_d5e60d03_63d8_44be_be72_86f900b51836_token_stream,
                         }
                     }
@@ -199,6 +199,6 @@ pub fn from_sqlx_postgres_error(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    //println!("{gen}");
+    // println!("{gen}");
     gen.into()
 }

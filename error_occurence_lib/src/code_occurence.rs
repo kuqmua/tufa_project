@@ -28,7 +28,7 @@ impl CodeOccurence {
             file,
             line,
             column,
-            commit: git_info::PROJECT_GIT_INFO.commit.to_string(),
+            commit: git_info::PROJECT_GIT_INFO.commit.to_owned(),
             duration: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap_or_default(),

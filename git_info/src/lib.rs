@@ -62,6 +62,6 @@ pub trait GetGitCommitId {
 impl GetGitCommitId for ProjectGitInfo<'_> {
     //todo
     fn get_git_commit_id(&self) -> std::string::String {
-        self.commit.to_string()
+        self.commit.to_owned()
     }
 }

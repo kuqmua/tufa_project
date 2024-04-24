@@ -897,7 +897,7 @@ pub async fn try_create_many(
             return Err(TryCreateManyErrorNamed::SerdeJsonToString {
                 serde_json_to_string: error,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
+                    file!().to_owned(),
                     line!(),
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -927,7 +927,7 @@ pub async fn try_create_many(
             return Err(TryCreateManyErrorNamed::Reqwest {
                 reqwest: error,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
+                    file!().to_owned(),
                     line!(),
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -951,7 +951,7 @@ pub async fn try_create_many(
                 status_code,
                 headers,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
+                    file!().to_owned(),
                     line!(),
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -974,7 +974,7 @@ pub async fn try_create_many(
                 headers,
                 response_text,
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_string(),
+                    file!().to_owned(),
                     line!(),
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1002,7 +1002,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::CheckCommit{
             check_commit,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1020,7 +1020,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::CheckBodySize{
             check_body_size,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1039,7 +1039,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Configuration{
             configuration,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1057,7 +1057,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Database{
             database,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1075,7 +1075,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Io{
             io,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1093,7 +1093,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Tls{
             tls,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1111,7 +1111,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Protocol{
             protocol,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1129,7 +1129,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::RowNotFound{
             row_not_found,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1147,7 +1147,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::TypeNotFound{
             type_not_found,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1167,7 +1167,7 @@ pub async fn try_create_many(
             column_index_out_of_bounds,
             len,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1185,7 +1185,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::ColumnNotFound{
             column_not_found,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1205,7 +1205,7 @@ pub async fn try_create_many(
             column_decode_index,
             source_handle,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1223,7 +1223,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Decode{
             decode,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1241,7 +1241,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::PoolTimedOut{
             pool_timed_out,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1259,7 +1259,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::PoolClosed{
             pool_closed,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1277,7 +1277,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::WorkerCrashed{
             worker_crashed,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1295,7 +1295,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::Migrate{
             migrate,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1313,7 +1313,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::JsonDataError{
             json_data_error,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1331,7 +1331,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::JsonSyntaxError{
             json_syntax_error,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1349,7 +1349,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::MissingJsonContentType{
             missing_json_content_type,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1367,7 +1367,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::BytesRejection{
             bytes_rejection,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1385,7 +1385,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::UnexpectedCase{
             unexpected_case,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1403,7 +1403,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::BindQuery{
             bind_query,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1421,7 +1421,7 @@ pub async fn try_create_many(
         } => Err(TryCreateManyErrorNamed::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer{
             operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_string(),
+                file!().to_owned(),
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
@@ -1436,3 +1436,4 @@ pub async fn try_create_many(
     }
 }
  
+/////////////////////////////////

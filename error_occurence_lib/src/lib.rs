@@ -46,7 +46,7 @@ pub trait IntoSerdeSerializeSerdeDeserialize {
 macro_rules! code_occurence {
     ( $( $x:expr ),* ) => {{
         error_occurence_lib::code_occurence::CodeOccurence::new(
-            file!().to_string(),
+            file!().to_owned(),
             line!(),
             column!(),
             None,

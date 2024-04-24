@@ -24,5 +24,5 @@ pub fn get_twitter_provider_name() -> std::string::String {
     // "nitter.dark.fail".to_string(),
     // "birdsite.xanny.family".to_string(),
     // "nitter.40two.app".to_string(),
-    "nitter.eu".to_string()
+    "nitter.eu".to_owned()
 }
