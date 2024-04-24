@@ -615,7 +615,7 @@ needless_option_as_deref = { level = "deny", priority = 0 }
 needless_option_take = { level = "deny", priority = 0 }
 needless_parens_on_range_literals = { level = "deny", priority = 0 }
 needless_pass_by_ref_mut = { level = "deny", priority = 0 }
-needless_pass_by_value = { level = "allow", priority = 0 }
+needless_pass_by_value = { level = "deny", priority = 0 }
 needless_pub_self = { level = "deny", priority = 0 }
 needless_question_mark = { level = "deny", priority = 0 }
 needless_range_loop = { level = "deny", priority = 0 }

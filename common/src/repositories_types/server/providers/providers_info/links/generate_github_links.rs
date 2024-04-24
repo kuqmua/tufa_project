@@ -3,8 +3,8 @@ pub fn generate_github_links<
     + std::marker::Send
     + std::marker::Sync
 >(
-    github_names: Vec<String>,
-    config: T,
+    github_names: &[std::string::String],
+    config: &T,
 ) -> Vec<String> {
     github_names
         .iter()

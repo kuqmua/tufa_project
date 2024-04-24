@@ -1,6 +1,6 @@
 pub fn get_subscriber<Sink, Config: app_state::GetTracingType + std::marker::Send + std::marker::Sync>(
     name: &str,
-    config: Config,
+    config: &Config,
     sink: Sink,
 ) -> impl tracing::Subscriber + Send + Sync
 where

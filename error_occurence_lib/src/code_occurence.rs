@@ -222,8 +222,8 @@ where
         config: &ConfigGeneric,
     ) -> std::string::String {
         prepare_for_log(
-            self.get_code_path(config.get_source_place_type()),
-            chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+            &self.get_code_path(config.get_source_place_type()),
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
                 .with_timezone(config.get_timezone())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
@@ -241,8 +241,8 @@ where
 {
     fn prepare_for_log_without_config(&self) -> std::string::String {
         prepare_for_log(
-            self.form_error_path_github(),
-            chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+            &self.form_error_path_github(),
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
                 .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
@@ -264,8 +264,8 @@ where
         &self,
     ) -> std::string::String {
         prepare_for_log(
-            self.form_error_path_github(),
-            chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+            &self.form_error_path_github(),
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
                 .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
@@ -273,6 +273,6 @@ where
     }
 }
 
-fn prepare_for_log(path: std::string::String, time: std::string::String) -> std::string::String {
+fn prepare_for_log(path: &str, time: &str) -> std::string::String {
     format!("{path} {time}")
 }

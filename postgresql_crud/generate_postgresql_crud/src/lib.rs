@@ -1864,8 +1864,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr201Created;
@@ -3104,8 +3104,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr201Created;
@@ -3600,8 +3600,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
@@ -4521,8 +4521,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
@@ -5061,8 +5061,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
@@ -5845,8 +5845,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
@@ -6054,7 +6054,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_token_stream = {
                 let check_for_none_token_stream_excluding_primary_key =
                     crate::check_for_none::check_for_none(
-                        fields_named.iter().map(|element|element.field).collect(),
+                        &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
                         primary_key_field,
                         &proc_macro_name_upper_camel_case_ident_stringified,
                         dot_space,
@@ -6457,8 +6457,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
@@ -6701,7 +6701,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
             let try_operation_token_stream = {
                 let check_for_none_token_stream = crate::check_for_none::check_for_none(
-                    fields_named.iter().map(|element|element.field).collect(),
+                    &fields_named.iter().map(|element|element.field).collect::<std::vec::Vec<&syn::Field>>(),
                     primary_key_field,
                     &proc_macro_name_upper_camel_case_ident_stringified,
                     dot_space,
@@ -7356,8 +7356,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 type_variants_from_request_response
             };
             generate_type_variants_from_request_response_syn_variants(
-                type_variants_from_request_response_syn_variants_partial,
-                full_additional_http_status_codes_error_variants,
+                &type_variants_from_request_response_syn_variants_partial,
+                &full_additional_http_status_codes_error_variants,
             )
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
@@ -8607,21 +8607,21 @@ fn generate_try_operation_token_stream(
 }
 
 fn generate_type_variants_from_request_response_syn_variants<'a>(
-    type_variants_from_request_response_syn_variants_partial: std::vec::Vec<&'a syn::Variant>,
-    full_additional_http_status_codes_error_variants: std::vec::Vec<&'a (
+    type_variants_from_request_response_syn_variants_partial: &[&'a syn::Variant],
+    full_additional_http_status_codes_error_variants: &[&'a (
         syn::Ident,
         proc_macro2::TokenStream,
         std::vec::Vec<syn::Variant>,
-    )>,
+    )],
 ) -> std::vec::Vec<&'a syn::Variant> {
     let mut handle = std::vec::Vec::with_capacity(
         type_variants_from_request_response_syn_variants_partial.len()
             + full_additional_http_status_codes_error_variants.len(),
     );
-    for element in &type_variants_from_request_response_syn_variants_partial {
+    for element in type_variants_from_request_response_syn_variants_partial {
         handle.push(*element);
     }
-    for element in &full_additional_http_status_codes_error_variants {
+    for element in full_additional_http_status_codes_error_variants {
         for element in &element.2 {
             handle.push(element);
         }

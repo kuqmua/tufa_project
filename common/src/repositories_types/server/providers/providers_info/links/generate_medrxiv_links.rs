@@ -1,4 +1,4 @@
-pub fn generate_medrxiv_links(medrxiv_names: Vec<String>) -> Vec<String> {
+pub fn generate_medrxiv_links(medrxiv_names: &[std::string::String]) -> Vec<String> {
     //example http://connect.medrxiv.org/medrxiv_xml.php?subject=Addiction_Medicine
     medrxiv_names
         .iter()

@@ -1,4 +1,4 @@
-pub fn generate_twitter_links(twitter_subs_names: Vec<String>) -> Vec<String> {
+pub fn generate_twitter_links(twitter_subs_names: &[std::string::String]) -> Vec<String> {
     //example https://nitter.pussthecat.org/Tom_McGurl/rss
     twitter_subs_names
         .iter()

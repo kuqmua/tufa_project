@@ -1,5 +1,5 @@
 pub(crate) fn check_for_none(
-    fields_named: std::vec::Vec<&syn::Field>,//&syn::punctuated::Punctuated<syn::Field, syn::token::Comma>
+    fields_named: &[&syn::Field],//&syn::punctuated::Punctuated<syn::Field, syn::token::Comma>
     id_field: &syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::string::String,
     dot_space: &str,
