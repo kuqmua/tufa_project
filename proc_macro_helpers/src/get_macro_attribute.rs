@@ -10,9 +10,7 @@ pub fn get_macro_attribute<'a>(
             stringified_path
         }
     });
-    if let Some(attribute) = option_attribute {
-        attribute
-    } else {
+    option_attribute.map_or_else(|| {
         panic!("{proc_macro_name_ident_stringified} no {attribute_path}");
-    }
+    }, |attribute| attribute)
 }

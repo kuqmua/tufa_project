@@ -2,8 +2,12 @@ pub fn form_last_arg_lifetime_vec(
     segments: &syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     proc_macro_name_ident_stringified: &str,
 ) -> Vec<crate::error_occurence::lifetime::Lifetime> {
-    if let Some(path_segment) = segments.last() {
-        match &path_segment.arguments {
+    segments.last().map_or_else(||{
+        panic!(
+            "{proc_macro_name_ident_stringified} type_path.path.segments.last() {}",
+            naming_constants::IS_NONE_STRINGIFIED
+        )},
+        |path_segment| match &path_segment.arguments {
             syn::PathArguments::None => Vec::new(),
             syn::PathArguments::AngleBracketed(angle_bracketed_generic_argument) => {
                 angle_bracketed_generic_argument.args.iter().map(|generic_argument|{
@@ -21,10 +25,5 @@ pub fn form_last_arg_lifetime_vec(
             },
             syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_ident_stringified} type_path.path.segments.last() is unexpected syn::PathArguments::Parenthesized"),
         }
-    } else {
-        panic!(
-            "{proc_macro_name_ident_stringified} type_path.path.segments.last() {}",
-            naming_constants::IS_NONE_STRINGIFIED
-        );
-    }
+    )
 }

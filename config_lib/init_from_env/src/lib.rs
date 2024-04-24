@@ -37,30 +37,26 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                     enum_variant_ident_value,
                     env_var_name,
                     enum_variant_ident
-                ) = match &field.ident {
-                    None => panic!(
-                        "InitFromEnvWithPanicIfFailed {}",
-                        naming_constants::FIELD_IDENT_IS_NONE
-                    ),
-                    Some(field_ident) => {
-                        generated_init_struct_fields.push(quote::quote! {
-                            #field_ident: #field_ident
-                        });
-                        (
-                            field_ident,
-                            syn::Ident::new(
-                                &convert_case::Casing::to_case(&format!("{field_ident}")
-                                    ,convert_case::Case::Snake)
-                                    .to_uppercase(),
-                                ident.span(),
-                            ),
-                            syn::Ident::new(
+                ) = field.ident.as_ref().map_or_else(|| panic!(
+                    "InitFromEnvWithPanicIfFailed {}",
+                    naming_constants::FIELD_IDENT_IS_NONE
+                ), |field_ident| {
+                    generated_init_struct_fields.push(quote::quote! {
+                        #field_ident: #field_ident
+                    });
+                    (
+                        field_ident,
+                        syn::Ident::new(
+                            &convert_case::Casing::to_case(&format!("{field_ident}"), convert_case::Case::Snake)
+                                .to_uppercase(),
+                            ident.span(),
+                        ),
+                        syn::Ident::new(
                             &convert_case::Casing::to_case(&format!("{field_ident}"),convert_case::Case::UpperCamel),
-                                ident.span(),
-                            )
+                            ident.span(),
                         )
-                    }
-                };
+                    )
+                });
                 let (
                     enum_variant_type,
                     enum_variant_type_as_string,

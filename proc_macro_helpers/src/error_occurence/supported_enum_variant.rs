@@ -39,9 +39,7 @@ pub fn create(
             },
             syn::Fields::Unit => panic!("{error_message}"),
         });
-    if let Some(supported_enum_variant) = all_equal {
-        supported_enum_variant
-    } else {
+    all_equal.map_or_else(|| {
         panic!("{proc_macro_name_ident_stringified} {} with enums where all variants are named or unnamed", naming_constants::SUPPORTS_ONLY_STRINGIFIED);
-    }
+    }, |supported_enum_variant| supported_enum_variant)
 }

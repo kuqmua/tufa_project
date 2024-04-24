@@ -86,10 +86,7 @@ impl TryFrom<&syn::Field> for NamedAttribute {
                 }
             }
         }
-        match error_occurence_attribute {
-            Some(value) => Ok(value),
-            None => Err(std::string::String::from("supported attribute not found")),
-        }
+        error_occurence_attribute.map_or_else(|| Err(std::string::String::from("supported attribute not found")), |value| Ok(value))
     }
 }
 
@@ -126,10 +123,7 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
                 }
             }
         }
-        match error_occurence_attribute {
-            Some(value) => Ok(value),
-            None => Err(std::string::String::from("supported attribute not found")),
-        }
+        error_occurence_attribute.map_or_else(|| Err(std::string::String::from("supported attribute not found")), |value| Ok(value))
     }
 }
 

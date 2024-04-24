@@ -114,10 +114,7 @@ pub fn generate_with_serialize_deserialize_version(
                             field.attrs.iter().for_each(|attr|{
                                 if attr.path().segments.len() == 1 {
                                     let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                    let attr_ident = match attr.path().segments.iter().next() {
-                                        Some(path_segment) => &path_segment.ident,
-                                        None => panic!("attr.path().segments.iter().next() is None"),
-                                    };
+                                    let attr_ident = attr.path().segments.iter().next().map_or_else(|| panic!("attr.path().segments.iter().next() is None"), |path_segment| &path_segment.ident);
                                     if let Ok(value) = {
                                         use std::str::FromStr;
                                         crate::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
@@ -223,12 +220,7 @@ pub fn generate_with_serialize_deserialize_version(
                     }
                 });
             });
-            let additional_variant_token_stream = match optional_additional_named_variant {
-                Some(additional_variant_token_stream) => {
-                    quote::quote! { #additional_variant_token_stream,}
-                }
-                None => quote::quote! {},
-            };
+            let additional_variant_token_stream =optional_additional_named_variant.map_or_else(|| quote::quote! {}, |additional_variant_token_stream| quote::quote! { #additional_variant_token_stream,});
             quote::quote! {
                 #[derive(Debug, #this_error_token_stream serde::Serialize, serde::Deserialize)]
                 #is_pub_token_stream enum #ident_with_serialize_deserialize_token_stream {
@@ -249,10 +241,7 @@ pub fn generate_with_serialize_deserialize_version(
                         naming_constants::SUPPORTED_ENUM_VARIANT_STRINGIFIED,
                         <naming_constants::Unnamed as naming_constants::Naming>::upper_camel_case_stringified()
                     );
-                    match unnamed.iter().next() {
-                        Some(field) => &field.ty,
-                        None => panic!("unnamed.iter().next() is None"),
-                    }
+                    unnamed.iter().next().map_or_else(|| panic!("unnamed.iter().next() is None"), |field| &field.ty)
                 }
                 else {
                     panic!(
