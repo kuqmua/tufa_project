@@ -136,7 +136,7 @@ impl utoipa::Modify for SecurityAddon {
                         utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
                     ),
                 ),
-            )
+            );
         }
     }
 }
