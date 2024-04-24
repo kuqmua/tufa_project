@@ -1,15 +1,10 @@
 pub fn generate_field_code_occurence_new_token_stream(
-    file_handle: &'static str,
-    line_handle: std::primitive::u32,
-    column_handle: std::primitive::u32,
+    file: &'static str,
+    line: std::primitive::u32,
+    column: std::primitive::u32,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
-    fn generate_code_occurence_new_token_stream(
-        file: &'static str,
-        line: std::primitive::u32,
-        column: std::primitive::u32,
-        proc_macro_name_upper_camel_case_ident_stringified: &str,
-    ) -> proc_macro2::TokenStream {
+    let code_occurence_new_token_stream = {
         let file_token_stream = proc_macro_common::generate_quotes::token_stream(
             file,
             proc_macro_name_upper_camel_case_ident_stringified,
@@ -36,15 +31,8 @@ pub fn generate_field_code_occurence_new_token_stream(
                 })
             )
         }
-    }
-    let code_occurence_new_token_stream = generate_code_occurence_new_token_stream(
-        file_handle,
-        line_handle,
-        column_handle,
-        proc_macro_name_upper_camel_case_ident_stringified,
-    );
-    let code_occurence_snake_case_token_stream =
-        crate::naming_conventions::code_occurence_snake_case_token_stream();
+    };
+    let code_occurence_snake_case_token_stream = crate::naming_conventions::code_occurence_snake_case_token_stream();
     quote::quote! {
         #code_occurence_snake_case_token_stream: #code_occurence_new_token_stream
     }

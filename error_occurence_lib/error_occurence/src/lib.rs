@@ -997,7 +997,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 "as {std_stringified}::collections::{} key type",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let str_stringified = "str";
+                            let str_snake_case_stringified = "str";
                             let string_string_stringified: std::string::String = format!(
                                 "{string_snake_case_stringified}::{}",
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1040,8 +1040,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 let wrong_attribute_view = proc_macro_helpers::error_occurence::named_attribute::attribute_view(wrong_attribute);
                                 let attribute_to_use_view = proc_macro_helpers::error_occurence::named_attribute::attribute_view(attribute_to_use);
                                 //maybe additional cases exists
-                                if path == str_stringified {
-                                    panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {str_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
+                                if path == str_snake_case_stringified {
+                                    panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {str_snake_case_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
                                 }
                                 else if path == std_string_string_stringified {
                                     panic!("{proc_macro_name_ident_stringified} {wrong_attribute_view} {std_string_string_stringified} {must_be_used_with_stringified} {attribute_to_use_view}");
@@ -1257,7 +1257,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident, lifetime_ident } => {
                                             proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                 &reference_ident,
-                                                str_stringified,
+                                                str_snake_case_stringified,
                                                 &proc_macro_name_ident_stringified,
                                                 naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                 &attribute
@@ -1616,7 +1616,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Reference { reference_ident, lifetime_ident } => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
@@ -2255,7 +2255,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 );
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &value_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
@@ -2296,7 +2296,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &key_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
@@ -2356,14 +2356,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &key_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
                                                 );
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &value_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
@@ -2713,7 +2713,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &key_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
@@ -2888,7 +2888,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &key_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
@@ -3195,7 +3195,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(
                                                     &value_reference_ident,
-                                                    str_stringified,
+                                                    str_snake_case_stringified,
                                                     &proc_macro_name_ident_stringified,
                                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                                     &attribute
