@@ -8637,14 +8637,14 @@ fn generate_unique_status_codes(
     let mut value =
         std::vec::Vec::with_capacity(type_variants_from_request_response_syn_variants.len());
     value.push(*desirable_status_code);
-    type_variants_from_request_response_syn_variants.iter().for_each(|element|{
+    for element in type_variants_from_request_response_syn_variants {
         let variant_ident = &element.ident;
         let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)
         .unwrap_or_else(|error| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} variant {variant_ident} failed: {error}")});
         if !value.contains(&error_variant_status_code) {
             value.push(error_variant_status_code);
         }
-    });
+    }
     value
 }
 

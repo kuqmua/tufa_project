@@ -833,10 +833,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let mut logic_for_into_serialize_deserialize_version: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut logic_for_compile_time_check_error_occurence_members: Vec<proc_macro2::TokenStream> = Vec::with_capacity(variants_vec.len());
             let mut should_generate_impl_compile_time_check_error_occurence_members = false;
-            variants_vec.into_iter().for_each(|(
-                variant_ident,
-                fields_vec
-            )|{
+            for (variant_ident, fields_vec) in variants_vec {
                 let mut enum_fields_logic_for_source_to_string_with_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_source_to_string_without_config: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut enum_fields_logic_for_get_code_occurence: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
@@ -3868,7 +3865,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         #(#fields_logic_for_compile_time_check_error_occurence_members_for_attribute)*
                     }
                 });
-            });
+            }
             let logic_for_source_to_string_with_config = logic_for_source_to_string_with_config.iter();
             let logic_for_source_to_string_without_config = logic_for_source_to_string_without_config.iter();
             let logic_for_get_code_occurence = logic_for_get_code_occurence.iter();
@@ -4229,7 +4226,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
             );
         }
     }
-    value_vec_lifetime.into_iter().for_each(|element|{
+    for element in value_vec_lifetime {
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_specified) = element {
             assert!(&value_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -4237,7 +4234,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
                 lifetimes_for_serialize_deserialize
             );
         }
-    });
+    }
     token_stream
 }
 
