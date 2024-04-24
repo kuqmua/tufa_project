@@ -186,10 +186,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
             }
         }
-        match primary_key_field_option {
-            Some(value) => value,
-            None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {primary_key_attr_name} attribute"),
-        }
+        primary_key_field_option.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {primary_key_attr_name} attribute"), |value| value)
     };
     let primary_key_field = &primary_key_syn_field.field;
     let primary_key_field_ident = &primary_key_syn_field.field_ident;
@@ -2223,10 +2220,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 field.attrs.iter().for_each(|attr|{
                                     if attr.path().segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                        let attr_ident = match attr.path().segments.iter().next() {
-                                            Some(path_segment) => &path_segment.ident,
-                                            None => panic!("attr.path().segments.iter().next() is None"),
-                                        };
+                                        let attr_ident = attr.path().segments.iter().next().map_or_else(|| panic!("attr.path().segments.iter().next() is None"), |path_segment| &path_segment.ident);
                                         if let Ok(value) = {
                                             use std::str::FromStr;
                                             proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
@@ -2378,10 +2372,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                             }
-                            match error_occurence_attribute {
-                                Some(value) => value.to_attribute_view_token_stream(),
-                                None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
-                            }
+                            error_occurence_attribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"), |value| value.to_attribute_view_token_stream())
                         };
                         let field_type = &field.ty;
                         quote::quote! {
@@ -2498,10 +2489,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                             }
-                            match error_occurence_attribute {
-                                Some(value) => value.to_attribute_view_token_stream(),
-                                None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"),
-                            }
+                            error_occurence_attribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"), |value| value.to_attribute_view_token_stream())
                         };
                         let field_type = &field.ty;
                         quote::quote! {
@@ -8137,10 +8125,7 @@ fn generate_http_request_many_token_stream(
                             field.attrs.iter().for_each(|attr|{
                                 if attr.path().segments.len() == 1 {
                                     let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                    let attr_ident = match attr.path().segments.iter().next() {
-                                        Some(path_segment) => &path_segment.ident,
-                                        None => panic!("attr.path().segments.iter().next() is None"),
-                                    };
+                                    let attr_ident = attr.path().segments.iter().next().map_or_else(|| panic!("attr.path().segments.iter().next() is None"), |path_segment| &path_segment.ident);
                                     if let Ok(value) = {
                                         use std::str::FromStr;
                                         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())
@@ -8451,10 +8436,7 @@ fn generate_try_operation_token_stream(
                             field.attrs.iter().for_each(|attr|{
                                 if attr.path().segments.len() == 1 {
                                     let error_message = format!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                                    let attr_ident = match attr.path().segments.iter().next() {
-                                        Some(path_segment) => &path_segment.ident,
-                                        None => panic!("attr.path().segments.iter().next() is None"),
-                                    };
+                                    let attr_ident = attr.path().segments.iter().next().map_or_else(|| panic!("attr.path().segments.iter().next() is None"), |path_segment| &path_segment.ident);
                                     if let Ok(value) = {
                                         use std::str::FromStr;
                                         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&attr_ident.to_string())

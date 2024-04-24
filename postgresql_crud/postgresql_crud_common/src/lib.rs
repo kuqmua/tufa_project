@@ -6520,18 +6520,12 @@ impl<T: std::fmt::Debug> std::fmt::Display for StdOptionOptionSqlxTypesJsonWithS
 }
 impl<T> std::convert::From<StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>> for StdOptionOptionSqlxTypesJson<T> {
     fn from(value: StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T>) -> Self {
-        match value.0 {
-            Some(value) => Self(Some(SqlxTypesJson::from(value).0)),
-            None => Self(None)
-        }
+        value.0.map_or_else(|| Self(None), |value| Self(Some(SqlxTypesJson::from(value).0)))
     }
 }
 impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for StdOptionOptionSqlxTypesJsonWithSerializeDeserialize<T> {
     fn from(value: StdOptionOptionSqlxTypesJson<T>) -> Self {
-        match value.0 {
-            Some(value) => Self(Some(SqlxTypesJsonWithSerializeDeserialize::from(SqlxTypesJson(value)))),
-            None => Self(None)
-        }
+        value.0.map_or_else(|| Self(None), |value| Self(Some(SqlxTypesJsonWithSerializeDeserialize::from(SqlxTypesJson(value)))))
     }
 }
 //

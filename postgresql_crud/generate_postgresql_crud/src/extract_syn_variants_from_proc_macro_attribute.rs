@@ -61,10 +61,7 @@ pub(crate) fn extract_syn_variants_from_proc_macro_attribute(
                     let element_path_stringified = element_path_token_stream.to_string();
                     element_path_stringified == "path"
                 });
-                let path_attribute = match option_path_sttribute {
-                    Some(value) => value,
-                    None => panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no path attribute"),
-                };
+                let path_attribute = option_path_sttribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {additional_http_status_codes_error_variant_path} no path attribute"), |value| value);
                 let path_to_additional_variant_enum_stringified = "{}".to_string();//todo
                 // &path_attribute.tokens.to_string();
                 let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified
