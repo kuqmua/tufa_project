@@ -1949,7 +1949,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr201Created;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -2210,7 +2210,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let desirable_type_token_stream = &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream;
         //todo remove injection of middleware logic
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -3099,7 +3099,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -3249,7 +3249,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr201Created;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -3388,7 +3388,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -3595,7 +3595,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -3745,7 +3745,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -4008,7 +4008,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             &std_vec_vec_struct_options_ident_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -4507,7 +4507,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 &std_vec_vec_struct_options_ident_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -4666,7 +4666,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -4836,7 +4836,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             &struct_options_ident_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -5038,7 +5038,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 &struct_options_ident_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -5206,7 +5206,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -5550,7 +5550,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -5842,7 +5842,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -5990,7 +5990,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -6219,7 +6219,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -6491,7 +6491,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -6649,7 +6649,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -6873,7 +6873,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = {
             crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-                &desirable_status_code,
+                desirable_status_code,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &derive_debug_thiserror_error_occurence_token_stream,
                 &derive_debug_serialize_deserialize_token_stream,
@@ -7396,7 +7396,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 &std_vec_vec_primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -7555,7 +7555,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let desirable_status_code = proc_macro_helpers::status_code::StatusCode::Tvfrr200Ok;
         let unique_status_codes = generate_unique_status_codes(
-            &desirable_status_code,
+            desirable_status_code,
             &type_variants_from_request_response_syn_variants,
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
@@ -7669,7 +7669,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         // println!("{parameters_token_stream}");
         let try_operation_error_with_middleware_error_variants_token_stream = crate::type_variants_from_request_response_generator::type_variants_from_request_response_generator(
-            &desirable_status_code,
+            desirable_status_code,
             primary_key_inner_type_with_serialize_deserialize_token_stream,
             &derive_debug_thiserror_error_occurence_token_stream,
             &derive_debug_serialize_deserialize_token_stream,
@@ -7876,7 +7876,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro_name_upper_camel_case_ident_stringified,
                 &type_variants_from_request_response_syn_variants,
-                &desirable_status_code,
+                desirable_status_code,
                 primary_key_inner_type_with_serialize_deserialize_token_stream,
                 &deserialize_response_initialization_token_stream,
                 &unexpected_status_code_initialization_token_stream,
@@ -8237,7 +8237,7 @@ fn generate_http_request_many_token_stream(
     operation: &Operation,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
-    desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
+    desirable_status_code: proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     deserialize_response_initialization_token_stream: &proc_macro2::TokenStream,
     unexpected_status_code_initialization_token_stream: &proc_macro2::TokenStream,
@@ -8427,7 +8427,7 @@ fn generate_http_request_many_token_stream(
                     }
                 });
             }
-            else if *desirable_status_code != status_code_attribute {
+            else if desirable_status_code != status_code_attribute {
                 status_code_enums_try_from_variants.push(quote::quote! {
                     else if status_code == #http_status_code_token_stream {
                         match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
@@ -8544,7 +8544,7 @@ fn generate_try_operation_token_stream(
     operation: &Operation,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
-    desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
+    desirable_status_code: proc_macro_helpers::status_code::StatusCode,
     desirable_type_token_stream: &proc_macro2::TokenStream,
     deserialize_response_initialization_token_stream: &proc_macro2::TokenStream,
     unexpected_status_code_initialization_token_stream: &proc_macro2::TokenStream,
@@ -8732,7 +8732,7 @@ fn generate_try_operation_token_stream(
                     }
                 });
             }
-            else if *desirable_status_code != status_code_attribute {
+            else if desirable_status_code != status_code_attribute {
                 status_code_enums_try_from_variants.push(quote::quote! {
                     else if status_code == #http_status_code_token_stream {
                         match serde_json::#from_str_snake_case_token_stream::<#try_operation_response_variants_desirable_attribute_token_stream>(&response_text) {
@@ -8817,13 +8817,13 @@ fn generate_type_variants_from_request_response_syn_variants<'a>(
 }
 
 fn generate_unique_status_codes(
-    desirable_status_code: &proc_macro_helpers::status_code::StatusCode,
+    desirable_status_code: proc_macro_helpers::status_code::StatusCode,
     type_variants_from_request_response_syn_variants: &[&syn::Variant],
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> std::vec::Vec<proc_macro_helpers::status_code::StatusCode> {
     let mut value =
         std::vec::Vec::with_capacity(type_variants_from_request_response_syn_variants.len());
-    value.push(*desirable_status_code);
+    value.push(desirable_status_code);
     for element in type_variants_from_request_response_syn_variants {
         let variant_ident = &element.ident;
         let error_variant_status_code = proc_macro_helpers::status_code::StatusCode::try_from(element)

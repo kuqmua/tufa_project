@@ -823,7 +823,7 @@ transmutes_expressible_as_ptr_casts = { level = "deny", priority = 0 }
 transmuting_null = { level = "deny", priority = 0 }
 trim_split_whitespace = { level = "deny", priority = 0 }
 trivial_regex = { level = "deny", priority = 0 }
-trivially_copy_pass_by_ref = { level = "allow", priority = 0 }
+trivially_copy_pass_by_ref = { level = "deny", priority = 0 }
 try_err = { level = "deny", priority = 0 }
 tuple_array_conversions = { level = "deny", priority = 0 }
 type_complexity = { level = "deny", priority = 0 }

@@ -695,7 +695,7 @@ impl SqlxPostgresType {
             SupportedSqlxPostgresType::StdOptionOptionSerdeJsonValue => Self::SerdeJsonValue,
         }
     }
-    fn get_type_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_type_stringified(self, generic_type_str: &str) -> std::string::String {
         match self {
             Self::StdPrimitiveBool => std::string::String::from("std::primitive::bool"),//todo maybe Option<T> for nullable ?
             Self::StdPrimitiveI16 => std::string::String::from("std::primitive::i16"),
@@ -928,8 +928,8 @@ pub enum OptionSupportedSqlxPostgresType {
 }
 
 impl OptionSupportedSqlxPostgresType {
-    fn get_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        format!("std::option::Option<{}>", SqlxPostgresType::from(self).get_type_stringified(generic_type_str))
+    fn get_type_stringified(self, generic_type_str: &str) -> std::string::String {
+        format!("std::option::Option<{}>", SqlxPostgresType::from(&self).get_type_stringified(generic_type_str))
     }
 }
 
@@ -1121,13 +1121,13 @@ impl std::convert::From<&SqlxPostgresType> for OptionSupportedSqlxPostgresType {
 }
 
 impl SupportedSqlxPostgresType {
-    fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
-        match SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::from(self) {
+    fn get_original_type_stringified(self, generic_type_str: &str) -> std::string::String {
+        match SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::from(&self) {
             SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::SqlxPostgresType(value) => value.get_type_stringified(generic_type_str),
             SqlxPostgresTypeOrOptionSupportedSqlxPostgresType::OptionSupportedSqlxPostgresType(value) => value.get_type_stringified(generic_type_str),
         }
     }
-    fn get_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_inner_type_handle_stringified(self, generic_type_str: &str) -> std::string::String {
         match self {
             Self::SqlxTypesJsonT => format!("{self}<{generic_type_str}>"),
             _ => self.to_string()
@@ -1137,7 +1137,7 @@ impl SupportedSqlxPostgresType {
         add_path(&self.get_inner_type_handle_stringified(generic_type_str))
     }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
-        &self,
+        self,
         generic_type_str: &str,
     ) -> std::string::String {
         if matches!(self, Self::SqlxTypesJsonT) { format!(
@@ -1150,7 +1150,7 @@ impl SupportedSqlxPostgresType {
     pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&self.get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str))
     }
-    fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_inner_type_with_serialize_deserialize_error_named_handle_stringified(self, generic_type_str: &str) -> std::string::String {
         match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
@@ -1161,7 +1161,7 @@ impl SupportedSqlxPostgresType {
             )
         }
     }
-    fn get_where_with_serialize_deserialize_error_named_stringified(&self, generic_type_str: &str) -> std::string::String {
+    fn get_where_with_serialize_deserialize_error_named_stringified(self, generic_type_str: &str) -> std::string::String {
         add_path(&match self.inner_type_from_or_try_from_inner_type_with_serialize_deserialize() {
             FromOrTryFrom::From => std::string::String::from(""),
             FromOrTryFrom::TryFrom => format!(
@@ -1173,7 +1173,7 @@ impl SupportedSqlxPostgresType {
             )
         })
     }
-    const fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(&self) -> FromOrTryFrom {
+    const fn inner_type_from_or_try_from_inner_type_with_serialize_deserialize(self) -> FromOrTryFrom {
         match self {
             Self::StdPrimitiveBool |
             Self::StdOptionOptionStdPrimitiveBool |
@@ -2184,17 +2184,17 @@ impl RustSqlxMapToPostgresTypeVariant {
     pub fn get_original_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         SupportedSqlxPostgresType::from(self).get_original_type_stringified(generic_type_str)
     }
-    fn get_inner_type_handle_stringified(&self, generic_type_str: &str) -> std::string::String {
-        SupportedSqlxPostgresType::from(self).get_inner_type_handle_stringified(generic_type_str)
+    fn get_inner_type_handle_stringified(self, generic_type_str: &str) -> std::string::String {
+        SupportedSqlxPostgresType::from(&self).get_inner_type_handle_stringified(generic_type_str)
     }
     pub fn get_inner_type_stringified(&self, generic_type_str: &str) -> std::string::String {
         add_path(&self.get_inner_type_handle_stringified(generic_type_str))
     }
     fn get_inner_type_with_serialize_deserialize_handle_stringified(
-        &self,
+        self,
         generic_type_str: &str,
     ) -> std::string::String {
-        SupportedSqlxPostgresType::from(self).get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str)
+        SupportedSqlxPostgresType::from(&self).get_inner_type_with_serialize_deserialize_handle_stringified(generic_type_str)
     }
     pub fn get_inner_type_with_serialize_deserialize_stringified(
         &self,
