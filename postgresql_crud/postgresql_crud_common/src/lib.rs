@@ -1140,15 +1140,11 @@ impl SupportedSqlxPostgresType {
         &self,
         generic_type_str: &str,
     ) -> std::string::String {
-        match self {
-            Self::SqlxTypesJsonT => format!(
-                "sqlx::types::Json{}<{generic_type_str}>",
-                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
-            ),
-            _ => format!(
-                "{self}{}",
-                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
-            ) 
+        if matches!(self, Self::SqlxTypesJsonT) { format!(
+            "sqlx::types::Json{}<{generic_type_str}>",
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        ) } else { 
+            format!("{self}{}", proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()) 
         }
     }
     pub fn get_inner_type_with_serialize_deserialize_stringified(&self, generic_type_str: &str) -> std::string::String {

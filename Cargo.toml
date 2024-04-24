@@ -755,14 +755,14 @@ should_panic_without_expect = { level = "deny", priority = 0 }
 significant_drop_in_scrutinee = { level = "deny", priority = 0 }
 significant_drop_tightening = { level = "deny", priority = 0 }
 similar_names = { level = "allow", priority = 0 }
-single_call_fn = { level = "deny", priority = 0 }
+single_call_fn = { level = "allow", priority = 0 }
 single_char_add_str = { level = "deny", priority = 0 }
 single_char_lifetime_names = { level = "allow", priority = 0 }
 single_char_pattern = { level = "deny", priority = 0 }
 single_component_path_imports = { level = "deny", priority = 0 }
 single_element_loop = { level = "deny", priority = 0 }
 single_match = { level = "deny", priority = 0 }
-single_match_else = { level = "allow", priority = 0 }
+single_match_else = { level = "deny", priority = 0 }
 single_range_in_vec_init = { level = "deny", priority = 0 }
 size_of_in_element_count = { level = "deny", priority = 0 }
 size_of_ref = { level = "deny", priority = 0 }
