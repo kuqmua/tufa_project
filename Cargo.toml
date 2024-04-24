@@ -680,7 +680,7 @@ print_stderr = { level = "allow", priority = 0 }
 print_stdout = { level = "allow", priority = 0 }
 print_with_newline = { level = "deny", priority = 0 }
 println_empty_string = { level = "deny", priority = 0 }
-ptr_arg = { level = "allow", priority = 0 }
+ptr_arg = { level = "deny", priority = 0 }
 ptr_as_ptr = { level = "deny", priority = 0 }
 ptr_cast_constness = { level = "deny", priority = 0 }
 ptr_eq = { level = "deny", priority = 0 }
