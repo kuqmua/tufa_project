@@ -277,5 +277,11 @@ impl Config {
     }
 }
 
+impl std::default::Default for Config {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 
 

@@ -630,7 +630,7 @@ neg_multiply = { level = "deny", priority = 0 }
 negative_feature_names = { level = "deny", priority = 0 }
 never_loop = { level = "deny", priority = 0 }
 new_ret_no_self = { level = "deny", priority = 0 }
-new_without_default = { level = "allow", priority = 0 }
+new_without_default = { level = "deny", priority = 0 }
 no_effect = { level = "deny", priority = 0 }
 no_effect_replace = { level = "deny", priority = 0 }
 no_effect_underscore_binding = { level = "deny", priority = 0 }
