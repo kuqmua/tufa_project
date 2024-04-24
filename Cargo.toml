@@ -778,7 +778,7 @@ string_extend_chars = { level = "deny", priority = 0 }
 string_from_utf8_as_bytes = { level = "deny", priority = 0 }
 string_lit_as_bytes = { level = "deny", priority = 0 }
 string_lit_chars_any = { level = "deny", priority = 0 }
-string_slice = { level = "allow", priority = 0 }
+string_slice = { level = "deny", priority = 0 }
 string_to_string = { level = "allow", priority = 0 }
 strlen_on_c_strings = { level = "deny", priority = 0 }
 struct_excessive_bools = { level = "deny", priority = 0 }
