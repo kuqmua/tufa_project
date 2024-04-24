@@ -602,7 +602,7 @@ needless_bool_assign = { level = "deny", priority = 0 }
 needless_borrow = { level = "deny", priority = 0 }
 needless_borrowed_reference = { level = "deny", priority = 0 }
 needless_borrows_for_generic_args = { level = "deny", priority = 0 }
-needless_collect = { level = "allow", priority = 0 }
+needless_collect = { level = "deny", priority = 0 }
 needless_continue = { level = "deny", priority = 0 }
 needless_doctest_main = { level = "deny", priority = 0 }
 needless_else = { level = "deny", priority = 0 }

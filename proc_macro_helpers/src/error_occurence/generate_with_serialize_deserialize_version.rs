@@ -158,14 +158,7 @@ pub fn generate_with_serialize_deserialize_version(
                     &variant.ident,
                     variant_fields_vec,
                 )
-            })
-            .collect::<Vec<(
-                &proc_macro2::Ident,
-                 Vec<(
-                    proc_macro2::Ident,
-                    crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence
-                )>
-            )>>();
+            });
             let mut lifetimes_for_serialize_deserialize = Vec::with_capacity(generics_len);
             let mut logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> =
                 Vec::with_capacity(variants_len);
