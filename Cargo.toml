@@ -606,7 +606,7 @@ needless_collect = { level = "deny", priority = 0 }
 needless_continue = { level = "deny", priority = 0 }
 needless_doctest_main = { level = "deny", priority = 0 }
 needless_else = { level = "deny", priority = 0 }
-needless_for_each = { level = "allow", priority = 0 }
+needless_for_each = { level = "deny", priority = 0 }
 needless_if = { level = "deny", priority = 0 }
 needless_late_init = { level = "deny", priority = 0 }
 needless_lifetimes = { level = "deny", priority = 0 }

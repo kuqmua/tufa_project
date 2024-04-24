@@ -851,7 +851,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let mut fields_logic_for_source_with_serialize_deserialize_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut fields_logic_for_into_serialize_deserialize_version_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
                 let mut fields_logic_for_compile_time_check_error_occurence_members_for_attribute: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
-                fields_vec.into_iter().enumerate().for_each(|(index, (field_ident, error_or_code_occurence))|{
+                for (index, (field_ident, error_or_code_occurence)) in fields_vec.into_iter().enumerate() {
                     let unused_argument_handle_stringified = format!("_unused_argument_{index}");
                     let unused_argument_handle_token_stream = unused_argument_handle_stringified
                     .parse::<proc_macro2::TokenStream>()
@@ -3786,7 +3786,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             fields_logic_for_compile_time_check_error_occurence_members_for_attribute.push(proc_macro2::TokenStream::new());
                         },
                     }
-                });
+                }
                 let format_logic_for_source_to_string_with_or_without_config_stringified = format_logic_for_source_to_string_with_or_without_config.iter().fold(
                     std::string::String::from(""), 
                     |mut acc, path_segment| {
@@ -4183,7 +4183,7 @@ fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_add
             proc_macro2::TokenStream::new()
         }
     };
-    vec_lifetime.into_iter().for_each(|element|{
+    for element in vec_lifetime {
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(specified_lifetime) = element {
             assert!(&specified_lifetime != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} must not contain reserved by macro lifetime name: {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -4191,7 +4191,7 @@ fn get_possible_serde_borrow_token_stream_for_one_vec_with_possible_lifetime_add
                 lifetimes_for_serialize_deserialize
             );
         }
-    });
+    }
     token_stream
 }
 //potential support for few lifetime annotations, but now supported only one lifetime annotation
@@ -4220,7 +4220,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
         ) => proc_macro2::TokenStream::new(),
     };
     let error_message = "must not contain reserved by macro lifetime name:";
-    key_vec_lifetime.into_iter().for_each(|element|{
+    for element in key_vec_lifetime {
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(key_lifetime_specified) = element {
             assert!(&key_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");
             proc_macro_helpers::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
@@ -4228,7 +4228,7 @@ fn get_possible_serde_borrow_token_stream_for_two_vecs_with_possible_lifetime_ad
                 lifetimes_for_serialize_deserialize
             );
         }
-    });
+    }
     value_vec_lifetime.into_iter().for_each(|element|{
         if let proc_macro_helpers::error_occurence::lifetime::Lifetime::Specified(value_lifetime_specified) = element {
             assert!(&value_lifetime_specified != trait_lifetime_stringified, "{proc_macro_name_ident_stringified} {error_message} {trait_lifetime_stringified}");

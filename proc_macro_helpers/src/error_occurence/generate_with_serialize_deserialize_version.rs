@@ -168,7 +168,7 @@ pub fn generate_with_serialize_deserialize_version(
                 fields_vec
             )|{
                 let mut enum_fields_logic_for_enum_with_serialize_deserialize: Vec<proc_macro2::TokenStream> = Vec::with_capacity(fields_vec.len());
-                fields_vec.into_iter().for_each(|(field_ident, error_or_code_occurence)|{
+                for (field_ident, error_or_code_occurence) in fields_vec {
                     match error_or_code_occurence {
                         crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
                             attribute,
@@ -216,7 +216,7 @@ pub fn generate_with_serialize_deserialize_version(
                             });
                         },
                     }
-                });
+                }
                 logic_for_enum_with_serialize_deserialize.push(quote::quote! {
                     #variant_ident {
                         #(#enum_fields_logic_for_enum_with_serialize_deserialize),*
