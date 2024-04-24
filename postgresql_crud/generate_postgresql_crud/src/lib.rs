@@ -1183,7 +1183,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 (
                     proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay,
                     &variant_name_snake_case_stringified,
-                    primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated.clone()
+                    primary_key_std_vec_vec_inner_type_syn_punctuated_punctuated
                 )
             ]
         )
@@ -1257,7 +1257,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             vec![(
                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay,
                 &variant_name_snake_case_stringified,
-                sqlx_error_syn_punctuated_punctuated.clone(),
+                sqlx_error_syn_punctuated_punctuated,
             )],
         )
     };
@@ -1727,7 +1727,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     (
                         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
                         &variant_name_snake_case_stringified,
-                        std_string_string_syn_punctuated_punctuated.clone()
+                        std_string_string_syn_punctuated_punctuated
                     )
                 ]
             )

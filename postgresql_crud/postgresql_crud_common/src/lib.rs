@@ -3918,7 +3918,7 @@ impl Default for TestNewType<Something> {
                 sqlx::types::BigDecimal,
             > {
                 start: std_ops_bound_sqlx_types_big_decimal_handle.clone(),
-                end: std_ops_bound_sqlx_types_big_decimal_handle.clone(),
+                end: std_ops_bound_sqlx_types_big_decimal_handle
             });
         let sqlx_postgres_types_pg_range_sqlx_types_decimal =
             SqlxPostgresTypesPgRangeSqlxTypesDecimal(sqlx::postgres::types::PgRange::<
@@ -3933,7 +3933,7 @@ impl Default for TestNewType<Something> {
         let sqlx_postgres_types_pg_ci_text = SqlxPostgresTypesPgCiText(
             sqlx::postgres::types::PgCiText(std_string_string_handle.clone()),
         );
-        let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx_types_big_decimal_handle.clone());
+        let sqlx_types_big_decimal = SqlxTypesBigDecimal(sqlx_types_big_decimal_handle);
         let sqlx_types_decimal = SqlxTypesDecimal(sqlx_types_decimal_handle);
         let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
             SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime::<
@@ -4012,7 +4012,7 @@ impl Default for TestNewType<Something> {
             ]));
         let sqlx_types_bit_vec = SqlxTypesBitVec(sqlx::types::BitVec::new());
         let sqlx_types_json = SqlxTypesJson(sqlx::types::Json(Something {
-            something: std_string_string_handle.clone(),
+            something: std_string_string_handle,
         }));
         let serde_json_value =
             SerdeJsonValue(serde_json::Value::Bool(std::primitive::bool::default()));

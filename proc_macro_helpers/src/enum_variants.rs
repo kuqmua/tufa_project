@@ -257,7 +257,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
                 (
                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
                     &variant_name_snake_case_stringified,
-                    std_string_string_syn_punctuated_punctuated.clone()
+                    std_string_string_syn_punctuated_punctuated
                 )
             ]
         )
@@ -377,7 +377,7 @@ pub fn json_extractor_error_named_syn_variants(
                 (
                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize,
                     &variant_name_snake_case_stringified,
-                    std_string_string_syn_punctuated_punctuated.clone()
+                    std_string_string_syn_punctuated_punctuated
                 )
             ]
         )
