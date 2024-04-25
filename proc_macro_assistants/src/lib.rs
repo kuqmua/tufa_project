@@ -36,7 +36,8 @@ pub fn to_upper_camel_case_stringified(input: proc_macro::TokenStream) -> proc_m
             );
             quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_upper_camel_case_quotes_token_stream)}
         },
-        _ => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
+        syn::Fields::Named(_) | 
+        syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let function_name_snake_case_token_stream =
         proc_macro_common::generate_function_name_snake_case_token_stream(
@@ -100,7 +101,8 @@ pub fn to_snake_case_stringified(input: proc_macro::TokenStream) -> proc_macro::
             );
             quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_snake_case_quotes_token_stream)}
         },
-        _ => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
+        syn::Fields::Named(_) | 
+        syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit")
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let function_name_snake_case_token_stream =
         proc_macro_common::generate_function_name_snake_case_token_stream(
@@ -165,7 +167,8 @@ pub fn to_screaming_snake_case_stringified(
             );
             quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_snake_case_quotes_token_stream)}
         },
-        _ => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
+        syn::Fields::Named(_) | 
+        syn::Fields::Unnamed(_) => panic!("{proc_macro_name_upper_camel_case_stringified} supported only syn::Fields::Unit"),
     }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
     let function_name_snake_case_token_stream =
         proc_macro_common::generate_function_name_snake_case_token_stream(

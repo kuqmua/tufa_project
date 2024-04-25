@@ -14,7 +14,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
     //todo to implement into_array() and into_vec - must implement Default for all inner variant types
     let len = match ast.data.clone() {
         syn::Data::Enum(enum_item) => enum_item.variants.len(),
-        _ => panic!("EnumVariantCount only works on Enums"),
+        syn::Data::Struct(_) | 
+        syn::Data::Union(_) => panic!("EnumVariantCount only works on Enums"),
     };
     let variants = match ast.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|element| {
@@ -35,7 +36,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 syn::Fields::Unit => quote::quote! { #variant_ident },
             }
         }),
-        _ => panic!("EnumIntoArray works only on enums"),
+        syn::Data::Struct(_) | 
+        syn::Data::Union(_) => panic!("EnumIntoArray works only on enums"),
     };
     let ident = &ast.ident;
     let gen = quote::quote! {

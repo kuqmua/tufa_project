@@ -81,7 +81,20 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                             syn::LitStr::new(&string_handle, ident.span())
                         )
                     }
-                    _ => panic!("InitFromEnvWithPanicIfFailed field.ty supports only syn::Type::Path!"),
+                    syn::Type::Array(_) | 
+                    syn::Type::BareFn(_) | 
+                    syn::Type::Group(_) | 
+                    syn::Type::ImplTrait(_) | 
+                    syn::Type::Infer(_) | 
+                    syn::Type::Macro(_) | 
+                    syn::Type::Never(_) | 
+                    syn::Type::Paren(_) | 
+                    syn::Type::Ptr(_) | 
+                    syn::Type::Reference(_) | 
+                    syn::Type::Slice(_) | 
+                    syn::Type::TraitObject(_) | 
+                    syn::Type::Tuple(_) | 
+                    syn::Type::Verbatim(_) => panic!("InitFromEnvWithPanicIfFailed field.ty supports only syn::Type::Path!"),
                 };
                 let env_var_name_as_screaming_snake_case_string =
                     syn::LitStr::new(&format!("{env_var_name}"), ident.span());
@@ -163,6 +176,7 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
             // println!("{gen}");
             gen.into()
         }
-        _ => panic!("InitFromEnvWithPanicIfFailed only works on Struct"),
+        syn::Data::Enum(_) | 
+        syn::Data::Union(_) => panic!("InitFromEnvWithPanicIfFailed only works on Struct"),
     }
 }

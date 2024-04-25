@@ -53,7 +53,8 @@ pub fn generate_getter_traits_for_struct_fields(
                 }
             }
         }),
-        _ => panic!("GenerateGetterTraitsForStructFields only works on Struct"),
+        syn::Data::Enum(_) | 
+        syn::Data::Union(_) => panic!("GenerateGetterTraitsForStructFields only works on Struct"),
     };
     let gen = quote::quote! {
         #(#generated_traits_implementations)*

@@ -904,7 +904,7 @@ while_immutable_condition = { level = "deny", priority = 0 }
 while_let_loop = { level = "deny", priority = 0 }
 while_let_on_iterator = { level = "deny", priority = 0 }
 wildcard_dependencies = { level = "deny", priority = 0 }
-wildcard_enum_match_arm = { level = "allow", priority = 0 }
+wildcard_enum_match_arm = { level = "deny", priority = 0 }
 wildcard_imports = { level = "deny", priority = 0 }
 wildcard_in_or_patterns = { level = "deny", priority = 0 }
 write_literal = { level = "deny", priority = 0 }

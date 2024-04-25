@@ -19,7 +19,8 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         .into_iter()
         .map(|variant| match variant.fields {
             syn::Fields::Unit => variant.ident,
-            _ => panic!("{proc_macro_name_ident_stringified} expected fields would be unit"),
+            syn::Fields::Named(_) | 
+            syn::Fields::Unnamed(_) => panic!("{proc_macro_name_ident_stringified} expected fields would be unit"),
         })
         .collect::<Vec<syn::Ident>>();
     let variants_token_stream = variant_idents.iter().map(|variant_ident| {
