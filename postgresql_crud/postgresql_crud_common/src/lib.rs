@@ -6478,12 +6478,12 @@ pub struct SerdeJsonValue(pub serde_json::Value);
 impl AsPostgresqlJson for SerdeJsonValue {}
 impl AsPostgresqlJsonB for SerdeJsonValue {}
 
-pub async fn something() {
+// pub async fn something() {
     // let mut query = sqlx::query::<sqlx::Postgres>("test");
     // query = query.bind(Into::<bool>::into(StdPrimitiveBool(false)));
     // query = query.bind(StdPrimitiveBool(false).into_inner());
     // let _query = query.bind(StdPrimitiveBool(false));
-}
+// }
 
 pub fn test_check_supported_postgresql_column_type() {
     //todo check if init functions are not panics. change to not panic init functions

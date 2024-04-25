@@ -9,7 +9,7 @@ pub fn entry(config: &'static common::repositories_types::server::config::config
         }
         Ok(runtime) => {
             common::dev::dev();
-            runtime.block_on(crate::dev::dev());
+            // runtime.block_on(crate::dev::dev());
             if let Err(error) =
                 common::repositories_types::server::telemetry::init_subscriber::init_subscriber(
                     common::repositories_types::server::telemetry::get_subscriber::get_subscriber(
