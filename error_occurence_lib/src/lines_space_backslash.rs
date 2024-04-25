@@ -10,7 +10,7 @@ where
         self.to_string()
             .lines()
             .fold(std::string::String::new(), |mut acc, line| {
-                acc.push_str(&format!(" {}\n", line));
+                acc.push_str(&format!(" {line}\n"));
                 acc
             })
     }

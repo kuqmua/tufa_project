@@ -835,7 +835,7 @@ unicode_not_nfc = { level = "deny", priority = 0 }
 unimplemented = { level = "deny", priority = 0 }
 uninit_assumed_init = { level = "deny", priority = 0 }
 uninit_vec = { level = "deny", priority = 0 }
-uninlined_format_args = { level = "allow", priority = 0 }
+uninlined_format_args = { level = "deny", priority = 0 }
 unit_arg = { level = "deny", priority = 0 }
 unit_cmp = { level = "deny", priority = 0 }
 unit_hash = { level = "deny", priority = 0 }

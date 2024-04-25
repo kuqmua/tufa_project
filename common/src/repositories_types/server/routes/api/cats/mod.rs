@@ -911,7 +911,7 @@ pub async fn try_create_many(
             });
         }
     };
-    let url = format!("{}/dogs/create_many", server_location,);
+    let url = format!("{server_location}/dogs/create_many");
     let future = reqwest::Client::new()
         .post(&url)
         .header(
