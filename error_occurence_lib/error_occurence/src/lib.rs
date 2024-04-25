@@ -2347,11 +2347,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                                                     key_reference_ident,
-                                                    key_lifetime_ident: _,
+                                                    ..
                                                 },
                                                proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                                                     value_reference_ident,
-                                                    value_lifetime_ident: _,
+                                                    ..
                                                 }
                                             ) => {
                                                 proc_macro_helpers::error_occurence::panic_if_not_str::panic_if_not_str(

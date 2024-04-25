@@ -26,19 +26,9 @@ pub enum CheckCommitErrorNamed {
 impl http_logic::GetAxumHttpStatusCode for CheckCommitErrorNamed {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         match self {
-            Self::CommitNotEqual {
-                commit_not_equal: _,
-                commit_to_use: _,
-                code_occurence: _,
-            } |
-            Self::CommitToStrConversion {
-                commit_to_str_conversion: _,
-                code_occurence: _,
-            } |
-            Self::NoCommitHeader {
-                no_commit_header: _,
-                code_occurence: _,
-            } => axum::http::StatusCode::BAD_REQUEST,
+            Self::CommitNotEqual {..} |
+            Self::CommitToStrConversion {..} |
+            Self::NoCommitHeader {..} => axum::http::StatusCode::BAD_REQUEST,
         }
     }
 }

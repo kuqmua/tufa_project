@@ -199,7 +199,7 @@ pub fn generate_with_serialize_deserialize_version(
                             }
                             match &attribute {
                                 crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => {
-                                    if let crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident: _, lifetime_ident } = &supported_container {
+                                    if let crate::error_occurence::supported_container::SupportedContainer::Reference{ lifetime_ident, .. } = &supported_container {
                                         crate::error_occurence::possible_lifetime_addition::possible_lifetime_addition(
                                             lifetime_ident.to_string(),
                                             &mut lifetimes_for_serialize_deserialize
@@ -242,7 +242,7 @@ pub fn generate_with_serialize_deserialize_version(
                                 );
                                 match &attribute {
                                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => {
-                                        if let crate::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime: _vec_lifetime } = &supported_container {
+                                        if let crate::error_occurence::supported_container::SupportedContainer::Path { path, ..} = &supported_container {
                                             inform_use_str_string_in_different_attribute(
                                                 path,
                                                 &attribute.to_string(),
@@ -257,8 +257,8 @@ pub fn generate_with_serialize_deserialize_version(
                                     },
                                     crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay => {
                                         if let crate::error_occurence::supported_container::SupportedContainer::Vec {
-                                            path: _,
-                                            vec_element_type: crate::error_occurence::vec_element_type::VecElementType::Path { element_path, vec_lifetime: _vec_lifetime }
+                                            vec_element_type: crate::error_occurence::vec_element_type::VecElementType::Path { element_path, ..},
+                                            ..
                                         } = &supported_container {
                                             inform_use_str_string_in_different_attribute(
                                                 element_path,
@@ -274,68 +274,39 @@ pub fn generate_with_serialize_deserialize_version(
                                     },
                                     crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
                                         if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                                            path: _,
                                             hashmap_key_type,
                                             hashmap_value_type,
+                                            ..
                                         } = &supported_container {
-                                            match (hashmap_key_type, hashmap_value_type) {
-                                                (
-                                                    crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                                                        key_segments_stringified: _,
-                                                        key_vec_lifetime: _
-                                                    },
-                                                   crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                                                        value_segments_stringified,
-                                                        value_vec_lifetime: _value_vec_lifetime
-                                                    }
-                                                ) => {
-                                                    inform_use_str_string_in_different_attribute(
-                                                        value_segments_stringified,
-                                                        &attribute.to_string(),
-                                                        &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
-                                                        str_stringified,
-                                                        proc_macro_name_ident_stringified,
-                                                        must_be_used_with_stringified,
-                                                        &std_string_string_stringified,
-                                                        &string_string_stringified,
-                                                    );
-                                                },
-                                                (
-                                                    crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                                                        key_reference_ident: _key_reference_ident,
-                                                        key_lifetime_ident: _key_lifetime_ident
-                                                    },
-                                                   crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                                                        value_segments_stringified,
-                                                        value_vec_lifetime: _value_vec_lifetime
-                                                    }
-                                                ) => {
-                                                    inform_use_str_string_in_different_attribute(
-                                                        value_segments_stringified,
-                                                        &attribute.to_string(),
-                                                        &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
-                                                        str_stringified,
-                                                        proc_macro_name_ident_stringified,
-                                                        must_be_used_with_stringified,
-                                                        &std_string_string_stringified,
-                                                        &string_string_stringified,
-                                                    );
-                                                },
-                                                _ => (),
+                                            if let (
+                                                crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} | 
+                                                crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                                                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                                    value_segments_stringified,
+                                                    ..
+                                                }
+                                            ) = (hashmap_key_type, hashmap_value_type) {
+                                                inform_use_str_string_in_different_attribute(
+                                                    value_segments_stringified,
+                                                    &attribute.to_string(),
+                                                    &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
+                                                    str_stringified,
+                                                    proc_macro_name_ident_stringified,
+                                                    must_be_used_with_stringified,
+                                                    &std_string_string_stringified,
+                                                    &string_string_stringified,
+                                                );
                                             }
                                         }
                                     },
                                     crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
                                         if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                                            path: _,
-                                            hashmap_key_type: crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                                                key_segments_stringified: _key_segments_stringified,
-                                                key_vec_lifetime: _key_vec_lifetime
-                                            },
+                                            hashmap_key_type: crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                             hashmap_value_type: crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                                                 value_segments_stringified,
-                                                value_vec_lifetime: _value_vec_lifetime
-                                            }
+                                                ..
+                                            },
+                                            ..
                                         } = &supported_container {
                                             inform_use_str_string_in_different_attribute(
                                                 value_segments_stringified,
@@ -378,7 +349,7 @@ pub fn generate_with_serialize_deserialize_version(
                         },
                         crate::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::CodeOccurence {
                             field_type,
-                            vec_lifetime: _vec_lifetime,
+                            ..
                          } => {
                             let code_occurence_type_token_stream = {
                                 let code_occurence_type_stringified = field_type.as_str();
@@ -554,7 +525,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
     );
     match &attribute {
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplay => {
-            if let crate::error_occurence::supported_container::SupportedContainer::Path { path: _, vec_lifetime: _vec_lifetime } = supported_container {
+            if let crate::error_occurence::supported_container::SupportedContainer::Path { .. } = supported_container {
                 quote::quote! {
                     #std_string_string_token_stream
                 }
@@ -579,7 +550,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     }
                 },
-                crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident, lifetime_ident: _ } => {
+                crate::error_occurence::supported_container::SupportedContainer::Reference{ reference_ident, .. } => {
                     crate::error_occurence::panic_if_not_str::panic_if_not_str(
                         &reference_ident,
                         str_stringified,
@@ -600,7 +571,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => {
-            if let crate::error_occurence::supported_container::SupportedContainer::Path { path: _path, vec_lifetime: _vec_lifetime } = supported_container {}
+            if let crate::error_occurence::supported_container::SupportedContainer::Path {..} = supported_container {}
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
@@ -630,7 +601,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             }
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence => {
-            if let crate::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime: _vec_lifetime } = &supported_container {
+            if let crate::error_occurence::supported_container::SupportedContainer::Path { path, ..} = &supported_container {
                 {
                     let type_stringified = format!("{path}{with_serialize_deserialize_upper_camel_case}");
                     type_stringified
@@ -651,7 +622,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 path,
                 vec_element_type
             } = supported_container {
-                if let crate::error_occurence::vec_element_type::VecElementType::Path { element_path: _, vec_lifetime: _vec_lifetime } = vec_element_type {
+                if let crate::error_occurence::vec_element_type::VecElementType::Path { .. } = vec_element_type {
                     let type_stringified = format!("{path}<{std_string_string_stringified}>");
                     type_stringified
                     .parse::<proc_macro2::TokenStream>()
@@ -685,7 +656,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
-                    crate::error_occurence::vec_element_type::VecElementType::Reference { reference_ident, lifetime_ident: _lifetime_ident } => {
+                    crate::error_occurence::vec_element_type::VecElementType::Reference { reference_ident, .. } => {
                         crate::error_occurence::panic_if_not_str::panic_if_not_str(
                             &reference_ident,
                             str_stringified,
@@ -712,10 +683,10 @@ pub fn generate_field_type_with_serialize_deserialize_version(
         },
         crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => {
             if let crate::error_occurence::supported_container::SupportedContainer::Vec {
-                path: _path,
-                vec_element_type
+                vec_element_type,
+                ..
             } = supported_container {
-                if let crate::error_occurence::vec_element_type::VecElementType::Path { element_path: _element_path, vec_lifetime: _vec_lifetime } = vec_element_type {}
+                if let crate::error_occurence::vec_element_type::VecElementType::Path {..} = vec_element_type {}
                 else {
                     panic!(
                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
@@ -827,10 +798,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             key_segments_stringified,
                             key_vec_lifetime
                         },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => {
                         hashmap_key_type_path_case(
                             key_segments_stringified,
@@ -838,24 +806,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         )
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => {
                         {
                             let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
@@ -865,14 +817,9 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         }
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} |
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -927,7 +874,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         },
                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                             value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
+                            ..
                         }
                     ) => {
                         crate::error_occurence::panic_if_not_string::panic_if_not_string(
@@ -958,7 +905,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                             key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
+                            ..
                         },
                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
@@ -985,11 +932,11 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                             key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
+                            ..
                         },
                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                             value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
+                            ..
                         }
                     ) => {
                         crate::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -1049,33 +996,18 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             key_segments_stringified,
                             key_vec_lifetime
                         },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => hashmap_key_type_path_case(
                         key_segments_stringified,
                         key_vec_lifetime,
                     ),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => {
                         let type_stringified = format!(
                             "{path}<{std_string_string_stringified},{std_string_string_stringified}>"
@@ -1085,14 +1017,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -1116,7 +1042,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             key_segments_stringified,
                             key_vec_lifetime
                         },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
                             value_vec_lifetime
                         }
@@ -1141,19 +1067,13 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         }
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                             key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
+                            ..
                         },
                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
@@ -1178,14 +1098,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                             }
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -1234,21 +1148,15 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         }
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                             key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
+                            ..
                         },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
                             value_vec_lifetime
                         }
@@ -1271,14 +1179,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         }
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -1304,47 +1206,23 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 };
                 match (hashmap_key_type, hashmap_value_type) {
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => {
                         hashmap_key_type_path_case()
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                         },
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
             else {
@@ -1363,10 +1241,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             } = supported_container {
                 match (hashmap_key_type, hashmap_value_type) {
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
                             value_vec_lifetime
@@ -1381,13 +1256,10 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
                             value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
+                            ..
                         }
                     ) => {
                         crate::error_occurence::panic_if_not_str::panic_if_not_str(
@@ -1407,24 +1279,12 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         }
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -1444,14 +1304,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             } = supported_container {
                 match (hashmap_key_type, hashmap_value_type) {
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => {
                         let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
                         type_stringified
@@ -1459,34 +1313,16 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime:  _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -1506,10 +1342,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             } = supported_container {
                 match (hashmap_key_type, hashmap_value_type) {
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
                             value_vec_lifetime
@@ -1524,34 +1357,16 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }
@@ -1571,11 +1386,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             } = supported_container {
                 match (hashmap_key_type, hashmap_value_type) {
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
                             value_segments_stringified,
                             value_vec_lifetime
                         }
@@ -1589,34 +1401,16 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                     },
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified: _key_segments_stringified,
-                            key_vec_lifetime: _key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified: _value_segments_stringified,
-                            value_vec_lifetime: _value_vec_lifetime
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
                     (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident: _key_reference_ident,
-                            key_lifetime_ident: _key_lifetime_ident
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident: _value_reference_ident,
-                            value_lifetime_ident: _value_lifetime_ident
-                        }
+                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
                     ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", attribute.attribute_view_stringified()),
                 }
             }

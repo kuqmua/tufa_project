@@ -18,12 +18,7 @@ pub enum CheckBodySizeErrorNamed {
 impl http_logic::GetAxumHttpStatusCode for CheckBodySizeErrorNamed {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         match self {
-            Self::ReachedMaximumSizeOfBody {
-                axum_error: _,
-                maximum_size_of_body_limit_in_bytes: _,
-                size_hint: _,
-                code_occurence: _,
-            } => axum::http::StatusCode::PAYLOAD_TOO_LARGE,
+            Self::ReachedMaximumSizeOfBody {..} => axum::http::StatusCode::PAYLOAD_TOO_LARGE,
         }
     }
 }

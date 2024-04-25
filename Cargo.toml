@@ -39,6 +39,7 @@ exclude = [
   "svg_component",
 ]
 
+#todo check proc macro generated token on lints
 [workspace.lints.rust]
 unsafe_code = { level = "deny", priority = 0 }
 absolute-paths-not-starting-with-crate = { level = "deny", priority = 0 } #fully qualified paths that start with a module name instead of `crate`, `self`, or an extern crate name
@@ -861,7 +862,7 @@ unnecessary_struct_initialization = { level = "deny", priority = 0 }
 unnecessary_to_owned = { level = "deny", priority = 0 }
 unnecessary_unwrap = { level = "deny", priority = 0 }
 unnecessary_wraps = { level = "deny", priority = 0 }
-unneeded_field_pattern = { level = "allow", priority = 0 }
+unneeded_field_pattern = { level = "deny", priority = 0 }
 unneeded_wildcard_pattern = { level = "deny", priority = 0 }
 unnested_or_patterns = { level = "deny", priority = 0 }
 unreachable = { level = "deny", priority = 0 }
