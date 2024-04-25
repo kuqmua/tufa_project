@@ -6,7 +6,7 @@ pub enum TryGetPostgresPoolError {
 impl std::fmt::Display for TryGetPostgresPoolError {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TryGetPostgresPoolError::Connect(error) => write!(formatter, "{error}"),
+            Self::Connect(error) => write!(formatter, "{error}"),
         }
     }
 }

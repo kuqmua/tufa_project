@@ -3561,18 +3561,18 @@ pub enum TimeMonthWithSerializeDeserialize {
 impl std::convert::From<TimeMonthWithSerializeDeserialize> for time::Month {
     fn from(value: TimeMonthWithSerializeDeserialize) -> Self {
         match value {
-            TimeMonthWithSerializeDeserialize::January => time::Month::January,
-            TimeMonthWithSerializeDeserialize::February => time::Month::February,
-            TimeMonthWithSerializeDeserialize::March => time::Month::March,
-            TimeMonthWithSerializeDeserialize::April => time::Month::April,
-            TimeMonthWithSerializeDeserialize::May => time::Month::May,
-            TimeMonthWithSerializeDeserialize::June => time::Month::June,
-            TimeMonthWithSerializeDeserialize::July => time::Month::July,
-            TimeMonthWithSerializeDeserialize::August => time::Month::August,
-            TimeMonthWithSerializeDeserialize::September => time::Month::September,
-            TimeMonthWithSerializeDeserialize::October => time::Month::October,
-            TimeMonthWithSerializeDeserialize::November => time::Month::November,
-            TimeMonthWithSerializeDeserialize::December => time::Month::December,
+            TimeMonthWithSerializeDeserialize::January => Self::January,
+            TimeMonthWithSerializeDeserialize::February => Self::February,
+            TimeMonthWithSerializeDeserialize::March => Self::March,
+            TimeMonthWithSerializeDeserialize::April => Self::April,
+            TimeMonthWithSerializeDeserialize::May => Self::May,
+            TimeMonthWithSerializeDeserialize::June => Self::June,
+            TimeMonthWithSerializeDeserialize::July => Self::July,
+            TimeMonthWithSerializeDeserialize::August => Self::August,
+            TimeMonthWithSerializeDeserialize::September => Self::September,
+            TimeMonthWithSerializeDeserialize::October => Self::October,
+            TimeMonthWithSerializeDeserialize::November => Self::November,
+            TimeMonthWithSerializeDeserialize::December => Self::December,
         }
     }
 }
@@ -3613,7 +3613,7 @@ impl std::convert::TryFrom<SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize
     fn try_from(
         value: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
     ) -> Result<Self, Self::Error> {
-        match sqlx::types::time::UtcOffset::from_hms(value.hours, value.minutes, value.seconds) {
+        match Self::from_hms(value.hours, value.minutes, value.seconds) {
             Ok(value) => Ok(value),
             Err(error) => Err(Self::Error::TimeErrorComponentRange {
                 time_error_component_range: error,
@@ -3642,18 +3642,18 @@ pub enum NumBigintSignWithSerializeDeserialize {
 impl std::convert::From<NumBigintSignWithSerializeDeserialize> for num_bigint::Sign {
     fn from(value: NumBigintSignWithSerializeDeserialize) -> Self {
         match value {
-            NumBigintSignWithSerializeDeserialize::Minus => num_bigint::Sign::Minus,
-            NumBigintSignWithSerializeDeserialize::NoSign => num_bigint::Sign::NoSign,
-            NumBigintSignWithSerializeDeserialize::Plus => num_bigint::Sign::Plus,
+            NumBigintSignWithSerializeDeserialize::Minus => Self::Minus,
+            NumBigintSignWithSerializeDeserialize::NoSign => Self::NoSign,
+            NumBigintSignWithSerializeDeserialize::Plus => Self::Plus,
         }
     }
 }
 impl std::convert::From<num_bigint::Sign> for NumBigintSignWithSerializeDeserialize {
     fn from(value: num_bigint::Sign) -> Self {
         match value {
-            num_bigint::Sign::Minus => NumBigintSignWithSerializeDeserialize::Minus,
-            num_bigint::Sign::NoSign => NumBigintSignWithSerializeDeserialize::NoSign,
-            num_bigint::Sign::Plus => NumBigintSignWithSerializeDeserialize::Plus,
+            num_bigint::Sign::Minus => Self::Minus,
+            num_bigint::Sign::NoSign => Self::NoSign,
+            num_bigint::Sign::Plus => Self::Plus,
         }
     }
 }
@@ -6203,14 +6203,14 @@ impl<T> AsPostgresqlJson for SqlxTypesJson<T> {}
 impl<T> AsPostgresqlJsonB for SqlxTypesJson<T> {}
 impl<T> std::convert::From<SqlxTypesJson<T>> for SupportedSqlxPostgresType {
     fn from(_value: SqlxTypesJson<T>) -> Self {
-        SupportedSqlxPostgresType::SqlxTypesJsonT
+        Self::SqlxTypesJsonT
     }
 }
 impl<T> SqlxTypesJson<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<sqlx::types::Json<T>> {
         value
             .into_iter()
-            .map(SqlxTypesJson::into_inner)
+            .map(Self::into_inner)
             .collect()
     }
 }
@@ -6308,14 +6308,14 @@ impl<T> CheckSupportedPostgresqlColumnType for StdOptionOptionSqlxTypesJson<T> {
 }
 impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for SupportedSqlxPostgresType {
     fn from(_value: StdOptionOptionSqlxTypesJson<T>) -> Self {
-        SupportedSqlxPostgresType::SqlxTypesJsonT
+        Self::SqlxTypesJsonT
     }
 }
 impl<T> StdOptionOptionSqlxTypesJson<T> {
     pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<std::option::Option<sqlx::types::Json<T>>> {
         value
             .into_iter()
-            .map(StdOptionOptionSqlxTypesJson::into_inner)
+            .map(Self::into_inner)
             .collect()
     }
 }
@@ -6597,8 +6597,8 @@ pub enum ConjunctiveOperator {
 impl std::fmt::Display for ConjunctiveOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ConjunctiveOperator::Or => write!(formatter, "{}", <naming_constants::Or as naming_constants::Naming>::upper_camel_case_stringified()),
-            ConjunctiveOperator::And => {
+            Self::Or => write!(formatter, "{}", <naming_constants::Or as naming_constants::Naming>::upper_camel_case_stringified()),
+            Self::And => {
                 write!(formatter, "{}", <naming_constants::And as naming_constants::Naming>::upper_camel_case_stringified())
             }
         }
@@ -6622,8 +6622,8 @@ pub enum Order {
 impl std::fmt::Display for Order {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Order::Asc => write!(formatter, "{}", <naming_constants::Asc as naming_constants::Naming>::upper_camel_case_stringified()),
-            Order::Desc => write!(formatter, "{}", <naming_constants::Desc as naming_constants::Naming>::upper_camel_case_stringified()),
+            Self::Asc => write!(formatter, "{}", <naming_constants::Asc as naming_constants::Naming>::upper_camel_case_stringified()),
+            Self::Desc => write!(formatter, "{}", <naming_constants::Desc as naming_constants::Naming>::upper_camel_case_stringified()),
         }
     }
 }

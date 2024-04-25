@@ -20,13 +20,13 @@ pub enum NoItemsErrorNamed {
 }
 
 impl NoItemsErrorNamed {
-    pub const fn get_stringified_kind(error: &NoItemsErrorNamed) -> &'static str {
+    pub const fn get_stringified_kind(error: &Self) -> &'static str {
         match error {
-            NoItemsErrorNamed::ThereIsTag {..} => stringify!(NoItemsErrorNamed::ThereIsTag),
-            NoItemsErrorNamed::ConversionFromStrError {..} => {
-                stringify!(NoItemsErrorNamed::ConversionFromStrError)
+            Self::ThereIsTag {..} => stringify!(Self::ThereIsTag),
+            Self::ConversionFromStrError {..} => {
+                stringify!(Self::ConversionFromStrError)
             }
-            NoItemsErrorNamed::NoTag {..} => stringify!(NoItemsErrorNamed::NoTag),
+            Self::NoTag {..} => stringify!(Self::NoTag),
         }
     }
     // pub fn into_json_with_link_and_provider_kind(

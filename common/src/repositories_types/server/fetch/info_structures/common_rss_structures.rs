@@ -188,7 +188,7 @@ impl CommonRssPost {
         //from TwitterStructForParsingImage
         //twitter specific
     ) -> Self {
-        CommonRssPost {
+        Self {
             title,
             link,
             description,
@@ -317,7 +317,7 @@ impl GithubInfoFromHtml {
         bot_tag: Option<String>,
         who_follow: Option<String>,
     ) -> Self {
-        GithubInfoFromHtml {
+        Self {
             avatar_link,
             author,
             action,

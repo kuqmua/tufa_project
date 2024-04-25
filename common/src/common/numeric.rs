@@ -15,16 +15,16 @@ pub enum Numeric {
 impl std::fmt::Display for Numeric {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Numeric::Zero => write!(formatter, "0"),
-            Numeric::One => write!(formatter, "1"),
-            Numeric::Two => write!(formatter, "2"),
-            Numeric::Three => write!(formatter, "3"),
-            Numeric::Four => write!(formatter, "4"),
-            Numeric::Five => write!(formatter, "5"),
-            Numeric::Six => write!(formatter, "6"),
-            Numeric::Seven => write!(formatter, "7"),
-            Numeric::Eight => write!(formatter, "8"),
-            Numeric::Nine => write!(formatter, "9"),
+            Self::Zero => write!(formatter, "0"),
+            Self::One => write!(formatter, "1"),
+            Self::Two => write!(formatter, "2"),
+            Self::Three => write!(formatter, "3"),
+            Self::Four => write!(formatter, "4"),
+            Self::Five => write!(formatter, "5"),
+            Self::Six => write!(formatter, "6"),
+            Self::Seven => write!(formatter, "7"),
+            Self::Eight => write!(formatter, "8"),
+            Self::Nine => write!(formatter, "9"),
         }
     }
 }
@@ -33,16 +33,16 @@ impl TryFrom<char> for Numeric {
     type Error = char;
     fn try_from(value: char) -> Result<Self, char> {
         match value {
-            '0' => Ok(Numeric::Zero),
-            '1' => Ok(Numeric::One),
-            '2' => Ok(Numeric::Two),
-            '3' => Ok(Numeric::Three),
-            '4' => Ok(Numeric::Four),
-            '5' => Ok(Numeric::Five),
-            '6' => Ok(Numeric::Six),
-            '7' => Ok(Numeric::Seven),
-            '8' => Ok(Numeric::Eight),
-            '9' => Ok(Numeric::Nine),
+            '0' => Ok(Self::Zero),
+            '1' => Ok(Self::One),
+            '2' => Ok(Self::Two),
+            '3' => Ok(Self::Three),
+            '4' => Ok(Self::Four),
+            '5' => Ok(Self::Five),
+            '6' => Ok(Self::Six),
+            '7' => Ok(Self::Seven),
+            '8' => Ok(Self::Eight),
+            '9' => Ok(Self::Nine),
             wrong_char => Err(wrong_char),
         }
     }

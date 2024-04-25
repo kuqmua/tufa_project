@@ -885,7 +885,7 @@ unwrap_or_default = { level = "deny", priority = 0 }
 unwrap_used = { level = "allow", priority = 0 }
 upper_case_acronyms = { level = "deny", priority = 0 }
 use_debug = { level = "allow", priority = 0 }
-use_self = { level = "allow", priority = 0 }
+use_self = { level = "deny", priority = 0 }
 used_underscore_binding = { level = "deny", priority = 0 }
 useless_asref = { level = "deny", priority = 0 }
 useless_attribute = { level = "deny", priority = 0 }
