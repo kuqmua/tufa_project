@@ -889,7 +889,7 @@ use_self = { level = "deny", priority = 0 }
 used_underscore_binding = { level = "deny", priority = 0 }
 useless_asref = { level = "deny", priority = 0 }
 useless_attribute = { level = "deny", priority = 0 }
-useless_conversion = { level = "allow", priority = 0 }
+useless_conversion = { level = "deny", priority = 0 }
 useless_format = { level = "deny", priority = 0 }
 useless_let_if_seq = { level = "allow", priority = 0 }
 useless_transmute = { level = "deny", priority = 0 }

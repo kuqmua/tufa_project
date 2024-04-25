@@ -221,7 +221,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .clone()
         .into_iter()
         .filter(|element| element.field != *primary_key_field)
-        .map(|element| SynFieldWithAdditionalInfo::from(element))
         .collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>();
     let fields_named_len = fields_named.len();
     assert!(fields_named_len > 1, "{proc_macro_name_upper_camel_case_ident_stringified} false = fields_named.len() > 1");
