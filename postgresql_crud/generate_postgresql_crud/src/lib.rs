@@ -2460,7 +2460,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
                                     } {
                                         match error_occurence_attribute {
-                                            Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
+                                            Some(value) => panic!(
+                                                "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
+                                            ),
                                             None => {
                                                 error_occurence_attribute = Some(value);
                                             }
@@ -2577,7 +2580,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
                                     } {
                                         match error_occurence_attribute {
-                                            Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
+                                            Some(value) => panic!(
+                                                "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
+                                            ),
                                             None => {
                                                 error_occurence_attribute = Some(value);
                                             }

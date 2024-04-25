@@ -62,7 +62,10 @@ pub(crate) fn type_variants_from_request_response_generator(
                                 proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::from_str(&segment.ident.to_string())
                             } {
                                 match error_occurence_attribute {
-                                    Some(value) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", value.to_string()),
+                                    Some(value) => panic!(
+                                        "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
+                                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
+                                    ),
                                     None => {
                                         error_occurence_attribute = Some(value);
                                     }
@@ -724,7 +727,7 @@ pub(crate) fn construct_syn_variant(
                                         let mut handle = syn::punctuated::Punctuated::new();
                                         handle.push(syn::PathSegment {
                                             ident: proc_macro2::Ident::new(
-                                                &element.0.to_string(),
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&element.0),
                                                 proc_macro2::Span::call_site(),
                                             ),
                                             arguments: syn::PathArguments::None,

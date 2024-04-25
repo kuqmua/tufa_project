@@ -245,7 +245,7 @@ pub fn generate_with_serialize_deserialize_version(
                                         if let crate::error_occurence::supported_container::SupportedContainer::Path { path, ..} = &supported_container {
                                             inform_use_str_string_in_different_attribute(
                                                 path,
-                                                &attribute.to_string(),
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                 &attribute_display_with_serialize_deserialize_stringified,
                                                 str_stringified,
                                                 proc_macro_name_ident_stringified,
@@ -262,7 +262,7 @@ pub fn generate_with_serialize_deserialize_version(
                                         } = &supported_container {
                                             inform_use_str_string_in_different_attribute(
                                                 element_path,
-                                                &attribute.to_string(),
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                 &attribute_vec_display_with_serialize_deserialize_stringified,
                                                 str_stringified,
                                                 proc_macro_name_ident_stringified,
@@ -288,7 +288,7 @@ pub fn generate_with_serialize_deserialize_version(
                                             ) = (hashmap_key_type, hashmap_value_type) {
                                                 inform_use_str_string_in_different_attribute(
                                                     value_segments_stringified,
-                                                    &attribute.to_string(),
+                                                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                     &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
                                                     str_stringified,
                                                     proc_macro_name_ident_stringified,
@@ -310,7 +310,7 @@ pub fn generate_with_serialize_deserialize_version(
                                         } = &supported_container {
                                             inform_use_str_string_in_different_attribute(
                                                 value_segments_stringified,
-                                                &attribute.to_string(),
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                 &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified,
                                                 str_stringified,
                                                 proc_macro_name_ident_stringified,
@@ -533,7 +533,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {} {}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -563,7 +563,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 crate::error_occurence::supported_container::SupportedContainer::Vec{ .. } | 
                 crate::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
@@ -576,7 +576,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -596,7 +596,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -613,7 +613,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -632,7 +632,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 else {
                     panic!(
                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
-                        attribute.attribute_view_stringified(),
+                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
                     );
                 }
@@ -640,7 +640,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -677,7 +677,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -691,7 +691,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 else {
                     panic!(
                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
-                        attribute.attribute_view_stringified(),
+                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
                     );
                 }
@@ -699,7 +699,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -723,7 +723,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 else {
                     panic!(
                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
-                        attribute.attribute_view_stringified(),
+                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
                     );
                 }
@@ -731,7 +731,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -752,7 +752,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 else {
                     panic!(
                         "{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", 
-                        attribute.attribute_view_stringified(),
+                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                         naming_constants::SUPPORTS_ONLY_STRINGIFIED
                     );
                 }
@@ -760,7 +760,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -821,13 +821,13 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} |
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -966,7 +966,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -1005,7 +1005,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
@@ -1020,13 +1020,13 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -1070,7 +1070,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                             key_reference_ident,
@@ -1101,13 +1101,13 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -1151,7 +1151,7 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                             key_reference_ident,
@@ -1182,13 +1182,13 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -1215,21 +1215,21 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -1282,17 +1282,17 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }
@@ -1316,21 +1316,21 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                 );
             }
@@ -1360,21 +1360,21 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                 );
             }
@@ -1404,21 +1404,21 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                     (
                         crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                         crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", attribute.attribute_view_stringified()),
+                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                 }
             }
             else {
                 panic!(
                     "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    attribute.attribute_view_stringified(),
+                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
             }

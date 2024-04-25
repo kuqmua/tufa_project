@@ -1086,7 +1086,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             );
                             let inform_use_str_string_in_different_attribute = |
                                 path: std::string::String,
-                                wrong_attribute: &String,
+                                wrong_attribute: &str,
                                 attribute_to_use: &String
                             | {
                                 let wrong_attribute_view = proc_macro_helpers::error_occurence::named_attribute::attribute_view(wrong_attribute);
@@ -1198,7 +1198,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path { path, .. } = supported_container {
                                         inform_use_str_string_in_different_attribute(
                                             path,
-                                            &attribute.to_string(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             &attribute_display_with_serialize_deserialize_stringified
                                         );
                                         (
@@ -1244,7 +1244,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {} {}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             naming_constants::SUPPORTS_ONLY_STRINGIFIED,
                                             naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                                             <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1359,7 +1359,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec{ .. } | 
                                         proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
                                             "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
                                             <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
                                             naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
@@ -1372,7 +1372,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     }
@@ -1440,7 +1440,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -1509,7 +1509,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -1570,7 +1570,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path { element_path, .. } = vec_element_type {
                                             inform_use_str_string_in_different_attribute(
                                                 element_path,
-                                                &attribute.to_string(),
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                 &attribute_vec_display_with_serialize_deserialize_stringified
                                             );
                                             let type_stringified = format!("{path}<{std_string_string_stringified}>");
@@ -1579,13 +1579,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -1705,7 +1705,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -1756,13 +1756,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     } = supported_container {
                                         if let proc_macro_helpers::error_occurence::vec_element_type::VecElementType::Path {..} = vec_element_type {}
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     }
@@ -1850,13 +1850,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             )
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -1927,13 +1927,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             )
                                         }
                                         else {
-                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", attribute.attribute_view_stringified(), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
+                                            panic!("{proc_macro_name_ident_stringified} {} {} {vec_element_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute), naming_constants::SUPPORTS_ONLY_STRINGIFIED);
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -2122,7 +2122,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 inform_use_str_string_in_different_attribute(
                                                     value_segments_stringified,
-                                                    &attribute.to_string(),
+                                                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                     &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified
                                                 );
                                                 hashmap_key_type_path_case(
@@ -2143,7 +2143,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 inform_use_str_string_in_different_attribute(
                                                     value_segments_stringified,
-                                                    &attribute.to_string(),
+                                                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                     &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified
                                                 );
                                                 hashmap_key_type_reference_case(
@@ -2155,13 +2155,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} |
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -2435,7 +2435,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -2588,7 +2588,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                                                     key_reference_ident,
@@ -2603,13 +2603,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -2714,7 +2714,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                                                     key_reference_ident,
@@ -2759,13 +2759,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -2877,7 +2877,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
                                                     key_reference_ident,
@@ -2924,13 +2924,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -3027,7 +3027,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             ) => {
                                                 inform_use_str_string_in_different_attribute(
                                                     value_segments_stringified,
-                                                    &attribute.to_string(),
+                                                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                                     &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified
                                                 );
                                                 hashmap_key_type_path_case()
@@ -3035,22 +3035,22 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}",
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                                            attribute.attribute_view_stringified()
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)
                                         );
                                     };
                                     (
@@ -3194,17 +3194,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -3269,21 +3269,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -3382,21 +3382,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };
@@ -3496,21 +3496,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                             (
                                                 proc_macro_helpers::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
                                                 proc_macro_helpers::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", attribute.attribute_view_stringified()),
+                                            ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
                                         }
                                     }
                                     else {
                                         panic!(
                                             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                                            attribute.attribute_view_stringified(),
+                                            proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
                                             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     };

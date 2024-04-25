@@ -69,7 +69,7 @@ impl TryFrom<&syn::Field> for NamedAttribute {
                                 Some(value) => {
                                     return Err(format!(
                                         "duplicated attributes {} are not supported",
-                                        value.to_string()
+                                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
                                     ));
                                 }
                                 None => {
@@ -106,7 +106,7 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
                                 Some(value) => {
                                     return Err(format!(
                                         "duplicated attributes {} are not supported",
-                                        value.to_string()
+                                        proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
                                     ));
                                 }
                                 None => {
@@ -127,41 +127,38 @@ impl TryFrom<&&syn::Field> for NamedAttribute {
     }
 }
 
-impl std::string::ToString for NamedAttribute {
-    fn to_string(&self) -> std::string::String {
+impl proc_macro_common::attribute_ident_stringified::AttributeIdentStringified for NamedAttribute {
+    fn attribute_ident_stringified(&self) -> &str {
         match self {
-            Self::EoDisplay => std::string::String::from("eo_display"),
-            Self::EoDisplayWithSerializeDeserialize => std::string::String::from("eo_display_with_serialize_deserialize"),
-            Self::EoDisplayForeignType => std::string::String::from("eo_display_foreign_type"),
-            Self::EoDisplayForeignTypeWithSerializeDeserialize => std::string::String::from("eo_display_foreign_type_with_serialize_deserialize"),
-            Self::EoErrorOccurence => std::string::String::from("eo_error_occurence"),
-            Self::EoVecDisplay => std::string::String::from("eo_vec_display"),
-            Self::EoVecDisplayWithSerializeDeserialize => std::string::String::from("eo_vec_display_with_serialize_deserialize"),
-            Self::EoVecDisplayForeignType => std::string::String::from("eo_vec_display_foreign_type"),
-            Self::EoVecDisplayForeignTypeWithSerializeDeserialize => std::string::String::from("eo_vec_display_foreign_type_with_serialize_deserialize"),
-            Self::EoVecErrorOccurence => std::string::String::from("eo_vec_error_occurence"),
-            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => std::string::String::from("eo_hashmap_key_display_with_serialize_deserialize_value_display"),
-            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => std::string::String::from("eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize"),
-            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => std::string::String::from("eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type"),
-            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => std::string::String::from("eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize"),
-            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => std::string::String::from("eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence"),
-            Self::EoHashMapKeyDisplayForeignTypeValueDisplay => std::string::String::from("eo_hashmap_key_display_foreign_type_value_display"),
-            Self::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => std::string::String::from("eo_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize"),
-            Self::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => std::string::String::from("eo_hashmap_key_display_foreign_type_value_display_foreign_type"),
-            Self::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => std::string::String::from("eo_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize"),
-            Self::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => std::string::String::from("eo_hashmap_key_display_foreign_type_value_error_occurence"),
+            Self::EoDisplay => "eo_display",
+            Self::EoDisplayWithSerializeDeserialize => "eo_display_with_serialize_deserialize",
+            Self::EoDisplayForeignType => "eo_display_foreign_type",
+            Self::EoDisplayForeignTypeWithSerializeDeserialize => "eo_display_foreign_type_with_serialize_deserialize",
+            Self::EoErrorOccurence => "eo_error_occurence",
+            Self::EoVecDisplay => "eo_vec_display",
+            Self::EoVecDisplayWithSerializeDeserialize => "eo_vec_display_with_serialize_deserialize",
+            Self::EoVecDisplayForeignType => "eo_vec_display_foreign_type",
+            Self::EoVecDisplayForeignTypeWithSerializeDeserialize => "eo_vec_display_foreign_type_with_serialize_deserialize",
+            Self::EoVecErrorOccurence => "eo_vec_error_occurence",
+            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => "eo_hashmap_key_display_with_serialize_deserialize_value_display",
+            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => "eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize",
+            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => "eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type",
+            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => "eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize",
+            Self::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => "eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence",
+            Self::EoHashMapKeyDisplayForeignTypeValueDisplay => "eo_hashmap_key_display_foreign_type_value_display",
+            Self::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => "eo_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize",
+            Self::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => "eo_hashmap_key_display_foreign_type_value_display_foreign_type",
+            Self::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => "eo_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize",
+            Self::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => "eo_hashmap_key_display_foreign_type_value_error_occurence",
         }
     }
 }
 
 impl NamedAttribute {
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
-        let value = format!("#[{}]", self.to_string());
+        let value = format!("#[{}]", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    }
-    pub fn attribute_view_stringified(&self) -> std::string::String {
-        self.to_string()
     }
 }
 

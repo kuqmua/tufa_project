@@ -47,7 +47,7 @@ pub fn construct_syn_variant(
                                         let mut handle = syn::punctuated::Punctuated::new();
                                         handle.push(syn::PathSegment {
                                             ident: proc_macro2::Ident::new(
-                                                &element.0.to_string(),
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&element.0),
                                                 proc_macro2::Span::call_site(),
                                             ),
                                             arguments: syn::PathArguments::None,
