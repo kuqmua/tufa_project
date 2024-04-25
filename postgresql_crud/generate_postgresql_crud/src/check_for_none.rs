@@ -29,7 +29,7 @@ pub(crate) fn check_for_none(
                         naming_constants::FIELD_IDENT_IS_NONE
                     )
                 });
-                let possible_dot_space = if (index + 1) == fields_named_handle_len {
+                let possible_dot_space = if index.checked_add(1).unwrap() == fields_named_handle_len {
                     ""
                 }
                 else {

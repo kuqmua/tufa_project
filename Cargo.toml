@@ -234,7 +234,7 @@ almost_complete_range = { level = "deny", priority = 0 }
 almost_swapped = { level = "deny", priority = 0 }
 approx_constant = { level = "deny", priority = 0 }
 arc_with_non_send_sync = { level = "deny", priority = 0 }
-arithmetic_side_effects = { level = "allow", priority = 0 }
+arithmetic_side_effects = { level = "deny", priority = 0 }
 as_conversions = { level = "deny", priority = 0 }
 as_ptr_cast_mut = { level = "deny", priority = 0 }
 as_underscore = { level = "deny", priority = 0 }

@@ -775,7 +775,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             additional_http_status_codes_error_variants_attribute_tokens_stringified.len();
         let additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified =
             &additional_http_status_codes_error_variants_attribute_tokens_stringified
-            .get(1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1))
+            .get(1..additional_http_status_codes_error_variants_attribute_tokens_stringified_len.checked_sub(1).unwrap())
             .expect("slice not found");
         // [1..(additional_http_status_codes_error_variants_attribute_tokens_stringified_len - 1)]; //todo maybe check
         additional_http_status_codes_error_variants_attribute_tokens_without_brackets_stringified.split(';').collect::<Vec<&str>>()
@@ -802,7 +802,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let path_to_additional_variant_enum_stringified = "{}".to_owned();//todo
                     // &path_attribute.tokens.to_string();
                     let path_to_additional_variant_enum_without_brackets_stringified = &path_to_additional_variant_enum_stringified
-                        .get(1..(path_to_additional_variant_enum_stringified.len() - 1))
+                        .get(1..path_to_additional_variant_enum_stringified.len().checked_sub(1).unwrap())
                         .expect("slice not found");
                     let path_to_additional_variant_enum_without_brackets_token_stream = path_to_additional_variant_enum_without_brackets_stringified.parse::<proc_macro2::TokenStream>()
                         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {path_to_additional_variant_enum_without_brackets_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -1443,7 +1443,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_many_declaration_token_stream,
         },
     };
-    let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len - 1), |mut acc, element| {
+    let not_unique_vec_syn_variants: std::vec::Vec<syn::Variant> = fields_named.iter().fold(std::vec::Vec::with_capacity(fields_named_len.checked_sub(1).unwrap()), |mut acc, element| {
         let field_ident = &element.field_ident;
         let not_unique_field_vec_upper_camel_stringified = generate_not_unique_field_vec_upper_camel_stringified(field_ident);
         let not_unique_field_vec_snake_case_stringified = generate_not_unique_field_vec_snake_case_stringified(field_ident);
@@ -1802,9 +1802,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
         let mut common_error_variants_vec = std::vec::Vec::with_capacity(
-            common_middlewares_error_syn_variants_len
-                + sqlx_postgres_error_named_syn_variants.len()
-                + 1,
+            common_middlewares_error_syn_variants_len.checked_add(sqlx_postgres_error_named_syn_variants.len().checked_add(1).unwrap()).unwrap()
         );
         for element in sqlx_postgres_error_named_syn_variants {
             common_error_variants_vec.push(element);
@@ -1945,7 +1943,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response =
-                    std::vec::Vec::with_capacity(common_error_syn_variants.len() + 3);
+                    std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(3).unwrap());
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
@@ -3252,7 +3250,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response =
-                    std::vec::Vec::with_capacity(common_error_syn_variants.len() + 2);
+                    std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(2).unwrap());
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
@@ -3743,7 +3741,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response = std::vec::Vec::with_capacity(
-                    common_error_syn_variants.len() + not_unique_vec_syn_variants.len() + 4,
+                    common_error_syn_variants.len().checked_add(not_unique_vec_syn_variants.len().checked_add(4).unwrap()).unwrap()
                 );
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
@@ -4670,7 +4668,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response =
-                    std::vec::Vec::with_capacity(common_error_syn_variants.len() + 1);
+                    std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(1).unwrap());
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
@@ -5199,7 +5197,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response =
-                    std::vec::Vec::with_capacity(common_error_syn_variants.len() + 10);
+                    std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(10).unwrap());
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
@@ -5991,7 +5989,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response =
-                    std::vec::Vec::with_capacity(common_error_syn_variants.len() + 4);
+                    std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(4).unwrap());
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
@@ -6637,7 +6635,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response = std::vec::Vec::with_capacity(
-                    common_error_syn_variants.len() + not_unique_vec_syn_variants.len() + 12,
+                    common_error_syn_variants.len().checked_add(not_unique_vec_syn_variants.len().checked_add(12).unwrap()).unwrap(),
                 );
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
@@ -7557,7 +7555,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let type_variants_from_request_response_syn_variants_partial = {
                 let mut type_variants_from_request_response =
-                    std::vec::Vec::with_capacity(common_error_syn_variants.len() + 2);
+                    std::vec::Vec::with_capacity(common_error_syn_variants.len().checked_add(2).unwrap());
                 for element in &common_error_syn_variants {
                     type_variants_from_request_response.push(element);
                 }
@@ -8107,7 +8105,7 @@ fn generate_std_vec_vec_syn_punctuated_punctuated(
                             path: syn::Path {
                                 leading_colon: None,
                                 segments: {
-                                    let parts_vec_len_minus_one = parts_vec_len - 1;
+                                    let parts_vec_len_minus_one = parts_vec_len.checked_sub(1).unwrap();
                                     let mut std_vec_vec_generic_type = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                                     for (index, element) in parts_vec.iter().enumerate() {
                                         std_vec_vec_generic_type.push_value(
@@ -8398,7 +8396,7 @@ fn generate_http_request_many_token_stream(
         );
         let unique_status_codes_len = hashmap_unique_status_codes.len();
         assert!(unique_status_codes_len >= 1, "{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
-        let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
+        let unique_status_codes_len_minus_one = unique_status_codes_len.checked_sub(1).unwrap();
         let unique_status_codes = hashmap_unique_status_codes
             .into_keys()
             .collect::<std::vec::Vec<proc_macro_helpers::status_code::StatusCode>>();
@@ -8427,7 +8425,7 @@ fn generate_http_request_many_token_stream(
             }
         };
         let mut status_code_enums_try_from_variants =
-            std::vec::Vec::with_capacity(unique_status_codes_len + 1);
+            std::vec::Vec::with_capacity(unique_status_codes_len.checked_add(1).unwrap());
         status_code_enums_try_from_variants.push(quote::quote! {
             if status_code == #http_status_code_quote_token_stream {
                 #desirable_status_code_case_token_stream
@@ -8709,7 +8707,7 @@ fn generate_try_operation_token_stream(
         );
         let unique_status_codes_len = hashmap_unique_status_codes.len();
         assert!(unique_status_codes_len >= 1, "{proc_macro_name_upper_camel_case_ident_stringified} unique_status_codes_len < 1 {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE);
-        let unique_status_codes_len_minus_one = unique_status_codes_len - 1;
+        let unique_status_codes_len_minus_one = unique_status_codes_len.checked_sub(1).unwrap();
         let unique_status_codes = hashmap_unique_status_codes
             .into_keys()
             .collect::<std::vec::Vec<proc_macro_helpers::status_code::StatusCode>>();
@@ -8732,7 +8730,7 @@ fn generate_try_operation_token_stream(
             }
         };
         let mut status_code_enums_try_from_variants =
-            std::vec::Vec::with_capacity(unique_status_codes_len + 1);
+            std::vec::Vec::with_capacity(unique_status_codes_len.checked_add(1).unwrap());
         status_code_enums_try_from_variants.push(quote::quote! {
             if status_code == #http_status_code_quote_token_stream {
                 #desirable_status_code_case_token_stream
@@ -8822,8 +8820,7 @@ fn generate_type_variants_from_request_response_syn_variants<'a>(
     )],
 ) -> std::vec::Vec<&'a syn::Variant> {
     let mut handle = std::vec::Vec::with_capacity(
-        type_variants_from_request_response_syn_variants_partial.len()
-            + full_additional_http_status_codes_error_variants.len(),
+        type_variants_from_request_response_syn_variants_partial.len().checked_add(full_additional_http_status_codes_error_variants.len()).unwrap()
     );
     for element in type_variants_from_request_response_syn_variants_partial {
         handle.push(*element);
@@ -9015,8 +9012,7 @@ fn generate_full_additional_http_status_codes_error_variants<'a>(
     std::vec::Vec<syn::Variant>,
 )> {
     let mut handle = std::vec::Vec::with_capacity(
-        common_middlewares_error_syn_variants.len()
-            + additional_http_status_codes_error_variants.len(),
+        common_middlewares_error_syn_variants.len().checked_add(additional_http_status_codes_error_variants.len()).unwrap()
     );
     for element in common_middlewares_error_syn_variants {
         handle.push(element);

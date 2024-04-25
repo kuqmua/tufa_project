@@ -218,7 +218,7 @@ where
     ) -> std::string::String {
         prepare_for_log(
             &self.get_code_path(config.get_source_place_type()),
-            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
                 .with_timezone(config.get_timezone())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
@@ -237,7 +237,7 @@ where
     fn prepare_for_log_without_config(&self) -> std::string::String {
         prepare_for_log(
             &self.form_error_path_github(),
-            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
                 .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
@@ -260,7 +260,7 @@ where
     ) -> std::string::String {
         prepare_for_log(
             &self.form_error_path_github(),
-            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH + self.get_duration())
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
                 .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
