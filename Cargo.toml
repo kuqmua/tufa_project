@@ -891,7 +891,7 @@ useless_asref = { level = "deny", priority = 0 }
 useless_attribute = { level = "deny", priority = 0 }
 useless_conversion = { level = "deny", priority = 0 }
 useless_format = { level = "deny", priority = 0 }
-useless_let_if_seq = { level = "allow", priority = 0 }
+useless_let_if_seq = { level = "deny", priority = 0 }
 useless_transmute = { level = "deny", priority = 0 }
 useless_vec = { level = "allow", priority = 0 }
 vec_box = { level = "deny", priority = 0 }

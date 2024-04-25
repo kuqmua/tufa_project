@@ -64,20 +64,17 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                     //todo: add different types support
                     syn::Type::Path(type_path) => {
                         let enum_variant_type = &type_path.path;
-                        let string_handle = {
-                            let mut string_handle = std::string::String::from("");
-                            if type_path.path.segments.len() == 1 {
-                                let first_segment = type_path.path.segments.first().unwrap_or_else(||panic!("failed to get first type_path.path.segments element"));
-                                string_handle = format!("{}", first_segment.ident);
-                            } else {
-                                for seg in &type_path.path.segments {
-                                    string_handle.push_str(&format!("{}:", seg.ident));
-                                }
-                                if !string_handle.is_empty() {
-                                    let _: std::option::Option<std::primitive::char> = string_handle.pop();
-                                }
+                        let string_handle = if type_path.path.segments.len() == 1 {
+                            format!("{}", type_path.path.segments.first().unwrap_or_else(||panic!("failed to get first type_path.path.segments element")).ident)
+                        } else {
+                            let mut value = std::string::String::from("");
+                            for seg in &type_path.path.segments {
+                                value.push_str(&format!("{}:", seg.ident));
                             }
-                            string_handle
+                            if !value.is_empty() {
+                                let _: std::option::Option<std::primitive::char> = value.pop();
+                            }
+                            value
                         };
                         (
                             enum_variant_type,
