@@ -155,7 +155,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         assert!(value.path.segments.first().expect("no first value in punctuated").ident == postgresql_crud_common::POSTGRESQL_CRUD_SNAKE_CASE, "{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path");
                         match value.path.segments.first().expect("no first value in punctuated").arguments {
                             syn::PathArguments::None => (),
-                            _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path().segments[0].arguments != syn::PathArguments::None")
+                            syn::PathArguments::AngleBracketed(_) | 
+                            syn::PathArguments::Parenthesized(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} value.path().segments[0].arguments != syn::PathArguments::None")
                         }
                         let _maybe_generic_token_stream = match &value.path.segments.iter().nth(1).expect("no second element").arguments {
                             syn::PathArguments::None => quote::quote!{},
@@ -182,7 +183,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
                     }
                 },
-                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path")
+                syn::Type::Array(_) | 
+                syn::Type::BareFn(_) | 
+                syn::Type::Group(_) | 
+                syn::Type::ImplTrait(_) | 
+                syn::Type::Infer(_) | 
+                syn::Type::Macro(_) | 
+                syn::Type::Never(_) | 
+                syn::Type::Paren(_) | 
+                syn::Type::Ptr(_) | 
+                syn::Type::Reference(_) | 
+                syn::Type::Slice(_) | 
+                syn::Type::TraitObject(_) | 
+                syn::Type::Tuple(_) | 
+                syn::Type::Verbatim(_) => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path"),
+                _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} field_type is not syn::Type::Path (exhaustive)")
             }
         }
         primary_key_field_option.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} no {primary_key_attr_name} attribute"), |value| value)
@@ -9067,7 +9082,8 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
                     }
                     match first.arguments {
                         syn::PathArguments::None => (),
-                        _ => {
+                        syn::PathArguments::AngleBracketed(_) | 
+                        syn::PathArguments::Parenthesized(_) => {
                             return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
                         }
                     }
@@ -9104,8 +9120,24 @@ impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a
                     return Err(std::string::String::from("value.path.segments.len() != 2"));
                 }
             }
-            _ => {
+            syn::Type::Array(_) | 
+            syn::Type::BareFn(_) | 
+            syn::Type::Group(_) | 
+            syn::Type::ImplTrait(_) | 
+            syn::Type::Infer(_) | 
+            syn::Type::Macro(_) | 
+            syn::Type::Never(_) | 
+            syn::Type::Paren(_) | 
+            syn::Type::Ptr(_) | 
+            syn::Type::Reference(_) | 
+            syn::Type::Slice(_) | 
+            syn::Type::TraitObject(_) | 
+            syn::Type::Tuple(_) | 
+            syn::Type::Verbatim(_) => {
                 return Err(format!("{name} field_type is not syn::Type::Path"));
+            }
+            _ => {
+                return Err(format!("{name} field_type is not syn::Type::Path (exhaustive)"));
             },
         };
         // let path_token_stream = {

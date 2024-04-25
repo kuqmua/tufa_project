@@ -95,6 +95,7 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                     syn::Type::TraitObject(_) | 
                     syn::Type::Tuple(_) | 
                     syn::Type::Verbatim(_) => panic!("InitFromEnvWithPanicIfFailed field.ty supports only syn::Type::Path!"),
+                    _ => panic!("InitFromEnvWithPanicIfFailed field.ty supports only syn::Type::Path!(exhaustive)"),
                 };
                 let env_var_name_as_screaming_snake_case_string =
                     syn::LitStr::new(&format!("{env_var_name}"), ident.span());

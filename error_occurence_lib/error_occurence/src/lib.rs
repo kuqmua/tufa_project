@@ -570,7 +570,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                                 )).ident
                                                             }
                                                         },
-                                                        _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
+                                                        syn::Type::Array(_) | 
+                                                        syn::Type::BareFn(_) | 
+                                                        syn::Type::Group(_) | 
+                                                        syn::Type::ImplTrait(_) | 
+                                                        syn::Type::Infer(_) | 
+                                                        syn::Type::Macro(_) | 
+                                                        syn::Type::Never(_) | 
+                                                        syn::Type::Paren(_) | 
+                                                        syn::Type::Ptr(_) | 
+                                                        syn::Type::Slice(_) | 
+                                                        syn::Type::TraitObject(_) | 
+                                                        syn::Type::Tuple(_) | 
+                                                        syn::Type::Verbatim(_) => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
+                                                        _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference} (exhaustive)", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                     }
                                                 }
                                                 else {
@@ -669,6 +682,19 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                                 )).ident
                                                             }
                                                         },
+                                                        syn::Type::Array(_) | 
+                                                        syn::Type::BareFn(_) | 
+                                                        syn::Type::Group(_) | 
+                                                        syn::Type::ImplTrait(_) | 
+                                                        syn::Type::Infer(_) | 
+                                                        syn::Type::Macro(_) | 
+                                                        syn::Type::Never(_) | 
+                                                        syn::Type::Paren(_) | 
+                                                        syn::Type::Ptr(_) | 
+                                                        syn::Type::Slice(_) | 
+                                                        syn::Type::TraitObject(_) | 
+                                                        syn::Type::Tuple(_) | 
+                                                        syn::Type::Verbatim(_) => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference} (exhaustive)", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                         _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                     }
                                                 }
@@ -716,6 +742,19 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                                 )).ident
                                                             }
                                                         },
+                                                        syn::Type::Array(_) | 
+                                                        syn::Type::BareFn(_) | 
+                                                        syn::Type::Group(_) | 
+                                                        syn::Type::ImplTrait(_) | 
+                                                        syn::Type::Infer(_) | 
+                                                        syn::Type::Macro(_) | 
+                                                        syn::Type::Never(_) | 
+                                                        syn::Type::Paren(_) | 
+                                                        syn::Type::Ptr(_) | 
+                                                        syn::Type::Slice(_) | 
+                                                        syn::Type::TraitObject(_) | 
+                                                        syn::Type::Tuple(_) | 
+                                                        syn::Type::Verbatim(_) => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference (exhaustive)", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                         _ => panic!("{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference", naming_constants::SUPPORTS_ONLY_STRINGIFIED),
                                                     }
                                                 }
@@ -776,7 +815,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         )).ident,
                                     }
                                 },
-                                _ => panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {error_message}"),
+                                syn::Type::Array(_) | 
+                                syn::Type::BareFn(_) | 
+                                syn::Type::Group(_) | 
+                                syn::Type::ImplTrait(_) | 
+                                syn::Type::Infer(_) | 
+                                syn::Type::Macro(_) | 
+                                syn::Type::Never(_) | 
+                                syn::Type::Paren(_) | 
+                                syn::Type::Ptr(_) | 
+                                syn::Type::Slice(_) | 
+                                syn::Type::TraitObject(_) | 
+                                syn::Type::Tuple(_) | 
+                                syn::Type::Verbatim(_) => panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {error_message}"),
+                                _ => panic!("{proc_macro_name_ident_stringified} {code_occurence_snake_case_stringified} {error_message} (exhaustive)"),
                             };
                             proc_macro_helpers::error_occurence::error_field_or_code_occurence::ErrorFieldOrCodeOccurence::ErrorField {
                                 attribute,
@@ -1304,7 +1356,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 proc_macro2::TokenStream::new(),
                                             )
                                         },
-                                        _ => panic!(
+                                        proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec{ .. } | 
+                                        proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
                                             "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
                                             attribute.attribute_view_stringified(),
                                             naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,

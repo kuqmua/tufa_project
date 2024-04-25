@@ -560,7 +560,8 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                     );
                     quote::quote!{#std_string_string_token_stream}
                 },
-                _ => panic!(
+                crate::error_occurence::supported_container::SupportedContainer::Vec{ .. } | 
+                crate::error_occurence::supported_container::SupportedContainer::HashMap{ .. } => panic!(
                     "{proc_macro_name_ident_stringified} {} only supports {}{} and {}{}", 
                     attribute.attribute_view_stringified(),
                     naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT,
@@ -1499,8 +1500,24 @@ pub fn generate_supported_container(
                                         )).ident
                                     }
                                 },
-                                _ => panic!(
+                                syn::Type::Array(_) | 
+                                syn::Type::BareFn(_) | 
+                                syn::Type::Group(_) | 
+                                syn::Type::ImplTrait(_) | 
+                                syn::Type::Infer(_) | 
+                                syn::Type::Macro(_) | 
+                                syn::Type::Never(_) | 
+                                syn::Type::Paren(_) | 
+                                syn::Type::Ptr(_) | 
+                                syn::Type::Slice(_) | 
+                                syn::Type::TraitObject(_) | 
+                                syn::Type::Tuple(_) | 
+                                syn::Type::Verbatim(_) => panic!(
                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                ),
+                                _ => panic!(
+                                    "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference} (exhaustive)",
                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
                                 ),
                             }
@@ -1608,8 +1625,24 @@ pub fn generate_supported_container(
                                         )).ident
                                     }
                                 },
-                                _ => panic!(
+                                syn::Type::Array(_) | 
+                                syn::Type::BareFn(_) | 
+                                syn::Type::Group(_) | 
+                                syn::Type::ImplTrait(_) | 
+                                syn::Type::Infer(_) | 
+                                syn::Type::Macro(_) | 
+                                syn::Type::Never(_) | 
+                                syn::Type::Paren(_) | 
+                                syn::Type::Ptr(_) | 
+                                syn::Type::Slice(_) | 
+                                syn::Type::TraitObject(_) | 
+                                syn::Type::Tuple(_) | 
+                                syn::Type::Verbatim(_) => panic!(
                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference}",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                ),
+                                _ => panic!(
+                                    "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and {syn_type_reference} (exhaustive)",
                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
                                 ),
                             }
@@ -1661,8 +1694,24 @@ pub fn generate_supported_container(
                                         )).ident
                                     }
                                 },
-                                _ => panic!(
+                                syn::Type::Array(_) | 
+                                syn::Type::BareFn(_) | 
+                                syn::Type::Group(_) | 
+                                syn::Type::ImplTrait(_) | 
+                                syn::Type::Infer(_) | 
+                                syn::Type::Macro(_) | 
+                                syn::Type::Never(_) | 
+                                syn::Type::Paren(_) | 
+                                syn::Type::Ptr(_) | 
+                                syn::Type::Slice(_) | 
+                                syn::Type::TraitObject(_) | 
+                                syn::Type::Tuple(_) | 
+                                syn::Type::Verbatim(_) => panic!(
                                     "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                ),
+                                _ => panic!(
+                                    "{proc_macro_name_ident_stringified} type_handle {} {syn_type_path_stringified} and syn::Type::Reference (exhaustive)",
                                     naming_constants::SUPPORTS_ONLY_STRINGIFIED
                                 ),
                             }
@@ -1731,6 +1780,19 @@ pub fn generate_supported_container(
                 )).ident,
             }
         },
-        _ => panic!("{proc_macro_name_ident_stringified} field.ty is not syn::Type::Path or syn::Type::Reference {error_message}"),
+        syn::Type::Array(_) | 
+        syn::Type::BareFn(_) | 
+        syn::Type::Group(_) | 
+        syn::Type::ImplTrait(_) | 
+        syn::Type::Infer(_) | 
+        syn::Type::Macro(_) | 
+        syn::Type::Never(_) | 
+        syn::Type::Paren(_) | 
+        syn::Type::Ptr(_) | 
+        syn::Type::Slice(_) | 
+        syn::Type::TraitObject(_) | 
+        syn::Type::Tuple(_) | 
+        syn::Type::Verbatim(_) => panic!("{proc_macro_name_ident_stringified} field.ty is not syn::Type::Path or syn::Type::Reference {error_message}"),
+        _ => panic!("{proc_macro_name_ident_stringified} field.ty is not syn::Type::Path or syn::Type::Reference {error_message} (exhaustive)"),
     }
 }
