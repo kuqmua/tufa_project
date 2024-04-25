@@ -200,14 +200,8 @@
 // impl From<&QueryExtractorErrorNamed> for http::StatusCode {
 //     fn from(val: &QueryExtractorErrorNamed) -> Self {
 //         match &val {
-//             QueryExtractorErrorNamed::FailedToDeserializeQueryString {
-//                 failed_to_deserialize_query_string: _,
-//                 code_occurence: _,
-//             } => http::StatusCode::BAD_REQUEST,
-//             QueryExtractorErrorNamed::UnexpectedCase {
-//                 unexpected_case: _,
-//                 code_occurence: _,
-//             } => http::StatusCode::INTERNAL_SERVER_ERROR,
+//             QueryExtractorErrorNamed::FailedToDeserializeQueryString {..} => http::StatusCode::BAD_REQUEST,
+//             QueryExtractorErrorNamed::UnexpectedCase {..} => http::StatusCode::INTERNAL_SERVER_ERROR,
 //         }
 //     }
 // }

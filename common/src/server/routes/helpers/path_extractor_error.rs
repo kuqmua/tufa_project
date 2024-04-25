@@ -241,18 +241,9 @@
 // // impl From<&PathExtractorErrorNamed> for http::StatusCode {
 // //     fn from(val: &PathExtractorErrorNamed) -> Self {
 // //         match &val {
-// //             PathExtractorErrorNamed::FailedToDeserializePathParams {
-// //                 failed_to_deserialize_path_params: _,
-// //                 code_occurence: _,
-// //             } => http::StatusCode::BAD_REQUEST,
-// //             PathExtractorErrorNamed::MissingPathParams {
-// //                 missing_path_params: _,
-// //                 code_occurence: _,
-// //             } => http::StatusCode::BAD_REQUEST,
-// //             PathExtractorErrorNamed::UnexpectedCase {
-// //                 unexpected_case: _,
-// //                 code_occurence: _,
-// //             } => http::StatusCode::INTERNAL_SERVER_ERROR,
+// //             PathExtractorErrorNamed::FailedToDeserializePathParams {..} => http::StatusCode::BAD_REQUEST,
+// //             PathExtractorErrorNamed::MissingPathParams {..} => http::StatusCode::BAD_REQUEST,
+// //             PathExtractorErrorNamed::UnexpectedCase {..} => http::StatusCode::INTERNAL_SERVER_ERROR,
 // //         }
 // //     }
 // // }

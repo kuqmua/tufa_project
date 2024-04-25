@@ -35,37 +35,22 @@
 //         return match &e {
 //             common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::GetStoredCredentials {
 //                 get_stored_credentials,
-//                 code_occurence: _code_occurence
+//                 ..
 //             } => match get_stored_credentials {
-//                 common::repositories_types::server::authentication::password::GetStoredCredentialsErrorNamed::FetchOptional {
-//                     fetch_optional: _fetch_optional,
-//                     code_occurence: _code_occurence
-//                 } => Err(common::repositories_types::server::utils::status_codes::e500(e)),
+//                 common::repositories_types::server::authentication::password::GetStoredCredentialsErrorNamed::FetchOptional {..} => Err(common::repositories_types::server::utils::status_codes::e500(e)),
 //             },
-//             common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::SpawnBlockingWithTracing {
-//                 spawn_blocking_with_tracing: _spawn_blocking_with_tracing,
-//                 code_occurence: _code_occurence
-//             } => Err(common::repositories_types::server::utils::status_codes::e500(e)),
+//             common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::SpawnBlockingWithTracing {..} => Err(common::repositories_types::server::utils::status_codes::e500(e)),
 //             common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::VerifyPasswordHash {
 //                 spawn_blocking_with_tracing,
-//                 code_occurence: _code_occurence
+//                 ..
 //             } => match spawn_blocking_with_tracing {
-//                 common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed::ExposeSecret {
-//                     expose_secret: _expose_secret,
-//                     code_occurence: _code_occurence
-//                 } => Err(common::repositories_types::server::utils::status_codes::e500(e)),
-//                 common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed::InvalidPassword {
-//                     invalid_password: _invalid_password,
-//                     code_occurence: _code_occurence
-//                 } => {
+//                 common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed::ExposeSecret {..} => Err(common::repositories_types::server::utils::status_codes::e500(e)),
+//                 common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed::InvalidPassword {..} => {
 //                     actix_web_flash_messages::FlashMessage::error("The current password is incorrect.").send();
 //                     Ok(common::repositories_types::server::utils::status_codes::see_other("/admin/password"))
 //                 },
 //             },
-//             common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::UnknownUsername {
-//                 message: _message,
-//                 code_occurence: _code_occurence
-//             } => {
+//             common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed::UnknownUsername {..} => {
 //                 actix_web_flash_messages::FlashMessage::error("The current password is incorrect.").send();
 //                 Ok(common::repositories_types::server::utils::status_codes::see_other("/admin/password"))
 //             }

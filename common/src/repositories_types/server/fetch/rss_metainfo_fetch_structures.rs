@@ -22,21 +22,11 @@ pub enum NoItemsErrorNamed {
 impl NoItemsErrorNamed {
     pub const fn get_stringified_kind(error: &NoItemsErrorNamed) -> &'static str {
         match error {
-            NoItemsErrorNamed::ThereIsTag {
-                tag: _tag,
-                code_occurence: _code_occurence,
-            } => stringify!(NoItemsErrorNamed::ThereIsTag),
-            NoItemsErrorNamed::ConversionFromStrError {
-                string: _string,
-                error: _error,
-                code_occurence: _code_occurence,
-            } => {
+            NoItemsErrorNamed::ThereIsTag {..} => stringify!(NoItemsErrorNamed::ThereIsTag),
+            NoItemsErrorNamed::ConversionFromStrError {..} => {
                 stringify!(NoItemsErrorNamed::ConversionFromStrError)
             }
-            NoItemsErrorNamed::NoTag {
-                no_tag: _no_tag,
-                code_occurence: _code_occurence,
-            } => stringify!(NoItemsErrorNamed::NoTag),
+            NoItemsErrorNamed::NoTag {..} => stringify!(NoItemsErrorNamed::NoTag),
         }
     }
     // pub fn into_json_with_link_and_provider_kind(
@@ -45,7 +35,7 @@ impl NoItemsErrorNamed {
     //     pk: &crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
     // ) -> serde_json::Value {
     //     match no_items_error {
-    //         NoItemsErrorNamed::ThereIsTag{ tag, code_occurence: _code_occurence } => {
+    //         NoItemsErrorNamed::ThereIsTag{ tag, .. } => {
     //             serde_json::json!({
     //                 "error_kind": NoItemsErrorNamed::get_stringified_kind(no_items_error),
     //                 "link": link,
@@ -54,7 +44,7 @@ impl NoItemsErrorNamed {
     //                 "date": chrono::Local::now().to_string()
     //             })
     //         }
-    //         NoItemsErrorNamed::ConversionFromStrError{ string, error, code_occurence: _code_occurence} => serde_json::json!({
+    //         NoItemsErrorNamed::ConversionFromStrError{ string, error, .. } => serde_json::json!({
     //             "error_kind": NoItemsErrorNamed::get_stringified_kind(no_items_error),
     //             "link": link,
     //             "string": string,
@@ -62,7 +52,7 @@ impl NoItemsErrorNamed {
     //             "part_of": format!("{pk}"),
     //             "date": chrono::Local::now().to_string()
     //         }),
-    //         NoItemsErrorNamed::NoTag{ no_tag, code_occurence: _code_occurence} => serde_json::json!({
+    //         NoItemsErrorNamed::NoTag{ no_tag, .. } => serde_json::json!({
     //             "error_kind": NoItemsErrorNamed::get_stringified_kind(no_items_error),
     //             "link": link,
     //             "tag": no_tag,
