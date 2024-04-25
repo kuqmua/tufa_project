@@ -3314,22 +3314,10 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
             SqlxPostgresTypesPgRangeStdPrimitiveI32::from(
                 value.sqlx_postgres_types_pg_range_std_primitive_i32,
             );
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
-            match SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(
-                value
-                    .sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
-            ) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = match SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local) {
-            Ok(value) => value,
-            Err(_e) => {
-                return Err(());
-            }
-        };
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(
+            value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc
+        );
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(value.sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local);
         let sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time =
             match SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime::try_from(
                 value.sqlx_postgres_types_pg_range_sqlx_types_time_offset_date_time,
@@ -3339,15 +3327,9 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
                     return Err(());
                 }
             };
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time =
-            match SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime::try_from(
-                value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time,
-            ) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime::from(
+            value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time,
+        );
         let sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time =
             match SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime::try_from(
                 value.sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time,
@@ -3357,15 +3339,9 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
                     return Err(());
                 }
             };
-        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date =
-            match SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::try_from(
-                value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date,
-            ) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
+        let sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate::from(
+            value.sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date
+        );
         let sqlx_postgres_types_pg_range_sqlx_types_time_date =
             match SqlxPostgresTypesPgRangeSqlxTypesTimeDate::try_from(
                 value.sqlx_postgres_types_pg_range_sqlx_types_time_date,
@@ -3389,45 +3365,15 @@ impl<T> std::convert::TryFrom<TestNewTypeWithSerializeDeserialize<T>> for TestNe
             SqlxPostgresTypesPgCiText::from(value.sqlx_postgres_types_pg_ci_text);
         let sqlx_types_big_decimal = SqlxTypesBigDecimal::from(value.sqlx_types_big_decimal);
         let sqlx_types_decimal = SqlxTypesDecimal::from(value.sqlx_types_decimal);
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc =
-            match SqlxTypesChronoDateTimeSqlxTypesChronoUtc::try_from(
-                value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
-            ) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
-        let sqlx_types_chrono_date_time_sqlx_types_chrono_local =
-            match SqlxTypesChronoDateTimeSqlxTypesChronoLocal::try_from(
-                value.sqlx_types_chrono_date_time_sqlx_types_chrono_local,
-            ) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
-        let sqlx_types_chrono_naive_date_time =
-            match SqlxTypesChronoNaiveDateTime::try_from(value.sqlx_types_chrono_naive_date_time) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
-        let sqlx_types_chrono_naive_date =
-            match SqlxTypesChronoNaiveDate::try_from(value.sqlx_types_chrono_naive_date) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
-        let sqlx_types_chrono_naive_time =
-            match SqlxTypesChronoNaiveTime::try_from(value.sqlx_types_chrono_naive_time) {
-                Ok(value) => value,
-                Err(_e) => {
-                    return Err(());
-                }
-            };
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_utc = SqlxTypesChronoDateTimeSqlxTypesChronoUtc::from(
+            value.sqlx_types_chrono_date_time_sqlx_types_chrono_utc,
+        );
+        let sqlx_types_chrono_date_time_sqlx_types_chrono_local = SqlxTypesChronoDateTimeSqlxTypesChronoLocal::from(
+            value.sqlx_types_chrono_date_time_sqlx_types_chrono_local
+        );
+        let sqlx_types_chrono_naive_date_time = SqlxTypesChronoNaiveDateTime::from(value.sqlx_types_chrono_naive_date_time);
+        let sqlx_types_chrono_naive_date = SqlxTypesChronoNaiveDate::from(value.sqlx_types_chrono_naive_date);
+        let sqlx_types_chrono_naive_time = SqlxTypesChronoNaiveTime::from(value.sqlx_types_chrono_naive_time);
         let sqlx_postgres_types_pg_time_tz =
             match SqlxPostgresTypesPgTimeTz::try_from(value.sqlx_postgres_types_pg_time_tz) {
                 Ok(value) => value,

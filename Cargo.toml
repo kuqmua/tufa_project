@@ -842,7 +842,7 @@ unit_hash = { level = "deny", priority = 0 }
 unit_return_expecting_ord = { level = "deny", priority = 0 }
 unnecessary_box_returns = { level = "deny", priority = 0 }
 unnecessary_cast = { level = "deny", priority = 0 }
-unnecessary_fallible_conversions = { level = "allow", priority = 0 }
+unnecessary_fallible_conversions = { level = "deny", priority = 0 }
 unnecessary_filter_map = { level = "deny", priority = 0 }
 unnecessary_find_map = { level = "deny", priority = 0 }
 unnecessary_fold = { level = "deny", priority = 0 }
