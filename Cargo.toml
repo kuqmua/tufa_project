@@ -893,7 +893,7 @@ useless_conversion = { level = "deny", priority = 0 }
 useless_format = { level = "deny", priority = 0 }
 useless_let_if_seq = { level = "deny", priority = 0 }
 useless_transmute = { level = "deny", priority = 0 }
-useless_vec = { level = "allow", priority = 0 }
+useless_vec = { level = "deny", priority = 0 }
 vec_box = { level = "deny", priority = 0 }
 vec_init_then_push = { level = "deny", priority = 0 }
 vec_resize_to_zero = { level = "deny", priority = 0 }
