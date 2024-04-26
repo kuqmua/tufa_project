@@ -543,7 +543,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 query
             }
         }
-        #[derive(Debug, PartialEq)]
+        #[derive(Debug, PartialEq, Eq)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -555,31 +555,25 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         }
         impl BindQuery for #where_ident_token_stream {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        Ok(())
-                    },
-                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                        checked_add: std::string::String::from("checked_add is None"),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                }
+                increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    checked_add: std::string::String::from("checked_add is None"),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }), |incr| {
+                    *increment = incr;
+                    Ok(())
+                })
             }
             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<
                 std::string::String,
                 TryGenerateBindIncrementsErrorNamed,
             > {
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        Ok(format!("${increment}"))
-                    },
-                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                        checked_add: std::string::String::from("checked_add is None"),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                }
+                increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    checked_add: std::string::String::from("checked_add is None"),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }), |incr| {
+                    *increment = incr;
+                    Ok(format!("${increment}"))
+                })
             }
             fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(self.value.0);
