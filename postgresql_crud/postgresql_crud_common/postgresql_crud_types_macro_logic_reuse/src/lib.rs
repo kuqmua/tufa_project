@@ -1,8 +1,31 @@
-#[proc_macro_derive(FieldTypeImplementsSerializeDeserialize)]
-pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(FieldTypeImplementsSerializeDeserializeWithEqImpl)]
+pub fn field_type_implements_serialize_deserialize_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserializeWithEqImpl";
+    field_type_implements_serialize_deserialize_handle(
+        input,
+        proc_macro_name_upper_camel_case,
+        true,
+    )
+}
+
+#[proc_macro_derive(FieldTypeImplementsSerializeDeserializeWithoutEqImpl)]
+pub fn field_type_implements_serialize_deserialize_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserializeWithoutEqImpl";
+    field_type_implements_serialize_deserialize_handle(
+        input,
+        proc_macro_name_upper_camel_case,
+        false,
+    )
+}
+
+
+fn field_type_implements_serialize_deserialize_handle(
+    input: proc_macro::TokenStream,
+    proc_macro_name_upper_camel_case: &str,
+    should_implement_eq: std::primitive::bool,
+) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "FieldTypeImplementsSerializeDeserialize";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
@@ -46,9 +69,15 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let possible_eq_impl_token_stream = if should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
     let gen = quote::quote!{
         //todo maybe some of them will not be needed in the future
-        #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
         pub struct #ident_with_serialize_deserialize_token_stream(#field_type);
         impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -69,6 +98,7 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
         #[derive(
             Debug,
             PartialEq,
+            #possible_eq_impl_token_stream
             serde::Serialize,
             serde::Deserialize,
             utoipa::ToSchema,
@@ -96,6 +126,7 @@ pub fn field_type_implements_serialize_deserialize(input: proc_macro::TokenStrea
     // }
     gen.into()
 }
+
 
 #[proc_macro_derive(CommonFrom)]
 pub fn common_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
