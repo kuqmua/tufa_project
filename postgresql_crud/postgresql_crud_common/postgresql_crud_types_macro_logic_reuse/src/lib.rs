@@ -366,6 +366,10 @@ pub fn common_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenS
         input,
         "CommonWithEqImpl",
         true,
+        true,
+        true,
+        true,
+        true,
     )
 }
 
@@ -375,13 +379,21 @@ pub fn common_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::Tok
         input,
         "CommonWithoutEqImpl",
         false,
+        false,
+        false,
+        false,
+        false,
     )
 }
 
 fn common_handle(
     input: proc_macro::TokenStream,
     proc_macro_name_upper_camel_case: &str,
-    should_implement_eq: std::primitive::bool,
+    where_ident_should_implement_eq: std::primitive::bool,
+    where_ident_with_serialize_deserialize_should_implement_eq: std::primitive::bool,
+    std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
+    where_std_option_option_ident_upper_camel_case_should_implement_eq: std::primitive::bool,
+    where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq: std::primitive::bool,
 ) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
@@ -463,7 +475,31 @@ fn common_handle(
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
-    let possible_eq_impl_token_stream = if should_implement_eq {
+    let where_ident_should_implement_eq_token_stream = if where_ident_should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let where_ident_with_serialize_deserialize_should_implement_eq_token_stream = if where_ident_with_serialize_deserialize_should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if std_option_option_ident_upper_camel_case_should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream = if where_std_option_option_ident_upper_camel_case_should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq_token_stream = if where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq {
         quote::quote!{Eq,}
     }
     else {
@@ -569,7 +605,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream)]
+        #[derive(Debug, PartialEq, #where_ident_should_implement_eq_token_stream)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -606,7 +642,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde::Serialize, serde::Deserialize)]
+        #[derive(Debug, PartialEq, #where_ident_with_serialize_deserialize_should_implement_eq_token_stream serde::Serialize, serde::Deserialize)]
         pub struct #where_ident_with_serialize_deserialize_token_stream {
             pub value: #ident_with_serialize_deserialize_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -625,7 +661,7 @@ fn common_handle(
             }
         }
         ///////////////////////////////////////
-        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream)]
+        #[derive(Debug, PartialEq, #std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
         ////////////////////////////
         impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
@@ -710,7 +746,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream)]
+        #[derive(Debug, PartialEq, #where_std_option_option_ident_upper_camel_case_should_implement_eq_token_stream)]
         pub struct #where_std_option_option_ident_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_upper_camel_case_token_stream ,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -760,7 +796,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde :: Serialize, serde :: Deserialize)]
+        #[derive(Debug, PartialEq, #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_should_implement_eq_token_stream serde :: Serialize, serde :: Deserialize)]
         pub struct #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -783,7 +819,7 @@ fn common_handle(
             }
         }
     };
-    // if ident == "" {
+    // if ident == "SqlxPostgresTypesPgCiText" {
     //     println!("{gen}");
     //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }
@@ -890,11 +926,29 @@ fn common_specific_from_handle(
     gen.into()
 }
 
+#[proc_macro_derive(CommonSpecificTryFromWithEqImpl)]
+pub fn common_specific_try_from_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_specific_try_from_handle(
+        input,
+        "CommonSpecificTryFromWithEqImpl",
+        true,
+    )
+}
 
+#[proc_macro_derive(CommonSpecificTryFromWithoutEqImpl)]
+pub fn common_specific_try_from_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_specific_try_from_handle(
+        input,
+        "CommonSpecificTryFromWithoutEqImpl",
+        false,
+    )
+}
 
-////////////////
-#[proc_macro_derive(CommonSpecificTryFrom)]
-pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+fn common_specific_try_from_handle(
+    input: proc_macro::TokenStream,
+    proc_macro_name_upper_camel_case: &str,
+    should_implement_eq: std::primitive::bool,
+) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "CommonSpecificTryFrom";
@@ -937,10 +991,17 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let possible_eq_impl_token_stream = if should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
     let gen = quote::quote!{
         #[derive(
             Debug,
             PartialEq,
+            #possible_eq_impl_token_stream
             serde::Serialize,
             serde::Deserialize,
             utoipa::ToSchema,
@@ -977,7 +1038,6 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
     // }
     gen.into()
 }
-////////////////
 
 #[proc_macro_derive(AsPostgresqlCommon)] //todo check on postgresql max length value of type
 pub fn as_postgresql_common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
