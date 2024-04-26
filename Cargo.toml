@@ -223,6 +223,24 @@ unconditional-panic = { level = "deny", priority = 0 } #operation will cause a p
 undropped-manually-drops = { level = "deny", priority = 0 } #calls to `std::mem::drop` with `std::mem::ManuallyDrop` instead of it's inner value
 unknown-crate-types = { level = "deny", priority = 0 } #unknown crate type found in `#[crate_type]` directive
 useless-deprecated = { level = "deny", priority = 0 } #detects deprecation attributes with no effect
+redundant-lifetimes = { level = "deny", priority = 0 } #detects lifetime parameters that are redundant because they are equal to some other named lifetime
+unit-bindings = { level = "deny", priority = 0 } #binding is useless because it has the unit `()` type
+const-eval-mutable-ptr-in-final-value = { level = "deny", priority = 0 } #detects a mutable pointer that has leaked into final value of a const expression
+non-contiguous-range-endpoints = { level = "deny", priority = 0 } #detects off-by-one errors with exclusive range patterns
+non-local-definitions = { level = "deny", priority = 0 } #checks for non-local definitions
+refining-impl-trait-internal = { level = "deny", priority = 0 } #impl trait in impl method signature does not match trait method signature
+refining-impl-trait-reachable = { level = "deny", priority = 0 } #impl trait in impl method signature does not match trait method signature
+static-mut-refs = { level = "deny", priority = 0 } #shared references or mutable references of mutable static is discouraged
+wasm-c-abi = { level = "deny", priority = 0 } #detects dependencies that are incompatible with the Wasm C ABI
+writes-through-immutable-pointer = { level = "deny", priority = 0 } #shared references are immutable, and pointers derived from them must not be written to
+# dereferencing-mut-binding = { level = "deny", priority = 0 } #detects `mut x` bindings that change the type of `x`
+# fuzzy-provenance-casts = { level = "deny", priority = 0 } #a fuzzy integer to pointer cast is used
+# lossy-provenance-casts = { level = "deny", priority = 0 } #a lossy pointer to integer cast is used
+# multiple-supertrait-upcastable = { level = "deny", priority = 0 } #detect when an object-safe trait has multiple supertraits
+# must-not-suspend = { level = "deny", priority = 0 } #use of a `#[must_not_suspend]` value across a yield point
+# non-exhaustive-omitted-patterns = { level = "deny", priority = 0 } #detect when patterns of types marked `non_exhaustive` are missed
+# unfulfilled-lint-expectations = { level = "deny", priority = 0 } #unfulfilled lint expectation
+# test-unstable-lint = { level = "deny", priority = 0 } #this unstable lint is only for testing
 
 [workspace.lints.clippy]#usage "cargo clippy"
 absolute_paths = { level = "allow", priority = 0 }

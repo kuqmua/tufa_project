@@ -57,142 +57,6 @@ impl Config {
             enable_api_git_commit_check: std::primitive::bool,
             maximum_size_of_http_body_in_bytes: std::primitive::usize,
         }
-        impl std::convert::TryFrom<ConfigUnchecked> for Config {
-            type Error = ConfigCheckErrorNamed;
-            fn try_from(value: ConfigUnchecked) -> Result<Self, Self::Error> {
-                let service_socket_address =  match <std::net::SocketAddr as std::str::FromStr>::from_str(&value.service_socket_address) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(Self::Error::ServiceSocketAddress {
-                            server_port: error,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                };
-                let hmac_secret = if value.hmac_secret.is_empty() {
-                    return Err(Self::Error::HmacSecret {
-                        hmac_secret: value.hmac_secret,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    secrecy::Secret::new(value.hmac_secret)
-                };
-                let base_url = if value.base_url.is_empty() {
-                    return Err(Self::Error::BaseUrl {
-                        base_url: value.base_url,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    value.base_url
-                };
-                let access_control_max_age = value.access_control_max_age;
-                let access_control_allow_origin = if value.access_control_allow_origin.is_empty() {
-                    return Err(Self::Error::AccessControlAllowOrigin {
-                        access_control_allow_origin: value.access_control_allow_origin,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }); //todo - maybe add check if its uri\url
-                }
-                else {
-                    value.access_control_allow_origin
-                };
-        
-                let github_name = if value.github_name.is_empty() {
-                    return Err(Self::Error::GithubName {
-                        github_name: value.github_name,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    value.github_name
-                };
-                let github_token = if value.github_token.is_empty() {
-                    return Err(Self::Error::GithubToken {
-                        github_token: value.github_token,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    value.github_token
-                };
-                let timezone = match chrono::FixedOffset::east_opt(value.timezone) {
-                    Some(fixed_offset) => fixed_offset,
-                    None => {
-                        return Err(Self::Error::Timezone {
-                            timezone: value.timezone,
-                            code_occurence: error_occurence_lib::code_occurence!(),
-                        });
-                    }
-                };
-                let redis_url = if value.redis_url.is_empty() {
-                    return Err(Self::Error::RedisUrl {
-                        redis_url: value.redis_url,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    secrecy::Secret::new(value.redis_url)
-                };
-                let mongo_url = if value.mongo_url.is_empty() {
-                    return Err(Self::Error::MongoUrl {
-                        mongo_url: value.mongo_url,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    secrecy::Secret::new(value.mongo_url)
-                };
-                let database_url = if value.database_url.is_empty() {
-                    return Err(Self::Error::DatabaseUrl {
-                        database_url: value.database_url,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    secrecy::Secret::new(value.database_url)
-                }; //postgres_url = value.; naming required by sqlx::query::query!
-        
-                let starting_check_link = if value.starting_check_link.is_empty() {
-                    return Err(Self::Error::StartingCheckLink {
-                        starting_check_link: value.starting_check_link,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else {
-                    value.starting_check_link
-                }; //todo add browser url limit check
-                let tracing_type = value.tracing_type;
-                let source_place_type = value.source_place_type;
-                let enable_api_git_commit_check = value.enable_api_git_commit_check;
-                let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
-                Ok(Self {
-                    service_socket_address,
-                    hmac_secret,
-                    base_url,
-                    access_control_max_age,
-                    access_control_allow_origin,
-        
-                    github_name,
-                    github_token,
-        
-                    timezone,
-        
-                    redis_url,
-        
-                    mongo_url,
-        
-                    database_url, //postgres_url, naming required by sqlx::query::query!
-        
-                    starting_check_link, //todo add browser url limit check
-        
-                    tracing_type,
-                    source_place_type,
-                    enable_api_git_commit_check,
-                    maximum_size_of_http_body_in_bytes,
-                })
-            }
-        }
         #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
         enum ConfigCheckErrorNamed {
             // ConfigUnchecked {
@@ -272,8 +136,150 @@ impl Config {
                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             },
         }
-        let config_unchecked = ConfigUnchecked::new().unwrap_or_else(|error| panic!("failed to ConfigUnchecked::new(), reason: {error:#?}"));
-        Self::try_from(config_unchecked).unwrap_or_else(|error| panic!("failed to Config try_from ConfigUnchecked, reason: {error}"))
+        let value = ConfigUnchecked::new().unwrap_or_else(|error| panic!("failed to ConfigUnchecked::new(), reason: {error:#?}"));
+        // Self::try_from(value).unwrap_or_else(|error| panic!("failed to Config try_from ConfigUnchecked, reason: {error}"))
+        let service_socket_address =  match <std::net::SocketAddr as std::str::FromStr>::from_str(&value.service_socket_address) {
+            Ok(value) => value,
+            Err(error) => {
+                // return Err(Self::Error::ServiceSocketAddress {
+                //     server_port: error,
+                //     code_occurence: error_occurence_lib::code_occurence!(),
+                // });
+                panic!("1");
+            }
+        };
+        let hmac_secret = if value.hmac_secret.is_empty() {
+            // return Err(Self::Error::HmacSecret {
+            //     hmac_secret: value.hmac_secret,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("2");
+        }
+        else {
+            secrecy::Secret::new(value.hmac_secret)
+        };
+        let base_url = if value.base_url.is_empty() {
+            // return Err(Self::Error::BaseUrl {
+            //     base_url: value.base_url,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("3");
+        }
+        else {
+            value.base_url
+        };
+        let access_control_max_age = value.access_control_max_age;
+        let access_control_allow_origin = if value.access_control_allow_origin.is_empty() {
+            // return Err(Self::Error::AccessControlAllowOrigin {
+            //     access_control_allow_origin: value.access_control_allow_origin,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // }); //todo - maybe add check if its uri\url
+            panic!("4");
+        }
+        else {
+            value.access_control_allow_origin
+        };
+        
+        let github_name = if value.github_name.is_empty() {
+            // return Err(Self::Error::GithubName {
+            //     github_name: value.github_name,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("5");
+        }
+        else {
+            value.github_name
+        };
+        let github_token = if value.github_token.is_empty() {
+            // return Err(Self::Error::GithubToken {
+            //     github_token: value.github_token,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("6");
+        }
+        else {
+            value.github_token
+        };
+        let timezone = match chrono::FixedOffset::east_opt(value.timezone) {
+            Some(fixed_offset) => fixed_offset,
+            None => {
+                // return Err(Self::Error::Timezone {
+                //     timezone: value.timezone,
+                //     code_occurence: error_occurence_lib::code_occurence!(),
+                // });
+                panic!("7");
+            }
+        };
+        let redis_url = if value.redis_url.is_empty() {
+            // return Err(Self::Error::RedisUrl {
+            //     redis_url: value.redis_url,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("8");
+        }
+        else {
+            secrecy::Secret::new(value.redis_url)
+        };
+        let mongo_url = if value.mongo_url.is_empty() {
+            // return Err(Self::Error::MongoUrl {
+            //     mongo_url: value.mongo_url,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("9");
+        }
+        else {
+            secrecy::Secret::new(value.mongo_url)
+        };
+        let database_url = if value.database_url.is_empty() {
+            // return Err(Self::Error::DatabaseUrl {
+            //     database_url: value.database_url,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("10");
+        }
+        else {
+            secrecy::Secret::new(value.database_url)
+        }; //postgres_url = value.; naming required by sqlx::query::query!
+        
+        let starting_check_link = if value.starting_check_link.is_empty() {
+            // return Err(Self::Error::StartingCheckLink {
+            //     starting_check_link: value.starting_check_link,
+            //     code_occurence: error_occurence_lib::code_occurence!(),
+            // });
+            panic!("11");
+        }
+        else {
+            value.starting_check_link
+        }; //todo add browser url limit check
+        let tracing_type = value.tracing_type;
+        let source_place_type = value.source_place_type;
+        let enable_api_git_commit_check = value.enable_api_git_commit_check;
+        let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
+        Self {
+            service_socket_address,
+            hmac_secret,
+            base_url,
+            access_control_max_age,
+            access_control_allow_origin,
+        
+            github_name,
+            github_token,
+        
+            timezone,
+        
+            redis_url,
+        
+            mongo_url,
+        
+            database_url, //postgres_url, naming required by sqlx::query::query!
+        
+            starting_check_link, //todo add browser url limit check
+        
+            tracing_type,
+            source_place_type,
+            enable_api_git_commit_check,
+            maximum_size_of_http_body_in_bytes,
+        }
     }
 }
 
