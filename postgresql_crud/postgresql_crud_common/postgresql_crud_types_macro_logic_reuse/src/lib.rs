@@ -386,6 +386,19 @@ pub fn common_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::Tok
     )
 }
 
+#[proc_macro_derive(CommonWithSerializeDeserializeEqImpl)] //todo check on postgresql max length value of type
+pub fn common_with_serialize_deserialize_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_handle(
+        input,
+        "CommonWithSerializeDeserializeEqImpl",
+        false,
+        true,
+        false,
+        false,
+        true,
+    )
+}
+
 fn common_handle(
     input: proc_macro::TokenStream,
     proc_macro_name_upper_camel_case: &str,
