@@ -514,16 +514,13 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         }
         impl BindQuery for #ident {
             fn try_increment(&self, increment: &mut std::primitive::u64) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        Ok(())
-                    }
-                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                        checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
+                increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    checked_add: std::string::String::from(CHECKED_ADD_IS_NONE),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }), |incr| {
+                    *increment = incr;
+                    Ok(())
+                })
             }
             fn try_generate_bind_increments(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, TryGenerateBindIncrementsErrorNamed> {
                 let mut increments = std::string::String::default();
@@ -712,16 +709,13 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 &self,
                 increment: &mut std::primitive::u64,
             ) -> Result<(), TryGenerateBindIncrementsErrorNamed> {
-                match increment.checked_add(1) {
-                    Some(incr) => {
-                        *increment = incr;
-                        Ok(())
-                    }
-                    None => Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
-                        checked_add: std::string::String::from("checked_add is None"),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    }),
-                }
+                increment.checked_add(1).map_or_else(|| Err(TryGenerateBindIncrementsErrorNamed::CheckedAdd {
+                    checked_add: std::string::String::from("checked_add is None"),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }), |incr| {
+                    *increment = incr;
+                    Ok(())
+                })
             }
             fn try_generate_bind_increments(
                 &self,
