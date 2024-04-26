@@ -360,11 +360,31 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     gen.into()
 }
 
-#[proc_macro_derive(Common)] //todo check on postgresql max length value of type
-pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(CommonWithEqImpl)] //todo check on postgresql max length value of type
+pub fn common_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_handle(
+        input,
+        "CommonWithEqImpl",
+        true,
+    )
+}
+
+#[proc_macro_derive(CommonWithoutEqImpl)] //todo check on postgresql max length value of type
+pub fn common_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_handle(
+        input,
+        "CommonWithoutEqImpl",
+        false,
+    )
+}
+
+fn common_handle(
+    input: proc_macro::TokenStream,
+    proc_macro_name_upper_camel_case: &str,
+    should_implement_eq: std::primitive::bool,
+) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "Common";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
@@ -442,6 +462,12 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         );
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let possible_eq_impl_token_stream = if should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
     };
     let gen = quote::quote!{
         impl std::fmt::Display for #ident {
@@ -543,7 +569,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 query
             }
         }
-        #[derive(Debug, PartialEq, Eq)]
+        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream)]
         pub struct #where_ident_token_stream {
             pub value: #ident,
             pub conjuctive_operator: ConjunctiveOperator,
