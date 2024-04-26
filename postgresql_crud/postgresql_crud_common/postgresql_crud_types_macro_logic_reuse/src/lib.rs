@@ -710,7 +710,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq)]
+        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream)]
         pub struct #where_std_option_option_ident_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_upper_camel_case_token_stream ,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -760,7 +760,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize)]
+        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde :: Serialize, serde :: Deserialize)]
         pub struct #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
             pub value: #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -783,18 +783,38 @@ fn common_handle(
             }
         }
     };
-    // if ident == "StdPrimitiveBool" {
+    // if ident == "" {
     //     println!("{gen}");
     //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }
     gen.into()
 }
 ///////////////
-#[proc_macro_derive(CommonSpecificFrom)]
-pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(CommonSpecificFromWithEqImpl)]
+pub fn common_specific_from_with_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_specific_from_handle(
+        input,
+        "CommonSpecificFromWithEqImpl",
+        true,
+    )
+}
+
+#[proc_macro_derive(CommonSpecificFromWithoutEqImpl)]
+pub fn common_specific_from_without_eq_impl(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    common_specific_from_handle(
+        input,
+        "CommonSpecificFromWithoutEqImpl",
+        false,
+    )
+}
+
+fn common_specific_from_handle(
+    input: proc_macro::TokenStream,
+    proc_macro_name_upper_camel_case: &str,
+    should_implement_eq: std::primitive::bool,
+) -> proc_macro::TokenStream {
     //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "CommonSpecificFrom";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}: {error}",
@@ -825,10 +845,17 @@ pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::Token
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
+    let possible_eq_impl_token_stream = if should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
     let gen = quote::quote!{
         #[derive(
             Debug,
             PartialEq,
+            #possible_eq_impl_token_stream
             serde::Serialize,
             serde::Deserialize,
             utoipa::ToSchema,
@@ -862,6 +889,9 @@ pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::Token
     // }
     gen.into()
 }
+
+
+
 ////////////////
 #[proc_macro_derive(CommonSpecificTryFrom)]
 pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
