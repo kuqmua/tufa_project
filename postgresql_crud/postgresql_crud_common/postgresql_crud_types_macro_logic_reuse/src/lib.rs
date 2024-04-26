@@ -80,8 +80,8 @@ fn field_type_implements_serialize_deserialize_handle(
         #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
         pub struct #ident_with_serialize_deserialize_token_stream(#field_type);
         impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{:?}", self.0)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
             }
         }
         impl std::convert::From<#ident_with_serialize_deserialize_token_stream> for #ident {
@@ -105,8 +105,8 @@ fn field_type_implements_serialize_deserialize_handle(
         )]
         pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#field_type>);
         impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{:?}", self.0)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
             }
         }
         impl std::convert::From<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
@@ -445,8 +445,8 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     let gen = quote::quote!{
         impl std::fmt::Display for #ident {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{:?}", self.0)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
             }
         }
         impl #ident {
@@ -552,8 +552,8 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             pub conjuctive_operator: ConjunctiveOperator,
         }
         impl std::fmt::Display for #where_ident_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
             }
         }
         impl BindQuery for #where_ident_token_stream {
@@ -595,8 +595,8 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             pub conjuctive_operator: ConjunctiveOperator,
         }
         impl std::fmt::Display for #where_ident_with_serialize_deserialize_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "value: {}, conjuctive_operator: {}", self.value, self.conjuctive_operator)
             }
         }
         impl std::convert::From<#where_ident_token_stream> for #where_ident_with_serialize_deserialize_token_stream {
@@ -612,8 +612,8 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         pub struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
         ////////////////////////////
         impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{:?}", self.0)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
             }
         }
         impl #std_option_option_ident_upper_camel_case_token_stream {
@@ -699,9 +699,9 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             pub conjuctive_operator: ConjunctiveOperator,
         }
         impl std::fmt::Display for #where_std_option_option_ident_upper_camel_case_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(
-                    f,
+                    formatter,
                     "value: {}, conjuctive_operator: {}",
                     self.value, self.conjuctive_operator
                 )
@@ -752,9 +752,9 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             pub conjuctive_operator: ConjunctiveOperator,
         }
         impl std::fmt::Display for #where_std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(
-                    f,
+                    formatter,
                     "value: {}, conjuctive_operator: {}",
                     self.value, self.conjuctive_operator
                 )
@@ -821,8 +821,8 @@ pub fn common_specific_from(input: proc_macro::TokenStream) -> proc_macro::Token
         )]
         pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#ident_with_serialize_deserialize_token_stream>);
         impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{:?}", self.0)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
             }
         }
         impl std::convert::From<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
@@ -903,8 +903,8 @@ pub fn common_specific_try_from(input: proc_macro::TokenStream) -> proc_macro::T
         )]
         pub struct #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream(std::option::Option<#ident_with_serialize_deserialize_token_stream>);
         impl std::fmt::Display for #std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{:?}", self.0)
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{:?}", self.0)
             }
         }
         impl std::convert::TryFrom<#std_option_option_ident_with_serialize_deserialize_upper_camel_case_token_stream> for #std_option_option_ident_upper_camel_case_token_stream {
