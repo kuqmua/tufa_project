@@ -3623,7 +3623,7 @@ pub struct Something {
     something: std::string::String,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum TimeMonthWithSerializeDeserialize {
     January,   // = 1,
     February,  // = 2,
@@ -3674,7 +3674,7 @@ impl std::convert::From<time::Month> for TimeMonthWithSerializeDeserialize {
         }
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     hours: std::primitive::i8,
     minutes: std::primitive::i8,
@@ -3713,7 +3713,7 @@ impl std::convert::From<sqlx::types::time::UtcOffset>
         }
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub enum NumBigintSignWithSerializeDeserialize {
     Minus,
     NoSign,

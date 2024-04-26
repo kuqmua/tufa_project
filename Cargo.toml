@@ -318,7 +318,7 @@ deref_addrof = { level = "deny", priority = 0 }
 deref_by_slicing = { level = "deny", priority = 0 }
 derivable_impls = { level = "deny", priority = 0 }
 derive_ord_xor_partial_ord = { level = "deny", priority = 0 }
-derive_partial_eq_without_eq = { level = "allow", priority = 0 }
+derive_partial_eq_without_eq = { level = "deny", priority = 0 }
 derived_hash_with_manual_eq = { level = "deny", priority = 0 }
 disallowed_macros = { level = "deny", priority = 0 }
 disallowed_methods = { level = "deny", priority = 0 }
