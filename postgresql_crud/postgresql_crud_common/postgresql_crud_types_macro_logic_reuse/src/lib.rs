@@ -501,14 +501,14 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         // impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
         impl std::convert::From<#ident> for SupportedSqlxPostgresType {
             fn from(_value: #ident) -> Self {
-                SupportedSqlxPostgresType::#ident
+                Self::#ident
             }
         }
         impl #ident {
             pub fn into_inner_type_vec(value: std::vec::Vec<Self>) -> std::vec::Vec<#field_type> {
                 value
                     .into_iter()
-                    .map(|element| element.into_inner())
+                    .map(Self::into_inner)
                     .collect()
             }
         }
@@ -541,7 +541,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 }
                 Ok(increments)
             }
-            fn bind_value_to_query(self, mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(self.0);
                 query
             }
@@ -584,7 +584,7 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     }),
                 }
             }
-            fn bind_value_to_query(self, mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn bind_value_to_query(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(self.value.0);
                 query
             }
@@ -687,8 +687,8 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
             fn bind_value_to_query(
                 self,
-                mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
-            ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+                mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(self.0);
                 query
             }
@@ -740,8 +740,8 @@ pub fn common(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             }
             fn bind_value_to_query(
                 self,
-                mut query: sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments>,
-            ) -> sqlx::query::Query<sqlx::Postgres, sqlx::postgres::PgArguments> {
+                mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 query = query.bind(self.value.0);
                 query
             }
