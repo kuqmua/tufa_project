@@ -606,7 +606,7 @@ fn common_handle(
                 query
             }
         }
-        #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream serde::Serialize, serde::Deserialize)]
         pub struct #where_ident_with_serialize_deserialize_token_stream {
             pub value: #ident_with_serialize_deserialize_token_stream,
             pub conjuctive_operator: ConjunctiveOperator,
@@ -625,7 +625,7 @@ fn common_handle(
             }
         }
         ///////////////////////////////////////
-        #[derive(Debug, PartialEq)]
+        #[derive(Debug, PartialEq, #possible_eq_impl_token_stream)]
         pub struct #std_option_option_ident_upper_camel_case_token_stream(pub std::option::Option<#field_type>);
         ////////////////////////////
         impl std::fmt::Display for #std_option_option_ident_upper_camel_case_token_stream {
@@ -783,7 +783,7 @@ fn common_handle(
             }
         }
     };
-    // if ident == "" {
+    // if ident == "StdPrimitiveBool" {
     //     println!("{gen}");
     //     println!("----------");//todo for some reason gen duplicates for few times - find out why and fix
     // }

@@ -4187,7 +4187,7 @@ impl AsPostgresqlBytea for StdVecVecStdPrimitiveU8 {}
 
 #[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxPostgresTypesPgInterval(pub sqlx::postgres::types::PgInterval);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgIntervalWithSerializeDeserialize {
     months: std::primitive::i32,
     days: std::primitive::i32,
@@ -4227,7 +4227,7 @@ impl PostgresqlOrder for SqlxPostgresTypesPgInterval {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64(
     pub sqlx::postgres::types::PgRange<std::primitive::i64>,
 );
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI64WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i64>,
     end: std::ops::Bound<std::primitive::i64>,
@@ -4263,7 +4263,7 @@ impl AsPostgresqlInt8Range for SqlxPostgresTypesPgRangeStdPrimitiveI64 {}
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(
     pub sqlx::postgres::types::PgRange<std::primitive::i32>,
 );
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32WithSerializeDeserialize {
     start: std::ops::Bound<std::primitive::i32>,
     end: std::ops::Bound<std::primitive::i32>,
@@ -4299,7 +4299,7 @@ impl AsPostgresqlInt4Range for SqlxPostgresTypesPgRangeStdPrimitiveI32 {}
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>>,
 );
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcWithSerializeDeserialize
 {
     start: std::ops::Bound<
@@ -4461,7 +4461,7 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSq
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>>,
 );
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalWithSerializeDeserialize
 {
     start: std::ops::Bound<
@@ -4603,7 +4603,7 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSq
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::OffsetDateTime>,
 );
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
@@ -4853,7 +4853,7 @@ impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTi
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDateTime>,
 );
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeWithSerializeDeserialize>,
@@ -4944,11 +4944,11 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeW
 }
 impl AsPostgresqlTsTzRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::PrimitiveDateTime>,
 );
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
@@ -5195,7 +5195,7 @@ impl AsPostgresqlTsRange for SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateT
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::chrono::NaiveDate>,
 );
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesChronoNaiveDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesChronoNaiveDateWithSerializeDeserialize>,
@@ -5286,11 +5286,11 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateWithS
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDate(
     pub sqlx::postgres::types::PgRange<sqlx::types::time::Date>,
 );
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
@@ -5529,11 +5529,11 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializ
 }
 impl AsPostgresqlDateRange for SqlxPostgresTypesPgRangeSqlxTypesTimeDate {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::BigDecimal>,
 );
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesBigDecimalWithSerializeDeserialize>,
@@ -5604,11 +5604,11 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesBigDecimalWithSerial
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesBigDecimal {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimal(
     pub sqlx::postgres::types::PgRange<sqlx::types::Decimal>,
 );
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesDecimalWithSerializeDeserialize>,
@@ -5663,9 +5663,9 @@ impl std::fmt::Display for SqlxPostgresTypesPgRangeSqlxTypesDecimalWithSerialize
 }
 impl AsPostgresqlNumRange for SqlxPostgresTypesPgRangeSqlxTypesDecimal {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxPostgresTypesPgMoney(pub sqlx::postgres::types::PgMoney);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgMoneyWithSerializeDeserialize(std::primitive::i64);
 impl std::convert::From<SqlxPostgresTypesPgMoneyWithSerializeDeserialize>
     for SqlxPostgresTypesPgMoney
@@ -5688,7 +5688,7 @@ impl std::fmt::Display for SqlxPostgresTypesPgMoneyWithSerializeDeserialize {
 }
 impl AsPostgresqlMoney for SqlxPostgresTypesPgMoney {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxPostgresTypesPgCiText(pub sqlx::postgres::types::PgCiText);
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgCiTextWithSerializeDeserialize(std::string::String);
@@ -5713,9 +5713,9 @@ impl std::fmt::Display for SqlxPostgresTypesPgCiTextWithSerializeDeserialize {
 }
 impl AsPostgresqlCiText for SqlxPostgresTypesPgCiText {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxTypesBigDecimal(pub sqlx::types::BigDecimal);
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBigDecimalWithSerializeDeserialize {
     digits: NumBigintBigIntWithSerializeDeserialize,
     scale: std::primitive::i64,
@@ -5745,36 +5745,36 @@ impl std::fmt::Display for SqlxTypesBigDecimalWithSerializeDeserialize {
 impl AsPostgresqlNumeric for SqlxTypesBigDecimal {}
 impl PostgresqlOrder for SqlxTypesBigDecimal {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxTypesDecimal(pub sqlx::types::Decimal);
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>,
 );
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxTypesChronoDateTimeSqlxTypesChronoLocal(
     pub sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>,
 );
 impl AsPostgresqlTimestampTz for SqlxTypesChronoDateTimeSqlxTypesChronoLocal {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxTypesChronoNaiveDateTime(pub sqlx::types::chrono::NaiveDateTime);
 impl AsPostgresqlTimestamp for SqlxTypesChronoNaiveDateTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDateTime {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxTypesChronoNaiveDate(pub sqlx::types::chrono::NaiveDate);
 impl AsPostgresqlDate for SqlxTypesChronoNaiveDate {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveDate {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl)]
 pub struct SqlxTypesChronoNaiveTime(pub sqlx::types::chrono::NaiveTime);
 impl AsPostgresqlTime for SqlxTypesChronoNaiveTime {}
 impl PostgresqlOrder for SqlxTypesChronoNaiveTime {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
+#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithoutEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxPostgresTypesPgTimeTz(pub sqlx::postgres::types::PgTimeTz);
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
@@ -5854,9 +5854,9 @@ impl std::fmt::Display for SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
 }
 impl AsPostgresqlTimeTz for SqlxPostgresTypesPgTimeTz {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxTypesTimePrimitiveDateTime(pub sqlx::types::time::PrimitiveDateTime);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     date: SqlxTypesTimeDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
@@ -5939,9 +5939,9 @@ impl std::fmt::Display for SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializ
 impl AsPostgresqlTimestamp for SqlxTypesTimePrimitiveDateTime {}
 impl PostgresqlOrder for SqlxTypesTimePrimitiveDateTime {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
     std::primitive::i64,
 );
@@ -5981,9 +5981,9 @@ impl std::fmt::Display for SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize {
 }
 impl AsPostgresqlTimestampTz for SqlxTypesTimeOffsetDateTime {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxTypesTimeDate(pub sqlx::types::time::Date);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     year: std::primitive::i32,
     month: TimeMonthWithSerializeDeserialize,
@@ -6036,7 +6036,7 @@ impl PostgresqlOrder for SqlxTypesTimeDate {}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxTypesTimeTime(pub sqlx::types::time::Time);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
     hour: std::primitive::u8,
     minute: std::primitive::u8,
@@ -6084,7 +6084,7 @@ impl PostgresqlOrder for SqlxTypesTimeTime {}
 //todo maybe its possible to not use Clone (refactor where .clone() used)
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonTryFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificTryFrom)]
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
@@ -6120,19 +6120,19 @@ impl std::fmt::Display for SqlxTypesUuidUuidWithSerializeDeserialize {
 }
 impl AsPostgresqlUuid for SqlxTypesUuidUuid {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SqlxTypesIpnetworkIpNetwork(pub sqlx::types::ipnetwork::IpNetwork);
 impl AsPostgresqlInet for SqlxTypesIpnetworkIpNetwork {}
 impl AsPostgresqlCidr for SqlxTypesIpnetworkIpNetwork {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct StdNetIpAddr(pub std::net::IpAddr);
 impl AsPostgresqlInet for StdNetIpAddr {}
 impl AsPostgresqlCidr for StdNetIpAddr {}
 
-#[derive(Debug, Clone, Copy, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxTypesMacAddressMacAddress(pub sqlx::types::mac_address::MacAddress);
-#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesMacAddressMacAddressWithSerializeDeserialize([std::primitive::u8; 6]);
 impl std::convert::From<SqlxTypesMacAddressMacAddressWithSerializeDeserialize>
     for SqlxTypesMacAddressMacAddress
@@ -6155,9 +6155,9 @@ impl std::fmt::Display for SqlxTypesMacAddressMacAddressWithSerializeDeserialize
 }
 impl AsPostgresqlMacAddr for SqlxTypesMacAddressMacAddress {}
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonSpecificFrom)]
 pub struct SqlxTypesBitVec(pub sqlx::types::BitVec);
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesBitVecWithSerializeDeserialize(std::vec::Vec<std::primitive::u8>);
 impl std::convert::From<SqlxTypesBitVecWithSerializeDeserialize> for SqlxTypesBitVec {
     fn from(value: SqlxTypesBitVecWithSerializeDeserialize) -> Self {
@@ -6556,7 +6556,7 @@ impl<T> std::convert::From<StdOptionOptionSqlxTypesJson<T>> for StdOptionOptionS
 //
 
 
-#[derive(Debug, Clone, PartialEq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
+#[derive(Debug, Clone, PartialEq, Eq, postgresql_crud_types_macro_logic_reuse::FieldTypeImplementsSerializeDeserializeWithEqImpl, postgresql_crud_types_macro_logic_reuse::CommonFrom, postgresql_crud_types_macro_logic_reuse::CommonWithEqImpl)]
 pub struct SerdeJsonValue(pub serde_json::Value);
 impl AsPostgresqlJson for SerdeJsonValue {}
 impl AsPostgresqlJsonB for SerdeJsonValue {}
