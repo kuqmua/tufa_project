@@ -277,41 +277,44 @@ pub trait TryFromStdEnvVarOk: Sized {
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkStdNetSocketAddrErrorNamed {
-    StdNetSocketAddr {
+pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
+    ServiceSocketAddress {
         #[eo_display]
-        std_net_socket_addr: std::net::AddrParseError,
+        service_socket_address: std::net::AddrParseError,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl TryFromStdEnvVarOk for std::net::SocketAddr {
-    type Error = TryFromStdEnvVarOkStdNetSocketAddrErrorNamed;
+impl TryFromStdEnvVarOk for ServiceSocketAddress {
+    type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        match <Self as std::str::FromStr>::from_str(&value) {
-            Ok(value) => Ok(value),
-            Err(error) => Err(Self::Error::StdNetSocketAddr {
-                std_net_socket_addr: error,
+        match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(Self::Error::ServiceSocketAddress {
+                service_socket_address: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
     }
 }
-
+#[derive(Debug)]
+pub struct HmacSecret(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkSecrecySecretStdStringStringErrorNamed {
-    SecrecySecretStdStringString {
+pub enum TryFromStdEnvVarOkHmacSecretErrorNamed {
+    HmacSecret {
         #[eo_display_with_serialize_deserialize]
-        secrecy_secret_std_string_string: std::string::String,
+        hmac_secret: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
-    type Error = TryFromStdEnvVarOkSecrecySecretStdStringStringErrorNamed;
+    type Error = TryFromStdEnvVarOkHmacSecretErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         if value.is_empty() {
-            Err(Self::Error::SecrecySecretStdStringString {
-                secrecy_secret_std_string_string: value,
+            Err(Self::Error::HmacSecret {
+                hmac_secret: value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
@@ -320,11 +323,6 @@ impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
         }
     }
 }
-
-#[derive(Debug, Clone, Copy)]
-pub struct ServiceSocketAddress(pub std::net::SocketAddr);
-#[derive(Debug)]
-pub struct HmacSecret(pub secrecy::Secret<std::string::String>);
 #[derive(Debug)]
 pub struct BaseUrl(pub std::string::String);
 #[derive(Debug, Clone, Copy)]
