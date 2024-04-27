@@ -450,7 +450,7 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
 
 /////////////
         #[derive(Debug, config_lib::TryFromEnv)]
-        struct ConfigUnchecked {
+        struct Something {
             //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
             service_socket_address: ServiceSocketAddress,
         
@@ -469,3 +469,48 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
             enable_api_git_commit_check: EnableApiGitCommitCheck,
             maximum_size_of_http_body_in_bytes: MaximumSizeOfHttpBodyInBytes,
         }
+
+impl Something {
+    // #[must_use]
+    pub(crate) fn new() -> Result<Self, ConfigUncheckedTryFromEnvErrorNamed> {
+        let was_dotenv_enable = dotenv::dotenv().is_ok();
+        if let Err(error) = dotenv::dotenv() {
+            return Err(ConfigUncheckedTryFromEnvErrorNamed::Dotenv {
+                dotenv: error,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        let env_var_name = std::string::String::from("SERVICE_SOCKET_ADDRESS");
+        let service_socket_address: ServiceSocketAddress = match std::env::var(&env_var_name) {
+            Err(error) => {
+                return Err(ConfigUncheckedTryFromEnvErrorNamed::StdEnvVarError {
+                    std_env_var_error: error,
+                    env_var_name,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+            Ok(value) => match TryFromStdEnvVarOk::try_from_std_env_var_ok(value) {
+                Err(error) => {
+                    return Err(ConfigUncheckedTryFromEnvErrorNamed::ServiceSocketAddress {
+                        service_socket_address: error,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                Ok(value) => value,
+            },
+        };
+        todo!()
+        // Ok(Self {
+        //     service_socket_address: service_socket_address,
+        //     timezone: timezone,
+        //     redis_url: redis_url,
+        //     mongo_url: mongo_url,
+        //     database_url: database_url,
+        //     starting_check_link: starting_check_link,
+        //     tracing_type: tracing_type,
+        //     source_place_type: source_place_type,
+        //     enable_api_git_commit_check: enable_api_git_commit_check,
+        //     maximum_size_of_http_body_in_bytes: maximum_size_of_http_body_in_bytes,
+        // })
+    }
+}
