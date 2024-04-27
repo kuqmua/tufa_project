@@ -348,7 +348,7 @@ pub enum TryFromStdEnvVarOkHmacSecretErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
+impl TryFromStdEnvVarOk for HmacSecret {
     type Error = TryFromStdEnvVarOkHmacSecretErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value: std::string::String = FromStdEnvVarOkHandle::from_std_env_var_ok_handle(value);
@@ -359,7 +359,7 @@ impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
             })
         }
         else {
-            Ok(Self::new(value))
+            Ok(Self(secrecy::Secret::new(value)))
         }
     }
 }
