@@ -348,6 +348,7 @@ pub enum TryFromStdEnvVarOkHmacSecretErrorNamed {
 impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
     type Error = TryFromStdEnvVarOkHmacSecretErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value: std::string::String = FromStdEnvVarOkHandle::from_std_env_var_ok_handle(value);
         if value.is_empty() {
             Err(Self::Error::HmacSecret {
                 hmac_secret: value,
