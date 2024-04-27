@@ -205,6 +205,54 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         syn::Fields::Unnamed(_) | 
         syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_stringified} only works with syn::Fields::Named"),
     };
+    let error_named_token_stream = {
+        let variants_token_stream = fields_named.iter().map(|element|{
+            let element_ident = &element.ident;
+            let element_ident_upper_camel_case_token_stream = {
+                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(
+                    &element_ident.as_ref().expect("ident is None").to_string()
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let error_upper_camel_case_token_stream = {
+                let element_type_stringified = {
+                    let value_type = &element.ty;
+                    let value_token_stream = quote::quote!{#value_type};
+                    value_token_stream.to_string()
+                };
+                let value = format!("TryFromStdEnvVarOk{element_type_stringified}ErrorNamed");
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            quote::quote!{
+                #element_ident_upper_camel_case_token_stream {
+                    #[eo_error_occurence]
+                    #element_ident: #error_upper_camel_case_token_stream,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                }
+            }
+        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        quote::quote!{
+            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+            pub enum ConfigUncheckedTryFromEnvErrorNamed {
+                Dotenv {
+                    #[eo_display]
+                    dotenv: dotenv::Error,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
+                StdEnvVarError {
+                    #[eo_display]
+                    std_env_var_error: std::env::VarError,
+                    #[eo_display_with_serialize_deserialize]
+                    env_var_name: std::string::String,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
+                #(#variants_token_stream),*
+            }
+        }
+    };
+    // println!("error_named_token_stream {error_named_token_stream}");
     // let fie
     // let error_std_env_var_ident =
     //     syn::Ident::new(&format!("{ident}StdEnvVar"), ident.span());
@@ -330,6 +378,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     // let dotenv_variant_name_snake_case_token_stream = quote::quote!{dotenv};
     // let dotenv_error_token_stream = quote::quote!{dotenv::Error};//implements Display
     let gen = quote::quote! {
+        #error_named_token_stream
         // #[derive(Debug)]
         // pub enum #error_enum_ident {
         //     #error_std_env_var_ident(#error_std_env_var_enum_ident),
