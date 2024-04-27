@@ -272,6 +272,15 @@ impl Config {
     }
 }
 
+pub trait FromStdEnvVarOkHandle: Sized {
+    fn from_std_env_var_ok_handle(value: std::string::String) -> Self;
+}
+
+pub trait TryFromStdEnvVarOkHandle: Sized {
+    type Error;
+    fn try_from_std_env_var_ok_handle(value: std::string::String) -> Result<Self, Self::Error>;
+}
+
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
