@@ -73,10 +73,7 @@ pub enum ConfigCheckErrorNamed {
 
 impl Config {
     pub fn try_from_env() -> Result<Self, ConfigCheckErrorNamed> {
-        #[derive(Debug, Default, PartialEq, Eq, 
-            config_lib::InitFromEnv,
-            // config_lib::InitFromEnvWrapper
-        )]
+        #[derive(Debug, Default, PartialEq, Eq, config_lib::InitFromEnv)]
         struct ConfigUnchecked {
             //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
             service_socket_address: std::string::String,
@@ -452,9 +449,7 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
 }
 
 /////////////
-        #[derive(Debug, Default, PartialEq, Eq, 
-            config_lib::InitFromEnvWrapper
-        )]
+        #[derive(Debug, config_lib::TryFromEnv)]
         struct ConfigUnchecked {
             //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
             service_socket_address: ServiceSocketAddress,
