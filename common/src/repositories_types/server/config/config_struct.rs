@@ -450,3 +450,27 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
         Ok(Self(value))
     }
 }
+
+/////////////
+        #[derive(Debug, Default, PartialEq, Eq, 
+            config_lib::InitFromEnvWrapper
+        )]
+        struct ConfigUnchecked {
+            //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
+            service_socket_address: ServiceSocketAddress,
+        
+            timezone: Timezone, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
+        
+            redis_url: RedisUrl,
+        
+            mongo_url: MongoUrl,
+        
+            database_url: DatabaseUrl, //postgres_url, naming required by sqlx::query::query!
+        
+            starting_check_link: StartingCheckLink, //todo add browser url limit check
+        
+            tracing_type: TracingType,
+            source_place_type: SourcePlaceType,
+            enable_api_git_commit_check: EnableApiGitCommitCheck,
+            maximum_size_of_http_body_in_bytes: MaximumSizeOfHttpBodyInBytes,
+        }

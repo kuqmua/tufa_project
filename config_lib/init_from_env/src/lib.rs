@@ -182,18 +182,18 @@ pub fn init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
 }
 
 //////////////////
-#[proc_macro_derive(InitFromEnvWrapper)]
-pub fn init_from_env_wrapper(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(TryInitFromEnv)]
+pub fn try_init_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let ast: syn::DeriveInput =
-        syn::parse(input).expect("InitFromEnvWithPanicIfFailed syn::parse(input) failed");
+        syn::parse(input).expect("TryInitFromEnv syn::parse(input) failed");
     let datastruct = match ast.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | 
-        syn::Data::Union(_) => panic!("InitFromEnvWithPanicIfFailed only works on Struct"),
+        syn::Data::Union(_) => panic!("TryInitFromEnv only works on Struct"),
     };
     let ident = &ast.ident;
-    let error_enum_ident = syn::Ident::new(&format!("{ident}ErrorEnum"), ident.span());
+    let ident_error = syn::Ident::new(&format!("{ident}Error"), ident.span());
     let error_std_env_var_ident =
         syn::Ident::new(&format!("{ident}StdEnvVar"), ident.span());
     let error_std_env_var_enum_ident =
@@ -318,35 +318,35 @@ pub fn init_from_env_wrapper(input: proc_macro::TokenStream) -> proc_macro::Toke
     let dotenv_variant_name_snake_case_token_stream = quote::quote!{dotenv};
     let dotenv_error_token_stream = quote::quote!{dotenv::Error};//implements Display
     let gen = quote::quote! {
-        #[derive(Debug)]
-        pub enum #error_enum_ident {
-            #error_std_env_var_ident(#error_std_env_var_enum_ident),
-            #error_parse_ident(#error_parse_enum_ident),
-        }
-        #[derive(Debug)]
-        pub enum #error_std_env_var_enum_ident {
-            #(#generated_enum_error_std_env_var_variants)*
-        }
-        #[derive(Debug)]
-        pub enum #error_parse_enum_ident {
-            #(#generated_enum_error_parse_variants)*
-        }
-        impl #ident {
-            #[must_use]
-            pub fn new() -> Result<Self, #error_enum_ident> {
-                if let Err(error) = dotenv::dotenv() {
-                    return Err(#error_enum_ident::#dotenv_variant_name_upper_camel_case_token_stream {
-                        #dotenv_variant_name_snake_case_token_stream: error,
-                    });
-                }
-                #(#generated_functions)*
-                Ok(
-                    Self {
-                        #(#generated_init_struct_fields,)*
-                    }
-                )
-            }
-        }
+        // #[derive(Debug)]
+        // pub enum #error_enum_ident {
+        //     #error_std_env_var_ident(#error_std_env_var_enum_ident),
+        //     #error_parse_ident(#error_parse_enum_ident),
+        // }
+        // #[derive(Debug)]
+        // pub enum #error_std_env_var_enum_ident {
+        //     #(#generated_enum_error_std_env_var_variants)*
+        // }
+        // #[derive(Debug)]
+        // pub enum #error_parse_enum_ident {
+        //     #(#generated_enum_error_parse_variants)*
+        // }
+        // impl #ident {
+        //     #[must_use]
+        //     pub fn new() -> Result<Self, #error_enum_ident> {
+        //         if let Err(error) = dotenv::dotenv() {
+        //             return Err(#error_enum_ident::#dotenv_variant_name_upper_camel_case_token_stream {
+        //                 #dotenv_variant_name_snake_case_token_stream: error,
+        //             });
+        //         }
+        //         #(#generated_functions)*
+        //         Ok(
+        //             Self {
+        //                 #(#generated_init_struct_fields,)*
+        //             }
+        //         )
+        //     }
+        // }
     };
     // println!("{gen}");
     gen.into()
