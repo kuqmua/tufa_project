@@ -288,12 +288,35 @@ pub enum TryFromStdEnvVarOkStdNetSocketAddrErrorNamed {
 impl TryFromStdEnvVarOk for std::net::SocketAddr {
     type Error = TryFromStdEnvVarOkStdNetSocketAddrErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
+        match <Self as std::str::FromStr>::from_str(&value) {
             Ok(value) => Ok(value),
             Err(error) => Err(Self::Error::StdNetSocketAddr {
                 std_net_socket_addr: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
+        }
+    }
+}
+
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkSecrecySecretStdStringStringErrorNamed {
+    SecrecySecretStdStringString {
+        #[eo_display_with_serialize_deserialize]
+        secrecy_secret_std_string_string: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
+    type Error = TryFromStdEnvVarOkSecrecySecretStdStringStringErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        if value.is_empty() {
+            Err(Self::Error::SecrecySecretStdStringString {
+                secrecy_secret_std_string_string: value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+        else {
+            Ok(Self::new(value))
         }
     }
 }
