@@ -144,5 +144,6 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "extraction",
     "generated",
     "route",
-    "body"
+    "body",
+    "env"
 );

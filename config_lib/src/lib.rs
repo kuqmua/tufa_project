@@ -1,4 +1,3 @@
-pub use init_from_env::InitFromEnv;
 pub use init_from_env::TryFromEnv;
 
 pub trait GetServiceSocketAddress {
