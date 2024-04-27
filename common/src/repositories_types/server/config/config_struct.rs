@@ -4,12 +4,7 @@
 )]
 pub struct Config {
     service_socket_address: std::net::SocketAddr,
-    hmac_secret: secrecy::Secret<std::string::String>,
-    base_url: std::string::String,
-    access_control_max_age: usize,
-    access_control_allow_origin: std::string::String,
 
-    github_name: std::string::String,
     github_token: std::string::String,
 
     timezone: chrono::FixedOffset,
@@ -40,30 +35,10 @@ pub enum ConfigCheckErrorNamed {
         server_port: std::net::AddrParseError,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    HmacSecret {
-        #[eo_display_with_serialize_deserialize]
-        hmac_secret: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BaseUrl {
-        #[eo_display_with_serialize_deserialize]
-        base_url: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
     //
     RequireSsl {
         #[eo_display_with_serialize_deserialize]
         require_ssl: bool,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    AccessControlAllowOrigin {
-        #[eo_display_with_serialize_deserialize]
-        access_control_allow_origin: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    GithubName {
-        #[eo_display_with_serialize_deserialize]
-        github_name: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     GithubToken {
@@ -114,12 +89,7 @@ impl Config {
         struct ConfigUnchecked {
             //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
             service_socket_address: std::string::String,
-            hmac_secret: std::string::String,
-            base_url: std::string::String,
-            access_control_max_age: std::primitive::usize,
-            access_control_allow_origin: std::string::String,
         
-            github_name: std::string::String,
             github_token: std::string::String,
         
             timezone: std::primitive::i32, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
@@ -147,44 +117,6 @@ impl Config {
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-        };
-        let hmac_secret = if value.hmac_secret.is_empty() {
-            return Err(ConfigCheckErrorNamed::HmacSecret {
-                hmac_secret: value.hmac_secret,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            secrecy::Secret::new(value.hmac_secret)
-        };
-        let base_url = if value.base_url.is_empty() {
-            return Err(ConfigCheckErrorNamed::BaseUrl {
-                base_url: value.base_url,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            value.base_url
-        };
-        let access_control_max_age = value.access_control_max_age;
-        let access_control_allow_origin = if value.access_control_allow_origin.is_empty() {
-            return Err(ConfigCheckErrorNamed::AccessControlAllowOrigin {
-                access_control_allow_origin: value.access_control_allow_origin,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            }); //todo - maybe add check if its uri\url
-        }
-        else {
-            value.access_control_allow_origin
-        };
-        
-        let github_name = if value.github_name.is_empty() {
-            return Err(ConfigCheckErrorNamed::GithubName {
-                github_name: value.github_name,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            value.github_name
         };
         let github_token = if value.github_token.is_empty() {
             return Err(ConfigCheckErrorNamed::GithubToken {
@@ -246,12 +178,7 @@ impl Config {
         let maximum_size_of_http_body_in_bytes = value.maximum_size_of_http_body_in_bytes;
         Ok(Self {
             service_socket_address,
-            hmac_secret,
-            base_url,
-            access_control_max_age,
-            access_control_allow_origin,
         
-            github_name,
             github_token,
         
             timezone,
@@ -303,80 +230,6 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
         Ok(Self(value))
     }
 }
-#[derive(Debug)]
-pub struct HmacSecret(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkHmacSecretErrorNamed {
-    IsEmpty {
-        #[eo_display_with_serialize_deserialize]
-        is_empty: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for HmacSecret {
-    type Error = TryFromStdEnvVarOkHmacSecretErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        if value.is_empty() {
-            Err(Self::Error::IsEmpty {
-                is_empty: "is_empty".to_string(),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-        else {
-            Ok(Self(secrecy::Secret::new(value)))
-        }
-    }
-}
-#[derive(Debug)]
-pub struct BaseUrl(pub std::string::String);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkBaseUrlErrorNamed {
-    IsEmpty {
-        #[eo_display_with_serialize_deserialize]
-        is_empty: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for BaseUrl {
-    type Error = TryFromStdEnvVarOkBaseUrlErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        if value.is_empty() {
-            Err(Self::Error::IsEmpty {
-                is_empty: "is_empty".to_string(),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-        else {
-            Ok(Self(value))
-        }
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct AccessControlMaxAge(pub std::primitive::usize);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkAccessControlMaxAgeErrorNamed {
-    Parsing {
-        #[eo_display]
-        parsing: std::num::ParseIntError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for AccessControlMaxAge {
-    type Error = TryFromStdEnvVarOkAccessControlMaxAgeErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        match value.parse::<std::primitive::usize>() {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(Self::Error::Parsing {
-                parsing: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-}
-#[derive(Debug)]
-pub struct AccessControlAllowOrigin(pub std::string::String);
-#[derive(Debug)]
-pub struct GithubName(pub std::string::String);
 #[derive(Debug)]
 pub struct GithubToken(pub std::string::String);
 #[derive(Debug, Clone, Copy)]

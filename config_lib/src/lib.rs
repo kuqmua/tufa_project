@@ -19,26 +19,6 @@ pub trait GetSocketAddr {
     fn get_socket_addr(&self) -> &std::string::String;
 }
 
-pub trait GetHmacSecret {
-    fn get_hmac_secret(&self) -> &secrecy::Secret<std::string::String>;
-}
-
-pub trait GetBaseUrl {
-    fn get_base_url(&self) -> &std::string::String;
-}
-
-pub trait GetAccessControlMaxAge {
-    fn get_access_control_max_age(&self) -> &std::primitive::usize;
-}
-
-pub trait GetAccessControlAllowOrigin {
-    fn get_access_control_allow_origin(&self) -> &std::string::String;
-}
-
-pub trait GetGithubName {
-    fn get_github_name(&self) -> &std::string::String;
-}
-
 pub trait GetGithubToken {
     fn get_github_token(&self) -> &std::string::String;
 }

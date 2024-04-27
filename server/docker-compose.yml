@@ -50,12 +50,7 @@ services:
   #     - ./.env
   #   environment:
   #     SERVER_PORT: ${SERVER_PORT}
-  #     HMAC_SECRET: ${HMAC_SECRET}
-  #     BASE_URL: ${BASE_URL}
-  #     ACCESS_CONTROL_MAX_AGE: ${ACCESS_CONTROL_MAX_AGE}
-  #     ACCESS_CONTROL_ALLOW_ORIGIN: ${ACCESS_CONTROL_ALLOW_ORIGIN}
 
-  #     GITHUB_NAME: ${GITHUB_NAME}
   #     GITHUB_TOKEN: ${GITHUB_TOKEN}
 
   #     TIMEZONE: ${TIMEZONE}
