@@ -1,5 +1,4 @@
 pub use config_lib::GetServiceSocketAddress;
-pub use config_lib::GetSocketAddr;
 pub use config_lib::GetTimezone;
 pub use config_lib::GetRedisUrl;
 pub use config_lib::GetMongoUrl;

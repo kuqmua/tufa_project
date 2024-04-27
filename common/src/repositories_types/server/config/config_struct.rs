@@ -21,55 +21,6 @@ pub struct Config {
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum ConfigCheckErrorNamed {
-//     ServiceSocketAddress {
-//         #[eo_display]
-//         server_port: std::net::AddrParseError,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     //
-//     RequireSsl {
-//         #[eo_display_with_serialize_deserialize]
-//         require_ssl: bool,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     Timezone {
-//         #[eo_display_with_serialize_deserialize]
-//         timezone: i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     RedisUrl {
-//         #[eo_display_with_serialize_deserialize]
-//         redis_url: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     MongoUrl {
-//         #[eo_display_with_serialize_deserialize]
-//         mongo_url: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     DatabaseUrl {
-//         #[eo_display_with_serialize_deserialize]
-//         database_url: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     StartingCheckLink {
-//         #[eo_display_with_serialize_deserialize]
-//         starting_check_link: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     TracingType {
-//         #[eo_display_with_serialize_deserialize]
-//         tracing_type: app_state::TracingType,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     SourcePlaceType {
-//         #[eo_display_with_serialize_deserialize]
-//         source_place_type: app_state::SourcePlaceType,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
 #[derive(Debug, config_lib::TryFromEnv)]
 struct ConfigHandle {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
