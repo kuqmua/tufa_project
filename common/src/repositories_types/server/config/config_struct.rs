@@ -365,6 +365,29 @@ impl TryFromStdEnvVarOk for HmacSecret {
 }
 #[derive(Debug)]
 pub struct BaseUrl(pub std::string::String);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkBaseUrlErrorNamed {
+    IsEmpty {
+        #[eo_display_with_serialize_deserialize]
+        is_empty: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for BaseUrl {
+    type Error = TryFromStdEnvVarOkBaseUrlErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value: std::string::String = FromStdEnvVarOkHandle::from_std_env_var_ok_handle(value);
+        if value.is_empty() {
+            Err(Self::Error::IsEmpty {
+                is_empty: "is_empty".to_string(),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+        else {
+            Ok(Self(value))
+        }
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct AccessControlMaxAge(pub std::primitive::usize);
 #[derive(Debug)]
