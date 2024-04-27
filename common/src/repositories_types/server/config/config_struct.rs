@@ -318,21 +318,24 @@ pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
     ServiceSocketAddress {
-        #[eo_display]
-        service_socket_address: std::net::AddrParseError,
+        #[eo_error_occurence]
+        service_socket_address: TryFromStdEnvVarOkStdNetSocketAddrErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(Self::Error::ServiceSocketAddress {
-                service_socket_address: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
+        let value: std::net::SocketAddr = match TryFromStdEnvVarOk::try_from_std_env_var_ok(value) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(Self::Error::ServiceSocketAddress {
+                    service_socket_address: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        Ok(Self(value))
     }
 }
 #[derive(Debug)]
