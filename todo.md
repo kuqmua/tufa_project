@@ -360,15 +360,6 @@ and in dcoker-compose too
 * limit for mongo "get data" functions
 get concrete number of provider links as function or command line or env
 
-* #[deny(,   unwrap_used)]
-files to write warnings:
-rss_parse_string_into_struct
-rss_fetch_and_parse_provider_data
-rss_divide_to_equal_for_each_provider
-rss_check_available_providers
-get_providers_link_parts_from_mongo
-generate_twitter_hashmap_links
-
 * github parsing return in second parameter option<String, line! file!> to analize missing parse logic 
 
 * implement get_providers_link_parts with all success completed and with not all
@@ -468,14 +459,6 @@ check it in the middle of 2022
             
 * remove unwrap() into expect() to give more meaning
 except maybe loops or early return cases 
-
-* warning: variant is never constructed: `PostgreSql`
-  --> src/providers_info/get_project_information/get_providers_link_parts.rs:62:5
-   |
-62 |     PostgreSql,
-   |     ^^^^^^^^^^
-   |
-   = note: `#[warn(dead_code)]` on by default
 
 * Result instead of option in all code possible coz return Option loosing information about error 
 
@@ -580,8 +563,6 @@ github parsing version to check different structs of posts as test in the loop
 Like http request to crates.io or something similar
 
 * write test what checks if something missing in .dockerignore and .gitignore - local or ci? 
-
-* Write tests what checks all function to have #![deny(,   unwrap_used)]
 
 * test to check what cargo run executes in the right folder
 
@@ -710,9 +691,6 @@ https://efanzh.org/2021/05/25/rust-lints.html
 
 * global .gitignore
 https://www.youtube.com/watch?v=D97rnxDqq1I
-
-* #[deny(  unwrap_used)]
-Find out why its triggers for tokio:main functions
 
 * rewrite something with "from" and "into" traits
 

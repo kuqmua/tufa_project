@@ -7,10 +7,6 @@ mod type_variants_from_request_response_generator;
 //todo generate for each create update delete body length checked and for path query headers too
 //todo how to write filter logic for sqlx rust postgresql types?
 //todo decide where to do error log (maybe add in some places)
-//todo clear unnesesary generated returns.
-// unneeded `return` statement
-// for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_return
-// `#[warn(clippy::needless_return)]`
 //todo validate uuid
 //todo add regex filter to query parameters - now supports only in body variants
 //todo regex filter support only for string-like types postgresql

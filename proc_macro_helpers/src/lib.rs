@@ -1,11 +1,3 @@
-#![deny(
-    clippy::indexing_slicing,
-    clippy::arithmetic_side_effects,
-    clippy::unwrap_used,
-    clippy::float_arithmetic
-)]
-#![allow(clippy::too_many_arguments)]
-
 pub mod code_occurence_syn_field;
 pub mod construct_syn_variant;
 pub mod enum_variants;

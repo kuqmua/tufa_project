@@ -1,11 +1,3 @@
-#![deny(
-    clippy::indexing_slicing,
-    clippy::arithmetic_side_effects,
-    clippy::unwrap_used,
-    clippy::float_arithmetic
-)]
-#![allow(clippy::too_many_arguments)]
-
 #[proc_macro]
 pub fn compile_time_project_git_info(
     _input_token_stream: proc_macro::TokenStream,

@@ -1,11 +1,3 @@
-#![deny(
-    clippy::indexing_slicing,
-    // clippy::arithmetic_side_effects,//detects inside quote!{}
-    clippy::unwrap_used,
-    clippy::float_arithmetic
-)]
-#![allow(clippy::too_many_arguments)]
-
 #[proc_macro_derive(EnumExtension)]
 pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();

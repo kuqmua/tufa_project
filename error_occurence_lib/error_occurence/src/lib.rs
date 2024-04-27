@@ -1,6 +1,3 @@
-#![deny(clippy::unwrap_used, clippy::float_arithmetic)]
-#![allow(clippy::too_many_arguments)]
-
 //there is a possibility for not doing with_serialize_deserialize case (then type does not implement serde::Serialize and serde::Deserialize) https://serde.rs/remote-derive.html
 //todo not all implementations of Unnnamed ErrorOccurence are support Sized config Generic. fix its(hashmap\vec impl)
 //todo change how hashmap shows in console
