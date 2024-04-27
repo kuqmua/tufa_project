@@ -246,6 +246,29 @@ impl TryFromStdEnvVarOk for Timezone {
 }
 #[derive(Debug)]
 pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
+    IsEmpty {
+        #[eo_display_with_serialize_deserialize]
+        is_empty: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for RedisUrl {
+    type Error = TryFromStdEnvVarOkRedisUrlErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = if value.is_empty() {
+            return Err(Self::Error::IsEmpty {
+                is_empty: std::string::String::from("is empty"),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        else {
+            secrecy::Secret::new(value)
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug)]
 pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug)]
