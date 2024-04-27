@@ -291,9 +291,27 @@ pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
 }
-//
 
-//
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkStdNetSocketAddrErrorNamed {
+    StdNetSocketAddr {
+        #[eo_display]
+        std_net_socket_addr: std::net::AddrParseError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for std::net::SocketAddr {
+    type Error = TryFromStdEnvVarOkStdNetSocketAddrErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        match <Self as std::str::FromStr>::from_str(&value) {
+            Ok(value) => Ok(value),
+            Err(error) => Err(Self::Error::StdNetSocketAddr {
+                std_net_socket_addr: error,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy)]
 pub struct ServiceSocketAddress(pub std::net::SocketAddr);
