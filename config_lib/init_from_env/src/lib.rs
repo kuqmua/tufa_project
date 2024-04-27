@@ -41,6 +41,16 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let std_env_var_error_upper_camel_case_token_stream = quote::quote!{StdEnvVarError};
     let std_env_var_error_snake_case_token_stream = quote::quote!{std_env_var_error};
     let env_var_name_snake_case_token_stream = quote::quote!{env_var_name};
+    let try_from_std_env_var_ok_upper_camel_case_stringified = "TryFromStdEnvVarOk";
+    let try_from_std_env_var_ok_upper_camel_case_token_stream = {
+        try_from_std_env_var_ok_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {try_from_std_env_var_ok_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let try_from_std_env_var_ok_snake_case_token_stream = {
+        let value = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&try_from_std_env_var_ok_upper_camel_case_stringified);
+        value.parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
     let error_named_token_stream = {
         let code_occurence_error_occurence_lib_code_occurence_code_occurence_token_stream = quote::quote!{code_occurence: error_occurence_lib::code_occurence::CodeOccurence};
         let variants_token_stream = fields_named.iter().map(|element|{
@@ -59,7 +69,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                     value_token_stream.to_string()
                 };
                 let value = format!(
-                    "TryFromStdEnvVarOk{element_type_stringified}{}{}",
+                    "{try_from_std_env_var_ok_upper_camel_case_stringified}{element_type_stringified}{}{}",
                     <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
                     <naming_constants::Named as naming_constants::Naming>::upper_camel_case_stringified(),
                 );
@@ -116,7 +126,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                                 #code_occurence_error_occurence_lib_code_occurence_token_stream,
                             });
                         }
-                        Ok(value) => match TryFromStdEnvVarOk::try_from_std_env_var_ok(value) {
+                        Ok(value) => match #try_from_std_env_var_ok_upper_camel_case_token_stream::try_from_std_env_var_ok(value) {
                             Err(error) => {
                                 return Err(#ident_try_from_env_error_named::#element_type {
                                     #element_ident: error,
