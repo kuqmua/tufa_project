@@ -276,6 +276,12 @@ pub trait FromStdEnvVarOkHandle: Sized {
     fn from_std_env_var_ok_handle(value: std::string::String) -> Self;
 }
 
+impl FromStdEnvVarOkHandle for std::string::String {
+    fn from_std_env_var_ok_handle(value: std::string::String) -> Self {
+        value
+    }
+}
+
 pub trait TryFromStdEnvVarOkHandle: Sized {
     type Error;
     fn try_from_std_env_var_ok_handle(value: std::string::String) -> Result<Self, Self::Error>;
@@ -285,6 +291,9 @@ pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
 }
+//
+
+//
 
 #[derive(Debug, Clone, Copy)]
 pub struct ServiceSocketAddress(pub std::net::SocketAddr);
