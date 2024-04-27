@@ -207,6 +207,43 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
 }
 #[derive(Debug, Clone, Copy)]
 pub struct Timezone(pub chrono::FixedOffset);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
+    StdPrimitiveI32Parsing {
+        #[eo_display]
+        std_primitive_i32_parsing: std::num::ParseIntError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ChronoFixedOffset {
+        #[eo_display_with_serialize_deserialize]
+        chrono_fixed_offset: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for Timezone {
+    type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = match value.parse::<std::primitive::i32>() {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(Self::Error::StdPrimitiveI32Parsing {
+                    std_primitive_i32_parsing: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        let value = match chrono::FixedOffset::east_opt(value) {
+            Some(value) => value,
+            None => {
+                return Err(Self::Error::ChronoFixedOffset {
+                    chrono_fixed_offset: std::string::String::from("not east"),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug)]
 pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug)]
