@@ -5,8 +5,6 @@
 pub struct Config {
     service_socket_address: std::net::SocketAddr,
 
-    github_token: std::string::String,
-
     timezone: chrono::FixedOffset,
 
     redis_url: secrecy::Secret<std::string::String>,
@@ -25,11 +23,6 @@ pub struct Config {
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ConfigCheckErrorNamed {
-    // ConfigUnchecked {
-    //     #[eo_display]
-    //     config_unchecked_error: ConfigUncheckedError,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
     ServiceSocketAddress {
         #[eo_display]
         server_port: std::net::AddrParseError,
@@ -39,11 +32,6 @@ pub enum ConfigCheckErrorNamed {
     RequireSsl {
         #[eo_display_with_serialize_deserialize]
         require_ssl: bool,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    GithubToken {
-        #[eo_display_with_serialize_deserialize]
-        github_token: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Timezone {
@@ -90,8 +78,6 @@ impl Config {
             //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
             service_socket_address: std::string::String,
         
-            github_token: std::string::String,
-        
             timezone: std::primitive::i32, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
         
             redis_url: std::string::String,
@@ -117,15 +103,6 @@ impl Config {
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-        };
-        let github_token = if value.github_token.is_empty() {
-            return Err(ConfigCheckErrorNamed::GithubToken {
-                github_token: value.github_token,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            value.github_token
         };
         let timezone = match chrono::FixedOffset::east_opt(value.timezone) {
             Some(fixed_offset) => fixed_offset,
@@ -179,8 +156,6 @@ impl Config {
         Ok(Self {
             service_socket_address,
         
-            github_token,
-        
             timezone,
         
             redis_url,
@@ -230,8 +205,6 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
         Ok(Self(value))
     }
 }
-#[derive(Debug)]
-pub struct GithubToken(pub std::string::String);
 #[derive(Debug, Clone, Copy)]
 pub struct Timezone(pub chrono::FixedOffset);
 #[derive(Debug)]

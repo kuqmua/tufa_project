@@ -1,7 +1,5 @@
 SERVICE_SOCKET_ADDRESS="127.0.0.1:8080"
 
-GITHUB_TOKEN=""
-
 TIMEZONE="0" # i32, in seconds. main is 10800. value = hours * 3600. -24 < hours < 24. so value is -86_400 < secs && secs < 86_400. Otherwise panics on start.  Makes a new FixedOffset for the Eastern Hemisphere with given timezone difference. The negative secs means the Western Hemisphere
 
 REDIS_URL=""

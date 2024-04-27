@@ -19,10 +19,6 @@ pub trait GetSocketAddr {
     fn get_socket_addr(&self) -> &std::string::String;
 }
 
-pub trait GetGithubToken {
-    fn get_github_token(&self) -> &std::string::String;
-}
-
 pub trait GetTimezone {
     fn get_timezone(&self) -> &chrono::FixedOffset;
 }
