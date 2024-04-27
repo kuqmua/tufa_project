@@ -321,11 +321,126 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
 }
 #[derive(Debug)]
 pub struct StartingCheckLink(pub std::string::String);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
+    IsEmpty {
+        #[eo_display_with_serialize_deserialize]
+        is_empty: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for StartingCheckLink {
+    type Error = TryFromStdEnvVarOkStartingCheckLinkErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = if value.is_empty() {
+            return Err(Self::Error::IsEmpty {
+                is_empty: std::string::String::from("is empty"),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        else {
+            value
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct TracingType(pub app_state::TracingType);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
+    AppStateTracingTypeParsing {
+        #[eo_display_with_serialize_deserialize]
+        app_state_tracing_type_parsing: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for TracingType {
+    type Error = TryFromStdEnvVarOkTracingTypeErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = match value.parse::<app_state::TracingType>() {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(Self::Error::AppStateTracingTypeParsing {
+                    app_state_tracing_type_parsing: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct SourcePlaceType(pub app_state::SourcePlaceType);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
+    AppStateSourcePlaceTypeParsing {
+        #[eo_display_with_serialize_deserialize]
+        app_state_source_place_type_parsing: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for SourcePlaceType {
+    type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = match value.parse::<app_state::SourcePlaceType>() {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(Self::Error::AppStateSourcePlaceTypeParsing {
+                    app_state_source_place_type_parsing: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
+    StdPrimitiveBoolParsing {
+        #[eo_display]
+        std_primitive_bool_parsing: std::str::ParseBoolError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
+    type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = match value.parse::<std::primitive::bool>() {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(Self::Error::StdPrimitiveBoolParsing {
+                    std_primitive_bool_parsing: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug, Clone, Copy)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
+    StdPrimitiveUsizeParsing {
+        #[eo_display]
+        std_primitive_usize_parsing: std::num::ParseIntError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
+    type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = match value.parse::<std::primitive::usize>() {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(Self::Error::StdPrimitiveUsizeParsing {
+                    std_primitive_usize_parsing: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        Ok(Self(value))
+    }
+}
