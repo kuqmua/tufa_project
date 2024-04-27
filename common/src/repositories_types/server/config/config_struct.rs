@@ -271,8 +271,54 @@ impl TryFromStdEnvVarOk for RedisUrl {
 }
 #[derive(Debug)]
 pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
+    IsEmpty {
+        #[eo_display_with_serialize_deserialize]
+        is_empty: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for MongoUrl {
+    type Error = TryFromStdEnvVarOkMongoUrlErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = if value.is_empty() {
+            return Err(Self::Error::IsEmpty {
+                is_empty: std::string::String::from("is empty"),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        else {
+            secrecy::Secret::new(value)
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug)]
 pub struct DatabaseUrl(pub secrecy::Secret<std::string::String>);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
+    IsEmpty {
+        #[eo_display_with_serialize_deserialize]
+        is_empty: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for DatabaseUrl {
+    type Error = TryFromStdEnvVarOkDatabaseUrlErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        let value = if value.is_empty() {
+            return Err(Self::Error::IsEmpty {
+                is_empty: std::string::String::from("is empty"),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        else {
+            secrecy::Secret::new(value)
+        };
+        Ok(Self(value))
+    }
+}
 #[derive(Debug)]
 pub struct StartingCheckLink(pub std::string::String);
 #[derive(Debug, Clone, Copy)]
