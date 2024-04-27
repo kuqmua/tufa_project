@@ -73,7 +73,10 @@ pub enum ConfigCheckErrorNamed {
 
 impl Config {
     pub fn try_from_env() -> Result<Self, ConfigCheckErrorNamed> {
-        #[derive(Debug, Default, PartialEq, Eq, config_lib::InitFromEnv)]
+        #[derive(Debug, Default, PartialEq, Eq, 
+            config_lib::InitFromEnv,
+            // config_lib::InitFromEnvWrapper
+        )]
         struct ConfigUnchecked {
             //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
             service_socket_address: std::string::String,
@@ -93,6 +96,9 @@ impl Config {
             enable_api_git_commit_check: std::primitive::bool,
             maximum_size_of_http_body_in_bytes: std::primitive::usize,
         }
+        ///////////////
+
+        ////////////////
         let value = ConfigUnchecked::new().unwrap_or_else(|error| panic!("failed to ConfigUnchecked::new(), reason: {error:#?}"));
         // Self::try_from(value).unwrap_or_else(|error| panic!("failed to Config try_from ConfigUnchecked, reason: {error}"))
         let service_socket_address =  match <std::net::SocketAddr as std::str::FromStr>::from_str(&value.service_socket_address) {
