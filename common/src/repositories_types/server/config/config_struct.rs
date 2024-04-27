@@ -272,65 +272,30 @@ impl Config {
     }
 }
 
-pub trait FromStdEnvVarOkHandle: Sized {
-    fn from_std_env_var_ok_handle(value: std::string::String) -> Self;
-}
-
-impl FromStdEnvVarOkHandle for std::string::String {
-    fn from_std_env_var_ok_handle(value: std::string::String) -> Self {
-        value
-    }
-}
-
-pub trait TryFromStdEnvVarOkHandle: Sized {
-    type Error;
-    fn try_from_std_env_var_ok_handle(value: std::string::String) -> Result<Self, Self::Error>;
-}
-
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
 }
 
+
+#[derive(Debug, Clone, Copy)]
+pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkStdNetSocketAddrErrorNamed {
+pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
     StdNetSocketAddr {
         #[eo_display]
         std_net_socket_addr: std::net::AddrParseError,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl TryFromStdEnvVarOk for std::net::SocketAddr {
-    type Error = TryFromStdEnvVarOkStdNetSocketAddrErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        match <Self as std::str::FromStr>::from_str(&value) {
-            Ok(value) => Ok(value),
-            Err(error) => Err(Self::Error::StdNetSocketAddr {
-                std_net_socket_addr: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct ServiceSocketAddress(pub std::net::SocketAddr);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
-    ServiceSocketAddress {
-        #[eo_error_occurence]
-        service_socket_address: TryFromStdEnvVarOkStdNetSocketAddrErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value: std::net::SocketAddr = match TryFromStdEnvVarOk::try_from_std_env_var_ok(value) {
+        let value = match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
             Ok(value) => value,
             Err(error) => {
-                return Err(Self::Error::ServiceSocketAddress {
-                    service_socket_address: error,
+                return Err(Self::Error::StdNetSocketAddr {
+                    std_net_socket_addr: error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
@@ -351,7 +316,6 @@ pub enum TryFromStdEnvVarOkHmacSecretErrorNamed {
 impl TryFromStdEnvVarOk for HmacSecret {
     type Error = TryFromStdEnvVarOkHmacSecretErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value: std::string::String = FromStdEnvVarOkHandle::from_std_env_var_ok_handle(value);
         if value.is_empty() {
             Err(Self::Error::IsEmpty {
                 is_empty: "is_empty".to_string(),
@@ -376,7 +340,6 @@ pub enum TryFromStdEnvVarOkBaseUrlErrorNamed {
 impl TryFromStdEnvVarOk for BaseUrl {
     type Error = TryFromStdEnvVarOkBaseUrlErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value: std::string::String = FromStdEnvVarOkHandle::from_std_env_var_ok_handle(value);
         if value.is_empty() {
             Err(Self::Error::IsEmpty {
                 is_empty: "is_empty".to_string(),
@@ -390,6 +353,26 @@ impl TryFromStdEnvVarOk for BaseUrl {
 }
 #[derive(Debug, Clone, Copy)]
 pub struct AccessControlMaxAge(pub std::primitive::usize);
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum TryFromStdEnvVarOkAccessControlMaxAgeErrorNamed {
+    Parsing {
+        #[eo_display]
+        parsing: std::num::ParseIntError,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl TryFromStdEnvVarOk for AccessControlMaxAge {
+    type Error = TryFromStdEnvVarOkAccessControlMaxAgeErrorNamed;
+    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
+        match value.parse::<std::primitive::usize>() {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(Self::Error::Parsing {
+                parsing: error,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
 #[derive(Debug)]
 pub struct AccessControlAllowOrigin(pub std::string::String);
 #[derive(Debug)]
