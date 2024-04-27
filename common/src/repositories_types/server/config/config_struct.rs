@@ -469,3 +469,58 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
             enable_api_git_commit_check: EnableApiGitCommitCheck,
             maximum_size_of_http_body_in_bytes: MaximumSizeOfHttpBodyInBytes,
         }
+
+
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum ConfigUncheckedTryFromEnvErrorNamed {
+    ServiceSocketAddress {
+        #[eo_error_occurence]
+        service_socket_address: TryFromStdEnvVarOkServiceSocketAddressErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Timezone {
+        #[eo_error_occurence]
+        timezone: TryFromStdEnvVarOkTimezoneErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RedisUrl {
+        #[eo_error_occurence]
+        redis_url: TryFromStdEnvVarOkRedisUrlErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MongoUrl {
+        #[eo_error_occurence]
+        mongo_url: TryFromStdEnvVarOkMongoUrlErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DatabaseUrl {
+        #[eo_error_occurence]
+        database_url: TryFromStdEnvVarOkDatabaseUrlErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    StartingCheckLink {
+        #[eo_error_occurence]
+        starting_check_link: TryFromStdEnvVarOkStartingCheckLinkErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TracingType {
+        #[eo_error_occurence]
+        tracing_type: TryFromStdEnvVarOkTracingTypeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SourcePlaceType {
+        #[eo_error_occurence]
+        source_place_type: TryFromStdEnvVarOkSourcePlaceTypeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    EnableApiGitCommitCheck {
+        #[eo_error_occurence]
+        enable_api_git_commit_check: TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    MaximumSizeOfHttpBodyInBytes {
+        #[eo_error_occurence]
+        maximum_size_of_http_body_in_bytes: TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
