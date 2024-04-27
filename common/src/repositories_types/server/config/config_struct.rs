@@ -321,3 +321,35 @@ impl TryFromStdEnvVarOk for secrecy::Secret<std::string::String> {
     }
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct ServiceSocketAddress(pub std::net::SocketAddr);
+#[derive(Debug)]
+pub struct HmacSecret(pub secrecy::Secret<std::string::String>);
+#[derive(Debug)]
+pub struct BaseUrl(pub std::string::String);
+#[derive(Debug, Clone, Copy)]
+pub struct AccessControlMaxAge(pub std::primitive::usize);
+#[derive(Debug)]
+pub struct AccessControlAllowOrigin(pub std::string::String);
+#[derive(Debug)]
+pub struct GithubName(pub std::string::String);
+#[derive(Debug)]
+pub struct GithubToken(pub std::string::String);
+#[derive(Debug, Clone, Copy)]
+pub struct Timezone(pub chrono::FixedOffset);
+#[derive(Debug)]
+pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
+#[derive(Debug)]
+pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
+#[derive(Debug)]
+pub struct DatabaseUrl(pub secrecy::Secret<std::string::String>);
+#[derive(Debug)]
+pub struct StartingCheckLink(pub std::string::String);
+#[derive(Debug, Clone, Copy)]
+pub struct TracingType(pub app_state::TracingType);
+#[derive(Debug, Clone, Copy)]
+pub struct SourcePlaceType(pub app_state::SourcePlaceType);
+#[derive(Debug, Clone, Copy)]
+pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
+#[derive(Debug, Clone, Copy)]
+pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
