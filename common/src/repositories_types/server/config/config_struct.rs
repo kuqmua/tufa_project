@@ -473,6 +473,21 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ConfigUncheckedTryFromEnvErrorNamed {
+    //
+    Dotenv {
+        #[eo_display]
+        dotenv: dotenv::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
+    StdEnvVarError {
+        #[eo_display]
+        std_env_var_error: std::env::VarError,
+        #[eo_display_with_serialize_deserialize]
+        env_var_name: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
     ServiceSocketAddress {
         #[eo_error_occurence]
         service_socket_address: TryFromStdEnvVarOkServiceSocketAddressErrorNamed,
