@@ -1,4 +1,5 @@
 pub use try_from_env::TryFromEnv;
+pub use generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields;
 pub mod types;
 
 pub trait TryFromStdEnvVarOk: Sized {

@@ -2,7 +2,6 @@
 1. [git_sync_command](#heading1)
 2. [compile_time_git_info](#heading2)
 3. [enum_extension](#heading3)
-7. [generate_getter_traits_for_struct_fields](#heading7)
 18. [proc_macro_helpers](#heading18)
 22. [svg_component](#heading22)
 23. [client](#heading23)
@@ -26,8 +25,6 @@
 ## git_sync_command <a name="heading1"/>
 
 ## enum_extension <a name="heading3"/>
-
-## generate_getter_traits_for_struct_fields <a name="heading7"/>
 
 ## proc_macro_helpers <a name="heading18"/>
 

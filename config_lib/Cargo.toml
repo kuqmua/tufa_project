@@ -16,6 +16,7 @@ enum_extension_lib = {path = "../enum_extension_lib"}
 from_str = {path = "../from_str"}
 # server_port = {path = "./server_port"}
 try_from_env = {path = "./try_from_env"}
+generate_getter_traits_for_struct_fields = {path = "./generate_getter_traits_for_struct_fields"}
 
 [lints]
 workspace = true
