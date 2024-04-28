@@ -1,4 +1,5 @@
 pub use try_from_env::TryFromEnv;
+pub mod types;
 
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
@@ -202,40 +203,11 @@ impl TryFromStdEnvVarOk for StartingCheckLinkWrapper {
     }
 }
 
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    strum_macros::EnumIter,
-    enum_extension_lib::EnumExtension,
-    serde::Serialize,
-    serde::Deserialize,
-    PartialEq,
-    Eq,
-    from_str::FromStr,
-)]
-pub enum TracingTypeEnum {
-    Trace,
-    Debug,
-    Info,
-    Warn,
-    Error,
-}
-impl std::default::Default for TracingTypeEnum {
-    fn default() -> Self {
-        Self::Error
-    }
-}
-impl std::fmt::Display for TracingTypeEnum {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.to_snake_case())
-    }
-}
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &TracingTypeEnum;
+    fn get_tracing_type(&self) -> &crate::types::TracingTypeEnum;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct TracingTypeWrapper(pub TracingTypeEnum);
+pub struct TracingTypeWrapper(pub crate::types::TracingTypeEnum);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
     AppStateTracingTypeParsing {
@@ -250,7 +222,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkTracingTypeErrorNamed {
 impl TryFromStdEnvVarOk for TracingTypeWrapper {
     type Error = TryFromStdEnvVarOkTracingTypeErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<TracingTypeEnum>() {
+        let value = match value.parse::<crate::types::TracingTypeEnum>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::AppStateTracingTypeParsing {
@@ -262,31 +234,11 @@ impl TryFromStdEnvVarOk for TracingTypeWrapper {
     }
 }
 
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    strum_macros::Display,
-    serde::Serialize,
-    serde::Deserialize,
-    from_str::FromStr,
-)]
-pub enum SourcePlaceType {
-    Source,
-    Github,
-}
-impl std::default::Default for SourcePlaceType {
-    fn default() -> Self {
-        Self::Source
-    }
-}
 pub trait GetSourcePlaceType {
-    fn get_source_place_type(&self) -> &SourcePlaceType;
+    fn get_source_place_type(&self) -> &crate::types::SourcePlaceType;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct SourcePlaceTypeWrapper(pub SourcePlaceType);
+pub struct SourcePlaceTypeWrapper(pub crate::types::SourcePlaceType);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
     AppStateSourcePlaceTypeParsing {
@@ -301,7 +253,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
 impl TryFromStdEnvVarOk for SourcePlaceTypeWrapper {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<SourcePlaceType>() {
+        let value = match value.parse::<crate::types::SourcePlaceType>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::AppStateSourcePlaceTypeParsing {
