@@ -1,5 +1,5 @@
 pub(crate) async fn server_wrapper(
-    config: &'static common::repositories_types::server::config::config_struct::Config,
+    config: &'static common::repositories_types::server::config::Config,
 ) -> Result<(), Box<common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed>> {
     let postgres_pool = match common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
         Ok(postgres_pool) => postgres_pool,

@@ -1,4 +1,4 @@
-pub fn entry(config: &'static common::repositories_types::server::config::config_struct::Config) {
+pub fn entry(config: &'static common::repositories_types::server::config::Config) {
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
         .enable_all()

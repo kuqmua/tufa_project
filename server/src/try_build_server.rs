@@ -199,7 +199,7 @@ async fn read_middleware_custom_header(
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_server(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
-    config: &'static common::repositories_types::server::config::config_struct::Config,
+    config: &'static common::repositories_types::server::config::Config,
 ) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
     println!("server running on {}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
     let app_state = std::sync::Arc::new(

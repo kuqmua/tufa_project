@@ -17,7 +17,7 @@ fn main() {
     println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
     crate::entry::entry(
         crate::global_variables::runtime::config::CONFIG.get_or_init(
-            || common::repositories_types::server::config::config_struct::Config::try_from_env().unwrap()
+            || common::repositories_types::server::config::Config::try_from_env().unwrap()
         ),
     );
 }

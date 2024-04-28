@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct AppState<'a> {
     pub postgres_pool: sqlx::PgPool,
-    pub config: &'a crate::repositories_types::server::config::config_struct::Config,
+    pub config: &'a crate::repositories_types::server::config::Config,
     pub project_git_info: &'a git_info::ProjectGitInfo<'a>,
 }
 

@@ -221,8 +221,8 @@
 //         c.email_client.base_url = email_server.uri();
 //         c
 //     };
-//     let config = crate::global_variables::runtime::config::CONFIG.get_or_init(|| common::repositories_types::server::config::config_struct::Config::try_from(
-//         common::repositories_types::server::config::config_struct::ConfigUnchecked::new()
+//     let config = crate::global_variables::runtime::config::CONFIG.get_or_init(|| common::repositories_types::server::config::Config::try_from(
+//         common::repositories_types::server::config::ConfigUnchecked::new()
 //         .unwrap_or_else(|error| panic!("failed to ConfigUnchecked::new(), reason: {error:#?}"))
 //     ).unwrap_or_else(|error| panic!("failed to Config try_from ConfigUnchecked, reason: {e}")));
 //     configure_database(config).await;
