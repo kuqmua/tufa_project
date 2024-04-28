@@ -214,28 +214,28 @@ impl TryFromStdEnvVarOk for StartingCheckLinkWrapper {
     Eq,
     from_str::FromStr,
 )]
-pub enum TracingType {
+pub enum TracingTypeEnum {
     Trace,
     Debug,
     Info,
     Warn,
     Error,
 }
-impl std::default::Default for TracingType {
+impl std::default::Default for TracingTypeEnum {
     fn default() -> Self {
         Self::Error
     }
 }
-impl std::fmt::Display for TracingType {
+impl std::fmt::Display for TracingTypeEnum {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.to_snake_case())
     }
 }
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &TracingType;
+    fn get_tracing_type(&self) -> &TracingTypeEnum;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct TracingTypeWrapper(pub TracingType);
+pub struct TracingTypeWrapper(pub TracingTypeEnum);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
     AppStateTracingTypeParsing {
@@ -250,7 +250,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkTracingTypeErrorNamed {
 impl TryFromStdEnvVarOk for TracingTypeWrapper {
     type Error = TryFromStdEnvVarOkTracingTypeErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<TracingType>() {
+        let value = match value.parse::<TracingTypeEnum>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::AppStateTracingTypeParsing {

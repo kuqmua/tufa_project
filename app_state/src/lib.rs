@@ -4,7 +4,7 @@ pub use config_lib::GetRedisUrl;
 pub use config_lib::GetMongoUrl;
 pub use config_lib::GetDatabaseUrl;
 pub use config_lib::GetStartingCheckLink;
-pub use config_lib::TracingType;
+pub use config_lib::TracingTypeEnum;
 pub use config_lib::GetTracingType;
 pub use config_lib::SourcePlaceType;
 pub use config_lib::GetSourcePlaceType;
