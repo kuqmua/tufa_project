@@ -54,11 +54,6 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let error_upper_camel_case_token_stream = {
-                // let element_type_stringified = {
-                //     let value_type = &element.ty;
-                //     let value_token_stream = quote::quote!{#value_type};
-                //     value_token_stream.to_string()
-                // };
                 let value = format!(
                     "{try_from_std_env_var_ok_upper_camel_case_stringified}{element_ident_upper_camel_case_token_stream}{}{}",
                     <naming_constants::Error as naming_constants::Naming>::upper_camel_case_stringified(),
