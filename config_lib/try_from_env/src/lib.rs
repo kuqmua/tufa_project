@@ -130,9 +130,20 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
+            let element_ident_wrapper_upper_camel_case_token_stream = {
+                let value = format!(
+                    "{}{}",
+                    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(
+                        &element_ident.as_ref().expect(ident_in_none_stringified).to_string()
+                    ),
+                    <naming_constants::Wrapper as naming_constants::Naming>::upper_camel_case_stringified(),
+                );
+                value.parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
             let element_type = &element.ty;
             quote::quote!{
-                let #element_ident: #element_type = {
+                let #element_ident = {
                     let env_var_name = std::string::String::from(#element_ident_quotes_screaming_snake_case_string);
                     match std::env::var(&env_var_name) {
                         Err(error) => {
@@ -141,13 +152,16 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                                 #env_var_name_snake_case_token_stream,
                             });
                         }
-                        Ok(value) => match config_lib::#try_from_std_env_var_ok_upper_camel_case_token_stream::try_from_std_env_var_ok(value) {
+                        Ok(value) => match <
+                            config_lib::#element_ident_wrapper_upper_camel_case_token_stream as 
+                            config_lib::#try_from_std_env_var_ok_upper_camel_case_token_stream
+                        >::try_from_std_env_var_ok(value) {
                             Err(error) => {
                                 return Err(#ident_try_from_env_error_named::#element_ident_upper_camel_case_token_stream {
                                     #element_ident: error,
                                 });
                             }
-                            Ok(value) => value,
+                            Ok(value) => value.0,
                         },
                     }
                 };
@@ -175,6 +189,6 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         #display_error_named_token_stream
         #try_from_env_token_stream
     };
-    println!("{gen}");
+    // println!("{gen}");
     gen.into()
 }
