@@ -203,29 +203,29 @@ impl TryFromStdEnvVarOk for StartingCheckLinkWrapper {
     }
 }
 
-pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &crate::types::TracingLevel;
+pub trait GetTracingLevel {
+    fn get_tracing_level(&self) -> &crate::types::TracingLevel;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct TracingTypeWrapper(pub crate::types::TracingLevel);
+pub struct TracingLevelWrapper(pub crate::types::TracingLevel);
 #[derive(Debug, thiserror::Error)]
-pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
-    AppStateTracingTypeParsing {
+pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
+    AppStateTracingLevelParsing {
         app_state_tracing_type_parsing: std::string::String,
     },
 }
-impl std::fmt::Display for TryFromStdEnvVarOkTracingTypeErrorNamed {
+impl std::fmt::Display for TryFromStdEnvVarOkTracingLevelErrorNamed {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for TracingTypeWrapper {
-    type Error = TryFromStdEnvVarOkTracingTypeErrorNamed;
+impl TryFromStdEnvVarOk for TracingLevelWrapper {
+    type Error = TryFromStdEnvVarOkTracingLevelErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match value.parse::<crate::types::TracingLevel>() {
             Ok(value) => value,
             Err(error) => {
-                return Err(Self::Error::AppStateTracingTypeParsing {
+                return Err(Self::Error::AppStateTracingLevelParsing {
                     app_state_tracing_type_parsing: error,
                 });
             }

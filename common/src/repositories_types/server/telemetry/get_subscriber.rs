@@ -1,4 +1,4 @@
-pub fn get_subscriber<Sink, Config: app_state::GetTracingType + std::marker::Send + std::marker::Sync>(
+pub fn get_subscriber<Sink, Config: app_state::GetTracingLevel + std::marker::Send + std::marker::Sync>(
     name: &str,
     config: &Config,
     sink: Sink,
@@ -12,7 +12,7 @@ where
     Sink: for<'a> tracing_subscriber::fmt::MakeWriter<'a> + Send + Sync + 'static,
 {
     let env_filter = tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
-        tracing_subscriber::EnvFilter::new(config.get_tracing_type().to_string())
+        tracing_subscriber::EnvFilter::new(config.get_tracing_level().to_string())
     });
     let formatting_layer =
         tracing_bunyan_formatter::BunyanFormattingLayer::new(name.to_owned(), sink);

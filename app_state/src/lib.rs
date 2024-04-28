@@ -5,7 +5,7 @@ pub use config_lib::GetMongoUrl;
 pub use config_lib::GetDatabaseUrl;
 pub use config_lib::GetStartingCheckLink;
 pub use config_lib::types::TracingLevel;
-pub use config_lib::GetTracingType;
+pub use config_lib::GetTracingLevel;
 pub use config_lib::types::SourcePlaceType;
 pub use config_lib::GetSourcePlaceType;
 pub use config_lib::GetEnableApiGitCommitCheck;
