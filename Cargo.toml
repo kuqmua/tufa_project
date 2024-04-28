@@ -32,7 +32,8 @@ members = [
   "naming_constants/gen_naming_trait_impl_vec", 
   "http_logic", 
   "route_validators", 
-  "tests",
+  "tests", 
+  "impl_display_as_debug",
 ]
 exclude = [
   "client",
