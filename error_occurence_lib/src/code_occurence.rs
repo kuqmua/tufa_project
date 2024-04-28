@@ -217,9 +217,9 @@ where
         config: &ConfigGeneric,
     ) -> std::string::String {
         prepare_for_log(
-            &self.get_code_path(&config.get_source_place_type().0),
+            &self.get_code_path(&config.get_source_place_type()),
             &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
-                .with_timezone(&config.get_timezone().0)
+                .with_timezone(config.get_timezone())
                 .format("%Y-%m-%d %H:%M:%S")
                 .to_string(),
         )

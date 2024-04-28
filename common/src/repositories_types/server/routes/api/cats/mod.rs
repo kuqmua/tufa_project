@@ -655,7 +655,7 @@ pub async fn try_create_many_route_logic(
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
     if let Err(error) = route_validators::check_commit::check_commit(
-        app_state.get_enable_api_git_commit_check().0,
+        *app_state.get_enable_api_git_commit_check(),
         &headers,
     ) {
         let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
@@ -669,7 +669,7 @@ pub async fn try_create_many_route_logic(
             body: TryCreateManyRouteLogicResponseVariants::from(error),
         };
     }
-    let body_bytes = match route_validators::check_body_size::check_body_size(body, app_state.get_maximum_size_of_http_body_in_bytes().0).await {
+    let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
         Err(error) => {
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);

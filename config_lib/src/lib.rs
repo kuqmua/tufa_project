@@ -6,7 +6,7 @@ pub trait TryFromStdEnvVarOk: Sized {
 }
 
 pub trait GetServiceSocketAddress {
-    fn get_service_socket_address(&self) -> &ServiceSocketAddressWrapper;
+    fn get_service_socket_address(&self) -> &std::net::SocketAddr;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct ServiceSocketAddressWrapper(pub std::net::SocketAddr);
@@ -37,7 +37,7 @@ impl TryFromStdEnvVarOk for ServiceSocketAddressWrapper {
 }
 
 pub trait GetTimezone {
-    fn get_timezone(&self) -> &TimezoneWrapper;
+    fn get_timezone(&self) -> &chrono::FixedOffset;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct TimezoneWrapper(pub chrono::FixedOffset);
@@ -79,7 +79,7 @@ impl TryFromStdEnvVarOk for TimezoneWrapper {
 }
 
 pub trait GetRedisUrl {
-    fn get_redis_url(&self) -> &RedisUrlWrapper;
+    fn get_redis_url(&self) -> &secrecy::Secret<std::string::String>;
 }
 #[derive(Debug)]
 pub struct RedisUrlWrapper(pub secrecy::Secret<std::string::String>);
@@ -110,7 +110,7 @@ impl TryFromStdEnvVarOk for RedisUrlWrapper {
 }
 
 pub trait GetMongoUrl {
-    fn get_mongo_url(&self) -> &MongoUrlWrapper;
+    fn get_mongo_url(&self) -> &secrecy::Secret<std::string::String>;
 }
 #[derive(Debug)]
 pub struct MongoUrlWrapper(pub secrecy::Secret<std::string::String>);
@@ -141,7 +141,7 @@ impl TryFromStdEnvVarOk for MongoUrlWrapper {
 }
 
 pub trait GetDatabaseUrl {
-    fn get_database_url(&self) -> &DatabaseUrlWrapper; //postgres database url. required to exists in env
+    fn get_database_url(&self) -> &secrecy::Secret<std::string::String>; //postgres database url. required to exists in env
 }
 #[derive(Debug)]
 pub struct DatabaseUrlWrapper(pub secrecy::Secret<std::string::String>);
@@ -172,7 +172,7 @@ impl TryFromStdEnvVarOk for DatabaseUrlWrapper {
 }
 
 pub trait GetStartingCheckLink {
-    fn get_starting_check_link(&self) -> &StartingCheckLinkWrapper;
+    fn get_starting_check_link(&self) -> &std::string::String;
 }
 #[derive(Debug)]
 pub struct StartingCheckLinkWrapper(pub std::string::String);
@@ -232,7 +232,7 @@ impl std::fmt::Display for TracingType {
     }
 }
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &TracingTypeWrapper;
+    fn get_tracing_type(&self) -> &TracingType;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct TracingTypeWrapper(pub TracingType);
@@ -283,7 +283,7 @@ impl std::default::Default for SourcePlaceType {
     }
 }
 pub trait GetSourcePlaceType {
-    fn get_source_place_type(&self) -> &SourcePlaceTypeWrapper;
+    fn get_source_place_type(&self) -> &SourcePlaceType;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct SourcePlaceTypeWrapper(pub SourcePlaceType);
@@ -314,7 +314,7 @@ impl TryFromStdEnvVarOk for SourcePlaceTypeWrapper {
 }
 
 pub trait GetEnableApiGitCommitCheck {
-    fn get_enable_api_git_commit_check(&self) -> &EnableApiGitCommitCheckWrapper;
+    fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct EnableApiGitCommitCheckWrapper(pub std::primitive::bool);
@@ -345,7 +345,7 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheckWrapper {
 }
 
 pub trait GetMaximumSizeOfHttpBodyInBytes {
-    fn get_maximum_size_of_http_body_in_bytes(&self) -> &MaximumSizeOfHttpBodyInBytesWrapper;
+    fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct MaximumSizeOfHttpBodyInBytesWrapper(pub std::primitive::usize);

@@ -29,7 +29,7 @@ where
         println!("trying to create postgres pool...");
         match sqlx::postgres::PgPoolOptions::new()
             .connect(secrecy::ExposeSecret::expose_secret(
-                &self.get_database_url().0,
+                self.get_database_url(),
             ))
             .await
         {

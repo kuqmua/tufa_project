@@ -64,6 +64,6 @@ pub fn generate_getter_traits_for_struct_fields_handle(
     let gen = quote::quote! {
         #(#generated_traits_implementations)*
     };
-    // println!("{gen}");
+    println!("{gen}");
     gen.into()
 }

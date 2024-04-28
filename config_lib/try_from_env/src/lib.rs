@@ -175,6 +175,6 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         #display_error_named_token_stream
         #try_from_env_token_stream
     };
-    // println!("{gen}");
+    println!("{gen}");
     gen.into()
 }
