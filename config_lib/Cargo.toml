@@ -15,7 +15,7 @@ thiserror = {version = "=1.0.48"}
 enum_extension_lib = {path = "../enum_extension_lib"}
 from_str = {path = "../from_str"}
 # server_port = {path = "./server_port"}
-init_from_env = {path = "./init_from_env"}
+try_from_env = {path = "./try_from_env"}
 
 [lints]
 workspace = true

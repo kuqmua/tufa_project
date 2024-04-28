@@ -1,4 +1,4 @@
-pub use init_from_env::TryFromEnv;
+pub use try_from_env::TryFromEnv;
 
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
