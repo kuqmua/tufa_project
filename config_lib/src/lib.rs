@@ -6,15 +6,10 @@ pub trait TryFromStdEnvVarOk: Sized {
 }
 
 pub trait GetServiceSocketAddress {
-    fn get_service_socket_address(&self) -> &std::net::SocketAddr;
+    fn get_service_socket_address(&self) -> &ServiceSocketAddressWrapper;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct ServiceSocketAddressWrapper(pub std::net::SocketAddr);
-impl ServiceSocketAddressWrapper {
-    pub fn into_inner(self) -> std::net::SocketAddr {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
     StdNetSocketAddr {
@@ -42,15 +37,10 @@ impl TryFromStdEnvVarOk for ServiceSocketAddressWrapper {
 }
 
 pub trait GetTimezone {
-    fn get_timezone(&self) -> &chrono::FixedOffset;
+    fn get_timezone(&self) -> &TimezoneWrapper;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct TimezoneWrapper(pub chrono::FixedOffset);
-impl TimezoneWrapper {
-    pub fn into_inner(self) -> chrono::FixedOffset {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
     StdPrimitiveI32Parsing {
@@ -89,15 +79,10 @@ impl TryFromStdEnvVarOk for TimezoneWrapper {
 }
 
 pub trait GetRedisUrl {
-    fn get_redis_url(&self) -> &secrecy::Secret<std::string::String>;
+    fn get_redis_url(&self) -> &RedisUrlWrapper;
 }
 #[derive(Debug)]
 pub struct RedisUrlWrapper(pub secrecy::Secret<std::string::String>);
-impl RedisUrlWrapper {
-    pub fn into_inner(self) -> secrecy::Secret<std::string::String> {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
     IsEmpty {
@@ -125,15 +110,10 @@ impl TryFromStdEnvVarOk for RedisUrlWrapper {
 }
 
 pub trait GetMongoUrl {
-    fn get_mongo_url(&self) -> &secrecy::Secret<std::string::String>;
+    fn get_mongo_url(&self) -> &MongoUrlWrapper;
 }
 #[derive(Debug)]
 pub struct MongoUrlWrapper(pub secrecy::Secret<std::string::String>);
-impl MongoUrlWrapper {
-    pub fn into_inner(self) -> secrecy::Secret<std::string::String> {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
     IsEmpty {
@@ -161,15 +141,10 @@ impl TryFromStdEnvVarOk for MongoUrlWrapper {
 }
 
 pub trait GetDatabaseUrl {
-    fn get_database_url(&self) -> &secrecy::Secret<std::string::String>; //postgres database url. required to exists in env
+    fn get_database_url(&self) -> &DatabaseUrlWrapper; //postgres database url. required to exists in env
 }
 #[derive(Debug)]
 pub struct DatabaseUrlWrapper(pub secrecy::Secret<std::string::String>);
-impl DatabaseUrlWrapper {
-    pub fn into_inner(self) -> secrecy::Secret<std::string::String> {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
     IsEmpty {
@@ -197,15 +172,10 @@ impl TryFromStdEnvVarOk for DatabaseUrlWrapper {
 }
 
 pub trait GetStartingCheckLink {
-    fn get_starting_check_link(&self) -> &std::string::String;
+    fn get_starting_check_link(&self) -> &StartingCheckLinkWrapper;
 }
 #[derive(Debug)]
 pub struct StartingCheckLinkWrapper(pub std::string::String);
-impl StartingCheckLinkWrapper {
-    pub fn into_inner(self) -> std::string::String {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
     IsEmpty {
@@ -262,15 +232,10 @@ impl std::fmt::Display for TracingType {
     }
 }
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &TracingType;
+    fn get_tracing_type(&self) -> &TracingTypeWrapper;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct TracingTypeWrapper(pub TracingType);
-impl TracingTypeWrapper {
-    pub fn into_inner(self) -> TracingType {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
     AppStateTracingTypeParsing {
@@ -318,15 +283,10 @@ impl std::default::Default for SourcePlaceType {
     }
 }
 pub trait GetSourcePlaceType {
-    fn get_source_place_type(&self) -> &SourcePlaceType;
+    fn get_source_place_type(&self) -> &SourcePlaceTypeWrapper;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct SourcePlaceTypeWrapper(pub SourcePlaceType);
-impl SourcePlaceTypeWrapper {
-    pub fn into_inner(self) -> SourcePlaceType {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
     AppStateSourcePlaceTypeParsing {
@@ -354,15 +314,10 @@ impl TryFromStdEnvVarOk for SourcePlaceTypeWrapper {
 }
 
 pub trait GetEnableApiGitCommitCheck {
-    fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool;
+    fn get_enable_api_git_commit_check(&self) -> &EnableApiGitCommitCheckWrapper;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct EnableApiGitCommitCheckWrapper(pub std::primitive::bool);
-impl EnableApiGitCommitCheckWrapper {
-    pub fn into_inner(self) -> std::primitive::bool {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
     StdPrimitiveBoolParsing {
@@ -390,15 +345,10 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheckWrapper {
 }
 
 pub trait GetMaximumSizeOfHttpBodyInBytes {
-    fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize;
+    fn get_maximum_size_of_http_body_in_bytes(&self) -> &MaximumSizeOfHttpBodyInBytesWrapper;
 }
 #[derive(Debug, Clone, Copy)]
 pub struct MaximumSizeOfHttpBodyInBytesWrapper(pub std::primitive::usize);
-impl MaximumSizeOfHttpBodyInBytesWrapper {
-    pub fn into_inner(self) -> std::primitive::usize {
-        self.0
-    }
-}
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
     StdPrimitiveUsizeParsing {

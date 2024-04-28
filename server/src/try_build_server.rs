@@ -201,7 +201,7 @@ pub async fn try_build_server(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     config: &'static common::repositories_types::server::config::config_struct::Config,
 ) -> Result<(), Box<common::repositories_types::server::try_build_server::TryBuildServer>> {
-    println!("server running on {}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
+    println!("server running on {}", app_state::GetServiceSocketAddress::get_service_socket_address(&config).0);
     let app_state = std::sync::Arc::new(
         common::repositories_types::server::routes::app_state::AppState {
             postgres_pool,
@@ -213,7 +213,7 @@ pub async fn try_build_server(
         message: std::string::String::from("shared_message"),
     };
     axum::serve(
-        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config))
+        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config).0)
         .await
         .unwrap(),
         axum::Router::new()

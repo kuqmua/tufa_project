@@ -26,7 +26,7 @@ where
         std::net::TcpListener,
         Box<crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed>,
     > {
-        match std::net::TcpListener::bind(self.get_service_socket_address()) {
+        match std::net::TcpListener::bind(self.get_service_socket_address().0) {
             Ok(listener) => Ok(listener),
             Err(error) => {
                 Err(Box::new(crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed::TcpListenerBind {

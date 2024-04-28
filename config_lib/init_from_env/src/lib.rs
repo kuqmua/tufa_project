@@ -161,7 +161,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         let fields_token_stream = fields_named.iter().map(|element|&element.ident);
         quote::quote!{
             impl #ident {
-                fn try_from_env() -> Result<Self, #ident_try_from_env_error_named> {
+                pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_named> {
                     if let Err(error) = dotenv::dotenv() {
                         return Err(#ident_try_from_env_error_named::#dotenv_upper_camel_case_token_stream {
                             #dotenv_snake_case_token_stream: error,
