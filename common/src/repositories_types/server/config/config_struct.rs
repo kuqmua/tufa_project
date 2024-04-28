@@ -21,25 +21,27 @@ pub struct Config {
     maximum_size_of_http_body_in_bytes: std::primitive::usize,
 }
 
-#[derive(Debug, config_lib::TryFromEnv)]
+#[derive(Debug, 
+    config_lib::TryFromEnv
+)]
 struct ConfigHandle {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
-    service_socket_address: ServiceSocketAddress,
+    service_socket_address: config_lib::ServiceSocketAddressWrapper,
     
-    timezone: Timezone, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
+    timezone: config_lib::TimezoneWrapper, //for some reason chrono::FixedOffset::east_opt uses i32 but i16 is enough
     
-    redis_url: RedisUrl,
+    redis_url: config_lib::RedisUrlWrapper,
     
-    mongo_url: MongoUrl,
+    mongo_url: config_lib::MongoUrlWrapper,
     
-    database_url: DatabaseUrl, //postgres_url, naming required by sqlx::query::query!
+    database_url: config_lib::DatabaseUrlWrapper, //postgres_url, naming required by sqlx::query::query!
     
-    starting_check_link: StartingCheckLink, //todo add browser url limit check
+    starting_check_link: config_lib::StartingCheckLinkWrapper, //todo add browser url limit check
     
-    tracing_type: TracingType,
-    source_place_type: SourcePlaceType,
-    enable_api_git_commit_check: EnableApiGitCommitCheck,
-    maximum_size_of_http_body_in_bytes: MaximumSizeOfHttpBodyInBytes,
+    tracing_type: config_lib::TracingTypeWrapper,
+    source_place_type: config_lib::SourcePlaceTypeWrapper,
+    enable_api_git_commit_check: config_lib::EnableApiGitCommitCheckWrapper,
+    maximum_size_of_http_body_in_bytes: config_lib::MaximumSizeOfHttpBodyInBytesWrapper,
 }
 
 impl Config {
@@ -70,274 +72,5 @@ impl Config {
         })
     }
 }
+////////////////////
 
-pub trait TryFromStdEnvVarOk: Sized {
-    type Error;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
-}
-
-
-#[derive(Debug, Clone, Copy)]
-pub struct ServiceSocketAddress(pub std::net::SocketAddr);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
-    StdNetSocketAddr {
-        #[eo_display]
-        std_net_socket_addr: std::net::AddrParseError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for ServiceSocketAddress {
-    type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::StdNetSocketAddr {
-                    std_net_socket_addr: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct Timezone(pub chrono::FixedOffset);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
-    StdPrimitiveI32Parsing {
-        #[eo_display]
-        std_primitive_i32_parsing: std::num::ParseIntError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ChronoFixedOffset {
-        #[eo_display_with_serialize_deserialize]
-        chrono_fixed_offset: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for Timezone {
-    type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<std::primitive::i32>() {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::StdPrimitiveI32Parsing {
-                    std_primitive_i32_parsing: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        let value = match chrono::FixedOffset::east_opt(value) {
-            Some(value) => value,
-            None => {
-                return Err(Self::Error::ChronoFixedOffset {
-                    chrono_fixed_offset: std::string::String::from("not east"),
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug)]
-pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
-    IsEmpty {
-        #[eo_display_with_serialize_deserialize]
-        is_empty: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for RedisUrl {
-    type Error = TryFromStdEnvVarOkRedisUrlErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: std::string::String::from("is empty"),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            secrecy::Secret::new(value)
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug)]
-pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
-    IsEmpty {
-        #[eo_display_with_serialize_deserialize]
-        is_empty: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for MongoUrl {
-    type Error = TryFromStdEnvVarOkMongoUrlErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: std::string::String::from("is empty"),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            secrecy::Secret::new(value)
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug)]
-pub struct DatabaseUrl(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
-    IsEmpty {
-        #[eo_display_with_serialize_deserialize]
-        is_empty: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for DatabaseUrl {
-    type Error = TryFromStdEnvVarOkDatabaseUrlErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: std::string::String::from("is empty"),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            secrecy::Secret::new(value)
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug)]
-pub struct StartingCheckLink(pub std::string::String);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
-    IsEmpty {
-        #[eo_display_with_serialize_deserialize]
-        is_empty: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for StartingCheckLink {
-    type Error = TryFromStdEnvVarOkStartingCheckLinkErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: std::string::String::from("is empty"),
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        else {
-            value
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct TracingType(pub app_state::TracingType);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
-    AppStateTracingTypeParsing {
-        #[eo_display_with_serialize_deserialize]
-        app_state_tracing_type_parsing: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for TracingType {
-    type Error = TryFromStdEnvVarOkTracingTypeErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<app_state::TracingType>() {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::AppStateTracingTypeParsing {
-                    app_state_tracing_type_parsing: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct SourcePlaceType(pub app_state::SourcePlaceType);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
-    AppStateSourcePlaceTypeParsing {
-        #[eo_display_with_serialize_deserialize]
-        app_state_source_place_type_parsing: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for SourcePlaceType {
-    type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<app_state::SourcePlaceType>() {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::AppStateSourcePlaceTypeParsing {
-                    app_state_source_place_type_parsing: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
-    StdPrimitiveBoolParsing {
-        #[eo_display]
-        std_primitive_bool_parsing: std::str::ParseBoolError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
-    type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<std::primitive::bool>() {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::StdPrimitiveBoolParsing {
-                    std_primitive_bool_parsing: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        Ok(Self(value))
-    }
-}
-#[derive(Debug, Clone, Copy)]
-pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
-    StdPrimitiveUsizeParsing {
-        #[eo_display]
-        std_primitive_usize_parsing: std::num::ParseIntError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
-    type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;
-    fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<std::primitive::usize>() {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::StdPrimitiveUsizeParsing {
-                    std_primitive_usize_parsing: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        Ok(Self(value))
-    }
-}
