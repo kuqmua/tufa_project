@@ -7,10 +7,7 @@ pub trait TryFromStdEnvVarOk: Sized {
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error>;
 }
 
-pub trait GetServiceSocketAddress {
-    fn get_service_socket_address(&self) -> &std::net::SocketAddr;
-}
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
@@ -38,10 +35,7 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
     }
 }
 
-pub trait GetTimezone {
-    fn get_timezone(&self) -> &chrono::FixedOffset;
-}
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct Timezone(pub chrono::FixedOffset);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
@@ -80,10 +74,7 @@ impl TryFromStdEnvVarOk for Timezone {
     }
 }
 
-pub trait GetRedisUrl {
-    fn get_redis_url(&self) -> &secrecy::Secret<std::string::String>;
-}
-#[derive(Debug)]
+#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
@@ -111,10 +102,7 @@ impl TryFromStdEnvVarOk for RedisUrl {
     }
 }
 
-pub trait GetMongoUrl {
-    fn get_mongo_url(&self) -> &secrecy::Secret<std::string::String>;
-}
-#[derive(Debug)]
+#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
@@ -142,10 +130,7 @@ impl TryFromStdEnvVarOk for MongoUrl {
     }
 }
 
-pub trait GetDatabaseUrl {
-    fn get_database_url(&self) -> &secrecy::Secret<std::string::String>; //postgres database url. required to exists in env
-}
-#[derive(Debug)]
+#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct DatabaseUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
@@ -173,10 +158,7 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
     }
 }
 
-pub trait GetStartingCheckLink {
-    fn get_starting_check_link(&self) -> &std::string::String;
-}
-#[derive(Debug)]
+#[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct StartingCheckLink(pub std::string::String);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
@@ -204,10 +186,7 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
     }
 }
 
-pub trait GetTracingLevel {
-    fn get_tracing_level(&self) -> &crate::types::TracingLevel;
-}
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct TracingLevel(pub crate::types::TracingLevel);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
@@ -235,10 +214,7 @@ impl TryFromStdEnvVarOk for TracingLevel {
     }
 }
 
-pub trait GetSourcePlaceType {
-    fn get_source_place_type(&self) -> &crate::types::SourcePlaceType;
-}
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct SourcePlaceType(pub crate::types::SourcePlaceType);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
@@ -266,10 +242,7 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
     }
 }
 
-pub trait GetEnableApiGitCommitCheck {
-    fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool;
-}
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
@@ -297,10 +270,7 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     }
 }
 
-pub trait GetMaximumSizeOfHttpBodyInBytes {
-    fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize;
-}
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
