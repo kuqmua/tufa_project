@@ -204,10 +204,10 @@ impl TryFromStdEnvVarOk for StartingCheckLinkWrapper {
 }
 
 pub trait GetTracingType {
-    fn get_tracing_type(&self) -> &crate::types::TracingTypeEnum;
+    fn get_tracing_type(&self) -> &crate::types::TracingLevel;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct TracingTypeWrapper(pub crate::types::TracingTypeEnum);
+pub struct TracingTypeWrapper(pub crate::types::TracingLevel);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTracingTypeErrorNamed {
     AppStateTracingTypeParsing {
@@ -222,7 +222,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkTracingTypeErrorNamed {
 impl TryFromStdEnvVarOk for TracingTypeWrapper {
     type Error = TryFromStdEnvVarOkTracingTypeErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<crate::types::TracingTypeEnum>() {
+        let value = match value.parse::<crate::types::TracingLevel>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::AppStateTracingTypeParsing {

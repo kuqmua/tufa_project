@@ -18,7 +18,7 @@ pub struct Config {
     
     starting_check_link: std::string::String,
     
-    tracing_type: config_lib::types::TracingTypeEnum,
+    tracing_type: config_lib::types::TracingLevel,
     source_place_type: config_lib::types::SourcePlaceType,
     enable_api_git_commit_check: std::primitive::bool,
     maximum_size_of_http_body_in_bytes: std::primitive::usize,

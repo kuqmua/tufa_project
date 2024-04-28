@@ -10,19 +10,19 @@
     Eq,
     from_str::FromStr,
 )]
-pub enum TracingTypeEnum {
+pub enum TracingLevel {
     Trace,
     Debug,
     Info,
     Warn,
     Error,
 }
-impl std::default::Default for TracingTypeEnum {
+impl std::default::Default for TracingLevel {
     fn default() -> Self {
         Self::Error
     }
 }
-impl std::fmt::Display for TracingTypeEnum {
+impl std::fmt::Display for TracingLevel {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.to_snake_case())
     }
