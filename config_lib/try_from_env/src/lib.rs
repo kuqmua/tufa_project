@@ -131,12 +131,8 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
             };
             let element_ident_wrapper_upper_camel_case_token_stream = {
-                let value = format!(
-                    "{}{}",
-                    proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(
-                        &element_ident.as_ref().expect(ident_in_none_stringified).to_string()
-                    ),
-                    <naming_constants::Wrapper as naming_constants::Naming>::upper_camel_case_stringified(),
+                let value = proc_macro_common::naming_conventions::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(
+                    &element_ident.as_ref().expect(ident_in_none_stringified).to_string()
                 );
                 value.parse::<proc_macro2::TokenStream>()
                 .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))

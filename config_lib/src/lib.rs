@@ -10,7 +10,7 @@ pub trait GetServiceSocketAddress {
     fn get_service_socket_address(&self) -> &std::net::SocketAddr;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct ServiceSocketAddressWrapper(pub std::net::SocketAddr);
+pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
     StdNetSocketAddr {
@@ -22,7 +22,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for ServiceSocketAddressWrapper {
+impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
@@ -41,7 +41,7 @@ pub trait GetTimezone {
     fn get_timezone(&self) -> &chrono::FixedOffset;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct TimezoneWrapper(pub chrono::FixedOffset);
+pub struct Timezone(pub chrono::FixedOffset);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
     StdPrimitiveI32Parsing {
@@ -56,7 +56,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkTimezoneErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for TimezoneWrapper {
+impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match value.parse::<std::primitive::i32>() {
@@ -83,7 +83,7 @@ pub trait GetRedisUrl {
     fn get_redis_url(&self) -> &secrecy::Secret<std::string::String>;
 }
 #[derive(Debug)]
-pub struct RedisUrlWrapper(pub secrecy::Secret<std::string::String>);
+pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
     IsEmpty {
@@ -95,7 +95,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkRedisUrlErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for RedisUrlWrapper {
+impl TryFromStdEnvVarOk for RedisUrl {
     type Error = TryFromStdEnvVarOkRedisUrlErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = if value.is_empty() {
@@ -114,7 +114,7 @@ pub trait GetMongoUrl {
     fn get_mongo_url(&self) -> &secrecy::Secret<std::string::String>;
 }
 #[derive(Debug)]
-pub struct MongoUrlWrapper(pub secrecy::Secret<std::string::String>);
+pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
     IsEmpty {
@@ -126,7 +126,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkMongoUrlErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for MongoUrlWrapper {
+impl TryFromStdEnvVarOk for MongoUrl {
     type Error = TryFromStdEnvVarOkMongoUrlErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = if value.is_empty() {
@@ -145,7 +145,7 @@ pub trait GetDatabaseUrl {
     fn get_database_url(&self) -> &secrecy::Secret<std::string::String>; //postgres database url. required to exists in env
 }
 #[derive(Debug)]
-pub struct DatabaseUrlWrapper(pub secrecy::Secret<std::string::String>);
+pub struct DatabaseUrl(pub secrecy::Secret<std::string::String>);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
     IsEmpty {
@@ -157,7 +157,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkDatabaseUrlErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for DatabaseUrlWrapper {
+impl TryFromStdEnvVarOk for DatabaseUrl {
     type Error = TryFromStdEnvVarOkDatabaseUrlErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = if value.is_empty() {
@@ -176,7 +176,7 @@ pub trait GetStartingCheckLink {
     fn get_starting_check_link(&self) -> &std::string::String;
 }
 #[derive(Debug)]
-pub struct StartingCheckLinkWrapper(pub std::string::String);
+pub struct StartingCheckLink(pub std::string::String);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
     IsEmpty {
@@ -188,7 +188,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for StartingCheckLinkWrapper {
+impl TryFromStdEnvVarOk for StartingCheckLink {
     type Error = TryFromStdEnvVarOkStartingCheckLinkErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = if value.is_empty() {
@@ -207,7 +207,7 @@ pub trait GetTracingLevel {
     fn get_tracing_level(&self) -> &crate::types::TracingLevel;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct TracingLevelWrapper(pub crate::types::TracingLevel);
+pub struct TracingLevel(pub crate::types::TracingLevel);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
     AppStateTracingLevelParsing {
@@ -219,7 +219,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkTracingLevelErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for TracingLevelWrapper {
+impl TryFromStdEnvVarOk for TracingLevel {
     type Error = TryFromStdEnvVarOkTracingLevelErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match value.parse::<crate::types::TracingLevel>() {
@@ -238,7 +238,7 @@ pub trait GetSourcePlaceType {
     fn get_source_place_type(&self) -> &crate::types::SourcePlaceType;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct SourcePlaceTypeWrapper(pub crate::types::SourcePlaceType);
+pub struct SourcePlaceType(pub crate::types::SourcePlaceType);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
     AppStateSourcePlaceTypeParsing {
@@ -250,7 +250,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for SourcePlaceTypeWrapper {
+impl TryFromStdEnvVarOk for SourcePlaceType {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match value.parse::<crate::types::SourcePlaceType>() {
@@ -269,7 +269,7 @@ pub trait GetEnableApiGitCommitCheck {
     fn get_enable_api_git_commit_check(&self) -> &std::primitive::bool;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct EnableApiGitCommitCheckWrapper(pub std::primitive::bool);
+pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
     StdPrimitiveBoolParsing {
@@ -281,7 +281,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for EnableApiGitCommitCheckWrapper {
+impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match value.parse::<std::primitive::bool>() {
@@ -300,7 +300,7 @@ pub trait GetMaximumSizeOfHttpBodyInBytes {
     fn get_maximum_size_of_http_body_in_bytes(&self) -> &std::primitive::usize;
 }
 #[derive(Debug, Clone, Copy)]
-pub struct MaximumSizeOfHttpBodyInBytesWrapper(pub std::primitive::usize);
+pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
 #[derive(Debug, thiserror::Error)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
     StdPrimitiveUsizeParsing {
@@ -312,7 +312,7 @@ impl std::fmt::Display for TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNa
         write!(formatter, "{:#?}", self)
     }
 }
-impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytesWrapper {
+impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
         let value = match value.parse::<std::primitive::usize>() {
