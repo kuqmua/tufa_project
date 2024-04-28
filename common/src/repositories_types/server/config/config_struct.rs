@@ -2,7 +2,7 @@
 #[derive(
     Debug, 
     config_lib::TryFromEnv,
-    generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFieldsHandle
+    generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFields
 )]
 pub struct Config {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files

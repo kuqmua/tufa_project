@@ -1,5 +1,5 @@
-#[proc_macro_derive(GenerateGetterTraitsForStructFieldsHandle)]
-pub fn generate_getter_traits_for_struct_fields_handle(
+#[proc_macro_derive(GenerateGetterTraitsForStructFields)]
+pub fn generate_getter_traits_for_struct_fields(
     input: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
