@@ -9,16 +9,11 @@ pub trait TryFromStdEnvVarOk: Sized {
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct ServiceSocketAddress(pub std::net::SocketAddr);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
     StdNetSocketAddr {
         std_net_socket_addr: std::net::AddrParseError,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
@@ -37,7 +32,7 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct Timezone(pub chrono::FixedOffset);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
     StdPrimitiveI32Parsing {
         std_primitive_i32_parsing: std::num::ParseIntError,
@@ -45,11 +40,6 @@ pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
     ChronoFixedOffset {
         chrono_fixed_offset: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkTimezoneErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
@@ -76,16 +66,11 @@ impl TryFromStdEnvVarOk for Timezone {
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct RedisUrl(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
     IsEmpty {
         is_empty: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkRedisUrlErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for RedisUrl {
     type Error = TryFromStdEnvVarOkRedisUrlErrorNamed;
@@ -104,16 +89,11 @@ impl TryFromStdEnvVarOk for RedisUrl {
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct MongoUrl(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
     IsEmpty {
         is_empty: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkMongoUrlErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for MongoUrl {
     type Error = TryFromStdEnvVarOkMongoUrlErrorNamed;
@@ -132,16 +112,11 @@ impl TryFromStdEnvVarOk for MongoUrl {
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct DatabaseUrl(pub secrecy::Secret<std::string::String>);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
     IsEmpty {
         is_empty: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkDatabaseUrlErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for DatabaseUrl {
     type Error = TryFromStdEnvVarOkDatabaseUrlErrorNamed;
@@ -160,16 +135,11 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct StartingCheckLink(pub std::string::String);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
     IsEmpty {
         is_empty: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for StartingCheckLink {
     type Error = TryFromStdEnvVarOkStartingCheckLinkErrorNamed;
@@ -188,16 +158,11 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct TracingLevel(pub crate::types::TracingLevel);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
     AppStateTracingLevelParsing {
         app_state_tracing_type_parsing: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkTracingLevelErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for TracingLevel {
     type Error = TryFromStdEnvVarOkTracingLevelErrorNamed;
@@ -216,16 +181,11 @@ impl TryFromStdEnvVarOk for TracingLevel {
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct SourcePlaceType(pub crate::types::SourcePlaceType);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
     AppStateSourcePlaceTypeParsing {
         app_state_source_place_type_parsing: std::string::String,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for SourcePlaceType {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
@@ -244,16 +204,11 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
     StdPrimitiveBoolParsing {
         std_primitive_bool_parsing: std::str::ParseBoolError,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
@@ -272,16 +227,11 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
     StdPrimitiveUsizeParsing {
         std_primitive_usize_parsing: std::num::ParseIntError,
     },
-}
-impl std::fmt::Display for TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{:#?}", self)
-    }
 }
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;

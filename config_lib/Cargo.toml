@@ -17,6 +17,7 @@ from_str = {path = "../from_str"}
 # server_port = {path = "./server_port"}
 try_from_env = {path = "./try_from_env"}
 generate_getter_traits_for_struct_fields = {path = "./generate_getter_traits_for_struct_fields"}
+impl_display_as_debug = {path = "../impl_display_as_debug"}
 
 [lints]
 workspace = true
