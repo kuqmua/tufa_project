@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
+    // error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedOne {
     Variant {
@@ -9,7 +9,7 @@ pub enum ErrorNamedOne {
         // eo_display_field: DisplayStruct,
         // #[eo_display_with_serialize_deserialize]
         // eo_display_with_serialize_deserialize_field: std::string::String,
-        #[eo_to_std_string_string]
+        // #[eo_to_std_string_string]
         eo_to_std_string_string_field: ToStdStringStringStruct,
         // #[eo_to_std_string_string_with_serialize_deserialize]
         // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct,
@@ -146,126 +146,137 @@ fn main() {
 }
 
 
-// ///////////////////////////////////
-// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
-//     for ErrorNamedOne
-// {
-//     fn source_to_string_with_config<
-//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-//     >(
-//         &self,
-//         config: &ConfigGeneric,
-//     ) -> std::string::String {
-//         match self {
-//             ErrorNamedOne::Variant {
-//                 eo_display_field,
-//                 code_occurence: _unused_argument_1,
-//             } => {
-//                 format!(
-//                     "{{{}}}",
-//                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-//                         &format!("eo_display_field: {}", eo_display_field)
-//                     )
-//                 )
-//             }
-//         }
-//     }
-// }
-// impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
-//     for ErrorNamedOne
-// {
-//     fn source_to_string_without_config(&self) -> std::string::String {
-//         match self {
-//             ErrorNamedOne::Variant {
-//                 eo_display_field,
-//                 code_occurence: _unused_argument_1,
-//             } => {
-//                 format!
-//                 ("{{{}}}",
-//                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-//                 ::
-//                 lines_space_backslash(& format!
-//                 ("eo_display_field: {}", eo_display_field)))
-//             }
-//         }
-//     }
-// }
-// impl error_occurence_lib::code_occurence::Get for ErrorNamedOne {
-//     fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
-//         match self {
-//             ErrorNamedOne::Variant {
-//                 eo_display_field: _unused_argument_0,
-//                 code_occurence,
-//             } => code_occurence,
-//         }
-//     }
-// }
-// impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
-//     for ErrorNamedOneWithSerializeDeserialize
-// {
-//     fn source_to_string_without_config(&self) -> std::string::String {
-//         match self {
-//             ErrorNamedOneWithSerializeDeserialize::Variant {
-//                 eo_display_field,
-//                 code_occurence: _unused_argument_1,
-//             } => {
-//                 format!
-//                 ("{{
-// {}}}",
-//                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-//                 ::
-//                 lines_space_backslash(& format!
-//                 ("eo_display_field: {}", eo_display_field)))
-//             }
-//         }
-//     }
-// }
-// impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDeserialize {
-//     fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
-//         match self {
-//             ErrorNamedOneWithSerializeDeserialize::Variant {
-//                 eo_display_field: _unused_argument_0,
-//                 code_occurence,
-//             } => code_occurence,
-//         }
-//     }
-// }
-// impl ErrorNamedOne {
-//     pub fn into_serialize_deserialize_version(self) -> ErrorNamedOneWithSerializeDeserialize {
-//         match self {
-//             ErrorNamedOne::Variant {
-//                 eo_display_field,
-//                 code_occurence,
-//             } => ErrorNamedOneWithSerializeDeserialize::Variant {
-//                 eo_display_field: { eo_display_field.to_string() },
-//                 code_occurence: code_occurence,
-//             },
-//         }
-//     }
-// }
-// impl std::fmt::Display for ErrorNamedOne {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!
-//         (formatter, "{}",
-//         error_occurence_lib::to_string_without_config::ToStringWithoutConfig
-//         :: to_string_without_config(self))
-//     }
-// }
-// impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!
-//         (formatter, "{}",
-//         error_occurence_lib::to_string_without_config::ToStringWithoutConfig
-//         :: to_string_without_config(self))
-//     }
-// }
-// impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNamedOne {
-//     fn error_occurence_named(&self) {}
-// }
-// #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-// pub enum ErrorNamedOneWithSerializeDeserialize {
-//     Variant {
-//         eo_display_field: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
+
+//////////////////////////
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
+    for ErrorNamedOne
+{
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        config: &ConfigGeneric,
+    ) -> std::string::String {
+        match self {
+            ErrorNamedOne::Variant {
+                eo_to_std_string_string_field,
+                code_occurence: _unused_argument_1,
+            } => {
+                format!
+                ("{{
+{}}}",
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(& format!
+                ("eo_to_std_string_string_field: {}",
+                error_occurence_lib::ToStdStringString ::
+                to_std_string_string(eo_to_std_string_string_field))))
+            }
+        }
+    }
+}
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
+    for ErrorNamedOne
+{
+    fn source_to_string_without_config(&self) -> std::string::String {
+        match self {
+            ErrorNamedOne::Variant {
+                eo_to_std_string_string_field,
+                code_occurence: _unused_argument_1,
+            } => {
+                format!
+                ("{{
+{}}}",
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(& format!
+                ("eo_to_std_string_string_field: {}",
+                error_occurence_lib::ToStdStringString ::
+                to_std_string_string(eo_to_std_string_string_field))))
+            }
+        }
+    }
+}
+impl error_occurence_lib::code_occurence::Get for ErrorNamedOne {
+    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
+        match self {
+            ErrorNamedOne::Variant {
+                eo_to_std_string_string_field: _unused_argument_0,
+                code_occurence,
+            } => code_occurence,
+        }
+    }
+}
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
+    for ErrorNamedOneWithSerializeDeserialize
+{
+    fn source_to_string_without_config(&self) -> std::string::String {
+        match self {
+            ErrorNamedOneWithSerializeDeserialize::Variant {
+                eo_to_std_string_string_field,
+                code_occurence: _unused_argument_1,
+            } => {
+                format!
+                ("{{
+{}}}",
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(& format!
+                ("eo_to_std_string_string_field: {}",
+                eo_to_std_string_string_field)))
+            }
+        }
+    }
+}
+impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDeserialize {
+    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
+        match self {
+            ErrorNamedOneWithSerializeDeserialize::Variant {
+                eo_to_std_string_string_field: _unused_argument_0,
+                code_occurence,
+            } => code_occurence,
+        }
+    }
+}
+impl ErrorNamedOne {
+    pub fn into_serialize_deserialize_version(self) -> ErrorNamedOneWithSerializeDeserialize {
+        match self {
+            ErrorNamedOne::Variant {
+                eo_to_std_string_string_field,
+                code_occurence,
+            } => ErrorNamedOneWithSerializeDeserialize::Variant {
+                eo_to_std_string_string_field:
+                    error_occurence_lib::ToStdStringString::to_std_string_string(
+                        &eo_to_std_string_string_field,
+                    ),
+                code_occurence: code_occurence,
+            },
+        }
+    }
+}
+impl std::fmt::Display for ErrorNamedOne {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!
+        (formatter, "{}",
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        :: to_string_without_config(self))
+    }
+}
+impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!
+        (formatter, "{}",
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        :: to_string_without_config(self))
+    }
+}
+impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNamedOne {
+    fn error_occurence_named(&self) {}
+}
+#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
+pub enum ErrorNamedOneWithSerializeDeserialize {
+    Variant {
+        eo_to_std_string_string_field: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
