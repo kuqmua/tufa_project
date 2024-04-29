@@ -731,7 +731,7 @@ pub enum TryCreateManyErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     FailedToGetResponseText {
-        #[eo_display_foreign_type]
+        #[eo_display]
         reqwest: reqwest::Error,
         #[eo_display]
         status_code: http::StatusCode,
@@ -751,7 +751,7 @@ pub enum TryCreateManyErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Reqwest {
-        #[eo_display_foreign_type]
+        #[eo_display]
         reqwest: reqwest::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

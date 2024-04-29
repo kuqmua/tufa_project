@@ -1,7 +1,7 @@
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum NetCheckAvailabilityErrorNamed {
     ReqwestGet {
-        #[eo_display_foreign_type]
+        #[eo_display]
         reqwest_get: reqwest::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

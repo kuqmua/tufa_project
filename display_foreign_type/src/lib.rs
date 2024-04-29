@@ -76,11 +76,11 @@ impl DisplayForeignType for tracing::log::SetLoggerError {
 //     }
 // }
 
-impl DisplayForeignType for reqwest::Error {
-    fn display_foreign_type(&self) -> std::string::String {
-        format!("{self}")
-    }
-}
+// impl DisplayForeignType for reqwest::Error {
+//     fn display_foreign_type(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
 
 impl DisplayForeignType for reqwest::StatusCode {
     fn display_foreign_type(&self) -> std::string::String {
