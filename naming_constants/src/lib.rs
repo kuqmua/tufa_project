@@ -37,7 +37,6 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "keys",
     "value",
     "vec",
-    "HashMap",
     "reference",
     "with",
     "serialize",
@@ -147,3 +146,20 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "body",
     "env"
 );
+
+#[derive(Debug, Clone, Copy)]
+pub struct HashMap;
+impl Naming for HashMap {
+    fn upper_camel_case_stringified() -> &'static str {
+        "HashMap"
+    }
+    fn upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+        quote::quote! { HashMap }
+    }
+    fn snake_case_stringified() -> &'static str {
+        "hashmap"
+    }
+    fn snake_case_token_stream() -> proc_macro2::TokenStream {
+        quote::quote! { hashmap }
+    }
+}

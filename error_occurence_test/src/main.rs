@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurence
 )]
 pub enum One {
     Variant {
@@ -26,7 +26,7 @@ pub enum One {
         #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamed>,
         // #[eo_hashmap_key_display_with_serialize_deserialize_value_display]
-        // eo_hashmap_key_display_with_serialize_deserialize_value_display_field: ,
+        // eo_hashmap_key_display_with_serialize_deserialize_value_display_field: std::collections::HashMap<std::string::String, DisplayStruct>,
         // #[eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize]
         // eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_field: ,
         // #[eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type]
@@ -91,7 +91,7 @@ impl error_occurence_lib::DisplayForeignType for DisplayForeignTypeWithSerialize
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurence
 )]
 pub enum Two {
     Variant {
@@ -120,6 +120,8 @@ pub enum ErrorUnnamed {
 fn main() {
     println!("1");
 }
+
+
 
         // eo_display,
         // eo_display_with_serialize_deserialize,

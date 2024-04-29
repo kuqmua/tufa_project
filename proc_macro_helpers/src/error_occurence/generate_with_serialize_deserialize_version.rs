@@ -173,9 +173,11 @@ pub fn generate_with_serialize_deserialize_version(
                         } => {
                             match &attribute {
                                 crate::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
+                                crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence
+                                //  |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence
+                                 => {
                                     if !should_generate_impl_compile_time_check_error_occurence_members {
                                         should_generate_impl_compile_time_check_error_occurence_members = true;
                                     }
@@ -187,15 +189,17 @@ pub fn generate_with_serialize_deserialize_version(
                                 crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplay |
                                 crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize |
                                 crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => (),
+                                crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize
+                                //  |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize
+                                 => (),
                             }
                             match &attribute {
                                 crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize => {
@@ -214,17 +218,19 @@ pub fn generate_with_serialize_deserialize_version(
                                 crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize |
                                 crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType |
                                 crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize |
-                                crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => (),
+                                crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence 
+                                // |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize |
+                                // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence
+                                 => (),
                             }
                             {
                                 let must_be_used_with_stringified = "must be used with";
@@ -272,54 +278,54 @@ pub fn generate_with_serialize_deserialize_version(
                                             );
                                         }
                                     },
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
-                                        if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                                            hashmap_key_type,
-                                            hashmap_value_type,
-                                            ..
-                                        } = &supported_container {
-                                            if let (
-                                                crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} | 
-                                                crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                                                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                                                    value_segments_stringified,
-                                                    ..
-                                                }
-                                            ) = (hashmap_key_type, hashmap_value_type) {
-                                                inform_use_str_string_in_different_attribute(
-                                                    value_segments_stringified,
-                                                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                                                    &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
-                                                    str_stringified,
-                                                    proc_macro_name_ident_stringified,
-                                                    must_be_used_with_stringified,
-                                                    &std_string_string_stringified,
-                                                    &string_string_stringified,
-                                                );
-                                            }
-                                        }
-                                    },
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
-                                        if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                                            hashmap_key_type: crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                                            hashmap_value_type: crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                                                value_segments_stringified,
-                                                ..
-                                            },
-                                            ..
-                                        } = &supported_container {
-                                            inform_use_str_string_in_different_attribute(
-                                                value_segments_stringified,
-                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                                                &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified,
-                                                str_stringified,
-                                                proc_macro_name_ident_stringified,
-                                                must_be_used_with_stringified,
-                                                &std_string_string_stringified,
-                                                &string_string_stringified,
-                                            );
-                                        }
-                                    },
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
+                                    //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+                                    //         hashmap_key_type,
+                                    //         hashmap_value_type,
+                                    //         ..
+                                    //     } = &supported_container {
+                                    //         if let (
+                                    //             crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} | 
+                                    //             crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+                                    //             crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                    //                 value_segments_stringified,
+                                    //                 ..
+                                    //             }
+                                    //         ) = (hashmap_key_type, hashmap_value_type) {
+                                    //             inform_use_str_string_in_different_attribute(
+                                    //                 value_segments_stringified,
+                                    //                 proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+                                    //                 &attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified,
+                                    //                 str_stringified,
+                                    //                 proc_macro_name_ident_stringified,
+                                    //                 must_be_used_with_stringified,
+                                    //                 &std_string_string_stringified,
+                                    //                 &string_string_stringified,
+                                    //             );
+                                    //         }
+                                    //     }
+                                    // },
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
+                                    //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+                                    //         hashmap_key_type: crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+                                    //         hashmap_value_type: crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+                                    //             value_segments_stringified,
+                                    //             ..
+                                    //         },
+                                    //         ..
+                                    //     } = &supported_container {
+                                    //         inform_use_str_string_in_different_attribute(
+                                    //             value_segments_stringified,
+                                    //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+                                    //             &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified,
+                                    //             str_stringified,
+                                    //             proc_macro_name_ident_stringified,
+                                    //             must_be_used_with_stringified,
+                                    //             &std_string_string_stringified,
+                                    //             &string_string_stringified,
+                                    //         );
+                                    //     }
+                                    // },
                                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize |
                                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType |
                                     crate::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize |
@@ -327,15 +333,17 @@ pub fn generate_with_serialize_deserialize_version(
                                     crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize |
                                     crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType |
                                     crate::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence |    
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize |
-                                    crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => (),
+                                    crate::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence
+                                    //  |    
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize |
+                                    // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence
+                                     => (),
                                 }
                             }
                             let field_type_with_serialize_deserialize_token_stream = generate_field_type_with_serialize_deserialize_version(
@@ -765,664 +773,664 @@ pub fn generate_field_type_with_serialize_deserialize_version(
                 );
             }
         },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type,
-            } = supported_container {
-                let hashmap_key_type_path_case = |
-                    key_segments_stringified: std::string::String,
-                    key_vec_lifetime: Vec<crate::error_occurence::lifetime::Lifetime>,
-                | -> proc_macro2::TokenStream {
-                    crate::error_occurence::panic_if_not_string::panic_if_not_string(
-                        &key_segments_stringified,
-                        &std_string_string_stringified,
-                        proc_macro_name_ident_stringified,
-                        naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                        &as_std_collections_hashmap_key_type_stringified,
-                        &attribute
-                    );
-                    {
-                        let type_stringified = format!(
-                            "{path}<{key_segments_stringified}{}, {std_string_string_stringified}>",
-                             crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
-                        );
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    }
-                };
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified,
-                            key_vec_lifetime
-                        },
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => {
-                        hashmap_key_type_path_case(
-                            key_segments_stringified,
-                            key_vec_lifetime,
-                        )
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => {
-                        {
-                            let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} |
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified,
-                            key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_string::panic_if_not_string(
-                            &key_segments_stringified,
-                            &std_string_string_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &as_std_collections_hashmap_key_type_stringified,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{key_segments_stringified}{}, {value_segments_stringified}{}>",
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
-                            );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified,
-                            key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident,
-                            ..
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_string::panic_if_not_string(
-                            &key_segments_stringified,
-                            &std_string_string_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &as_std_collections_hashmap_key_type_stringified,
-                            &attribute
-                        );
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &value_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{key_segments_stringified}{}, {std_string_string_stringified}>",
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime)
-                            );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident,
-                            ..
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &key_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{std_string_string_stringified}, {value_segments_stringified}{}>",
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
-                            );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident,
-                            ..
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident,
-                            ..
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &key_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &value_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                let hashmap_key_type_path_case = |
-                    key_segments_stringified: std::string::String,
-                    key_vec_lifetime: Vec<crate::error_occurence::lifetime::Lifetime>,
-                | -> proc_macro2::TokenStream {
-                    {
-                        let type_stringified = format!(
-                            "{path}<{key_segments_stringified}{},{std_string_string_stringified}>",
-                             crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime)
-                        );
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    }
-                };
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified,
-                            key_vec_lifetime
-                        },
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => hashmap_key_type_path_case(
-                        key_segments_stringified,
-                        key_vec_lifetime,
-                    ),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => {
-                        let type_stringified = format!(
-                            "{path}<{std_string_string_stringified},{std_string_string_stringified}>"
-                        );
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified,
-                            key_vec_lifetime
-                        },
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_string::panic_if_not_string(
-                            &key_segments_stringified,
-                            &std_string_string_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &as_std_collections_hashmap_key_type_stringified,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{key_segments_stringified}{},{value_segments_stringified}{}>",
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime),
-                            );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident,
-                            ..
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &key_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        {
-                                let type_stringified = format!(
-                                    "{path}<{std_string_string_stringified},{value_segments_stringified}{}>",
-                                     crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime),
-                                );
-                                type_stringified
-                                .parse::<proc_macro2::TokenStream>()
-                                .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                            }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
-                            key_segments_stringified,
-                            key_vec_lifetime
-                        },
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_string::panic_if_not_string(
-                            &key_segments_stringified,
-                            &std_string_string_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &as_std_collections_hashmap_key_type_stringified,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{key_segments_stringified}{}, {value_segments_stringified}{with_serialize_deserialize_upper_camel_case}{}>",
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
-                            );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
-                            key_reference_ident,
-                            ..
-                        },
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &key_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{std_string_string_stringified}, {value_segments_stringified}{with_serialize_deserialize_upper_camel_case}{}>",
-                                 crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
-                           );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                let hashmap_key_type_path_case = || -> proc_macro2::TokenStream {
-                    let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
-                    type_stringified
-                    .parse::<proc_macro2::TokenStream>()
-                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => {
-                        hashmap_key_type_path_case()
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        let type_stringified = format!(
-                            "{path}<{std_string_string_stringified},{value_segments_stringified}{}>",
-                             crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
-                        );
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
-                            value_reference_ident,
-                            ..
-                        }
-                    ) => {
-                        crate::error_occurence::panic_if_not_str::panic_if_not_str(
-                            &value_reference_ident,
-                            str_stringified,
-                            proc_macro_name_ident_stringified,
-                            naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-                            &attribute
-                        );
-                        {
-                            let type_stringified = format!(
-                                "{path}<{std_string_string_stringified},{std_string_string_stringified}>"
-                            );
-                            type_stringified
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        }
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => {
-                        let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                       crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        let type_stringified = format!(
-                            "{path}<{std_string_string_stringified},{value_segments_stringified}{}>",
-                             crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime),
-                        );
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
-                );
-            }
-        },
-        crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
-            if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
-                path,
-                hashmap_key_type,
-                hashmap_value_type
-            } = supported_container {
-                match (hashmap_key_type, hashmap_value_type) {
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
-                            value_segments_stringified,
-                            value_vec_lifetime
-                        }
-                    ) => {
-                        let type_stringified = format!(
-                            "{path}<{std_string_string_stringified}, {value_segments_stringified}{with_serialize_deserialize_upper_camel_case}{}>",
-                             crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
-                        );
-                        type_stringified
-                        .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                    },
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                    (
-                        crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
-                        crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
-                    ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
-                }
-            }
-            else {
-                panic!(
-                    "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
-                    proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                    <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
-                );
-            }
-        },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type,
+        //     } = supported_container {
+        //         let hashmap_key_type_path_case = |
+        //             key_segments_stringified: std::string::String,
+        //             key_vec_lifetime: Vec<crate::error_occurence::lifetime::Lifetime>,
+        //         | -> proc_macro2::TokenStream {
+        //             crate::error_occurence::panic_if_not_string::panic_if_not_string(
+        //                 &key_segments_stringified,
+        //                 &std_string_string_stringified,
+        //                 proc_macro_name_ident_stringified,
+        //                 naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                 &as_std_collections_hashmap_key_type_stringified,
+        //                 &attribute
+        //             );
+        //             {
+        //                 let type_stringified = format!(
+        //                     "{path}<{key_segments_stringified}{}, {std_string_string_stringified}>",
+        //                      crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
+        //                 );
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             }
+        //         };
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime
+        //                 },
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => {
+        //                 hashmap_key_type_path_case(
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime,
+        //                 )
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => {
+        //                 {
+        //                     let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..} |
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime
+        //                 },
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_string::panic_if_not_string(
+        //                     &key_segments_stringified,
+        //                     &std_string_string_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &as_std_collections_hashmap_key_type_stringified,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{key_segments_stringified}{}, {value_segments_stringified}{}>",
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
+        //                     );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime
+        //                 },
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+        //                     value_reference_ident,
+        //                     ..
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_string::panic_if_not_string(
+        //                     &key_segments_stringified,
+        //                     &std_string_string_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &as_std_collections_hashmap_key_type_stringified,
+        //                     &attribute
+        //                 );
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &value_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{key_segments_stringified}{}, {std_string_string_stringified}>",
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime)
+        //                     );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+        //                     key_reference_ident,
+        //                     ..
+        //                 },
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &key_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{std_string_string_stringified}, {value_segments_stringified}{}>",
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
+        //                     );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+        //                     key_reference_ident,
+        //                     ..
+        //                 },
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+        //                     value_reference_ident,
+        //                     ..
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &key_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &value_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!("{path}<{std_string_string_stringified}, {std_string_string_stringified}>");
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         let hashmap_key_type_path_case = |
+        //             key_segments_stringified: std::string::String,
+        //             key_vec_lifetime: Vec<crate::error_occurence::lifetime::Lifetime>,
+        //         | -> proc_macro2::TokenStream {
+        //             {
+        //                 let type_stringified = format!(
+        //                     "{path}<{key_segments_stringified}{},{std_string_string_stringified}>",
+        //                      crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime)
+        //                 );
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             }
+        //         };
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime
+        //                 },
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => hashmap_key_type_path_case(
+        //                 key_segments_stringified,
+        //                 key_vec_lifetime,
+        //             ),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => {
+        //                 let type_stringified = format!(
+        //                     "{path}<{std_string_string_stringified},{std_string_string_stringified}>"
+        //                 );
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime
+        //                 },
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_string::panic_if_not_string(
+        //                     &key_segments_stringified,
+        //                     &std_string_string_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &as_std_collections_hashmap_key_type_stringified,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{key_segments_stringified}{},{value_segments_stringified}{}>",
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime),
+        //                     );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+        //                     key_reference_ident,
+        //                     ..
+        //                 },
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &key_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                         let type_stringified = format!(
+        //                             "{path}<{std_string_string_stringified},{value_segments_stringified}{}>",
+        //                              crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime),
+        //                         );
+        //                         type_stringified
+        //                         .parse::<proc_macro2::TokenStream>()
+        //                         .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                     }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {
+        //                     key_segments_stringified,
+        //                     key_vec_lifetime
+        //                 },
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_string::panic_if_not_string(
+        //                     &key_segments_stringified,
+        //                     &std_string_string_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &as_std_collections_hashmap_key_type_stringified,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{key_segments_stringified}{}, {value_segments_stringified}{with_serialize_deserialize_upper_camel_case}{}>",
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&key_vec_lifetime),
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
+        //                     );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {
+        //                     key_reference_ident,
+        //                     ..
+        //                 },
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &key_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{std_string_string_stringified}, {value_segments_stringified}{with_serialize_deserialize_upper_camel_case}{}>",
+        //                          crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
+        //                    );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         let hashmap_key_type_path_case = || -> proc_macro2::TokenStream {
+        //             let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
+        //             type_stringified
+        //             .parse::<proc_macro2::TokenStream>()
+        //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //         };
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => {
+        //                 hashmap_key_type_path_case()
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 let type_stringified = format!(
+        //                     "{path}<{std_string_string_stringified},{value_segments_stringified}{}>",
+        //                      crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
+        //                 );
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {
+        //                     value_reference_ident,
+        //                     ..
+        //                 }
+        //             ) => {
+        //                 crate::error_occurence::panic_if_not_str::panic_if_not_str(
+        //                     &value_reference_ident,
+        //                     str_stringified,
+        //                     proc_macro_name_ident_stringified,
+        //                     naming_constants::SUPPORTS_ONLY_STRINGIFIED,
+        //                     &attribute
+        //                 );
+        //                 {
+        //                     let type_stringified = format!(
+        //                         "{path}<{std_string_string_stringified},{std_string_string_stringified}>"
+        //                     );
+        //                     type_stringified
+        //                     .parse::<proc_macro2::TokenStream>()
+        //                     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //                 }
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => {
+        //                 let type_stringified = format!("{path}<{std_string_string_stringified},{std_string_string_stringified}>");
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 let type_stringified = format!(
+        //                     "{path}<{std_string_string_stringified},{value_segments_stringified}{}>",
+        //                      crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime),
+        //                 );
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}",proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
+        //         );
+        //     }
+        // },
+        // crate::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
+        //     if let crate::error_occurence::supported_container::SupportedContainer::HashMap {
+        //         path,
+        //         hashmap_key_type,
+        //         hashmap_value_type
+        //     } = supported_container {
+        //         match (hashmap_key_type, hashmap_value_type) {
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {
+        //                     value_segments_stringified,
+        //                     value_vec_lifetime
+        //                 }
+        //             ) => {
+        //                 let type_stringified = format!(
+        //                     "{path}<{std_string_string_stringified}, {value_segments_stringified}{with_serialize_deserialize_upper_camel_case}{}>",
+        //                      crate::error_occurence::vec_lifetime_to_string::vec_lifetime_to_string(&value_vec_lifetime)
+        //                 );
+        //                 type_stringified
+        //                 .parse::<proc_macro2::TokenStream>()
+        //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        //             },
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Path {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_path_stringified} && {hashmap_value_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Path {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_value_type_path_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //             (
+        //                 crate::error_occurence::hashmap_value_type::HashMapKeyType::Reference {..},
+        //                 crate::error_occurence::hashmap_key_type::HashMapValueType::Reference {..}
+        //             ) => panic!("{proc_macro_name_ident_stringified} {} {does_not_support_stringified} {hashmap_key_type_reference_stringified} && {hashmap_key_type_reference_stringified}", proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute)),
+        //         }
+        //     }
+        //     else {
+        //         panic!(
+        //             "{proc_macro_name_ident_stringified} {} {supports_only_supported_container_stringified}{}", 
+        //             proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
+        //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
+        //         );
+        //     }
+        // },
     }
 }
 
