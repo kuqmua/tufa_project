@@ -40,7 +40,26 @@ impl std::fmt::Display for DisplayStruct {
         write!(formatter, "{}", self.display)
     }
 }
-// impl error_occurence_lib::SourceToStringWithConfig
+impl error_occurence_lib::SourceToStringWithConfig<'_> for DisplayStruct {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for DisplayStruct {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl DisplayStruct {
+    pub fn into_serialize_deserialize_version(self) -> std::string::String {
+        self.to_string()
+    }
+}
 
 
 #[derive(Debug)]
