@@ -41,6 +41,14 @@ impl std::fmt::Display for DisplayStruct {
     }
 }
 
+impl into_serialize_deserialize_to_string::IntoSerializeDeserializeToString for DisplayStruct {
+    fn into_serialize_deserialize_to_string(
+        self,
+    ) -> impl serde::Serialize + serde::Deserialize<'static> + std::fmt::Display {
+        self.to_string()
+    }
+}
+
 #[derive(Debug)]
 pub struct ToStdStringStringStruct {
     pub to_std_string_string: std::string::String,
