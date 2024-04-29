@@ -3788,12 +3788,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 proc_macro2::TokenStream::new()
             };
             quote::quote! {
-                impl<
-                    #trait_lifetime_token_stream,
-                >
-                    #error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream<
-                        #trait_lifetime_token_stream,
-                    > for #ident
+                impl #error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream<'_> for #ident
                 {
                     fn #source_to_string_with_config_token_stream
                     <
@@ -3955,13 +3950,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             let logic_for_into_serialize_deserialize_version_generated = logic_for_into_serialize_deserialize_version.iter();
             let logic_for_compile_time_check_error_occurence_members_generated = logic_for_compile_time_check_error_occurence_members.iter();
             quote::quote! {
-                impl<
-                    #trait_lifetime_token_stream
-                >
-                    #error_occurence_lib_to_string_with_config_to_string_with_config_token_stream<
-                        #trait_lifetime_token_stream
-                    > for #ident
-                {
+                impl #error_occurence_lib_to_string_with_config_to_string_with_config_token_stream<'_> for #ident {
                     fn #to_string_with_config_token_stream<
                         #config_generic_token_stream: #crate_common_config_path_get_source_place_type_token_stream
                         + #crate_common_config_path_get_timezone_token_stream
@@ -4044,13 +4033,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         #token_stream
         #enum_with_serialize_deserialize_logic
     };
-    // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &proc_macro_name,
-    //         &gen,
-    //         &proc_macro_name_ident_stringified
-    //     );
-    // }
+    if ident == "Something" {
+        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            &proc_macro_name,
+            &gen,
+            &proc_macro_name_ident_stringified
+        );
+    }
     gen.into()
 }
 
