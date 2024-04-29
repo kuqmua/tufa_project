@@ -4,7 +4,7 @@
     error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum One {
-    EoDisplayVariant {
+    Variant {
         #[eo_display]
         eo_display_field: DisplayStruct,
         #[eo_display_with_serialize_deserialize]
@@ -13,8 +13,8 @@ pub enum One {
         eo_display_foreign_type_field: DisplayForeignTypeStruct,
         #[eo_display_foreign_type_with_serialize_deserialize]
         eo_display_foreign_type_with_serialize_deserialize_field: DisplayForeignTypeWithSerializeDeserializeStruct,
-        // #[eo_error_occurence]
-        // eo_error_occurence_field: ,
+        #[eo_error_occurence]
+        eo_error_occurence_field: Two,
         // #[eo_vec_display]
         // eo_vec_display_field: ,
         // #[eo_vec_display_with_serialize_deserialize]
@@ -84,6 +84,20 @@ pub struct DisplayForeignTypeWithSerializeDeserializeStruct {
 impl error_occurence_lib::DisplayForeignType for DisplayForeignTypeWithSerializeDeserializeStruct {
     fn display_foreign_type(&self) -> std::string::String {
         format!("{self:#?}")
+    }
+}
+
+
+#[derive(
+    Debug,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurenceTest
+)]
+pub enum Two {
+    Variant {
+        #[eo_display_with_serialize_deserialize]
+        eo_display_with_serialize_deserialize_field: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
 
