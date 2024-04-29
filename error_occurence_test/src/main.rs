@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurence
+    error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedOne {
     Variant {
