@@ -5,14 +5,14 @@
 )]
 pub enum One {
     EoDisplayVariant {
-        #[eo_display_with_serialize_deserialize]
-        eo_display_field: std::string::String,
+        #[eo_display]
+        eo_display_field: DisplayStruct,
         #[eo_display_with_serialize_deserialize]
         eo_display_with_serialize_deserialize_field: std::string::String,
-        // #[eo_display_foreign_type]
-        // eo_display_foreign_type_field: ,
-        // #[eo_display_foreign_type_with_serialize_deserialize]
-        // eo_display_foreign_type_with_serialize_deserialize_field: ,
+        #[eo_display_foreign_type]
+        eo_display_foreign_type_field: DisplayForeignTypeStruct,
+        #[eo_display_foreign_type_with_serialize_deserialize]
+        eo_display_foreign_type_with_serialize_deserialize_field: DisplayForeignTypeWithSerializeDeserializeStruct,
         // #[eo_error_occurence]
         // eo_error_occurence_field: ,
         // #[eo_vec_display]
@@ -56,15 +56,37 @@ pub enum One {
     // },
 }
 
-// struct F {
-//     k: std::string::String,
-// }
 
-// impl error_occurence_lib::DisplayForeignType for F {
-//     fn display_foreign_type(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
+#[derive(Debug)]
+pub struct DisplayStruct {
+    pub display: std::string::String,
+}
+impl std::fmt::Display for DisplayStruct {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.display)
+    }
+}
+
+#[derive(Debug)]
+pub struct DisplayForeignTypeStruct {
+    pub display_foreign_type: std::string::String,
+}
+impl error_occurence_lib::DisplayForeignType for DisplayForeignTypeStruct {
+    fn display_foreign_type(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct DisplayForeignTypeWithSerializeDeserializeStruct {
+    pub display_foreign_type_with_serialize_deserialize: std::string::String,
+}
+impl error_occurence_lib::DisplayForeignType for DisplayForeignTypeWithSerializeDeserializeStruct {
+    fn display_foreign_type(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+
 
 fn main() {
     println!("1");

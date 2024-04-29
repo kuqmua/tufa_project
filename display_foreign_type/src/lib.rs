@@ -20,7 +20,6 @@ impl DisplayForeignType for reqwest::header::HeaderMap {
     }
 }
 
-
 impl DisplayForeignType for http_body::SizeHint {
     fn display_foreign_type(&self) -> std::string::String {
         format!("{self:#?}")
