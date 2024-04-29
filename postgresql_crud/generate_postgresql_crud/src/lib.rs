@@ -417,8 +417,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay
             .to_attribute_view_token_stream();
     let eo_display_with_serialize_deserialize_token_stream = proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize.to_attribute_view_token_stream();
-    let eo_display_foreign_type_token_stream =
-        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType
+    let eo_to_std_string_string_token_stream =
+        proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringString
             .to_attribute_view_token_stream();
     let eo_vec_error_occurence_token_stream =
         proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence
@@ -1671,9 +1671,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #unexpected_status_code_upper_camel_case_token_stream {
                     #eo_display_token_stream
                     #status_code_snake_case_token_stream: #http_status_code_token_stream,
-                    #eo_display_foreign_type_token_stream
+                    #eo_to_std_string_string_token_stream
                     #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
-                    #eo_display_foreign_type_token_stream
+                    #eo_to_std_string_string_token_stream
                     #response_text_result_snake_case_token_stream: #crate_common_api_request_unexpected_error_response_text_result_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }
@@ -1704,11 +1704,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #failed_to_get_response_text_upper_camel_case_token_stream {
-                    #eo_display_foreign_type_token_stream
+                    #eo_to_std_string_string_token_stream
                     #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
                     #eo_display_token_stream
                     #status_code_snake_case_token_stream: #http_status_code_token_stream,
-                    #eo_display_foreign_type_token_stream
+                    #eo_to_std_string_string_token_stream
                     #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }
@@ -1745,7 +1745,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #serde_snake_case_token_stream: #serde_json_error_token_stream,
                     #eo_display_token_stream
                     #status_code_snake_case_token_stream: #http_status_code_token_stream,
-                    #eo_display_foreign_type_token_stream
+                    #eo_to_std_string_string_token_stream
                     #headers_snake_case_token_stream: #reqwest_header_header_map_token_stream,
                     #eo_display_with_serialize_deserialize_token_stream
                     #response_text_snake_case_token_stream: #std_string_string_token_stream,
@@ -1775,7 +1775,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         (
             quote::quote! {
                 #reqwest_upper_camel_case_token_stream {
-                    #eo_display_foreign_type_token_stream
+                    #eo_to_std_string_string_token_stream
                     #reqwest_snake_case_token_stream: #reqwest_error_token_stream,
                     #code_occurence_snake_case_double_dot_space_error_occurence_lib_code_occurence_code_occurence_token_stream,
                 }

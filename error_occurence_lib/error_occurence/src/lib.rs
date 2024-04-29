@@ -8,31 +8,31 @@
 //     #[doc = include_str!("x.md")]
 //     x: u32
 // }
-//todo - maybe remove possibility to use references for display, display_foreign_type, error occurence for WithSerializeDeserialize
+//todo - maybe remove possibility to use references for display, to_std_string_string, error occurence for WithSerializeDeserialize
 #[proc_macro_derive(
     ErrorOccurence,
     attributes(
         eo_display,
         eo_display_with_serialize_deserialize,
-        eo_display_foreign_type,
-        eo_display_foreign_type_with_serialize_deserialize,
+        eo_to_std_string_string,
+        eo_to_std_string_string_with_serialize_deserialize,
         eo_error_occurence,
         //todo error_occurence version for - after errors after deserialization
         eo_vec_display,//todo maybe add version without generation \n for each element?
         eo_vec_display_with_serialize_deserialize,
-        eo_vec_display_foreign_type,
-        eo_vec_display_foreign_type_with_serialize_deserialize,
+        eo_vec_to_std_string_string,
+        eo_vec_to_std_string_string_with_serialize_deserialize,
         eo_vec_error_occurence,
         // eo_hashmap_key_display_with_serialize_deserialize_value_display,
         // eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize,
-        // eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type,
-        // eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize,
+        // eo_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string,
+        // eo_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize,
         // eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence,
-        // eo_hashmap_key_display_foreign_type_value_display,
-        // eo_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize,
-        // eo_hashmap_key_display_foreign_type_value_display_foreign_type,
-        // eo_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize,
-        // eo_hashmap_key_display_foreign_type_value_error_occurence,
+        // eo_hashmap_key_to_std_string_string_value_display,
+        // eo_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize,
+        // eo_hashmap_key_to_std_string_string_value_to_std_string_string,
+        // eo_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize,
+        // eo_hashmap_key_to_std_string_string_value_error_occurence,
     )
 )]
 pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -260,30 +260,36 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 <naming_constants::Type as naming_constants::Naming>::upper_camel_case_stringified()
             );
             let display_upper_camel_case_stringified = <naming_constants::Display as naming_constants::Naming>::upper_camel_case_stringified();
-            let display_foreign_type_upper_camel_case = format!("{display_upper_camel_case_stringified}{foreign_type_upper_camel_case_stringified}");
-            let display_foreign_type_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&display_foreign_type_upper_camel_case);
+            let to_std_string_string_upper_camel_case = format!(
+                "{}{}{}{}",
+                <naming_constants::To as naming_constants::Naming>::upper_camel_case_stringified(),
+                <naming_constants::Std as naming_constants::Naming>::upper_camel_case_stringified(),
+                <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
+                <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
+            );
+            let to_std_string_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&to_std_string_string_upper_camel_case);
             let display_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&display_upper_camel_case_stringified);
             let attribute_prefix_stringified = "eo_";
             let attribute_display_stringified = format!("{attribute_prefix_stringified}{display_snake_case_stringified}");
             let attribute_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{display_foreign_type_snake_case_stringified}");
-            let attribute_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{to_std_string_string_snake_case_stringified}");
+            let attribute_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
             let attribute_error_occurence_stringified = format!("{attribute_prefix_stringified}{error_occurence_snake_case}");
             let attribute_vec_display_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_snake_case_stringified}");
             let attribute_vec_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_vec_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_foreign_type_snake_case_stringified}");
-            let attribute_vec_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_vec_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{to_std_string_string_snake_case_stringified}");
+            let attribute_vec_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
             let attribute_vec_error_occurence_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{error_occurence_snake_case}");
             let attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_snake_case_stringified}");
             let attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_foreign_type_snake_case_stringified}");
-            let attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{to_std_string_string_snake_case_stringified}");
+            let attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
             let attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{error_occurence_snake_case}");
-            let attribute_hashmap_key_display_foreign_type_value_display_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}");
-            let attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_foreign_type_snake_case_stringified}");
-            let attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{error_occurence_snake_case}");
+            let attribute_hashmap_key_to_std_string_string_value_display_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}");
+            let attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_hashmap_key_to_std_string_string_value_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{to_std_string_string_snake_case_stringified}");
+            let attribute_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_hashmap_key_to_std_string_string_value_error_occurence_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{error_occurence_snake_case}");
             let variants_vec = data_enum.variants.into_iter().map(|variant| {
                 let variant_fields_vec = if let syn::Fields::Named(fields_named) = variant.fields {
                     fields_named.named.into_iter().map(|field|{
@@ -334,7 +340,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 field.attrs.iter().for_each(|attr|{
                                     if attr.path().segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                        if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_stringified {
+                                        let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+                                        if *first_segment_ident == *attribute_display_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -342,7 +349,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_display_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -350,23 +357,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_stringified {
+                                        else if *first_segment_ident == *attribute_to_std_string_string_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringString);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_to_std_string_string_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringStringWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_error_occurence_stringified {
+                                        else if *first_segment_ident == *attribute_error_occurence_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -374,7 +381,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_stringified {
+                                        else if *first_segment_ident == *attribute_vec_display_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -382,7 +389,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_vec_display_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -390,23 +397,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_stringified {
+                                        else if *first_segment_ident == *attribute_vec_to_std_string_string_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringString);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_vec_to_std_string_string_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringStringWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_error_occurence_stringified {
+                                        else if *first_segment_ident == *attribute_vec_error_occurence_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -414,7 +421,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
                                             }
                                         }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
@@ -422,7 +429,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
@@ -430,23 +437,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringString);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringStringWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
@@ -454,44 +461,44 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_display_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplay);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplayWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_to_std_string_string_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringString);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringStringWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_error_occurence_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueErrorOccurence);
                                         //     }
                                         // }
                                         else {
@@ -914,10 +921,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 .parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {field_name_with_field_value_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
-                            let display_foreign_type_snake_case_token_stream =
-                            display_foreign_type_snake_case_stringified
+                            let to_std_string_string_snake_case_token_stream =
+                            to_std_string_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {display_foreign_type_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_std_string_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let to_string_token_stream = to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -932,11 +939,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_upper_camel_case}");
-                            let error_occurence_lib_display_foreign_type_token_stream =
-                            error_occurence_lib_display_foreign_type_stringified
+                            let error_occurence_lib_to_std_string_string_stringified = format!("{error_occurence_lib_stringified}::{to_std_string_string_upper_camel_case}");
+                            let error_occurence_lib_to_std_string_string_token_stream =
+                            error_occurence_lib_to_std_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_std_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_display_to_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -967,7 +974,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
+                            let hashmap_display_to_std_string_string_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
                             hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case
@@ -982,65 +989,65 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&<naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified());
-                            let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
+                            let hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
                             let std_stringified = "std";
                             let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
-                            let hashmap_display_display_foreign_type_to_string_snake_case_token_stream =
-                            hashmap_display_display_foreign_type_to_string_snake_case
+                            let hashmap_display_to_std_string_string_to_string_snake_case_token_stream =
+                            hashmap_display_to_std_string_string_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified = format!(
-                                "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_to_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}",
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_std_string_string_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_stringified = format!(
+                                "{error_occurence_lib_stringified}::{hashmap_display_to_std_string_string_to_string_snake_case}::{}{display_upper_camel_case_stringified}{to_std_string_string_upper_camel_case}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream =
-                            error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified
+                            let error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream =
+                            error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_element_type_path_stringified = format!(
                                 "proc_macro_helpers::error_occurence::vec_element_type::VecElementType::{}",
                                 <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let vec_display_foreign_type_to_string_upper_camel_case = format!(
-                                "{}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}",
+                            let vec_to_std_string_string_to_string_upper_camel_case = format!(
+                                "{}{to_std_string_string_upper_camel_case}{to_string_upper_camel_case}",
                                 <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let vec_display_foreign_type_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_foreign_type_to_string_upper_camel_case);
-                            let vec_display_foreign_type_to_string_snake_case_token_stream =
-                            vec_display_foreign_type_to_string_snake_case_stringified
+                            let vec_to_std_string_string_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_std_string_string_to_string_upper_camel_case);
+                            let vec_to_std_string_string_to_string_snake_case_token_stream =
+                            vec_to_std_string_string_to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_to_string_snake_case_stringified}::{vec_display_foreign_type_to_string_upper_camel_case}");
-                            let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream =
-                            error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_std_string_string_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_std_string_string_to_string_snake_case_stringified}::{vec_to_std_string_string_to_string_upper_camel_case}");
+                            let error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream =
+                            error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_foreign_type_display_to_string_snake_case_token_stream =
-                            hashmap_display_foreign_type_display_to_string_snake_case
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let hashmap_to_std_string_string_display_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
+                            let hashmap_to_std_string_string_display_to_string_snake_case_token_stream =
+                            hashmap_to_std_string_string_display_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified = format!(
-                                "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_display_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_stringified = format!(
+                                "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_display_to_string_snake_case}::{}{to_std_string_string_upper_camel_case}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream =
-                            error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified
+                            let error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream =
+                            error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream =
-                            hashmap_display_foreign_type_display_foreign_type_to_string_snake_case
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let hashmap_to_std_string_string_to_std_string_string_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{to_string_snake_case_stringified}");
+                            let hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream =
+                            hashmap_to_std_string_string_to_std_string_string_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified = format!(
-                                "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}", 
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_std_string_string_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_stringified = format!(
+                                "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_std_string_string_to_string_snake_case}::{}{to_std_string_string_upper_camel_case}{to_std_string_string_upper_camel_case}{to_string_upper_camel_case}", 
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream =
-                            error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified
+                            let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream =
+                            error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let as_std_collections_hashmap_key_type_stringified = format!(
                                 "as {std_stringified}::collections::{} key type",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -1133,21 +1140,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_display_foreign_type_into_hashmap_string_string_upper_camel_case = format!(
-                                "{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
+                            let hashmap_display_to_std_string_string_into_hashmap_string_string_upper_camel_case = format!(
+                                "{}{display_upper_camel_case_stringified}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                            let hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream = hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case
+                            let hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
+                            let hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream = hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case}::{hashmap_display_display_foreign_type_into_hashmap_string_string_upper_camel_case}");
-                            let crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream = crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case}::{hashmap_display_to_std_string_string_into_hashmap_string_string_upper_camel_case}");
+                            let crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream = crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_into_hashmap_display_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -1163,21 +1170,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             hashmap_display_display_into_hashmap_display_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_into_hashmap_string_string_upper_camel_case = format!(
-                                "{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{}",
+                            let hashmap_to_std_string_string_display_into_hashmap_string_string_upper_camel_case = format!(
+                                "{}{to_std_string_string_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                            let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case}::{hashmap_display_foreign_type_display_into_hashmap_string_string_upper_camel_case}");
-                            let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream = error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified
+                            let hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
+                            let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case}::{hashmap_to_std_string_string_display_into_hashmap_string_string_upper_camel_case}");
+                            let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream = error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream = hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream = hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
 
                             //
                             let (
@@ -1363,7 +1370,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         ),
                                     }
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringString => {
                                     if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path {..} = supported_container {}
                                     else {
                                         panic!(
@@ -1377,7 +1384,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1387,7 +1394,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                          #field_ident
                                                     )
                                                 )
@@ -1402,7 +1409,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             )
                                         },
                                         quote::quote! {
-                                            #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                            #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                 &#field_ident
                                             )
                                         },
@@ -1416,7 +1423,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro2::TokenStream::new(),
                                     )
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringStringWithSerializeDeserialize => {
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime } = supported_container {
                                         (
                                             {
@@ -1445,7 +1452,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1455,7 +1462,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1465,7 +1472,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1745,7 +1752,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro2::TokenStream::new(),
                                     )
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringString => {
                                     if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
                                         vec_element_type,
                                         ..
@@ -1762,28 +1769,28 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     }
-                                    let vec_display_foreign_type_into_vec_string_upper_camel_case = format!(
-                                        "{}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}",
+                                    let vec_to_std_string_string_into_vec_string_upper_camel_case = format!(
+                                        "{}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}",
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                                         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                     );
-                                    let vec_display_foreign_type_into_vec_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_foreign_type_into_vec_string_upper_camel_case);
-                                    let vec_display_foreign_type_into_vec_string_snake_case_token_stream =
-                                    vec_display_foreign_type_into_vec_string_snake_case_stringified
+                                    let vec_to_std_string_string_into_vec_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_std_string_string_into_vec_string_upper_camel_case);
+                                    let vec_to_std_string_string_into_vec_string_snake_case_token_stream =
+                                    vec_to_std_string_string_into_vec_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_into_vec_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                    let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_into_vec_string_snake_case_stringified}::{vec_display_foreign_type_into_vec_string_upper_camel_case}");
-                                    let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream =
-                                    error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_std_string_string_into_vec_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    let error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_std_string_string_into_vec_string_snake_case_stringified}::{vec_to_std_string_string_into_vec_string_upper_camel_case}");
+                                    let error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_token_stream =
+                                    error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1793,7 +1800,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1810,7 +1817,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             )
                                         },
                                         quote::quote! {
-                                            #error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream::#vec_display_foreign_type_into_vec_string_snake_case_token_stream(
+                                            #error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_token_stream::#vec_to_std_string_string_into_vec_string_snake_case_token_stream(
                                                 #field_ident
                                             )
                                         },
@@ -1824,7 +1831,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         proc_macro2::TokenStream::new(),
                                     )
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringStringWithSerializeDeserialize => {
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
                                         path,
                                         vec_element_type
@@ -1861,7 +1868,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1871,7 +1878,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -1881,7 +1888,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -2481,7 +2488,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringString => {
                                 //     let (
                                 //         type_token_stream,
                                 //         serde_borrow_token_stream,
@@ -2500,20 +2507,20 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             proc_macro2::TokenStream,
                                 //             proc_macro2::TokenStream
                                 //         ) {
-                                //             let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream =
-                                //             hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case
+                                //             let hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case_token_stream =
+                                //             hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case
                                 //             .parse::<proc_macro2::TokenStream>()
-                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //             let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified = format!(
-                                //                 "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
+                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //             let error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_stringified = format!(
+                                //                 "{error_occurence_lib_stringified}::{hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case}::{}{display_upper_camel_case_stringified}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
                                 //                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //             );
-                                //             let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream =
-                                //             error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified
+                                //             let error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_token_stream =
+                                //             error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_stringified
                                 //             .parse::<proc_macro2::TokenStream>()
-                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //             (
                                 //                 {
                                 //                     let type_stringified = format!(
@@ -2531,7 +2538,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                     &proc_macro_name_ident_stringified
                                 //                 ),
                                 //                 quote::quote! {
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_token_stream::#hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 }
@@ -2563,7 +2570,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                     quote::quote!{#[serde(borrow)]}
                                 //                 },
                                 //                 quote::quote! {
-                                //                     #crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream(
+                                //                     #crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream::#hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 }
@@ -2615,7 +2622,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -2627,7 +2634,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -2655,7 +2662,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringStringWithSerializeDeserialize => {
                                 //     let (
                                 //         type_token_stream,
                                 //         serde_borrow_token_stream,
@@ -2746,7 +2753,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                         quote::quote!{#[serde(borrow)]}
                                 //                     },
                                 //                     quote::quote! {
-                                //                         #crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream(
+                                //                         #crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream::#hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream(
                                 //                             #field_ident
                                 //                         )
                                 //                     }
@@ -2771,7 +2778,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -2783,7 +2790,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -2795,7 +2802,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3001,7 +3008,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         },
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplay => {
                                 //     let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                 //         path,
                                 //         hashmap_key_type,
@@ -3024,7 +3031,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                 inform_use_str_string_in_different_attribute(
                                 //                     value_segments_stringified,
                                 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                                //                     &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified
+                                //                     &attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified
                                 //                 );
                                 //                 hashmap_key_type_path_case()
                                 //             },
@@ -3054,7 +3061,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3064,7 +3071,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3083,7 +3090,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             }
                                 //         },
                                 //         quote::quote! {
-                                //             #error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream::#hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream(
+                                //             #error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream::#hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream(
                                 //                 #field_ident
                                 //             )
                                 //         },
@@ -3095,7 +3102,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplayWithSerializeDeserialize => {
                                 //     let (
                                 //         type_token_stream,
                                 //         serde_borrow_token_stream,
@@ -3113,21 +3120,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                     value_vec_lifetime
                                 //                 }
                                 //             ) => {
-                                //                 let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_snake_case_stringified}");
-                                //                 let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream =
-                                //                 hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case
+                                //                 let hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_snake_case_stringified}");
+                                //                 let hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case_token_stream =
+                                //                 hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case
                                 //                 .parse::<proc_macro2::TokenStream>()
-                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //                 let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified = format!(
-                                //                     "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{display_upper_camel_case_stringified}",
+                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //                 let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_stringified = format!(
+                                //                     "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case}::{}{to_std_string_string_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{display_upper_camel_case_stringified}",
                                 //                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                     <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //                 );
-                                //                 let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream =
-                                //                 error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified
+                                //                 let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_token_stream =
+                                //                 error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_stringified
                                 //                 .parse::<proc_macro2::TokenStream>()
-                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //                 (
                                 //                     {
                                 //                         let type_stringified = format!(
@@ -3145,7 +3152,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                         &proc_macro_name_ident_stringified
                                 //                     ),
                                 //                     quote::quote! {
-                                //                         #error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream::#hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream(
+                                //                         #error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_token_stream::#hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case_token_stream(
                                 //                             #field_ident
                                 //                         )
                                 //                     }
@@ -3181,7 +3188,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                         &proc_macro_name_ident_stringified
                                 //                     ),
                                 //                     quote::quote! {
-                                //                         #error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream::#hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream(
+                                //                         #error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream::#hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream(
                                 //                             #field_ident
                                 //                         )
                                 //                     }
@@ -3209,7 +3216,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3219,7 +3226,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3246,7 +3253,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringString => {
                                 //     let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                 //         path,
                                 //         hashmap_key_type,
@@ -3283,28 +3290,28 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //         );
                                 //     };
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream =
-                                //     hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case_token_stream =
+                                //     hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified = format!(
-                                //         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_stringified = format!(
+                                //         "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case}::{}{to_std_string_string_upper_camel_case}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream =
-                                //     error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_token_stream =
+                                //     error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //     (
                                 //         quote::quote! {
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3314,7 +3321,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3333,7 +3340,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             }
                                 //         },
                                 //         quote::quote! {
-                                //             #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream(
+                                //             #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case_token_stream(
                                 //                 #field_ident
                                 //             )
                                 //         },
@@ -3345,7 +3352,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringStringWithSerializeDeserialize => {
                                 //     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                 //         path,
                                 //         hashmap_key_type,
@@ -3396,26 +3403,26 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //         );
                                 //     };
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_upper_camel_case = format!(
-                                //         "{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{display_foreign_type_upper_camel_case}",
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_upper_camel_case = format!(
+                                //         "{}{to_std_string_string_upper_camel_case}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}{to_std_string_string_upper_camel_case}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_foreign_type_snake_case_stringified}");
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_token_stream = hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}");
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_token_stream = hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_upper_camel_case}");
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_token_stream = error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case}::{hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_upper_camel_case}");
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_token_stream = error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //     (
                                 //         quote::quote! {
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3425,7 +3432,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3436,7 +3443,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3444,7 +3451,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             }
                                 //         },
                                 //         quote::quote! {
-                                //             #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_token_stream::#hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_token_stream(
+                                //             #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_token_stream(
                                 //                 #field_ident
                                 //             )
                                 //         },
@@ -3456,7 +3463,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueErrorOccurence => {
                                 //     if !should_generate_impl_compile_time_check_error_occurence_members {
                                 //         should_generate_impl_compile_time_check_error_occurence_members = true;
                                 //     }
@@ -3510,37 +3517,37 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //         );
                                 //     };
-                                //     let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
-                                //     let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream =
-                                //     hashmap_display_foreign_type_to_string_without_config_to_string_snake_case
+                                //     let hashmap_to_std_string_string_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
+                                //     let hashmap_to_std_string_string_to_string_without_config_to_string_snake_case_token_stream =
+                                //     hashmap_to_std_string_string_to_string_without_config_to_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_without_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified = format!(
-                                //         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_without_config_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_string_without_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_stringified = format!(
+                                //         "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_string_without_config_to_string_snake_case}::{}{to_std_string_string_upper_camel_case}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream =
-                                //     error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_token_stream =
+                                //     error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let hashmap_display_foreign_type_to_string_with_config_to_string_upper_camel_case = format!(
-                                //         "{}{display_foreign_type_upper_camel_case}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let hashmap_to_std_string_string_to_string_with_config_to_string_upper_camel_case = format!(
+                                //         "{}{to_std_string_string_upper_camel_case}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let hashmap_display_foreign_type_to_string_with_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{to_string_with_config_snake_case_stringified}_{to_string_snake_case_stringified}");
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_with_config_to_string_snake_case}::{hashmap_display_foreign_type_to_string_with_config_to_string_upper_camel_case}");
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_token_stream = error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified
+                                //     let hashmap_to_std_string_string_to_string_with_config_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_string_with_config_snake_case_stringified}_{to_string_snake_case_stringified}");
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_string_with_config_to_string_snake_case}::{hashmap_to_std_string_string_to_string_with_config_to_string_upper_camel_case}");
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_token_stream = error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let hashmap_display_foreign_type_to_string_with_config_to_string_token_stream = hashmap_display_foreign_type_to_string_with_config_to_string_snake_case
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let hashmap_to_std_string_string_to_string_with_config_to_string_token_stream = hashmap_to_std_string_string_to_string_with_config_to_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_with_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_string_with_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //     (
                                 //         quote::quote! {
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_token_stream::#hashmap_display_foreign_type_to_string_with_config_to_string_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_token_stream::#hashmap_to_std_string_string_to_string_with_config_to_string_token_stream(
                                 //                         #field_ident,
                                 //                         config
                                 //                     )
@@ -3551,7 +3558,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream::#hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_token_stream::#hashmap_to_std_string_string_to_string_without_config_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -3572,7 +3579,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 //                 #field_ident.into_iter()
                                 //                 .map(|(k, v)| {
                                 //                     (
-                                //                         #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(k),
+                                //                         #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(k),
                                 //                         { v.#into_serialize_deserialize_version_token_stream() },
                                 //                     )
                                 //                 })
@@ -4123,25 +4130,25 @@ fn vec_lifetime_to_lifetime(
     attributes(
         eo_display,
         eo_display_with_serialize_deserialize,
-        eo_display_foreign_type,
-        eo_display_foreign_type_with_serialize_deserialize,
+        eo_to_std_string_string,
+        eo_to_std_string_string_with_serialize_deserialize,
         eo_error_occurence,
         //todo error_occurence version for - after errors after deserialization
         eo_vec_display,//todo maybe add version without generation \n for each element?
         eo_vec_display_with_serialize_deserialize,
-        eo_vec_display_foreign_type,
-        eo_vec_display_foreign_type_with_serialize_deserialize,
+        eo_vec_to_std_string_string,
+        eo_vec_to_std_string_string_with_serialize_deserialize,
         eo_vec_error_occurence,
         // eo_hashmap_key_display_with_serialize_deserialize_value_display,
         // eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize,
-        // eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type,
-        // eo_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize,
+        // eo_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string,
+        // eo_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize,
         // eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence,
-        // eo_hashmap_key_display_foreign_type_value_display,
-        // eo_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize,
-        // eo_hashmap_key_display_foreign_type_value_display_foreign_type,
-        // eo_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize,
-        // eo_hashmap_key_display_foreign_type_value_error_occurence,
+        // eo_hashmap_key_to_std_string_string_value_display,
+        // eo_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize,
+        // eo_hashmap_key_to_std_string_string_value_to_std_string_string,
+        // eo_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize,
+        // eo_hashmap_key_to_std_string_string_value_error_occurence,
     )
 )]
 pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -4369,30 +4376,36 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 <naming_constants::Type as naming_constants::Naming>::upper_camel_case_stringified()
             );
             let display_upper_camel_case_stringified = <naming_constants::Display as naming_constants::Naming>::upper_camel_case_stringified();
-            let display_foreign_type_upper_camel_case = format!("{display_upper_camel_case_stringified}{foreign_type_upper_camel_case_stringified}");
-            let display_foreign_type_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&display_foreign_type_upper_camel_case);
+            let to_std_string_string_upper_camel_case = format!(
+                "{}{}{}{}",
+                <naming_constants::To as naming_constants::Naming>::upper_camel_case_stringified(),
+                <naming_constants::Std as naming_constants::Naming>::upper_camel_case_stringified(),
+                <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
+                <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
+            );
+            let to_std_string_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&to_std_string_string_upper_camel_case);
             let display_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&display_upper_camel_case_stringified);
             let attribute_prefix_stringified = "eo_";
             let attribute_display_stringified = format!("{attribute_prefix_stringified}{display_snake_case_stringified}");
             let attribute_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{display_foreign_type_snake_case_stringified}");
-            let attribute_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{to_std_string_string_snake_case_stringified}");
+            let attribute_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
             let attribute_error_occurence_stringified = format!("{attribute_prefix_stringified}{error_occurence_snake_case}");
             let attribute_vec_display_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_snake_case_stringified}");
             let attribute_vec_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_vec_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_foreign_type_snake_case_stringified}");
-            let attribute_vec_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_vec_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{to_std_string_string_snake_case_stringified}");
+            let attribute_vec_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
             let attribute_vec_error_occurence_stringified = format!("{attribute_prefix_stringified}{vec_snake_case}_{error_occurence_snake_case}");
             let attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_snake_case_stringified}");
             let attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_foreign_type_snake_case_stringified}");
-            let attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{to_std_string_string_snake_case_stringified}");
+            let attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
             let attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}_{value_snake_case}_{error_occurence_snake_case}");
-            let attribute_hashmap_key_display_foreign_type_value_display_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}");
-            let attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_foreign_type_snake_case_stringified}");
-            let attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{display_foreign_type_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
-            let attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{display_foreign_type_snake_case_stringified}_{value_snake_case}_{error_occurence_snake_case}");
+            let attribute_hashmap_key_to_std_string_string_value_display_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}");
+            let attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{display_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_hashmap_key_to_std_string_string_value_to_std_string_string_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{to_std_string_string_snake_case_stringified}");
+            let attribute_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{to_std_string_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
+            let attribute_hashmap_key_to_std_string_string_value_error_occurence_stringified = format!("{attribute_prefix_stringified}{hashmap_snake_case}_{key_snake_case}_{to_std_string_string_snake_case_stringified}_{value_snake_case}_{error_occurence_snake_case}");
             let variants_vec = data_enum.variants.into_iter().map(|variant| {
                 let variant_fields_vec = if let syn::Fields::Named(fields_named) = variant.fields {
                     fields_named.named.into_iter().map(|field|{
@@ -4443,7 +4456,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 field.attrs.iter().for_each(|attr|{
                                     if attr.path().segments.len() == 1 {
                                         let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
-                                        if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_stringified {
+                                        let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+                                        if *first_segment_ident == *attribute_display_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -4451,7 +4465,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_display_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -4459,23 +4473,23 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_stringified {
+                                        else if *first_segment_ident == *attribute_to_std_string_string_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringString);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_display_foreign_type_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_to_std_string_string_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringStringWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_error_occurence_stringified {
+                                        else if *first_segment_ident == *attribute_error_occurence_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -4483,7 +4497,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_stringified {
+                                        else if *first_segment_ident == *attribute_vec_display_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -4491,7 +4505,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_vec_display_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -4499,23 +4513,23 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_stringified {
+                                        else if *first_segment_ident == *attribute_vec_to_std_string_string_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringString);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_display_foreign_type_with_serialize_deserialize_stringified {
+                                        else if *first_segment_ident == *attribute_vec_to_std_string_string_with_serialize_deserialize_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
                                             else {
-                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize);
+                                                option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringStringWithSerializeDeserialize);
                                             }
                                         }
-                                        else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_vec_error_occurence_stringified {
+                                        else if *first_segment_ident == *attribute_vec_error_occurence_stringified {
                                             if option_attribute.is_some() {
                                                 panic!("{error_message}");
                                             }
@@ -4523,7 +4537,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
                                             }
                                         }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
@@ -4531,7 +4545,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
@@ -4539,23 +4553,23 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringString);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringStringWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
@@ -4563,44 +4577,44 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_display_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplay);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplayWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_to_std_string_string_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringString);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_display_foreign_type_with_serialize_deserialize_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringStringWithSerializeDeserialize);
                                         //     }
                                         // }
-                                        // else if attr.path().segments.first().expect("no first value in punctuated").ident == attribute_hashmap_key_display_foreign_type_value_error_occurence_stringified {
+                                        // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_error_occurence_stringified {
                                         //     if option_attribute.is_some() {
                                         //         panic!("{error_message}");
                                         //     }
                                         //     else {
-                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence);
+                                        //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueErrorOccurence);
                                         //     }
                                         // }
                                         else {
@@ -5023,10 +5037,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 .parse::<proc_macro2::TokenStream>()
                                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {field_name_with_field_value_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                             };
-                            let display_foreign_type_snake_case_token_stream =
-                            display_foreign_type_snake_case_stringified
+                            let to_std_string_string_snake_case_token_stream =
+                            to_std_string_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {display_foreign_type_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_std_string_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let to_string_token_stream = to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
@@ -5041,11 +5055,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_lines_space_backslash_lines_space_backslash_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{display_foreign_type_upper_camel_case}");
-                            let error_occurence_lib_display_foreign_type_token_stream =
-                            error_occurence_lib_display_foreign_type_stringified
+                            let error_occurence_lib_to_std_string_string_stringified = format!("{error_occurence_lib_stringified}::{to_std_string_string_upper_camel_case}");
+                            let error_occurence_lib_to_std_string_string_token_stream =
+                            error_occurence_lib_to_std_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_display_foreign_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_to_std_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_display_to_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
@@ -5076,7 +5090,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_to_string_hashmap_display_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
+                            let hashmap_display_to_std_string_string_to_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{to_string_snake_case_stringified}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}_{with_serialize_deserialize_snake_case}");
                             let hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case_token_stream =
                             hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_snake_case
@@ -5091,65 +5105,65 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_hashmap_display_to_string_without_config_to_string_with_serialize_deserialize_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&<naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified());
-                            let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
+                            let hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{display_snake_case_stringified}_{string_snake_case_stringified}");
                             let std_stringified = "std";
                             let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
-                            let hashmap_display_display_foreign_type_to_string_snake_case_token_stream =
-                            hashmap_display_display_foreign_type_to_string_snake_case
+                            let hashmap_display_to_std_string_string_to_string_snake_case_token_stream =
+                            hashmap_display_to_std_string_string_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified = format!(
-                                "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_to_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}",
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_std_string_string_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_stringified = format!(
+                                "{error_occurence_lib_stringified}::{hashmap_display_to_std_string_string_to_string_snake_case}::{}{display_upper_camel_case_stringified}{to_std_string_string_upper_camel_case}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream =
-                            error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified
+                            let error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream =
+                            error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let vec_element_type_path_stringified = format!(
                                 "proc_macro_helpers::error_occurence::vec_element_type::VecElementType::{}",
                                 <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let vec_display_foreign_type_to_string_upper_camel_case = format!(
-                                "{}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}",
+                            let vec_to_std_string_string_to_string_upper_camel_case = format!(
+                                "{}{to_std_string_string_upper_camel_case}{to_string_upper_camel_case}",
                                 <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let vec_display_foreign_type_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_foreign_type_to_string_upper_camel_case);
-                            let vec_display_foreign_type_to_string_snake_case_token_stream =
-                            vec_display_foreign_type_to_string_snake_case_stringified
+                            let vec_to_std_string_string_to_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_std_string_string_to_string_upper_camel_case);
+                            let vec_to_std_string_string_to_string_snake_case_token_stream =
+                            vec_to_std_string_string_to_string_snake_case_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_to_string_snake_case_stringified}::{vec_display_foreign_type_to_string_upper_camel_case}");
-                            let error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream =
-                            error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_std_string_string_to_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_std_string_string_to_string_snake_case_stringified}::{vec_to_std_string_string_to_string_upper_camel_case}");
+                            let error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream =
+                            error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_foreign_type_display_to_string_snake_case_token_stream =
-                            hashmap_display_foreign_type_display_to_string_snake_case
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let hashmap_to_std_string_string_display_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{display_snake_case_stringified}_{to_string_snake_case_stringified}");
+                            let hashmap_to_std_string_string_display_to_string_snake_case_token_stream =
+                            hashmap_to_std_string_string_display_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified = format!(
-                                "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_display_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_stringified = format!(
+                                "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_display_to_string_snake_case}::{}{to_std_string_string_upper_camel_case}{display_upper_camel_case_stringified}{to_string_upper_camel_case}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream =
-                            error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified
+                            let error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream =
+                            error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{to_string_snake_case_stringified}");
-                            let hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream =
-                            hashmap_display_foreign_type_display_foreign_type_to_string_snake_case
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let hashmap_to_std_string_string_to_std_string_string_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{to_string_snake_case_stringified}");
+                            let hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream =
+                            hashmap_to_std_string_string_to_std_string_string_to_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified = format!(
-                                "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{to_string_upper_camel_case}", 
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_std_string_string_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_stringified = format!(
+                                "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_std_string_string_to_string_snake_case}::{}{to_std_string_string_upper_camel_case}{to_std_string_string_upper_camel_case}{to_string_upper_camel_case}", 
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream =
-                            error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified
+                            let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream =
+                            error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let as_std_collections_hashmap_key_type_stringified = format!(
                                 "as {std_stringified}::collections::{} key type",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
@@ -5242,21 +5256,21 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_into_hashmap_string_string_hash_map_display_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_display_foreign_type_into_hashmap_string_string_upper_camel_case = format!(
-                                "{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
+                            let hashmap_display_to_std_string_string_into_hashmap_string_string_upper_camel_case = format!(
+                                "{}{display_upper_camel_case_stringified}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                            let hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream = hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case
+                            let hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
+                            let hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream = hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_into_hashmap_string_string_snake_case}::{hashmap_display_display_foreign_type_into_hashmap_string_string_upper_camel_case}");
-                            let crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream = crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_to_std_string_string_into_hashmap_string_string_snake_case}::{hashmap_display_to_std_string_string_into_hashmap_string_string_upper_camel_case}");
+                            let crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream = crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                             let hashmap_display_display_into_hashmap_display_string_upper_camel_case = format!(
                                 "{}{display_upper_camel_case_stringified}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
@@ -5272,21 +5286,21 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             hashmap_display_display_into_hashmap_display_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
                             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_into_hashmap_string_string_upper_camel_case = format!(
-                                "{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{}",
+                            let hashmap_to_std_string_string_display_into_hashmap_string_string_upper_camel_case = format!(
+                                "{}{to_std_string_string_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{}",
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
                                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                             );
-                            let hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                            let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case}::{hashmap_display_foreign_type_display_into_hashmap_string_string_upper_camel_case}");
-                            let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream = error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified
+                            let hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
+                            let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case}::{hashmap_to_std_string_string_display_into_hashmap_string_string_upper_camel_case}");
+                            let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream = error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_stringified
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                            let hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream = hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            let hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream = hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case
                             .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                            .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_display_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
 
                             //
                             let (
@@ -5472,7 +5486,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         ),
                                     }
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignType => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringString => {
                                     if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path {..} = supported_container {}
                                     else {
                                         panic!(
@@ -5486,7 +5500,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5496,7 +5510,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                          #field_ident
                                                     )
                                                 )
@@ -5511,7 +5525,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             )
                                         },
                                         quote::quote! {
-                                            #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                            #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                 &#field_ident
                                             )
                                         },
@@ -5525,7 +5539,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         proc_macro2::TokenStream::new(),
                                     )
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayForeignTypeWithSerializeDeserialize => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringStringWithSerializeDeserialize => {
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime } = supported_container {
                                         (
                                             {
@@ -5554,7 +5568,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5564,7 +5578,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5574,7 +5588,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(
+                                                    #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5854,7 +5868,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         proc_macro2::TokenStream::new(),
                                     )
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignType => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringString => {
                                     if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
                                         vec_element_type,
                                         ..
@@ -5871,28 +5885,28 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified()
                                         );
                                     }
-                                    let vec_display_foreign_type_into_vec_string_upper_camel_case = format!(
-                                        "{}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}",
+                                    let vec_to_std_string_string_into_vec_string_upper_camel_case = format!(
+                                        "{}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}",
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                                         <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified(),
                                         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                     );
-                                    let vec_display_foreign_type_into_vec_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_display_foreign_type_into_vec_string_upper_camel_case);
-                                    let vec_display_foreign_type_into_vec_string_snake_case_token_stream =
-                                    vec_display_foreign_type_into_vec_string_snake_case_stringified
+                                    let vec_to_std_string_string_into_vec_string_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&vec_to_std_string_string_into_vec_string_upper_camel_case);
+                                    let vec_to_std_string_string_into_vec_string_snake_case_token_stream =
+                                    vec_to_std_string_string_into_vec_string_snake_case_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_display_foreign_type_into_vec_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                    let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_display_foreign_type_into_vec_string_snake_case_stringified}::{vec_display_foreign_type_into_vec_string_upper_camel_case}");
-                                    let error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream =
-                                    error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {vec_to_std_string_string_into_vec_string_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    let error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_stringified = format!("{error_occurence_lib_stringified}::{vec_to_std_string_string_into_vec_string_snake_case_stringified}::{vec_to_std_string_string_into_vec_string_upper_camel_case}");
+                                    let error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_token_stream =
+                                    error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_stringified
                                     .parse::<proc_macro2::TokenStream>()
-                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                     (
                                         quote::quote! {
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5902,7 +5916,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5919,7 +5933,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             )
                                         },
                                         quote::quote! {
-                                            #error_occurence_lib_vec_display_foreign_type_into_vec_string_vec_display_foreign_type_into_vec_string_token_stream::#vec_display_foreign_type_into_vec_string_snake_case_token_stream(
+                                            #error_occurence_lib_vec_to_std_string_string_into_vec_string_vec_to_std_string_string_into_vec_string_token_stream::#vec_to_std_string_string_into_vec_string_snake_case_token_stream(
                                                 #field_ident
                                             )
                                         },
@@ -5933,7 +5947,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         proc_macro2::TokenStream::new(),
                                     )
                                 },
-                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayForeignTypeWithSerializeDeserialize => {
+                                proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringStringWithSerializeDeserialize => {
                                     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::Vec {
                                         path,
                                         vec_element_type
@@ -5970,7 +5984,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5980,7 +5994,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -5990,7 +6004,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                                 &format!(
                                                     #field_name_with_field_value_token_stream,
-                                                    #error_occurence_lib_vec_display_foreign_type_to_string_vec_display_foreign_type_to_string_token_stream::#vec_display_foreign_type_to_string_snake_case_token_stream(
+                                                    #error_occurence_lib_vec_to_std_string_string_to_string_vec_to_std_string_string_to_string_token_stream::#vec_to_std_string_string_to_string_snake_case_token_stream(
                                                         #field_ident
                                                     )
                                                 )
@@ -6590,7 +6604,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignType => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringString => {
                                 //     let (
                                 //         type_token_stream,
                                 //         serde_borrow_token_stream,
@@ -6609,20 +6623,20 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             proc_macro2::TokenStream,
                                 //             proc_macro2::TokenStream
                                 //         ) {
-                                //             let hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream =
-                                //             hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case
+                                //             let hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case_token_stream =
+                                //             hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case
                                 //             .parse::<proc_macro2::TokenStream>()
-                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //             let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified = format!(
-                                //                 "{error_occurence_lib_stringified}::{hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case}::{}{display_upper_camel_case_stringified}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
+                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //             let error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_stringified = format!(
+                                //                 "{error_occurence_lib_stringified}::{hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case}::{}{display_upper_camel_case_stringified}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{display_upper_camel_case_stringified}{}",
                                 //                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                 <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                 <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //             );
-                                //             let error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream =
-                                //             error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified
+                                //             let error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_token_stream =
+                                //             error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_stringified
                                 //             .parse::<proc_macro2::TokenStream>()
-                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //             .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //             (
                                 //                 {
                                 //                     let type_stringified = format!(
@@ -6640,7 +6654,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                     &proc_macro_name_ident_stringified
                                 //                 ),
                                 //                 quote::quote! {
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_into_hashmap_display_string_hashmap_display_display_foreign_type_into_hashmap_display_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_display_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_into_hashmap_display_string_hashmap_display_to_std_string_string_into_hashmap_display_string_token_stream::#hashmap_display_to_std_string_string_into_hashmap_display_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 }
@@ -6672,7 +6686,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                     quote::quote!{#[serde(borrow)]}
                                 //                 },
                                 //                 quote::quote! {
-                                //                     #crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream(
+                                //                     #crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream::#hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 }
@@ -6724,7 +6738,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -6736,7 +6750,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -6764,7 +6778,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayForeignTypeWithSerializeDeserialize => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringStringWithSerializeDeserialize => {
                                 //     let (
                                 //         type_token_stream,
                                 //         serde_borrow_token_stream,
@@ -6855,7 +6869,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                         quote::quote!{#[serde(borrow)]}
                                 //                     },
                                 //                     quote::quote! {
-                                //                         #crate_common_error_logs_logs_hashmap_display_display_foreign_type_into_hashmap_string_string_hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_display_foreign_type_into_hashmap_string_string_token_stream(
+                                //                         #crate_common_error_logs_logs_hashmap_display_to_std_string_string_into_hashmap_string_string_hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream::#hashmap_display_to_std_string_string_into_hashmap_string_string_token_stream(
                                 //                             #field_ident
                                 //                         )
                                 //                     }
@@ -6880,7 +6894,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -6892,7 +6906,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -6904,7 +6918,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7110,7 +7124,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         },
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplay => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplay => {
                                 //     let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                 //         path,
                                 //         hashmap_key_type,
@@ -7133,7 +7147,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                 inform_use_str_string_in_different_attribute(
                                 //                     value_segments_stringified,
                                 //                     proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&attribute),
-                                //                     &attribute_hashmap_key_display_foreign_type_value_display_with_serialize_deserialize_stringified
+                                //                     &attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified
                                 //                 );
                                 //                 hashmap_key_type_path_case()
                                 //             },
@@ -7163,7 +7177,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7173,7 +7187,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7192,7 +7206,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             }
                                 //         },
                                 //         quote::quote! {
-                                //             #error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream::#hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream(
+                                //             #error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream::#hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream(
                                 //                 #field_ident
                                 //             )
                                 //         },
@@ -7204,7 +7218,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayWithSerializeDeserialize => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplayWithSerializeDeserialize => {
                                 //     let (
                                 //         type_token_stream,
                                 //         serde_borrow_token_stream,
@@ -7222,21 +7236,21 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                     value_vec_lifetime
                                 //                 }
                                 //             ) => {
-                                //                 let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_snake_case_stringified}");
-                                //                 let hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream =
-                                //                 hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case
+                                //                 let hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{display_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_snake_case_stringified}");
+                                //                 let hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case_token_stream =
+                                //                 hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case
                                 //                 .parse::<proc_macro2::TokenStream>()
-                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //                 let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified = format!(
-                                //                     "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case}::{}{display_foreign_type_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{display_upper_camel_case_stringified}",
+                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //                 let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_stringified = format!(
+                                //                     "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case}::{}{to_std_string_string_upper_camel_case}{display_upper_camel_case_stringified}{into_upper_camel_case_stringified}{}{}{display_upper_camel_case_stringified}",
                                 //                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                     <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //                     <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //                 );
-                                //                 let error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream =
-                                //                 error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified
+                                //                 let error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_token_stream =
+                                //                 error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_stringified
                                 //                 .parse::<proc_macro2::TokenStream>()
-                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //                 .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //                 (
                                 //                     {
                                 //                         let type_stringified = format!(
@@ -7254,7 +7268,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                         &proc_macro_name_ident_stringified
                                 //                     ),
                                 //                     quote::quote! {
-                                //                         #error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_display_hashmap_display_foreign_type_display_into_hashmap_string_display_token_stream::#hashmap_display_foreign_type_display_into_hashmap_string_display_snake_case_token_stream(
+                                //                         #error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_display_hashmap_to_std_string_string_display_into_hashmap_string_display_token_stream::#hashmap_to_std_string_string_display_into_hashmap_string_display_snake_case_token_stream(
                                 //                             #field_ident
                                 //                         )
                                 //                     }
@@ -7290,7 +7304,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                         &proc_macro_name_ident_stringified
                                 //                     ),
                                 //                     quote::quote! {
-                                //                         #error_occurence_lib_hashmap_display_foreign_type_display_into_hashmap_string_string_hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream::#hashmap_display_foreign_type_display_into_hashmap_string_string_token_stream(
+                                //                         #error_occurence_lib_hashmap_to_std_string_string_display_into_hashmap_string_string_hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream::#hashmap_to_std_string_string_display_into_hashmap_string_string_token_stream(
                                 //                             #field_ident
                                 //                         )
                                 //                     }
@@ -7318,7 +7332,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7328,7 +7342,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_to_string_hashmap_display_foreign_type_display_to_string_token_stream::#hashmap_display_foreign_type_display_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_display_to_string_hashmap_to_std_string_string_display_to_string_token_stream::#hashmap_to_std_string_string_display_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7355,7 +7369,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignType => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringString => {
                                 //     let type_token_stream = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                 //         path,
                                 //         hashmap_key_type,
@@ -7392,28 +7406,28 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //         );
                                 //     };
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream =
-                                //     hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{string_snake_case_stringified}");
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case_token_stream =
+                                //     hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified = format!(
-                                //         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case}::{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_stringified = format!(
+                                //         "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case}::{}{to_std_string_string_upper_camel_case}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}{}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream =
-                                //     error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_token_stream =
+                                //     error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //     (
                                 //         quote::quote! {
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7423,7 +7437,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7442,7 +7456,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             }
                                 //         },
                                 //         quote::quote! {
-                                //             #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_string_snake_case_token_stream(
+                                //             #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_string_snake_case_token_stream(
                                 //                 #field_ident
                                 //             )
                                 //         },
@@ -7454,7 +7468,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueDisplayForeignTypeWithSerializeDeserialize => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringStringWithSerializeDeserialize => {
                                 //     let (type_token_stream, serde_borrow_token_stream) = if let proc_macro_helpers::error_occurence::supported_container::SupportedContainer::HashMap {
                                 //         path,
                                 //         hashmap_key_type,
@@ -7505,26 +7519,26 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //         );
                                 //     };
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_upper_camel_case = format!(
-                                //         "{}{display_foreign_type_upper_camel_case}{display_foreign_type_upper_camel_case}{into_upper_camel_case_stringified}{}{}{display_foreign_type_upper_camel_case}",
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_upper_camel_case = format!(
+                                //         "{}{to_std_string_string_upper_camel_case}{to_std_string_string_upper_camel_case}{into_upper_camel_case_stringified}{}{}{to_std_string_string_upper_camel_case}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified(),
                                 //         <naming_constants::String as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{display_foreign_type_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{display_foreign_type_snake_case_stringified}");
-                                //     let hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_token_stream = hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}_{into_snake_case_stringified}_{hashmap_snake_case}_{string_snake_case_stringified}_{to_std_string_string_snake_case_stringified}");
+                                //     let hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_token_stream = hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_snake_case}::{hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_upper_camel_case}");
-                                //     let error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_token_stream = error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_snake_case}::{hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_upper_camel_case}");
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_token_stream = error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //     (
                                 //         quote::quote! {
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7534,7 +7548,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_to_string_hashmap_display_foreign_type_display_foreign_type_to_string_token_stream::#hashmap_display_foreign_type_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_to_string_hashmap_to_std_string_string_to_std_string_string_to_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7545,7 +7559,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_display_foreign_type_to_string_hashmap_display_display_foreign_type_to_string_token_stream::#hashmap_display_display_foreign_type_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_display_to_std_string_string_to_string_hashmap_display_to_std_string_string_to_string_token_stream::#hashmap_display_to_std_string_string_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7553,7 +7567,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             }
                                 //         },
                                 //         quote::quote! {
-                                //             #error_occurence_lib_hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_hash_map_display_foreign_type_display_foreign_type_into_hash_map_string_display_foreign_type_token_stream::#hashmap_display_foreign_type_display_foreign_type_into_hashmap_string_display_foreign_type_token_stream(
+                                //             #error_occurence_lib_hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_hash_map_to_std_string_string_to_std_string_string_into_hash_map_string_to_std_string_string_token_stream::#hashmap_to_std_string_string_to_std_string_string_into_hashmap_string_to_std_string_string_token_stream(
                                 //                 #field_ident
                                 //             )
                                 //         },
@@ -7565,7 +7579,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //         proc_macro2::TokenStream::new(),
                                 //     )
                                 // },
-                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayForeignTypeValueErrorOccurence => {
+                                // proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueErrorOccurence => {
                                 //     if !should_generate_impl_compile_time_check_error_occurence_members {
                                 //         should_generate_impl_compile_time_check_error_occurence_members = true;
                                 //     }
@@ -7619,37 +7633,37 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //         );
                                 //     };
-                                //     let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
-                                //     let hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream =
-                                //     hashmap_display_foreign_type_to_string_without_config_to_string_snake_case
+                                //     let hashmap_to_std_string_string_to_string_without_config_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_string_without_config_snake_case_stringified}_{to_string_snake_case_stringified}");
+                                //     let hashmap_to_std_string_string_to_string_without_config_to_string_snake_case_token_stream =
+                                //     hashmap_to_std_string_string_to_string_without_config_to_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_without_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified = format!(
-                                //         "{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_without_config_to_string_snake_case}::{}{display_foreign_type_upper_camel_case}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_string_without_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_stringified = format!(
+                                //         "{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_string_without_config_to_string_snake_case}::{}{to_std_string_string_upper_camel_case}{to_string_without_config_upper_camel_case}{to_string_upper_camel_case}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream =
-                                //     error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_token_stream =
+                                //     error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let hashmap_display_foreign_type_to_string_with_config_to_string_upper_camel_case = format!(
-                                //         "{}{display_foreign_type_upper_camel_case}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let hashmap_to_std_string_string_to_string_with_config_to_string_upper_camel_case = format!(
+                                //         "{}{to_std_string_string_upper_camel_case}{to_string_with_config_upper_camel_case}{to_string_upper_camel_case}",
                                 //         <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified()
                                 //     );
-                                //     let hashmap_display_foreign_type_to_string_with_config_to_string_snake_case = format!("{hashmap_snake_case}_{display_foreign_type_snake_case_stringified}_{to_string_with_config_snake_case_stringified}_{to_string_snake_case_stringified}");
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_display_foreign_type_to_string_with_config_to_string_snake_case}::{hashmap_display_foreign_type_to_string_with_config_to_string_upper_camel_case}");
-                                //     let error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_token_stream = error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified
+                                //     let hashmap_to_std_string_string_to_string_with_config_to_string_snake_case = format!("{hashmap_snake_case}_{to_std_string_string_snake_case_stringified}_{to_string_with_config_snake_case_stringified}_{to_string_snake_case_stringified}");
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_stringified = format!("{error_occurence_lib_stringified}::{hashmap_to_std_string_string_to_string_with_config_to_string_snake_case}::{hashmap_to_std_string_string_to_string_with_config_to_string_upper_camel_case}");
+                                //     let error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_token_stream = error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_stringified
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                                //     let hashmap_display_foreign_type_to_string_with_config_to_string_token_stream = hashmap_display_foreign_type_to_string_with_config_to_string_snake_case
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     let hashmap_to_std_string_string_to_string_with_config_to_string_token_stream = hashmap_to_std_string_string_to_string_with_config_to_string_snake_case
                                 //     .parse::<proc_macro2::TokenStream>()
-                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_display_foreign_type_to_string_with_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
+                                //     .unwrap_or_else(|_| panic!("{proc_macro_name_ident_stringified} {hashmap_to_std_string_string_to_string_with_config_to_string_snake_case} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                                 //     (
                                 //         quote::quote! {
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_to_string_with_config_to_string_hashmap_display_foreign_type_to_string_with_config_to_string_token_stream::#hashmap_display_foreign_type_to_string_with_config_to_string_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_string_with_config_to_string_hashmap_to_std_string_string_to_string_with_config_to_string_token_stream::#hashmap_to_std_string_string_to_string_with_config_to_string_token_stream(
                                 //                         #field_ident,
                                 //                         config
                                 //                     )
@@ -7660,7 +7674,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //             #error_occurence_lib_lines_space_backslash_lines_space_backslash_token_stream::#lines_space_backslash_snake_case_token_stream(
                                 //                 &format!(
                                 //                     #field_name_with_field_value_token_stream,
-                                //                     #error_occurence_lib_hashmap_display_foreign_type_to_string_without_config_to_string_hashmap_display_foreign_type_to_string_without_config_to_string_token_stream::#hashmap_display_foreign_type_to_string_without_config_to_string_snake_case_token_stream(
+                                //                     #error_occurence_lib_hashmap_to_std_string_string_to_string_without_config_to_string_hashmap_to_std_string_string_to_string_without_config_to_string_token_stream::#hashmap_to_std_string_string_to_string_without_config_to_string_snake_case_token_stream(
                                 //                         #field_ident
                                 //                     )
                                 //                 )
@@ -7681,7 +7695,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 //                 #field_ident.into_iter()
                                 //                 .map(|(k, v)| {
                                 //                     (
-                                //                         #error_occurence_lib_display_foreign_type_token_stream::#display_foreign_type_snake_case_token_stream(k),
+                                //                         #error_occurence_lib_to_std_string_string_token_stream::#to_std_string_string_snake_case_token_stream(k),
                                 //                         { v.#into_serialize_deserialize_version_token_stream() },
                                 //                     )
                                 //                 })

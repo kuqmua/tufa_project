@@ -13,7 +13,7 @@ git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
 error_occurence = {path = "./error_occurence"}
 naming_constants = {path = "../naming_constants"}
-display_foreign_type = {path = "../display_foreign_type"}
+to_std_string_string = {path = "../to_std_string_string"}
 
 [lints]
 workspace = true

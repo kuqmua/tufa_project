@@ -1,12 +1,12 @@
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum RssPartErrorNamed {
 //     CheckLinkStatusCodeError {
-//         #[eo_display_foreign_type]
+//         #[eo_to_std_string_string]
 //         reqwest_error: reqwest::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     StatusCode {
-//         #[eo_display_foreign_type]
+//         #[eo_to_std_string_string]
 //         status_code: reqwest::StatusCode,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

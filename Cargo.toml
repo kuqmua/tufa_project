@@ -5,7 +5,7 @@ members = [
   "common",
   "config_lib",
   "constants",
-  "display_foreign_type",
+  "to_std_string_string",
   "enum_extension_lib/enum_extension",
   "enum_extension_lib",
   "error_occurence_lib",

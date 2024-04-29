@@ -1,24 +1,24 @@
-pub trait HashMapDisplayForeignTypeToStringWithoutConfigToString<'a> {
-    fn hashmap_display_foreign_type_to_string_without_config_to_string(
+pub trait HashMapToStdStringStringToStringWithoutConfigToString<'a> {
+    fn hashmap_to_std_string_string_to_string_without_config_to_string(
         &self,
     ) -> std::string::String;
 }
 
 impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher>
-    HashMapDisplayForeignTypeToStringWithoutConfigToString<'a>
+    HashMapToStdStringStringToStringWithoutConfigToString<'a>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
-    HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: to_std_string_string::ToStdStringString,
     HashMapValueGeneric: crate::to_string_without_config::ToStringWithoutConfig<'a>,
 {
-    fn hashmap_display_foreign_type_to_string_without_config_to_string(
+    fn hashmap_to_std_string_string_to_string_without_config_to_string(
         &self,
     ) -> std::string::String {
         crate::helpers::error_occurence_hashmap_formatter(self.iter().fold(
             std::string::String::new(),
             |mut acc, (key, value)| {
                 acc.push_str(&crate::helpers::stringified_lines_error_hashmap_element(
-                    key.display_foreign_type(),
+                    key.to_std_string_string(),
                     value.to_string_without_config(),
                 ));
                 acc
@@ -27,28 +27,28 @@ where
     }
 }
 
-pub trait HashMapToStringDisplayForeignTypeToStringWithoutConfigWithSerializeDeserialize<'a> {
-    fn hashmap_to_string_display_foreign_type_to_string_without_config_with_serialize_deserialize(
+pub trait HashMapToStringToStdStringStringToStringWithoutConfigWithSerializeDeserialize<'a> {
+    fn hashmap_to_string_to_std_string_string_to_string_without_config_with_serialize_deserialize(
         &self,
     ) -> std::string::String;
 }
 
 impl<'a, HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher>
-    HashMapToStringDisplayForeignTypeToStringWithoutConfigWithSerializeDeserialize<'a>
+    HashMapToStringToStdStringStringToStringWithoutConfigWithSerializeDeserialize<'a>
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
-    HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: to_std_string_string::ToStdStringString,
     HashMapValueGeneric:
         crate::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'a>,
 {
-    fn hashmap_to_string_display_foreign_type_to_string_without_config_with_serialize_deserialize(
+    fn hashmap_to_string_to_std_string_string_to_string_without_config_with_serialize_deserialize(
         &self,
     ) -> std::string::String {
         crate::helpers::error_occurence_hashmap_formatter(self.iter().fold(
             std::string::String::new(),
             |mut acc, (key, value)| {
                 acc.push_str(&crate::helpers::stringified_lines_error_hashmap_element(
-                    key.display_foreign_type(),
+                    key.to_std_string_string(),
                     value.to_string_without_config_with_serialize_deserialize(),
                 ));
                 acc

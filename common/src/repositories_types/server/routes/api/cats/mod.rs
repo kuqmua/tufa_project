@@ -724,9 +724,9 @@ pub enum TryCreateManyErrorNamed {
     UnexpectedStatusCode {
         #[eo_display]
         status_code: http::StatusCode,
-        #[eo_display_foreign_type]
+        #[eo_to_std_string_string]
         headers: reqwest::header::HeaderMap,
-        #[eo_display_foreign_type]
+        #[eo_to_std_string_string]
         response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -735,7 +735,7 @@ pub enum TryCreateManyErrorNamed {
         reqwest: reqwest::Error,
         #[eo_display]
         status_code: http::StatusCode,
-        #[eo_display_foreign_type]
+        #[eo_to_std_string_string]
         headers: reqwest::header::HeaderMap,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -744,7 +744,7 @@ pub enum TryCreateManyErrorNamed {
         serde: serde_json::Error,
         #[eo_display]
         status_code: http::StatusCode,
-        #[eo_display_foreign_type]
+        #[eo_to_std_string_string]
         headers: reqwest::header::HeaderMap,
         #[eo_display_with_serialize_deserialize]
         response_text: std::string::String,

@@ -1,19 +1,19 @@
-pub trait HashMapDisplayForeignTypeDisplayToString {
-    fn hashmap_display_foreign_type_display_to_string(&self) -> std::string::String;
+pub trait HashMapToStdStringStringDisplayToString {
+    fn hashmap_to_std_string_string_display_to_string(&self) -> std::string::String;
 }
 
-impl<HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher> HashMapDisplayForeignTypeDisplayToString
+impl<HashMapKeyGeneric, HashMapValueGeneric, S: ::std::hash::BuildHasher> HashMapToStdStringStringDisplayToString
     for std::collections::HashMap<HashMapKeyGeneric, HashMapValueGeneric, S>
 where
-    HashMapKeyGeneric: display_foreign_type::DisplayForeignType,
+    HashMapKeyGeneric: to_std_string_string::ToStdStringString,
     HashMapValueGeneric: std::fmt::Display,
 {
-    fn hashmap_display_foreign_type_display_to_string(&self) -> std::string::String {
+    fn hashmap_to_std_string_string_display_to_string(&self) -> std::string::String {
         crate::helpers::error_occurence_hashmap_formatter(self.iter().fold(
             std::string::String::new(),
             |mut acc, (key, value)| {
                 acc.push_str(&crate::helpers::stringified_lines_error_hashmap_element(
-                    key.display_foreign_type(),
+                    key.to_std_string_string(),
                     value.to_string(),
                 ));
                 acc

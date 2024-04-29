@@ -9,7 +9,7 @@ pub enum CheckBodySizeErrorNamed {
         axum_error: axum::Error,
         #[eo_display_with_serialize_deserialize]
         maximum_size_of_body_limit_in_bytes: std::primitive::usize,
-        #[eo_display_foreign_type]
+        #[eo_to_std_string_string]
         size_hint: http_body::SizeHint,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

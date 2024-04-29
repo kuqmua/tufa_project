@@ -1,5 +1,5 @@
 [package]
-name = "display_foreign_type"
+name = "to_std_string_string"
 version = "0.1.0"
 edition = "2021"
 
