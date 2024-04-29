@@ -6,11 +6,11 @@
 pub enum ErrorNamedOne {
     Variant {
         // #[eo_display]
-        // eo_display_field: DisplayStruct,
+        eo_display_field: DisplayStruct,
         // #[eo_display_with_serialize_deserialize]
         // eo_display_with_serialize_deserialize_field: std::string::String,
         // #[eo_to_std_string_string]
-        eo_to_std_string_string_field: ToStdStringStringStruct,
+        // eo_to_std_string_string_field: ToStdStringStringStruct,
         // #[eo_to_std_string_string_with_serialize_deserialize]
         // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct,
         // #[eo_error_occurence]
@@ -43,7 +43,7 @@ impl std::fmt::Display for DisplayStruct {
 
 impl into_serialize_deserialize_to_string::IntoSerializeDeserializeToString for DisplayStruct {
     fn into_serialize_deserialize_to_string(
-        self,
+        &self,
     ) -> impl serde::Serialize + serde::Deserialize<'static> + std::fmt::Display {
         self.to_string()
     }
@@ -90,13 +90,13 @@ pub enum ErrorUnnamedOne {
 
 fn main() {
     let e = ErrorNamedOne::Variant {
-        // eo_display_field: DisplayStruct {
-        //     display: std::string::String::from("value")
-        // },
-        // eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
-        eo_to_std_string_string_field: ToStdStringStringStruct {
-            to_std_string_string: std::string::String::from("value"),
+        eo_display_field: DisplayStruct {
+            display: std::string::String::from("value")
         },
+        // eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+        // eo_to_std_string_string_field: ToStdStringStringStruct {
+        //     to_std_string_string: std::string::String::from("value"),
+        // },
         // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct {
         //     to_std_string_string_with_serialize_deserialize: std::string::String::from("value"),
         // },
@@ -159,7 +159,7 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
     ) -> std::string::String {
         match self {
             ErrorNamedOne::Variant {
-                eo_to_std_string_string_field,
+                eo_display_field,
                 code_occurence: _unused_argument_1,
             } => {
                 format!
@@ -168,9 +168,12 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
-                ("eo_to_std_string_string_field: {}",
-                error_occurence_lib::ToStdStringString ::
-                to_std_string_string(eo_to_std_string_string_field))))
+                ("eo_display_field: {}", 
+
+into_serialize_deserialize_to_string::IntoSerializeDeserializeToString::into_serialize_deserialize_to_string(eo_display_field)
+
+                
+            )))
             }
         }
     }
@@ -181,7 +184,7 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
             ErrorNamedOne::Variant {
-                eo_to_std_string_string_field,
+                eo_display_field,
                 code_occurence: _unused_argument_1,
             } => {
                 format!
@@ -190,9 +193,9 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
-                ("eo_to_std_string_string_field: {}",
-                error_occurence_lib::ToStdStringString ::
-                to_std_string_string(eo_to_std_string_string_field))))
+                ("eo_display_field: {}", 
+                    into_serialize_deserialize_to_string::IntoSerializeDeserializeToString::into_serialize_deserialize_to_string(eo_display_field)
+                )))
             }
         }
     }
@@ -201,7 +204,7 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedOne {
     fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
             ErrorNamedOne::Variant {
-                eo_to_std_string_string_field: _unused_argument_0,
+                eo_display_field: _unused_argument_0,
                 code_occurence,
             } => code_occurence,
         }
@@ -213,7 +216,7 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
             ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_to_std_string_string_field,
+                eo_display_field,
                 code_occurence: _unused_argument_1,
             } => {
                 format!
@@ -222,8 +225,9 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
-                ("eo_to_std_string_string_field: {}",
-                eo_to_std_string_string_field)))
+                ("eo_display_field: {}", 
+                    into_serialize_deserialize_to_string::IntoSerializeDeserializeToString::into_serialize_deserialize_to_string(&eo_display_field)
+                )))
             }
         }
     }
@@ -232,7 +236,7 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDese
     fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
             ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_to_std_string_string_field: _unused_argument_0,
+                eo_display_field: _unused_argument_0,
                 code_occurence,
             } => code_occurence,
         }
@@ -242,13 +246,13 @@ impl ErrorNamedOne {
     pub fn into_serialize_deserialize_version(self) -> ErrorNamedOneWithSerializeDeserialize {
         match self {
             ErrorNamedOne::Variant {
-                eo_to_std_string_string_field,
+                eo_display_field,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_to_std_string_string_field:
-                    error_occurence_lib::ToStdStringString::to_std_string_string(
-                        &eo_to_std_string_string_field,
-                    ),
+                eo_display_field: { 
+                    // eo_display_field.to_string() 
+                    into_serialize_deserialize_to_string::IntoSerializeDeserializeToString::into_serialize_deserialize_to_string(&eo_display_field).to_string()
+                },
                 code_occurence: code_occurence,
             },
         }
@@ -276,7 +280,7 @@ impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNa
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorNamedOneWithSerializeDeserialize {
     Variant {
-        eo_to_std_string_string_field: std::string::String,
+        eo_display_field: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
