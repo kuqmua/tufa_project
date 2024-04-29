@@ -13,8 +13,8 @@ pub enum ErrorNamedOne {
         // eo_to_std_string_string_field: ToStdStringStringStruct,
         // #[eo_to_std_string_string_with_serialize_deserialize]
         // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct,
-        // #[eo_error_occurence]
-        // eo_error_occurence_field: ErrorNamedTwo,
+        #[eo_error_occurence]
+        eo_error_occurence_field: ErrorNamedTwo,
         // #[eo_vec_display]
         // eo_vec_display_field: std::vec::Vec<DisplayStruct>,
         // #[eo_vec_display_with_serialize_deserialize]
@@ -64,7 +64,7 @@ impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDe
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurence
+    error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedTwo {
     Variant {
@@ -74,7 +74,7 @@ pub enum ErrorNamedTwo {
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum ErrorUnnamedOne {
     #[eo_error_occurence]
     Something(ErrorNamedTwo),
@@ -92,10 +92,10 @@ fn main() {
         // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct {
         //     to_std_string_string_with_serialize_deserialize: std::string::String::from("value"),
         // },
-        // eo_error_occurence_field: ErrorNamedTwo::Variant {
-        //     eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
-        //     code_occurence: error_occurence_lib::code_occurence!(),
-        // },
+        eo_error_occurence_field: ErrorNamedTwo::Variant {
+            eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+            code_occurence: error_occurence_lib::code_occurence!(),
+        },
         // eo_vec_display_field: vec![
         //     DisplayStruct {
         //         display: std::string::String::from("value")
