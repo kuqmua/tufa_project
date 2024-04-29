@@ -87,6 +87,51 @@ fn main() {
 }
 
 pub fn test_code_occurence() {
+    let e = ErrorNamedOne::Variant {
+        eo_display_field: DisplayStruct {
+            display: std::string::String::from("value")
+        },
+        eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+        eo_display_foreign_type_field: DisplayForeignTypeStruct {
+            display_foreign_type: std::string::String::from("value"),
+        },
+        eo_display_foreign_type_with_serialize_deserialize_field: DisplayForeignTypeWithSerializeDeserializeStruct {
+            display_foreign_type_with_serialize_deserialize: std::string::String::from("value"),
+        },
+        eo_error_occurence_field: ErrorNamedTwo::Variant {
+            eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+            code_occurence: error_occurence_lib::code_occurence!(),
+        },
+        eo_vec_display_field: vec![
+            DisplayStruct {
+                display: std::string::String::from("value")
+            }
+        ],
+        eo_vec_display_with_serialize_deserialize_field: vec![
+            std::string::String::from("value")
+        ],
+        eo_vec_display_foreign_type_field: vec![
+            DisplayForeignTypeStruct {
+                display_foreign_type: std::string::String::from("value")
+            }
+        ],
+        eo_vec_display_foreign_type_with_serialize_deserialize_field: vec![
+            DisplayForeignTypeWithSerializeDeserializeStruct {
+                display_foreign_type_with_serialize_deserialize: std::string::String::from("value"),
+            }
+        ],
+        eo_vec_error_occurence_field: vec![
+            ErrorUnnamedOne::Something(
+                ErrorNamedTwo::Variant {
+                    eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }
+            )
+        ],
+
+        code_occurence: error_occurence_lib::code_occurence!(),
+    };
+
     // let git_info = crate::common::git::git_info::GitInfo::default();
     // let code_occurence = error_occurence_lib::code_occurence::CodeOccurence::new(
     //     git_info.to_git_info_without_lifetime(),
