@@ -3807,10 +3807,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         }
                     }
                 }
-                impl<#trait_lifetime_token_stream>
-                    #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream<
-                        #trait_lifetime_token_stream
-                    > for #ident
+                impl #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream<'_> for #ident
                 {
                     fn #source_to_string_without_config_token_stream(&self) -> std::string::String {
                         match self {
@@ -3826,7 +3823,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         }
                     }
                 }
-                impl <#trait_lifetime_token_stream> #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream<#trait_lifetime_token_stream> for #ident_with_serialize_deserialize_token_stream
+                impl #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream<'_> for #ident_with_serialize_deserialize_token_stream
                 {
                     fn #source_to_string_without_config_token_stream(&self) -> std::string::String {
                         match self {
@@ -3854,18 +3851,18 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }
                 }
                 impl std::fmt::Display for #ident {
-                    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(
-                            f,
+                            formatter,
                             "{}", 
                             #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_token_stream(self)
                         )
                     }
                 }
                 impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
-                    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(
-                            f,
+                            formatter,
                             "{}",
                             #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_token_stream(
                                 self
@@ -3962,11 +3959,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         }
                     }
                 }
-                impl<
-                    #trait_lifetime_token_stream
-                > #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream<
-                    #trait_lifetime_token_stream
-                >
+                impl #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream<'_>
                     for #ident
                 {
                     fn #to_string_without_config_token_stream(&self) -> std::string::String {
@@ -3975,10 +3968,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         }
                     }
                 }
-                impl<#trait_lifetime_token_stream>
-                    #error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream<
-                        #trait_lifetime_token_stream
-                    >
+                impl #error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream<'_>
                     for #ident_with_serialize_deserialize_token_stream
                 {
                     fn #with_serialize_deserialize_token_stream(&self) -> std::string::String {
@@ -3995,9 +3985,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }
                 }
                 impl std::fmt::Display for #ident {
-                    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(
-                            f,
+                            formatter,
                             "{}", 
                             #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_token_stream(
                                 self
@@ -4006,9 +3996,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }
                 }
                 impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
-                    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(
-                            f,
+                            formatter,
                             "{}", 
                             #error_occurence_lib_to_string_without_config_with_serialize_deserialize_token_stream::#with_serialize_deserialize_token_stream(
                                 self
@@ -4033,13 +4023,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         #token_stream
         #enum_with_serialize_deserialize_logic
     };
-    if ident == "Something" {
-        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            &proc_macro_name,
-            &gen,
-            &proc_macro_name_ident_stringified
-        );
-    }
+    // if ident == "" {
+    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //         &proc_macro_name,
+    //         &gen,
+    //         &proc_macro_name_ident_stringified
+    //     );
+    // }
     gen.into()
 }
 
