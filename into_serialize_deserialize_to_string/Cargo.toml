@@ -1,0 +1,9 @@
+[package]
+name = "into_serialize_deserialize_to_string"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lints]
+workspace = true

@@ -37,7 +37,6 @@ pub mod vec_display_into_vec_string;
 pub mod vec_display_to_string;
 pub mod vec_to_string_with_config_to_string;
 pub mod vec_to_string_without_config_to_string;
-pub mod into_serialize_deserialize_to_std_string_string;
 
 #[macro_export]
 macro_rules! code_occurence {

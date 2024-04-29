@@ -35,6 +35,7 @@ members = [
   "tests", 
   "impl_display_as_debug", 
   "error_occurence_test", 
+  "into_serialize_deserialize_to_string", 
 ]
 exclude = [
   "client",
