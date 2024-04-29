@@ -6,7 +6,7 @@ pub enum NetCheckAvailabilityErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ResponseStatus {
-        #[eo_display_foreign_type]
+        #[eo_display]
         status: reqwest::StatusCode,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
