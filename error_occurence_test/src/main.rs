@@ -177,18 +177,19 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{
-{}{}}}",
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(& format!
-                ("eo_display_field: {}", eo_display_field)),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(& format!
-                ("eo_error_occurence_field: {}",
-                error_occurence_lib::to_string_with_config::ToStringWithConfig
-                :: to_string_with_config(eo_error_occurence_field, config))))
+                ("{{{}{}}}",
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                    & format!("eo_display_field: {}", 
+                        eo_display_field
+                        // error_occurence_lib::to_string_with_config::ToStringWithConfig:: to_string_with_config(eo_display_field, config)
+                    )
+                ),
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                    & format!(
+                        "eo_error_occurence_field: {}",
+                        error_occurence_lib::to_string_with_config::ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
+                    )
+                ))
             }
         }
     }
