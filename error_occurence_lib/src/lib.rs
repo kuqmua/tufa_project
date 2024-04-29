@@ -1,3 +1,5 @@
+pub use error_occurence::ErrorOccurenceTest;
+
 pub use error_occurence::ErrorOccurence;
 pub use ::display_foreign_type::DisplayForeignType;
 pub mod code_occurence;
