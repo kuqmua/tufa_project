@@ -6,7 +6,8 @@
 pub enum ErrorNamedOne {
     Variant {
 
-        TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED 
+        TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED AND MAYBE USE SourceToStringWithConfig AND SourceToStringWithoutConfig
+
 
         // #[eo_display]
         eo_display_field: DisplayStruct,
