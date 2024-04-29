@@ -1,0 +1,10 @@
+[package]
+name = "source_to_string"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+app_state = {path = "../app_state"}
+
+[lints]
+workspace = true

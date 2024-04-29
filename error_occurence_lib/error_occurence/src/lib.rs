@@ -8138,6 +8138,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         }
                     }
                 }
+                //
+                // impl error_occurence_lib::ToStdStringString for #ident {
+                //     fn to_std_string_string(&self) -> std::string::String {
+                //         self.to_string()
+                //     }
+                // }
+                //
             }
         },
     };
@@ -8145,12 +8152,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         #token_stream
         #enum_with_serialize_deserialize_logic
     };
-    // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &proc_macro_name,
-    //         &gen,
-    //         &proc_macro_name_ident_stringified
-    //     );
-    // }
+    if ident == "ErrorNamedTwo" {
+        proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            &proc_macro_name,
+            &gen,
+            &proc_macro_name_ident_stringified
+        );
+    }
     gen.into()
 }

@@ -34,7 +34,8 @@ members = [
   "route_validators", 
   "tests", 
   "impl_display_as_debug", 
-  "error_occurence_test",
+  "error_occurence_test", 
+  "source_to_string",
 ]
 exclude = [
   "client",
