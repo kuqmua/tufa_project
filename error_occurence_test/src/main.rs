@@ -5,6 +5,9 @@
 )]
 pub enum ErrorNamedOne {
     Variant {
+
+        TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED 
+
         // #[eo_display]
         eo_display_field: DisplayStruct,
         // #[eo_display_with_serialize_deserialize]
