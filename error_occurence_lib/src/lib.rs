@@ -1,6 +1,8 @@
-pub use error_occurence::ErrorOccurenceTest;
+// pub use error_occurence::ErrorOccurenceTest;
 
 pub use error_occurence::ErrorOccurence;
+pub use source_to_string::SourceToStringWithConfig;
+pub use source_to_string::SourceToStringWithoutConfig;
 pub use ::to_std_string_string::ToStdStringString;
 pub mod code_occurence;
 pub mod error_log;
@@ -25,8 +27,6 @@ pub mod hashmap_display_to_string_with_config_to_string;
 pub mod hashmap_display_to_string_without_config_to_string;
 pub mod helpers;
 pub mod lines_space_backslash;
-pub mod source_to_string_with_config;
-pub mod source_to_string_without_config;
 #[cfg(test)]
 pub mod test;
 pub mod to_string_with_config;

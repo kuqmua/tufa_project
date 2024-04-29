@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurence
 )]
 pub enum ErrorNamedOne {
     Variant {
@@ -64,7 +64,7 @@ impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDe
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurence
 )]
 pub enum ErrorNamedTwo {
     Variant {
@@ -74,7 +74,7 @@ pub enum ErrorNamedTwo {
     }
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorUnnamedOne {
     #[eo_error_occurence]
     Something(ErrorNamedTwo),

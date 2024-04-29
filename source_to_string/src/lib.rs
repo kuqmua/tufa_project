@@ -1,2 +1,4 @@
-pub mod source_to_string_with_config;
-pub mod source_to_string_without_config;
+mod source_to_string_with_config;
+mod source_to_string_without_config;
+pub use source_to_string_with_config::SourceToStringWithConfig;
+pub use source_to_string_without_config::SourceToStringWithoutConfig;
