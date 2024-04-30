@@ -1,3 +1,43 @@
+// #[derive(
+//     Debug,
+//     thiserror::Error,
+//     error_occurence_lib::ErrorOccurenceTest
+// )]
+// pub enum Meow {
+//     Variant {
+
+//         // TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED AND MAYBE USE SourceToStringWithConfig AND SourceToStringWithoutConfig
+
+
+//         // #[eo_display]
+//         eo_display_field: DisplayStruct,//std::string::String
+//         // #[eo_display_with_serialize_deserialize]
+//         // eo_display_with_serialize_deserialize_field: std::string::String,
+//         // #[eo_to_std_string_string]
+//         // eo_to_std_string_string_field: ToStdStringStringStruct,
+//         // #[eo_to_std_string_string_with_serialize_deserialize]
+//         // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct,
+//         // #[eo_error_occurence]
+//         eo_error_occurence_field: ErrorNamedTwo,//error_occurence
+//         // #[eo_vec_display]
+//         // eo_vec_display_field: std::vec::Vec<DisplayStruct>,//std::vec::Vec<std::string::String>
+//         // #[eo_vec_display_with_serialize_deserialize]
+//         // eo_vec_display_with_serialize_deserialize_field: std::vec::Vec<std::string::String>,
+//         // #[eo_vec_to_std_string_string]
+//         // eo_vec_to_std_string_string_field: std::vec::Vec<ToStdStringStringStruct>,
+//         // #[eo_vec_to_std_string_string_with_serialize_deserialize]
+//         // eo_vec_to_std_string_string_with_serialize_deserialize_field: std::vec::Vec<ToStdStringStringWithSerializeDeserializeStruct>,
+//         // #[eo_vec_error_occurence]
+//         // eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOne>,//std::vec::Vec<error_occurence>
+//         // 
+//         // hashmap string string
+//         // hashmap string error_occurence
+
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+
+
 #[derive(
     Debug,
     thiserror::Error,
@@ -5,38 +45,27 @@
 )]
 pub enum ErrorNamedOne {
     Variant {
-
         // TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED AND MAYBE USE SourceToStringWithConfig AND SourceToStringWithoutConfig
-
-
-        // #[eo_display]
-        eo_display_field: DisplayStruct,
-        // #[eo_display_with_serialize_deserialize]
-        // eo_display_with_serialize_deserialize_field: std::string::String,
-        // #[eo_to_std_string_string]
-        // eo_to_std_string_string_field: ToStdStringStringStruct,
-        // #[eo_to_std_string_string_with_serialize_deserialize]
-        // eo_to_std_string_string_with_serialize_deserialize_field: ToStdStringStringWithSerializeDeserializeStruct,
+        // #[eo_string]
+        eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
         // #[eo_error_occurence]
-        eo_error_occurence_field: ErrorNamedTwo,
-        // #[eo_vec_display]
-        // eo_vec_display_field: std::vec::Vec<DisplayStruct>,
-        // #[eo_vec_display_with_serialize_deserialize]
-        // eo_vec_display_with_serialize_deserialize_field: std::vec::Vec<std::string::String>,
-        // #[eo_vec_to_std_string_string]
-        // eo_vec_to_std_string_string_field: std::vec::Vec<ToStdStringStringStruct>,
-        // #[eo_vec_to_std_string_string_with_serialize_deserialize]
-        // eo_vec_to_std_string_string_with_serialize_deserialize_field: std::vec::Vec<ToStdStringStringWithSerializeDeserializeStruct>,
+        eo_error_occurence_field: ErrorNamedTwo,//IN SERIALIZE DESERIALIZE nested
+        // #[eo_vec_string]
+        // eo_vec_display_field: std::vec::Vec<DisplayStruct>,//IN SERIALIZE DESERIALIZE std::vec::Vec<std::string::String>
         // #[eo_vec_error_occurence]
-        // eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOne>,
+        // eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOne>,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
+        // #[eo_hashmap_string_string]
+        // hashmap string string
+        // #[eo_hashmap_string_error_occurence]
+        // hashmap string error_occurence
 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+//////////
+#[derive(Debug)]
 pub struct StdStringString(std::string::String);
-//
 impl std::fmt::Display for StdStringString {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.0)
@@ -67,7 +96,10 @@ impl error_occurence_lib::code_occurence::GetOption for StdStringString {
         None
     }
 }
-//
+////////
+// #[derive(Debug, serde::Serialize, serde::Deserialize)]
+// pub struct StdStringString(std::string::String);
+////////
 
 #[derive(Debug)]
 pub struct DisplayStruct {
@@ -295,21 +327,29 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
             ErrorNamedOne::Variant {
                 eo_display_field,
                 eo_error_occurence_field,
+                // eo_vec_display_field,
                 code_occurence: _unused_argument_2,
             } => {
-                format!
-                ("{{{}{}}}",
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                    & format!("eo_display_field: {}", 
-                        ToStringWithConfig:: to_string_with_config(eo_display_field, config)
-                    )
-                ),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                    & format!(
-                        "eo_error_occurence_field: {}",
-                        ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
-                    )
-                ))
+                format!(
+                    "{{{}{}}}",
+                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                        & format!("eo_display_field: {}", 
+                            ToStringWithConfig:: to_string_with_config(eo_display_field, config)
+                        )
+                    ),
+                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                        & format!(
+                            "eo_error_occurence_field: {}",
+                            ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
+                        )
+                    ),
+                    // error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                    //     & format!(
+                    //         "eo_vec_display_field: {}",
+                    //         ToStringWithConfig:: to_string_with_config(eo_vec_display_field, config)
+                    //     )
+                    // )
+                )
             }
         }
     }

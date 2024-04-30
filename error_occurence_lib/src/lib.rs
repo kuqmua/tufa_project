@@ -1,4 +1,4 @@
-// pub use error_occurence::ErrorOccurenceTest;
+pub use error_occurence::ErrorOccurenceTest;
 
 pub use error_occurence::ErrorOccurence;
 pub use source_to_string::SourceToStringWithConfig;
