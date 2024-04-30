@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    // error_occurence_lib::ErrorOccurence
+    // error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedOne {
     Variant {
@@ -70,7 +70,6 @@ impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
     }
 }
 
-
 #[derive(Debug)]
 pub struct ToStdStringStringStruct {
     pub to_std_string_string: std::string::String,
@@ -94,7 +93,7 @@ impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDe
 #[derive(
     Debug,
     thiserror::Error,
-    // error_occurence_lib::ErrorOccurence
+    // error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedTwo {
     Variant {
@@ -105,7 +104,7 @@ pub enum ErrorNamedTwo {
 }
 
 #[derive(Debug, thiserror::Error, 
-    // error_occurence_lib::ErrorOccurence
+    // error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorUnnamedOne {
     // #[eo_error_occurence]
@@ -268,7 +267,6 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                 ("{{{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                     & format!("eo_display_field: {}", 
-                        // eo_display_field
                         ToStringWithConfig:: to_string_with_config(eo_display_field, config)
                     )
                 ),
@@ -291,18 +289,23 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{
-{}{}}}",
+                ("{{{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
-                lines_space_backslash(& format!
-                ("eo_display_field: {}", eo_display_field)),
+                lines_space_backslash(
+                    & format!(
+                        "eo_display_field: {}", 
+                        ToStringWithoutConfig:: to_string_without_config(eo_display_field)
+                    )
+                ),
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
-                lines_space_backslash(& format!
-                ("eo_error_occurence_field: {}",
-                ToStringWithoutConfig
-                :: to_string_without_config(eo_error_occurence_field))))
+                lines_space_backslash(
+                    & format!(
+                        "eo_error_occurence_field: {}",
+                        ToStringWithoutConfig:: to_string_without_config(eo_error_occurence_field)
+                    )
+                ))
             }
         }
     }
@@ -334,14 +337,17 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
-                ("eo_display_field: {}", eo_display_field)),
+                (
+                    "eo_display_field: {}", 
+                    ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_display_field)
+                )),
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
-                ("eo_error_occurence_field: {}",
-                ToStringWithoutConfigWithSerializeDeserialize
-                ::
-                to_string_without_config_with_serialize_deserialize(eo_error_occurence_field))))
+                (
+                    "eo_error_occurence_field: {}",
+                    ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_error_occurence_field)
+                )))
             }
         }
     }
