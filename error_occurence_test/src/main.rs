@@ -34,6 +34,40 @@ pub enum ErrorNamedOne {
     },
 }
 
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct StdStringString(std::string::String);
+//
+impl std::fmt::Display for StdStringString {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
+    }
+}
+impl error_occurence_lib::SourceToStringWithConfig<'_> for StdStringString {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.0.clone()
+    }
+}
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdStringString {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.0.clone()
+    }
+}
+impl StdStringString {
+    pub fn into_serialize_deserialize_version(self) -> std::string::String {
+        self.0
+    }
+}
+impl error_occurence_lib::code_occurence::GetOption for StdStringString {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
+//
 
 #[derive(Debug)]
 pub struct DisplayStruct {
@@ -98,7 +132,7 @@ impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDe
 pub enum ErrorNamedTwo {
     Variant {
         // #[eo_display_with_serialize_deserialize]
-        eo_display_with_serialize_deserialize_field: std::string::String,
+        eo_display_with_serialize_deserialize_field: StdStringString,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -203,7 +237,7 @@ fn main() {
         //     to_std_string_string_with_serialize_deserialize: std::string::String::from("value"),
         // },
         eo_error_occurence_field: ErrorNamedTwo::Variant {
-            eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+            eo_display_with_serialize_deserialize_field: StdStringString(std::string::String::from("value")),
             code_occurence: error_occurence_lib::code_occurence!(),
         },
         // eo_vec_display_field: vec![
