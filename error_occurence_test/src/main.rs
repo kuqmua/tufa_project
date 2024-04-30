@@ -371,7 +371,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                 code_occurence: _unused_argument_2,
             } => {
                 format!(
-                    "{{{}{}{}}}",
+                    "{{\n{}{}{}}}",
                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                         & format!("eo_display_field: {}", 
                             ToStringWithConfig:: to_string_with_config(eo_display_field, config)
@@ -404,7 +404,7 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{{}{}{}}}",
+                ("{{\n{}{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(
@@ -458,7 +458,7 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{{}{}{}}}",
+                ("{{\n{}{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
@@ -578,7 +578,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedTwo {
                 code_occurence: _unused_argument_1,
             } => {
                 format!
-                ("{{{}}}",
+                ("{{\n{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(
@@ -599,7 +599,7 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
                 code_occurence: _unused_argument_1,
             } => {
                 format!
-                ("{{{}}}",
+                ("{{\n{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(
@@ -632,8 +632,7 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                 code_occurence: _unused_argument_1,
             } => {
                 format!
-                ("{{
-{}}}",
+                ("{{\n{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(
