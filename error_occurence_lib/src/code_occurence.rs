@@ -169,6 +169,11 @@ pub trait Get {
     fn get(&self) -> &CodeOccurence;
 }
 
+pub trait GetOption {
+    fn get_option(&self) -> std::option::Option<&CodeOccurence>;
+}
+
+
 pub trait GetCodePath {
     fn get_code_path(
         &self,

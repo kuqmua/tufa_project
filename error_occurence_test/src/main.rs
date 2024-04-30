@@ -64,6 +64,11 @@ impl DisplayStruct {
         self.to_string()
     }
 }
+impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
 
 
 #[derive(Debug)]
@@ -122,7 +127,7 @@ pub trait ToStringWithConfig<'a> {
 impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
 where
     SelfGeneric: error_occurence_lib::SourceToStringWithConfig<'a>
-        + error_occurence_lib::code_occurence::Get,
+        + error_occurence_lib::code_occurence::GetOption,
 {
     fn to_string_with_config<
         ConfigGeneric: app_state::GetSourcePlaceType
@@ -132,13 +137,16 @@ where
         &self,
         config: &ConfigGeneric,
     ) -> std::string::String {
-        error_occurence_lib::helpers::source_and_code_occurence_formatter(
-            self.source_to_string_with_config(config),
-            error_occurence_lib::code_occurence::PrepareForLogWithConfig::prepare_for_log_with_config(
-                self.get(),
-                config
-            )
-        )
+        match self.get_option() {
+            Some(value) => error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                self.source_to_string_with_config(config),
+                error_occurence_lib::code_occurence::PrepareForLogWithConfig::prepare_for_log_with_config(
+                    value,
+                    config
+                )
+            ),
+            None => self.source_to_string_with_config(config)
+        }
     }
 }
 ///
@@ -149,13 +157,16 @@ pub trait ToStringWithoutConfig<'a> {
 impl<'a, SelfGeneric> ToStringWithoutConfig<'a> for SelfGeneric
 where
     SelfGeneric: error_occurence_lib::SourceToStringWithoutConfig<'a>
-        + error_occurence_lib::code_occurence::Get,
+        + error_occurence_lib::code_occurence::GetOption,
 {
     fn to_string_without_config(&self) -> std::string::String {
-        error_occurence_lib::helpers::source_and_code_occurence_formatter(
-            self.source_to_string_without_config(),
-            self.get(),
-        )
+        match self.get_option() {
+            Some(value) => error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                self.source_to_string_without_config(),
+                value,
+            ),
+            None => self.source_to_string_without_config(),
+        }
     }
 }
 // //implemented coz you cant deserialize field into &'a GitInfo(not implememnted in serde)
@@ -166,13 +177,16 @@ pub trait ToStringWithoutConfigWithSerializeDeserialize<'a> {
 impl<'a, SelfGeneric> ToStringWithoutConfigWithSerializeDeserialize<'a> for SelfGeneric
 where
     SelfGeneric: error_occurence_lib::SourceToStringWithoutConfig<'a>
-        + error_occurence_lib::code_occurence::Get,
+        + error_occurence_lib::code_occurence::GetOption,
 {
     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
-        error_occurence_lib::helpers::source_and_code_occurence_formatter(
-            self.source_to_string_without_config(),
-            self.get(),
-        )
+        match self.get_option() {
+            Some(value) => error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                self.source_to_string_without_config(),
+                value,
+            ),
+            None => self.source_to_string_without_config(),
+        }
     }
 }
 ////////////
@@ -254,14 +268,14 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                 ("{{{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                     & format!("eo_display_field: {}", 
-                        eo_display_field
-                        // error_occurence_lib::to_string_with_config::ToStringWithConfig:: to_string_with_config(eo_display_field, config)
+                        // eo_display_field
+                        ToStringWithConfig:: to_string_with_config(eo_display_field, config)
                     )
                 ),
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                     & format!(
                         "eo_error_occurence_field: {}",
-                        error_occurence_lib::to_string_with_config::ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
+                        ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
                     )
                 ))
             }
@@ -287,20 +301,20 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                 ::
                 lines_space_backslash(& format!
                 ("eo_error_occurence_field: {}",
-                error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+                ToStringWithoutConfig
                 :: to_string_without_config(eo_error_occurence_field))))
             }
         }
     }
 }
-impl error_occurence_lib::code_occurence::Get for ErrorNamedOne {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
+impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOne {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         match self {
             ErrorNamedOne::Variant {
                 eo_display_field: _unused_argument_0,
                 eo_error_occurence_field: _unused_argument_1,
                 code_occurence,
-            } => code_occurence,
+            } => Some(code_occurence),
         }
     }
 }
@@ -325,21 +339,21 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                 ::
                 lines_space_backslash(& format!
                 ("eo_error_occurence_field: {}",
-                error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize
+                ToStringWithoutConfigWithSerializeDeserialize
                 ::
                 to_string_without_config_with_serialize_deserialize(eo_error_occurence_field))))
             }
         }
     }
 }
-impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDeserialize {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
+impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOneWithSerializeDeserialize {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         match self {
             ErrorNamedOneWithSerializeDeserialize::Variant {
                 eo_display_field: _unused_argument_0,
                 eo_error_occurence_field: _unused_argument_1,
                 code_occurence,
-            } => code_occurence,
+            } => Some(code_occurence),
         }
     }
 }
@@ -364,7 +378,7 @@ impl std::fmt::Display for ErrorNamedOne {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
         (formatter, "{}",
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        ToStringWithoutConfig
         :: to_string_without_config(self))
     }
 }
@@ -372,7 +386,7 @@ impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
         (formatter, "{}",
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        ToStringWithoutConfig
         :: to_string_without_config(self))
     }
 }
@@ -447,13 +461,13 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
         }
     }
 }
-impl error_occurence_lib::code_occurence::Get for ErrorNamedTwo {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
+impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwo {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         match self {
             ErrorNamedTwo::Variant {
                 eo_display_with_serialize_deserialize_field: _unused_argument_0,
                 code_occurence,
-            } => code_occurence,
+            } => Some(code_occurence),
         }
     }
 }
@@ -478,13 +492,13 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
         }
     }
 }
-impl error_occurence_lib::code_occurence::Get for ErrorNamedTwoWithSerializeDeserialize {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
+impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwoWithSerializeDeserialize {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         match self {
             ErrorNamedTwoWithSerializeDeserialize::Variant {
                 eo_display_with_serialize_deserialize_field: _unused_argument_0,
                 code_occurence,
-            } => code_occurence,
+            } => Some(code_occurence),
         }
     }
 }
@@ -507,7 +521,7 @@ impl std::fmt::Display for ErrorNamedTwo {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
         (formatter, "{}",
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        ToStringWithoutConfig
         :: to_string_without_config(self))
     }
 }
@@ -515,7 +529,7 @@ impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
         (formatter, "{}",
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        ToStringWithoutConfig
         :: to_string_without_config(self))
     }
 }
@@ -530,7 +544,7 @@ pub enum ErrorNamedTwoWithSerializeDeserialize {
     },
 }
 ////////////////////
-impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for ErrorUnnamedOne {
+impl ToStringWithConfig<'_> for ErrorUnnamedOne {
     fn to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -538,25 +552,25 @@ impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for Erro
         config: &ConfigGeneric,
     ) -> std::string::String {
         match self {
-            ErrorUnnamedOne::Something(i) => error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(i, config),
+            ErrorUnnamedOne::Something(i) => ToStringWithConfig::to_string_with_config(i, config),
         }
     }
 }
-impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for ErrorUnnamedOne {
+impl ToStringWithoutConfig<'_> for ErrorUnnamedOne {
     fn to_string_without_config(&self) -> std::string::String {
         match self {
-            ErrorUnnamedOne::Something(i) => error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(i),
+            ErrorUnnamedOne::Something(i) => ToStringWithoutConfig::to_string_without_config(i),
         }
     }
 }
 impl
-    error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'_>
+    ToStringWithoutConfigWithSerializeDeserialize<'_>
     for ErrorUnnamedOneWithSerializeDeserialize
 {
     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
         match self {
             ErrorUnnamedOneWithSerializeDeserialize::Something(i) => {
-                error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(i)
+                ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(i)
             }
         }
     }
@@ -574,7 +588,7 @@ impl std::fmt::Display for ErrorUnnamedOne {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
         (formatter, "{}",
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+        ToStringWithoutConfig
         :: to_string_without_config(self))
     }
 }
@@ -582,7 +596,7 @@ impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
         (formatter, "{}",
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize
+        ToStringWithoutConfigWithSerializeDeserialize
         :: to_string_without_config_with_serialize_deserialize(self))
     }
 }
