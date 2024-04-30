@@ -15,7 +15,7 @@ pub enum ErrorNamedOne {
         // #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOne,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
         // #[eo_hashmap_string_string]
-        hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringString,
+        hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct,
         // #[eo_hashmap_string_error_occurence]
         // hashmap string error_occurence
 
@@ -217,19 +217,12 @@ impl error_occurence_lib::code_occurence::GetOption for StdVecVecErrorUnnamedOne
 }
 ////////
 #[derive(Debug)]
-pub struct StdCollectionsHashMapStdStringStringStdStringString(std::collections::HashMap<StdStringString, StdStringString>);
-impl std::fmt::Display for StdCollectionsHashMapStdStringStringStdStringString {
+pub struct StdCollectionsHashMapStdStringStringDisplayStruct(std::collections::HashMap<StdStringString, DisplayStruct>);
+impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             formatter, 
             "{}",
-            // error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
-            //     std::string::String::from(""),
-            //     |mut acc, vec_element| {
-            //         acc.push_str(&format!(" {vec_element}\n"));
-            //         acc
-            //     },
-            // ))
             error_occurence_lib::helpers::error_occurence_hashmap_formatter(self.0.iter().fold(
                 std::string::String::new(),
                 |mut acc, (key, value)| {
@@ -243,7 +236,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringStdStringString {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringStdStringString {
+impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -253,40 +246,33 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMap
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringStdStringString {
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl StdCollectionsHashMapStdStringStringStdStringString {
-    pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize {
-        StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize(self.0.into_iter().map(
+impl StdCollectionsHashMapStdStringStringDisplayStruct {
+    pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
+        StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(self.0.into_iter().map(
             |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
         ).collect())
     }
 }
-impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringStdStringString {
+impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         None
     }
 }
 //
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize(
-    std::collections::HashMap<StdStringStringWithSerializeDeserialize, StdStringStringWithSerializeDeserialize>
+pub struct StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(
+    std::collections::HashMap<StdStringStringWithSerializeDeserialize, DisplayStructWithSerializeDeserialize>
 );
-impl std::fmt::Display for StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize {
+impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             formatter, 
             "{}",
-            // error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
-            //     std::string::String::from(""),
-            //     |mut acc, vec_element| {
-            //         acc.push_str(&format!(" {vec_element}\n"));
-            //         acc
-            //     },
-            // ))
             error_occurence_lib::helpers::error_occurence_hashmap_formatter(self.0.iter().fold(
                 std::string::String::new(),
                 |mut acc, (key, value)| {
@@ -300,7 +286,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringStdStringStringWi
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize {
+impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -310,18 +296,65 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMap
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize {
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize {
+impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         None
     }
 }
-
 ////////
+// #[derive(Debug)]
+// pub struct StdCollectionsHashMapStdStringString (std::collections::HashMap<StdStringString, StdStringString>);
+// impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(
+//             formatter, 
+//             "{}",
+//             error_occurence_lib::helpers::error_occurence_hashmap_formatter(self.0.iter().fold(
+//                 std::string::String::new(),
+//                 |mut acc, (key, value)| {
+//                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+//                         key,
+//                         value.to_string(),
+//                     ));
+//                     acc
+//                 },
+//             ))
+//         )
+//     }
+// }
+// impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
+//     fn source_to_string_with_config<
+//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+//     >(
+//         &self,
+//         _: &ConfigGeneric,
+//     ) -> std::string::String {
+//         self.to_string()
+//     }
+// }
+// impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
+//     fn source_to_string_without_config(&self) -> std::string::String {
+//         self.to_string()
+//     }
+// }
+// impl StdCollectionsHashMapStdStringStringDisplayStruct {
+//     pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
+//         StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(self.0.into_iter().map(
+//             |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
+//         ).collect())
+//     }
+// }
+// impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringDisplayStruct {
+//     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+//         None
+//     }
+// }
+/////
 
 
 #[derive(Debug)]
@@ -534,11 +567,13 @@ fn main() {
                 }
             )
         ]),
-        hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringString(
+        hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct(
             std::collections::HashMap::from([
                 (
                     StdStringString(std::string::String::from("key")),
-                    StdStringString(std::string::String::from("value")),
+                    DisplayStruct {
+                        display: std::string::String::from("value")
+                    }
                 ),
             ])
         ),
@@ -819,7 +854,7 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
         eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
         eo_vec_display_field: std::vec::Vec<std::string::String>,
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOneWithSerializeDeserialize,
-        hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize,
+        hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
