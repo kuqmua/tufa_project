@@ -6,7 +6,7 @@
 pub enum ErrorNamedOne {
     Variant {
 
-        TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED AND MAYBE USE SourceToStringWithConfig AND SourceToStringWithoutConfig
+        // TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED AND MAYBE USE SourceToStringWithConfig AND SourceToStringWithoutConfig
 
 
         // #[eo_display]
@@ -106,6 +106,76 @@ pub enum ErrorUnnamedOne {
     // #[eo_error_occurence]
     Something(ErrorNamedTwo),
 }
+
+////////////
+pub trait ToStringWithConfig<'a> {
+    fn to_string_with_config<
+        ConfigGeneric: app_state::GetSourcePlaceType
+            + app_state::GetTimezone
+            + ?Sized,
+    >(
+        &self,
+        config: &ConfigGeneric,
+    ) -> std::string::String;
+}
+
+impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
+where
+    SelfGeneric: error_occurence_lib::SourceToStringWithConfig<'a>
+        + error_occurence_lib::code_occurence::Get,
+{
+    fn to_string_with_config<
+        ConfigGeneric: app_state::GetSourcePlaceType
+            + app_state::GetTimezone
+            + ?Sized,
+    >(
+        &self,
+        config: &ConfigGeneric,
+    ) -> std::string::String {
+        error_occurence_lib::helpers::source_and_code_occurence_formatter(
+            self.source_to_string_with_config(config),
+            error_occurence_lib::code_occurence::PrepareForLogWithConfig::prepare_for_log_with_config(
+                self.get(),
+                config
+            )
+        )
+    }
+}
+///
+pub trait ToStringWithoutConfig<'a> {
+    fn to_string_without_config(&self) -> std::string::String;
+}
+
+impl<'a, SelfGeneric> ToStringWithoutConfig<'a> for SelfGeneric
+where
+    SelfGeneric: error_occurence_lib::SourceToStringWithoutConfig<'a>
+        + error_occurence_lib::code_occurence::Get,
+{
+    fn to_string_without_config(&self) -> std::string::String {
+        error_occurence_lib::helpers::source_and_code_occurence_formatter(
+            self.source_to_string_without_config(),
+            self.get(),
+        )
+    }
+}
+// //implemented coz you cant deserialize field into &'a GitInfo(not implememnted in serde)
+pub trait ToStringWithoutConfigWithSerializeDeserialize<'a> {
+    fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String;
+}
+
+impl<'a, SelfGeneric> ToStringWithoutConfigWithSerializeDeserialize<'a> for SelfGeneric
+where
+    SelfGeneric: error_occurence_lib::SourceToStringWithoutConfig<'a>
+        + error_occurence_lib::code_occurence::Get,
+{
+    fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
+        error_occurence_lib::helpers::source_and_code_occurence_formatter(
+            self.source_to_string_without_config(),
+            self.get(),
+        )
+    }
+}
+////////////
 
 fn main() {
     let e = ErrorNamedOne::Variant {
@@ -468,14 +538,14 @@ impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for Erro
         config: &ConfigGeneric,
     ) -> std::string::String {
         match self {
-            ErrorUnnamedOne::Something(i) => i.to_string_with_config(config),
+            ErrorUnnamedOne::Something(i) => error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(i, config),
         }
     }
 }
 impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for ErrorUnnamedOne {
     fn to_string_without_config(&self) -> std::string::String {
         match self {
-            ErrorUnnamedOne::Something(i) => i.to_string_without_config(),
+            ErrorUnnamedOne::Something(i) => error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(i),
         }
     }
 }
@@ -486,7 +556,7 @@ impl
     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
         match self {
             ErrorUnnamedOneWithSerializeDeserialize::Something(i) => {
-                i.to_string_without_config_with_serialize_deserialize()
+                error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(i)
             }
         }
     }
