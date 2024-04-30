@@ -17,7 +17,7 @@ pub enum ErrorNamedOne {
         // #[eo_hashmap_string_string]
         hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct,
         // #[eo_hashmap_string_error_occurence]
-        // hashmap string error_occurence
+        hashmap_string_error_occurence: StdCollectionsHashMapStdStringStringErrorUnnamedOne,
 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -307,53 +307,96 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
     }
 }
 ////////
-// #[derive(Debug)]
-// pub struct StdCollectionsHashMapStdStringString (std::collections::HashMap<StdStringString, StdStringString>);
-// impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(
-//             formatter, 
-//             "{}",
-//             error_occurence_lib::helpers::error_occurence_hashmap_formatter(self.0.iter().fold(
-//                 std::string::String::new(),
-//                 |mut acc, (key, value)| {
-//                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-//                         key,
-//                         value.to_string(),
-//                     ));
-//                     acc
-//                 },
-//             ))
-//         )
-//     }
-// }
-// impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
-//     fn source_to_string_with_config<
-//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-//     >(
-//         &self,
-//         _: &ConfigGeneric,
-//     ) -> std::string::String {
-//         self.to_string()
-//     }
-// }
-// impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
-//     fn source_to_string_without_config(&self) -> std::string::String {
-//         self.to_string()
-//     }
-// }
-// impl StdCollectionsHashMapStdStringStringDisplayStruct {
-//     pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
-//         StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(self.0.into_iter().map(
-//             |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
-//         ).collect())
-//     }
-// }
-// impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringDisplayStruct {
-//     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-//         None
-//     }
-// }
+#[derive(Debug)]
+pub struct StdCollectionsHashMapStdStringStringErrorUnnamedOne(std::collections::HashMap<StdStringString, ErrorUnnamedOne>);
+impl std::fmt::Display for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            error_occurence_lib::helpers::error_occurence_hashmap_formatter(self.0.iter().fold(
+                std::string::String::new(),
+                |mut acc, (key, value)| {
+                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                        key,
+                        value.to_string(),
+                    ));
+                    acc
+                },
+            ))
+        )
+    }
+}
+impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+    pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+        StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize(self.0.into_iter().map(
+            |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
+        ).collect())
+    }
+}
+impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
+///
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize(
+    std::collections::HashMap<StdStringStringWithSerializeDeserialize, ErrorUnnamedOneWithSerializeDeserialize>
+);
+impl std::fmt::Display for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            error_occurence_lib::helpers::error_occurence_hashmap_formatter(self.0.iter().fold(
+                std::string::String::new(),
+                |mut acc, (key, value)| {
+                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                        key,
+                        value.to_string(),
+                    ));
+                    acc
+                },
+            ))
+        )
+    }
+}
+impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
 /////
 
 
@@ -577,6 +620,20 @@ fn main() {
                 ),
             ])
         ),
+        hashmap_string_error_occurence: StdCollectionsHashMapStdStringStringErrorUnnamedOne(
+            std::collections::HashMap::from([
+                (
+                    StdStringString(std::string::String::from("key")),
+                    ErrorUnnamedOne::Something(
+                        ErrorNamedTwo::Variant {
+                            eo_display_with_serialize_deserialize_field: StdStringString(std::string::String::from("value")),
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        }
+                    )
+                ),
+            ])
+        ),
+        
 
         code_occurence: error_occurence_lib::code_occurence!(),
     };
@@ -609,10 +666,11 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_error_occurence,
                 code_occurence: _unused_argument_2,
             } => {
                 format!(
-                    "{{\n{}{}{}{}{}}}",
+                    "{{\n{}{}{}{}{}{}}}",
                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                         & format!("eo_display_field: {}", 
                             ToStringWithConfig:: to_string_with_config(eo_display_field, config)
@@ -642,6 +700,12 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                             ToStringWithConfig:: to_string_with_config(hashmap_string_string, config)
                         )
                     ),
+                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                        & format!(
+                            "hashmap_string_error_occurence: {}",
+                            ToStringWithConfig:: to_string_with_config(hashmap_string_error_occurence, config)
+                        )
+                    ),
                 )
             }
         }
@@ -656,10 +720,11 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_error_occurence,
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{\n{}{}{}{}{}}}",
+                ("{{\n{}{}{}{}{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(
@@ -700,6 +765,14 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                         ToStringWithoutConfig:: to_string_without_config(hashmap_string_string)
                     )
                 ),
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(
+                    & format!(
+                        "hashmap_string_error_occurence: {}",
+                        ToStringWithoutConfig:: to_string_without_config(hashmap_string_error_occurence)
+                    )
+                ),
             )
 
             }
@@ -727,10 +800,11 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_error_occurence,
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{\n{}{}{}{}{}}}",
+                ("{{\n{}{}{}{}{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
@@ -766,6 +840,13 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                     "hashmap_string_string: {}",
                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(hashmap_string_string)
                 )),
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(& format!
+                (
+                    "hashmap_string_error_occurence: {}",
+                    ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(hashmap_string_error_occurence)
+                )),
             )
             }
         }
@@ -790,6 +871,7 @@ impl ErrorNamedOne {
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_error_occurence,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
                 eo_display_field: { 
@@ -806,6 +888,9 @@ impl ErrorNamedOne {
                 },
                 hashmap_string_string: {
                     hashmap_string_string.into_serialize_deserialize_version()
+                },
+                hashmap_string_error_occurence: {
+                    hashmap_string_error_occurence.into_serialize_deserialize_version()
                 },
                 code_occurence: code_occurence,
             },
@@ -855,6 +940,7 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
         eo_vec_display_field: std::vec::Vec<std::string::String>,
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOneWithSerializeDeserialize,
         hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize,
+        hashmap_string_error_occurence: StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
