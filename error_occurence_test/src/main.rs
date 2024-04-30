@@ -97,8 +97,48 @@ impl error_occurence_lib::code_occurence::GetOption for StdStringString {
     }
 }
 ////////
-// #[derive(Debug, serde::Serialize, serde::Deserialize)]
-// pub struct StdStringString(std::string::String);
+#[derive(Debug)]
+pub struct StdVecVecDisplayStruct(std::vec::Vec<DisplayStruct>);
+impl std::fmt::Display for StdVecVecDisplayStruct {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
+                std::string::String::from(""),
+                |mut acc, vec_element| {
+                    acc.push_str(&format!(" {vec_element}\n"));
+                    acc
+                },
+            ))
+        )
+    }
+}
+impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecDisplayStruct {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStruct {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl StdVecVecDisplayStruct {
+    pub fn into_serialize_deserialize_version(self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::code_occurence::GetOption for StdVecVecDisplayStruct {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
 ////////
 
 #[derive(Debug)]
