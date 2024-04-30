@@ -371,7 +371,9 @@ impl ErrorNamedOne {
                 eo_error_occurence_field,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_display_field: { eo_display_field.to_string() },
+                eo_display_field: { 
+                    eo_display_field.into_serialize_deserialize_version()
+                },
                 eo_error_occurence_field: {
                     eo_error_occurence_field.into_serialize_deserialize_version()
                 },
@@ -437,13 +439,15 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedTwo {
                 code_occurence: _unused_argument_1,
             } => {
                 format!
-                ("{{
-{}}}",
+                ("{{{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
-                lines_space_backslash(& format!
-                ("eo_display_with_serialize_deserialize_field: {}",
-                eo_display_with_serialize_deserialize_field)))
+                lines_space_backslash(
+                    & format!(
+                        "eo_display_with_serialize_deserialize_field: {}",
+                        ToStringWithConfig:: to_string_with_config(eo_display_with_serialize_deserialize_field, config)
+                    )
+                ))
             }
         }
     }
@@ -456,13 +460,15 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
                 code_occurence: _unused_argument_1,
             } => {
                 format!
-                ("{{
-{}}}",
+                ("{{{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
-                lines_space_backslash(& format!
-                ("eo_display_with_serialize_deserialize_field: {}",
-                eo_display_with_serialize_deserialize_field)))
+                lines_space_backslash(
+                    & format!(
+                        "eo_display_with_serialize_deserialize_field: {}",
+                        ToStringWithoutConfig:: to_string_without_config(eo_display_with_serialize_deserialize_field)
+                    )
+                ))
             }
         }
     }
@@ -491,9 +497,12 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
 {}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
-                lines_space_backslash(& format!
-                ("eo_display_with_serialize_deserialize_field: {}",
-                eo_display_with_serialize_deserialize_field)))
+                lines_space_backslash(
+                    & format!(
+                        "eo_display_with_serialize_deserialize_field: {}",
+                        ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_display_with_serialize_deserialize_field)
+                    )
+                ))
             }
         }
     }
@@ -515,9 +524,7 @@ impl ErrorNamedTwo {
                 eo_display_with_serialize_deserialize_field,
                 code_occurence,
             } => ErrorNamedTwoWithSerializeDeserialize::Variant {
-                eo_display_with_serialize_deserialize_field: {
-                    eo_display_with_serialize_deserialize_field
-                },
+                eo_display_with_serialize_deserialize_field: eo_display_with_serialize_deserialize_field.into_serialize_deserialize_version(),
                 code_occurence: code_occurence,
             },
         }

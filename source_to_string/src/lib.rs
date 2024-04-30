@@ -1,4 +1,6 @@
 mod source_to_string_with_config;
 mod source_to_string_without_config;
+mod into_serialize_deserialize_version;
 pub use source_to_string_with_config::SourceToStringWithConfig;
 pub use source_to_string_without_config::SourceToStringWithoutConfig;
+pub use into_serialize_deserialize_version::IntoSerializeDeserializeVersion;
