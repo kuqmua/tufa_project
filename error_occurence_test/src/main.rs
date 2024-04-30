@@ -15,7 +15,7 @@ pub enum ErrorNamedOne {
         // #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOne,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
         // #[eo_hashmap_string_string]
-        // hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringString,
+        hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringString,
         // #[eo_hashmap_string_error_occurence]
         // hashmap string error_occurence
 
@@ -534,6 +534,14 @@ fn main() {
                 }
             )
         ]),
+        hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringString(
+            std::collections::HashMap::from([
+                (
+                    StdStringString(std::string::String::from("key")),
+                    StdStringString(std::string::String::from("value")),
+                ),
+            ])
+        ),
 
         code_occurence: error_occurence_lib::code_occurence!(),
     };
@@ -565,10 +573,11 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
+                hashmap_string_string,
                 code_occurence: _unused_argument_2,
             } => {
                 format!(
-                    "{{\n{}{}{}{}}}",
+                    "{{\n{}{}{}{}{}}}",
                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                         & format!("eo_display_field: {}", 
                             ToStringWithConfig:: to_string_with_config(eo_display_field, config)
@@ -592,6 +601,12 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
                             ToStringWithConfig:: to_string_with_config(eo_vec_error_occurence_field, config)
                         )
                     ),
+                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                        & format!(
+                            "hashmap_string_string: {}",
+                            ToStringWithConfig:: to_string_with_config(hashmap_string_string, config)
+                        )
+                    ),
                 )
             }
         }
@@ -605,10 +620,11 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
+                hashmap_string_string,
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{\n{}{}{}{}}}",
+                ("{{\n{}{}{}{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(
@@ -641,6 +657,14 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
                         ToStringWithoutConfig:: to_string_without_config(eo_vec_error_occurence_field)
                     )
                 ),
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(
+                    & format!(
+                        "hashmap_string_string: {}",
+                        ToStringWithoutConfig:: to_string_without_config(hashmap_string_string)
+                    )
+                ),
             )
 
             }
@@ -667,10 +691,11 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
+                hashmap_string_string,
                 code_occurence: _unused_argument_2,
             } => {
                 format!
-                ("{{\n{}{}{}{}}}",
+                ("{{\n{}{}{}{}{}}}",
                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
                 ::
                 lines_space_backslash(& format!
@@ -699,6 +724,13 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_>
                     "eo_vec_error_occurence_field: {}",
                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_vec_error_occurence_field)
                 )),
+                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+                ::
+                lines_space_backslash(& format!
+                (
+                    "hashmap_string_string: {}",
+                    ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(hashmap_string_string)
+                )),
             )
             }
         }
@@ -722,6 +754,7 @@ impl ErrorNamedOne {
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
+                hashmap_string_string,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
                 eo_display_field: { 
@@ -735,6 +768,9 @@ impl ErrorNamedOne {
                 },
                 eo_vec_error_occurence_field: {
                     eo_vec_error_occurence_field.into_serialize_deserialize_version()
+                },
+                hashmap_string_string: {
+                    hashmap_string_string.into_serialize_deserialize_version()
                 },
                 code_occurence: code_occurence,
             },
@@ -783,6 +819,7 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
         eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
         eo_vec_display_field: std::vec::Vec<std::string::String>,
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOneWithSerializeDeserialize,
+        hashmap_string_string: StdCollectionsHashMapStdStringStringStdStringStringWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
