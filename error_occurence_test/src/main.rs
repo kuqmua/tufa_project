@@ -46,14 +46,14 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdStringString {
         self.0.clone()
     }
 }
-impl StdStringString {
-    pub fn into_serialize_deserialize_version(self) -> StdStringStringWithSerializeDeserialize {
-        StdStringStringWithSerializeDeserialize(self.0)
-    }
-}
 impl error_occurence_lib::code_occurence::GetOption for StdStringString {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         None
+    }
+}
+impl StdStringString {
+    pub fn into_serialize_deserialize_version(self) -> StdStringStringWithSerializeDeserialize {
+        StdStringStringWithSerializeDeserialize(self.0)
     }
 }
 //
@@ -117,14 +117,14 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecDisplaySt
         self.to_string()
     }
 }
-impl StdVecVecDisplayStruct {
-    pub fn into_serialize_deserialize_version(self) -> StdVecVecDisplayStructWithSerializeDeserialize {
-        StdVecVecDisplayStructWithSerializeDeserialize(self.0.into_iter().map(|element|element.into_serialize_deserialize_version()).collect())
-    }
-}
 impl error_occurence_lib::code_occurence::GetOption for StdVecVecDisplayStruct {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         None
+    }
+}
+impl StdVecVecDisplayStruct {
+    pub fn into_serialize_deserialize_version(self) -> StdVecVecDisplayStructWithSerializeDeserialize {
+        StdVecVecDisplayStructWithSerializeDeserialize(self.0.into_iter().map(|element|element.into_serialize_deserialize_version()).collect())
     }
 }
 //
@@ -198,16 +198,17 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecErrorUnna
         self.to_string()
     }
 }
-impl StdVecVecErrorUnnamedOne {
-    pub fn into_serialize_deserialize_version(self) -> StdVecVecErrorUnnamedOneWithSerializeDeserialize {
-        StdVecVecErrorUnnamedOneWithSerializeDeserialize(self.0.into_iter().map(|element|element.into_serialize_deserialize_version()).collect())
-    }
-}
 impl error_occurence_lib::code_occurence::GetOption for StdVecVecErrorUnnamedOne {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         None
     }
 }
+impl StdVecVecErrorUnnamedOne {
+    pub fn into_serialize_deserialize_version(self) -> StdVecVecErrorUnnamedOneWithSerializeDeserialize {
+        StdVecVecErrorUnnamedOneWithSerializeDeserialize(self.0.into_iter().map(|element|element.into_serialize_deserialize_version()).collect())
+    }
+}
+
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct StdVecVecErrorUnnamedOneWithSerializeDeserialize(std::vec::Vec<ErrorUnnamedOneWithSerializeDeserialize>);
 impl std::fmt::Display for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
@@ -289,16 +290,16 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHash
         self.to_string()
     }
 }
+impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringDisplayStruct {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
 impl StdCollectionsHashMapStdStringStringDisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
         StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(self.0.into_iter().map(
             |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
         ).collect())
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringDisplayStruct {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
     }
 }
 //
@@ -380,16 +381,16 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHash
         self.to_string()
     }
 }
+impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
 impl StdCollectionsHashMapStdStringStringErrorUnnamedOne {
     pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
         StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize(self.0.into_iter().map(
             |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
         ).collect())
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
     }
 }
 ///
@@ -462,16 +463,16 @@ impl error_occurence_lib::SourceToStringWithoutConfig<'_> for DisplayStruct {
         self.to_string()
     }
 }
+impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
 impl DisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> DisplayStructWithSerializeDeserialize {
         DisplayStructWithSerializeDeserialize {
             display: StdStringStringWithSerializeDeserialize (self.display.to_string())
         }
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
     }
 }
 //
