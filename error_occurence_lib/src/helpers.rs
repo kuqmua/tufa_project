@@ -7,7 +7,7 @@ pub fn stringified_lines_error_hashmap_element<K: std::fmt::Display, V: std::fmt
     key: K, //todo - it can possibly contains more than one line
     value: V,
 ) -> std::string::String {
-    format!("{}: [\n{}]\n", key, lines_space_backslash_addition(value))
+    format!("{}: {{\n{}}}\n", key, lines_space_backslash_addition(value))
 }
 
 pub fn lines_space_backslash_addition<T: std::fmt::Display>(value: T) -> std::string::String {
