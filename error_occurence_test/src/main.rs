@@ -434,10 +434,16 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
 #[derive(Debug)]
 pub struct DisplayStruct {
     pub display: std::string::String,
+    pub something: std::primitive::bool,
 }
 impl std::fmt::Display for DisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.display))
+        write!(
+            formatter, 
+            "display: {}\nsomething: {}", 
+            error_occurence_lib::helpers::lines_backslash_addition(&self.display),
+            error_occurence_lib::helpers::lines_backslash_addition(&self.something),
+        )
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStruct {
@@ -471,6 +477,7 @@ impl DisplayStruct {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct DisplayStructWithSerializeDeserialize {
     pub display: StdStringStringWithSerializeDeserialize,
+    // pub something: std::primitive::bool,
 }
 impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -622,7 +629,8 @@ where
 fn main() {
     let e = ErrorNamedOne::Variant {
         eo_display_field: DisplayStruct {
-            display: std::string::String::from("value")
+            display: std::string::String::from("value"),
+            something: true,
         },
         eo_error_occurence_field: ErrorNamedTwo::Variant {
             eo_display_with_serialize_deserialize_field: StdStringString(std::string::String::from("value")),
@@ -630,7 +638,8 @@ fn main() {
         },
         eo_vec_display_field: StdVecVecDisplayStruct(vec![
             DisplayStruct {
-                display: std::string::String::from("value")
+                display: std::string::String::from("value"),
+                something: true,
             }
         ]),
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOne(vec![
@@ -646,7 +655,8 @@ fn main() {
                 (
                     StdStringString(std::string::String::from("keysiudfgsidlufgsiadfglisadglifasgdlfiygsaldfglsagdlfhgsaldhfglhsdflhsadflhsaldhfgs\nkeysdfsadfasdfsdfasdfasdf\nkeysadfasfdsdfsfdsfsd")),
                     DisplayStruct {
-                        display: std::string::String::from("value")
+                        display: std::string::String::from("value"),
+                        something: true,
                     }
                 ),
             ])
