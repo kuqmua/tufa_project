@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    // error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedOne {
     Variant {
@@ -902,22 +902,7 @@ impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
 impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNamedOne {
     fn error_occurence_named(&self) {}
 }
-impl ErrorNamedOne {
-    fn _compile_time_check_error_occurence_members(&self) {
-        match self {
-            ErrorNamedOne::Variant {
-                // eo_display_field: _unused_argument_0,
-                eo_error_occurence_field,
-                // eo_vec_display_field: _unused_argument_1,
-                // code_occurence: _unused_argument_2,
-                ..
-            } => {
-                error_occurence_lib::error_occurence_named::ErrorOccurenceNamed
-                :: error_occurence_named(eo_error_occurence_field);
-            }
-        }
-    }
-}
+
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorNamedOneWithSerializeDeserialize {
     Variant {
@@ -1122,16 +1107,7 @@ impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
 impl error_occurence_lib::error_occurence_unnamed::ErrorOccurenceUnnamed for ErrorUnnamedOne {
     fn error_occurence_unnamed(&self) {}
 }
-impl ErrorUnnamedOne {
-    fn _compile_time_check_error_occurence_members(&self) {
-        match self {
-            ErrorUnnamedOne::Something(i) => {
-                error_occurence_lib::error_occurence_named::ErrorOccurenceNamed
-                :: error_occurence_named(i);
-            }
-        }
-    }
-}
+
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorUnnamedOneWithSerializeDeserialize {
     Something(ErrorNamedTwoWithSerializeDeserialize),
