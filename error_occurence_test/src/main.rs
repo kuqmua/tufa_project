@@ -638,74 +638,6 @@ fn main() {
 
 
 //////////////////////////
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        match self {
-            ErrorNamedOne::Variant {
-                eo_display_field,
-                eo_error_occurence_field,
-                eo_vec_display_field,
-                eo_vec_error_occurence_field,
-                hashmap_string_string,
-                hashmap_string_error_occurence,
-                code_occurence: _unused_argument_2,
-            } => {
-                format!
-                ("{{\n{}{}{}{}{}{}}}",
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "eo_display_field: {}", 
-                        ToStringWithoutConfig:: to_string_without_config(eo_display_field)
-                    )
-                ),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "eo_error_occurence_field: {}",
-                        ToStringWithoutConfig:: to_string_without_config(eo_error_occurence_field)
-                    )
-                ),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "eo_vec_display_field: {}",
-                        ToStringWithoutConfig:: to_string_without_config(eo_vec_display_field)
-                    )
-                ),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "eo_vec_error_occurence_field: {}",
-                        ToStringWithoutConfig:: to_string_without_config(eo_vec_error_occurence_field)
-                    )
-                ),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "hashmap_string_string: {}",
-                        ToStringWithoutConfig:: to_string_without_config(hashmap_string_string)
-                    )
-                ),
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "hashmap_string_error_occurence: {}",
-                        ToStringWithoutConfig:: to_string_without_config(hashmap_string_error_occurence)
-                    )
-                ),
-            )
-
-            }
-        }
-    }
-}
 impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOne {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         match self {
@@ -858,28 +790,6 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
 }
 
 ////////////
-
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        match self {
-            ErrorNamedTwo::Variant {
-                eo_display_with_serialize_deserialize_field,
-                code_occurence: _unused_argument_1,
-            } => {
-                format!
-                ("{{\n{}}}",
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "eo_display_with_serialize_deserialize_field: {}",
-                        ToStringWithoutConfig:: to_string_without_config(eo_display_with_serialize_deserialize_field)
-                    )
-                ))
-            }
-        }
-    }
-}
 impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwo {
     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
         match self {
