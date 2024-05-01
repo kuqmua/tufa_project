@@ -11,7 +11,7 @@ pub trait ToStringWithConfig<'a> {
 
 impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
 where
-    SelfGeneric: source_to_string::SourceToStringWithConfig<'a>
+    SelfGeneric: crate::source_to_string_with_config::SourceToStringWithConfig<'a>
         + crate::code_occurence::Get,
 {
     fn to_string_with_config<

@@ -31,7 +31,7 @@ impl std::fmt::Display for StdStringString {
         write!(formatter, "{}", self.0)
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdStringString {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdStringString {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -41,7 +41,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdStringString {
         self.0.clone()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdStringString {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdStringString {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.0.clone()
     }
@@ -64,7 +64,7 @@ impl std::fmt::Display for StdStringStringWithSerializeDeserialize {
         write!(formatter, "{}", self.0)
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdStringStringWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdStringStringWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -74,7 +74,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdStringStringWithSe
         self.0.clone()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdStringStringWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdStringStringWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.0.clone()
     }
@@ -102,7 +102,7 @@ impl std::fmt::Display for StdVecVecDisplayStruct {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecDisplayStruct {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecDisplayStruct {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -112,7 +112,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecDisplayStruc
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStruct {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStruct {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -145,7 +145,7 @@ impl std::fmt::Display for StdVecVecDisplayStructWithSerializeDeserialize {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecDisplayStructWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecDisplayStructWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -155,7 +155,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecDisplayStruc
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStructWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStructWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -183,7 +183,7 @@ impl std::fmt::Display for StdVecVecErrorUnnamedOne {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecErrorUnnamedOne {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecErrorUnnamedOne {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -193,7 +193,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecErrorUnnamed
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecErrorUnnamedOne {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecErrorUnnamedOne {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -234,7 +234,7 @@ impl std::fmt::Display for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -244,7 +244,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdVecVecErrorUnnamed
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -275,7 +275,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -285,7 +285,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMap
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -325,7 +325,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStructWith
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -335,7 +335,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMap
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -366,7 +366,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -376,7 +376,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMap
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -416,7 +416,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringErrorUnnamedOneWi
         )
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -426,7 +426,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for StdCollectionsHashMap
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -448,7 +448,7 @@ impl std::fmt::Display for DisplayStruct {
         write!(formatter, "{}", self.display)
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for DisplayStruct {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStruct {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -458,7 +458,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for DisplayStruct {
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for DisplayStruct {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStruct {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -485,7 +485,7 @@ impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
         write!(formatter, "{}", self.display)
     }
 }
-impl error_occurence_lib::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -495,7 +495,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for DisplayStructWithSeri
         self.to_string()
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for DisplayStructWithSerializeDeserialize {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStructWithSerializeDeserialize {
     fn source_to_string_without_config(&self) -> std::string::String {
         self.to_string()
     }
@@ -562,7 +562,7 @@ pub trait ToStringWithConfig<'a> {
 
 impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::SourceToStringWithConfig<'a>
+    SelfGeneric: error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'a>
         + error_occurence_lib::code_occurence::GetOption,
 {
     fn to_string_with_config<
@@ -592,7 +592,7 @@ pub trait ToStringWithoutConfig<'a> {
 
 impl<'a, SelfGeneric> ToStringWithoutConfig<'a> for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::SourceToStringWithoutConfig<'a>
+    SelfGeneric: error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'a>
         + error_occurence_lib::code_occurence::GetOption,
 {
     fn to_string_without_config(&self) -> std::string::String {
@@ -612,7 +612,7 @@ pub trait ToStringWithoutConfigWithSerializeDeserialize<'a> {
 
 impl<'a, SelfGeneric> ToStringWithoutConfigWithSerializeDeserialize<'a> for SelfGeneric
 where
-    SelfGeneric: error_occurence_lib::SourceToStringWithoutConfig<'a>
+    SelfGeneric: error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'a>
         + error_occurence_lib::code_occurence::GetOption,
 {
     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
@@ -691,7 +691,7 @@ fn main() {
 
 
 //////////////////////////
-impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for ErrorNamedOne {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -750,7 +750,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedOne {
         }
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
             ErrorNamedOne::Variant {
@@ -828,7 +828,7 @@ impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOne {
         }
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_>
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedOneWithSerializeDeserialize
 {
     fn source_to_string_without_config(&self) -> std::string::String {
@@ -986,7 +986,7 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
 
 ////////////
 
-impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedTwo {
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for ErrorNamedTwo {
     fn source_to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
     >(
@@ -1012,7 +1012,7 @@ impl error_occurence_lib::SourceToStringWithConfig<'_> for ErrorNamedTwo {
         }
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
             ErrorNamedTwo::Variant {
@@ -1043,7 +1043,7 @@ impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwo {
         }
     }
 }
-impl error_occurence_lib::SourceToStringWithoutConfig<'_>
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedTwoWithSerializeDeserialize
 {
     fn source_to_string_without_config(&self) -> std::string::String {

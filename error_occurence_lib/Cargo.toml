@@ -14,7 +14,6 @@ app_state = {path = "../app_state"}
 error_occurence = {path = "./error_occurence"}
 naming_constants = {path = "../naming_constants"}
 to_std_string_string = {path = "../to_std_string_string"}
-source_to_string = {path = "../source_to_string"}
 
 [lints]
 workspace = true
