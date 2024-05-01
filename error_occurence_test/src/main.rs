@@ -381,9 +381,8 @@ impl std::fmt::Display for DisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             formatter, 
-            "display: {}\nsomething: {}", 
-            error_occurence_lib::helpers::lines_backslash_addition(&self.display),
-            error_occurence_lib::helpers::lines_backslash_addition(&self.something),
+            "{}",
+            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
         )
     }
 }
@@ -410,7 +409,8 @@ impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
 impl DisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> DisplayStructWithSerializeDeserialize {
         DisplayStructWithSerializeDeserialize {
-            display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize (self.display.to_string())
+            display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize (self.display),
+            something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize (self.something),
         }
     }
 }
@@ -418,11 +418,15 @@ impl DisplayStruct {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct DisplayStructWithSerializeDeserialize {
     pub display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
-    // pub something: std::primitive::bool,
+    pub something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize,
 }
 impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.display))
+        write!(
+            formatter, 
+            "{}",
+            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
+        )
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
