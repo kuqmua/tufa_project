@@ -638,16 +638,6 @@ fn main() {
 
 
 //////////////////////////
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOne {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        match self {
-            ErrorNamedOne::Variant {
-                code_occurence,
-                ..
-            } => Some(code_occurence),
-        }
-    }
-}
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedOneWithSerializeDeserialize
 {
@@ -790,16 +780,6 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
 }
 
 ////////////
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwo {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        match self {
-            ErrorNamedTwo::Variant {
-                eo_display_with_serialize_deserialize_field: _unused_argument_0,
-                code_occurence,
-            } => Some(code_occurence),
-        }
-    }
-}
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedTwoWithSerializeDeserialize
 {

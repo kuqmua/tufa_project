@@ -4181,6 +4181,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let config_config_generic_token_stream = quote::quote!{#config_snake_case_token_stream: &#config_generic_upper_camel_case_token_stream};
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
     let ident_in_none_stringified = "ident is None";
+    let error_occurence_lib_code_occurence_get_option_token_stream = quote::quote!{error_occurence_lib::code_occurence::GetOption};
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4326,19 +4327,30 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let impl_error_occurence_lib_code_occurence_get_option_for_ident_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    quote::quote! {
+                        #ident::#element_ident {
+                            code_occurence,
+                            ..
+                        } => Some(code_occurence),
+                    }
+                });
+                quote::quote! {
+                    impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident {
+                        fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+                            match self {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
-                // impl error_occurence_lib::code_occurence::GetOption for #ident {
-                //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-                //         match self {
-                //             #ident::Variant {
-                //                 code_occurence,
-                //                 ..
-                //             } => Some(code_occurence),
-                //         }
-                //     }
-                // }
+                #impl_error_occurence_lib_code_occurence_get_option_for_ident_token_stream
                 // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
                 //     for #ident_with_serialize_deserialize_token_stream
                 // {
@@ -4402,7 +4414,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //         }
                 //     }
                 // }
-                // impl error_occurence_lib::code_occurence::GetOption for #ident_with_serialize_deserialize_token_stream {
+                // impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident_with_serialize_deserialize_token_stream {
                 //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
                 //         match self {
                 //             #ident_with_serialize_deserialize_token_stream::Variant {
@@ -4530,7 +4542,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //         }
                 //     }
                 // }
-                // impl error_occurence_lib::code_occurence::GetOption for #ident {
+                // impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident {
                 //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
                 //         match self {
                 //             #ident::Variant {
@@ -4563,7 +4575,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //         }
                 //     }
                 // }
-                // impl error_occurence_lib::code_occurence::GetOption for #ident_with_serialize_deserialize_token_stream {
+                // impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident_with_serialize_deserialize_token_stream {
                 //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
                 //         match self {
                 //             #ident_with_serialize_deserialize_token_stream::Variant {
