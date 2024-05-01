@@ -28,7 +28,7 @@ pub enum ErrorNamedOne {
 pub struct StdStringString(std::string::String);
 impl std::fmt::Display for StdStringString {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.0)
+        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.0))
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdStringString {
@@ -61,7 +61,7 @@ impl StdStringString {
 pub struct StdStringStringWithSerializeDeserialize(std::string::String);
 impl std::fmt::Display for StdStringStringWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.0)
+        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.0))
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdStringStringWithSerializeDeserialize {
@@ -437,7 +437,7 @@ pub struct DisplayStruct {
 }
 impl std::fmt::Display for DisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.display)
+        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.display))
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStruct {
@@ -474,7 +474,7 @@ pub struct DisplayStructWithSerializeDeserialize {
 }
 impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.display)
+        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.display))
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
@@ -644,7 +644,7 @@ fn main() {
         hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct(
             std::collections::HashMap::from([
                 (
-                    StdStringString(std::string::String::from("key")),
+                    StdStringString(std::string::String::from("keysiudfgsidlufgsiadfglisadglifasgdlfiygsaldfglsagdlfhgsaldhfglhsdflhsadflhsaldhfgs\nkeysdfsadfasdfsdfasdfasdf\nkeysadfasfdsdfsfdsfsd")),
                     DisplayStruct {
                         display: std::string::String::from("value")
                     }

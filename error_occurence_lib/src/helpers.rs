@@ -20,6 +20,23 @@ pub fn lines_space_backslash_addition<T: std::fmt::Display>(value: T) -> std::st
         })
 }
 
+pub fn lines_backslash_addition<T: std::fmt::Display>(value: T) -> std::string::String {
+    let stringified_value = value.to_string();
+    if stringified_value.lines().nth(1).is_some() {
+        let mut value = stringified_value
+        .lines()
+        .fold(std::string::String::new(), |mut acc, line| {
+            acc.push_str(&format!("{line}\n"));
+            acc
+        });
+        let _ = value.pop();
+        value
+    }
+    else {
+        stringified_value
+    }
+}
+
 pub fn source_and_code_occurence_formatter<Source: std::fmt::Display, CodeOccurence: std::fmt::Display>(
     stringified_source: Source,
     stringified_code_occurence: CodeOccurence,
