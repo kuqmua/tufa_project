@@ -859,32 +859,6 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
 
 ////////////
 
-// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for ErrorNamedTwo {
-//     fn source_to_string_with_config<
-//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-//     >(
-//         &self,
-//         config: &ConfigGeneric,
-//     ) -> std::string::String {
-//         match self {
-//             ErrorNamedTwo::Variant {
-//                 eo_display_with_serialize_deserialize_field,
-//                 code_occurence: _unused_argument_1,
-//             } => {
-//                 format!
-//                 ("{{\n{}}}",
-//                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-//                 ::
-//                 lines_space_backslash(
-//                     & format!(
-//                         "eo_display_with_serialize_deserialize_field: {}",
-//                         ToStringWithConfig:: to_string_with_config(eo_display_with_serialize_deserialize_field, config)
-//                     )
-//                 ))
-//             }
-//         }
-//     }
-// }
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
