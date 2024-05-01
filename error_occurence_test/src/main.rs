@@ -24,66 +24,7 @@ pub enum ErrorNamedOne {
 }
 
 //////////
-#[derive(Debug, PartialEq, Eq, Hash)]
-pub struct StdStringString(std::string::String);
-impl std::fmt::Display for StdStringString {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.0))
-    }
-}
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdStringString {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.0.clone()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdStringString {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.0.clone()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for StdStringString {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
-impl StdStringString {
-    pub fn into_serialize_deserialize_version(self) -> StdStringStringWithSerializeDeserialize {
-        StdStringStringWithSerializeDeserialize(self.0)
-    }
-}
-//
-#[derive(Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
-pub struct StdStringStringWithSerializeDeserialize(std::string::String);
-impl std::fmt::Display for StdStringStringWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&self.0))
-    }
-}
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdStringStringWithSerializeDeserialize {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.0.clone()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdStringStringWithSerializeDeserialize {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.0.clone()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for StdStringStringWithSerializeDeserialize {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
+
 ////////
 #[derive(Debug)]
 pub struct StdVecVecDisplayStruct(std::vec::Vec<DisplayStruct>);
@@ -248,7 +189,7 @@ impl error_occurence_lib::code_occurence::GetOption for StdVecVecErrorUnnamedOne
 }
 ////////
 #[derive(Debug)]
-pub struct StdCollectionsHashMapStdStringStringDisplayStruct(std::collections::HashMap<StdStringString, DisplayStruct>);
+pub struct StdCollectionsHashMapStdStringStringDisplayStruct(std::collections::HashMap<error_occurence_lib::primitive_types_wrappers::StdStringString, DisplayStruct>);
 impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -297,7 +238,7 @@ impl StdCollectionsHashMapStdStringStringDisplayStruct {
 //
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(
-    std::collections::HashMap<StdStringStringWithSerializeDeserialize, DisplayStructWithSerializeDeserialize>
+    std::collections::HashMap<error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize, DisplayStructWithSerializeDeserialize>
 );
 impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -339,7 +280,7 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
 }
 ////////
 #[derive(Debug)]
-pub struct StdCollectionsHashMapStdStringStringErrorUnnamedOne(std::collections::HashMap<StdStringString, ErrorUnnamedOne>);
+pub struct StdCollectionsHashMapStdStringStringErrorUnnamedOne(std::collections::HashMap<error_occurence_lib::primitive_types_wrappers::StdStringString, ErrorUnnamedOne>);
 impl std::fmt::Display for StdCollectionsHashMapStdStringStringErrorUnnamedOne {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -388,7 +329,7 @@ impl StdCollectionsHashMapStdStringStringErrorUnnamedOne {
 ///
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize(
-    std::collections::HashMap<StdStringStringWithSerializeDeserialize, ErrorUnnamedOneWithSerializeDeserialize>
+    std::collections::HashMap<error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize, ErrorUnnamedOneWithSerializeDeserialize>
 );
 impl std::fmt::Display for StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -469,14 +410,14 @@ impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
 impl DisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> DisplayStructWithSerializeDeserialize {
         DisplayStructWithSerializeDeserialize {
-            display: StdStringStringWithSerializeDeserialize (self.display.to_string())
+            display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize (self.display.to_string())
         }
     }
 }
 //
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct DisplayStructWithSerializeDeserialize {
-    pub display: StdStringStringWithSerializeDeserialize,
+    pub display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
     // pub something: std::primitive::bool,
 }
 impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
@@ -534,7 +475,7 @@ impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDe
 pub enum ErrorNamedTwo {
     Variant {
         // #[eo_display_with_serialize_deserialize]
-        eo_display_with_serialize_deserialize_field: StdStringString,
+        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -633,7 +574,7 @@ fn main() {
             something: true,
         },
         eo_error_occurence_field: ErrorNamedTwo::Variant {
-            eo_display_with_serialize_deserialize_field: StdStringString(std::string::String::from("value")),
+            eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("value")),
             code_occurence: error_occurence_lib::code_occurence!(),
         },
         eo_vec_display_field: StdVecVecDisplayStruct(vec![
@@ -645,7 +586,7 @@ fn main() {
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOne(vec![
             ErrorUnnamedOne::Something(
                 ErrorNamedTwo::Variant {
-                    eo_display_with_serialize_deserialize_field: StdStringString(std::string::String::from("value")),
+                    eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("value")),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }
             )
@@ -653,7 +594,7 @@ fn main() {
         hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct(
             std::collections::HashMap::from([
                 (
-                    StdStringString(std::string::String::from("keysiudfgsidlufgsiadfglisadglifasgdlfiygsaldfglsagdlfhgsaldhfglhsdflhsadflhsaldhfgs\nkeysdfsadfasdfsdfasdfasdf\nkeysadfasfdsdfsfdsfsd")),
+                    error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("keysiudfgsidlufgsiadfglisadglifasgdlfiygsaldfglsagdlfhgsaldhfglhsdflhsadflhsaldhfgs\nkeysdfsadfasdfsdfasdfasdf\nkeysadfasfdsdfsfdsfsd")),
                     DisplayStruct {
                         display: std::string::String::from("value"),
                         something: true,
@@ -664,10 +605,10 @@ fn main() {
         hashmap_string_error_occurence: StdCollectionsHashMapStdStringStringErrorUnnamedOne(
             std::collections::HashMap::from([
                 (
-                    StdStringString(std::string::String::from("key")),
+                    error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("key")),
                     ErrorUnnamedOne::Something(
                         ErrorNamedTwo::Variant {
-                            eo_display_with_serialize_deserialize_field: StdStringString(std::string::String::from("value")),
+                            eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("value")),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         }
                     )
@@ -1113,7 +1054,7 @@ impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNa
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorNamedTwoWithSerializeDeserialize {
     Variant {
-        eo_display_with_serialize_deserialize_field: StdStringStringWithSerializeDeserialize,
+        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
