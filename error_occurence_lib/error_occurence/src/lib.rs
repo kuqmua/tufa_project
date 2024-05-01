@@ -4158,7 +4158,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
-    println!("{data_enum:#?}");
+    // println!("{data_enum:#?}");
     let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create(
         &data_enum,
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -4175,9 +4175,68 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let config_snake_case_token_stream = quote::quote!{config};
     let config_generic_upper_camel_case_token_stream = quote::quote!{ConfigGeneric};
     let config_config_generic_token_stream = quote::quote!{#config_snake_case_token_stream: &#config_generic_upper_camel_case_token_stream};
+    let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
+    let ident_in_none_stringified = "ident is None";
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream_for_ident_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    let fields = if let syn::Fields::Named(fields) = &element.fields {
+                        &fields.named
+                    }
+                    else {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
+                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                        );
+                    };
+                    let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                    ).map(|element|{
+                        let element_ident = &element.ident;
+                        quote::quote! {#element_ident,}
+                    });
+                    let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
+                        &format!(
+                            "{{{{\n{}}}}}",
+                            fields.iter().filter(|element|
+                                *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                            ).fold(std::string::String::new(), |mut acc, gen_param| {
+                                acc.push_str("{}");
+                                acc
+                            })
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                    ).map(|element|{
+                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                        let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!("{element_ident}: {{}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        quote::quote! {
+                            error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                                &format!(#ident_colon_to_string_with_config_format_token_stream, 
+                                    ToStringWithConfig::to_string_with_config(#element_ident, #config_snake_case_token_stream)
+                                )
+                            )
+                        }
+                    });
+                    quote::quote! {
+                        #ident::#element_ident {
+                            #(#fields_idents_excluding_code_occurence_token_stream)*
+                            ..
+                        } => {
+                            format!(
+                                #fields_format_excluding_code_occurence_token_stream,
+                                #(#fields_format_values_excluding_code_occurence_token_stream),*
+                            )
+                        }
+                    }
+                });
                 quote::quote! {
                     impl #error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream for #ident {
                         fn #source_to_string_with_config_snake_case_token_stream<
@@ -4189,127 +4248,14 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             #config_config_generic_token_stream,
                         ) -> #std_string_string_token_stream {
                             match self {
-                                #ident::Variant {
-                                    eo_display_field,
-                                    eo_error_occurence_field,
-                                    eo_vec_display_field,
-                                    eo_vec_error_occurence_field,
-                                    hashmap_string_string,
-                                    hashmap_string_error_occurence,
-                                    code_occurence: _unused_argument_2,
-                                } => {
-                                    format!(
-                                        "{{\n{}{}{}{}{}{}}}",
-                                        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                                            & format!("eo_display_field: {}", 
-                                                ToStringWithConfig:: to_string_with_config(eo_display_field, config)
-                                            )
-                                        ),
-                                        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                                            & format!(
-                                                "eo_error_occurence_field: {}",
-                                                ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
-                                            )
-                                        ),
-                                        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                                            & format!(
-                                                "eo_vec_display_field: {}",
-                                                ToStringWithConfig:: to_string_with_config(eo_vec_display_field, config)
-                                            )
-                                        ),
-                                        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                                            & format!(
-                                                "eo_vec_error_occurence_field: {}",
-                                                ToStringWithConfig:: to_string_with_config(eo_vec_error_occurence_field, config)
-                                            )
-                                        ),
-                                        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                                            & format!(
-                                                "hashmap_string_string: {}",
-                                                ToStringWithConfig:: to_string_with_config(hashmap_string_string, config)
-                                            )
-                                        ),
-                                        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                                            & format!(
-                                                "hashmap_string_error_occurence: {}",
-                                                ToStringWithConfig:: to_string_with_config(hashmap_string_error_occurence, config)
-                                            )
-                                        ),
-                                    )
-                                }
+                                #(#variants_token_stream),*
                             }
                         }
                     }
                 }
             };
-            // let variants_token_stream = data_enum.variants.into_iter().map(|variant| {
-            //     let variant_fields_vec = if let syn::Fields::Named(fields_named) = variant.fields {
-            //         fields_named.named.into_iter().map(|field|{
-
-            //         });
-            //     }
-            // });
-            //
             quote::quote! {
-                // impl #error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream for #ident {
-                //     fn source_to_string_with_config<
-                //         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-                //     >(
-                //         &self,
-                //         config: &ConfigGeneric,
-                //     ) -> std::string::String {
-                //         match self {
-                //             #ident::Variant {
-                //                 eo_display_field,
-                //                 eo_error_occurence_field,
-                //                 eo_vec_display_field,
-                //                 eo_vec_error_occurence_field,
-                //                 hashmap_string_string,
-                //                 hashmap_string_error_occurence,
-                //                 code_occurence: _unused_argument_2,
-                //             } => {
-                //                 format!(
-                //                     "{{\n{}{}{}{}{}{}}}",
-                //                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                //                         & format!("eo_display_field: {}", 
-                //                             ToStringWithConfig:: to_string_with_config(eo_display_field, config)
-                //                         )
-                //                     ),
-                //                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                //                         & format!(
-                //                             "eo_error_occurence_field: {}",
-                //                             ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
-                //                         )
-                //                     ),
-                //                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                //                         & format!(
-                //                             "eo_vec_display_field: {}",
-                //                             ToStringWithConfig:: to_string_with_config(eo_vec_display_field, config)
-                //                         )
-                //                     ),
-                //                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                //                         & format!(
-                //                             "eo_vec_error_occurence_field: {}",
-                //                             ToStringWithConfig:: to_string_with_config(eo_vec_error_occurence_field, config)
-                //                         )
-                //                     ),
-                //                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                //                         & format!(
-                //                             "hashmap_string_string: {}",
-                //                             ToStringWithConfig:: to_string_with_config(hashmap_string_string, config)
-                //                         )
-                //                     ),
-                //                     error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                //                         & format!(
-                //                             "hashmap_string_error_occurence: {}",
-                //                             ToStringWithConfig:: to_string_with_config(hashmap_string_error_occurence, config)
-                //                         )
-                //                     ),
-                //                 )
-                //             }
-                //         }
-                //     }
-                // }
+                #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream_for_ident_token_stream
                 // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for #ident {
                 //     fn source_to_string_without_config(&self) -> std::string::String {
                 //         match self {
@@ -4665,13 +4611,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         }
     };
     let gen = quote::quote! {
-  
+        #tokens
     };
     // if ident == "" {
     //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &proc_macro_name,
+    //         &proc_macro_name_upper_camel_case,
     //         &gen,
-    //         &proc_macro_name_ident_stringified
+    //         &proc_macro_name_upper_camel_case_ident_stringified
     //     );
     // }
     gen.into()

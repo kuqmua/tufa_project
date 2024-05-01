@@ -474,7 +474,7 @@ impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDe
 #[derive(
     Debug,
     thiserror::Error,
-    // error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedTwo {
     Variant {
@@ -638,65 +638,6 @@ fn main() {
 
 
 //////////////////////////
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for ErrorNamedOne {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self {
-            ErrorNamedOne::Variant {
-                eo_display_field,
-                eo_error_occurence_field,
-                eo_vec_display_field,
-                eo_vec_error_occurence_field,
-                hashmap_string_string,
-                hashmap_string_error_occurence,
-                code_occurence: _unused_argument_2,
-            } => {
-                format!(
-                    "{{\n{}{}{}{}{}{}}}",
-                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                        & format!("eo_display_field: {}", 
-                            ToStringWithConfig:: to_string_with_config(eo_display_field, config)
-                        )
-                    ),
-                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                        & format!(
-                            "eo_error_occurence_field: {}",
-                            ToStringWithConfig:: to_string_with_config(eo_error_occurence_field, config)
-                        )
-                    ),
-                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                        & format!(
-                            "eo_vec_display_field: {}",
-                            ToStringWithConfig:: to_string_with_config(eo_vec_display_field, config)
-                        )
-                    ),
-                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                        & format!(
-                            "eo_vec_error_occurence_field: {}",
-                            ToStringWithConfig:: to_string_with_config(eo_vec_error_occurence_field, config)
-                        )
-                    ),
-                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                        & format!(
-                            "hashmap_string_string: {}",
-                            ToStringWithConfig:: to_string_with_config(hashmap_string_string, config)
-                        )
-                    ),
-                    error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-                        & format!(
-                            "hashmap_string_error_occurence: {}",
-                            ToStringWithConfig:: to_string_with_config(hashmap_string_error_occurence, config)
-                        )
-                    ),
-                )
-            }
-        }
-    }
-}
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedOne {
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
@@ -918,32 +859,32 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
 
 ////////////
 
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for ErrorNamedTwo {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self {
-            ErrorNamedTwo::Variant {
-                eo_display_with_serialize_deserialize_field,
-                code_occurence: _unused_argument_1,
-            } => {
-                format!
-                ("{{\n{}}}",
-                error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                ::
-                lines_space_backslash(
-                    & format!(
-                        "eo_display_with_serialize_deserialize_field: {}",
-                        ToStringWithConfig:: to_string_with_config(eo_display_with_serialize_deserialize_field, config)
-                    )
-                ))
-            }
-        }
-    }
-}
+// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for ErrorNamedTwo {
+//     fn source_to_string_with_config<
+//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+//     >(
+//         &self,
+//         config: &ConfigGeneric,
+//     ) -> std::string::String {
+//         match self {
+//             ErrorNamedTwo::Variant {
+//                 eo_display_with_serialize_deserialize_field,
+//                 code_occurence: _unused_argument_1,
+//             } => {
+//                 format!
+//                 ("{{\n{}}}",
+//                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
+//                 ::
+//                 lines_space_backslash(
+//                     & format!(
+//                         "eo_display_with_serialize_deserialize_field: {}",
+//                         ToStringWithConfig:: to_string_with_config(eo_display_with_serialize_deserialize_field, config)
+//                     )
+//                 ))
+//             }
+//         }
+//     }
+// }
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for ErrorNamedTwo {
     fn source_to_string_without_config(&self) -> std::string::String {
         match self {
