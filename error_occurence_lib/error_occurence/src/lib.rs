@@ -8154,3 +8154,142 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     }
     gen.into()
 }
+
+// #[proc_macro_derive(PrimitiveErrorOccurence)]
+// pub fn primitive_error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+//     primitive_error_occurence_handle(input)
+// }
+
+#[proc_macro_derive(PrimitiveErrorOccurencePartialEqEqHash)]
+pub fn primitive_error_occurence_partial_eq_eq_hash(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    primitive_error_occurence_handle(
+        input,
+        true,
+        true,
+        true,
+    )
+}
+
+fn primitive_error_occurence_handle(
+    input: proc_macro::TokenStream,
+    should_implement_partial_eq: std::primitive::bool,
+    should_implement_eq: std::primitive::bool,
+    should_implement_hash: std::primitive::bool,
+) -> proc_macro::TokenStream {
+    proc_macro_common::panic_location::panic_location();
+    let proc_macro_name_upper_camel_case = "PrimitiveErrorOccurence";
+    let ast: syn::DeriveInput = syn::parse(input).expect("{proc_macro_name_upper_camel_case} syn::parse(input) failed");
+    let ident = &ast.ident;
+    let proc_macro_name_upper_camel_case_ident_stringified = format!("{proc_macro_name_upper_camel_case} {ident}");
+    let ident_with_serialize_deserialize_token_stream = {
+        let value = format!(
+            "{ident}{}",
+            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+        );
+        value
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    };
+    let fields_unnamed = if let syn::Data::Struct(data_struct) = &ast.data {
+        if let syn::Fields::Unnamed(fields_unnamed) = &data_struct.fields {
+            &fields_unnamed.unnamed
+        } else {
+            panic!("{proc_macro_name_upper_camel_case_ident_stringified} supports only syn::Fields::Named");
+        }
+    } else {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} does work only on structs!");
+    };
+    if fields_unnamed.len() != 1 {
+        panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.len() != 1");
+    }
+    let field = fields_unnamed.iter().nth(0).unwrap_or_else(||panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields_unnamed.iter().nth(0) is None"));
+    let field_type = &field.ty;
+    let should_implement_partial_eq_token_stream = if should_implement_partial_eq {
+        quote::quote!{PartialEq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let should_implement_eq_token_stream = if should_implement_eq {
+        quote::quote!{Eq,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let should_implement_hash_token_stream = if should_implement_hash {
+        quote::quote!{Hash,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let gen = quote::quote! {
+        impl std::fmt::Display for #ident {
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{}", crate::helpers::lines_backslash_addition(&self.0))
+            }
+        }
+        impl crate::source_to_string_with_config::SourceToStringWithConfig<'_> for #ident {
+            fn source_to_string_with_config<
+                ConfigGeneric: app_state::GetSourcePlaceType + app_state::GetTimezone + ?Sized,
+            >(
+                &self,
+                _: &ConfigGeneric,
+            ) -> std::string::String {
+                self.0.to_string()
+            }
+        }
+        impl crate::source_to_string_without_config::SourceToStringWithoutConfig<'_> for #ident {
+            fn source_to_string_without_config(&self) -> std::string::String {
+                self.0.to_string()
+            }
+        }
+        impl crate::code_occurence::GetOption for #ident {
+            fn get_option(&self) -> std::option::Option<&crate::code_occurence::CodeOccurence> {
+                None
+            }
+        }
+        impl #ident {
+            pub fn into_serialize_deserialize_version(self) -> #ident_with_serialize_deserialize_token_stream {
+                #ident_with_serialize_deserialize_token_stream(self.0)
+            }
+        }
+        #[derive(
+            Debug,
+            #should_implement_partial_eq_token_stream
+            #should_implement_eq_token_stream
+            #should_implement_hash_token_stream
+            serde::Serialize, 
+            serde::Deserialize
+        )]
+        pub struct #ident_with_serialize_deserialize_token_stream(pub #field_type);
+        impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
+            fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "{}", crate::helpers::lines_backslash_addition(&self.0))
+            }
+        }
+        impl crate::source_to_string_with_config::SourceToStringWithConfig<'_> for #ident_with_serialize_deserialize_token_stream {
+            fn source_to_string_with_config<
+                ConfigGeneric: app_state::GetSourcePlaceType + app_state::GetTimezone + ?Sized,
+            >(
+                &self,
+                _: &ConfigGeneric,
+            ) -> std::string::String {
+                self.0.to_string()
+            }
+        }
+        impl crate::source_to_string_without_config::SourceToStringWithoutConfig<'_> for #ident_with_serialize_deserialize_token_stream {
+            fn source_to_string_without_config(&self) -> std::string::String {
+                self.0.to_string()
+            }
+        }
+        impl crate::code_occurence::GetOption for #ident_with_serialize_deserialize_token_stream {
+            fn get_option(&self) -> std::option::Option<&crate::code_occurence::CodeOccurence> {
+                None
+            }
+        }
+    };
+    // if ident == "" {
+    //     println!("{gen}");
+    // }
+    gen.into()
+}
