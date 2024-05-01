@@ -8155,15 +8155,24 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     gen.into()
 }
 
-// #[proc_macro_derive(PrimitiveErrorOccurence)]
-// pub fn primitive_error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-//     primitive_error_occurence_handle(input)
-// }
-
 #[proc_macro_derive(PrimitiveErrorOccurencePartialEqEqHash)]
 pub fn primitive_error_occurence_partial_eq_eq_hash(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     primitive_error_occurence_handle(
         input,
+        true,
+        true,
+        true,
+        false,
+        false,
+    )
+}
+
+#[proc_macro_derive(PrimitiveErrorOccurencePartialEqEqHashCloneCopy)]
+pub fn primitive_error_occurence_partial_eq_eq_hash_clone_copy(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    primitive_error_occurence_handle(
+        input,
+        true,
+        true,
         true,
         true,
         true,
@@ -8175,6 +8184,8 @@ fn primitive_error_occurence_handle(
     should_implement_partial_eq: std::primitive::bool,
     should_implement_eq: std::primitive::bool,
     should_implement_hash: std::primitive::bool,
+    should_implement_clone: std::primitive::bool,
+    should_implement_copy: std::primitive::bool,
 ) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "PrimitiveErrorOccurence";
@@ -8222,6 +8233,18 @@ fn primitive_error_occurence_handle(
     else {
         proc_macro2::TokenStream::new()
     };
+    let should_implement_clone_token_stream = if should_implement_clone {
+        quote::quote!{Clone,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
+    let should_implement_copy_token_stream = if should_implement_copy {
+        quote::quote!{Copy,}
+    }
+    else {
+        proc_macro2::TokenStream::new()
+    };
     let gen = quote::quote! {
         impl std::fmt::Display for #ident {
             fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -8258,6 +8281,8 @@ fn primitive_error_occurence_handle(
             #should_implement_partial_eq_token_stream
             #should_implement_eq_token_stream
             #should_implement_hash_token_stream
+            #should_implement_clone_token_stream
+            #should_implement_copy_token_stream
             serde::Serialize, 
             serde::Deserialize
         )]
