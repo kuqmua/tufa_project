@@ -218,16 +218,8 @@ impl std::fmt::Display for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
             "{}",
             error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
                 std::string::String::from(""),
-                |mut acc, vec_element| {
-                    acc.push_str(
-                        &vec_element
-                        .to_string()
-                        .lines()
-                        .fold(std::string::String::new(), |mut acc, line| {
-                            acc.push_str(&format!(" {line}\n"));
-                            acc
-                        })
-                    );
+                |mut acc, element| {
+                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(element));
                     acc
                 },
             ))
