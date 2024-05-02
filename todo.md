@@ -475,13 +475,6 @@ type = ....
 * wrap blocking diesel function into spawn blocking under tokio runtime
 (rustacean station - tokio ecosystem with alice ryhl) 24:30
 
-* procedural macros for config fields like vec![]. with correct naming require
-without typed enums
-like 
-Config {
-  test_field: from_env!(test_field.to_upper_snake_case()) 
-}
-
 * reuse files with functions and constants using #[path=""] instead of module system
 its maybe bad practice but must work
 
