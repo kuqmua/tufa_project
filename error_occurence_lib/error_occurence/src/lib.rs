@@ -4576,126 +4576,57 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
-                // impl #error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream for #ident {
-                //     fn source_to_string_with_config<
+                // impl ToStringWithConfig<'_> for #ident {
+                //     fn to_string_with_config<
                 //         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
                 //     >(
                 //         &self,
                 //         config: &ConfigGeneric,
                 //     ) -> std::string::String {
                 //         match self {
-                //             #ident::Variant {
-                //                 eo_display_with_serialize_deserialize_field,
-                //                 code_occurence: _unused_argument_1,
-                //             } => {
-                //                 format!
-                //                 ("{{\n{}}}",
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(
-                //                     & format!(
-                //                         "eo_display_with_serialize_deserialize_field: {}",
-                //                         ToStringWithConfig:: to_string_with_config(eo_display_with_serialize_deserialize_field, config)
-                //                     )
-                //                 ))
-                //             }
+                //             #ident::Something(i) => ToStringWithConfig::to_string_with_config(i, config),
                 //         }
                 //     }
                 // }
-                // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for #ident {
-                //     fn source_to_string_without_config(&self) -> std::string::String {
+                // impl ToStringWithoutConfig<'_> for #ident {
+                //     fn to_string_without_config(&self) -> std::string::String {
                 //         match self {
-                //             #ident::Variant {
-                //                 eo_display_with_serialize_deserialize_field,
-                //                 code_occurence: _unused_argument_1,
-                //             } => {
-                //                 format!
-                //                 ("{{\n{}}}",
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(
-                //                     & format!(
-                //                         "eo_display_with_serialize_deserialize_field: {}",
-                //                         ToStringWithoutConfig:: to_string_without_config(eo_display_with_serialize_deserialize_field)
-                //                     )
-                //                 ))
-                //             }
-                //         }
-                //     }
-                // }
-                // impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident {
-                //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-                //         match self {
-                //             #ident::Variant {
-                //                 eo_display_with_serialize_deserialize_field: _unused_argument_0,
-                //                 code_occurence,
-                //             } => Some(code_occurence),
-                //         }
-                //     }
-                // }
-                // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
-                //     for #ident_with_serialize_deserialize_token_stream
-                // {
-                //     fn source_to_string_without_config(&self) -> std::string::String {
-                //         match self {
-                //             #ident_with_serialize_deserialize_token_stream::Variant {
-                //                 eo_display_with_serialize_deserialize_field,
-                //                 code_occurence: _unused_argument_1,
-                //             } => {
-                //                 format!
-                //                 ("{{\n{}}}",
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(
-                //                     & format!(
-                //                         "eo_display_with_serialize_deserialize_field: {}",
-                //                         ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_display_with_serialize_deserialize_field)
-                //                     )
-                //                 ))
-                //             }
-                //         }
-                //     }
-                // }
-                // impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident_with_serialize_deserialize_token_stream {
-                //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-                //         match self {
-                //             #ident_with_serialize_deserialize_token_stream::Variant {
-                //                 eo_display_with_serialize_deserialize_field: _unused_argument_0,
-                //                 code_occurence,
-                //             } => Some(code_occurence),
+                //             #ident::Something(i) => ToStringWithoutConfig::to_string_without_config(i),
                 //         }
                 //     }
                 // }
                 // impl #ident {
                 //     pub fn into_serialize_deserialize_version(self) -> #ident_with_serialize_deserialize_token_stream {
                 //         match self {
-                //             #ident::Variant {
-                //                 eo_display_with_serialize_deserialize_field,
-                //                 code_occurence,
-                //             } => #ident_with_serialize_deserialize_token_stream::Variant {
-                //                 eo_display_with_serialize_deserialize_field: eo_display_with_serialize_deserialize_field.into_serialize_deserialize_version(),
-                //                 code_occurence: code_occurence,
-                //             },
+                //             #ident::Something(i) => #ident_with_serialize_deserialize_token_stream::Something(
+                //                 i.into_serialize_deserialize_version(),
+                //             ),
                 //         }
                 //     }
+                // }
+                // // impl error_occurence_lib::error_occurence_unnamed::ErrorOccurenceUnnamed for #ident {
+                // //     fn error_occurence_unnamed(&self) {}
+                // // }               
+                // #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
+                // pub enum #ident_with_serialize_deserialize_token_stream {
+                //     Something(ErrorNamedTwoWithSerializeDeserialize),
                 // }
                 // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
                 //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 //         write!
                 //         (formatter, "{}",
-                //         ToStringWithoutConfig
-                //         :: to_string_without_config(self))
+                //         ToStringWithoutConfigWithSerializeDeserialize
+                //         :: to_string_without_config_with_serialize_deserialize(self))
                 //     }
                 // }
-                // impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for #ident {
-                //     fn error_occurence_named(&self) {}
-                // }
-                // #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-                // pub enum #ident_with_serialize_deserialize_token_stream {
-                //     Variant {
-                //         eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
-                //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                //     },
+                // impl ToStringWithoutConfigWithSerializeDeserialize<'_> for #ident_with_serialize_deserialize_token_stream {
+                //     fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
+                //         match self {
+                //             #ident_with_serialize_deserialize_token_stream::Something(i) => {
+                //                 ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(i)
+                //             }
+                //         }
+                //     }
                 // }
             }
         }

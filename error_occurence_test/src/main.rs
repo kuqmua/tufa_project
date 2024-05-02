@@ -684,9 +684,9 @@ impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
         :: to_string_without_config_with_serialize_deserialize(self))
     }
 }
-impl error_occurence_lib::error_occurence_unnamed::ErrorOccurenceUnnamed for ErrorUnnamedOne {
-    fn error_occurence_unnamed(&self) {}
-}
+// impl error_occurence_lib::error_occurence_unnamed::ErrorOccurenceUnnamed for ErrorUnnamedOne {
+//     fn error_occurence_unnamed(&self) {}
+// }
 
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorUnnamedOneWithSerializeDeserialize {
