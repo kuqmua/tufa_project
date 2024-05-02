@@ -636,6 +636,18 @@ fn main() {
 }
 
 ////////////////////
+#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
+pub enum ErrorUnnamedOneWithSerializeDeserialize {
+    Something(ErrorNamedTwoWithSerializeDeserialize),
+}
+impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!
+        (formatter, "{}",
+        ToStringWithoutConfigWithSerializeDeserialize
+        :: to_string_without_config_with_serialize_deserialize(self))
+    }
+}
 impl
     ToStringWithoutConfigWithSerializeDeserialize<'_>
     for ErrorUnnamedOneWithSerializeDeserialize
@@ -647,26 +659,4 @@ impl
             }
         }
     }
-}
-impl ErrorUnnamedOne {
-    pub fn into_serialize_deserialize_version(self) -> ErrorUnnamedOneWithSerializeDeserialize {
-        match self {
-            ErrorUnnamedOne::Something(i) => ErrorUnnamedOneWithSerializeDeserialize::Something(
-                i.into_serialize_deserialize_version(),
-            ),
-        }
-    }
-}
-impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfigWithSerializeDeserialize
-        :: to_string_without_config_with_serialize_deserialize(self))
-    }
-}
-
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorUnnamedOneWithSerializeDeserialize {
-    Something(ErrorNamedTwoWithSerializeDeserialize),
 }
