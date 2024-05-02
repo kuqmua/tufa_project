@@ -720,19 +720,6 @@ impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
     }
 }
 
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorNamedOneWithSerializeDeserialize {
-    Variant {
-        eo_display_field: DisplayStructWithSerializeDeserialize,
-        eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
-        eo_vec_display_field: StdVecVecDisplayStructWithSerializeDeserialize,
-        eo_vec_error_occurence_field: StdVecVecErrorUnnamedOneWithSerializeDeserialize,
-        hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize,
-        hashmap_string_error_occurence: StdCollectionsHashMapStdStringStringErrorUnnamedOneWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-
 ////////////
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedTwoWithSerializeDeserialize
@@ -774,13 +761,6 @@ impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
         ToStringWithoutConfig
         :: to_string_without_config(self))
     }
-}
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorNamedTwoWithSerializeDeserialize {
-    Variant {
-        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 ////////////////////
 impl ToStringWithConfig<'_> for ErrorUnnamedOne {
