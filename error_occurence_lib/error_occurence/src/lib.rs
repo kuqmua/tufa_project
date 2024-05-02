@@ -4163,6 +4163,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         &data_enum,
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
+    let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
     let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream = quote::quote! {
         error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
     };
@@ -4180,13 +4181,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let config_generic_upper_camel_case_token_stream = quote::quote!{ConfigGeneric};
     let config_config_generic_token_stream = quote::quote!{#config_snake_case_token_stream: &#config_generic_upper_camel_case_token_stream};
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
+    let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
     let ident_in_none_stringified = "ident is None";
     let error_occurence_lib_code_occurence_get_option_token_stream = quote::quote!{error_occurence_lib::code_occurence::GetOption};
+    let into_serialize_deserialize_version_snake_case_token_stream = quote::quote!{into_serialize_deserialize_version};
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_std_fmt_display_for_ident_token_stream = {
                 quote::quote! {
-                    impl std::fmt::Display for #ident {
+                    impl #std_fmt_display_token_stream for #ident {
                         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                             write!(formatter, "{}", ToStringWithoutConfig::to_string_without_config(self))
                         }
@@ -4356,11 +4359,62 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let impl_error_occurence_lib_error_occurence_named_error_occurence_named_for_ident_token_stream = {
+                quote::quote! {
+                    impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for #ident {
+                        fn error_occurence_named(&self) {}
+                    }    
+                }
+            };
+            let impl_ident_into_serialize_deserialize_version_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    let fields = if let syn::Fields::Named(fields) = &element.fields {
+                        &fields.named
+                    }
+                    else {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
+                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                        );
+                    };
+                    let fields_idents_token_stream = fields.iter().map(|element|&element.ident);
+                    let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                    ).map(|element|{
+                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                        quote::quote! {
+                            #element_ident: { 
+                                #element_ident.#into_serialize_deserialize_version_snake_case_token_stream()
+                            },
+                        }
+                    });
+                    quote::quote! {
+                        #ident::#element_ident {
+                            #(#fields_idents_token_stream),*
+                        } => #ident_with_serialize_deserialize_token_stream::#element_ident {
+                            #(#fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream)*
+                            #code_occurence_snake_case_token_stream: #code_occurence_snake_case_token_stream,
+                        },
+                    }
+                });
+                quote::quote! {
+                    impl #ident {
+                        pub fn #into_serialize_deserialize_version_snake_case_token_stream(self) -> #ident_with_serialize_deserialize_token_stream {
+                            match self {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
                 #impl_error_occurence_lib_code_occurence_get_option_for_ident_token_stream
+                #impl_error_occurence_lib_error_occurence_named_error_occurence_named_for_ident_token_stream
+                #impl_ident_into_serialize_deserialize_version_token_stream
                 // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
                 //     for #ident_with_serialize_deserialize_token_stream
                 // {
@@ -4434,41 +4488,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //         }
                 //     }
                 // }
-                // impl #ident {
-                //     pub fn into_serialize_deserialize_version(self) -> #ident_with_serialize_deserialize_token_stream {
-                //         match self {
-                //             #ident::Variant {
-                //                 eo_display_field,
-                //                 eo_error_occurence_field,
-                //                 eo_vec_display_field,
-                //                 eo_vec_error_occurence_field,
-                //                 hashmap_string_string,
-                //                 hashmap_string_error_occurence,
-                //                 code_occurence,
-                //             } => #ident_with_serialize_deserialize_token_stream::Variant {
-                //                 eo_display_field: { 
-                //                     eo_display_field.into_serialize_deserialize_version()
-                //                 },
-                //                 eo_error_occurence_field: {
-                //                     eo_error_occurence_field.into_serialize_deserialize_version()
-                //                 },
-                //                 eo_vec_display_field: {
-                //                     eo_vec_display_field.into_serialize_deserialize_version()
-                //                 },
-                //                 eo_vec_error_occurence_field: {
-                //                     eo_vec_error_occurence_field.into_serialize_deserialize_version()
-                //                 },
-                //                 hashmap_string_string: {
-                //                     hashmap_string_string.into_serialize_deserialize_version()
-                //                 },
-                //                 hashmap_string_error_occurence: {
-                //                     hashmap_string_error_occurence.into_serialize_deserialize_version()
-                //                 },
-                //                 code_occurence: code_occurence,
-                //             },
-                //         }
-                //     }
-                // }
                 // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
                 //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 //         write!
@@ -4477,9 +4496,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //         :: to_string_without_config(self))
                 //     }
                 // }
-                // impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for #ident {
-                //     fn error_occurence_named(&self) {}
-                // }               
+          
 
                 // #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
                 // pub enum #ident_with_serialize_deserialize_token_stream {

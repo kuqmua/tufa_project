@@ -711,41 +711,6 @@ impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOneWithSeriali
         }
     }
 }
-impl ErrorNamedOne {
-    pub fn into_serialize_deserialize_version(self) -> ErrorNamedOneWithSerializeDeserialize {
-        match self {
-            ErrorNamedOne::Variant {
-                eo_display_field,
-                eo_error_occurence_field,
-                eo_vec_display_field,
-                eo_vec_error_occurence_field,
-                hashmap_string_string,
-                hashmap_string_error_occurence,
-                code_occurence,
-            } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_display_field: { 
-                    eo_display_field.into_serialize_deserialize_version()
-                },
-                eo_error_occurence_field: {
-                    eo_error_occurence_field.into_serialize_deserialize_version()
-                },
-                eo_vec_display_field: {
-                    eo_vec_display_field.into_serialize_deserialize_version()
-                },
-                eo_vec_error_occurence_field: {
-                    eo_vec_error_occurence_field.into_serialize_deserialize_version()
-                },
-                hashmap_string_string: {
-                    hashmap_string_string.into_serialize_deserialize_version()
-                },
-                hashmap_string_error_occurence: {
-                    hashmap_string_error_occurence.into_serialize_deserialize_version()
-                },
-                code_occurence: code_occurence,
-            },
-        }
-    }
-}
 impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
@@ -753,9 +718,6 @@ impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
         ToStringWithoutConfig
         :: to_string_without_config(self))
     }
-}
-impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNamedOne {
-    fn error_occurence_named(&self) {}
 }
 
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
@@ -805,19 +767,6 @@ impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwoWithSeriali
         }
     }
 }
-impl ErrorNamedTwo {
-    pub fn into_serialize_deserialize_version(self) -> ErrorNamedTwoWithSerializeDeserialize {
-        match self {
-            ErrorNamedTwo::Variant {
-                eo_display_with_serialize_deserialize_field,
-                code_occurence,
-            } => ErrorNamedTwoWithSerializeDeserialize::Variant {
-                eo_display_with_serialize_deserialize_field: eo_display_with_serialize_deserialize_field.into_serialize_deserialize_version(),
-                code_occurence: code_occurence,
-            },
-        }
-    }
-}
 impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
@@ -825,9 +774,6 @@ impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
         ToStringWithoutConfig
         :: to_string_without_config(self))
     }
-}
-impl error_occurence_lib::error_occurence_named::ErrorOccurenceNamed for ErrorNamedTwo {
-    fn error_occurence_named(&self) {}
 }
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorNamedTwoWithSerializeDeserialize {
@@ -901,3 +847,11 @@ impl error_occurence_lib::error_occurence_unnamed::ErrorOccurenceUnnamed for Err
 pub enum ErrorUnnamedOneWithSerializeDeserialize {
     Something(ErrorNamedTwoWithSerializeDeserialize),
 }
+
+
+
+
+
+
+
+
