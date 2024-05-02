@@ -636,10 +636,6 @@ fn main() {
 }
 
 ////////////////////
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorUnnamedOneWithSerializeDeserialize {
-    Something(ErrorNamedTwoWithSerializeDeserialize),
-}
 impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!

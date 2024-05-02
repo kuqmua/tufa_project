@@ -4634,11 +4634,54 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let enum_ident_with_serialize_deserialize_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    let fields = if let syn::Fields::Unnamed(fields) = &element.fields {
+                        &fields.unnamed
+                    }
+                    else {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
+                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                        );
+                    };
+                    let inner_type_with_serialize_deserialize_token_stream = {
+                        let value = format!(
+                            "{}{}",
+                            {
+                                if fields.len() != 1 {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} fields.len() != 1");
+                                }
+                                let field_type = &fields.iter().nth(0).expect("no first field type").ty;
+                                quote::quote!{#field_type}.to_string()
+                            },
+                            proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+                        );
+                        value
+                        .parse::<proc_macro2::TokenStream>()
+                        .unwrap_or_else(|_| panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", 
+                            proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                        ))
+                    };
+                    quote::quote! {
+                        #element_ident(#inner_type_with_serialize_deserialize_token_stream)
+                    }
+                });
+                quote::quote! {
+                    #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
+                    pub enum #ident_with_serialize_deserialize_token_stream {
+                        #(#variants_token_stream),*
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_to_string_with_config_for_ident_token_stream
                 #impl_to_string_without_config_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
+                #enum_ident_with_serialize_deserialize_token_stream
                 // #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
                 // pub enum #ident_with_serialize_deserialize_token_stream {
                 //     Something(ErrorNamedTwoWithSerializeDeserialize),
