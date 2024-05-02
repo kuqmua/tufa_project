@@ -634,17 +634,3 @@ fn main() {
     println!("{e_serialize_deserialize_version_deserialized}");
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
-
-////////////////////
-impl
-    ToStringWithoutConfigWithSerializeDeserialize<'_>
-    for ErrorUnnamedOneWithSerializeDeserialize
-{
-    fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
-        match self {
-            ErrorUnnamedOneWithSerializeDeserialize::Something(i) => {
-                ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(i)
-            }
-        }
-    }
-}
