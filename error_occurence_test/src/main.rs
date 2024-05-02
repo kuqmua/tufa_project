@@ -5,7 +5,7 @@
 )]
 pub enum ErrorNamedOne {
     Variant {
-        // TODO REMOVE ALL ATTRIBUTES EXCEPT eo_error_occurence RELATED AND MAYBE USE SourceToStringWithConfig AND SourceToStringWithoutConfig
+        // todo maybe create 6 wrapper types for IN SERIALIZE DESERIALIZE std::string::String, IN SERIALIZE DESERIALIZE nested, IN SERIALIZE DESERIALIZE std::vec::Vec<std::string::String>,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested> and hashmaps
         // #[eo_string]
         eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
         // #[eo_error_occurence]
@@ -746,14 +746,6 @@ impl ErrorNamedOne {
         }
     }
 }
-impl std::fmt::Display for ErrorNamedOne {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfig
-        :: to_string_without_config(self))
-    }
-}
 impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
@@ -824,14 +816,6 @@ impl ErrorNamedTwo {
                 code_occurence: code_occurence,
             },
         }
-    }
-}
-impl std::fmt::Display for ErrorNamedTwo {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfig
-        :: to_string_without_config(self))
     }
 }
 impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {

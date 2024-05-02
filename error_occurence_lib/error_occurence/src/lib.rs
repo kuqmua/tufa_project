@@ -4184,6 +4184,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let error_occurence_lib_code_occurence_get_option_token_stream = quote::quote!{error_occurence_lib::code_occurence::GetOption};
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
+            let impl_std_fmt_display_for_ident_token_stream = {
+                quote::quote! {
+                    impl std::fmt::Display for #ident {
+                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                            write!(formatter, "{}", ToStringWithoutConfig::to_string_without_config(self))
+                        }
+                    }
+                }
+            };
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
@@ -4207,7 +4216,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             "{{{{\n{}}}}}",
                             fields.iter().filter(|element|
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                            ).fold(std::string::String::new(), |mut acc, gen_param| {
+                            ).fold(std::string::String::new(), |mut acc, _| {
                                 acc.push_str("{}");
                                 acc
                             })
@@ -4282,7 +4291,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             "{{{{\n{}}}}}",
                             fields.iter().filter(|element|
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                            ).fold(std::string::String::new(), |mut acc, gen_param| {
+                            ).fold(std::string::String::new(), |mut acc, _| {
                                 acc.push_str("{}");
                                 acc
                             })
@@ -4348,6 +4357,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 }
             };
             quote::quote! {
+                #impl_std_fmt_display_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
                 #impl_error_occurence_lib_code_occurence_get_option_for_ident_token_stream
@@ -4457,14 +4467,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //                 code_occurence: code_occurence,
                 //             },
                 //         }
-                //     }
-                // }
-                // impl std::fmt::Display for #ident {
-                //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                //         write!
-                //         (formatter, "{}",
-                //         ToStringWithoutConfig
-                //         :: to_string_without_config(self))
                 //     }
                 // }
                 // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
