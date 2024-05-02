@@ -4574,20 +4574,33 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let impl_to_string_with_config_for_ident_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    quote::quote! {
+                        #ident::#element_ident(value) => ToStringWithConfig::to_string_with_config(value, #config_snake_case_token_stream),
+                    }
+                });
+                quote::quote! {
+                    impl ToStringWithConfig<'_> for #ident {
+                        fn to_string_with_config<
+                            #config_generic_upper_camel_case_token_stream: #config_lib_snake_case_token_stream::#get_source_place_type_upper_camel_case_token_stream
+                             + #config_lib_snake_case_token_stream::#get_timezone_upper_camel_case_token_stream
+                             + ?#sized_upper_camel_case_token_stream
+                        >(
+                            &self,
+                            #config_config_generic_token_stream,
+                        ) -> #std_string_string_token_stream {
+                            match self {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
-                // impl ToStringWithConfig<'_> for #ident {
-                //     fn to_string_with_config<
-                //         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-                //     >(
-                //         &self,
-                //         config: &ConfigGeneric,
-                //     ) -> std::string::String {
-                //         match self {
-                //             #ident::Something(i) => ToStringWithConfig::to_string_with_config(i, config),
-                //         }
-                //     }
-                // }
+                #impl_to_string_with_config_for_ident_token_stream
                 // impl ToStringWithoutConfig<'_> for #ident {
                 //     fn to_string_without_config(&self) -> std::string::String {
                 //         match self {

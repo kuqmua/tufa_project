@@ -636,18 +636,6 @@ fn main() {
 }
 
 ////////////////////
-impl ToStringWithConfig<'_> for ErrorUnnamedOne {
-    fn to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self {
-            ErrorUnnamedOne::Something(i) => ToStringWithConfig::to_string_with_config(i, config),
-        }
-    }
-}
 impl ToStringWithoutConfig<'_> for ErrorUnnamedOne {
     fn to_string_without_config(&self) -> std::string::String {
         match self {
@@ -684,9 +672,6 @@ impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
         :: to_string_without_config_with_serialize_deserialize(self))
     }
 }
-// impl error_occurence_lib::error_occurence_unnamed::ErrorOccurenceUnnamed for ErrorUnnamedOne {
-//     fn error_occurence_unnamed(&self) {}
-// }
 
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorUnnamedOneWithSerializeDeserialize {
