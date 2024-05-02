@@ -711,14 +711,6 @@ impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOneWithSeriali
         }
     }
 }
-impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfig
-        :: to_string_without_config(self))
-    }
-}
 
 ////////////
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
@@ -752,14 +744,6 @@ impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwoWithSeriali
                 code_occurence,
             } => Some(code_occurence),
         }
-    }
-}
-impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfig
-        :: to_string_without_config(self))
     }
 }
 ////////////////////

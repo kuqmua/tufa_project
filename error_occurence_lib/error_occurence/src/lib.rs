@@ -4453,6 +4453,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = {
+                quote::quote! {
+                    impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
+                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                            write!(formatter, "{}", ToStringWithoutConfig::to_string_without_config(self))
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
@@ -4461,6 +4470,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_error_occurence_lib_error_occurence_named_error_occurence_named_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
+                // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
+                //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                //         write!
+                //         (formatter, "{}",
+                //         ToStringWithoutConfig
+                //         :: to_string_without_config(self))
+                //     }
+                // }
                 // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
                 //     for #ident_with_serialize_deserialize_token_stream
                 // {
@@ -4532,14 +4550,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //                 ..
                 //             } => Some(code_occurence),
                 //         }
-                //     }
-                // }
-                // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
-                //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                //         write!
-                //         (formatter, "{}",
-                //         ToStringWithoutConfig
-                //         :: to_string_without_config(self))
                 //     }
                 // }
             }
