@@ -636,13 +636,6 @@ fn main() {
 }
 
 ////////////////////
-impl ToStringWithoutConfig<'_> for ErrorUnnamedOne {
-    fn to_string_without_config(&self) -> std::string::String {
-        match self {
-            ErrorUnnamedOne::Something(i) => ToStringWithoutConfig::to_string_without_config(i),
-        }
-    }
-}
 impl
     ToStringWithoutConfigWithSerializeDeserialize<'_>
     for ErrorUnnamedOneWithSerializeDeserialize

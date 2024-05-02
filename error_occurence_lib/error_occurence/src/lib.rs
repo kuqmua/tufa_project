@@ -4598,16 +4598,27 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let impl_to_string_without_config_for_ident_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    quote::quote! {
+                        #ident::#element_ident(value) => ToStringWithoutConfig::to_string_without_config(value),
+                    }
+                });
+                quote::quote! {
+                    impl ToStringWithoutConfig<'_> for #ident {
+                        fn to_string_without_config(&self) -> #std_string_string_token_stream {
+                            match self {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_to_string_with_config_for_ident_token_stream
-                // impl ToStringWithoutConfig<'_> for #ident {
-                //     fn to_string_without_config(&self) -> std::string::String {
-                //         match self {
-                //             #ident::Something(i) => ToStringWithoutConfig::to_string_without_config(i),
-                //         }
-                //     }
-                // }
+                #impl_to_string_without_config_for_ident_token_stream
                 // impl #ident {
                 //     pub fn into_serialize_deserialize_version(self) -> #ident_with_serialize_deserialize_token_stream {
                 //         match self {
