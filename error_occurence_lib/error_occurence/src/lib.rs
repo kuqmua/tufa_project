@@ -4462,6 +4462,74 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
+            let impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream = {
+                let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    let element_ident = &element.ident;
+                    let fields = if let syn::Fields::Named(fields) = &element.fields {
+                        &fields.named
+                    }
+                    else {
+                        panic!(
+                            "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
+                            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                        );
+                    };
+                    let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                    ).map(|element|{
+                        let element_ident = &element.ident;
+                        quote::quote! {#element_ident,}
+                    });
+                    let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
+                        &format!(
+                            "{{{{\n{}}}}}",
+                            fields.iter().filter(|element|
+                                *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                            ).fold(std::string::String::new(), |mut acc, _| {
+                                acc.push_str("{}");
+                                acc
+                            })
+                        ),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                    ).map(|element|{
+                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                        let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
+                            &format!("{element_ident}: {{}}"),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        quote::quote! {
+                            error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                                &format!(#ident_colon_to_string_with_config_format_token_stream, 
+                                    ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(#element_ident)
+                                )
+                            )
+                        }
+                    });
+                    quote::quote! {
+                        #ident_with_serialize_deserialize_token_stream::#element_ident {
+                            #(#fields_idents_excluding_code_occurence_token_stream)*
+                            ..
+                        } => {
+                            format!(
+                                #fields_format_excluding_code_occurence_token_stream,
+                                #(#fields_format_values_excluding_code_occurence_token_stream),*
+                            )
+                        }
+                    }
+                });
+                quote::quote! {
+                    impl #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream for #ident_with_serialize_deserialize_token_stream {
+                        fn #source_to_string_without_config_snake_case_token_stream(&self) -> #std_string_string_token_stream {
+                            match self {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
@@ -4471,77 +4539,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
-                // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
-                //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                //         write!
-                //         (formatter, "{}",
-                //         ToStringWithoutConfig
-                //         :: to_string_without_config(self))
-                //     }
-                // }
-                // impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
-                //     for #ident_with_serialize_deserialize_token_stream
-                // {
-                //     fn source_to_string_without_config(&self) -> std::string::String {
-                //         match self {
-                //             #ident_with_serialize_deserialize_token_stream::Variant {
-                //                 eo_display_field,
-                //                 eo_error_occurence_field,
-                //                 eo_vec_display_field,
-                //                 eo_vec_error_occurence_field,
-                //                 hashmap_string_string,
-                //                 hashmap_string_error_occurence,
-                //                 code_occurence: _unused_argument_2,
-                //             } => {
-                //                 format!
-                //                 ("{{\n{}{}{}{}{}{}}}",
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(& format!
-                //                 (
-                //                     "eo_display_field: {}", 
-                //                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_display_field)
-                //                 )),
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(& format!
-                //                 (
-                //                     "eo_error_occurence_field: {}",
-                //                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_error_occurence_field)
-                //                 )),
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(& format!
-                //                 (
-                //                     "eo_vec_display_field: {}",
-                //                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_vec_display_field)
-                //                 )),
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(& format!
-                //                 (
-                //                     "eo_vec_error_occurence_field: {}",
-                //                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(eo_vec_error_occurence_field)
-                //                 )),
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(& format!
-                //                 (
-                //                     "hashmap_string_string: {}",
-                //                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(hashmap_string_string)
-                //                 )),
-                //                 error_occurence_lib::lines_space_backslash::LinesSpaceBackslash
-                //                 ::
-                //                 lines_space_backslash(& format!
-                //                 (
-                //                     "hashmap_string_error_occurence: {}",
-                //                     ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(hashmap_string_error_occurence)
-                //                 )),
-                //             )
-                //             }
-                //         }
-                //     }
-                // }
+                #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
                 // impl #error_occurence_lib_code_occurence_get_option_token_stream for #ident_with_serialize_deserialize_token_stream {
                 //     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
                 //         match self {
