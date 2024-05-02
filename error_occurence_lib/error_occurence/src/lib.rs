@@ -4682,10 +4682,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_to_string_without_config_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
-                // #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-                // pub enum #ident_with_serialize_deserialize_token_stream {
-                //     Something(ErrorNamedTwoWithSerializeDeserialize),
-                // }
                 // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
                 //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 //         write!
