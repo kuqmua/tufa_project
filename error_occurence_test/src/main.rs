@@ -485,7 +485,7 @@ pub enum ErrorNamedTwo {
 }
 
 #[derive(Debug, thiserror::Error, 
-    // error_occurence_lib::ErrorOccurenceTest
+    error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorUnnamedOne {
     // #[eo_error_occurence]
@@ -674,14 +674,6 @@ impl ErrorUnnamedOne {
                 i.into_serialize_deserialize_version(),
             ),
         }
-    }
-}
-impl std::fmt::Display for ErrorUnnamedOne {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfig
-        :: to_string_without_config(self))
     }
 }
 impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {

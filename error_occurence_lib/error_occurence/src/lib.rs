@@ -4565,7 +4565,17 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         },
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
+            let impl_std_fmt_display_for_ident_token_stream = {
+                quote::quote! {
+                    impl std::fmt::Display for #ident {
+                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                            write!(formatter, "{}", ToStringWithoutConfig::to_string_without_config(self))
+                        }
+                    }
+                }
+            };
             quote::quote! {
+                #impl_std_fmt_display_for_ident_token_stream
                 // impl #error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream for #ident {
                 //     fn source_to_string_with_config<
                 //         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
@@ -4667,14 +4677,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 //                 code_occurence: code_occurence,
                 //             },
                 //         }
-                //     }
-                // }
-                // impl std::fmt::Display for #ident {
-                //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                //         write!
-                //         (formatter, "{}",
-                //         ToStringWithoutConfig
-                //         :: to_string_without_config(self))
                 //     }
                 // }
                 // impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
