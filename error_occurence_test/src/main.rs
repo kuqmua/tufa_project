@@ -635,31 +635,6 @@ fn main() {
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 
-
-
-//////////////////////////
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOneWithSerializeDeserialize {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        match self {
-            ErrorNamedOneWithSerializeDeserialize::Variant {
-                code_occurence,
-                ..
-            } => Some(code_occurence),
-        }
-    }
-}
-
-////////////
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwoWithSerializeDeserialize {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        match self {
-            ErrorNamedTwoWithSerializeDeserialize::Variant {
-                eo_display_with_serialize_deserialize_field: _unused_argument_0,
-                code_occurence,
-            } => Some(code_occurence),
-        }
-    }
-}
 ////////////////////
 impl ToStringWithConfig<'_> for ErrorUnnamedOne {
     fn to_string_with_config<
