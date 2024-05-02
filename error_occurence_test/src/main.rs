@@ -636,14 +636,6 @@ fn main() {
 }
 
 ////////////////////
-impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}",
-        ToStringWithoutConfigWithSerializeDeserialize
-        :: to_string_without_config_with_serialize_deserialize(self))
-    }
-}
 impl
     ToStringWithoutConfigWithSerializeDeserialize<'_>
     for ErrorUnnamedOneWithSerializeDeserialize
