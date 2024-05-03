@@ -4456,7 +4456,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = {
                 quote::quote! {
-                    impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
+                    impl #std_fmt_display_token_stream for #ident_with_serialize_deserialize_token_stream {
                         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                             write!(formatter, "{}", error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(self))
                         }
@@ -4569,7 +4569,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
             let impl_std_fmt_display_for_ident_token_stream = {
                 quote::quote! {
-                    impl std::fmt::Display for #ident {
+                    impl #std_fmt_display_token_stream for #ident {
                         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                             write!(formatter, "{}", error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(self))
                         }
@@ -4680,7 +4680,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = {
                 quote::quote! {
-                    impl std::fmt::Display for #ident_with_serialize_deserialize_token_stream {
+                    impl #std_fmt_display_token_stream for #ident_with_serialize_deserialize_token_stream {
                         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                             write!(
                                 formatter, "{}", 
