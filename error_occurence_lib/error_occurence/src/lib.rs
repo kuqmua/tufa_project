@@ -4184,15 +4184,24 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream = quote::quote!{
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash
     };
+    let error_occurence_lib_to_string_without_config_to_string_without_config_token_stream = quote::quote!{
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
+    };
+    let to_string_without_config_snake_case_token_stream = quote::quote!{to_string_without_config};
     let impl_std_fmt_display_for_ident_token_stream = {
         quote::quote! {
             impl #std_fmt_display_token_stream for #ident {
                 fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    write!(formatter, "{}", error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(self))
+                    write!(formatter, "{}", #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(self))
                 }
             }
         }
     };
+    //
+    let error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream = quote::quote!{
+        error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize
+    };
+    let to_string_without_config_with_serialize_deserialize_snake_case_token_stream = quote::quote!{to_string_without_config_with_serialize_deserialize};
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4311,7 +4320,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         quote::quote! {
                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(#ident_colon_to_string_with_config_format_token_stream, 
-                                    error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(#element_ident)
+                                    #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(#element_ident)
                                 )
                             )
                         }
@@ -4458,7 +4467,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 quote::quote! {
                     impl #std_fmt_display_token_stream for #ident_with_serialize_deserialize_token_stream {
                         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            write!(formatter, "{}", error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(self))
+                            write!(formatter, "{}", #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(self))
                         }
                     }
                 }
@@ -4505,7 +4514,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(
                                     #ident_colon_to_string_with_config_format_token_stream, 
-                                    error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(#element_ident)
+                                    #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(#element_ident)
                                 )
                             )
                         }
@@ -4595,12 +4604,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
-                        #ident::#element_ident(value) => error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(value),
+                        #ident::#element_ident(value) => #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(value),
                     }
                 });
                 quote::quote! {
-                    impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for #ident {
-                        fn to_string_without_config(&self) -> #std_string_string_token_stream {
+                    impl #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream<'_> for #ident {
+                        fn #to_string_without_config_snake_case_token_stream(&self) -> #std_string_string_token_stream {
                             match self {
                                 #(#variants_token_stream),*
                             }
@@ -4675,7 +4684,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                             write!(
                                 formatter, "{}", 
-                                error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(self)
+                                #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(self)
                             )
                         }
                     }
@@ -4686,13 +4695,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     let element_ident = &element.ident;
                     quote::quote! {
                         #ident_with_serialize_deserialize_token_stream::#element_ident(value) => {
-                            error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(value)
+                            #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(value)
                         }
                     }
                 });
                 quote::quote! {
-                    impl error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'_> for #ident_with_serialize_deserialize_token_stream {
-                        fn to_string_without_config_with_serialize_deserialize(&self) -> #std_string_string_token_stream {
+                    impl #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream<'_> for #ident_with_serialize_deserialize_token_stream {
+                        fn #to_string_without_config_with_serialize_deserialize_snake_case_token_stream(&self) -> #std_string_string_token_stream {
                             match self {
                                 #(#variants_token_stream),*
                             }
