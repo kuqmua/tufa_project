@@ -6,17 +6,17 @@
 pub enum ErrorNamedOne {
     Variant {
         // todo maybe create 6 wrapper types for IN SERIALIZE DESERIALIZE std::string::String, IN SERIALIZE DESERIALIZE nested, IN SERIALIZE DESERIALIZE std::vec::Vec<std::string::String>,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested> and hashmaps
-        // #[eo_string]
+        #[eo_string]
         eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
-        // #[eo_error_occurence]
+        #[eo_error_occurence]
         eo_error_occurence_field: ErrorNamedTwo,//IN SERIALIZE DESERIALIZE nested
-        // #[eo_vec_string]
+        #[eo_vec_string]
         eo_vec_display_field: StdVecVecDisplayStruct,//IN SERIALIZE DESERIALIZE std::vec::Vec<std::string::String>
-        // #[eo_vec_error_occurence]
+        #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOne,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
-        // #[eo_hashmap_string_string]
+        #[eo_hashmap_string_string]
         hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct,
-        // #[eo_hashmap_string_error_occurence]
+        #[eo_hashmap_string_error_occurence]
         hashmap_string_error_occurence: StdCollectionsHashMapStdStringStringErrorUnnamedOne,
 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,

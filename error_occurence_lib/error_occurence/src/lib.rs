@@ -4125,7 +4125,53 @@ fn vec_lifetime_to_lifetime(
     lifetime_handle
 }
 ///////////////////////////////////////////////////////////
-#[proc_macro_derive(ErrorOccurenceTest)]
+
+enum ErrorOccurenceTestFieldAttribute {
+    EoString,
+    EoErrorOccurence,
+    EoVecString,
+    EoVecErrorOccurence,
+    EoHashMapStringString,
+    EoHashMapStringErrorOccurence,
+}
+impl std::str::FromStr for ErrorOccurenceTestFieldAttribute {
+    type Err = std::string::String;
+    fn from_str(value: &std::primitive::str) -> Result<Self, Self::Err> {
+        if value == "eo_string" {
+            Ok(Self::EoString)
+        }
+        else if value == "eo_error_occurence" {
+            Ok(Self::EoErrorOccurence)
+        }
+        else if value == "eo_vec_string" {
+            Ok(Self::EoVecString)
+        }
+        else if value == "eo_vec_error_occurence" {
+            Ok(Self::EoVecErrorOccurence)
+        }
+        else if value == "eo_hashmap_string_string" {
+            Ok(Self::EoHashMapStringString)
+        }
+        else if value == "eo_hashmap_string_error_occurence" {
+            Ok(Self::EoHashMapStringErrorOccurence)
+        }
+        else {
+            Err(Self::Err::from(value))
+        }
+    }
+}
+
+#[proc_macro_derive(
+    ErrorOccurenceTest,
+    attributes(
+        eo_string,
+        eo_error_occurence,
+        eo_vec_string,
+        eo_vec_error_occurence,
+        eo_hashmap_string_string,
+        eo_hashmap_string_error_occurence,
+    )
+)]
 pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "ErrorOccurenceTest";
@@ -4154,7 +4200,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
-    // println!("{data_enum:#?}");
+    println!("{data_enum:#?}");
     let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create(
         &data_enum,
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -4267,6 +4313,184 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let to_string_with_config_snake_case_token_stream = quote::quote!{to_string_with_config};
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
+            //
+                            // let attribute = {
+                            //     let mut option_attribute = None;
+                            //     field.attrs.iter().for_each(|attr|{
+                            //         if attr.path().segments.len() == 1 {
+                            //             let error_message = format!("{proc_macro_name_ident_stringified} two or more supported attributes!");
+                            //             let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+                            //             if *first_segment_ident == *attribute_display_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplay);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_display_with_serialize_deserialize_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoDisplayWithSerializeDeserialize);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_to_std_string_string_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringString);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_to_std_string_string_with_serialize_deserialize_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoToStdStringStringWithSerializeDeserialize);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_error_occurence_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoErrorOccurence);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_vec_display_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplay);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_vec_display_with_serialize_deserialize_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecDisplayWithSerializeDeserialize);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_vec_to_std_string_string_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringString);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_vec_to_std_string_string_with_serialize_deserialize_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecToStdStringStringWithSerializeDeserialize);
+                            //                 }
+                            //             }
+                            //             else if *first_segment_ident == *attribute_vec_error_occurence_stringified {
+                            //                 if option_attribute.is_some() {
+                            //                     panic!("{error_message}");
+                            //                 }
+                            //                 else {
+                            //                     option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoVecErrorOccurence);
+                            //                 }
+                            //             }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_display_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplay);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueDisplayWithSerializeDeserialize);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringString);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_to_std_string_string_with_serialize_deserialize_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueToStdStringStringWithSerializeDeserialize);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_display_with_serialize_deserialize_value_error_occurence_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyDisplayWithSerializeDeserializeValueErrorOccurence);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_display_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplay);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_display_with_serialize_deserialize_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueDisplayWithSerializeDeserialize);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_to_std_string_string_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringString);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_to_std_string_string_with_serialize_deserialize_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueToStdStringStringWithSerializeDeserialize);
+                            //             //     }
+                            //             // }
+                            //             // else if *first_segment_ident == *attribute_hashmap_key_to_std_string_string_value_error_occurence_stringified {
+                            //             //     if option_attribute.is_some() {
+                            //             //         panic!("{error_message}");
+                            //             //     }
+                            //             //     else {
+                            //             //         option_attribute = Some(proc_macro_helpers::error_occurence::named_attribute::NamedAttribute::EoHashMapKeyToStdStringStringValueErrorOccurence);
+                            //             //     }
+                            //             // }
+                            //             else {
+                            //                 //clippy lint forces to add empty else
+                            //             }
+                            //         }//other attributes are not for this proc_macro
+                            //     });
+                            //     option_attribute.unwrap_or_else(|| panic!(
+                            //         "{proc_macro_name_ident_stringified} option attribute {}",
+                            //         naming_constants::IS_NONE_STRINGIFIED
+                            //     ))
+                            // };
+            //
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
