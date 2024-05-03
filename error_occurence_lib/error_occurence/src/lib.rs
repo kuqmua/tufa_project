@@ -4261,6 +4261,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         }
     };
+    let error_occurence_lib_to_string_with_config_to_string_with_config_token_stream = quote::quote!{
+        error_occurence_lib::to_string_with_config::ToStringWithConfig
+    };
+    let to_string_with_config_snake_case_token_stream = quote::quote!{to_string_with_config};
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4304,7 +4308,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         quote::quote! {
                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(#ident_colon_to_string_with_config_format_token_stream, 
-                                    error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(#element_ident, #config_snake_case_token_stream)
+                                    #error_occurence_lib_to_string_with_config_to_string_with_config_token_stream::#to_string_with_config_snake_case_token_stream(#element_ident, #config_snake_case_token_stream)
                                 )
                             )
                         }
@@ -4580,12 +4584,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
-                        #ident::#element_ident(value) => error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(value, #config_snake_case_token_stream),
+                        #ident::#element_ident(value) => #error_occurence_lib_to_string_with_config_to_string_with_config_token_stream::#to_string_with_config_snake_case_token_stream(value, #config_snake_case_token_stream),
                     }
                 });
                 quote::quote! {
-                    impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for #ident {
-                        fn to_string_with_config<
+                    impl #error_occurence_lib_to_string_with_config_to_string_with_config_token_stream<'_> for #ident {
+                        fn #to_string_with_config_snake_case_token_stream<
                             #config_generic_upper_camel_case_token_stream: #config_lib_snake_case_token_stream::#get_source_place_type_upper_camel_case_token_stream
                              + #config_lib_snake_case_token_stream::#get_timezone_upper_camel_case_token_stream
                              + ?#sized_upper_camel_case_token_stream
