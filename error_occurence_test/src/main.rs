@@ -10,7 +10,7 @@ pub enum ErrorNamedOne {
         eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
         #[eo_error_occurence]
         eo_error_occurence_field: ErrorNamedTwo,//IN SERIALIZE DESERIALIZE nested
-        #[eo_vec_string]
+        #[eo_vec_string]//todo remove wrapper under std::vec::Vec
         eo_vec_display_field: StdVecVecDisplayStruct,//IN SERIALIZE DESERIALIZE std::vec::Vec<std::string::String>
         #[eo_vec_error_occurence]
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOne,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
@@ -50,6 +50,7 @@ pub struct DisplayStruct {
     pub display: std::string::String,
     pub something: std::primitive::bool,
 }
+//maybe change it to ToStdStringString ?
 impl std::fmt::Display for DisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{self:?}")
