@@ -52,64 +52,9 @@ pub struct DisplayStruct {
 }
 impl std::fmt::Display for DisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
-        )
+        write!(formatter, "{self:?}")
     }
 }
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStruct {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
-impl DisplayStruct {
-    pub fn into_serialize_deserialize_version(self) -> DisplayStructWithSerializeDeserialize {
-        DisplayStructWithSerializeDeserialize {
-            display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize (self.display),
-            something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize (self.something),
-        }
-    }
-}
-//
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct DisplayStructWithSerializeDeserialize {
-    pub display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
-    pub something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize,
-}
-impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter, 
-            "{}",
-            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
-        )
-    }
-}
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStructWithSerializeDeserialize {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for DisplayStructWithSerializeDeserialize {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
-
 ////////////////////////////////////////
 
 #[derive(Debug)]
@@ -123,7 +68,7 @@ impl std::fmt::Display for StdVecVecDisplayStruct {
                 std::string::String::from(""),
                 |mut acc, element| {
                     acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                        &format!("{element:#?}")
+                        &element
                     ));
                     acc
                 },
@@ -153,12 +98,12 @@ impl error_occurence_lib::code_occurence::GetOption for StdVecVecDisplayStruct {
 }
 impl StdVecVecDisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> StdVecVecDisplayStructWithSerializeDeserialize {
-        StdVecVecDisplayStructWithSerializeDeserialize(self.0.into_iter().map(|element|element.into_serialize_deserialize_version()).collect())
+        StdVecVecDisplayStructWithSerializeDeserialize(self.0.into_iter().map(|element|element.to_string()).collect())
     }
 }
 //
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct StdVecVecDisplayStructWithSerializeDeserialize(std::vec::Vec<DisplayStructWithSerializeDeserialize>);
+pub struct StdVecVecDisplayStructWithSerializeDeserialize(std::vec::Vec<std::string::String>);
 impl std::fmt::Display for StdVecVecDisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -168,7 +113,7 @@ impl std::fmt::Display for StdVecVecDisplayStructWithSerializeDeserialize {
                 std::string::String::from(""),
                 |mut acc, element| {
                     acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                        &format!("{element:#?}")
+                        &element
                     ));
                     acc
                 },
@@ -294,7 +239,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
                 |mut acc, (key, value)| {
                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                         &key,
-                        &format!("{value:#?}"),
+                        &value,
                     ));
                     acc
                 },
@@ -325,14 +270,14 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
 impl StdCollectionsHashMapStdStringStringDisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
         StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(self.0.into_iter().map(
-            |(key, value)|(key.into_serialize_deserialize_version(), value.into_serialize_deserialize_version())
+            |(key, value)|(key.into_serialize_deserialize_version(), value.to_string())
         ).collect())
     }
 }
 //
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(
-    std::collections::HashMap<error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize, DisplayStructWithSerializeDeserialize>
+    std::collections::HashMap<error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize, std::string::String>
 );
 impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -344,7 +289,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStructWith
                 |mut acc, (key, value)| {
                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                         &key,
-                        &format!("{value:#?}"),
+                        &value,
                     ));
                     acc
                 },
@@ -492,7 +437,7 @@ fn main() {
         hashmap_string_string: StdCollectionsHashMapStdStringStringDisplayStruct(
             std::collections::HashMap::from([
                 (
-                    error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("keysiudfgsidlufgsiadfglisadglifasgdlfiygsaldfglsagdlfhgsaldhfglhsdflhsadflhsaldhfgs\nkeysdfsadfasdfsdfasdfasdf\nkeysadfasfdsdfsfdsfsd")),
+                    error_occurence_lib::primitive_types_wrappers::StdStringString(std::string::String::from("key")),
                     DisplayStruct {
                         display: std::string::String::from("value"),
                         something: true,
@@ -613,18 +558,21 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
             } => {
                 format!
                 ("{{
-{}{}{}{}{}{}}}", error_occurence_lib ::
-                lines_space_backslash :: LinesSpaceBackslash ::
+{}{}{}{}{}{}}}", 
+error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_display_field: {}", error_occurence_lib ::
-                to_string_without_config :: ToStringWithoutConfig ::
-                to_string_without_config(eo_display_field))),
+                ("eo_display_field: {eo_display_field}")),
+
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 ("eo_error_occurence_field: {}", error_occurence_lib ::
                 to_string_without_config :: ToStringWithoutConfig ::
                 to_string_without_config(eo_error_occurence_field))),
+
+
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
@@ -674,7 +622,7 @@ impl ErrorNamedOne {
                 hashmap_string_error_occurence,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_display_field: { eo_display_field.into_serialize_deserialize_version() },
+                eo_display_field: { eo_display_field.to_string() },
                 eo_error_occurence_field: {
                     eo_error_occurence_field.into_serialize_deserialize_version()
                 },
@@ -696,7 +644,7 @@ impl ErrorNamedOne {
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorNamedOneWithSerializeDeserialize {
     Variant {
-        eo_display_field: DisplayStructWithSerializeDeserialize,
+        eo_display_field: std::string::String,
         eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
         eo_vec_display_field: StdVecVecDisplayStructWithSerializeDeserialize,
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOneWithSerializeDeserialize,
@@ -730,13 +678,16 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
             } => {
                 format!
                 ("{{
-{}{}{}{}{}{}}}", error_occurence_lib ::
+{}{}{}{}{}{}}}", 
+
+
+
+error_occurence_lib ::
                 lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_display_field: {}", error_occurence_lib ::
-                to_string_without_config ::
-                ToStringWithoutConfigWithSerializeDeserialize ::
-                to_string_without_config_with_serialize_deserialize(eo_display_field))),
+                ("eo_display_field: {eo_display_field}")),
+
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
