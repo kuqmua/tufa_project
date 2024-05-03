@@ -51,6 +51,7 @@ pub struct DisplayStruct {
     pub something: std::primitive::bool,
 }
 //maybe change it to ToStdStringString ?
+//todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
 impl std::fmt::Display for DisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{self:?}")
