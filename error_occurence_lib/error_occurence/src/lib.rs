@@ -4200,7 +4200,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
-    println!("{data_enum:#?}");
+    // println!("{data_enum:#?}");
     let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create(
         &data_enum,
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -4924,14 +4924,14 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         }
     };
     let gen = quote::quote! {
-        #tokens
+        // #tokens
     };
     // if ident == "" {
-    //     proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &proc_macro_name_upper_camel_case,
-    //         &gen,
-    //         &proc_macro_name_upper_camel_case_ident_stringified
-    //     );
+        // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     &proc_macro_name_upper_camel_case,
+        //     &gen,
+        //     &proc_macro_name_upper_camel_case_ident_stringified
+        // );
     // }
     gen.into()
 }
