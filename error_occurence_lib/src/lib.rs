@@ -51,9 +51,6 @@ macro_rules! code_occurence {
     }};
 }
 
-
-
-
 #[derive(Debug)]
 pub struct StdVecVec<T>(pub std::vec::Vec<T>);
 impl<T> std::fmt::Display for StdVecVec<T> 
@@ -73,66 +70,75 @@ impl<T> std::fmt::Display for StdVecVec<T>
         )
     }
 }
-// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVec {
-//     fn source_to_string_with_config<
-//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-//     >(
-//         &self,
-//         _: &ConfigGeneric,
-//     ) -> std::string::String {
-//         self.to_string()
-//     }
-// }
-// impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVec {
-//     fn source_to_string_without_config(&self) -> std::string::String {
-//         self.to_string()
-//     }
-// }
-// impl error_occurence_lib::code_occurence::GetOption for StdVecVec {
-//     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-//         None
-//     }
-// }
-// impl StdVecVec {
-//     pub fn into_serialize_deserialize_version(self) -> StdVecVecWithSerializeDeserialize {
+impl<T> crate::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVec<T> 
+where T: std::fmt::Display
+{
+    fn source_to_string_with_config<
+        ConfigGeneric: app_state::GetSourcePlaceType + app_state::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl<T> crate::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVec<T> 
+where T: std::fmt::Display
+{
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl<T> crate::code_occurence::GetOption for StdVecVec<T> {
+    fn get_option(&self) -> std::option::Option<&crate::code_occurence::CodeOccurence> {
+        None
+    }
+}
+// impl<T> StdVecVec<T> {
+//     pub fn into_serialize_deserialize_version(self) -> StdVecVecWithSerializeDeserialize<T> {
 //         StdVecVecWithSerializeDeserialize(self.0.into_iter().map(|element|element.into_serialize_deserialize_version()).collect())
 //     }
 // }
-// //
-// #[derive(Debug, serde::Serialize, serde::Deserialize)]
-// pub struct StdVecVecWithSerializeDeserialize(std::vec::Vec<DisplayStructWithSerializeDeserialize>);
-// impl std::fmt::Display for StdVecVecWithSerializeDeserialize {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(
-//             formatter, 
-//             "{}",
-//             error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
-//                 std::string::String::from(""),
-//                 |mut acc, element| {
-//                     acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(&element));
-//                     acc
-//                 },
-//             ))
-//         )
-//     }
-// }
-// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecWithSerializeDeserialize {
-//     fn source_to_string_with_config<
-//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-//     >(
-//         &self,
-//         _: &ConfigGeneric,
-//     ) -> std::string::String {
-//         self.to_string()
-//     }
-// }
-// impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecWithSerializeDeserialize {
-//     fn source_to_string_without_config(&self) -> std::string::String {
-//         self.to_string()
-//     }
-// }
-// impl error_occurence_lib::code_occurence::GetOption for StdVecVecWithSerializeDeserialize {
-//     fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-//         None
-//     }
-// }
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct StdVecVecWithSerializeDeserialize<T>(std::vec::Vec<T>);
+impl<T> std::fmt::Display for StdVecVecWithSerializeDeserialize<T> 
+where T: std::fmt::Display
+{
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            crate::helpers::stringified_lines_error_vec(self.0.iter().fold(
+                std::string::String::from(""),
+                |mut acc, element| {
+                    acc.push_str(&crate::helpers::lines_space_backslash_addition(&element));
+                    acc
+                },
+            ))
+        )
+    }
+}
+impl<T> crate::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecWithSerializeDeserialize<T>
+where T: std::fmt::Display
+{
+    fn source_to_string_with_config<
+        ConfigGeneric: app_state::GetSourcePlaceType + app_state::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl<T> crate::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecWithSerializeDeserialize<T> 
+where T: std::fmt::Display
+{
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl<T> crate::code_occurence::GetOption for StdVecVecWithSerializeDeserialize<T> {
+    fn get_option(&self) -> std::option::Option<&crate::code_occurence::CodeOccurence> {
+        None
+    }
+}
