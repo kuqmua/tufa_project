@@ -76,71 +76,6 @@ impl std::fmt::Display for StdVecVecDisplayStruct {
         )
     }
 }
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecDisplayStruct {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStruct {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for StdVecVecDisplayStruct {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
-impl StdVecVecDisplayStruct {
-    pub fn into_serialize_deserialize_version(self) -> StdVecVecDisplayStructWithSerializeDeserialize {
-        StdVecVecDisplayStructWithSerializeDeserialize(self.0.into_iter().map(|element|element.to_string()).collect())
-    }
-}
-//
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct StdVecVecDisplayStructWithSerializeDeserialize(std::vec::Vec<std::string::String>);
-impl std::fmt::Display for StdVecVecDisplayStructWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter, 
-            "{}",
-            error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
-                std::string::String::from(""),
-                |mut acc, element| {
-                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                        &element
-                    ));
-                    acc
-                },
-            ))
-        )
-    }
-}
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for StdVecVecDisplayStructWithSerializeDeserialize {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for StdVecVecDisplayStructWithSerializeDeserialize {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for StdVecVecDisplayStructWithSerializeDeserialize {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
 ////////
 #[derive(Debug)]
 pub struct StdVecVecErrorUnnamedOne(std::vec::Vec<ErrorUnnamedOne>);
@@ -514,9 +449,7 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
         ),
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
             &format!
-                ("eo_vec_display_field: {}", error_occurence_lib ::
-                to_string_with_config :: ToStringWithConfig ::
-                to_string_with_config(eo_vec_display_field, config))
+                ("eo_vec_display_field: {eo_vec_display_field}")
         ),
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
             &format!
@@ -576,9 +509,9 @@ error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_vec_display_field: {}", error_occurence_lib ::
-                to_string_without_config :: ToStringWithoutConfig ::
-                to_string_without_config(eo_vec_display_field))),
+                ("eo_vec_display_field: {eo_vec_display_field}")),
+
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
@@ -622,11 +555,15 @@ impl ErrorNamedOne {
                 hashmap_string_error_occurence,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_display_field: { eo_display_field.to_string() },
+                eo_display_field: { 
+                    eo_display_field.to_string() 
+                },
                 eo_error_occurence_field: {
                     eo_error_occurence_field.into_serialize_deserialize_version()
                 },
-                eo_vec_display_field: { eo_vec_display_field.into_serialize_deserialize_version() },
+                eo_vec_display_field: { 
+                    eo_vec_display_field.0.into_iter().map(|element|element.to_string()).collect()
+                },
                 eo_vec_error_occurence_field: {
                     eo_vec_error_occurence_field.into_serialize_deserialize_version()
                 },
@@ -646,7 +583,7 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
     Variant {
         eo_display_field: std::string::String,
         eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
-        eo_vec_display_field: StdVecVecDisplayStructWithSerializeDeserialize,
+        eo_vec_display_field: std::vec::Vec<std::string::String>,
         eo_vec_error_occurence_field: StdVecVecErrorUnnamedOneWithSerializeDeserialize,
         hashmap_string_string:
             StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize,
@@ -698,10 +635,8 @@ error_occurence_lib ::
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_vec_display_field: {}", error_occurence_lib ::
-                to_string_without_config ::
-                ToStringWithoutConfigWithSerializeDeserialize ::
-                to_string_without_config_with_serialize_deserialize(eo_vec_display_field))),
+                ("eo_vec_display_field: {:#?}", eo_vec_display_field
+                )),
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
