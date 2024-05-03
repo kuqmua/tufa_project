@@ -4250,6 +4250,17 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         }
     };
+    let generate_impl_ident_into_serialize_deserialize_version_token_stream = |variants: &proc_macro2::TokenStream|{
+        quote::quote! {
+            impl #ident {
+                pub fn #into_serialize_deserialize_version_snake_case_token_stream(self) -> #ident_with_serialize_deserialize_token_stream {
+                    match self {
+                        #variants
+                    }
+                }
+            }
+        }
+    };
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4432,15 +4443,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         },
                     }
                 });
-                quote::quote! {
-                    impl #ident {
-                        pub fn #into_serialize_deserialize_version_snake_case_token_stream(self) -> #ident_with_serialize_deserialize_token_stream {
-                            match self {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    }
-                }
+                generate_impl_ident_into_serialize_deserialize_version_token_stream(
+                    &quote::quote!{#(#variants_token_stream),*}
+                )
             };
             let enum_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -4621,15 +4626,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         )
                     }
                 });
-                quote::quote! {
-                    impl #ident {
-                        pub fn #into_serialize_deserialize_version_snake_case_token_stream(self) -> #ident_with_serialize_deserialize_token_stream {
-                            match self {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    }
-                }
+                generate_impl_ident_into_serialize_deserialize_version_token_stream(
+                    &quote::quote!{#(#variants_token_stream),*}
+                )
             };
             let enum_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
