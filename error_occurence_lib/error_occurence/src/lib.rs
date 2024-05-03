@@ -4181,6 +4181,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let ident_in_none_stringified = "ident is None";
     let error_occurence_lib_code_occurence_get_option_token_stream = quote::quote!{error_occurence_lib::code_occurence::GetOption};
     let into_serialize_deserialize_version_snake_case_token_stream = quote::quote!{into_serialize_deserialize_version};
+    let error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream = quote::quote!{
+        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash
+    };
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_std_fmt_display_for_ident_token_stream = {
@@ -4231,7 +4234,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         quote::quote! {
-                            error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                            #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(#ident_colon_to_string_with_config_format_token_stream, 
                                     error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(#element_ident, #config_snake_case_token_stream)
                                 )
@@ -4306,7 +4309,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         quote::quote! {
-                            error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                            #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(#ident_colon_to_string_with_config_format_token_stream, 
                                     error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(#element_ident)
                                 )
@@ -4499,7 +4502,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
                         quote::quote! {
-                            error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+                            #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(
                                     #ident_colon_to_string_with_config_format_token_stream, 
                                     error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize::to_string_without_config_with_serialize_deserialize(#element_ident)
