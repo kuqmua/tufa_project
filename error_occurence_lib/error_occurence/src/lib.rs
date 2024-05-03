@@ -4195,15 +4195,19 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let write_formatter_error_occurence_lib_to_string_without_config_to_string_without_config_to_string_without_config_self_token_stream = quote::quote!{
         write!(formatter, "{}", #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(self))
     };
-    let impl_std_fmt_display_for_ident_token_stream = {
+    let generate_impl_std_fmt_display_token_stream = |ident_token_stream: &proc_macro2::TokenStream, content_token_stream: &proc_macro2::TokenStream|{
         quote::quote! {
-            impl #std_fmt_display_token_stream for #ident {
+            impl #std_fmt_display_token_stream for #ident_token_stream {
                 fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    #write_formatter_error_occurence_lib_to_string_without_config_to_string_without_config_to_string_without_config_self_token_stream
+                    #content_token_stream
                 }
             }
         }
     };
+    let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
+        &quote::quote!{#ident},
+        &write_formatter_error_occurence_lib_to_string_without_config_to_string_without_config_to_string_without_config_self_token_stream
+    );
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4465,15 +4469,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = {
-                quote::quote! {
-                    impl #std_fmt_display_token_stream for #ident_with_serialize_deserialize_token_stream {
-                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            #write_formatter_error_occurence_lib_to_string_without_config_to_string_without_config_to_string_without_config_self_token_stream
-                        }
-                    }
-                }
-            };
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
+                &ident_with_serialize_deserialize_token_stream,
+                &write_formatter_error_occurence_lib_to_string_without_config_to_string_without_config_to_string_without_config_self_token_stream
+            );
             let impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
@@ -4680,15 +4679,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 }
             };
-            let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = {
-                quote::quote! {
-                    impl #std_fmt_display_token_stream for #ident_with_serialize_deserialize_token_stream {
-                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            write!(formatter, "{}", #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(self))
-                        }
-                    }
-                }
-            };
+            let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
+                &ident_with_serialize_deserialize_token_stream,
+                &quote::quote!{write!(formatter, "{}", #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(self))}
+            );
             let impl_to_string_without_config_with_serialize_deserialize_for_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
