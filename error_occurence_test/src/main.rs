@@ -529,46 +529,7 @@ where
         }
     }
 }
-///
-pub trait ToStringWithoutConfig<'a> {
-    fn to_string_without_config(&self) -> std::string::String;
-}
 
-impl<'a, SelfGeneric> ToStringWithoutConfig<'a> for SelfGeneric
-where
-    SelfGeneric: error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'a>
-        + error_occurence_lib::code_occurence::GetOption,
-{
-    fn to_string_without_config(&self) -> std::string::String {
-        match self.get_option() {
-            Some(value) => error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                self.source_to_string_without_config(),
-                value,
-            ),
-            None => self.source_to_string_without_config(),
-        }
-    }
-}
-// //implemented coz you cant deserialize field into &'a GitInfo(not implememnted in serde)
-pub trait ToStringWithoutConfigWithSerializeDeserialize<'a> {
-    fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String;
-}
-
-impl<'a, SelfGeneric> ToStringWithoutConfigWithSerializeDeserialize<'a> for SelfGeneric
-where
-    SelfGeneric: error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'a>
-        + error_occurence_lib::code_occurence::GetOption,
-{
-    fn to_string_without_config_with_serialize_deserialize(&self) -> std::string::String {
-        match self.get_option() {
-            Some(value) => error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                self.source_to_string_without_config(),
-                value,
-            ),
-            None => self.source_to_string_without_config(),
-        }
-    }
-}
 ////////////
 
 fn main() {
@@ -619,7 +580,6 @@ fn main() {
                 ),
             ])
         ),
-        
 
         code_occurence: error_occurence_lib::code_occurence!(),
     };
