@@ -36,6 +36,15 @@ pub enum ErrorNamedTwo {
     }
 }
 
+#[derive(
+    Debug, 
+    thiserror::Error, 
+    error_occurence_lib::ErrorOccurenceTest
+)]
+pub enum ErrorUnnamedOne {
+    Something(ErrorNamedTwo),
+}
+
 #[derive(Debug)]
 pub struct DisplayStruct {
     pub display: std::string::String,
@@ -468,14 +477,6 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
     }
 }
 /////
-
-#[derive(Debug, thiserror::Error, 
-    error_occurence_lib::ErrorOccurenceTest
-)]
-pub enum ErrorUnnamedOne {
-    // #[eo_error_occurence]
-    Something(ErrorNamedTwo),
-}
 
 fn main() {
     let e = ErrorNamedOne::Variant {
