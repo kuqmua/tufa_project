@@ -4216,6 +4216,20 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         }
     };
+    let generate_impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream = |
+        ident_token_stream: &proc_macro2::TokenStream,
+        variants_token_stream: &proc_macro2::TokenStream,
+    |{
+        quote::quote! {
+            impl #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream for #ident_token_stream {
+                fn #source_to_string_without_config_snake_case_token_stream(&self) -> #std_string_string_token_stream {
+                    match self {
+                        #variants_token_stream
+                    }
+                }
+            }
+        }
+    };
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4351,15 +4365,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         }
                     }
                 });
-                quote::quote! {
-                    impl #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream for #ident {
-                        fn #source_to_string_without_config_snake_case_token_stream(&self) -> #std_string_string_token_stream {
-                            match self {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    }
-                }
+                generate_impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream(
+                    &quote::quote!{#ident},
+                    &quote::quote!{#(#variants_token_stream),*},
+                )
             };
             let impl_error_occurence_lib_code_occurence_get_option_for_ident_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -4537,15 +4546,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         }
                     }
                 });
-                quote::quote! {
-                    impl #error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream for #ident_with_serialize_deserialize_token_stream {
-                        fn #source_to_string_without_config_snake_case_token_stream(&self) -> #std_string_string_token_stream {
-                            match self {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    }
-                }
+                generate_impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream(
+                    &ident_with_serialize_deserialize_token_stream,
+                    &quote::quote!{#(#variants_token_stream),*},
+                )
             };
             let impl_error_occurence_lib_code_occurence_get_option_for_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
