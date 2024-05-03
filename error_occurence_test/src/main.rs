@@ -23,6 +23,19 @@ pub enum ErrorNamedOne {
     },
 }
 
+#[derive(
+    Debug,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurenceTest
+)]
+pub enum ErrorNamedTwo {
+    Variant {
+        // #[eo_display_with_serialize_deserialize]
+        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+
 #[derive(Debug)]
 pub struct DisplayStruct {
     pub display: std::string::String,
@@ -101,18 +114,7 @@ impl error_occurence_lib::code_occurence::GetOption for DisplayStructWithSeriali
     }
 }
 
-#[derive(
-    Debug,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
-)]
-pub enum ErrorNamedTwo {
-    Variant {
-        // #[eo_display_with_serialize_deserialize]
-        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
+////////////////////////////////////////
 
 #[derive(Debug)]
 pub struct StdVecVecDisplayStruct(std::vec::Vec<DisplayStruct>);
@@ -124,7 +126,9 @@ impl std::fmt::Display for StdVecVecDisplayStruct {
             error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
                 std::string::String::from(""),
                 |mut acc, element| {
-                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(&element));
+                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                        &format!("{element:#?}")
+                    ));
                     acc
                 },
             ))
@@ -167,7 +171,9 @@ impl std::fmt::Display for StdVecVecDisplayStructWithSerializeDeserialize {
             error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
                 std::string::String::from(""),
                 |mut acc, element| {
-                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(&element));
+                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                        &format!("{element:#?}")
+                    ));
                     acc
                 },
             ))
@@ -205,7 +211,9 @@ impl std::fmt::Display for StdVecVecErrorUnnamedOne {
             error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
                 std::string::String::from(""),
                 |mut acc, element| {
-                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(&element));
+                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                        &element
+                    ));
                     acc
                 },
             ))
@@ -248,7 +256,9 @@ impl std::fmt::Display for StdVecVecErrorUnnamedOneWithSerializeDeserialize {
             error_occurence_lib::helpers::stringified_lines_error_vec(self.0.iter().fold(
                 std::string::String::from(""),
                 |mut acc, element| {
-                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(&element));
+                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                        &element
+                    ));
                     acc
                 },
             ))
@@ -288,7 +298,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
                 |mut acc, (key, value)| {
                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                         &key,
-                        &value,
+                        &format!("{value:#?}"),
                     ));
                     acc
                 },
@@ -338,7 +348,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStructWith
                 |mut acc, (key, value)| {
                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                         &key,
-                        &value,
+                        &format!("{value:#?}"),
                     ));
                     acc
                 },
