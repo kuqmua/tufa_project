@@ -23,9 +23,6 @@ pub enum ErrorNamedOne {
     },
 }
 
-//////////
-
-////////
 #[derive(Debug)]
 pub struct StdVecVecDisplayStruct(std::vec::Vec<DisplayStruct>);
 impl std::fmt::Display for StdVecVecDisplayStruct {
@@ -491,46 +488,6 @@ pub enum ErrorUnnamedOne {
     // #[eo_error_occurence]
     Something(ErrorNamedTwo),
 }
-
-////////////
-pub trait ToStringWithConfig<'a> {
-    fn to_string_with_config<
-        ConfigGeneric: app_state::GetSourcePlaceType
-            + app_state::GetTimezone
-            + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String;
-}
-
-impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
-where
-    SelfGeneric: error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'a>
-        + error_occurence_lib::code_occurence::GetOption,
-{
-    fn to_string_with_config<
-        ConfigGeneric: app_state::GetSourcePlaceType
-            + app_state::GetTimezone
-            + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self.get_option() {
-            Some(value) => error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                self.source_to_string_with_config(config),
-                error_occurence_lib::code_occurence::PrepareForLogWithConfig::prepare_for_log_with_config(
-                    value,
-                    config
-                )
-            ),
-            None => self.source_to_string_with_config(config)
-        }
-    }
-}
-
-////////////
 
 fn main() {
     let e = ErrorNamedOne::Variant {

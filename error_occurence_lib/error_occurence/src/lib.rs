@@ -4233,7 +4233,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         quote::quote! {
                             error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
                                 &format!(#ident_colon_to_string_with_config_format_token_stream, 
-                                    ToStringWithConfig::to_string_with_config(#element_ident, #config_snake_case_token_stream)
+                                    error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(#element_ident, #config_snake_case_token_stream)
                                 )
                             )
                         }
@@ -4577,11 +4577,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
-                        #ident::#element_ident(value) => ToStringWithConfig::to_string_with_config(value, #config_snake_case_token_stream),
+                        #ident::#element_ident(value) => error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(value, #config_snake_case_token_stream),
                     }
                 });
                 quote::quote! {
-                    impl ToStringWithConfig<'_> for #ident {
+                    impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for #ident {
                         fn to_string_with_config<
                             #config_generic_upper_camel_case_token_stream: #config_lib_snake_case_token_stream::#get_source_place_type_upper_camel_case_token_stream
                              + #config_lib_snake_case_token_stream::#get_timezone_upper_camel_case_token_stream
