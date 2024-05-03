@@ -24,6 +24,97 @@ pub enum ErrorNamedOne {
 }
 
 #[derive(Debug)]
+pub struct DisplayStruct {
+    pub display: std::string::String,
+    pub something: std::primitive::bool,
+}
+impl std::fmt::Display for DisplayStruct {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
+        )
+    }
+}
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStruct {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStruct {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
+impl DisplayStruct {
+    pub fn into_serialize_deserialize_version(self) -> DisplayStructWithSerializeDeserialize {
+        DisplayStructWithSerializeDeserialize {
+            display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize (self.display),
+            something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize (self.something),
+        }
+    }
+}
+//
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct DisplayStructWithSerializeDeserialize {
+    pub display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
+    pub something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize,
+}
+impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter, 
+            "{}",
+            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
+        )
+    }
+}
+impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
+    fn source_to_string_with_config<
+        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+    >(
+        &self,
+        _: &ConfigGeneric,
+    ) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStructWithSerializeDeserialize {
+    fn source_to_string_without_config(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl error_occurence_lib::code_occurence::GetOption for DisplayStructWithSerializeDeserialize {
+    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+        None
+    }
+}
+
+#[derive(
+    Debug,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurenceTest
+)]
+pub enum ErrorNamedTwo {
+    Variant {
+        // #[eo_display_with_serialize_deserialize]
+        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+
+#[derive(Debug)]
 pub struct StdVecVecDisplayStruct(std::vec::Vec<DisplayStruct>);
 impl std::fmt::Display for StdVecVecDisplayStruct {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -367,119 +458,6 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
     }
 }
 /////
-
-
-#[derive(Debug)]
-pub struct DisplayStruct {
-    pub display: std::string::String,
-    pub something: std::primitive::bool,
-}
-impl std::fmt::Display for DisplayStruct {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter, 
-            "{}",
-            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
-        )
-    }
-}
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStruct {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStruct {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for DisplayStruct {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
-impl DisplayStruct {
-    pub fn into_serialize_deserialize_version(self) -> DisplayStructWithSerializeDeserialize {
-        DisplayStructWithSerializeDeserialize {
-            display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize (self.display),
-            something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize (self.something),
-        }
-    }
-}
-//
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct DisplayStructWithSerializeDeserialize {
-    pub display: error_occurence_lib::primitive_types_wrappers::StdStringStringWithSerializeDeserialize,
-    pub something: error_occurence_lib::primitive_types_wrappers::StdPrimitiveBoolWithSerializeDeserialize,
-}
-impl std::fmt::Display for DisplayStructWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter, 
-            "{}",
-            error_occurence_lib::helpers::lines_backslash_addition(&format!("{self:#?}"))
-        )
-    }
-}
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_> for DisplayStructWithSerializeDeserialize {
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        _: &ConfigGeneric,
-    ) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_> for DisplayStructWithSerializeDeserialize {
-    fn source_to_string_without_config(&self) -> std::string::String {
-        self.to_string()
-    }
-}
-impl error_occurence_lib::code_occurence::GetOption for DisplayStructWithSerializeDeserialize {
-    fn get_option(&self) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
-        None
-    }
-}
-//
-
-#[derive(Debug)]
-pub struct ToStdStringStringStruct {
-    pub to_std_string_string: std::string::String,
-}
-impl error_occurence_lib::ToStdStringString for ToStdStringStringStruct {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct ToStdStringStringWithSerializeDeserializeStruct {
-    pub to_std_string_string_with_serialize_deserialize: std::string::String,
-}
-impl error_occurence_lib::ToStdStringString for ToStdStringStringWithSerializeDeserializeStruct {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-
-#[derive(
-    Debug,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest
-)]
-pub enum ErrorNamedTwo {
-    Variant {
-        // #[eo_display_with_serialize_deserialize]
-        eo_display_with_serialize_deserialize_field: error_occurence_lib::primitive_types_wrappers::StdStringString,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
 
 #[derive(Debug, thiserror::Error, 
     error_occurence_lib::ErrorOccurenceTest
