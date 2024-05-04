@@ -4,6 +4,7 @@
     error_occurence_lib::ErrorOccurenceTest
 )]
 pub enum ErrorNamedOne {
+    //todo test on using only code_occurence as pnly field in named variant
     Variant {
         #[eo_string]
         eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
@@ -446,12 +447,10 @@ error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
         }
     }
 }
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOne {
-    fn get_option(
-        &self,
-    ) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+impl error_occurence_lib::code_occurence::Get for ErrorNamedOne {
+    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
-            ErrorNamedOne::Variant { code_occurence, .. } => Some(code_occurence),
+            ErrorNamedOne::Variant { code_occurence, .. } => code_occurence,
         }
     }
 }
@@ -648,14 +647,10 @@ error_occurence_lib ::
         }
     }
 }
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedOneWithSerializeDeserialize {
-    fn get_option(
-        &self,
-    ) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDeserialize {
+    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
-            ErrorNamedOneWithSerializeDeserialize::Variant { code_occurence, .. } => {
-                Some(code_occurence)
-            }
+            ErrorNamedOneWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
         }
     }
 }
@@ -715,12 +710,10 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
         }
     }
 }
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwo {
-    fn get_option(
-        &self,
-    ) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+impl error_occurence_lib::code_occurence::Get for ErrorNamedTwo {
+    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
-            ErrorNamedTwo::Variant { code_occurence, .. } => Some(code_occurence),
+            ErrorNamedTwo::Variant { code_occurence, .. } => code_occurence,
         }
     }
 }
@@ -772,14 +765,10 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
         }
     }
 }
-impl error_occurence_lib::code_occurence::GetOption for ErrorNamedTwoWithSerializeDeserialize {
-    fn get_option(
-        &self,
-    ) -> std::option::Option<&error_occurence_lib::code_occurence::CodeOccurence> {
+impl error_occurence_lib::code_occurence::Get for ErrorNamedTwoWithSerializeDeserialize {
+    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
-            ErrorNamedTwoWithSerializeDeserialize::Variant { code_occurence, .. } => {
-                Some(code_occurence)
-            }
+            ErrorNamedTwoWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
         }
     }
 }

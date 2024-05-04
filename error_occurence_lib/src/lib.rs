@@ -37,7 +37,6 @@ pub mod vec_to_string_with_config_to_string;
 pub mod vec_to_string_without_config_to_string;
 pub mod source_to_string_with_config;
 pub mod source_to_string_without_config;
-pub mod primitive_types_wrappers;
 
 #[macro_export]
 macro_rules! code_occurence {
