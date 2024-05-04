@@ -52,9 +52,9 @@ pub struct DisplayStruct {
 }
 //maybe change it to ToStdStringString ?
 //todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
-impl std::fmt::Display for DisplayStruct {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{self:?}")
+impl error_occurence_lib::ToStdStringString for DisplayStruct {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
     }
 }
 ////////////////////////////////////////
@@ -70,7 +70,7 @@ impl std::fmt::Display for StdVecVecDisplayStruct {
                 std::string::String::from(""),
                 |mut acc, element| {
                     acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                        &element
+                        &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                     ));
                     acc
                 },
@@ -176,7 +176,7 @@ impl std::fmt::Display for StdCollectionsHashMapStdStringStringDisplayStruct {
                 |mut acc, (key, value)| {
                     acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                         &key,
-                        &value,
+                        &error_occurence_lib::ToStdStringString::to_std_string_string(value),
                     ));
                     acc
                 },
@@ -207,7 +207,7 @@ impl error_occurence_lib::code_occurence::GetOption for StdCollectionsHashMapStd
 impl StdCollectionsHashMapStdStringStringDisplayStruct {
     pub fn into_serialize_deserialize_version(self) -> StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize {
         StdCollectionsHashMapStdStringStringDisplayStructWithSerializeDeserialize(self.0.into_iter().map(
-            |(key, value)|(key.into_serialize_deserialize_version(), value.to_string())
+            |(key, value)|(key.into_serialize_deserialize_version(), error_occurence_lib::ToStdStringString::to_std_string_string(&value))
         ).collect())
     }
 }
@@ -440,8 +440,10 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
         "{{
 {}{}{}{}{}{}}}",
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
-            &format!
-                ("eo_display_field: {eo_display_field}")
+            &format!(
+                "eo_display_field: {}",
+                error_occurence_lib::ToStdStringString::to_std_string_string(eo_display_field)
+            )
         ),
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
             &format!
@@ -496,7 +498,10 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
 {}{}{}{}{}{}}}", 
 error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_display_field: {eo_display_field}")),
+                (
+                    "eo_display_field: {}",
+                    error_occurence_lib::ToStdStringString::to_std_string_string(eo_display_field)
+                )),
 
 
                 error_occurence_lib :: lines_space_backslash ::
@@ -557,14 +562,14 @@ impl ErrorNamedOne {
                 hashmap_string_error_occurence,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_display_field: { 
-                    eo_display_field.to_string() 
+                eo_display_field: {
+                    error_occurence_lib::ToStdStringString::to_std_string_string(&eo_display_field)
                 },
                 eo_error_occurence_field: {
                     eo_error_occurence_field.into_serialize_deserialize_version()
                 },
                 eo_vec_display_field: { 
-                    eo_vec_display_field.0.into_iter().map(|element|element.to_string()).collect()
+                    eo_vec_display_field.0.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
                 },
                 eo_vec_error_occurence_field: {
                     eo_vec_error_occurence_field.into_serialize_deserialize_version()
