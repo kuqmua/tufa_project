@@ -19,29 +19,29 @@ where
     }
 }
 
-pub trait VecToStringWithoutConfigToStringWithSerializeDeserialize<'a> {
-    fn vec_to_string_without_config_to_string_with_serialize_deserialize(
-        &self,
-    ) -> std::string::String;
-}
+// pub trait VecToStringWithoutConfigToStringWithSerializeDeserialize<'a> {
+//     fn vec_to_string_without_config_to_string_with_serialize_deserialize(
+//         &self,
+//     ) -> std::string::String;
+// }
 
-impl<'a, VecElementGeneric> VecToStringWithoutConfigToStringWithSerializeDeserialize<'a>
-    for Vec<VecElementGeneric>
-where
-    VecElementGeneric:
-        crate::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'a>,
-{
-    fn vec_to_string_without_config_to_string_with_serialize_deserialize(
-        &self,
-    ) -> std::string::String {
-        crate::helpers::stringified_lines_error_vec(self.iter().fold(
-            std::string::String::from(""),
-            |mut acc, vec_element| {
-                acc.push_str(&crate::helpers::lines_space_backslash_addition(
-                    vec_element.to_string_without_config_with_serialize_deserialize(),
-                ));
-                acc
-            },
-        ))
-    }
-}
+// impl<'a, VecElementGeneric> VecToStringWithoutConfigToStringWithSerializeDeserialize<'a>
+//     for Vec<VecElementGeneric>
+// where
+//     VecElementGeneric:
+//         crate::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize<'a>,
+// {
+//     fn vec_to_string_without_config_to_string_with_serialize_deserialize(
+//         &self,
+//     ) -> std::string::String {
+//         crate::helpers::stringified_lines_error_vec(self.iter().fold(
+//             std::string::String::from(""),
+//             |mut acc, vec_element| {
+//                 acc.push_str(&crate::helpers::lines_space_backslash_addition(
+//                     vec_element.to_string_without_config_with_serialize_deserialize(),
+//                 ));
+//                 acc
+//             },
+//         ))
+//     }
+// }
