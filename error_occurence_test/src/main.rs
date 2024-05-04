@@ -17,6 +17,7 @@ pub enum ErrorNamedOne {
         eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOne>,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
         #[eo_hashmap_string_string]
         hashmap_string_string: std::collections::HashMap<std::string::String, DisplayStruct>,
+        hashmap_string_serde: std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
         #[eo_hashmap_string_error_occurence]
         hashmap_string_error_occurence: std::collections::HashMap<std::string::String, ErrorUnnamedOne>,
 
@@ -119,6 +120,16 @@ fn main() {
                     }
                 ),
             ]),
+        hashmap_string_serde: std::collections::HashMap::from([
+                (
+                    std::string::String::from("key"),
+                    SerializeDeserializeStruct {
+                        one: std::string::String::from("value"),
+                        two: true,
+                        three: 42,
+                    }
+                ),
+            ]),
         hashmap_string_error_occurence: std::collections::HashMap::from([
             (
                 std::string::String::from("key"),
@@ -168,12 +179,13 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_serde,
                 hashmap_string_error_occurence,
                 ..
             } => {
     format!(
         "{{
-{}{}{}{}{}{}{}{}}}",
+{}{}{}{}{}{}{}{}{}}}",
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
             &format!(
                 "eo_display_field: {}",
@@ -256,6 +268,22 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
             &format!
                 (
+                    "hashmap_string_serde: {}", 
+                    error_occurence_lib::helpers::error_occurence_hashmap_formatter(hashmap_string_serde.iter().fold(
+                        std::string::String::new(),
+                        |mut acc, (key, value)| {
+                            acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                &key,
+                                &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                            ));
+                            acc
+                        },
+                    ))
+                )
+        ),
+        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+            &format!
+                (
                     "hashmap_string_error_occurence: {}", 
                     error_occurence_lib::helpers::error_occurence_hashmap_formatter(hashmap_string_error_occurence.iter().fold(
                         std::string::String::new(),
@@ -287,12 +315,13 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 eo_vec_serde,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_serde,
                 hashmap_string_error_occurence,
                 ..
             } => {
                 format!
                 ("{{
-{}{}{}{}{}{}{}{}}}", 
+{}{}{}{}{}{}{}{}{}}}", 
 error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 (
@@ -377,6 +406,25 @@ error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
                     ))
             )
         ),
+
+                error_occurence_lib :: lines_space_backslash ::
+                LinesSpaceBackslash ::
+                lines_space_backslash(& format!
+                (
+                    "hashmap_string_serde: {}", 
+                    error_occurence_lib::helpers::error_occurence_hashmap_formatter(hashmap_string_serde.iter().fold(
+                        std::string::String::new(),
+                        |mut acc, (key, value)| {
+                            acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                &key,
+                                &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                            ));
+                            acc
+                        },
+                    ))
+            )
+        ),
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
@@ -418,6 +466,7 @@ impl ErrorNamedOne {
                 eo_vec_serde,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_serde,
                 hashmap_string_error_occurence,
                 code_occurence,
             } => ErrorNamedOneWithSerializeDeserialize::Variant {
@@ -440,6 +489,7 @@ impl ErrorNamedOne {
                         (key, error_occurence_lib::ToStdStringString::to_std_string_string(&value))
                     ).collect()
                 },
+                hashmap_string_serde,
                 hashmap_string_error_occurence: {
                     hashmap_string_error_occurence.into_iter().map(
                         |(key, value)|(key, value.into_serialize_deserialize_version())
@@ -460,6 +510,7 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
         eo_vec_serde: std::vec::Vec<SerializeDeserializeStruct>,
         eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOneWithSerializeDeserialize>,
         hashmap_string_string: std::collections::HashMap<std::string::String, std::string::String>,
+        hashmap_string_serde: std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
         hashmap_string_error_occurence: std::collections::HashMap<std::string::String, ErrorUnnamedOneWithSerializeDeserialize>,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -484,12 +535,13 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 eo_vec_serde,
                 eo_vec_error_occurence_field,
                 hashmap_string_string,
+                hashmap_string_serde,
                 hashmap_string_error_occurence,
                 ..
             } => {
                 format!
                 ("{{
-{}{}{}{}{}{}{}{}}}", 
+{}{}{}{}{}{}{}{}{}}}", 
 
 
 
@@ -556,6 +608,26 @@ error_occurence_lib ::
                 )
                 
                 ),
+
+                error_occurence_lib :: lines_space_backslash ::
+                LinesSpaceBackslash ::
+                lines_space_backslash(& format!
+                (
+                    "hashmap_string_serde: {}",
+                    error_occurence_lib::helpers::error_occurence_hashmap_formatter(hashmap_string_serde.iter().fold(
+                        std::string::String::new(),
+                        |mut acc, (key, value)| {
+                            acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                &key,
+                                &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                            ));
+                            acc
+                        },
+                    ))
+                )
+                
+                ),
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
