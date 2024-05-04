@@ -36,6 +36,7 @@ pub enum ErrorNamedOne {
 )]
 pub enum ErrorNamedTwo {
     Variant {
+        #[eo_to_std_string_string_serialize_deserialize]
         eo_display_with_serialize_deserialize_field: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
