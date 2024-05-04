@@ -4127,6 +4127,25 @@ fn vec_lifetime_to_lifetime(
 ///////////////////////////////////////////////////////////
 
 enum ErrorOccurenceTestFieldAttribute {
+        // #[eo_to_std_string_string]
+        // eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
+        // #[eo_to_std_string_string_serialize_deserialize]
+        // eo_serde: SerializeDeserializeStruct,
+        // #[eo_error_occurence]
+        // eo_error_occurence_field: ErrorNamedTwo,//IN SERIALIZE DESERIALIZE nested
+        // #[eo_vec_to_std_string_string]//todo remove wrapper under std::vec::Vec
+        // eo_vec_display_field: std::vec::Vec<DisplayStruct>,//IN SERIALIZE DESERIALIZE std::vec::Vec<std::string::String>
+        // #[eo_vec_to_std_string_string_serialize_deserialize]
+        // eo_vec_serde: std::vec::Vec<SerializeDeserializeStruct>,
+        // #[eo_vec_error_occurence]
+        // eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOne>,//IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
+        // #[eo_hashmap_key_std_string_string_value_to_std_string_string]
+        // hashmap_string_string: std::collections::HashMap<std::string::String, DisplayStruct>,
+        // #[eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize]
+        // hashmap_string_serde: std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
+        // #[eo_hashmap_key_std_string_string_value_error_occurence]
+
+
     EoString,
     EoErrorOccurence,
     EoVecString,
