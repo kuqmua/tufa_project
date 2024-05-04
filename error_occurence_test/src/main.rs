@@ -160,11 +160,6 @@ fn main() {
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 //////////////////////////////////////////////////////////
-impl std::fmt::Display for ErrorNamedOne {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(self))
-    }
-}
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
     for ErrorNamedOne
 {
@@ -514,13 +509,6 @@ pub enum ErrorNamedOneWithSerializeDeserialize {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", error_occurence_lib :: to_string_without_config ::
-        ToStringWithoutConfig :: to_string_without_config(self))
-    }
-}
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedOneWithSerializeDeserialize
 {
@@ -654,13 +642,6 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDese
         }
     }
 }
-impl std::fmt::Display for ErrorNamedTwo {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", error_occurence_lib :: to_string_without_config ::
-        ToStringWithoutConfig :: to_string_without_config(self))
-    }
-}
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
     for ErrorNamedTwo
 {
@@ -739,13 +720,6 @@ pub enum ErrorNamedTwoWithSerializeDeserialize {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", error_occurence_lib :: to_string_without_config ::
-        ToStringWithoutConfig :: to_string_without_config(self))
-    }
-}
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedTwoWithSerializeDeserialize
 {
@@ -770,13 +744,6 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedTwoWithSerializeDese
         match self {
             ErrorNamedTwoWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
         }
-    }
-}
-impl std::fmt::Display for ErrorUnnamedOne {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", error_occurence_lib :: to_string_without_config ::
-        ToStringWithoutConfig :: to_string_without_config(self))
     }
 }
 impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for ErrorUnnamedOne {
@@ -818,14 +785,6 @@ impl ErrorUnnamedOne {
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorUnnamedOneWithSerializeDeserialize {
     Something(ErrorNamedTwoWithSerializeDeserialize),
-}
-impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", error_occurence_lib :: to_string_without_config ::
-        ToStringWithoutConfig ::
-        to_string_without_config(self))
-    }
 }
 impl
     error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_>
