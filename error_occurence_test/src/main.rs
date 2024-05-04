@@ -57,15 +57,18 @@ impl error_occurence_lib::ToStdStringString for DisplayStruct {
 }
 
 fn main() {
+    let e_two = ErrorNamedTwo::Variant {
+        eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+        code_occurence: error_occurence_lib::code_occurence!(),
+    };
+    println!("{e_two}");
+    println!("*****************************");
     let e = ErrorNamedOne::Variant {
         eo_display_field: DisplayStruct {
             display: std::string::String::from("value"),
             something: true,
         },
-        eo_error_occurence_field: ErrorNamedTwo::Variant {
-            eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
-            code_occurence: error_occurence_lib::code_occurence!(),
-        },
+        eo_error_occurence_field: e_two,
         eo_vec_display_field: vec![
             DisplayStruct {
                 display: std::string::String::from("value"),
@@ -117,9 +120,7 @@ fn main() {
 //////////////////////////////////////////////////////////
 impl std::fmt::Display for ErrorNamedOne {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", error_occurence_lib :: to_string_without_config ::
-        ToStringWithoutConfig :: to_string_without_config(self))
+        write!(formatter, "{}", error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self))
     }
 }
 impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
