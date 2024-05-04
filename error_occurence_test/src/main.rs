@@ -7,6 +7,7 @@ pub enum ErrorNamedOne {
     Variant {
         #[eo_string]
         eo_display_field: DisplayStruct,//IN SERIALIZE DESERIALIZE std::string::String
+        eo_serde: SerializeDeserializeStruct,
         #[eo_error_occurence]
         eo_error_occurence_field: ErrorNamedTwo,//IN SERIALIZE DESERIALIZE nested
         #[eo_vec_string]//todo remove wrapper under std::vec::Vec
@@ -81,6 +82,11 @@ fn main() {
             display: std::string::String::from("value"),
             something: true,
         },
+        eo_serde: SerializeDeserializeStruct {
+            one: std::string::String::from("value"),
+            two: true,
+            three: 42,
+        },
         eo_error_occurence_field: e_two,
         eo_vec_display_field: vec![
             DisplayStruct {
@@ -148,6 +154,7 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
         match self {
             ErrorNamedOne::Variant {
                 eo_display_field,
+                eo_serde,
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
@@ -157,11 +164,17 @@ impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig
             } => {
     format!(
         "{{
-{}{}{}{}{}{}}}",
+{}{}{}{}{}{}{}}}",
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
             &format!(
                 "eo_display_field: {}",
                 error_occurence_lib::ToStdStringString::to_std_string_string(eo_display_field)
+            )
+        ),
+        error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
+            &format!(
+                "eo_serde: {}",
+                error_occurence_lib::ToStdStringString::to_std_string_string(eo_serde)
             )
         ),
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash(
@@ -244,6 +257,7 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
         match self {
             ErrorNamedOne::Variant {
                 eo_display_field,
+                eo_serde,
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
@@ -253,12 +267,18 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
             } => {
                 format!
                 ("{{
-{}{}{}{}{}{}}}", 
+{}{}{}{}{}{}{}}}", 
 error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 (
                     "eo_display_field: {}",
                     error_occurence_lib::ToStdStringString::to_std_string_string(eo_display_field)
+                )),
+error_occurence_lib ::lines_space_backslash :: LinesSpaceBackslash ::
+                lines_space_backslash(& format!
+                (
+                    "eo_serde: {}",
+                    error_occurence_lib::ToStdStringString::to_std_string_string(eo_serde)
                 )),
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
@@ -349,6 +369,7 @@ impl ErrorNamedOne {
         match self {
             ErrorNamedOne::Variant {
                 eo_display_field,
+                eo_serde,
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
@@ -359,6 +380,7 @@ impl ErrorNamedOne {
                 eo_display_field: {
                     error_occurence_lib::ToStdStringString::to_std_string_string(&eo_display_field)
                 },
+                eo_serde,
                 eo_error_occurence_field: {
                     eo_error_occurence_field.into_serialize_deserialize_version()
                 },
@@ -387,6 +409,7 @@ impl ErrorNamedOne {
 pub enum ErrorNamedOneWithSerializeDeserialize {
     Variant {
         eo_display_field: std::string::String,
+        eo_serde: SerializeDeserializeStruct,
         eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
         eo_vec_display_field: std::vec::Vec<std::string::String>,
         eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOneWithSerializeDeserialize>,
@@ -409,6 +432,7 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
         match self {
             ErrorNamedOneWithSerializeDeserialize::Variant {
                 eo_display_field,
+                eo_serde,
                 eo_error_occurence_field,
                 eo_vec_display_field,
                 eo_vec_error_occurence_field,
@@ -418,7 +442,7 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
             } => {
                 format!
                 ("{{
-{}{}{}{}{}{}}}", 
+{}{}{}{}{}{}{}}}", 
 
 
 
@@ -426,7 +450,10 @@ error_occurence_lib ::
                 lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 ("eo_display_field: {eo_display_field}")),
-
+error_occurence_lib ::
+                lines_space_backslash :: LinesSpaceBackslash ::
+                lines_space_backslash(& format!
+                ("eo_serde: {}", error_occurence_lib::ToStdStringString::to_std_string_string(eo_serde))),
 
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
