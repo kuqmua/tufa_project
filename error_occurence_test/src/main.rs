@@ -56,6 +56,19 @@ impl error_occurence_lib::ToStdStringString for DisplayStruct {
     }
 }
 
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct SerializeDeserializeStruct {
+    pub one: std::string::String,
+    pub two: std::primitive::bool,
+    pub three: std::primitive::u32,
+}
+
+impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+
 fn main() {
     let e_two = ErrorNamedTwo::Variant {
         eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
