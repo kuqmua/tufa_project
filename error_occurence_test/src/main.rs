@@ -163,21 +163,6 @@ fn main() {
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 //////////////////////////////////////////////////////////
-impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for ErrorUnnamedOne {
-    fn to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self
-        {
-            ErrorUnnamedOne :: Something(value) => error_occurence_lib ::
-            to_string_with_config :: ToStringWithConfig ::
-            to_string_with_config(value, config),
-        }
-    }
-}
 impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for ErrorUnnamedOne {
     fn to_string_without_config(&self) -> std::string::String {
         match self
