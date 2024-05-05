@@ -4806,6 +4806,46 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                     ).map(|element|{
                         let element_ident = element.ident.as_ref().expect(ident_in_none_stringified);
+                        fn get_type_path_third_segment_check_if_hashmap<'a>(
+                            value: &'a syn::Field,
+                            proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
+                            std_snake_case_stringified: &std::primitive::str,
+                        ) -> &'a syn::PathSegment {
+                            let segments = if let syn::Type::Path(value) = &value.ty {
+                                &value.path.segments
+                            }
+                            else {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} Type::Path(value) != &element.ty");
+                            };
+                            if segments.len() != 3 {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
+                            }
+                            let first_segment = segments.iter().nth(0).expect("no .nth(0) element");
+                            if first_segment.ident != std_snake_case_stringified {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
+                            }
+                            if first_segment.arguments != syn::PathArguments::None {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
+                            }
+                            let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
+                            {
+                                let collections_snake_case_stringified = <naming_constants::Collections as naming_constants::Naming>::snake_case_stringified();
+                                if second_segment.ident != collections_snake_case_stringified {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {collections_snake_case_stringified} {}", second_segment.ident);
+                                }
+                            }
+                            if second_segment.arguments != syn::PathArguments::None {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None");
+                            }
+                            let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
+                            {
+                                let hashmap_upper_camel_case_stringified = <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified();
+                                if third_segment.ident != hashmap_upper_camel_case_stringified {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {hashmap_upper_camel_case_stringified} {}", third_segment.ident);
+                                }
+                            }
+                            third_segment
+                        }
                         let element_type_with_serialize_deserialize_token_stream = match generate_attribute(&element) {
                             ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
@@ -4909,6 +4949,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 //todo check if original type hashmap key is std::string::String
+                                // println!("{:#?}", &element.ty);
                                 quote::quote!{
                                     std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
                                 }
@@ -4922,39 +4963,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 //todo check if original type hashmap key is std::string::String
-                                let segments = if let syn::Type::Path(value) = &element.ty {
-                                    &value.path.segments
-                                }
-                                else {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} Type::Path(value) != &element.ty");
-                                };
-                                if segments.len() != 3 {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
-                                }
-                                let first_segment = segments.iter().nth(0).expect("no .nth(0) element");
-                                if first_segment.ident != std_snake_case_stringified {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
-                                }
-                                if first_segment.arguments != syn::PathArguments::None {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
-                                }
-                                let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
-                                {
-                                    let collections_snake_case_stringified = <naming_constants::Collections as naming_constants::Naming>::snake_case_stringified();
-                                    if second_segment.ident != collections_snake_case_stringified {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {collections_snake_case_stringified} {}", second_segment.ident);
-                                    }
-                                }
-                                if second_segment.arguments != syn::PathArguments::None {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None");
-                                }
-                                let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
-                                {
-                                    let hashmap_upper_camel_case_stringified = <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified();
-                                    if third_segment.ident != hashmap_upper_camel_case_stringified {
-                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {hashmap_upper_camel_case_stringified} {}", third_segment.ident);
-                                    }
-                                }
+                                let third_segment = get_type_path_third_segment_check_if_hashmap(
+                                    &element,
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    &std_snake_case_stringified,
+                                );
                                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
                                     args,
                                     ..
