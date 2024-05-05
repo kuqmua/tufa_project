@@ -5043,11 +5043,60 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             &format!("{element_ident}: {{}}"),
                             &proc_macro_name_upper_camel_case_ident_stringified,
                         );
+                        //
+                        let format_value_token_stream = match generate_attribute(&element) {
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                quote::quote!{
+                                    
+                                }
+                            },
+                        };
+                        //
                         quote::quote! {
                             #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
                                 &format!(
                                     #ident_colon_to_string_with_config_format_token_stream, 
-                                    #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(#element_ident)
+                                    #format_value_token_stream
                                 )
                             )
                         }

@@ -208,13 +208,35 @@ error_occurence_lib ::
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_vec_display_field: {:#?}", eo_vec_display_field
+                ("eo_vec_display_field: {}", 
+            
+                //
+                    error_occurence_lib::helpers::stringified_lines_error_vec(
+                        eo_vec_display_field.iter().fold(std::string::String::from(""),|mut acc, element |{
+                            acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                                &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                            )); 
+                            acc
+                        })
+                    )
+                //
                 )),
 
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_vec_serde: {:#?}", eo_vec_serde
+                (
+                    "eo_vec_serde: {}", 
+                    //
+                    error_occurence_lib::helpers::stringified_lines_error_vec(
+                        eo_vec_serde.iter().fold(std::string::String::from(""), |mut acc, element|{
+                            acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                                &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                            )); 
+                            acc
+                        })
+                    )
+                    //
                 )),
 
                 error_occurence_lib :: lines_space_backslash ::
@@ -243,7 +265,7 @@ error_occurence_lib ::
                         |mut acc, (key, value)| {
                             acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
                                 &key,
-                                &value,
+                                &error_occurence_lib::ToStdStringString::to_std_string_string(value),
                             ));
                             acc
                         },
