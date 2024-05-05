@@ -4353,6 +4353,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             naming_constants::IS_NONE_STRINGIFIED
         ))
     };
+    let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
@@ -4823,7 +4824,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         "{}{}",
                                         {
                                             let element_type = &element.ty;
-                                            quote::quote!{#element_type}.to_string()
+                                            quote::quote!{#element_type}
                                         },
                                         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
                                     );
@@ -4857,8 +4858,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
                                 }
                                 let first_segment = segments.iter().nth(0).expect("no .nth(0) element");
-                                if first_segment.ident != "std" {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != std {}", first_segment.ident);
+                                if first_segment.ident != std_snake_case_stringified {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
                                 }
                                 if first_segment.arguments != syn::PathArguments::None {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
@@ -4875,20 +4876,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != vec {}", third_segment.ident);
                                 }
                                 let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
-                                    colon2_token,
-                                    lt_token,
                                     args,
-                                    gt_token,
+                                    ..
                                 }) = &third_segment.arguments {
-                                    // if colon2_token != None {
-                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} colon2_token != None");
-                                    // }
-                                    // if lt_token != syn::BinOp::Lt {
-                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} lt_token != Lt");
-                                    // }
-                                    // if gt_token != syn::BinOp::Lt {
-                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} gt_token != Lt");
-                                    // }
                                     if args.len() != 1 {
                                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 1");
                                     }
@@ -4925,6 +4915,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                //todo check if original type hashmap key is std::string::String
                                 let segments = if let syn::Type::Path(value) = &element.ty {
                                     &value.path.segments
                                 }
@@ -4935,8 +4926,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
                                 }
                                 let first_segment = segments.iter().nth(0).expect("no .nth(0) element");
-                                if first_segment.ident != "std" {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != std {}", first_segment.ident);
+                                if first_segment.ident != std_snake_case_stringified {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
                                 }
                                 if first_segment.arguments != syn::PathArguments::None {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
@@ -4953,20 +4944,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != HashMap {}", third_segment.ident);
                                 }
                                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
-                                    colon2_token,
-                                    lt_token,
                                     args,
-                                    gt_token,
+                                    ..
                                 }) = &third_segment.arguments {
-                                    // if colon2_token != None {
-                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} colon2_token != None");
-                                    // }
-                                    // if lt_token != syn::BinOp::Lt {
-                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} lt_token != Lt");
-                                    // }
-                                    // if gt_token != syn::BinOp::Lt {
-                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} gt_token != Lt");
-                                    // }
                                     if args.len() != 2 {
                                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 2");
                                     }
@@ -4986,7 +4966,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
                                 };
                                 quote::quote!{
-                                    std::collections::HashMap<std::string::String, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
+                                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
                                 }
                             },
                         }; 
