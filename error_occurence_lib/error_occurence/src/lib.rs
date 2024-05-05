@@ -4933,15 +4933,21 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
                                 }
                                 let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
-                                if second_segment.ident != "collections" {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != collections {}", second_segment.ident);
+                                {
+                                    let collections_snake_case_stringified = <naming_constants::Collections as naming_constants::Naming>::snake_case_stringified();
+                                    if second_segment.ident != collections_snake_case_stringified {
+                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {collections_snake_case_stringified} {}", second_segment.ident);
+                                    }
                                 }
                                 if second_segment.arguments != syn::PathArguments::None {
                                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None");
                                 }
                                 let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
-                                if third_segment.ident != "HashMap" {
-                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != HashMap {}", third_segment.ident);
+                                {
+                                    let hashmap_upper_camel_case_stringified = <naming_constants::HashMap as naming_constants::Naming>::upper_camel_case_stringified();
+                                    if third_segment.ident != hashmap_upper_camel_case_stringified {
+                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {hashmap_upper_camel_case_stringified} {}", third_segment.ident);
+                                    }
                                 }
                                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
                                     args,

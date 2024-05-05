@@ -144,7 +144,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "generated",
     "route",
     "body",
-    "env"
+    "env",
+    "collections"
 );
 
 #[derive(Debug, Clone, Copy)]
