@@ -5274,18 +5274,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     &quote::quote! {#(#variants_token_stream),*}
                 )
             };
-            let impl_to_string_without_config_with_serialize_deserialize_for_ident_with_serialize_deserialize_token_stream = {
+            let impl_to_string_without_config_for_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
                         #ident_with_serialize_deserialize_token_stream::#element_ident(value) => {
-                            #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream::#to_string_without_config_with_serialize_deserialize_snake_case_token_stream(value)
+                            #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(value)
                         }
                     }
                 });
                 quote::quote! {
-                    impl #error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream<'_> for #ident_with_serialize_deserialize_token_stream {
-                        fn #to_string_without_config_with_serialize_deserialize_snake_case_token_stream(&self) -> #std_string_string_token_stream {
+                    impl #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream<'_> for #ident_with_serialize_deserialize_token_stream {
+                        fn #to_string_without_config_snake_case_token_stream(&self) -> #std_string_string_token_stream {
                             match self {
                                 #(#variants_token_stream),*
                             }
@@ -5300,7 +5300,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
-                // #impl_to_string_without_config_with_serialize_deserialize_for_ident_with_serialize_deserialize_token_stream
+                #impl_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
             }
         }
     };

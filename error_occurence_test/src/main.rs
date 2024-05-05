@@ -162,20 +162,3 @@ fn main() {
     println!("{e_serialize_deserialize_version_deserialized}");
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
-//////////////////////////////////////////////////////////
-impl
-    error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_>
-    for ErrorUnnamedOneWithSerializeDeserialize
-{
-    fn to_string_without_config(&self) -> std::string::String {
-        match self
-        {
-            ErrorUnnamedOneWithSerializeDeserialize :: Something(value) =>
-            {
-                error_occurence_lib :: to_string_without_config ::
-                ToStringWithoutConfig ::
-                to_string_without_config(value)
-            }
-        }
-    }
-}
