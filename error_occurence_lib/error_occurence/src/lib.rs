@@ -4805,19 +4805,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                     ).map(|element|{
                         let element_ident = element.ident.as_ref().expect(ident_in_none_stringified);
-                        // let element_ident_with_serialize_deserialize_token_stream = {
-                        //     let value = format!(
-                        //         "{}{}",
-                        //         {
-                        //             let element_type = &element.ty;
-                        //             quote::quote!{#element_type}.to_string()
-                        //         },
-                        //         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
-                        //     );
-                        //     value
-                        //     .parse::<proc_macro2::TokenStream>()
-                        //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        // };
                         let element_type_with_serialize_deserialize_token_stream = match generate_attribute(&element) {
                             ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
@@ -4831,8 +4818,21 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                                let element_type_with_serialize_deserialize_token_stream = {
+                                    let value = format!(
+                                        "{}{}",
+                                        {
+                                            let element_type = &element.ty;
+                                            quote::quote!{#element_type}.to_string()
+                                        },
+                                        proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+                                    );
+                                    value
+                                    .parse::<proc_macro2::TokenStream>()
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                };
                                 quote::quote!{
-                                    #element_type_with_serialize_deserialize
+                                    #element_type_with_serialize_deserialize_token_stream
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
@@ -4847,8 +4847,68 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                                let segments = if let syn::Type::Path(value) = &element.ty {
+                                    &value.path.segments
+                                }
+                                else {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} Type::Path(value) != &element.ty");
+                                };
+                                if segments.len() != 3 {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
+                                }
+                                let first_segment = segments.iter().nth(0).expect("no .nth(0) element");
+                                if first_segment.ident != "std" {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != std {}", first_segment.ident);
+                                }
+                                if first_segment.arguments != syn::PathArguments::None {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
+                                }
+                                let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
+                                if second_segment.ident != "vec" {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != vec {}", second_segment.ident);
+                                }
+                                if second_segment.arguments != syn::PathArguments::None {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None");
+                                }
+                                let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
+                                if third_segment.ident != "Vec" {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != vec {}", third_segment.ident);
+                                }
+                                let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
+                                    colon2_token,
+                                    lt_token,
+                                    args,
+                                    gt_token,
+                                }) = &third_segment.arguments {
+                                    // if colon2_token != None {
+                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} colon2_token != None");
+                                    // }
+                                    // if lt_token != syn::BinOp::Lt {
+                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} lt_token != Lt");
+                                    // }
+                                    // if gt_token != syn::BinOp::Lt {
+                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} gt_token != Lt");
+                                    // }
+                                    if args.len() != 1 {
+                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 1");
+                                    }
+                                    let value = format!(
+                                        "{}{}",
+                                        {
+                                            let first_arg = args.iter().nth(0).expect("args.iter().nth(0) is None");
+                                            quote::quote! {#first_arg}
+                                        },
+                                        proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                                    );
+                                    value
+                                    .parse::<proc_macro2::TokenStream>()
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                }
+                                else {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
+                                };
                                 quote::quote!{
-                                    std::vec::Vec<#element_vec_type_with_serialize_deserialize>
+                                    std::vec::Vec<#element_vec_type_with_serialize_deserialize_token_stream>
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
@@ -4859,13 +4919,74 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 //todo check if original type hashmap key is std::string::String
+                                let element_type = &element.ty;
                                 quote::quote!{
-                                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type>
+                                    #element_type
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                let segments = if let syn::Type::Path(value) = &element.ty {
+                                    &value.path.segments
+                                }
+                                else {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} Type::Path(value) != &element.ty");
+                                };
+                                if segments.len() != 3 {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
+                                }
+                                let first_segment = segments.iter().nth(0).expect("no .nth(0) element");
+                                if first_segment.ident != "std" {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != std {}", first_segment.ident);
+                                }
+                                if first_segment.arguments != syn::PathArguments::None {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
+                                }
+                                let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
+                                if second_segment.ident != "collections" {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != collections {}", second_segment.ident);
+                                }
+                                if second_segment.arguments != syn::PathArguments::None {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None");
+                                }
+                                let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
+                                if third_segment.ident != "HashMap" {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != HashMap {}", third_segment.ident);
+                                }
+                                let element_hashmap_value_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
+                                    colon2_token,
+                                    lt_token,
+                                    args,
+                                    gt_token,
+                                }) = &third_segment.arguments {
+                                    // if colon2_token != None {
+                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} colon2_token != None");
+                                    // }
+                                    // if lt_token != syn::BinOp::Lt {
+                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} lt_token != Lt");
+                                    // }
+                                    // if gt_token != syn::BinOp::Lt {
+                                    //     panic!("{proc_macro_name_upper_camel_case_ident_stringified} gt_token != Lt");
+                                    // }
+                                    if args.len() != 2 {
+                                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 2");
+                                    }
+                                    let value = format!(
+                                        "{}{}",
+                                        {
+                                            let first_arg = args.iter().nth(1).expect("args.iter().nth(1) is None");
+                                            quote::quote! {#first_arg}
+                                        },
+                                        proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                                    );
+                                    value
+                                    .parse::<proc_macro2::TokenStream>()
+                                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                                }
+                                else {
+                                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
+                                };
                                 quote::quote!{
-                                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type_with_serialize_deserialize>
+                                    std::collections::HashMap<std::string::String, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
                                 }
                             },
                         }; 
@@ -4957,7 +5078,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
                 #impl_error_occurence_lib_code_occurence_get_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
-                // #enum_ident_with_serialize_deserialize_token_stream
+                #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
                 // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
                 // #impl_error_occurence_lib_code_occurence_get_option_for_ident_with_serialize_deserialize_token_stream
