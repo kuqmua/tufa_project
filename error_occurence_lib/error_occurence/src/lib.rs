@@ -4805,21 +4805,72 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                     ).map(|element|{
                         let element_ident = element.ident.as_ref().expect(ident_in_none_stringified);
-                        let element_ident_with_serialize_deserialize_token_stream = {
-                            let value = format!(
-                                "{}{}",
-                                {
-                                    let element_type = &element.ty;
-                                    quote::quote!{#element_type}.to_string()
-                                },
-                                proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
-                            );
-                            value
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
+                        // let element_ident_with_serialize_deserialize_token_stream = {
+                        //     let value = format!(
+                        //         "{}{}",
+                        //         {
+                        //             let element_type = &element.ty;
+                        //             quote::quote!{#element_type}.to_string()
+                        //         },
+                        //         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+                        //     );
+                        //     value
+                        //     .parse::<proc_macro2::TokenStream>()
+                        //     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                        // };
+                        let element_type_with_serialize_deserialize_token_stream = match generate_attribute(&element) {
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                                quote::quote!{
+                                    #std_string_string_token_stream
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                                let element_type = &element.ty;
+                                quote::quote!{
+                                    #element_type
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                                quote::quote!{
+                                    #element_type_with_serialize_deserialize
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                                quote::quote!{
+                                    std::vec::Vec<#std_string_string_token_stream>
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                let element_type = &element.ty;
+                                quote::quote!{
+                                    #element_type
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                                quote::quote!{
+                                    std::vec::Vec<#element_vec_type_with_serialize_deserialize>
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                                //todo check if original type hashmap key is std::string::String
+                                quote::quote!{
+                                    std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                //todo check if original type hashmap key is std::string::String
+                                quote::quote!{
+                                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type>
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                quote::quote!{
+                                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type_with_serialize_deserialize>
+                                }
+                            },
+                        }; 
                         quote::quote! {
-                            #element_ident: #element_ident_with_serialize_deserialize_token_stream,
+                            #element_ident: #element_type_with_serialize_deserialize_token_stream,
                         }
                     });
                     quote::quote! {
