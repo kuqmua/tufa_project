@@ -4711,11 +4711,70 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                     ).map(|element|{
                         let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                        quote::quote! {
-                            #element_ident: { 
-                                #element_ident.#into_serialize_deserialize_version_snake_case_token_stream()
+                        let conversion_token_stream = match generate_attribute(&element) {
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                                quote::quote!{
+                                    #element_ident: {
+                                        error_occurence_lib::ToStdStringString::to_std_string_string(&#element_ident)
+                                    }
+                                }
                             },
-                        }
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                                quote::quote!{
+                                    #element_ident
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                                quote::quote!{
+                                    #element_ident: {
+                                        #element_ident.into_serialize_deserialize_version()
+                                    }
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                                quote::quote!{
+                                    #element_ident: { 
+                                        #element_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
+                                    }
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                quote::quote!{
+                                    #element_ident
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                                quote::quote!{
+                                    #element_ident: {
+                                        #element_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
+                                    }
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                                quote::quote!{
+                                    #element_ident: {
+                                        #element_ident.into_iter().map(|(key, value)|
+                                            (key, error_occurence_lib::ToStdStringString::to_std_string_string(&value))
+                                        ).collect()
+                                    }
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                quote::quote!{
+                                    #element_ident
+                                }
+                            },
+                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                quote::quote!{
+                                    #element_ident: {
+                                        #element_ident.into_iter().map(
+                                            |(key, value)|(key, value.into_serialize_deserialize_version())
+                                        ).collect()
+                                    }
+                                }
+                            },
+                        };
+                        quote::quote!{#conversion_token_stream,}
                     });
                     quote::quote! {
                         #ident::#element_ident {
@@ -4846,7 +4905,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
                 #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
                 #impl_error_occurence_lib_code_occurence_get_for_ident_token_stream
-                // #impl_ident_into_serialize_deserialize_version_token_stream
+                #impl_ident_into_serialize_deserialize_version_token_stream
                 // #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
                 // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream

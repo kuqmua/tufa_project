@@ -162,51 +162,6 @@ fn main() {
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 //////////////////////////////////////////////////////////
-impl ErrorNamedOne {
-    pub fn into_serialize_deserialize_version(self) -> ErrorNamedOneWithSerializeDeserialize {
-        match self {
-            ErrorNamedOne::Variant {
-                eo_display_field,
-                eo_serde,
-                eo_error_occurence_field,
-                eo_vec_display_field,
-                eo_vec_serde,
-                eo_vec_error_occurence_field,
-                hashmap_string_string,
-                hashmap_string_serde,
-                hashmap_string_error_occurence,
-                code_occurence,
-            } => ErrorNamedOneWithSerializeDeserialize::Variant {
-                eo_display_field: {
-                    error_occurence_lib::ToStdStringString::to_std_string_string(&eo_display_field)
-                },
-                eo_serde,
-                eo_error_occurence_field: {
-                    eo_error_occurence_field.into_serialize_deserialize_version()
-                },
-                eo_vec_display_field: { 
-                    eo_vec_display_field.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
-                },
-                eo_vec_serde,
-                eo_vec_error_occurence_field: {
-                    eo_vec_error_occurence_field.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
-                },
-                hashmap_string_string: {
-                    hashmap_string_string.into_iter().map(|(key, value)|
-                        (key, error_occurence_lib::ToStdStringString::to_std_string_string(&value))
-                    ).collect()
-                },
-                hashmap_string_serde,
-                hashmap_string_error_occurence: {
-                    hashmap_string_error_occurence.into_iter().map(
-                        |(key, value)|(key, value.into_serialize_deserialize_version())
-                    ).collect()
-                },
-                code_occurence: code_occurence,
-            },
-        }
-    }
-}
 #[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
 pub enum ErrorNamedOneWithSerializeDeserialize {
     Variant {
@@ -352,21 +307,6 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDese
     fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
             ErrorNamedOneWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
-        }
-    }
-}
-impl ErrorNamedTwo {
-    pub fn into_serialize_deserialize_version(self) -> ErrorNamedTwoWithSerializeDeserialize {
-        match self {
-            ErrorNamedTwo::Variant {
-                eo_display_with_serialize_deserialize_field,
-                code_occurence,
-            } => ErrorNamedTwoWithSerializeDeserialize::Variant {
-                eo_display_with_serialize_deserialize_field: {
-                    error_occurence_lib::ToStdStringString::to_std_string_string(&eo_display_with_serialize_deserialize_field)
-                },
-                code_occurence: code_occurence,
-            },
         }
     }
 }
