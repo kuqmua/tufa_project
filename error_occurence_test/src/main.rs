@@ -163,31 +163,6 @@ fn main() {
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 //////////////////////////////////////////////////////////
-impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for ErrorUnnamedOne {
-    fn to_string_without_config(&self) -> std::string::String {
-        match self
-        {
-            ErrorUnnamedOne :: Something(value) => error_occurence_lib ::
-            to_string_without_config :: ToStringWithoutConfig ::
-            to_string_without_config(value),
-        }
-    }
-}
-impl ErrorUnnamedOne {
-    pub fn into_serialize_deserialize_version(self) -> ErrorUnnamedOneWithSerializeDeserialize {
-        match self {
-            ErrorUnnamedOne::Something(value) => {
-                ErrorUnnamedOneWithSerializeDeserialize::Something(
-                    value.into_serialize_deserialize_version(),
-                )
-            }
-        }
-    }
-}
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorUnnamedOneWithSerializeDeserialize {
-    Something(ErrorNamedTwoWithSerializeDeserialize),
-}
 impl
     error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_>
     for ErrorUnnamedOneWithSerializeDeserialize
