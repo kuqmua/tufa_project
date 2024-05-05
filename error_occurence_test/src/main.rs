@@ -188,7 +188,10 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
 error_occurence_lib ::
                 lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_display_field: {eo_display_field}")),
+                (
+                    "eo_display_field: {}",
+                    error_occurence_lib::ToStdStringString::to_std_string_string(eo_display_field)
+                )),
 error_occurence_lib ::
                 lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
