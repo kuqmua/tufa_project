@@ -4810,6 +4810,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             value: &'a syn::Field,
                             proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
                             std_snake_case_stringified: &std::primitive::str,
+                            std_string_string_token_stream: &proc_macro2::TokenStream,
                         ) -> &'a syn::GenericArgument {
                             let segments = if let syn::Type::Path(value) = &value.ty {
                                 &value.path.segments
@@ -4855,6 +4856,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             };
                             if args.len() != 2 {
                                 panic!("{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 2");
+                            }
+                            let first_argument_stringified = {
+                                let first_argument = args.iter().nth(0).expect("args.iter().nth(1) is None");
+                                quote::quote! {#first_argument}.to_string()
+                            };
+                            if std_string_string_token_stream.to_string() != first_argument_stringified {
+                                panic!("{proc_macro_name_upper_camel_case_ident_stringified} {std_string_string_token_stream} != {first_argument_stringified}");
                             }
                             args.iter().nth(1).expect("args.iter().nth(1) is None")
                         }
@@ -4960,14 +4968,23 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                                //todo check if original type hashmap key is std::string::String
-                                // println!("{:#?}", &element.ty);
+                                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
+                                    &element,
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    &std_snake_case_stringified,
+                                    &std_string_string_token_stream,
+                                );
                                 quote::quote!{
                                     std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                //todo check if original type hashmap key is std::string::String
+                                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
+                                    &element,
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                    &std_snake_case_stringified,
+                                    &std_string_string_token_stream,
+                                );
                                 let element_type = &element.ty;
                                 quote::quote!{
                                     #element_type
@@ -4979,6 +4996,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     &element,
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                     &std_snake_case_stringified,
+                                    &std_string_string_token_stream,
                                 );
                                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
                                     let value = format!(
