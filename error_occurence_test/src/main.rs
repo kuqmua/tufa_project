@@ -174,13 +174,6 @@ fn main() {
 
 
 /////////////////////////////
-impl error_occurence_lib::code_occurence::Get for ErrorNamedOne {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
-        match self {
-            ErrorNamedOne::Variant { code_occurence, .. } => code_occurence,
-        }
-    }
-}
 impl ErrorNamedOne {
     pub fn into_serialize_deserialize_version(self) -> ErrorNamedOneWithSerializeDeserialize {
         match self {
@@ -379,13 +372,6 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDese
     fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
         match self {
             ErrorNamedOneWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
-        }
-    }
-}
-impl error_occurence_lib::code_occurence::Get for ErrorNamedTwo {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
-        match self {
-            ErrorNamedTwo::Variant { code_occurence, .. } => code_occurence,
         }
     }
 }
