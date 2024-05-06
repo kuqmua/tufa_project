@@ -5214,16 +5214,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         },
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
+            let display_formatter_handle_token_stream = generate_display_formatter_handle_token_stream(&quote::quote!{value});
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
                 &quote::quote!{
                     match self {
-                        ErrorUnnamedOne::Something(value) => {
-                            error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
-                                error_occurence_lib::code_occurence::Get::get(value),
-                            )
-                        },
+                        #ident::Something(value) => #display_formatter_handle_token_stream,
                     }
                 }
             );
@@ -5331,12 +5327,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 &ident_with_serialize_deserialize_token_stream,
                 &quote::quote!{
                     match self {
-                        ErrorUnnamedOneWithSerializeDeserialize::Something(value) => {
-                            error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
-                                error_occurence_lib::code_occurence::Get::get(value),
-                            )
-                        }
+                        #ident_with_serialize_deserialize_token_stream::Something(value) => #display_formatter_handle_token_stream,
                     }
                 }
             );
