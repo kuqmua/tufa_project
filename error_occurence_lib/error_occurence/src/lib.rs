@@ -5089,7 +5089,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             },
                             ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
                                 quote::quote!{
-                                    error_occurence_lib::to_string_without_config::ToStringWithoutConfig::to_string_without_config(#element_ident)
+                                    #element_ident
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
@@ -5209,7 +5209,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
-                // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
+                #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
                 // #impl_error_occurence_lib_code_occurence_get_for_ident_with_serialize_deserialize_token_stream
             }
         },
