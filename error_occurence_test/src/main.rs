@@ -174,23 +174,6 @@ fn main() {
 
 
 /////////////////////////////
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorNamedOneWithSerializeDeserialize {
-    Variant {
-        eo_display_field: std::string::String,
-        eo_serde: SerializeDeserializeStruct,
-        eo_error_occurence_field: ErrorNamedTwoWithSerializeDeserialize,
-        eo_vec_display_field: std::vec::Vec<std::string::String>,
-        eo_vec_serde: std::vec::Vec<SerializeDeserializeStruct>,
-        eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOneWithSerializeDeserialize>,
-        hashmap_string_string: std::collections::HashMap<std::string::String, std::string::String>,
-        hashmap_string_serde:
-            std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
-        hashmap_string_error_occurence:
-            std::collections::HashMap<std::string::String, ErrorUnnamedOneWithSerializeDeserialize>,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedOneWithSerializeDeserialize
 {
@@ -312,13 +295,6 @@ impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDese
             ErrorNamedOneWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
         }
     }
-}
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorNamedTwoWithSerializeDeserialize {
-    Variant {
-        eo_display_with_serialize_deserialize_field: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
 }
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedTwoWithSerializeDeserialize
