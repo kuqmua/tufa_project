@@ -1,13 +1,13 @@
-pub trait ToStringWithConfig<'a> {
-    fn to_string_with_config<
-        ConfigGeneric: app_state::GetSourcePlaceType
-            + app_state::GetTimezone
-            + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String;
-}
+// pub trait ToStringWithConfig<'a> {
+//     fn to_string_with_config<
+//         ConfigGeneric: app_state::GetSourcePlaceType
+//             + app_state::GetTimezone
+//             + ?Sized,
+//     >(
+//         &self,
+//         config: &ConfigGeneric,
+//     ) -> std::string::String;
+// }
 
 // impl<'a, SelfGeneric> ToStringWithConfig<'a> for SelfGeneric
 // where
