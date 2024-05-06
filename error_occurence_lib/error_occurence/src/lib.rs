@@ -5308,7 +5308,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         }
     };
     let gen = quote::quote! {
-        #tokens
+        // #tokens
     };
     // println!("{gen} ");
     // if ident == "" {

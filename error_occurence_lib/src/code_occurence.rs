@@ -165,9 +165,9 @@ where
     }
 }
 
-pub trait Get {
-    fn get(&self) -> &CodeOccurence;
-}
+// pub trait Get {
+//     fn get(&self) -> &CodeOccurence;
+// }
 
 pub trait GetCodePath {
     fn get_code_path(
