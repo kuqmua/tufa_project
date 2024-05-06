@@ -5273,7 +5273,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
                 &ident_with_serialize_deserialize_token_stream,
-                &generate_display_formatter_unnamed_token_stream(&quote::quote!{#ident_with_serialize_deserialize_token_stream})
+                &generate_display_formatter_unnamed_token_stream(&ident_with_serialize_deserialize_token_stream)
             );
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
