@@ -1,3 +1,12 @@
+// todo is there is no point to add additional info to enum like this
+// eo_error_occurence_field: {
+//     eo_display_with_serialize_deserialize_field: value
+// }
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
+// impl display like this this
+// eo_error_occurence_field
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/error_occurence_test/src/main.rs#L85 2024-05-06 09:17:23
+
 #[derive(
     Debug,
     thiserror::Error,
@@ -773,7 +782,20 @@ impl std::fmt::Display for ErrorUnnamedOne {
         (
             formatter, 
             "{}", 
-            error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            //HERE
+            match self
+            {
+                ErrorUnnamedOne :: Something(value) =>
+                {
+                    // error_occurence_lib::to_string_without_config::ToStringWithoutConfig :: to_string_without_config(value)
+                    //HERE
+                    error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                        error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+                        error_occurence_lib::code_occurence::Get::get(value),
+                    )
+                },
+            }
         )
     }
 }
@@ -792,22 +814,23 @@ impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for Erro
         }
     }
 }
-impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for ErrorUnnamedOne {
-    fn to_string_without_config(&self) -> std::string::String {
-        match self
-        {
-            ErrorUnnamedOne :: Something(value) =>
-            {
-                // error_occurence_lib::to_string_without_config::ToStringWithoutConfig :: to_string_without_config(value)
-                //HERE
-                error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                    error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
-                    error_occurence_lib::code_occurence::Get::get(value),
-                )
-            },
-        }
-    }
-}
+//HERE
+// impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> for ErrorUnnamedOne {
+//     fn to_string_without_config(&self) -> std::string::String {
+//         match self
+//         {
+//             ErrorUnnamedOne :: Something(value) =>
+//             {
+//                 // error_occurence_lib::to_string_without_config::ToStringWithoutConfig :: to_string_without_config(value)
+//                 //HERE
+//                 error_occurence_lib::helpers::source_and_code_occurence_formatter(
+//                     error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+//                     error_occurence_lib::code_occurence::Get::get(value),
+//                 )
+//             },
+//         }
+//     }
+// }
 impl ErrorUnnamedOne {
     pub fn into_serialize_deserialize_version(self) -> ErrorUnnamedOneWithSerializeDeserialize {
         match self {
@@ -829,25 +852,43 @@ impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
         (
             formatter, 
             "{}", 
-            error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            //HERE
+            // error_occurence_lib::helpers::source_and_code_occurence_formatter(
+            //     error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
+            //     error_occurence_lib::code_occurence::Get::get(self),
+            // )
+            match self
+            {
+                ErrorUnnamedOneWithSerializeDeserialize :: Something(value) =>
+                {
+                    // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(value)
+                    //HERE
+                    error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                        error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+                        error_occurence_lib::code_occurence::Get::get(value),
+                    )
+                }
+            }
         )
     }
 }
-impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_>
-    for ErrorUnnamedOneWithSerializeDeserialize
-{
-    fn to_string_without_config(&self) -> std::string::String {
-        match self
-        {
-            ErrorUnnamedOneWithSerializeDeserialize :: Something(value) =>
-            {
-                // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(value)
-                //HERE
-                error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                    error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
-                    error_occurence_lib::code_occurence::Get::get(value),
-                )
-            }
-        }
-    }
-}
+//HERE
+// impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_>
+//     for ErrorUnnamedOneWithSerializeDeserialize
+// {
+//     fn to_string_without_config(&self) -> std::string::String {
+//         match self
+//         {
+//             ErrorUnnamedOneWithSerializeDeserialize :: Something(value) =>
+//             {
+//                 // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(value)
+//                 //HERE
+//                 error_occurence_lib::helpers::source_and_code_occurence_formatter(
+//                     error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+//                     error_occurence_lib::code_occurence::Get::get(value),
+//                 )
+//             }
+//         }
+//     }
+// }

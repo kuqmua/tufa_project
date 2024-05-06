@@ -1,6 +1,6 @@
-pub trait ToStringWithoutConfig<'a> {
-    fn to_string_without_config(&self) -> std::string::String;
-}
+// pub trait ToStringWithoutConfig<'a> {
+//     fn to_string_without_config(&self) -> std::string::String;
+// }
 
 // impl<'a, SelfGeneric> ToStringWithoutConfig<'a> for SelfGeneric
 // where
