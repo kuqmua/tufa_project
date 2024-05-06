@@ -736,20 +736,20 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
 //         }
 //     }
 // }
-impl std::fmt::Display for ErrorUnnamedOne {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", match self
-        {
-            ErrorUnnamedOne :: Something(value) => value.to_string()
+// impl std::fmt::Display for ErrorUnnamedOne {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!
+//         (formatter, "{}", match self
+//         {
+//             ErrorUnnamedOne :: Something(value) => value.to_string()
             
-            // error_occurence_lib ::helpers ::source_and_code_occurence_formatter(
-            //     error_occurence_lib ::source_to_string_without_config :: SourceToStringWithoutConfig ::source_to_string_without_config(value), 
-            //     error_occurence_lib ::code_occurence :: Get :: get(value),
-            // )
-        })
-    }
-}
+//             // error_occurence_lib ::helpers ::source_and_code_occurence_formatter(
+//             //     error_occurence_lib ::source_to_string_without_config :: SourceToStringWithoutConfig ::source_to_string_without_config(value), 
+//             //     error_occurence_lib ::code_occurence :: Get :: get(value),
+//             // )
+//         })
+//     }
+// }
 impl ErrorUnnamedOne {
     pub fn into_serialize_deserialize_version(self) -> ErrorUnnamedOneWithSerializeDeserialize {
         match self {
@@ -765,17 +765,17 @@ impl ErrorUnnamedOne {
 pub enum ErrorUnnamedOneWithSerializeDeserialize {
     Something(ErrorNamedTwoWithSerializeDeserialize),
 }
-impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!
-        (formatter, "{}", match self
-        {
-            ErrorUnnamedOneWithSerializeDeserialize :: Something(value) => value.to_string()
-            // error_occurence_lib :: helpers ::
-            // source_and_code_occurence_formatter(error_occurence_lib ::
-            // source_to_string_without_config :: SourceToStringWithoutConfig ::
-            // source_to_string_without_config(value), error_occurence_lib ::
-            // code_occurence :: Get :: get(value),)
-        })
-    }
-}
+// impl std::fmt::Display for ErrorUnnamedOneWithSerializeDeserialize {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!
+//         (formatter, "{}", match self
+//         {
+//             ErrorUnnamedOneWithSerializeDeserialize :: Something(value) => value.to_string()
+//             // error_occurence_lib :: helpers ::
+//             // source_and_code_occurence_formatter(error_occurence_lib ::
+//             // source_to_string_without_config :: SourceToStringWithoutConfig ::
+//             // source_to_string_without_config(value), error_occurence_lib ::
+//             // code_occurence :: Get :: get(value),)
+//         })
+//     }
+// }
