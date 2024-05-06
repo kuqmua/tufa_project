@@ -4413,7 +4413,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             },
                             ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
                                 quote::quote!{
-                                    error_occurence_lib::to_string_with_config::ToStringWithConfig::to_string_with_config(#element_ident, config)
+                                    #element_ident
                                 }
                             },
                             ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
@@ -5202,15 +5202,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 &ident_with_serialize_deserialize_token_stream
             );
             quote::quote! {
-                // #impl_std_fmt_display_for_ident_token_stream
-                // #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
-                // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
-                // #impl_error_occurence_lib_code_occurence_get_for_ident_token_stream
-                // #impl_ident_into_serialize_deserialize_version_token_stream
-                // #enum_ident_with_serialize_deserialize_token_stream
-                // #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
-                // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
-                // #impl_error_occurence_lib_code_occurence_get_for_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_token_stream
+                #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
+                #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
+                #impl_error_occurence_lib_code_occurence_get_for_ident_token_stream
+                #impl_ident_into_serialize_deserialize_version_token_stream
+                #enum_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
+                #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
+                #impl_error_occurence_lib_code_occurence_get_for_ident_with_serialize_deserialize_token_stream
             }
         },
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
@@ -5235,10 +5235,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
-                        #ident::#element_ident(value) => #error_occurence_lib_to_string_with_config_to_string_with_config_token_stream::#to_string_with_config_snake_case_token_stream(
-                            value, 
-                            #config_snake_case_token_stream
-                        ),
+                        #ident::#element_ident(value) => value.to_string()
                     }
                 });
                 quote::quote! {
@@ -5327,11 +5324,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 }
             );
             quote::quote! {
-                // #impl_std_fmt_display_for_ident_token_stream
-                // #impl_to_string_with_config_for_ident_token_stream
-                // #impl_ident_into_serialize_deserialize_version_token_stream
-                // #enum_ident_with_serialize_deserialize_token_stream
-                // #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_token_stream
+                #impl_to_string_with_config_for_ident_token_stream
+                #impl_ident_into_serialize_deserialize_version_token_stream
+                #enum_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
             }
         }
     };
