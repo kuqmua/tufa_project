@@ -5336,7 +5336,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let gen = quote::quote! {
         #tokens
     };
-    println!("{gen}");
+    // println!("{gen} ");
     // if ident == "" {
         // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //     &proc_macro_name_upper_camel_case,
