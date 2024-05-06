@@ -174,20 +174,6 @@ fn main() {
 
 
 /////////////////////////////
-impl error_occurence_lib::code_occurence::Get for ErrorNamedOneWithSerializeDeserialize {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
-        match self {
-            ErrorNamedOneWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
-        }
-    }
-}
-impl error_occurence_lib::code_occurence::Get for ErrorNamedTwoWithSerializeDeserialize {
-    fn get(&self) -> &error_occurence_lib::code_occurence::CodeOccurence {
-        match self {
-            ErrorNamedTwoWithSerializeDeserialize::Variant { code_occurence, .. } => code_occurence,
-        }
-    }
-}
 impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for ErrorUnnamedOne {
     fn to_string_with_config<
         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
