@@ -4260,7 +4260,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         quote::quote! {
             impl #std_fmt_display_token_stream for #ident_token_stream {
                 fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    #content_token_stream
+                    write!(
+                        formatter, "{}", 
+                        #content_token_stream
+                    )
                 }
             }
         }
@@ -4354,18 +4357,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     };
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
-            let write_display_formatter_handle_token_stream = {
-                let display_formatter_handle_token_stream = generate_display_formatter_handle_token_stream(&quote::quote!{self});
-                quote::quote!{
-                    write!(
-                        formatter, "{}", 
-                        #display_formatter_handle_token_stream
-                    )
-                }
-            };
+            let display_formatter_handle_token_stream = generate_display_formatter_handle_token_stream(&quote::quote!{self});
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
-                &write_display_formatter_handle_token_stream
+                &display_formatter_handle_token_stream
             );
             let impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -5041,7 +5036,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
                 &ident_with_serialize_deserialize_token_stream,
-                &write_display_formatter_handle_token_stream
+                &display_formatter_handle_token_stream
             );
             let impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -5222,17 +5217,14 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
                 &quote::quote!{
-                    write!(
-                        formatter, "{}", 
-                        match self {
-                            ErrorUnnamedOne::Something(value) => {
-                                error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                                    error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
-                                    error_occurence_lib::code_occurence::Get::get(value),
-                                )
-                            },
-                        }
-                    )
+                    match self {
+                        ErrorUnnamedOne::Something(value) => {
+                            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+                                error_occurence_lib::code_occurence::Get::get(value),
+                            )
+                        },
+                    }
                 }
             );
             //
@@ -5338,16 +5330,14 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
                 &ident_with_serialize_deserialize_token_stream,
                 &quote::quote!{
-                    write!(formatter, "{}", 
-                        match self {
-                            ErrorUnnamedOneWithSerializeDeserialize::Something(value) => {
-                                error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                                    error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
-                                    error_occurence_lib::code_occurence::Get::get(value),
-                                )
-                            }
+                    match self {
+                        ErrorUnnamedOneWithSerializeDeserialize::Something(value) => {
+                            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+                                error_occurence_lib::code_occurence::Get::get(value),
+                            )
                         }
-                    )
+                    }
                 }
             );
             //
