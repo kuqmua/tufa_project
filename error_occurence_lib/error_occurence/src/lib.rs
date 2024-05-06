@@ -5236,15 +5236,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     let element_ident = &element.ident;
                     quote::quote! {
                         #ident::#element_ident(value) => {
-                            // #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(value)
-                            error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                                //
-        // error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
-        // error_occurence_lib::code_occurence::Get::get(self)
-                                //
-                                self.source_to_string_without_config(),
-                                self.get(),
-                            )
+                            #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(value)
                         },
                     }
                 });
