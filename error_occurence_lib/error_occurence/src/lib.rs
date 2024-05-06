@@ -5203,7 +5203,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             );
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
-                // #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
+                #impl_error_occurence_lib_source_to_string_with_config_source_to_string_with_config_for_ident_token_stream
                 // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
                 // #impl_error_occurence_lib_code_occurence_get_for_ident_token_stream
                 // #impl_ident_into_serialize_deserialize_version_token_stream
