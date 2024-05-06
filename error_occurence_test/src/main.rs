@@ -170,7 +170,12 @@ impl std::fmt::Display for ErrorNamedOne {
         write!
         (
             formatter, "{}", 
-            error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            //HERE
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
+                error_occurence_lib::code_occurence::Get::get(self),
+            )
         )
     }
 }
@@ -319,7 +324,12 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 lines_space_backslash(& format!
                 (
                     "eo_error_occurence_field: {}", 
-                    error_occurence_lib ::to_string_without_config :: ToStringWithoutConfig ::to_string_without_config(eo_error_occurence_field)
+                    // error_occurence_lib ::to_string_without_config :: ToStringWithoutConfig ::to_string_without_config(eo_error_occurence_field)
+                    //HERE
+                    error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                        error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(eo_error_occurence_field),
+                        error_occurence_lib::code_occurence::Get::get(eo_error_occurence_field),
+                    )
                 )),
 
 
@@ -345,17 +355,25 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                     acc.push_str(& error_occurence_lib :: helpers ::
                     lines_space_backslash_addition(& error_occurence_lib ::
                     ToStdStringString :: to_std_string_string(element))); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
+                },)))), 
+                
+                
+                error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
-                ("eo_vec_error_occurence_field: {}", error_occurence_lib ::
-                helpers ::
-                stringified_lines_error_vec(eo_vec_error_occurence_field.iter().fold(std
-                :: string :: String :: from(""), | mut acc, element |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    lines_space_backslash_addition(& element)); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
+                (
+                    "eo_vec_error_occurence_field: {}", 
+                    error_occurence_lib :: helpers :: stringified_lines_error_vec(
+                        eo_vec_error_occurence_field.iter().fold(std:: string :: String :: from(""), | mut acc, element |{
+                            acc.push_str(& error_occurence_lib :: helpers ::lines_space_backslash_addition(& element)); 
+                            acc
+                        })
+                    )
+                )), 
+                
+                
+                
+                error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 ("hashmap_string_string: {}", error_occurence_lib :: helpers
@@ -486,7 +504,12 @@ impl std::fmt::Display for ErrorNamedOneWithSerializeDeserialize {
         (
             formatter, 
             "{}", 
-            error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            //HERE
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
+                error_occurence_lib::code_occurence::Get::get(self),
+            )
         )
     }
 }
@@ -526,7 +549,12 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 lines_space_backslash(& format!
                 (
                     "eo_error_occurence_field: {}", 
-                    error_occurence_lib ::to_string_without_config :: ToStringWithoutConfig ::to_string_without_config(eo_error_occurence_field)
+                    // error_occurence_lib ::to_string_without_config :: ToStringWithoutConfig ::to_string_without_config(eo_error_occurence_field)
+                    //HERE
+                    error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                        error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(eo_error_occurence_field),
+                        error_occurence_lib::code_occurence::Get::get(eo_error_occurence_field),
+                    )
                 )),
 
 
@@ -613,7 +641,12 @@ impl std::fmt::Display for ErrorNamedTwo {
         (
             formatter, 
             "{}", 
-            error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            //HERE
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
+                error_occurence_lib::code_occurence::Get::get(self),
+            )
         )
     }
 }
@@ -697,7 +730,12 @@ impl std::fmt::Display for ErrorNamedTwoWithSerializeDeserialize {
         (
             formatter, 
             "{}", 
-            error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(self)
+            //HERE
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
+                error_occurence_lib::code_occurence::Get::get(self),
+            )
         )
     }
 }
@@ -760,7 +798,12 @@ impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_> fo
         {
             ErrorUnnamedOne :: Something(value) =>
             {
-                error_occurence_lib::to_string_without_config::ToStringWithoutConfig :: to_string_without_config(value)
+                // error_occurence_lib::to_string_without_config::ToStringWithoutConfig :: to_string_without_config(value)
+                //HERE
+                error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                    error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+                    error_occurence_lib::code_occurence::Get::get(value),
+                )
             },
         }
     }
@@ -798,7 +841,12 @@ impl error_occurence_lib::to_string_without_config::ToStringWithoutConfig<'_>
         {
             ErrorUnnamedOneWithSerializeDeserialize :: Something(value) =>
             {
-                error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(value)
+                // error_occurence_lib :: to_string_without_config ::ToStringWithoutConfig :: to_string_without_config(value)
+                //HERE
+                error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                    error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(value),
+                    error_occurence_lib::code_occurence::Get::get(value),
+                )
             }
         }
     }
