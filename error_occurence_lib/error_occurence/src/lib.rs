@@ -5217,13 +5217,20 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             let display_formatter_handle_token_stream = generate_display_formatter_handle_token_stream(&quote::quote!{value});
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
-                &quote::quote!{
-                    match self {
-                        #ident::Something(value) => #display_formatter_handle_token_stream,
+                &{
+                    let variants_token_stream = data_enum.variants.iter().map(|element| {
+                        let element_ident = &element.ident;
+                        quote::quote! {
+                            #ident::#element_ident(value) => #display_formatter_handle_token_stream
+                        }
+                    });
+                    quote::quote!{
+                        match self {
+                            #(#variants_token_stream),*
+                        }
                     }
                 }
             );
-            //
             let impl_to_string_with_config_for_ident_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
@@ -5322,16 +5329,22 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     &quote::quote! {#(#variants_token_stream),*}
                 )
             };
-            //
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
                 &ident_with_serialize_deserialize_token_stream,
-                &quote::quote!{
-                    match self {
-                        #ident_with_serialize_deserialize_token_stream::Something(value) => #display_formatter_handle_token_stream,
+                &{
+                    let variants_token_stream = data_enum.variants.iter().map(|element| {
+                        let element_ident = &element.ident;
+                        quote::quote! {
+                            #ident_with_serialize_deserialize_token_stream::#element_ident(value) => #display_formatter_handle_token_stream
+                        }
+                    });
+                    quote::quote!{
+                        match self {
+                            #(#variants_token_stream),*
+                        }
                     }
                 }
             );
-            //
             let impl_to_string_without_config_for_ident_with_serialize_deserialize_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
