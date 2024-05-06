@@ -4346,15 +4346,19 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         ))
     };
     let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
+    let generate_display_formatter_handle_token_stream = |value_token_stream: &proc_macro2::TokenStream|quote::quote!{
+        error_occurence_lib::helpers::source_and_code_occurence_formatter(
+            error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(#value_token_stream),
+            error_occurence_lib::code_occurence::Get::get(#value_token_stream),
+        )
+    };
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
+            let formatter_value_token_stream = generate_display_formatter_handle_token_stream(&quote::quote!{self});
             let named_display_write_token_stream = quote::quote!{
                 write!(
                     formatter, "{}", 
-                    error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                        error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
-                        error_occurence_lib::code_occurence::Get::get(self),
-                    )
+                    #formatter_value_token_stream
                 )
             };
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
