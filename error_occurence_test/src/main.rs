@@ -174,33 +174,3 @@ fn main() {
 
 
 /////////////////////////////
-impl error_occurence_lib::to_string_with_config::ToStringWithConfig<'_> for ErrorUnnamedOne {
-    fn to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self
-        {
-            ErrorUnnamedOne :: Something(value) => error_occurence_lib ::
-            to_string_with_config :: ToStringWithConfig ::
-            to_string_with_config(value, config),
-        }
-    }
-}
-impl ErrorUnnamedOne {
-    pub fn into_serialize_deserialize_version(self) -> ErrorUnnamedOneWithSerializeDeserialize {
-        match self {
-            ErrorUnnamedOne::Something(value) => {
-                ErrorUnnamedOneWithSerializeDeserialize::Something(
-                    value.into_serialize_deserialize_version(),
-                )
-            }
-        }
-    }
-}
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum ErrorUnnamedOneWithSerializeDeserialize {
-    Something(ErrorNamedTwoWithSerializeDeserialize),
-}
