@@ -44,6 +44,6 @@ pub fn source_and_code_occurence_formatter<Source: std::fmt::Display, CodeOccure
     format!("{stringified_source}\n{stringified_code_occurence}")
 }
 
-pub fn error_occurence_hashmap_formatter<T: std::fmt::Display>(inner: T) -> std::string::String {
-    format!("{{\n{}}}", lines_space_backslash_addition(inner))
-}
+// pub fn error_occurence_hashmap_formatter<T: std::fmt::Display>(inner: T) -> std::string::String {
+//     format!("{{\n{}}}", lines_space_backslash_addition(inner))
+// }

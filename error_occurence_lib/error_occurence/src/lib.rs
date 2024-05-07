@@ -4424,7 +4424,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                            format!(
+                                                "{{\n{}}}", 
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
@@ -4435,12 +4436,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc
                                                     },
                                                 )
+                                                .lines()
+                                                .fold(std::string::String::new(), |mut acc, line| {
+                                                    acc.push_str(&format!(" {line}\n"));
+                                                    acc
+                                                })
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                            format!(
+                                                "{{\n{}}}", 
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
@@ -4451,12 +4458,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc
                                                     },
                                                 )
+                                                .lines()
+                                                .fold(std::string::String::new(), |mut acc, line| {
+                                                    acc.push_str(&format!(" {line}\n"));
+                                                    acc
+                                                })
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                            format!(
+                                                "{{\n{}}}",
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
@@ -4467,6 +4480,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc
                                                     },
                                                 )
+                                                .lines()
+                                                .fold(std::string::String::new(), |mut acc, line| {
+                                                    acc.push_str(&format!(" {line}\n"));
+                                                    acc
+                                                })
                                             )
                                         }
                                     },
@@ -4924,7 +4942,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                            format!(
+                                                "{{\n{}}}",
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
@@ -4935,12 +4954,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc
                                                     },
                                                 )
+                                                .lines()
+                                                .fold(std::string::String::new(), |mut acc, line| {
+                                                    acc.push_str(&format!(" {line}\n"));
+                                                    acc
+                                                })
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                            format!(
+                                                "{{\n{}}}",
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
@@ -4951,12 +4976,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc
                                                     },
                                                 )
+                                                .lines()
+                                                .fold(std::string::String::new(), |mut acc, line| {
+                                                    acc.push_str(&format!(" {line}\n"));
+                                                    acc
+                                                })
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                            format!(
+                                                "{{\n{}}}",
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
@@ -4967,6 +4998,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc
                                                     },
                                                 )
+                                                .lines()
+                                                .fold(std::string::String::new(), |mut acc, line| {
+                                                    acc.push_str(&format!(" {line}\n"));
+                                                    acc
+                                                })
                                             )
                                         }
                                     },
