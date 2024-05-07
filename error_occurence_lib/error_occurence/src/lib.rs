@@ -4322,7 +4322,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 });
                 quote::quote!{
                     error_occurence_lib::helpers::source_and_code_occurence_formatter(
-                        // error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig::source_to_string_without_config(self),
                         #value_token_stream,
                         match self {
                             #(#variants_token_stream),*
@@ -4999,7 +4998,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_token_stream
-                // #impl_ident_into_serialize_deserialize_version_token_stream
+                #impl_ident_into_serialize_deserialize_version_token_stream
                 // #enum_ident_with_serialize_deserialize_token_stream
                 // #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
                 // #impl_error_occurence_lib_source_to_string_without_config_source_to_string_without_config_for_ident_with_serialize_deserialize_token_stream
@@ -5080,10 +5079,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 &generate_display_formatter_unnamed_token_stream(&ident_with_serialize_deserialize_token_stream)
             );
             quote::quote! {
-                // #impl_std_fmt_display_for_ident_token_stream
-                // #impl_ident_into_serialize_deserialize_version_token_stream
+                #impl_std_fmt_display_for_ident_token_stream
+                #impl_ident_into_serialize_deserialize_version_token_stream
                 // #enum_ident_with_serialize_deserialize_token_stream
-                // #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
             }
         }
     };
