@@ -4222,39 +4222,17 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         &proc_macro_name_upper_camel_case_ident_stringified,
     );
     let std_fmt_display_token_stream = quote::quote! {std::fmt::Display};
-    let error_occurence_lib_source_to_string_with_config_source_to_string_with_config_token_stream = quote::quote! {
-        error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
-    };
     let error_occurence_lib_source_to_string_without_config_source_to_string_without_config_token_stream = quote::quote! {
         error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     };
-    let source_to_string_with_config_snake_case_token_stream = quote::quote!{source_to_string_with_config};
     let source_to_string_without_config_snake_case_token_stream = quote::quote!{source_to_string_without_config};
-    let config_lib_snake_case_token_stream = quote::quote!{config_lib};
-    let get_source_place_type_upper_camel_case_token_stream = quote::quote!{GetSourcePlaceType};
-    let get_timezone_upper_camel_case_token_stream = quote::quote!{GetTimezone};
-    let sized_upper_camel_case_token_stream = quote::quote!{Sized};
     let std_string_string_token_stream = quote::quote!{std::string::String};
-    let config_snake_case_token_stream = quote::quote!{config};
-    let config_generic_upper_camel_case_token_stream = quote::quote!{ConfigGeneric};
-    let config_config_generic_token_stream = quote::quote!{#config_snake_case_token_stream: &#config_generic_upper_camel_case_token_stream};
     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
     let code_occurence_snake_case_token_stream = proc_macro_helpers::naming_conventions::code_occurence_snake_case_token_stream();
     let ident_in_none_stringified = "ident is None";
     let into_serialize_deserialize_version_snake_case_token_stream = quote::quote!{into_serialize_deserialize_version};
     let error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream = quote::quote!{
         error_occurence_lib::lines_space_backslash::LinesSpaceBackslash::lines_space_backslash
-    };
-    let error_occurence_lib_to_string_without_config_to_string_without_config_token_stream = quote::quote!{
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfig
-    };
-    let to_string_without_config_snake_case_token_stream = quote::quote!{to_string_without_config};
-    let error_occurence_lib_to_string_without_config_to_string_without_config_with_serialize_deserialize_token_stream = quote::quote!{
-        error_occurence_lib::to_string_without_config::ToStringWithoutConfigWithSerializeDeserialize
-    };
-    let to_string_without_config_with_serialize_deserialize_snake_case_token_stream = quote::quote!{to_string_without_config_with_serialize_deserialize};
-    let write_formatter_error_occurence_lib_to_string_without_config_to_string_without_config_to_string_without_config_self_token_stream = quote::quote!{
-        write!(formatter, "{}", #error_occurence_lib_to_string_without_config_to_string_without_config_token_stream::#to_string_without_config_snake_case_token_stream(self))
     };
     let generate_impl_std_fmt_display_token_stream = |ident_token_stream: &proc_macro2::TokenStream, content_token_stream: &proc_macro2::TokenStream|{
         quote::quote! {
@@ -4301,10 +4279,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         }
     };
-    let error_occurence_lib_to_string_with_config_to_string_with_config_token_stream = quote::quote!{
-        error_occurence_lib::to_string_with_config::ToStringWithConfig
-    };
-    let to_string_with_config_snake_case_token_stream = quote::quote!{to_string_with_config};
     let generate_attribute = |element: &syn::Field|{
         let mut option_attribute = None;
         element.attrs.iter().for_each(|attr|{
