@@ -4450,12 +4450,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                 };
                                 quote::quote! {
-                                    #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
-                                        &format!(
-                                            #ident_colon_to_string_with_config_format_token_stream, 
-                                            #format_value_token_stream
-                                        )
+                                    format!(
+                                        #ident_colon_to_string_with_config_format_token_stream, 
+                                        #format_value_token_stream
                                     )
+                                    .lines()
+                                    .fold(std::string::String::new(), |mut acc, line| {
+                                        acc.push_str(&format!(" {line}\n"));
+                                        acc
+                                    })
                                 }
                             });
                             quote::quote! {
@@ -4940,12 +4943,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                 };
                                 quote::quote! {
-                                    #error_occurence_lib_lines_space_backslash_lines_space_backslash_lines_space_backslash_token_stream(
-                                        &format!(
-                                            #ident_colon_to_string_with_config_format_token_stream, 
-                                            #format_value_token_stream
-                                        )
+                                    format!(
+                                        #ident_colon_to_string_with_config_format_token_stream, 
+                                        #format_value_token_stream
                                     )
+                                    .lines()
+                                    .fold(std::string::String::new(), |mut acc, line| {
+                                        acc.push_str(&format!(" {line}\n"));
+                                        acc
+                                    })
                                 }
                             });
                             quote::quote! {
@@ -4969,10 +4975,10 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 )
             );
             quote::quote! {
-                // #impl_std_fmt_display_for_ident_token_stream
+                #impl_std_fmt_display_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
-                // #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
+                #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
             }
         },
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
