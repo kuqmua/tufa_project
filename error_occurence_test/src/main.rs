@@ -184,112 +184,112 @@ impl std::fmt::Display for ErrorNamedOne {
         }))
     }
 }
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
-    for ErrorNamedOne
-{
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self {
-            ErrorNamedOne::Variant {
-                eo_display_field,
-                eo_serde,
-                eo_error_occurence_field,
-                eo_vec_display_field,
-                eo_vec_serde,
-                eo_vec_error_occurence_field,
-                hashmap_string_string,
-                hashmap_string_serde,
-                hashmap_string_error_occurence,
-                ..
-            } => {
-                format!
-                ("{{
-{}{}{}{}{}{}{}{}{}}}", error_occurence_lib ::
-                lines_space_backslash :: LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_display_field: {}", error_occurence_lib ::
-                ToStdStringString :: to_std_string_string(eo_display_field))),
-                error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_serde: {}", error_occurence_lib :: ToStdStringString ::
-                to_std_string_string(eo_serde))), error_occurence_lib ::
-                lines_space_backslash :: LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_error_occurence_field: {}", eo_error_occurence_field)),
-                error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_vec_display_field: {}", error_occurence_lib :: helpers ::
-                stringified_lines_error_vec(eo_vec_display_field.iter().fold(std
-                :: string :: String :: from(""), | mut acc, element |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    lines_space_backslash_addition(& error_occurence_lib ::
-                    ToStdStringString :: to_std_string_string(element))); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_vec_serde: {}", error_occurence_lib :: helpers ::
-                stringified_lines_error_vec(eo_vec_serde.iter().fold(std ::
-                string :: String :: from(""), | mut acc, element |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    lines_space_backslash_addition(& error_occurence_lib ::
-                    ToStdStringString :: to_std_string_string(element))); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_vec_error_occurence_field: {}", error_occurence_lib ::
-                helpers ::
-                stringified_lines_error_vec(eo_vec_error_occurence_field.iter().fold(std
-                :: string :: String :: from(""), | mut acc, element |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    lines_space_backslash_addition(& element)); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("hashmap_string_string: {}", error_occurence_lib :: helpers
-                ::
-                error_occurence_hashmap_formatter(hashmap_string_string.iter().fold(std
-                :: string :: String :: new(), | mut acc, (key, value) |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    stringified_lines_error_hashmap_element(& key, &
-                    error_occurence_lib :: ToStdStringString ::
-                    to_std_string_string(value),)); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("hashmap_string_serde: {}", error_occurence_lib :: helpers ::
-                error_occurence_hashmap_formatter(hashmap_string_serde.iter().fold(std
-                :: string :: String :: new(), | mut acc, (key, value) |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    stringified_lines_error_hashmap_element(& key, &
-                    error_occurence_lib :: ToStdStringString ::
-                    to_std_string_string(value),)); acc
-                },)))), error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("hashmap_string_error_occurence: {}", error_occurence_lib ::
-                helpers ::
-                error_occurence_hashmap_formatter(hashmap_string_error_occurence.iter().fold(std
-                :: string :: String :: new(), | mut acc, (key, value) |
-                {
-                    acc.push_str(& error_occurence_lib :: helpers ::
-                    stringified_lines_error_hashmap_element(& key, & value,));
-                    acc
-                },)))))
-            }
-        }
-    }
-}
+// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
+//     for ErrorNamedOne
+// {
+//     fn source_to_string_with_config<
+//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+//     >(
+//         &self,
+//         config: &ConfigGeneric,
+//     ) -> std::string::String {
+//         match self {
+//             ErrorNamedOne::Variant {
+//                 eo_display_field,
+//                 eo_serde,
+//                 eo_error_occurence_field,
+//                 eo_vec_display_field,
+//                 eo_vec_serde,
+//                 eo_vec_error_occurence_field,
+//                 hashmap_string_string,
+//                 hashmap_string_serde,
+//                 hashmap_string_error_occurence,
+//                 ..
+//             } => {
+//                 format!
+//                 ("{{
+// {}{}{}{}{}{}{}{}{}}}", error_occurence_lib ::
+//                 lines_space_backslash :: LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_display_field: {}", error_occurence_lib ::
+//                 ToStdStringString :: to_std_string_string(eo_display_field))),
+//                 error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_serde: {}", error_occurence_lib :: ToStdStringString ::
+//                 to_std_string_string(eo_serde))), error_occurence_lib ::
+//                 lines_space_backslash :: LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_error_occurence_field: {}", eo_error_occurence_field)),
+//                 error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_vec_display_field: {}", error_occurence_lib :: helpers ::
+//                 stringified_lines_error_vec(eo_vec_display_field.iter().fold(std
+//                 :: string :: String :: from(""), | mut acc, element |
+//                 {
+//                     acc.push_str(& error_occurence_lib :: helpers ::
+//                     lines_space_backslash_addition(& error_occurence_lib ::
+//                     ToStdStringString :: to_std_string_string(element))); acc
+//                 },)))), error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_vec_serde: {}", error_occurence_lib :: helpers ::
+//                 stringified_lines_error_vec(eo_vec_serde.iter().fold(std ::
+//                 string :: String :: from(""), | mut acc, element |
+//                 {
+//                     acc.push_str(& error_occurence_lib :: helpers ::
+//                     lines_space_backslash_addition(& error_occurence_lib ::
+//                     ToStdStringString :: to_std_string_string(element))); acc
+//                 },)))), error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_vec_error_occurence_field: {}", error_occurence_lib ::
+//                 helpers ::
+//                 stringified_lines_error_vec(eo_vec_error_occurence_field.iter().fold(std
+//                 :: string :: String :: from(""), | mut acc, element |
+//                 {
+//                     acc.push_str(& error_occurence_lib :: helpers ::
+//                     lines_space_backslash_addition(& element)); acc
+//                 },)))), error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("hashmap_string_string: {}", error_occurence_lib :: helpers
+//                 ::
+//                 error_occurence_hashmap_formatter(hashmap_string_string.iter().fold(std
+//                 :: string :: String :: new(), | mut acc, (key, value) |
+//                 {
+//                     acc.push_str(& error_occurence_lib :: helpers ::
+//                     stringified_lines_error_hashmap_element(& key, &
+//                     error_occurence_lib :: ToStdStringString ::
+//                     to_std_string_string(value),)); acc
+//                 },)))), error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("hashmap_string_serde: {}", error_occurence_lib :: helpers ::
+//                 error_occurence_hashmap_formatter(hashmap_string_serde.iter().fold(std
+//                 :: string :: String :: new(), | mut acc, (key, value) |
+//                 {
+//                     acc.push_str(& error_occurence_lib :: helpers ::
+//                     stringified_lines_error_hashmap_element(& key, &
+//                     error_occurence_lib :: ToStdStringString ::
+//                     to_std_string_string(value),)); acc
+//                 },)))), error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("hashmap_string_error_occurence: {}", error_occurence_lib ::
+//                 helpers ::
+//                 error_occurence_hashmap_formatter(hashmap_string_error_occurence.iter().fold(std
+//                 :: string :: String :: new(), | mut acc, (key, value) |
+//                 {
+//                     acc.push_str(& error_occurence_lib :: helpers ::
+//                     stringified_lines_error_hashmap_element(& key, & value,));
+//                     acc
+//                 },)))))
+//             }
+//         }
+//     }
+// }
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedOne
 {
@@ -318,10 +318,15 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 ("eo_serde: {}", error_occurence_lib :: ToStdStringString ::
-                to_std_string_string(eo_serde))), error_occurence_lib ::
+                to_std_string_string(eo_serde))), 
+                
+                error_occurence_lib ::
                 lines_space_backslash :: LinesSpaceBackslash ::
                 lines_space_backslash(& format!
                 ("eo_error_occurence_field: {}", eo_error_occurence_field)),
+
+
+
                 error_occurence_lib :: lines_space_backslash ::
                 LinesSpaceBackslash ::
                 lines_space_backslash(& format!
@@ -587,41 +592,40 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
 impl std::fmt::Display for ErrorNamedTwo {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!
-        (formatter, "{}", error_occurence_lib :: helpers ::
-        source_and_code_occurence_formatter(error_occurence_lib ::
-        source_to_string_without_config :: SourceToStringWithoutConfig ::
-        source_to_string_without_config(self), match self
-        {
+        (
+            formatter, "{}", 
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(error_occurence_lib::source_to_string_without_config :: SourceToStringWithoutConfig::source_to_string_without_config(self), 
+            match self {
             ErrorNamedTwo :: Variant { code_occurence, .. } => code_occurence,
         }))
     }
 }
-impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
-    for ErrorNamedTwo
-{
-    fn source_to_string_with_config<
-        ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        match self {
-            ErrorNamedTwo::Variant {
-                eo_display_with_serialize_deserialize_field,
-                ..
-            } => {
-                format!
-                ("{{
-{}}}", error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_display_with_serialize_deserialize_field: {}",
-                error_occurence_lib :: ToStdStringString ::
-                to_std_string_string(eo_display_with_serialize_deserialize_field))))
-            }
-        }
-    }
-}
+// impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
+//     for ErrorNamedTwo
+// {
+//     fn source_to_string_with_config<
+//         ConfigGeneric: config_lib::GetSourcePlaceType + config_lib::GetTimezone + ?Sized,
+//     >(
+//         &self,
+//         config: &ConfigGeneric,
+//     ) -> std::string::String {
+//         match self {
+//             ErrorNamedTwo::Variant {
+//                 eo_display_with_serialize_deserialize_field,
+//                 ..
+//             } => {
+//                 format!
+//                 ("{{
+// {}}}", error_occurence_lib :: lines_space_backslash ::
+//                 LinesSpaceBackslash ::
+//                 lines_space_backslash(& format!
+//                 ("eo_display_with_serialize_deserialize_field: {}",
+//                 error_occurence_lib :: ToStdStringString ::
+//                 to_std_string_string(eo_display_with_serialize_deserialize_field))))
+//             }
+//         }
+//     }
+// }
 impl error_occurence_lib::source_to_string_without_config::SourceToStringWithoutConfig<'_>
     for ErrorNamedTwo
 {
@@ -633,12 +637,12 @@ impl error_occurence_lib::source_to_string_without_config::SourceToStringWithout
             } => {
                 format!
                 ("{{
-{}}}", error_occurence_lib :: lines_space_backslash ::
-                LinesSpaceBackslash ::
-                lines_space_backslash(& format!
-                ("eo_display_with_serialize_deserialize_field: {}",
-                error_occurence_lib :: ToStdStringString ::
-                to_std_string_string(eo_display_with_serialize_deserialize_field))))
+{}}}", 
+error_occurence_lib :: lines_space_backslash ::LinesSpaceBackslash ::lines_space_backslash(
+    & format!(
+        "eo_display_with_serialize_deserialize_field: {}",
+        error_occurence_lib :: ToStdStringString ::to_std_string_string(eo_display_with_serialize_deserialize_field)
+    )))
             }
         }
     }
