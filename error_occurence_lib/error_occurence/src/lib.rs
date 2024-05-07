@@ -4424,44 +4424,50 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
-                                                |mut acc, (key, value)| {
-                                                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                        &key,
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::new(),
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                            &key,
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
-                                                |mut acc, (key, value)| {
-                                                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                        &key,
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::new(),
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                            &key,
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
-                                                |mut acc, (key, value)| {
-                                                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                        &key,
-                                                        &value,
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::new(),
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                            &key,
+                                                            &value,
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                 };
@@ -4918,44 +4924,50 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
-                                                |mut acc, (key, value)| {
-                                                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                        &key,
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::new(),
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                            &key,
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
-                                                |mut acc, (key, value)| {
-                                                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                        &key,
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::new(),
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                            &key,
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::new(),
-                                                |mut acc, (key, value)| {
-                                                    acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                        &key,
-                                                        &value,
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            error_occurence_lib::helpers::error_occurence_hashmap_formatter(
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::new(),
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                            &key,
+                                                            &value,
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                 };
