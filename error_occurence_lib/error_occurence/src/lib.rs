@@ -4663,18 +4663,17 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             }
                             args.iter().nth(1).expect("args.iter().nth(1) is None")
                         }
+                        let element_type_token_stream = {
+                            let element_type = &element.ty;
+                            quote::quote!{#element_type}
+                        };
                         let element_type_with_serialize_deserialize_token_stream = match generate_attribute(&element) {
                             ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
                                     #std_string_string_token_stream
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
-                                let element_type = &element.ty;
-                                quote::quote!{
-                                    #element_type
-                                }
-                            },
+                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => element_type_token_stream,
                             ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
                                 let element_type_with_serialize_deserialize_token_stream = {
                                     let value = format!(
@@ -4698,12 +4697,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     std::vec::Vec<#std_string_string_token_stream>
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
-                                let element_type = &element.ty;
-                                quote::quote!{
-                                    #element_type
-                                }
-                            },
+                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
                             ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
                                 let segments = if let syn::Type::Path(value) = &element.ty {
                                     &value.path.segments
@@ -4782,13 +4776,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     &std_snake_case_stringified,
                                     &std_string_string_token_stream,
                                 );
-                                let element_type = &element.ty;
-                                quote::quote!{
-                                    #element_type
-                                }
+                                element_type_token_stream
                             },
                             ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                                //todo check if original type hashmap key is std::string::String
                                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(
                                     &element,
                                     &proc_macro_name_upper_camel_case_ident_stringified,
