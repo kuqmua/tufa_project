@@ -1,7 +1,7 @@
 //todo later - make them private
-pub fn stringified_lines_error_vec<T: std::fmt::Display>(stringified_vec: T) -> std::string::String {
-    format!("[\n{stringified_vec}]")
-}
+// pub fn stringified_lines_error_vec<T: std::fmt::Display>(stringified_vec: T) -> std::string::String {
+//     format!("[\n{stringified_vec}]")
+// }
 
 pub fn stringified_lines_error_hashmap_element<K: std::fmt::Display, V: std::fmt::Display>(
     key: K, //todo - it can possibly contains more than one line

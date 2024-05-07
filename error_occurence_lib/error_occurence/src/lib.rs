@@ -4309,6 +4309,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     )
                 }
             };
+            let lines_space_backslash_token_stream = quote::quote!{
+                .lines()
+                .fold(std::string::String::new(), |mut acc, line| {
+                    acc.push_str(&format!(" {line}\n"));
+                    acc
+                })
+            };
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
                 &generate_display_formatter_named_token_stream(
@@ -4369,41 +4376,50 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::stringified_lines_error_vec(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::from(""),
-                                                |mut acc, element| {
-                                                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(element)
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            format!(
+                                                "[\n{}]",
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::from(""),
+                                                    |mut acc, element| {
+                                                        acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::stringified_lines_error_vec(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::from(""),
-                                                |mut acc, element| {
-                                                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(element)
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            format!(
+                                                "[\n{}]",
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::from(""),
+                                                    |mut acc, element| {
+                                                        acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::stringified_lines_error_vec(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::from(""),
-                                                |mut acc, element| {
-                                                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                                                        &element
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            format!(
+                                                "[\n{}]",
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::from(""),
+                                                    |mut acc, element| {
+                                                        acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                            &element
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
@@ -4454,11 +4470,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         #ident_colon_to_string_with_config_format_token_stream, 
                                         #format_value_token_stream
                                     )
-                                    .lines()
-                                    .fold(std::string::String::new(), |mut acc, line| {
-                                        acc.push_str(&format!(" {line}\n"));
-                                        acc
-                                    })
+                                    #lines_space_backslash_token_stream
                                 }
                             });
                             quote::quote! {
@@ -4864,7 +4876,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::stringified_lines_error_vec(
+                                            format!(
+                                                "[\n{}]",
                                                 #element_ident.iter().fold(#std_string_string_token_stream::from(""),|mut acc, element |{
                                                     acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
@@ -4876,7 +4889,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::stringified_lines_error_vec(
+                                            format!(
+                                                "[\n{}]",
                                                 #element_ident.iter().fold(#std_string_string_token_stream::from(""), |mut acc, element|{
                                                     acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
@@ -4888,15 +4902,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
                                         quote::quote!{
-                                            error_occurence_lib::helpers::stringified_lines_error_vec(#element_ident.iter().fold(
-                                                #std_string_string_token_stream::from(""),
-                                                |mut acc, element| {
-                                                    acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
-                                                        &element
-                                                    ));
-                                                    acc
-                                                },
-                                            ))
+                                            format!(
+                                                "[\n{}]",
+                                                #element_ident.iter().fold(
+                                                    #std_string_string_token_stream::from(""),
+                                                    |mut acc, element| {
+                                                        acc.push_str(&error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                            &element
+                                                        ));
+                                                        acc
+                                                    },
+                                                )
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
@@ -4947,11 +4964,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                         #ident_colon_to_string_with_config_format_token_stream, 
                                         #format_value_token_stream
                                     )
-                                    .lines()
-                                    .fold(std::string::String::new(), |mut acc, line| {
-                                        acc.push_str(&format!(" {line}\n"));
-                                        acc
-                                    })
+                                    #lines_space_backslash_token_stream
                                 }
                             });
                             quote::quote! {
