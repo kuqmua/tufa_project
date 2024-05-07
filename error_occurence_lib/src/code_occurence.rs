@@ -230,13 +230,18 @@ pub trait PrepareForLogWithoutConfig {
     fn prepare_for_log_without_config(&self) -> std::string::String;
 }
 
+static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> = std::sync::OnceLock::new();
+
 impl<SelfGeneric> PrepareForLogWithoutConfig for SelfGeneric
 where
-    SelfGeneric: FormErrorPathGithub + GetDuration,
+    SelfGeneric: FormErrorPathDirectory + FormErrorPathGithub + GetDuration,
 {
     fn prepare_for_log_without_config(&self) -> std::string::String {
         prepare_for_log(
-            &self.form_error_path_github(),
+            &match SOURCE_PLACE_TYPE.get_or_init(||app_state::SourcePlaceType::from_env_or_default()) {
+                app_state::SourcePlaceType::Source => self.form_error_path_directory(),
+                app_state::SourcePlaceType::Github => self.form_error_path_github()
+            },
             &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
                 .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
                 .format("%Y-%m-%d %H:%M:%S")

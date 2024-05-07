@@ -45,6 +45,31 @@ pub enum SourcePlaceType {
 }
 impl std::default::Default for SourcePlaceType {
     fn default() -> Self {
-        Self::Source
+        Self::Github
+    }
+}
+impl SourcePlaceType {
+    pub fn from_env_or_default() -> Self {
+        if let Err(error) = dotenv::dotenv() {
+            let default = SourcePlaceType::default();
+            eprintln!("using default SourcePlaceType::{default:#?} (failed to dotenv::dotenv(): {error})");
+            return default;
+        }
+        let name = "SOURCE_PLACE_TYPE";
+        match std::env::var(name) {
+            Ok(value) => match <SourcePlaceType as std::str::FromStr>::from_str(&value) {
+                Ok(value) => value,
+                Err(error) => {
+                    let default = SourcePlaceType::default();
+                    eprintln!("using default SourcePlaceType::{default:#?} (<SourcePlaceType as std::str::FromStr>::from_str(&value): {error})");
+                    default
+                }
+            },
+            Err(error) => {
+                let default = SourcePlaceType::default();
+                eprintln!("using default SourcePlaceType::{default:#?} (std::env::var(\"{name}\"): {error})");
+                default
+            }
+        }
     }
 }

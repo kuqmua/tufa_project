@@ -594,10 +594,12 @@ impl std::fmt::Display for ErrorNamedTwo {
         write!
         (
             formatter, "{}", 
-            error_occurence_lib::helpers::source_and_code_occurence_formatter(error_occurence_lib::source_to_string_without_config :: SourceToStringWithoutConfig::source_to_string_without_config(self), 
-            match self {
-            ErrorNamedTwo :: Variant { code_occurence, .. } => code_occurence,
-        }))
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                error_occurence_lib::source_to_string_without_config :: SourceToStringWithoutConfig::source_to_string_without_config(self), 
+                match self {
+                    ErrorNamedTwo :: Variant { code_occurence, .. } => code_occurence,
+                }
+            ))
     }
 }
 // impl error_occurence_lib::source_to_string_with_config::SourceToStringWithConfig<'_>
