@@ -37,12 +37,12 @@ pub fn lines_backslash_addition<T: std::fmt::Display>(value: T) -> std::string::
     }
 }
 
-pub fn source_and_code_occurence_formatter<Source: std::fmt::Display, CodeOccurence: std::fmt::Display>(
-    stringified_source: Source,
-    stringified_code_occurence: CodeOccurence,
-) -> std::string::String {
-    format!("{stringified_source}\n{stringified_code_occurence}")
-}
+// pub fn source_and_code_occurence_formatter<Source: std::fmt::Display, CodeOccurence: std::fmt::Display>(
+//     stringified_source: Source,
+//     stringified_code_occurence: CodeOccurence,
+// ) -> std::string::String {
+//     format!("{stringified_source}\n{stringified_code_occurence}")
+// }
 
 // pub fn error_occurence_hashmap_formatter<T: std::fmt::Display>(inner: T) -> std::string::String {
 //     format!("{{\n{}}}", lines_space_backslash_addition(inner))

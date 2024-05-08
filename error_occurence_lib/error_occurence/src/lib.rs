@@ -4301,7 +4301,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 });
                 quote::quote!{
-                    error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                    format!(
+                        "{}\n{}",
                         #value_token_stream,
                         match self {
                             #(#variants_token_stream),*
