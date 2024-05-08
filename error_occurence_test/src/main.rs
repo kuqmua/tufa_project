@@ -172,3 +172,299 @@ fn main() {
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 ////////////////////////////
+impl std::fmt::Display for ErrorNamedOne {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter,
+            "{}",
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                match self {
+                    ErrorNamedOne::Variant {
+                        eo_display_field,
+                        eo_serde,
+                        eo_error_occurence_field,
+                        eo_vec_display_field,
+                        eo_vec_serde,
+                        eo_vec_error_occurence_field,
+                        hashmap_string_string,
+                        hashmap_string_serde,
+                        hashmap_string_error_occurence,
+                        ..
+                    } => {
+                        format!(
+                            "{{
+{}{}{}{}{}{}{}{}{}}}",
+                            format!(
+                                "eo_display_field: {}",
+                                error_occurence_lib::ToStdStringString::to_std_string_string(
+                                    eo_display_field
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!(
+                                "eo_serde: {}",
+                                error_occurence_lib::ToStdStringString::to_std_string_string(
+                                    eo_serde
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!("eo_error_occurence_field: {}", eo_error_occurence_field)
+                                .lines()
+                                .fold(std::string::String::new(), |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }),
+                            format!(
+                                "eo_vec_display_field: {}",
+                                format!(
+                                    "[\n{}]",
+                                    eo_vec_display_field.iter().fold(
+                                        std::string::String::from(""),
+                                        |mut acc, element| {
+                                            acc.push_str(
+                                                &error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                                                ));
+                                            acc
+                                        },
+                                    )
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!(
+                                "eo_vec_serde: {}",
+                                format!(
+                                    "[\n{}]",
+                                    eo_vec_serde.iter().fold(
+                                        std::string::String::from(""),
+                                        |mut acc, element| {
+                                            acc.push_str(
+                                                &error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                                                )
+                                            );
+                                            acc
+                                        },
+                                    )
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!(
+                                "eo_vec_error_occurence_field: {}",
+                                format!(
+                                    "[\n{}]",
+                                    eo_vec_error_occurence_field.iter().fold(
+                                        std::string::String::from(""),
+                                        |mut acc, element| {
+                                            acc.push_str(
+                                                &error_occurence_lib::helpers::lines_space_backslash_addition(&element)
+                                            );
+                                            acc
+                                        },
+                                    )
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!(
+                                "hashmap_string_string: {}",
+                                format!(
+                                    "{{\n{}}}",
+                                    hashmap_string_string
+                                        .iter()
+                                        .fold(
+                                            std::string::String::new(),
+                                            |mut acc, (key, value)| {
+                                                acc.push_str(
+                                                    // &error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                    //     &key, 
+                                                    //     &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                    // )
+                                                    //
+                                                    &format!(
+                                                        "{}: {{\n{}}}\n", 
+                                                        &key, 
+                                                        error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                        )
+                                                    )
+                                                    //
+                                                );
+                                                acc
+                                            },
+                                        )
+                                        .lines()
+                                        .fold(std::string::String::new(), |mut acc, line| {
+                                            acc.push_str(&format!(" {line}\n"));
+                                            acc
+                                        })
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!(
+                                "hashmap_string_serde: {}",
+                                format!(
+                                    "{{\n{}}}",
+                                    hashmap_string_serde
+                                        .iter()
+                                        .fold(
+                                            std::string::String::new(),
+                                            |mut acc, (key, value)| {
+                                                acc.push_str(
+                                                    // &error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                    //     & key, 
+                                                    //     &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                    // )
+                                                    &format!(
+                                                        "{}: {{\n{}}}\n", 
+                                                        &key, 
+                                                        error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                        )
+                                                    )
+                                                );
+                                                acc
+                                            },
+                                        )
+                                        .lines()
+                                        .fold(std::string::String::new(), |mut acc, line| {
+                                            acc.push_str(&format!(" {line}\n"));
+                                            acc
+                                        })
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            ),
+                            format!(
+                                "hashmap_string_error_occurence: {}",
+                                format!(
+                                    "{{\n{}}}",
+                                    hashmap_string_error_occurence
+                                        .iter()
+                                        .fold(
+                                            std::string::String::new(),
+                                            |mut acc, (key, value)| {
+                                                acc.push_str(
+                                                    // &error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
+                                                    //     &key, 
+                                                    //     &value,
+                                                    // )
+                                                    &format!(
+                                                        "{}: {{\n{}}}\n", 
+                                                        &key, 
+                                                        error_occurence_lib::helpers::lines_space_backslash_addition(value)
+                                                    )
+                                                );
+                                                acc
+                                            },
+                                        )
+                                        .lines()
+                                        .fold(std::string::String::new(), |mut acc, line| {
+                                            acc.push_str(&format!(" {line}\n"));
+                                            acc
+                                        })
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            )
+                        )
+                    }
+                },
+                match self {
+                    ErrorNamedOne::Variant { code_occurence, .. } => code_occurence,
+                }
+            )
+        )
+    }
+}
+impl std::fmt::Display for ErrorNamedTwo {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter,
+            "{}",
+            error_occurence_lib::helpers::source_and_code_occurence_formatter(
+                match self {
+                    ErrorNamedTwo::Variant {
+                        eo_display_with_serialize_deserialize_field,
+                        ..
+                    } => {
+                        format!(
+                            "{{
+{}}}",
+                            format!(
+                                "eo_display_with_serialize_deserialize_field: {}",
+                                error_occurence_lib::ToStdStringString::to_std_string_string(
+                                    eo_display_with_serialize_deserialize_field
+                                )
+                            )
+                            .lines()
+                            .fold(
+                                std::string::String::new(),
+                                |mut acc, line| {
+                                    acc.push_str(&format!(" {line}\n"));
+                                    acc
+                                }
+                            )
+                        )
+                    }
+                },
+                match self {
+                    ErrorNamedTwo::Variant { code_occurence, .. } => code_occurence,
+                }
+            )
+        )
+    }
+}
