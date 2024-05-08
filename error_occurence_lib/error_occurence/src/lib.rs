@@ -4234,10 +4234,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         quote::quote! {
             impl #std_fmt_display_token_stream for #ident_token_stream {
                 fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                    write!(
-                        formatter, "{}", 
-                        #content_token_stream
-                    )
+                    #content_token_stream
                 }
             }
         }
@@ -4301,7 +4298,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 });
                 quote::quote!{
-                    format!(
+                    write!(
+                        formatter,
                         "{}\n{}",
                         #value_token_stream,
                         match self {
@@ -5143,7 +5141,16 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
-                &generate_display_formatter_unnamed_token_stream(&quote::quote!{#ident})
+                &{
+                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream(&quote::quote!{#ident});
+                    quote::quote! {
+                        write!(
+                            formatter, 
+                            "{}", 
+                            #display_formatter_unnamed_token_stream
+                        )
+                    }
+                }
             );
             let impl_ident_into_serialize_deserialize_version_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -5199,7 +5206,16 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_token_stream(
                 &ident_with_serialize_deserialize_token_stream,
-                &generate_display_formatter_unnamed_token_stream(&ident_with_serialize_deserialize_token_stream)
+                &{
+                    let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream(&ident_with_serialize_deserialize_token_stream);
+                    quote::quote! {
+                        write!(
+                            formatter, 
+                            "{}", 
+                            #display_formatter_unnamed_token_stream
+                        )
+                    }
+                }
             );
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
@@ -5212,7 +5228,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let gen = quote::quote! {
         #tokens
     };
-    // println!("{gen}");
+    // println!("{gen} ");
     // if ident == "" {
         // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //     &proc_macro_name_upper_camel_case,
