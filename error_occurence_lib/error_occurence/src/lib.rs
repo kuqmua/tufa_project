@@ -4311,8 +4311,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let lines_space_backslash_token_stream = quote::quote!{
                 .lines()
-                .fold(std::string::String::new(), |mut acc, line| {
-                    acc.push_str(&format!(" {line}\n"));
+                .fold(std::string::String::new(), |mut acc, element| {
+                    acc.push_str(&format!(" {element}\n"));
                     acc
                 })
             };
@@ -4387,8 +4387,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc.push_str(
                                                             &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                             .lines()
-                                                            .fold(std::string::String::new(), |mut acc, line| {
-                                                                acc.push_str(&format!(" {line}\n"));
+                                                            .fold(std::string::String::new(), |mut acc, element| {
+                                                                acc.push_str(&format!(" {element}\n"));
                                                                 acc
                                                             })
                                                         );
@@ -4408,8 +4408,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                         acc.push_str(
                                                             &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                             .lines()
-                                                            .fold(std::string::String::new(), |mut acc, line| {
-                                                                acc.push_str(&format!(" {line}\n"));
+                                                            .fold(std::string::String::new(), |mut acc, element| {
+                                                                acc.push_str(&format!(" {element}\n"));
                                                                 acc
                                                             })
                                                         );
@@ -4430,8 +4430,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                             &element
                                                             .to_string()
                                                             .lines()
-                                                            .fold(std::string::String::new(), |mut acc, line| {
-                                                                acc.push_str(&format!(" {line}\n"));
+                                                            .fold(std::string::String::new(), |mut acc, element| {
+                                                                acc.push_str(&format!(" {element}\n"));
                                                                 acc
                                                             })
                                                         );
@@ -4454,8 +4454,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                                 &key, 
                                                                 &error_occurence_lib::ToStdStringString::to_std_string_string(value)
                                                                 .lines()
-                                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                                    acc.push_str(&format!(" {line}\n"));
+                                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                                    acc.push_str(&format!(" {element}\n"));
                                                                     acc
                                                                 })
                                                             )
@@ -4464,8 +4464,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     },
                                                 )
                                                 .lines()
-                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                    acc.push_str(&format!(" {line}\n"));
+                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                    acc.push_str(&format!(" {element}\n"));
                                                     acc
                                                 })
                                             )
@@ -4484,8 +4484,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                                 &key, 
                                                                 &error_occurence_lib::ToStdStringString::to_std_string_string(value)
                                                                 .lines()
-                                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                                    acc.push_str(&format!(" {line}\n"));
+                                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                                    acc.push_str(&format!(" {element}\n"));
                                                                     acc
                                                                 })
                                                             )
@@ -4494,8 +4494,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     },
                                                 )
                                                 .lines()
-                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                    acc.push_str(&format!(" {line}\n"));
+                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                    acc.push_str(&format!(" {element}\n"));
                                                     acc
                                                 })
                                             )
@@ -4515,8 +4515,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                                 value
                                                                 .to_string()
                                                                 .lines()
-                                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                                    acc.push_str(&format!(" {line}\n"));
+                                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                                    acc.push_str(&format!(" {element}\n"));
                                                                     acc
                                                                 })
                                                             )
@@ -4525,8 +4525,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     },
                                                 )
                                                 .lines()
-                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                    acc.push_str(&format!(" {line}\n"));
+                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                    acc.push_str(&format!(" {element}\n"));
                                                     acc
                                                 })
                                             )
@@ -4536,8 +4536,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 quote::quote! {
                                     #format_value_token_stream
                                     .lines()
-                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, line| {
-                                        acc.push_str(&format!(" {line}\n"));
+                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, element| {
+                                        acc.push_str(&format!(" {element}\n"));
                                         acc
                                     })
                                 }
@@ -4948,8 +4948,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     acc.push_str(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                         .lines()
-                                                        .fold(std::string::String::new(), |mut acc, line| {
-                                                            acc.push_str(&format!(" {line}\n"));
+                                                        .fold(std::string::String::new(), |mut acc, element| {
+                                                            acc.push_str(&format!(" {element}\n"));
                                                             acc
                                                         })
                                                     ); 
@@ -4966,8 +4966,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     acc.push_str(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                         .lines()
-                                                        .fold(std::string::String::new(), |mut acc, line| {
-                                                            acc.push_str(&format!(" {line}\n"));
+                                                        .fold(std::string::String::new(), |mut acc, element| {
+                                                            acc.push_str(&format!(" {element}\n"));
                                                             acc
                                                         })
                                                     ); 
@@ -4987,8 +4987,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                             &element
                                                             .to_string()
                                                             .lines()
-                                                            .fold(std::string::String::new(), |mut acc, line| {
-                                                                acc.push_str(&format!(" {line}\n"));
+                                                            .fold(std::string::String::new(), |mut acc, element| {
+                                                                acc.push_str(&format!(" {element}\n"));
                                                                 acc
                                                             })
                                                         );
@@ -5011,8 +5011,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                                 &key, 
                                                                 &error_occurence_lib::ToStdStringString::to_std_string_string(value)
                                                                 .lines()
-                                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                                    acc.push_str(&format!(" {line}\n"));
+                                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                                    acc.push_str(&format!(" {element}\n"));
                                                                     acc
                                                                 })
                                                             )
@@ -5021,8 +5021,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     },
                                                 )
                                                 .lines()
-                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                    acc.push_str(&format!(" {line}\n"));
+                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                    acc.push_str(&format!(" {element}\n"));
                                                     acc
                                                 })
                                             )
@@ -5041,8 +5041,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                                 &key, 
                                                                 &error_occurence_lib::ToStdStringString::to_std_string_string(value)
                                                                 .lines()
-                                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                                    acc.push_str(&format!(" {line}\n"));
+                                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                                    acc.push_str(&format!(" {element}\n"));
                                                                     acc
                                                                 })
                                                             )
@@ -5051,8 +5051,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     },
                                                 )
                                                 .lines()
-                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                    acc.push_str(&format!(" {line}\n"));
+                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                    acc.push_str(&format!(" {element}\n"));
                                                     acc
                                                 })
                                             )
@@ -5072,8 +5072,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                                 value
                                                                 .to_string()
                                                                 .lines()
-                                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                                    acc.push_str(&format!(" {line}\n"));
+                                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                                    acc.push_str(&format!(" {element}\n"));
                                                                     acc
                                                                 })
                                                             )
@@ -5082,8 +5082,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                     },
                                                 )
                                                 .lines()
-                                                .fold(std::string::String::new(), |mut acc, line| {
-                                                    acc.push_str(&format!(" {line}\n"));
+                                                .fold(std::string::String::new(), |mut acc, element| {
+                                                    acc.push_str(&format!(" {element}\n"));
                                                     acc
                                                 })
                                             )
@@ -5093,8 +5093,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 quote::quote! {
                                     #format_value_token_stream
                                     .lines()
-                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, line| {
-                                        acc.push_str(&format!(" {line}\n"));
+                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, element| {
+                                        acc.push_str(&format!(" {element}\n"));
                                         acc
                                     })
                                 }
