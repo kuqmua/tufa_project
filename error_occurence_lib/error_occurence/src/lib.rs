@@ -4316,6 +4316,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     acc
                 })
             };
+            let generate_ident_colon_to_string_with_config_format_token_stream = |value: &syn::Ident|{
+                proc_macro_common::generate_quotes::token_stream(
+                    &format!(" {value}:"),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                )
+            };
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
                 &generate_display_formatter_named_token_stream(
@@ -4354,10 +4360,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                                let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                    &format!(" {element_ident}: "),
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                );
+                                let ident_colon_to_string_with_config_format_token_stream = generate_ident_colon_to_string_with_config_format_token_stream(&element_ident);
                                 let format_value_token_stream = match generate_attribute(&element) {
                                     ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                         quote::quote!{
@@ -4920,10 +4923,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                                let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                    &format!(" {element_ident}: "),
-                                    &proc_macro_name_upper_camel_case_ident_stringified,
-                                );
+                                let ident_colon_to_string_with_config_format_token_stream = generate_ident_colon_to_string_with_config_format_token_stream(&element_ident);
                                 let format_value_token_stream = match generate_attribute(&element) {
                                     ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                         quote::quote!{
