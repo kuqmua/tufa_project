@@ -4355,7 +4355,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
                                 let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                    &format!("{element_ident}: {{}}"),
+                                    &format!(" {element_ident}: "),
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
                                 let format_value_token_stream = match generate_attribute(&element) {
@@ -4371,7 +4371,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
                                         quote::quote!{
-                                            #element_ident
+                                            #element_ident.to_string()
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
@@ -4531,11 +4531,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                 };
                                 quote::quote! {
-                                    format!(
-                                        #ident_colon_to_string_with_config_format_token_stream, 
-                                        #format_value_token_stream
-                                    )
-                                    #lines_space_backslash_token_stream
+                                    #format_value_token_stream
+                                    .lines()
+                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, line| {
+                                        acc.push_str(&format!(" {line}\n"));
+                                        acc
+                                    })
                                 }
                             });
                             quote::quote! {
@@ -4920,7 +4921,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
                                 let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                    &format!("{element_ident}: {{}}"),
+                                    &format!(" {element_ident}: "),
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
                                 let format_value_token_stream = match generate_attribute(&element) {
@@ -4936,7 +4937,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
                                         quote::quote!{
-                                            #element_ident
+                                            #element_ident.to_string()
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
@@ -5090,11 +5091,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                 };
                                 quote::quote! {
-                                    format!(
-                                        #ident_colon_to_string_with_config_format_token_stream, 
-                                        #format_value_token_stream
-                                    )
-                                    #lines_space_backslash_token_stream
+                                    #format_value_token_stream
+                                    .lines()
+                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, line| {
+                                        acc.push_str(&format!(" {line}\n"));
+                                        acc
+                                    })
                                 }
                             });
                             quote::quote! {
