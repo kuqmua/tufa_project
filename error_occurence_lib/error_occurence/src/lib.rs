@@ -4429,10 +4429,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                            &key,
-                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                        ));
+                                                        acc.push_str(
+                                                            &format!(
+                                                                "{}: {{\n{}}}\n", 
+                                                                &key, 
+                                                                error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                                )
+                                                            )
+                                                        );
                                                         acc
                                                     },
                                                 )
@@ -4451,10 +4456,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                            &key,
-                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                        ));
+                                                        acc.push_str(
+                                                            &format!(
+                                                                "{}: {{\n{}}}\n", 
+                                                                &key, 
+                                                                error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                                )
+                                                            )
+                                                        );
                                                         acc
                                                     },
                                                 )
@@ -4473,10 +4483,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                            &key,
-                                                            &value,
-                                                        ));
+                                                        acc.push_str(
+                                                            &format!(
+                                                                "{}: {{\n{}}}\n", 
+                                                                &key, 
+                                                                error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                                    value
+                                                                )
+                                                            )
+                                                        );
                                                         acc
                                                     },
                                                 )
@@ -4947,10 +4962,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                            &key,
-                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                        ));
+                                                        acc.push_str(
+                                                            &format!(
+                                                                "{}: {{\n{}}}\n", 
+                                                                &key, 
+                                                                error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                                )
+                                                            )
+                                                        );
                                                         acc
                                                     },
                                                 )
@@ -4969,10 +4989,15 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                            &key,
-                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(value),
-                                                        ));
+                                                        acc.push_str(
+                                                            &format!(
+                                                                "{}: {{\n{}}}\n", 
+                                                                &key, 
+                                                                error_occurence_lib::helpers::lines_space_backslash_addition(
+                                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(value)
+                                                                )
+                                                            )
+                                                        );
                                                         acc
                                                     },
                                                 )
@@ -4991,10 +5016,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 #element_ident.iter().fold(
                                                     #std_string_string_token_stream::new(),
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(&error_occurence_lib::helpers::stringified_lines_error_hashmap_element(
-                                                            &key,
-                                                            &value,
-                                                        ));
+                                                        acc.push_str(
+                                                            &format!(
+                                                                "{}: {{\n{}}}\n", 
+                                                                &key, 
+                                                                error_occurence_lib::helpers::lines_space_backslash_addition(value)
+                                                            )
+                                                        );
                                                         acc
                                                     },
                                                 )
@@ -5036,7 +5064,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 )
             );
             quote::quote! {
-                // #impl_std_fmt_display_for_ident_token_stream
+                #impl_std_fmt_display_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
