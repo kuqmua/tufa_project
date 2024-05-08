@@ -172,3 +172,252 @@ fn main() {
     // println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 // ///////////
+impl std::fmt::Display for ErrorNamedOne {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter,
+            "{}\n{}",
+            match self {
+                ErrorNamedOne::Variant {
+                    eo_display_field,
+                    eo_serde,
+                    eo_error_occurence_field,
+                    eo_vec_display_field,
+                    eo_vec_serde,
+                    eo_vec_error_occurence_field,
+                    hashmap_string_string,
+                    hashmap_string_serde,
+                    hashmap_string_error_occurence,
+                    ..
+                } => {
+                    format!(
+                        "{{
+{}{}{}{}{}{}{}{}{}}}",
+                        error_occurence_lib::ToStdStringString::to_std_string_string(
+                            eo_display_field
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" eo_display_field:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        ),
+                        error_occurence_lib::ToStdStringString::to_std_string_string(eo_serde)
+                            .lines()
+                            .fold(
+                                std::string::String::from(" eo_serde:"),
+                                |mut acc, element| {
+                                    acc.push_str(&format!(" {element}\n"));
+                                    acc
+                                }
+                            ),
+
+                            
+                        eo_error_occurence_field.to_string().lines().fold(
+                            std::string::String::from(" eo_error_occurence_field:\n"),
+                            |mut acc, element| {
+                                acc.push_str(&format!("  {element}\n"));
+                                acc
+                            }
+                        ),
+
+
+
+
+                        format!(
+                            "[\n{}]",
+                            eo_vec_display_field.iter().fold(
+                                std::string::String::from(""),
+                                |mut acc, element| {
+                                    acc.push_str(& error_occurence_lib :: ToStdStringString ::
+                    to_std_string_string(element).lines().fold(std :: string ::
+                    String :: new(), | mut acc, element |
+                    { acc.push_str(& format! (" {element}\n")); acc }));
+                                    acc
+                                },
+                            )
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" eo_vec_display_field:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        ),
+                        format!(
+                            "[\n{}]",
+                            eo_vec_serde.iter().fold(
+                                std::string::String::from(""),
+                                |mut acc, element| {
+                                    acc.push_str(& error_occurence_lib :: ToStdStringString ::
+                    to_std_string_string(element).lines().fold(std :: string ::
+                    String :: new(), | mut acc, element |
+                    { acc.push_str(& format! (" {element}\n")); acc }));
+                                    acc
+                                },
+                            )
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" eo_vec_serde:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        ),
+                        format!(
+                            "[\n{}]",
+                            eo_vec_error_occurence_field.iter().fold(
+                                std::string::String::from(""),
+                                |mut acc, element| {
+                                    acc.push_str(&element.to_string().lines().fold(
+                                        std::string::String::new(),
+                                        |mut acc, element| {
+                                            acc.push_str(&format!(" {element}\n"));
+                                            acc
+                                        },
+                                    ));
+                                    acc
+                                },
+                            )
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" eo_vec_error_occurence_field:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        ),
+                        format!(
+                            "{{\n{}}}",
+                            hashmap_string_string
+                                .iter()
+                                .fold(std::string::String::new(), |mut acc, (key, value)| {
+                                    acc.push_str(&format!
+                    ("{}: {{\n{}}}\n", & key, & error_occurence_lib ::
+                    ToStdStringString ::
+                    to_std_string_string(value).lines().fold(std :: string ::
+                    String :: new(), | mut acc, element |
+                    { acc.push_str(& format! (" {element}\n")); acc })));
+                                    acc
+                                },)
+                                .lines()
+                                .fold(std::string::String::new(), |mut acc, element| {
+                                    acc.push_str(&format!(" {element}\n"));
+                                    acc
+                                })
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" hashmap_string_string:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        ),
+                        format!(
+                            "{{\n{}}}",
+                            hashmap_string_serde
+                                .iter()
+                                .fold(std::string::String::new(), |mut acc, (key, value)| {
+                                    acc.push_str(&format!
+                    ("{}: {{\n{}}}\n", & key, & error_occurence_lib ::
+                    ToStdStringString ::
+                    to_std_string_string(value).lines().fold(std :: string ::
+                    String :: new(), | mut acc, element |
+                    { acc.push_str(& format! (" {element}\n")); acc })));
+                                    acc
+                                },)
+                                .lines()
+                                .fold(std::string::String::new(), |mut acc, element| {
+                                    acc.push_str(&format!(" {element}\n"));
+                                    acc
+                                })
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" hashmap_string_serde:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        ),
+                        format!(
+                            "{{\n{}}}",
+                            hashmap_string_error_occurence
+                                .iter()
+                                .fold(std::string::String::new(), |mut acc, (key, value)| {
+                                    acc.push_str(&format!(
+                                        "{}: {{\n{}}}\n",
+                                        &key,
+                                        value.to_string().lines().fold(
+                                            std::string::String::new(),
+                                            |mut acc, element| {
+                                                acc.push_str(&format!(" {element}\n"));
+                                                acc
+                                            }
+                                        )
+                                    ));
+                                    acc
+                                },)
+                                .lines()
+                                .fold(std::string::String::new(), |mut acc, element| {
+                                    acc.push_str(&format!(" {element}\n"));
+                                    acc
+                                })
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(" hashmap_string_error_occurence:"),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        )
+                    )
+                }
+            },
+            match self {
+                ErrorNamedOne::Variant { code_occurence, .. } => code_occurence,
+            }
+        )
+    }
+}
+impl std::fmt::Display for ErrorNamedTwo {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter,
+            "{}{}",
+            match self {
+                ErrorNamedTwo::Variant {
+                    eo_display_with_serialize_deserialize_field,
+                    ..
+                } => {
+                    format!(
+                        "{}",
+                        error_occurence_lib::ToStdStringString::to_std_string_string(
+                            eo_display_with_serialize_deserialize_field
+                        )
+                        .lines()
+                        .fold(
+                            std::string::String::from(
+                                "eo_display_with_serialize_deserialize_field:"
+                            ),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {element}\n"));
+                                acc
+                            }
+                        )
+                    )
+                }
+            },
+            match self {
+                ErrorNamedTwo::Variant { code_occurence, .. } => code_occurence,
+            }
+        )
+    }
+}
