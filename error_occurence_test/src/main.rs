@@ -191,23 +191,17 @@ impl std::fmt::Display for ErrorNamedOne {
                     ..
                 } => {
                     format!(
-                        "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n",
+                        //todo in some cases there are spaces, in some cases - no spaces
+                        "eo_display_field: {}\neo_display_field: {}\neo_error_occurence_field:{}\neo_vec_display_field:{}\neo_vec_serde:{}\neo_vec_error_occurence_field:{}\nhashmap_string_string:{}\nhashmap_string_serde:{}\nhashmap_string_error_occurence:{}\n",
 
-                        format!(
-                            "eo_display_field: {}",
-                            error_occurence_lib::ToStdStringString::to_std_string_string(
-                                eo_display_field
-                            )
+                        error_occurence_lib::ToStdStringString::to_std_string_string(
+                            eo_display_field
                         ),
-
-                        format!(
-                            "eo_display_field: {}",
-                            error_occurence_lib::ToStdStringString::to_std_string_string(eo_serde)
-                        ),
-
+                        
+                        error_occurence_lib::ToStdStringString::to_std_string_string(eo_serde),
                             
                         eo_error_occurence_field.to_string().lines().fold(
-                            std::string::String::from("eo_error_occurence_field:"),
+                            std::string::String::from(""),
                             |mut acc, element| {
                                 acc.push_str(&format!("\n {element}"));
                                 acc
@@ -215,7 +209,7 @@ impl std::fmt::Display for ErrorNamedOne {
                         ),
 
                         eo_vec_display_field.iter().fold(
-                            std::string::String::from("eo_vec_display_field:"),
+                            std::string::String::from(""),
                             |mut acc, element| {
                                 acc.push_str(
                                     &error_occurence_lib :: ToStdStringString ::to_std_string_string(element)
@@ -233,7 +227,7 @@ impl std::fmt::Display for ErrorNamedOne {
                         ),
 
                         eo_vec_serde.iter().fold(
-                            std::string::String::from("eo_vec_serde:"),
+                            std::string::String::from(""),
                             |mut acc, element| {
                                 acc.push_str(& error_occurence_lib :: ToStdStringString ::to_std_string_string(element)
                                 .lines()
@@ -249,7 +243,7 @@ impl std::fmt::Display for ErrorNamedOne {
                         ),
 
                         eo_vec_error_occurence_field.iter().fold(
-                            std::string::String::from("eo_vec_error_occurence_field:"),
+                            std::string::String::from(""),
                             |mut acc, element| {
                                 acc.push_str(&element.to_string().lines().fold(
                                     std::string::String::new(),
@@ -283,7 +277,7 @@ impl std::fmt::Display for ErrorNamedOne {
                                 acc
                             })
                             .lines()
-                            .fold(std::string::String::from("hashmap_string_string:"), |mut acc, element| {
+                            .fold(std::string::String::from(""), |mut acc, element| {
                                 acc.push_str(&format!("\n {element}"));
                                 acc
                             }),
@@ -309,7 +303,7 @@ impl std::fmt::Display for ErrorNamedOne {
                                 acc
                             })
                             .lines()
-                            .fold(std::string::String::from("hashmap_string_serde:"), |mut acc, element| {
+                            .fold(std::string::String::from(""), |mut acc, element| {
                                 acc.push_str(&format!("\n {element}"));
                                 acc
                             }),
@@ -331,7 +325,7 @@ impl std::fmt::Display for ErrorNamedOne {
                                 acc
                             },)
                             .lines()
-                            .fold(std::string::String::from("hashmap_string_error_occurence:"), |mut acc, element| {
+                            .fold(std::string::String::from(""), |mut acc, element| {
                                 acc.push_str(&format!("\n {element}"));
                                 acc
                             }),
