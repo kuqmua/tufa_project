@@ -4873,7 +4873,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
                                 let ident_colon_to_string_with_config_format_token_stream = generate_ident_colon_to_string_with_config_format_token_stream(&element_ident);
-                                let format_value_token_stream = match generate_attribute(&element) {
+                                match generate_attribute(&element) {
                                     ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                         quote::quote!{
                                             error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
@@ -4886,166 +4886,132 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
                                         quote::quote!{
-                                            #element_ident.to_string()
+                                            #element_ident.to_string().lines().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
+                                                    acc.push_str(&format!("\n {element}"));
+                                                    acc
+                                                }
+                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
                                         quote::quote!{
-                                            format!(
-                                                "[\n{}]",
-                                                #element_ident.iter().fold(#std_string_string_token_stream::from(""),|mut acc, element |{
+                                            #element_ident.iter().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
                                                     acc.push_str(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                         .lines()
-                                                        .fold(std::string::String::new(), |mut acc, element| {
-                                                            acc.push_str(&format!(" {element}\n"));
-                                                            acc
-                                                        })
-                                                    ); 
+                                                        .fold(
+                                                            std::string::String::new(), 
+                                                            |mut acc, element| { 
+                                                                acc.push_str(&format!("\n {element}")); 
+                                                                acc 
+                                                            }
+                                                        )
+                                                    );
                                                     acc
-                                                })
+                                                }
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            format!(
-                                                "[\n{}]",
-                                                #element_ident.iter().fold(#std_string_string_token_stream::from(""), |mut acc, element|{
+                                            #element_ident.iter().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
                                                     acc.push_str(
                                                         &error_occurence_lib::ToStdStringString::to_std_string_string(element)
                                                         .lines()
-                                                        .fold(std::string::String::new(), |mut acc, element| {
-                                                            acc.push_str(&format!(" {element}\n"));
-                                                            acc
-                                                        })
-                                                    ); 
+                                                        .fold(
+                                                            std::string::String::new(), 
+                                                            |mut acc, element| { 
+                                                                acc.push_str(& format! ("\n {element}")); 
+                                                                acc 
+                                                            }
+                                                        )
+                                                    );
                                                     acc
-                                                })
+                                                }
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
                                         quote::quote!{
-                                            format!(
-                                                "[\n{}]",
-                                                #element_ident.iter().fold(
-                                                    #std_string_string_token_stream::from(""),
-                                                    |mut acc, element| {
-                                                        acc.push_str(
-                                                            &element
-                                                            .to_string()
-                                                            .lines()
-                                                            .fold(std::string::String::new(), |mut acc, element| {
-                                                                acc.push_str(&format!(" {element}\n"));
-                                                                acc
-                                                            })
-                                                        );
-                                                        acc
-                                                    },
-                                                )
+                                            #element_ident.iter().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
+                                                    acc.push_str(&element.to_string().lines().fold(
+                                                        std::string::String::new(),
+                                                        |mut acc, element| {
+                                                            acc.push_str(&format!("\n {element}"));
+                                                            acc
+                                                        },
+                                                    ));
+                                                    acc
+                                                }
                                             )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                         quote::quote!{
-                                            format!(
-                                                "{{\n{}}}",
-                                                #element_ident.iter().fold(
-                                                    #std_string_string_token_stream::new(),
+                                            #element_ident
+                                                .iter()
+                                                .fold(
+                                                    std::string::String::new(), 
                                                     |mut acc, (key, value)| {
                                                         acc.push_str(
                                                             &format!(
-                                                                "{}: {{\n{}}}\n", 
-                                                                &key, 
+                                                                "\n {key}: {}", 
                                                                 &error_occurence_lib::ToStdStringString::to_std_string_string(value)
-                                                                .lines()
-                                                                .fold(std::string::String::new(), |mut acc, element| {
-                                                                    acc.push_str(&format!(" {element}\n"));
-                                                                    acc
-                                                                })
                                                             )
                                                         );
                                                         acc
-                                                    },
+                                                    }
                                                 )
-                                                .lines()
-                                                .fold(std::string::String::new(), |mut acc, element| {
-                                                    acc.push_str(&format!(" {element}\n"));
-                                                    acc
-                                                })
-                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
-                                            format!(
-                                                "{{\n{}}}",
-                                                #element_ident.iter().fold(
-                                                    #std_string_string_token_stream::new(),
+                                            #element_ident
+                                                .iter()
+                                                .fold(
+                                                    std::string::String::new(), 
                                                     |mut acc, (key, value)| {
                                                         acc.push_str(
                                                             &format!(
-                                                                "{}: {{\n{}}}\n", 
-                                                                &key, 
-                                                                &error_occurence_lib::ToStdStringString::to_std_string_string(value)
-                                                                .lines()
-                                                                .fold(std::string::String::new(), |mut acc, element| {
-                                                                    acc.push_str(&format!(" {element}\n"));
-                                                                    acc
-                                                                })
+                                                                "\n {key}: {}", 
+                                                                &error_occurence_lib ::ToStdStringString ::to_std_string_string(value)
                                                             )
                                                         );
                                                         acc
-                                                    },
+                                                    }
                                                 )
-                                                .lines()
-                                                .fold(std::string::String::new(), |mut acc, element| {
-                                                    acc.push_str(&format!(" {element}\n"));
-                                                    acc
-                                                })
-                                            )
                                         }
                                     },
                                     ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                         quote::quote!{
-                                            format!(
-                                                "{{\n{}}}",
-                                                #element_ident.iter().fold(
-                                                    #std_string_string_token_stream::new(),
+                                            #element_ident
+                                                .iter()
+                                                .fold(
+                                                    std::string::String::new(), 
                                                     |mut acc, (key, value)| {
-                                                        acc.push_str(
-                                                            &format!(
-                                                                "{}: {{\n{}}}\n", 
-                                                                &key, 
-                                                                value
-                                                                .to_string()
-                                                                .lines()
-                                                                .fold(std::string::String::new(), |mut acc, element| {
-                                                                    acc.push_str(&format!(" {element}\n"));
+                                                        acc.push_str(&format!(
+                                                            "\n {key}: {}",
+                                                            value.to_string().lines().fold(
+                                                                std::string::String::new(),
+                                                                |mut acc, element| {
+                                                                    acc.push_str(&format!("\n  {element}"));
                                                                     acc
-                                                                })
+                                                                }
                                                             )
-                                                        );
+                                                        ));
                                                         acc
-                                                    },
+                                                    }
                                                 )
-                                                .lines()
-                                                .fold(std::string::String::new(), |mut acc, element| {
-                                                    acc.push_str(&format!(" {element}\n"));
-                                                    acc
-                                                })
-                                            )
                                         }
                                     },
-                                };
-                                quote::quote! {
-                                    #format_value_token_stream
-                                    .lines()
-                                    .fold(std::string::String::from(#ident_colon_to_string_with_config_format_token_stream), |mut acc, element| {
-                                        acc.push_str(&format!(" {element}\n"));
-                                        acc
-                                    })
                                 }
                             });
                             quote::quote! {
