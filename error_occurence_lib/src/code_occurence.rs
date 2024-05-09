@@ -15,7 +15,6 @@ pub struct CodeOccurence {
     duration: std::time::Duration,
     macro_occurence: std::option::Option<MacroOccurence>,
 }
-
 impl CodeOccurence {
     #[must_use]
     pub fn new(
@@ -36,243 +35,48 @@ impl CodeOccurence {
         }
     }
 }
-
-pub trait GetCommit {
-    fn get_commit(&self) -> &str;
-}
-
-impl GetCommit for CodeOccurence {
-    fn get_commit(&self) -> &str {
-        &self.commit
-    }
-}
-
-pub trait GetFile {
-    fn get_file(&self) -> &str;
-}
-
-impl GetFile for CodeOccurence {
-    fn get_file(&self) -> &str {
-        &self.file
-    }
-}
-
-pub trait GetLine {
-    fn get_line(&self) -> &u32;
-}
-
-impl GetLine for CodeOccurence {
-    fn get_line(&self) -> &u32 {
-        &self.line
-    }
-}
-
-pub trait GetColumn {
-    fn get_column(&self) -> &u32;
-}
-
-impl GetColumn for CodeOccurence {
-    fn get_column(&self) -> &u32 {
-        &self.column
-    }
-}
-
-pub trait GetDuration {
-    fn get_duration(&self) -> std::time::Duration;
-}
-
-impl GetDuration for CodeOccurence {
-    fn get_duration(&self) -> std::time::Duration {
-        self.duration
-    }
-}
-
-pub trait GetMacroOccurence {
-    fn get_macro_occurence(&self) -> &std::option::Option<MacroOccurence>;
-}
-
-impl GetMacroOccurence for CodeOccurence {
-    fn get_macro_occurence(&self) -> &std::option::Option<MacroOccurence> {
-        &self.macro_occurence
-    }
-}
-
+static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> = std::sync::OnceLock::new();
 impl std::fmt::Display for CodeOccurence {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             formatter,
-            "{}",
-            PrepareForLogWithoutConfig::prepare_for_log_without_config(
-                self
-            )
-        )
-    }
-}
-
-pub trait FormErrorPathDirectory {
-    fn form_error_path_directory(&self) -> std::string::String;
-}
-
-impl<T> FormErrorPathDirectory for T
-where
-    T: GetFile + GetLine + GetColumn + GetMacroOccurence,
-{
-    fn form_error_path_directory(&self) -> std::string::String {
-        self.get_macro_occurence().as_ref().map_or_else(|| format!(
-            "{}:{}:{}",
-            self.get_file(),
-            self.get_line(),
-            self.get_column()
-        ), |value| format!(
-            "{}:{}:{} ({}:{}:{})",
-            self.get_file(),
-            self.get_line(),
-            self.get_column(),
-            value.file,
-            value.line,
-            value.column
-        ))
-    }
-}
-
-pub trait FormErrorPathGithub {
-    fn form_error_path_github(&self) -> std::string::String;
-}
-
-impl<T> FormErrorPathGithub for T
-where
-    T: GetCommit + GetFile + GetLine + GetMacroOccurence,
-{
-    fn form_error_path_github(&self) -> std::string::String {
-        self.get_macro_occurence().as_ref().map_or_else(|| format!(
-            "{}/blob/{}/{}#L{}",
-            naming_constants::GITHUB_URL,
-            self.get_commit(),
-            self.get_file(),
-            self.get_line()
-        ), |value| format!(
-            "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
-            naming_constants::GITHUB_URL,
-            self.get_commit(),
-            self.get_file(),
-            self.get_line(),
-            naming_constants::GITHUB_URL,
-            self.get_commit(),
-            value.file,
-            value.line
-        ))
-
-    }
-}
-
-// pub trait Get {
-//     fn get(&self) -> &CodeOccurence;
-// }
-
-pub trait GetCodePath {
-    fn get_code_path(
-        &self,
-        source_place_type: &app_state::SourcePlaceType,
-    ) -> std::string::String;
-}
-
-impl<T> GetCodePath for T
-where
-    T: FormErrorPathDirectory + FormErrorPathGithub,
-{
-    fn get_code_path(
-        &self,
-        source_place_type: &app_state::SourcePlaceType,
-    ) -> std::string::String {
-        match source_place_type {
-            app_state::SourcePlaceType::Source => {
-                self.form_error_path_directory()
-            }
-            app_state::SourcePlaceType::Github => self.form_error_path_github(),
-        }
-    }
-}
-
-pub trait PrepareForLogWithConfig {
-    fn prepare_for_log_with_config<
-        ConfigGeneric: app_state::GetTimezone
-            + app_state::GetSourcePlaceType
-            + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String;
-}
-
-impl<SelfGeneric> PrepareForLogWithConfig for SelfGeneric
-where
-    SelfGeneric: GetCodePath + GetDuration,
-{
-    fn prepare_for_log_with_config<
-        ConfigGeneric: app_state::GetTimezone
-            + app_state::GetSourcePlaceType
-            + ?Sized,
-    >(
-        &self,
-        config: &ConfigGeneric,
-    ) -> std::string::String {
-        prepare_for_log(
-            &self.get_code_path(&config.get_source_place_type()),
-            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
-                .with_timezone(config.get_timezone())
-                .format("%Y-%m-%d %H:%M:%S")
-                .to_string(),
-        )
-    }
-}
-
-pub trait PrepareForLogWithoutConfig {
-    fn prepare_for_log_without_config(&self) -> std::string::String;
-}
-
-static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> = std::sync::OnceLock::new();
-
-impl<SelfGeneric> PrepareForLogWithoutConfig for SelfGeneric
-where
-    SelfGeneric: FormErrorPathDirectory + FormErrorPathGithub + GetDuration,
-{
-    fn prepare_for_log_without_config(&self) -> std::string::String {
-        prepare_for_log(
+            "{} {}",
             &match SOURCE_PLACE_TYPE.get_or_init(||app_state::SourcePlaceType::from_env_or_default()) {
-                app_state::SourcePlaceType::Source => self.form_error_path_directory(),
-                app_state::SourcePlaceType::Github => self.form_error_path_github()
+                app_state::SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(|| format!(
+                    "{}:{}:{}",
+                    self.file,
+                    self.line,
+                    self.column
+                ), |value| format!(
+                    "{}:{}:{} ({}:{}:{})",
+                    self.file,
+                    self.line,
+                    self.column,
+                    value.file,
+                    value.line,
+                    value.column
+                )),
+                app_state::SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(|| format!(
+                    "{}/blob/{}/{}#L{}",
+                    naming_constants::GITHUB_URL,
+                    self.commit,
+                    self.file,
+                    self.line
+                ), |value| format!(
+                    "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
+                    naming_constants::GITHUB_URL,
+                    self.commit,
+                    self.file,
+                    self.line,
+                    naming_constants::GITHUB_URL,
+                    self.commit,
+                    value.file,
+                    value.line
+                ))
             },
-            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
+            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.duration).unwrap())
                 .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
                 .format("%Y-%m-%d %H:%M:%S")
-                .to_string(),
         )
     }
-}
-
-pub trait PrepareForLogWithoutConfigWithSerializeDeserialize {
-    fn prepare_for_log_without_config_with_serialize_deserialize(
-        &self,
-    ) -> std::string::String;
-}
-
-impl<SelfGeneric> PrepareForLogWithoutConfigWithSerializeDeserialize for SelfGeneric
-where
-    SelfGeneric: FormErrorPathGithub + GetDuration,
-{
-    fn prepare_for_log_without_config_with_serialize_deserialize(
-        &self,
-    ) -> std::string::String {
-        prepare_for_log(
-            &self.form_error_path_github(),
-            &chrono::DateTime::<chrono::Utc>::from(std::time::UNIX_EPOCH.checked_add(self.get_duration()).unwrap())
-                .with_timezone(&chrono::FixedOffset::east_opt(10800).unwrap())
-                .format("%Y-%m-%d %H:%M:%S")
-                .to_string(),
-        )
-    }
-}
-
-fn prepare_for_log(path: &str, time: &str) -> std::string::String {
-    format!("{path} {time}")
 }
