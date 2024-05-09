@@ -4,7 +4,7 @@
 //     pub password: secrecy::Secret<String>,
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum LoginErrorNamed {
 //     AuthError {
 //         #[eo_error_occurence]

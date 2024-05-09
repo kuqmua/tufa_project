@@ -375,39 +375,39 @@
 //     }
 // }
 
-// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum InnerErrorNamed {
 //     Something {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         string: std::string::String,
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         display_with_serialize_deserialize_struct_lifetime:
 //             DisplayWithSerializeDeserializeStructLifetime,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
-// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum ErrorUnnamed {
 //     #[eo_error_occurence]
 //     Something(crate::common::error_logs_logic::test::InnerErrorNamed),
 // }
 
-// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum ErrorNamed {
 //     Something {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         eo_display: crate::common::error_logs_logic::test::DisplayStruct,
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         eo_display_lifetime: crate::common::error_logs_logic::test::DisplayStructLifetime,
 
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         eo_str_display_with_serialize_deserialize: std::string::String,
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         eo_string_display_with_serialize_deserialize: std::string::String,
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         eo_display_with_serialize_deserialize: crate::common::error_logs_logic::test::DisplayWithSerializeDeserializeStruct,
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         eo_display_with_serialize_deserialize_lifetime: crate::common::error_logs_logic::test::DisplayWithSerializeDeserializeStructLifetime,
 
 //         #[eo_to_std_string_string]
@@ -423,18 +423,18 @@
 //         #[eo_error_occurence]
 //         eo_error_occurence: crate::common::error_logs_logic::test::InnerErrorNamed,
 
-//         #[eo_vec_display]
+//         #[eo_vec_to_std_string_string]
 //         eo_vec_display: std::vec::Vec<crate::common::error_logs_logic::test::DisplayStruct>,
-//         #[eo_vec_display]
+//         #[eo_vec_to_std_string_string]
 //         eo_vec_display_lifetime: std::vec::Vec<crate::common::error_logs_logic::test::DisplayStructLifetime>,
 
-//         #[eo_vec_display_with_serialize_deserialize]
+//         #[eo_vec_to_std_string_string_serialize_deserialize]
 //         eo_vec_str_display_with_serialize_deserialize: std::vec::Vec<std::string::String>,
-//         #[eo_vec_display_with_serialize_deserialize]
+//         #[eo_vec_to_std_string_string_serialize_deserialize]
 //         eo_vec_string_display_with_serialize_deserialize: std::vec::Vec<std::string::String>,
-//         #[eo_vec_display_with_serialize_deserialize]
+//         #[eo_vec_to_std_string_string_serialize_deserialize]
 //         eo_vec_display_with_serialize_deserialize: std::vec::Vec<crate::common::error_logs_logic::test::DisplayWithSerializeDeserializeStruct>,
-//         #[eo_vec_display_with_serialize_deserialize]
+//         #[eo_vec_to_std_string_string_serialize_deserialize]
 //         eo_vec_display_with_serialize_deserialize_lifetime: std::vec::Vec<crate::common::error_logs_logic::test::DisplayWithSerializeDeserializeStructLifetime>,
 
 //         #[eo_vec_to_std_string_string]

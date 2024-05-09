@@ -1,33 +1,143 @@
 pub trait ToStdStringString {
     fn to_std_string_string(&self) -> std::string::String;
 }
-
 impl ToStdStringString for std::string::String {
     fn to_std_string_string(&self) -> std::string::String {
         self.clone()
     }
 }
-
 impl ToStdStringString for tracing::dispatcher::SetGlobalDefaultError {
     fn to_std_string_string(&self) -> std::string::String {
         std::string::String::from("tracing::dispatcher::SetGlobalDefaultError")
     }
 }
-
 impl ToStdStringString for tracing::log::SetLoggerError {
     fn to_std_string_string(&self) -> std::string::String {
         std::string::String::from("tracing::log::SetLoggerError")
     }
 }
-
 impl ToStdStringString for reqwest::header::HeaderMap {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
-
 impl ToStdStringString for http_body::SizeHint {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
+impl ToStdStringString for axum::http::header::ToStrError {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for axum::Error {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for std::primitive::usize {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for time::error::ComponentRange {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::types::uuid::Error {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for std::io::Error {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::Error {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for serde_json::Error {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for reqwest::Error {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for http::StatusCode {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for axum::extract::rejection::JsonDataError {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for sqlx::migrate::MigrateError {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ToStdStringString for axum::extract::rejection::JsonSyntaxError {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+// impl ToStdStringString for  {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }

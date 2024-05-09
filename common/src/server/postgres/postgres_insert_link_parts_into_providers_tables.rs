@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginErrorNamed {
 //     Postgres {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -10,15 +10,15 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'a> {
 //     PostgresInsertLinkPartsIntoProvidersTablesOriginHandle(PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed),
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed {
 //     Postgres {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         error: sqlx::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

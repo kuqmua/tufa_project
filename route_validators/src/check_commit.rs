@@ -1,23 +1,23 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
+    error_occurence_lib::ErrorOccurenceTest,
 )]
 pub enum CheckCommitErrorNamed {
     CommitNotEqual {
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         commit_not_equal: std::string::String,
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         commit_to_use: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     CommitToStrConversion {
-        #[eo_display]
+        #[eo_to_std_string_string]
         commit_to_str_conversion: axum::http::header::ToStrError,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NoCommitHeader {
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         no_commit_header: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

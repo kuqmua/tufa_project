@@ -1,12 +1,12 @@
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum NetCheckAvailabilityErrorNamed {
     ReqwestGet {
-        #[eo_display]
+        #[eo_to_std_string_string]
         reqwest_get: reqwest::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ResponseStatus {
-        #[eo_display]
+        #[eo_to_std_string_string]
         status: reqwest::StatusCode,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

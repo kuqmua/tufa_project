@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoInsertManyErrorNamed {
 //     InsertMany {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -7,15 +7,15 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoInsertManyErrorUnnamed<'a> {
 //     InsertMany(MongoInsertManyHandleErrorNamed),
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoInsertManyHandleErrorNamed {
 //     InsertMany {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         insert_many: mongodb::error::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

@@ -1,7 +1,7 @@
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum MongoCheckAvailabilityErrorNamed {
     ListCollectionNames {
-        #[eo_display]
+        #[eo_to_std_string_string]
         list_collection_names: mongodb::error::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

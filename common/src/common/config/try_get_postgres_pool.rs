@@ -11,6 +11,12 @@ impl std::fmt::Display for TryGetPostgresPoolError {
     }
 }
 
+impl error_occurence_lib::ToStdStringString for TryGetPostgresPoolError {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+
 #[allow(async_fn_in_trait)] //todo wait for async trait stabilization
 
 pub trait TryGetPostgresPool {

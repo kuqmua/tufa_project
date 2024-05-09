@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum GetLocalProvidersLinkPartsErrorNamed {
 //     GetLinkPartsFromLocalJsonFile {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -7,7 +7,7 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum GetLocalProvidersLinkPartsErrorUnnamed<'a> {
 //     GetLinkPartsFromLocalJsonFile(crate::repositories_types::server::providers::provider_kind::provider_kind_enum::GetLinkPartsFromLocalJsonFileErrorNamed),
 // }

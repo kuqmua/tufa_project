@@ -3677,10 +3677,10 @@ pub struct SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize {
     minutes: std::primitive::i8,
     seconds: std::primitive::i8,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
-        #[eo_display]
+        #[eo_to_std_string_string]
         time_error_component_range: time::error::ComponentRange,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -4606,7 +4606,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeser
     start: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize>,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     Start {
         #[eo_error_occurence]
@@ -4951,7 +4951,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDe
     start: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize>,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed
 {
     Start {
@@ -5293,7 +5293,7 @@ pub struct SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserialize {
     start: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
     end: std::ops::Bound<SqlxTypesTimeDateWithSerializeDeserialize>,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxPostgresTypesPgRangeSqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     Start {
         #[eo_error_occurence]
@@ -5783,7 +5783,7 @@ pub struct SqlxPostgresTypesPgTimeTzWithSerializeDeserialize {
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
     offset: SqlxTypesTimeUtcOffsetFromHmsWithSerializeDeserialize,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxPostgresTypesPgTimeTzWithSerializeDeserializeErrorNamed {
     Time {
         #[eo_error_occurence]
@@ -5863,7 +5863,7 @@ pub struct SqlxTypesTimePrimitiveDateTimeWithSerializeDeserialize {
     date: SqlxTypesTimeDateWithSerializeDeserialize,
     time: SqlxTypesTimeTimeWithSerializeDeserialize,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxTypesTimePrimitiveDateTimeWithSerializeDeserializeErrorNamed {
     Date {
         #[eo_error_occurence]
@@ -5947,10 +5947,10 @@ pub struct SqlxTypesTimeOffsetDateTime(pub sqlx::types::time::OffsetDateTime);
 pub struct SqlxTypesTimeOffsetDateTimeWithSerializeDeserialize(
     std::primitive::i64,
 );
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxTypesTimeOffsetDateTimeWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
-        #[eo_display]
+        #[eo_to_std_string_string]
         time_error_component_range: time::error::ComponentRange,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -5991,10 +5991,10 @@ pub struct SqlxTypesTimeDateWithSerializeDeserialize {
     month: TimeMonthWithSerializeDeserialize,
     day: std::primitive::u8,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxTypesTimeDateWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
-        #[eo_display]
+        #[eo_to_std_string_string]
         time_error_component_range: time::error::ComponentRange,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -6044,10 +6044,10 @@ pub struct SqlxTypesTimeTimeWithSerializeDeserialize {
     minute: std::primitive::u8,
     second: std::primitive::u8,
 }
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxTypesTimeTimeWithSerializeDeserializeErrorNamed {
     TimeErrorComponentRange {
-        #[eo_display]
+        #[eo_to_std_string_string]
         time_error_component_range: time::error::ComponentRange,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -6088,10 +6088,10 @@ impl PostgresqlOrder for SqlxTypesTimeTime {}
 pub struct SqlxTypesUuidUuid(pub sqlx::types::uuid::Uuid);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
 pub struct SqlxTypesUuidUuidWithSerializeDeserialize(std::string::String);
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum SqlxTypesUuidUuidWithSerializeDeserializeErrorNamed {
     SqlxTypesUuidError {
-        #[eo_display]
+        #[eo_to_std_string_string]
         sqlx_types_uuid_error: sqlx::types::uuid::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -6659,10 +6659,10 @@ pub trait AsPostgresqlJson {}
 pub trait AsPostgresqlJsonB {}
 
 const CHECKED_ADD_IS_NONE: &str = "checked_add is None";
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum TryGenerateBindIncrementsErrorNamed {
     CheckedAdd {
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         checked_add: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -6740,31 +6740,31 @@ pub struct OrderBy<ColumnGeneric> {
 // #[derive(
 //     Debug,
 //     thiserror::Error,
-//     error_occurence_lib::ErrorOccurence,
+//     error_occurence_lib::ErrorOccurenceTest,
 // )]
 // pub enum JsonExtractorErrorNamed {
 //     JsonDataError {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         json_data_error: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     JsonSyntaxError {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         json_syntax_error: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     MissingJsonContentType {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         missing_json_content_type: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     BytesRejection {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         bytes_rejection: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     NonExhaustiveCase {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         unexpected_case: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

@@ -21,7 +21,7 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum FetchAndParseProviderDataErrorNamed {
 //     // AsyncFetchLinks {
 //     //     #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -35,7 +35,7 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum FetchAndParseProviderDataErrorUnnamed<'a> {
 //     NoItems(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed),
 // }
@@ -204,20 +204,20 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum GetLinkPartsFromLocalJsonFileErrorNamed {
 //     TokioFsFileOpen {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         tokio_fs_file_open: std::io::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     TokioIoAsyncReadExtReadToEnd {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         tokio_io_async_read_ext_read_to_end: std::io::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     SerdeJsonFromSlice {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         serde_json_from_slice: serde_json::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
@@ -308,15 +308,15 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoGetProviderLinkPartsErrorNamed {
 //     ClientOptionsParse {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         mongo: mongodb::error::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     ClientWithOptions {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         mongo: mongodb::error::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

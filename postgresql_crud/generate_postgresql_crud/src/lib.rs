@@ -281,10 +281,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let error_log_call_token_stream = quote::quote! {
-        error_occurence_lib::error_log::ErrorLog::error_log(
-            &#error_value_snake_case_token_stream,
-            #app_state_name_token_stream.as_ref(),
-        );
+        // error_occurence_lib::error_log::ErrorLog::error_log(
+        //     &#error_value_snake_case_token_stream,
+        //     #app_state_name_token_stream.as_ref(),
+        // );
+        eprintln!("{error}");
     };
     let utoipa_to_schema_token_stream = proc_macro_common::utoipa_to_schema_token_stream();
     let serde_serialize_token_stream = proc_macro_common::serde_serialize_token_stream();
@@ -2483,7 +2484,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #[derive(
                         Debug,
                         thiserror::Error,
-                        error_occurence_lib::ErrorOccurence,
+                        error_occurence_lib::ErrorOccurenceTest,
                         from_sqlx_postgres_error::FromSqlxPostgresError,
                     )]
                     pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
@@ -2603,7 +2604,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #[derive(
                         Debug,
                         thiserror::Error,
-                        error_occurence_lib::ErrorOccurence,
+                        error_occurence_lib::ErrorOccurenceTest,
                         from_sqlx_postgres_error::FromSqlxPostgresError,
                     )]
                     pub enum #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
@@ -3083,12 +3084,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //             #reqwest_declaration_token_stream,
             //             //todo
             //             CheckCommit {
-            //                 #[eo_display_with_serialize_deserialize]
+            //                 #[eo_to_std_string_string_serialize_deserialize]
             //                 check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
             //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             //             },
             //             CheckBodySize {
-            //                 #[eo_display_with_serialize_deserialize]
+            //                 #[eo_to_std_string_string_serialize_deserialize]
             //                 check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
             //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
             //             },
@@ -8039,9 +8040,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream

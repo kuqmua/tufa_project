@@ -1,14 +1,14 @@
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum MongoDropEmptyDbErrorNamed {
     MongoDB {
-        #[eo_display]
+        #[eo_to_std_string_string]
         mongodb: mongodb::error::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     CollectionNamesListIsNotEmpty {
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         database: std::string::String, //todo conversion to_string() for with_serialize_deserialize
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         list_collection_names_len: usize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

@@ -1,7 +1,7 @@
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 pub enum WriteJsonIntoFileSyncErrorNamed {
     SerdeJson{
-        #[eo_display]
+        #[eo_to_std_string_string]
         serde_json: serde_json::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },

@@ -1,12 +1,12 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum CheckProvidersLinkPartsEmptyErrorNamed {
 //     Full {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         message: &'a str,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     Partially {
-//         #[eo_vec_display_with_serialize_deserialize]
+//         #[eo_vec_to_std_string_string_serialize_deserialize]
 //         provider_kind_vec: Vec<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

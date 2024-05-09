@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum GetProvidersLinkPartsErrorNamed {
 //     GetLocalProvidersLinkParts {
 //         #[eo_error_occurence]

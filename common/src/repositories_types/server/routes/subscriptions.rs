@@ -17,35 +17,35 @@
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum SubscribeErrorNamed {
 //     TryIntoNewSubscriber {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         try_into_new_subscriber: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     PostgresPoolBegin {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         postgres_pool_begin: sqlx::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     InsertSubscriber {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         insert_subscriber: sqlx::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     StoreToken {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         store_token: StoreTokenError,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     PostgresTransactionCommit {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         postgres_transaction_commit: sqlx::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     SendConfirmationEmail {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         send_confirmation_email: reqwest::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

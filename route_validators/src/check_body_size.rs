@@ -1,13 +1,13 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
+    error_occurence_lib::ErrorOccurenceTest,
 )]
 pub enum CheckBodySizeErrorNamed {
     ReachedMaximumSizeOfBody {
-        #[eo_display]
+        #[eo_to_std_string_string]
         axum_error: axum::Error,
-        #[eo_display_with_serialize_deserialize]
+        #[eo_to_std_string_string_serialize_deserialize]
         maximum_size_of_body_limit_in_bytes: std::primitive::usize,
         #[eo_to_std_string_string]
         size_hint: http_body::SizeHint,

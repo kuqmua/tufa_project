@@ -26,12 +26,14 @@ pub fn entry(config: &'static common::repositories_types::server::config::Config
                 if let Err(error) = runtime.block_on(
                     common::server::net::net_check_availability::net_check_availability(config),
                 ) {
-                    error_occurence_lib::error_log::ErrorLog::error_log(&*error, &config);
+                    // error_occurence_lib::error_log::ErrorLog::error_log(&*error, &config);
+                    eprintln!("{error}");
                 } else if let Err(error) =
                     runtime.block_on(crate::server_wrapper::server_wrapper(config))
                 {
                     eprintln!("server stopped");
-                    error_occurence_lib::error_log::ErrorLog::error_log(&*error, &config);
+                    // error_occurence_lib::error_log::ErrorLog::error_log(&*error, &config);
+                    eprintln!("{error}");
                 }
                 else {
                     //clippy lint forces to add empty else

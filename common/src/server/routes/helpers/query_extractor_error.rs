@@ -1,7 +1,7 @@
 // #[derive(
 //     Debug,
 //     thiserror::Error,
-//     error_occurence_lib::ErrorOccurence,
+//     error_occurence_lib::ErrorOccurenceTest,
 //     type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker,
 // )]
 // #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
@@ -10,14 +10,14 @@
 // pub enum QueryExtractorErrorNamed {
 //     #[tvfrr_400_bad_request]
 //     FailedToDeserializeQueryString {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         failed_to_deserialize_query_string: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     //#[non_exhaustive] case
 //     #[tvfrr_500_internal_server_error]
 //     UnexpectedCase {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         unexpected_case: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },

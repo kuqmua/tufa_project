@@ -1,7 +1,7 @@
 // #[derive(
 //     Debug,
 //     thiserror::Error,
-//     error_occurence_lib::ErrorOccurence,
+//     error_occurence_lib::ErrorOccurenceTest,
 //     type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker, //(rust analyzer does not work if type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker macro works for some reason)
 // )]
 // #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(
@@ -24,32 +24,32 @@
 // pub enum JsonExtractorErrorNamed {
 //     #[tvfrr_400_bad_request]
 //     JsonDataError {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         json_data_error: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_400_bad_request]
 //     JsonSyntaxError {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         json_syntax_error: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_400_bad_request]
 //     MissingJsonContentType {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         missing_json_content_type: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     BytesRejection {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         bytes_rejection: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     //#[non_exhaustive] case
 //     #[tvfrr_500_internal_server_error]
 //     UnexpectedCase {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         unexpected_case: std::string::String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
@@ -148,7 +148,8 @@
 //             Ok(axum::Json(payload)) => Ok(payload),
 //             Err(err) => {
 //                 let error = crate::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
-//                 error_occurence_lib::error_log::ErrorLog::error_log(&error, app_state.as_ref());
+////                 error_occurence_lib::error_log::ErrorLog::error_log(&error, app_state.as_ref());
+//                 eprintln!("{error}");
 //                 Err(ErrorGeneric::from(error))
 //             }
 //         }

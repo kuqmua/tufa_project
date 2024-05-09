@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoCheckCollectionIsNotEmptyErrorNamed {
 //     Mongo {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -8,25 +8,25 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoCheckCollectionIsNotEmptyErrorUnnamed<'a> {
 //     CountDocumentsOrigin(MongoCheckCollectionIsNotEmptyErrorCountDocumentsErrorNamed),
 //     IsNotEmptyOrigin(MongoCheckCollectionIsNotEmptyErrorIsNotEmptyOriginErrorNamed),
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoCheckCollectionIsNotEmptyErrorCountDocumentsErrorNamed {
 //     CountDocuments {
-//         #[eo_display]
+//         #[eo_to_std_string_string]
 //         error: mongodb::error::Error,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
 // pub enum MongoCheckCollectionIsNotEmptyErrorIsNotEmptyOriginErrorNamed {
 //     IsNotEmptyOrigin {
-//         #[eo_display_with_serialize_deserialize]
+//         #[eo_to_std_string_string_serialize_deserialize]
 //         error: u64,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
