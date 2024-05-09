@@ -261,8 +261,7 @@ impl std::fmt::Display for ErrorNamedOne {
                             .fold(std::string::String::new(), |mut acc, (key, value)| {
                                 acc.push_str(
                                     &format!(
-                                        "\n {}: {}", 
-                                        &key, 
+                                        "\n {key}: {}", 
                                         &error_occurence_lib::ToStdStringString::to_std_string_string(value)
                                     )
                                 );
@@ -274,8 +273,7 @@ impl std::fmt::Display for ErrorNamedOne {
                             .fold(std::string::String::new(), |mut acc, (key, value)| {
                                 acc.push_str(
                                     &format!(
-                                        "\n {}: {}", 
-                                        &key, 
+                                        "\n {key}: {}", 
                                         &error_occurence_lib ::ToStdStringString ::to_std_string_string(value)
                                     )
                                 );
@@ -286,8 +284,7 @@ impl std::fmt::Display for ErrorNamedOne {
                             .iter()
                             .fold(std::string::String::new(), |mut acc, (key, value)| {
                                 acc.push_str(&format!(
-                                    "\n {}: {}",
-                                    &key,
+                                    "\n {key}: {}",
                                     value.to_string().lines().fold(
                                         std::string::String::new(),
                                         |mut acc, element| {
