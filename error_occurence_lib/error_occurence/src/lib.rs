@@ -4321,6 +4321,18 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
+            let generate_fields_format_excluding_code_occurence_token_stream = |fields: &syn::punctuated::Punctuated<syn::Field, syn::token::Comma>|{
+                proc_macro_common::generate_quotes::token_stream(
+                    &fields.iter().filter(|element|
+                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                    ).fold(std::string::String::new(), |mut acc, element| {
+                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                        acc.push_str(&format!("{element_ident}: {{}}\n"));
+                        acc
+                    }),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                )
+            };
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_token_stream(
                 &quote::quote!{#ident},
                 &generate_display_formatter_named_token_stream(
@@ -4343,19 +4355,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 let element_ident = &element.ident;
                                 quote::quote! {#element_ident,}
                             });
-                            let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                &format!(
-                                    "{}",
-                                    fields.iter().filter(|element|
-                                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                                    ).fold(std::string::String::new(), |mut acc, element| {
-                                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                                        acc.push_str(&format!("{element_ident}: {{}}\n"));
-                                        acc
-                                    })
-                                ),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
+                            let fields_format_excluding_code_occurence_token_stream = generate_fields_format_excluding_code_occurence_token_stream(&fields);
                             let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                             ).map(|element|{
@@ -4867,18 +4867,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 let element_ident = &element.ident;
                                 quote::quote! {#element_ident,}
                             });
-                            let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
-                                &format!(
-                                    "{{{{\n{}}}}}",
-                                    fields.iter().filter(|element|
-                                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                                    ).fold(std::string::String::new(), |mut acc, _| {
-                                        acc.push_str("{}");
-                                        acc
-                                    })
-                                ),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
+                            let fields_format_excluding_code_occurence_token_stream = generate_fields_format_excluding_code_occurence_token_stream(&fields);
                             let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                             ).map(|element|{

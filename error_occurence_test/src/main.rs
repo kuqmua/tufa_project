@@ -162,8 +162,8 @@ fn main() {
     };
     println!("{e}");
     let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
-    // println!("--------------------------------------------------------------------------------------------------");
-    // println!("{e_serialize_deserialize_version}");
+    println!("--------------------------------------------------------------------------------------------------");
+    println!("{e_serialize_deserialize_version}");
     let e_serialize_deserialize_version_json_string = serde_json::to_string(&e_serialize_deserialize_version).unwrap();
     // println!("{e_serialize_deserialize_version_json_string}");
     // println!("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
