@@ -85,7 +85,7 @@ pub fn generate_getter_trait(
         syn::Fields::Unit => panic!("{proc_macro_name_upper_camel_case_stringified} only works with syn::Fields::Unnamed"),
     };
     assert!(fields_unnamed.len() == 1, "{proc_macro_name_upper_camel_case_stringified} fields_unnamed !== 1");
-    let first_field_unnamed = fields_unnamed.iter().nth(0).map_or_else(|| panic!("{proc_macro_name_upper_camel_case_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
+    let first_field_unnamed = fields_unnamed.iter().next().map_or_else(|| panic!("{proc_macro_name_upper_camel_case_stringified} fields_unnamed.iter().nth(0) is None"), |value| value);
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_upper_camel_case_stringified = format!(
         "{}{ident}",

@@ -1570,7 +1570,7 @@ fn generate_query_vec_column(value: &[DogColumn]) -> std::string::String {
             acc += ",";
             acc
         });
-    let _ = value.pop();
+    let _: std::option::Option<std::primitive::char> = value.pop();
     value
 }
 #[derive(Debug)]
