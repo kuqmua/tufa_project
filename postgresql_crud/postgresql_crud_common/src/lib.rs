@@ -3051,7 +3051,7 @@ pub struct Test<T> {
                                                    //maybe Composite types
                                                    //maybe Enumerations
 }
-
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct TestOption<T> {
     std_primitive_bool: std::option::Option<std::primitive::bool>,

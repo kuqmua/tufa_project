@@ -2441,8 +2441,8 @@ pub async fn try_create_many_generated_route_logic(
                         ),
                     );
                 }
-                Err(e) => {
-                    return Err(TryCreateManyGeneratedRouteLogicErrorNamed::from(e));
+                Err(error) => {
+                    return Err(TryCreateManyGeneratedRouteLogicErrorNamed::from(error));
                 }
             }
         }
