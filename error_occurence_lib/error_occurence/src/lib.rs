@@ -4283,31 +4283,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
-            let lines_space_backslash_token_stream = quote::quote!{
-                .lines()
-                .fold(std::string::String::new(), |mut acc, element| {
-                    acc.push_str(&format!(" {element}\n"));
-                    acc
-                })
-            };
-            let generate_ident_colon_to_string_with_config_format_token_stream = |value: &syn::Ident|{
-                proc_macro_common::generate_quotes::token_stream(
-                    &format!("{value}:\n"),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                )
-            };
-            let generate_fields_format_excluding_code_occurence_token_stream = |fields: &syn::punctuated::Punctuated<syn::Field, syn::token::Comma>|{
-                proc_macro_common::generate_quotes::token_stream(
-                    &fields.iter().filter(|element|
-                        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                    ).fold(std::string::String::new(), |mut acc, element| {
-                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                        acc.push_str(&format!("{element_ident}: {{}}\n"));
-                        acc
-                    }),
-                    &proc_macro_name_upper_camel_case_ident_stringified,
-                )
-            };
             let generate_impl_std_fmt_display_handle_token_stream = |ident_token_stream: &proc_macro2::TokenStream|{
                 generate_impl_std_fmt_display_token_stream(
                     &ident_token_stream,
@@ -4329,12 +4304,24 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 let element_ident = &element.ident;
                                 quote::quote! {#element_ident,}
                             });
-                            let fields_format_excluding_code_occurence_token_stream = generate_fields_format_excluding_code_occurence_token_stream(&fields);
+                            let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
+                                &fields.iter().filter(|element|
+                                    *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                                ).fold(std::string::String::new(), |mut acc, element| {
+                                    let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                                    acc.push_str(&format!("{element_ident}: {{}}\n"));
+                                    acc
+                                }),
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            );
                             let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
                                 *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                             ).map(|element|{
                                 let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                                let ident_colon_to_string_with_config_format_token_stream = generate_ident_colon_to_string_with_config_format_token_stream(&element_ident);
+                                let ident_colon_to_string_with_config_format_token_stream = proc_macro_common::generate_quotes::token_stream(
+                                    &format!("{element_ident}:\n"),
+                                    &proc_macro_name_upper_camel_case_ident_stringified,
+                                );
                                 match generate_attribute(&element) {
                                     ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
                                         quote::quote!{
