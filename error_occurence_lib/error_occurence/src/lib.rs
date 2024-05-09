@@ -4348,8 +4348,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     "{}",
                                     fields.iter().filter(|element|
                                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                                    ).fold(std::string::String::new(), |mut acc, _| {
-                                        acc.push_str("{}");
+                                    ).fold(std::string::String::new(), |mut acc, element| {
+                                        let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                                        acc.push_str(&format!("{element_ident}: {{}}\n"));
                                         acc
                                     })
                                 ),
