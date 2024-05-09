@@ -89,12 +89,6 @@ impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {
 }
 
 fn main() {
-    let e_two = ErrorNamedTwo::Variant {
-        eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
-        code_occurence: error_occurence_lib::code_occurence!(),
-    };
-    println!("{e_two}");
-    println!("*****************************");
     let e = ErrorNamedOne::Variant {
         eo_display_field: DisplayStruct {
             display: std::string::String::from("value"),
@@ -105,10 +99,17 @@ fn main() {
             two: true,
             three: 42,
         },
-        eo_error_occurence_field: e_two,
+        eo_error_occurence_field: ErrorNamedTwo::Variant {
+            eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+            code_occurence: error_occurence_lib::code_occurence!(),
+        },
         eo_vec_display_field: vec![
             DisplayStruct {
-                display: std::string::String::from("value"),
+                display: std::string::String::from("08708789"),
+                something: true,
+            },
+            DisplayStruct {
+                display: std::string::String::from("7565757"),
                 something: true,
             }
         ],
@@ -117,6 +118,11 @@ fn main() {
                 one: std::string::String::from("value"),
                 two: true,
                 three: 42,
+            },
+            SerializeDeserializeStruct {
+                one: std::string::String::from("97697697"),
+                two: false,
+                three: 422,
             }
         ],
         eo_vec_error_occurence_field: vec![
@@ -125,22 +131,43 @@ fn main() {
                     eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }
+            ),
+            ErrorUnnamedOne::Something(
+                ErrorNamedTwo::Variant {
+                    eo_display_with_serialize_deserialize_field: std::string::String::from("123"),
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                }
             )
         ],
         hashmap_string_string: std::collections::HashMap::from([
                 (
-                    std::string::String::from("key"),
+                    std::string::String::from("kesdfsfdsfsd"),
                     DisplayStruct {
-                        display: std::string::String::from("value"),
+                        display: std::string::String::from("vasfdsdfsdflue"),
+                        something: true,
+                    }
+                ),
+                (
+                    std::string::String::from("ksdfsdfsdfsdfey"),
+                    DisplayStruct {
+                        display: std::string::String::from("valsfdsfdsfdsue"),
                         something: true,
                     }
                 ),
             ]),
         hashmap_string_serde: std::collections::HashMap::from([
                 (
-                    std::string::String::from("key"),
+                    std::string::String::from("kdfgsdfgdsfgey"),
                     SerializeDeserializeStruct {
-                        one: std::string::String::from("value"),
+                        one: std::string::String::from("valusdfgdsgdsfgde"),
+                        two: true,
+                        three: 42,
+                    }
+                ),
+                (
+                    std::string::String::from("ksdfgdsfgsdfgey"),
+                    SerializeDeserializeStruct {
+                        one: std::string::String::from("valsdfgdsgdue"),
                         two: true,
                         three: 42,
                     }
@@ -148,10 +175,19 @@ fn main() {
             ]),
         hashmap_string_error_occurence: std::collections::HashMap::from([
             (
-                std::string::String::from("key"),
+                std::string::String::from("ksdfgadsfgsdfgdfgey"),
                 ErrorUnnamedOne::Something(
                     ErrorNamedTwo::Variant {
-                        eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
+                        eo_display_with_serialize_deserialize_field: std::string::String::from("vasdfgdgdfglue"),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    }
+                )
+            ),
+            (
+                std::string::String::from("kesdfgsdgfdfgy"),
+                ErrorUnnamedOne::Something(
+                    ErrorNamedTwo::Variant {
+                        eo_display_with_serialize_deserialize_field: std::string::String::from("valsdfgdsafgdsgue"),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     }
                 )
