@@ -53,7 +53,7 @@ pub enum ErrorNamedTwo {
     },
     Another {
         #[eo_to_std_string_string_serialize_deserialize]
-        eo_display_with_serialize_deserialize_field: std::string::String,
+        sdasdasd: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -94,7 +94,7 @@ impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {
 }
 
 fn main() {
-    let e = ErrorNamedOne::Variant {
+    let error = ErrorNamedOne::Variant {
         eo_display_field: DisplayStruct {
             display: std::string::String::from("value"),
             something: true,
@@ -201,8 +201,8 @@ fn main() {
 
         code_occurence: error_occurence_lib::code_occurence!(),
     };
-    println!("{e}");
-    let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
+    println!("{error}");
+    let e_serialize_deserialize_version = error.into_serialize_deserialize_version();
     println!("--------------------------------------------------------------------------------------------------");
     println!("{e_serialize_deserialize_version}");
     let e_serialize_deserialize_version_json_string = serde_json::to_string(&e_serialize_deserialize_version).unwrap();

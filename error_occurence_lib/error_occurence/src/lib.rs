@@ -166,6 +166,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
         quote::quote! {
             impl #ident {
                 pub fn #into_serialize_deserialize_version_snake_case_token_stream(self) -> #ident_with_serialize_deserialize_token_stream {
+                    #[allow(clippy::redundant_closure_for_method_calls)]
                     match self {
                         #variants
                     }
@@ -337,7 +338,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 }
                             });
                             quote::quote! {
-                                #ident_token_stream::#element_ident {
+                                Self::#element_ident {
                                     #(#fields_idents_excluding_code_occurence_token_stream)*
                                     ..
                                 } => {
@@ -348,13 +349,23 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 }
                             }
                         });
-                        let code_occurence_variants_token_stream = data_enum.variants.iter().map(|element| {
+                        let code_occurence_variants_token_stream = data_enum.variants.iter().enumerate().map(|(index, element)| {
                             let element_ident = &element.ident;
-                            quote::quote! {
-                                #ident_token_stream::#element_ident {
-                                    #code_occurence_snake_case_token_stream,
-                                    ..
-                                } => #code_occurence_snake_case_token_stream
+                            if index == 0 {
+                                quote::quote! {
+                                    Self::#element_ident {
+                                        #code_occurence_snake_case_token_stream,
+                                        ..
+                                    }
+                                }
+                            }
+                            else {
+                                quote::quote! {
+                                    | Self::#element_ident {
+                                        #code_occurence_snake_case_token_stream,
+                                        ..
+                                    }
+                                }
                             }
                         });
                         quote::quote!{
@@ -365,7 +376,8 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     #(#variants_token_stream),*
                                 },
                                 match self {
-                                    #(#code_occurence_variants_token_stream),*
+                                    #(#code_occurence_variants_token_stream)*
+                                    => #code_occurence_snake_case_token_stream
                                 }
                             )
                         }
@@ -449,11 +461,11 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         quote::quote!{#conversion_token_stream,}
                     });
                     quote::quote! {
-                        #ident::#element_ident {
+                        Self::#element_ident {
                             #(#fields_idents_token_stream),*
                         } => #ident_with_serialize_deserialize_token_stream::#element_ident {
                             #(#fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream)*
-                            #code_occurence_snake_case_token_stream: #code_occurence_snake_case_token_stream,
+                            #code_occurence_snake_case_token_stream,
                         }
                     }
                 });
@@ -627,7 +639,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
-                        #ident_token_stream::#element_ident(value) => value
+                        Self::#element_ident(value) => value
                     }
                 });
                 quote::quote!{
@@ -653,7 +665,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
                     quote::quote! {
-                        #ident::#element_ident(value) => #ident_with_serialize_deserialize_token_stream::#element_ident(
+                        Self::#element_ident(value) => #ident_with_serialize_deserialize_token_stream::#element_ident(
                             value.#into_serialize_deserialize_version_snake_case_token_stream(),
                         )
                     }
