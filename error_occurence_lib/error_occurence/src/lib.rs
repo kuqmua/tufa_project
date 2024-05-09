@@ -4494,7 +4494,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 #ident_token_stream::#element_ident {
                                     #code_occurence_snake_case_token_stream,
                                     ..
-                                } => #code_occurence_snake_case_token_stream,
+                                } => #code_occurence_snake_case_token_stream
                             }
                         });
                         quote::quote!{
@@ -4602,7 +4602,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         } => #ident_with_serialize_deserialize_token_stream::#element_ident {
                             #(#fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream)*
                             #code_occurence_snake_case_token_stream: #code_occurence_snake_case_token_stream,
-                        },
+                        }
                     }
                 });
                 generate_impl_ident_into_serialize_deserialize_version_token_stream(
