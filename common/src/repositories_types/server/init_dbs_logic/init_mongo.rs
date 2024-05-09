@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum InitMongoErrorNamed {
 //     ClientOptionsParse {
 //         #[eo_error_occurence]

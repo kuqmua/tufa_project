@@ -1,4 +1,4 @@
-pub use error_occurence::ErrorOccurenceTest;
+pub use error_occurence::ErrorOccurence;
 pub use ::to_std_string_string::ToStdStringString;
 pub mod code_occurence;
 

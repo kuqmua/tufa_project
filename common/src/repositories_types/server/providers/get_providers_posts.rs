@@ -42,7 +42,7 @@
 // // }
 // //TODO: WRITE CONVERSION FUNCTION INTO COMMON ERROR ENUM AND MOVE IT INTO write_error_posts_wrapper
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum GetProviderPostsErrorNamed {
 //     // GetLocalProvidersLinkParts {
 //     //     #[eo_error_occurence]
@@ -61,7 +61,7 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum GetProviderPostsErrorUnnamed<'a> {
 //     GetNewProvidersPosts(crate::repositories_types::server::providers::provider_kind::functions::rss_part::RssPartErrorNamed),
 // }

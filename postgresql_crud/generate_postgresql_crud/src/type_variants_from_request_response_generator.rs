@@ -91,7 +91,7 @@ pub(crate) fn type_variants_from_request_response_generator(
             #[derive(
                 Debug,
                 thiserror::Error,
-                error_occurence_lib::ErrorOccurenceTest,
+                error_occurence_lib::ErrorOccurence,
                 from_sqlx_postgres_error::FromSqlxPostgresError,
             )]
             pub enum #try_operation_upper_camel_case_token_stream {

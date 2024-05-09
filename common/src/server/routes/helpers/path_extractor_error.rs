@@ -1,7 +1,7 @@
 // #[derive(
 //     Debug,
 //     thiserror::Error,
-//     error_occurence_lib::ErrorOccurenceTest,
+//     error_occurence_lib::ErrorOccurence,
 //     type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker, //(rust analyzer does not work if type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker macro works for some reason)
 // )]
 // #[type_variants_from_reqwest_response::type_variants_from_reqwest_response_from_checker_paths(

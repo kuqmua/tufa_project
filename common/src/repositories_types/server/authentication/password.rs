@@ -1,4 +1,4 @@
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum GetStoredCredentialsErrorNamed {
     FetchOptional {
         #[eo_to_std_string_string]
@@ -7,7 +7,7 @@ pub enum GetStoredCredentialsErrorNamed {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ValidateCredentialsErrorNamed {
     GetStoredCredentials {
         #[eo_error_occurence]
@@ -31,7 +31,7 @@ pub enum ValidateCredentialsErrorNamed {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum VerifyPasswordHashErrorNamed {
     ExposeSecret {
         #[eo_to_std_string_string]
@@ -45,7 +45,7 @@ pub enum VerifyPasswordHashErrorNamed {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ChangePasswordErrorNamed {
     SpawnBlockingWithTracing {
         #[eo_to_std_string_string]
@@ -64,7 +64,7 @@ pub enum ChangePasswordErrorNamed {
     },
 }
 
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ComputePasswordHashErrorNamed {
     PasswordHash {
         #[eo_to_std_string_string]

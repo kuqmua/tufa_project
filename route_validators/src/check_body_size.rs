@@ -1,7 +1,7 @@
 #[derive(
     Debug,
     thiserror::Error,
-    error_occurence_lib::ErrorOccurenceTest,
+    error_occurence_lib::ErrorOccurence,
 )]
 pub enum CheckBodySizeErrorNamed {
     ReachedMaximumSizeOfBody {

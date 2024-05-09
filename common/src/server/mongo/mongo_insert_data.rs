@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum MongoInsertDataErrorNamed {
 //     Errors {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
@@ -7,7 +7,7 @@
 //     },
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum MongoInsertDataErrorUnnamed<'a> {
 //     MongoInsertDocsInEmptyCollection(crate::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorNamed)
 // }

@@ -434,7 +434,7 @@ pub struct Dog {
 //     }
 // }
 
-// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+// #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum TryCreateManyRouteLogicErrorNamed {
 //     CheckCommit {
 //         #[eo_error_occurence]
@@ -712,7 +712,7 @@ pub async fn try_create_many_route_logic(
 
 
 
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurenceTest)]
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryCreateManyErrorNamed {
     SerdeJsonToString {
         #[eo_to_std_string_string]
@@ -2082,7 +2082,7 @@ pub struct CreateManyParameters {
 #[derive(
     Debug,
     thiserror :: Error,
-    error_occurence_lib :: ErrorOccurenceTest,
+    error_occurence_lib :: ErrorOccurence,
     from_sqlx_postgres_error :: FromSqlxPostgresError,
 )]
 pub enum TryCreateManyGeneratedRouteLogicErrorNamed {
@@ -2663,7 +2663,7 @@ impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
 #[derive(
     Debug,
     thiserror :: Error,
-    error_occurence_lib :: ErrorOccurenceTest,
+    error_occurence_lib :: ErrorOccurence,
     from_sqlx_postgres_error :: FromSqlxPostgresError,
 )]
 pub enum TryCreateManyRouteLogicErrorNamed {

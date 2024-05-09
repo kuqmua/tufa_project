@@ -1,5 +1,5 @@
 #[derive(Debug)]
-enum ErrorOccurenceTestFieldAttribute {
+enum ErrorOccurenceFieldAttribute {
     EoToStdStringString,
     EoToStdStringStringSerializeDeserialize,
     EoErrorOccurence,
@@ -10,7 +10,7 @@ enum ErrorOccurenceTestFieldAttribute {
     EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize,
     EoHashMapKeyStdStringStringValueErrorOccurence,
 }
-impl std::str::FromStr for ErrorOccurenceTestFieldAttribute {
+impl std::str::FromStr for ErrorOccurenceFieldAttribute {
     type Err = std::string::String;
     fn from_str(value: &std::primitive::str) -> Result<Self, Self::Err> {
         if value == "eo_to_std_string_string" {
@@ -47,7 +47,7 @@ impl std::str::FromStr for ErrorOccurenceTestFieldAttribute {
 }
 
 #[proc_macro_derive(
-    ErrorOccurenceTest,
+    ErrorOccurence,
     attributes(
         eo_to_std_string_string,
         eo_to_std_string_string_serialize_deserialize,
@@ -62,7 +62,7 @@ impl std::str::FromStr for ErrorOccurenceTestFieldAttribute {
 )]
 pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
-    let proc_macro_name_upper_camel_case = "ErrorOccurenceTest";
+    let proc_macro_name_upper_camel_case = "ErrorOccurence";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
         panic!(
             "{proc_macro_name_upper_camel_case} {}",
@@ -136,7 +136,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
                 if let Ok(value) = {
                     use std::str::FromStr;
-                    ErrorOccurenceTestFieldAttribute::from_str(&first_segment_ident.to_string())
+                    ErrorOccurenceFieldAttribute::from_str(&first_segment_ident.to_string())
                 } {
                     if option_attribute.is_some() {
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
@@ -195,17 +195,17 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
                                 match generate_attribute(&element) {
-                                    ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                                    ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                         quote::quote!{
                                             error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                                    ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
                                             error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                                    ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                         quote::quote!{
                                             #element_ident.to_string().lines().fold(
                                                 std::string::String::new(),
@@ -216,7 +216,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             )
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                                    ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
                                                 std::string::String::new(),
@@ -237,7 +237,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             )
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                    ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
                                                 std::string::String::new(),
@@ -258,7 +258,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             )
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                                    ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                         quote::quote!{
                                             #element_ident.iter().fold(
                                                 std::string::String::new(),
@@ -275,7 +275,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                             )
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                                    ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                         quote::quote!{
                                             #element_ident
                                                 .iter()
@@ -293,7 +293,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 )
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                    ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
                                             #element_ident
                                                 .iter()
@@ -311,7 +311,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                                 )
                                         }
                                     },
-                                    ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                    ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                         quote::quote!{
                                             #element_ident
                                                 .iter()
@@ -391,45 +391,45 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     ).map(|element|{
                         let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
                         let conversion_token_stream = match generate_attribute(&element) {
-                            ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
                                     #element_ident: {
                                         error_occurence_lib::ToStdStringString::to_std_string_string(&#element_ident)
                                     }
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                 quote::quote!{
                                     #element_ident
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 quote::quote!{
                                     #element_ident: {
                                         #element_ident.into_serialize_deserialize_version()
                                     }
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote::quote!{
                                     #element_ident: { 
                                         #element_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
                                     }
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                 quote::quote!{
                                     #element_ident
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote::quote!{
                                     #element_ident: {
                                         #element_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
                                     }
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 quote::quote!{
                                     #element_ident: {
                                         #element_ident.into_iter().map(|(key, value)|
@@ -438,12 +438,12 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     }
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 quote::quote!{
                                     #element_ident
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 quote::quote!{
                                     #element_ident: {
                                         #element_ident.into_iter().map(
@@ -549,13 +549,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             quote::quote!{#element_type}
                         };
                         let element_type_with_serialize_deserialize_token_stream = match generate_attribute(&element) {
-                            ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
                                     #std_string_string_token_stream
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => element_type_token_stream,
-                            ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => element_type_token_stream,
+                            ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 let element_type_with_serialize_deserialize_token_stream = {
                                     let value = format!(
                                         "{}{}",
@@ -573,13 +573,13 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     #element_type_with_serialize_deserialize_token_stream
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote::quote!{
                                     std::vec::Vec<#std_string_string_token_stream>
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
-                            ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
+                            ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 let segments = if let syn::Type::Path(value) = &element.ty {
                                     &value.path.segments
                                 }
@@ -639,7 +639,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     std::vec::Vec<#element_vec_type_with_serialize_deserialize_token_stream>
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
                                     &element,
                                     &proc_macro_name_upper_camel_case_ident_stringified,
@@ -650,7 +650,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
                                 }
                             },
-                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
                                     &element,
                                     &proc_macro_name_upper_camel_case_ident_stringified,
@@ -659,7 +659,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                 );
                                 element_type_token_stream
                             },
-                            ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(
                                     &element,
                                     &proc_macro_name_upper_camel_case_ident_stringified,

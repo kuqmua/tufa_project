@@ -297,7 +297,7 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     };
     let gen = quote::quote!{
-        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
         pub enum #where_ident_with_serialize_deserialize_error_named_token_stream {
             #ident {
                 #[eo_error_occurence]
@@ -323,7 +323,7 @@ pub fn common_try_from(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         }
         //
-        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)]
+        #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
         pub enum #where_std_option_option_ident_with_serialize_deserialize_error_named_token_stream {
             #ident {
                 #[eo_error_occurence]

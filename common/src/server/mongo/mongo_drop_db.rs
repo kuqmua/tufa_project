@@ -1,4 +1,4 @@
-#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurenceTest)] //
+#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)] //
 pub enum MongoDropDbErrorNamed {
     MongoDB {
         #[eo_to_std_string_string]

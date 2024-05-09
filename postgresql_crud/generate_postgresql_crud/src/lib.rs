@@ -2484,7 +2484,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #[derive(
                         Debug,
                         thiserror::Error,
-                        error_occurence_lib::ErrorOccurenceTest,
+                        error_occurence_lib::ErrorOccurence,
                         from_sqlx_postgres_error::FromSqlxPostgresError,
                     )]
                     pub enum #try_operation_route_logic_error_named_upper_camel_case_token_stream {
@@ -2604,7 +2604,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #[derive(
                         Debug,
                         thiserror::Error,
-                        error_occurence_lib::ErrorOccurenceTest,
+                        error_occurence_lib::ErrorOccurence,
                         from_sqlx_postgres_error::FromSqlxPostgresError,
                     )]
                     pub enum #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
