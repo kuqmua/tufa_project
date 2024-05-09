@@ -4284,30 +4284,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
     let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
-            let generate_display_formatter_named_token_stream = |
-                ident_token_stream: &proc_macro2::TokenStream,
-                value_token_stream: &proc_macro2::TokenStream,
-            |{
-                let variants_token_stream = data_enum.variants.iter().map(|element| {
-                    let element_ident = &element.ident;
-                    quote::quote! {
-                        #ident_token_stream::#element_ident {
-                            code_occurence,
-                            ..
-                        } => code_occurence,
-                    }
-                });
-                quote::quote!{
-                    write!(
-                        formatter,
-                        "{}{}",
-                        #value_token_stream,
-                        match self {
-                            #(#variants_token_stream),*
-                        }
-                    )
-                }
-            };
             let lines_space_backslash_token_stream = quote::quote!{
                 .lines()
                 .fold(std::string::String::new(), |mut acc, element| {
@@ -4336,192 +4312,206 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             let generate_impl_std_fmt_display_handle_token_stream = |ident_token_stream: &proc_macro2::TokenStream|{
                 generate_impl_std_fmt_display_token_stream(
                     &ident_token_stream,
-                    &generate_display_formatter_named_token_stream(
-                        &ident_token_stream,
-                        {
-                            let variants_token_stream = data_enum.variants.iter().map(|element| {
+                    &{
+                        let variants_token_stream = data_enum.variants.iter().map(|element| {
+                            let element_ident = &element.ident;
+                            let fields = if let syn::Fields::Named(fields) = &element.fields {
+                                &fields.named
+                            }
+                            else {
+                                panic!(
+                                    "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
+                                    naming_constants::SUPPORTS_ONLY_STRINGIFIED
+                                );
+                            };
+                            let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                                *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                            ).map(|element|{
                                 let element_ident = &element.ident;
-                                let fields = if let syn::Fields::Named(fields) = &element.fields {
-                                    &fields.named
-                                }
-                                else {
-                                    panic!(
-                                        "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
-                                        naming_constants::SUPPORTS_ONLY_STRINGIFIED
-                                    );
-                                };
-                                let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-                                    *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                                ).map(|element|{
-                                    let element_ident = &element.ident;
-                                    quote::quote! {#element_ident,}
-                                });
-                                let fields_format_excluding_code_occurence_token_stream = generate_fields_format_excluding_code_occurence_token_stream(&fields);
-                                let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-                                    *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-                                ).map(|element|{
-                                    let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                                    let ident_colon_to_string_with_config_format_token_stream = generate_ident_colon_to_string_with_config_format_token_stream(&element_ident);
-                                    match generate_attribute(&element) {
-                                        ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
-                                            quote::quote!{
-                                                error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
-                                            quote::quote!{
-                                                error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
-                                            quote::quote!{
-                                                #element_ident.to_string().lines().fold(
-                                                    std::string::String::new(),
-                                                    |mut acc, element| {
-                                                        acc.push_str(&format!("\n {element}"));
-                                                        acc
-                                                    }
-                                                )
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
-                                            quote::quote!{
-                                                #element_ident.iter().fold(
-                                                    std::string::String::new(),
-                                                    |mut acc, element| {
+                                quote::quote! {#element_ident,}
+                            });
+                            let fields_format_excluding_code_occurence_token_stream = generate_fields_format_excluding_code_occurence_token_stream(&fields);
+                            let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+                                *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+                            ).map(|element|{
+                                let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+                                let ident_colon_to_string_with_config_format_token_stream = generate_ident_colon_to_string_with_config_format_token_stream(&element_ident);
+                                match generate_attribute(&element) {
+                                    ErrorOccurenceTestFieldAttribute::EoToStdStringString => {
+                                        quote::quote!{
+                                            error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+                                        quote::quote!{
+                                            error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoErrorOccurence => {
+                                        quote::quote!{
+                                            #element_ident.to_string().lines().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
+                                                    acc.push_str(&format!("\n {element}"));
+                                                    acc
+                                                }
+                                            )
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoVecToStdStringString => {
+                                        quote::quote!{
+                                            #element_ident.iter().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
+                                                    acc.push_str(
+                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                                                        .lines()
+                                                        .fold(
+                                                            std::string::String::new(), 
+                                                            |mut acc, element| { 
+                                                                acc.push_str(&format!("\n {element}")); 
+                                                                acc 
+                                                            }
+                                                        )
+                                                    );
+                                                    acc
+                                                }
+                                            )
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+                                        quote::quote!{
+                                            #element_ident.iter().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
+                                                    acc.push_str(
+                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(element)
+                                                        .lines()
+                                                        .fold(
+                                                            std::string::String::new(), 
+                                                            |mut acc, element| { 
+                                                                acc.push_str(& format! ("\n {element}")); 
+                                                                acc 
+                                                            }
+                                                        )
+                                                    );
+                                                    acc
+                                                }
+                                            )
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
+                                        quote::quote!{
+                                            #element_ident.iter().fold(
+                                                std::string::String::new(),
+                                                |mut acc, element| {
+                                                    acc.push_str(&element.to_string().lines().fold(
+                                                        std::string::String::new(),
+                                                        |mut acc, element| {
+                                                            acc.push_str(&format!("\n {element}"));
+                                                            acc
+                                                        },
+                                                    ));
+                                                    acc
+                                                }
+                                            )
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                                        quote::quote!{
+                                            #element_ident
+                                                .iter()
+                                                .fold(
+                                                    std::string::String::new(), 
+                                                    |mut acc, (key, value)| {
                                                         acc.push_str(
-                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(element)
-                                                            .lines()
-                                                            .fold(
-                                                                std::string::String::new(), 
-                                                                |mut acc, element| { 
-                                                                    acc.push_str(&format!("\n {element}")); 
-                                                                    acc 
-                                                                }
+                                                            &format!(
+                                                                "\n {key}: {}", 
+                                                                &error_occurence_lib::ToStdStringString::to_std_string_string(value)
                                                             )
                                                         );
                                                         acc
                                                     }
                                                 )
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
-                                            quote::quote!{
-                                                #element_ident.iter().fold(
-                                                    std::string::String::new(),
-                                                    |mut acc, element| {
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                                        quote::quote!{
+                                            #element_ident
+                                                .iter()
+                                                .fold(
+                                                    std::string::String::new(), 
+                                                    |mut acc, (key, value)| {
                                                         acc.push_str(
-                                                            &error_occurence_lib::ToStdStringString::to_std_string_string(element)
-                                                            .lines()
-                                                            .fold(
-                                                                std::string::String::new(), 
-                                                                |mut acc, element| { 
-                                                                    acc.push_str(& format! ("\n {element}")); 
-                                                                    acc 
-                                                                }
+                                                            &format!(
+                                                                "\n {key}: {}", 
+                                                                &error_occurence_lib ::ToStdStringString ::to_std_string_string(value)
                                                             )
                                                         );
                                                         acc
                                                     }
                                                 )
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoVecErrorOccurence => {
-                                            quote::quote!{
-                                                #element_ident.iter().fold(
-                                                    std::string::String::new(),
-                                                    |mut acc, element| {
-                                                        acc.push_str(&element.to_string().lines().fold(
-                                                            std::string::String::new(),
-                                                            |mut acc, element| {
-                                                                acc.push_str(&format!("\n {element}"));
-                                                                acc
-                                                            },
+                                        }
+                                    },
+                                    ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                                        quote::quote!{
+                                            #element_ident
+                                                .iter()
+                                                .fold(
+                                                    std::string::String::new(), 
+                                                    |mut acc, (key, value)| {
+                                                        acc.push_str(&format!(
+                                                            "\n {key}: {}",
+                                                            value.to_string().lines().fold(
+                                                                std::string::String::new(),
+                                                                |mut acc, element| {
+                                                                    acc.push_str(&format!("\n  {element}"));
+                                                                    acc
+                                                                }
+                                                            )
                                                         ));
                                                         acc
                                                     }
                                                 )
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                                            quote::quote!{
-                                                #element_ident
-                                                    .iter()
-                                                    .fold(
-                                                        std::string::String::new(), 
-                                                        |mut acc, (key, value)| {
-                                                            acc.push_str(
-                                                                &format!(
-                                                                    "\n {key}: {}", 
-                                                                    &error_occurence_lib::ToStdStringString::to_std_string_string(value)
-                                                                )
-                                                            );
-                                                            acc
-                                                        }
-                                                    )
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                                            quote::quote!{
-                                                #element_ident
-                                                    .iter()
-                                                    .fold(
-                                                        std::string::String::new(), 
-                                                        |mut acc, (key, value)| {
-                                                            acc.push_str(
-                                                                &format!(
-                                                                    "\n {key}: {}", 
-                                                                    &error_occurence_lib ::ToStdStringString ::to_std_string_string(value)
-                                                                )
-                                                            );
-                                                            acc
-                                                        }
-                                                    )
-                                            }
-                                        },
-                                        ErrorOccurenceTestFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                                            quote::quote!{
-                                                #element_ident
-                                                    .iter()
-                                                    .fold(
-                                                        std::string::String::new(), 
-                                                        |mut acc, (key, value)| {
-                                                            acc.push_str(&format!(
-                                                                "\n {key}: {}",
-                                                                value.to_string().lines().fold(
-                                                                    std::string::String::new(),
-                                                                    |mut acc, element| {
-                                                                        acc.push_str(&format!("\n  {element}"));
-                                                                        acc
-                                                                    }
-                                                                )
-                                                            ));
-                                                            acc
-                                                        }
-                                                    )
-                                            }
-                                        },
-                                    }
-                                });
-                                quote::quote! {
-                                    #ident_token_stream::#element_ident {
-                                        #(#fields_idents_excluding_code_occurence_token_stream)*
-                                        ..
-                                    } => {
-                                        format!(
-                                            #fields_format_excluding_code_occurence_token_stream,
-                                            #(#fields_format_values_excluding_code_occurence_token_stream),*
-                                        )
-                                    }
+                                        }
+                                    },
                                 }
                             });
-                            &quote::quote!{
-                                match self {
-                                    #(#variants_token_stream),*
+                            quote::quote! {
+                                #ident_token_stream::#element_ident {
+                                    #(#fields_idents_excluding_code_occurence_token_stream)*
+                                    ..
+                                } => {
+                                    format!(
+                                        #fields_format_excluding_code_occurence_token_stream,
+                                        #(#fields_format_values_excluding_code_occurence_token_stream),*
+                                    )
                                 }
                             }
+                        });
+                        let code_occurence_variants_token_stream = data_enum.variants.iter().map(|element| {
+                            let element_ident = &element.ident;
+                            quote::quote! {
+                                #ident_token_stream::#element_ident {
+                                    code_occurence,
+                                    ..
+                                } => code_occurence,
+                            }
+                        });
+                        quote::quote!{
+                            write!(
+                                formatter,
+                                "{}{}",
+                                match self {
+                                    #(#variants_token_stream),*
+                                },
+                                match self {
+                                    #(#code_occurence_variants_token_stream),*
+                                }
+                            )
                         }
-                    )
+                    }
+
                 )
             };
             let impl_std_fmt_display_for_ident_token_stream = generate_impl_std_fmt_display_handle_token_stream(&quote::quote!{#ident});
