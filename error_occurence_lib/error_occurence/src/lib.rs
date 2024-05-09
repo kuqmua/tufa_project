@@ -4300,7 +4300,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                 quote::quote!{
                     write!(
                         formatter,
-                        "{}\n{}",
+                        "{}{}",
                         #value_token_stream,
                         match self {
                             #(#variants_token_stream),*
@@ -4317,7 +4317,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             };
             let generate_ident_colon_to_string_with_config_format_token_stream = |value: &syn::Ident|{
                 proc_macro_common::generate_quotes::token_stream(
-                    &format!(" {value}:"),
+                    &format!("{value}:\n"),
                     &proc_macro_name_upper_camel_case_ident_stringified,
                 )
             };
@@ -4345,7 +4345,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             });
                             let fields_format_excluding_code_occurence_token_stream = proc_macro_common::generate_quotes::token_stream(
                                 &format!(
-                                    "{{{{\n{}}}}}",
+                                    "{}",
                                     fields.iter().filter(|element|
                                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                                     ).fold(std::string::String::new(), |mut acc, _| {
@@ -5118,6 +5118,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                     }
                 )
             );
+            // println!("{impl_std_fmt_display_for_ident_token_stream}");
             quote::quote! {
                 // #impl_std_fmt_display_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
