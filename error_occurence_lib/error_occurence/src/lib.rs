@@ -4216,7 +4216,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
-    // println!("{data_enum:#?}");
     let supported_enum_variant = proc_macro_helpers::error_occurence::supported_enum_variant::create(
         &data_enum,
         &proc_macro_name_upper_camel_case_ident_stringified,
@@ -4493,9 +4492,9 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             let element_ident = &element.ident;
                             quote::quote! {
                                 #ident_token_stream::#element_ident {
-                                    code_occurence,
+                                    #code_occurence_snake_case_token_stream,
                                     ..
-                                } => code_occurence,
+                                } => #code_occurence_snake_case_token_stream,
                             }
                         });
                         quote::quote!{
