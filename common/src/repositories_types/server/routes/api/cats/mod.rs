@@ -1579,8 +1579,7 @@ impl WrapperVecColumn {
     fn options_try_from_sqlx_row<'a, R: sqlx::Row>(&self, row: &'a R) -> sqlx::Result<DogOptions>
     where
         &'a std::primitive::str: sqlx::ColumnIndex<R>,
-        std::option::Option<std::primitive::i64>: sqlx::decode::Decode<'a, R::Database>,
-        std::option::Option<std::primitive::i64>: sqlx::types::Type<R::Database>,
+        std::option::Option<std::primitive::i64>: sqlx::decode::Decode<'a, R::Database> + sqlx::types::Type<R::Database>,
         std::option::Option<std::option::Option<std::primitive::bool>>:
             sqlx::decode::Decode<'a, R::Database>,
         std::option::Option<std::option::Option<std::primitive::bool>>:
@@ -2574,11 +2573,11 @@ impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
         {
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             CheckCommit { check_commit, code_occurence, } => Self ::
-            CheckCommit { check_commit : check_commit, code_occurence, },
+            CheckCommit { check_commit, code_occurence, },
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             CheckBodySize { check_body_size, code_occurence, } => Self ::
             CheckBodySize
-            { check_body_size : check_body_size, code_occurence, },
+            { check_body_size, code_occurence, },
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             Configuration { configuration, code_occurence } => Self ::
             Configuration { configuration, code_occurence },
