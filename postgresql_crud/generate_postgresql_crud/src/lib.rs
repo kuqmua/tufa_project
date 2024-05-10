@@ -2867,10 +2867,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &try_operation_response_variants_token_stream,
                     );
                     let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
-                        &quote::quote! {
-                            return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                        &{
+                            let field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                                file!(),
+                                line!(),
+                                column!(),
+                                &proc_macro_name_upper_camel_case_ident_stringified,
+                            );
+                            quote::quote! {
+                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Postgresql{
+                                    postgresql: error,
+                                    #field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream
+                                });
+                            }
                         },
                         &pg_connection_token_stream,
+                    );
+                    let field_code_occurence_new_72512bb5_747b_4847_a84d_87bb1561ce62_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    let field_code_occurence_new_ced1663e_25b0_4b0a_a775_feb3035caef8_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
                         let #query_string_name_token_stream = {
@@ -2891,8 +2914,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             .await
                             {
                                 Ok(value) => value,
-                                Err(#error_value_snake_case_token_stream) => {
-                                    return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                                Err(error) => {
+                                    return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Postgresql{
+                                        postgresql: error,
+                                        #field_code_occurence_new_72512bb5_747b_4847_a84d_87bb1561ce62_token_stream
+                                    });
                                 }
                             }
                         } {
@@ -2907,8 +2933,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         ),
                                     );
                                 }
-                                Err(#error_value_snake_case_token_stream) => {
-                                    return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::from(e));
+                                Err(error) => {
+                                    return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Postgresql{
+                                        postgresql: error,
+                                        #field_code_occurence_new_ced1663e_25b0_4b0a_a775_feb3035caef8_token_stream
+                                    });
                                 }
                             }
                         }
@@ -2973,7 +3002,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
                 #try_operation_generated_route_logic_desirable_token_stream
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
-                // #try_operation_generated_route_logic_token_stream
+                #try_operation_generated_route_logic_token_stream
             }
         };
         // println!("{route_handler_token_stream}");
