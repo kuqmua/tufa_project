@@ -39,7 +39,7 @@ utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 # utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
 git_info = {path = "../git_info"}
 from_str = {path = "../from_str"}
-from_sqlx_postgres_error = {path = "../from_sqlx_postgres_error"}
+# from_sqlx_postgres_error = {path = "../from_sqlx_postgres_error"}
 enum_extension_lib = {path = "../enum_extension_lib"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 postgresql_crud = {path = "../postgresql_crud"}

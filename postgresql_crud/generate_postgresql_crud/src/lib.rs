@@ -2598,13 +2598,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         Debug,
                         thiserror::Error,
                         error_occurence_lib::ErrorOccurence,
-                        from_sqlx_postgres_error::FromSqlxPostgresError,
+                        // from_sqlx_postgres_error::FromSqlxPostgresError,
                     )]
                     pub enum #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
                         #(#variants_token_stream),*
                     }
                 }
             };
+            // println!("{try_operation_generated_route_logic_error_named_token_stream}");
             let impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream = {
                 let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|{
                     let variant_ident = &element.ident;
@@ -2955,11 +2956,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{try_operation_generated_route_logic_token_stream}");
             quote::quote! {
-                #try_operation_generated_route_logic_error_named_token_stream
+                // #try_operation_generated_route_logic_error_named_token_stream
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
                 #try_operation_generated_route_logic_desirable_token_stream
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
-                #try_operation_generated_route_logic_token_stream
+                // #try_operation_generated_route_logic_token_stream
             }
         };
         // println!("{route_handler_token_stream}");
@@ -8039,9 +8040,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let gen = quote::quote! {
         //comment out coz its impossible to correctly generate tokens
         // pub mod #mod_name_snake_case_token_stream {/
-            #common_token_stream
+            // #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
