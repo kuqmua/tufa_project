@@ -5,7 +5,7 @@ pub mod generate_with_serialize_deserialize_version;
 pub mod hashmap_key_type;
 pub mod hashmap_value_type;
 pub mod lifetime;
-pub mod named_attribute;
+pub mod error_occurence_field_attribute;
 pub mod panic_if_not_str;
 pub mod panic_if_not_string;
 pub mod possible_lifetime_addition;

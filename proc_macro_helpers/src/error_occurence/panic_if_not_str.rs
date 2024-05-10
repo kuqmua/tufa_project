@@ -3,7 +3,7 @@ pub fn panic_if_not_str(
     str_stringified: &str,
     proc_macro_name_ident_stringified: &str,
     supports_only_stringified: &str,
-    attribute: &crate::error_occurence::named_attribute::NamedAttribute,
+    attribute: &crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute,
 ) {
     assert!(
         reference_ident == str_stringified, 

@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub enum ErrorFieldOrCodeOccurence {
     ErrorField {
-        attribute: crate::error_occurence::named_attribute::NamedAttribute,
+        attribute: crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute,
         supported_container: crate::error_occurence::supported_container::SupportedContainer,
     },
     CodeOccurence {

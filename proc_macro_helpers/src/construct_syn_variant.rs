@@ -3,7 +3,7 @@ pub fn construct_syn_variant(
     variant_name: &str,
     code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
-        crate::error_occurence::named_attribute::NamedAttribute,
+        crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute,
         &str,
         syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
