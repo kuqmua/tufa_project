@@ -2942,26 +2942,26 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             quote::quote! {
                 #try_operation_generated_route_logic_error_named_token_stream
-                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
-                #try_operation_generated_route_logic_desirable_token_stream
-                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
+                // #try_operation_generated_route_logic_desirable_token_stream
+                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
 
-                // #swagger_open_api_token_stream
-                pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
-                    #app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream
-                    #body_bytes_bytes_bytes_token_stream
-                ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
-                    let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
-                        #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
-                            Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
-                            Err(#error_value_snake_case_token_stream) => #axum_extract_rejection_json_rejection_handle_token_stream,
-                        }
-                    };
-                    println!("{:#?}", #parameters_snake_case_token_stream);
-                    {
-                        #try_operation_token_stream
-                    }
-                }
+                // // #swagger_open_api_token_stream
+                // pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
+                //     #app_state_dyn_postgresql_crud_combination_of_traits_for_postgresql_crud_logic_comma_token_stream
+                //     #body_bytes_bytes_bytes_token_stream
+                // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
+                //     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                //         #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
+                //             Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
+                //             Err(#error_value_snake_case_token_stream) => #axum_extract_rejection_json_rejection_handle_token_stream,
+                //         }
+                //     };
+                //     println!("{:#?}", #parameters_snake_case_token_stream);
+                //     {
+                //         #try_operation_token_stream
+                //     }
+                // }
             }
         };
         // println!("{route_handler_token_stream}");
@@ -3193,7 +3193,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // // #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream
                 // // #try_operation_error_with_middleware_error_variants_token_stream
                 // #http_request_token_stream
-                // #route_handler_token_stream
+                #route_handler_token_stream
                 // #try_operation_route_logic_token_stream
                 // // #common_middlewares_error_syn_variants_from_impls
             },

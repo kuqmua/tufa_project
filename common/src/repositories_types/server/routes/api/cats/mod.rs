@@ -198,18 +198,6 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-// pub struct TryCreateManyRouteLogicResponse {
-//     status_code: axum::http::StatusCode,
-//     body: TryCreateManyRouteLogicResponseVariants,
-// }
-// impl axum::response::IntoResponse for TryCreateManyRouteLogicResponse {
-//     fn into_response(self) -> axum::response::Response {
-//         let mut res = axum::Json(self.body).into_response(); 
-//         *res.status_mut() = self.status_code;
-//         res
-//     }
-// }
-
 // #[derive(Debug, serde::Serialize, serde::Deserialize)]
 // pub enum TryCreateManyRouteLogicResponseVariants {
 //     //
@@ -2208,6 +2196,8 @@ impl std::convert::From<TryCreateManyGeneratedRouteLogicErrorNamed>
             TryCreateManyGeneratedRouteLogicErrorNamed :: Migrate
             { migrate, code_occurence } => Self :: Migrate
             { migrate, code_occurence },
+
+
             TryCreateManyGeneratedRouteLogicErrorNamed :: JsonDataError
             { json_data_error, code_occurence } => Self :: JsonDataError
             { json_data_error, code_occurence },
