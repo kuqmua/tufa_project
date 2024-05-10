@@ -556,11 +556,21 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 )
             };
             let impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream = generate_impl_std_fmt_display_handle_token_stream(&ident_with_serialize_deserialize_token_stream);
+            let impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream = {
+                quote::quote! {
+                    impl error_occurence_lib::ToStdStringString for #ident_with_serialize_deserialize_token_stream {
+                        fn to_std_string_string(&self) -> std::string::String {
+                            format!("{self}")
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #impl_std_fmt_display_for_ident_token_stream
                 #impl_ident_into_serialize_deserialize_version_token_stream
                 #enum_ident_with_serialize_deserialize_token_stream
                 #impl_std_fmt_display_for_ident_with_serialize_deserialize_token_stream
+                #impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream
             }
         },
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
