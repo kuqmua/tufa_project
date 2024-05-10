@@ -2631,6 +2631,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                     };
                     quote::quote! {
+                        //
+                        Self::Postgresql { 
+                            postgresql, code_occurence 
+                        }=> axum::http::StatusCode::CREATED, 
+                        //
                         Self::#variant_ident {
                             #(#fields_anonymous_types_mapped_into_token_stream),*
                         } => #axum_http_status_code_token_stream::CREATED//todo status code
@@ -2965,7 +2970,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // println!("{try_operation_generated_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_generated_route_logic_error_named_token_stream
-                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
+                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
                 // #try_operation_generated_route_logic_desirable_token_stream
                 // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
                 // #try_operation_generated_route_logic_token_stream

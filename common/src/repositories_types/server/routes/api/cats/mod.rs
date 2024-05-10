@@ -1132,44 +1132,6 @@ pub async fn try_create_many_generated_route_logic(
 
 
 //////////
-impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogicErrorNamed {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        match self
-        {
-            Self :: Postgresql { postgresql, code_occurence }
-            => axum :: http :: StatusCode :: CREATED, 
-
-            
-            Self :: JsonDataError { json_data_error, code_occurence }
-            => axum :: http :: StatusCode :: CREATED, 
-            
-            Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => axum :: http ::
-            StatusCode :: CREATED, 
-            
-            Self :: MissingJsonContentType
-            { missing_json_content_type, code_occurence } => axum :: http ::
-            StatusCode :: CREATED, 
-            
-            Self :: BytesRejection
-            { bytes_rejection, code_occurence } => axum :: http :: StatusCode
-            :: CREATED, Self :: UnexpectedCase
-            { unexpected_case, code_occurence } => axum :: http :: StatusCode
-            :: CREATED, 
-            
-            Self :: BindQuery { bind_query, code_occurence } =>
-            axum :: http :: StatusCode :: CREATED, 
-            
-            
-            Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            } => axum :: http :: StatusCode :: CREATED
-        }
-    }
-}
 #[derive(Debug)]
 pub struct TryCreateManyGeneratedRouteLogicDesirable(
     std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
