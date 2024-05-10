@@ -530,58 +530,63 @@ pub enum TryCreateManyErrorNamed {
     },
 
     //
-    CheckCommit {
-        #[eo_to_std_string_string_serialize_deserialize]
-        check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+    TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        try_create_many_route_logic_error_named_with_serialize_deserialize: TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckBodySize {
-        #[eo_to_std_string_string_serialize_deserialize]
-        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-    Postgresql {
-        #[eo_to_std_string_string_serialize_deserialize]
-        postgresql: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonDataError {
-        #[eo_to_std_string_string_serialize_deserialize]
-        json_data_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    JsonSyntaxError {
-        #[eo_to_std_string_string_serialize_deserialize]
-        json_syntax_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        #[eo_to_std_string_string_serialize_deserialize]
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        #[eo_to_std_string_string_serialize_deserialize]
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        #[eo_to_std_string_string_serialize_deserialize]
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        #[eo_to_std_string_string_serialize_deserialize]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
-        #[eo_to_std_string_string_serialize_deserialize]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    }
+    // CheckCommit {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // CheckBodySize {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // //
+    // Postgresql {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     postgresql: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // JsonDataError {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     json_data_error: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // JsonSyntaxError {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     json_syntax_error: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // MissingJsonContentType {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     missing_json_content_type: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // BytesRejection {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     bytes_rejection: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // UnexpectedCase {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     unexpected_case: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // BindQuery {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+    //         std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
 }
 pub async fn try_create_many(
     server_location: &str,//todo rename as endpoint location
@@ -697,21 +702,24 @@ pub async fn try_create_many(
         TryCreateManyRouteLogicResponseVariants::CheckCommit {
             check_commit,
             code_occurence,
-        } => Err(TryCreateManyErrorNamed::CheckCommit{
-            check_commit,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                file!().to_owned(),
-                line!(),
-                column!(),
-                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from(
-                        "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                    ),
-                    line: 1644,
-                    column: 13,
-                }),
-            ),
-        }),
+        } => {
+            Err(TryCreateManyErrorNamed::TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize{
+                try_create_many_route_logic_error_named_with_serialize_deserialize: TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1644,
+                        column: 13,
+                    }),
+                ),
+            })
+            //
+        },
         TryCreateManyRouteLogicResponseVariants::CheckBodySize {
             check_body_size,
             code_occurence,
