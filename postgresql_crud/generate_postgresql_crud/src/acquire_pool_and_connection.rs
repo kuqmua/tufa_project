@@ -5,7 +5,7 @@ pub(crate) fn acquire_pool_and_connection(
     let error_value_snake_case_token_stream =
         proc_macro_common::error_value_snake_case_token_stream();
     quote::quote! {
-        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
+        let mut pool_connection = match pg_pool.acquire().await {//todo find out difference between acquire and try_acquire
             Ok(value) => value,
             Err(#error_value_snake_case_token_stream) => {
                 #from_log_and_return_error_token_stream
