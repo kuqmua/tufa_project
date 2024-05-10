@@ -648,7 +648,6 @@ pub async fn try_create_many_route_logic(
             check_commit: error,
             code_occurence: error_occurence_lib::code_occurence!(),
         };
-        // error_occurence_lib::error_log::ErrorLog::error_log(&error, app_state.as_ref());
         eprintln!("{error}");
         return TryCreateManyRouteLogicResponse {
             status_code,
@@ -663,7 +662,6 @@ pub async fn try_create_many_route_logic(
                 check_body_size: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             };
-            // error_occurence_lib::error_log::ErrorLog::error_log(&error, app_state.as_ref());
             eprintln!("{error}");
             return TryCreateManyRouteLogicResponse {
                 status_code,
@@ -685,7 +683,6 @@ pub async fn try_create_many_route_logic(
         Err(error) => {
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
             let error = TryCreateManyRouteLogicErrorNamed::from(error);
-    //         error_occurence_lib::error_log::ErrorLog::error_log(&e, app_state.as_ref());
             eprintln!("{error}");
             return TryCreateManyRouteLogicResponse {
                 status_code,
