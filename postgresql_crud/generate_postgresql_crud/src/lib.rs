@@ -2971,8 +2971,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #try_operation_generated_route_logic_error_named_token_stream
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
-                // #try_operation_generated_route_logic_desirable_token_stream
-                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+                #try_operation_generated_route_logic_desirable_token_stream
+                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
                 // #try_operation_generated_route_logic_token_stream
             }
         };

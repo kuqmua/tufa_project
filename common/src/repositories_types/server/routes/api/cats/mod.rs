@@ -1112,32 +1112,3 @@ pub async fn try_create_many_generated_route_logic(
         Ok(TryCreateManyGeneratedRouteLogicDesirable(vec_values))
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////
-#[derive(Debug)]
-pub struct TryCreateManyGeneratedRouteLogicDesirable(
-    std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
-);
-impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogicDesirable {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        axum::http::StatusCode::CREATED
-    }
-}
