@@ -1,10 +1,6 @@
 pub const GITHUB_URL: &str = "https://github.com/kuqmua/tufa_project";
 pub const SUPPORTS_ONLY_STRINGIFIED: &str = "supports only";
 pub const SYN_FIELDS: &str = "syn::Fields";
-pub const SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT: &str =
-    "proc_macro_helpers::error_occurence::supported_container::SupportedContainer::";
-pub const SUPPORTED_ENUM_VARIANT_STRINGIFIED: &str =
-    "proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant";
 pub const SYN_GENERIC_ARGUMENT_TYPE_STRINGIFIED: &str = "syn::GenericArgument::Type";
 pub const IS_NONE_STRINGIFIED: &str = "is None";
 pub const STD_STRINGIFIED: &str = "std";

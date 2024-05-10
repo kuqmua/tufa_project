@@ -55,13 +55,6 @@ pub fn syn_type_path_stringified() -> std::string::String {
         <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
     )
 }
-pub fn supports_only_supported_container_stringified() -> std::string::String {
-    format!(
-        "{} {}",
-        naming_constants::SUPPORTS_ONLY_STRINGIFIED,
-        naming_constants::SUPPORTED_CONTAINER_DOUBLE_DOT_DOUBLE_DOT
-    )
-}
 pub fn code_occurence_upper_camel_case_stringified() -> std::string::String {
     format!(
         "{}{}",
