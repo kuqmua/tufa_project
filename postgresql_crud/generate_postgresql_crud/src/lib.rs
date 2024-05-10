@@ -1783,20 +1783,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let common_error_syn_variants = {
-        let sqlx_postgres_error_named_syn_variants =
-            proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(
-                &proc_macro_name_upper_camel_case_ident_stringified,
-            );
+        // let sqlx_postgres_error_named_syn_variants =
+        //     proc_macro_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(
+        //         &proc_macro_name_upper_camel_case_ident_stringified,
+        //     );
         let json_extractor_error_named_syn_variants =
             proc_macro_helpers::enum_variants::json_extractor_error_named_syn_variants(
                 &proc_macro_name_upper_camel_case_ident_stringified,
             );
         let mut common_error_variants_vec = std::vec::Vec::with_capacity(
-            common_middlewares_error_syn_variants_len.checked_add(sqlx_postgres_error_named_syn_variants.len().checked_add(1).unwrap()).unwrap()
+            common_middlewares_error_syn_variants_len
+            // .checked_add(sqlx_postgres_error_named_syn_variants.len()
+            .checked_add(1).unwrap()
+            // ).unwrap()
         );
-        for element in sqlx_postgres_error_named_syn_variants {
-            common_error_variants_vec.push(element);
-        }
+        // for element in sqlx_postgres_error_named_syn_variants {
+        //     common_error_variants_vec.push(element);
+        // }
         for element in json_extractor_error_named_syn_variants {
             common_error_variants_vec.push(element);
         }
@@ -2601,6 +2604,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // from_sqlx_postgres_error::FromSqlxPostgresError,
                     )]
                     pub enum #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
+                        Postgresql {
+                            #[eo_to_std_string_string]
+                            postgresql: sqlx::Error,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
                         #(#variants_token_stream),*
                     }
                 }
@@ -2956,10 +2964,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             // println!("{try_operation_generated_route_logic_token_stream}");
             quote::quote! {
-                // #try_operation_generated_route_logic_error_named_token_stream
-                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
-                #try_operation_generated_route_logic_desirable_token_stream
-                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+                #try_operation_generated_route_logic_error_named_token_stream
+                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
+                // #try_operation_generated_route_logic_desirable_token_stream
+                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
                 // #try_operation_generated_route_logic_token_stream
             }
         };
@@ -3188,7 +3196,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // println!("{common_middlewares_error_syn_variants_from_impls}");
         (
             quote::quote! {
-                #parameters_token_stream
+                // #parameters_token_stream
                 // // #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream
                 // // #try_operation_error_with_middleware_error_variants_token_stream
                 // #http_request_token_stream
@@ -8042,7 +8050,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             // #common_token_stream
 
-            // #create_many_token_stream
+            #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
