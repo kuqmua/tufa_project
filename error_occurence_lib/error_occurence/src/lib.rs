@@ -12,7 +12,7 @@ enum ErrorOccurenceFieldAttribute {
     EoHashMapKeyStdStringStringValueErrorOccurence,
 }
 impl std::str::FromStr for ErrorOccurenceFieldAttribute {
-    type Err = std::string::String;
+    type Err = ();
     fn from_str(value: &std::primitive::str) -> Result<Self, Self::Err> {
         if value == "eo_to_std_string_string" {
             Ok(Self::EoToStdStringString)
@@ -42,10 +42,36 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
             Ok(Self::EoHashMapKeyStdStringStringValueErrorOccurence)
         }
         else {
-            Err(Self::Err::from(value))
+            Err(())
         }
     }
 }
+impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
+    fn from(value: &syn::Field) -> Self {
+        let mut option_attribute = None;
+        for attr in &value.attrs {
+            if attr.path().segments.len() == 1 {
+                let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+                if let Ok(value) = {
+                    use std::str::FromStr;
+                    ErrorOccurenceFieldAttribute::from_str(&first_segment_ident.to_string())
+                } {
+                    if option_attribute.is_some() {
+                        panic!("two or more supported attributes!");
+                    }
+                    else {
+                        option_attribute = Some(value);
+                    }
+                }
+            }//other attributes are not for this proc_macro
+        };
+        option_attribute.unwrap_or_else(|| panic!(
+            "option attribute {}",
+            naming_constants::IS_NONE_STRINGIFIED
+        ))
+    }
+}
+
 fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     value: &'a syn::Field,
     proc_macro_name_upper_camel_case_ident_stringified: &std::primitive::str,
@@ -104,7 +130,7 @@ fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
         eo_hashmap_key_std_string_string_value_error_occurence,
     )
 )]
-pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     proc_macro_common::panic_location::panic_location();
     let proc_macro_name_upper_camel_case = "ErrorOccurence";
     let ast: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
@@ -174,29 +200,6 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
             }
         }
     };
-    let generate_attribute = |element: &syn::Field|{
-        let mut option_attribute = None;
-        element.attrs.iter().for_each(|attr|{
-            if attr.path().segments.len() == 1 {
-                let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
-                if let Ok(value) = {
-                    use std::str::FromStr;
-                    ErrorOccurenceFieldAttribute::from_str(&first_segment_ident.to_string())
-                } {
-                    if option_attribute.is_some() {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} two or more supported attributes!");
-                    }
-                    else {
-                        option_attribute = Some(value);
-                    }
-                }
-            }//other attributes are not for this proc_macro
-        });
-        option_attribute.unwrap_or_else(|| panic!(
-            "{proc_macro_name_upper_camel_case_ident_stringified} option attribute {}",
-            naming_constants::IS_NONE_STRINGIFIED
-        ))
-    };
     let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
     let tokens = match supported_enum_variant {
         proc_macro_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
@@ -239,7 +242,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                                     &format!("{element_ident}:\n"),
                                     &proc_macro_name_upper_camel_case_ident_stringified,
                                 );
-                                match generate_attribute(element) {
+                                match ErrorOccurenceFieldAttribute::from(element) {
                                     ErrorOccurenceFieldAttribute::EoToStdStringString |
                                     ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                         quote::quote!{
@@ -403,7 +406,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
                     ).map(|element|{
                         let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
-                        let conversion_token_stream = match generate_attribute(element) {
+                        let conversion_token_stream = match ErrorOccurenceFieldAttribute::from(element) {
                             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
                                     #element_ident: {
@@ -493,7 +496,7 @@ pub fn error_occurence_test(input: proc_macro::TokenStream) -> proc_macro::Token
                             let element_type = &element.ty;
                             quote::quote!{#element_type}
                         };
-                        let element_type_with_serialize_deserialize_token_stream = match generate_attribute(element) {
+                        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::from(element) {
                             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote!{
                                     #std_string_string_token_stream
