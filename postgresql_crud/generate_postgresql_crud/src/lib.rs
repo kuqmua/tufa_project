@@ -2631,11 +2631,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
                     };
                     quote::quote! {
-                        //
-                        Self::Postgresql { 
-                            postgresql, code_occurence 
-                        }=> axum::http::StatusCode::CREATED, 
-                        //
                         Self::#variant_ident {
                             #(#fields_anonymous_types_mapped_into_token_stream),*
                         } => #axum_http_status_code_token_stream::CREATED//todo status code
@@ -2645,6 +2640,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     impl #postgresql_crud_get_axum_http_status_code_token_stream for #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
                         fn #get_axum_http_status_code_snake_case_token_stream(&self) -> #axum_http_status_code_token_stream {
                             match self {
+                                //
+                                Self::Postgresql { 
+                                    postgresql, code_occurence 
+                                }=> axum::http::StatusCode::CREATED, 
+                                //
                                 #(#variants_token_stream),*
                             }
                         }
@@ -2658,6 +2658,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ) = {
                 let try_operation_generated_route_logic_desirable_token_stream = {
                     quote::quote! {
+                        #[derive(Debug)]
                         pub struct #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>);
                     }
                 };
@@ -8084,7 +8085,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // pub mod #mod_name_snake_case_token_stream {/
             #common_token_stream
 
-            #create_many_token_stream
+            // #create_many_token_stream
             // #create_one_token_stream
             // #read_many_token_stream
             // #read_one_token_stream
