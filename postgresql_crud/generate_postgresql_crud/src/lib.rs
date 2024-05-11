@@ -2240,17 +2240,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            // let impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream = {
-            //     quote::quote! {
-            //         impl #axum_response_into_response_token_stream for #try_operation_route_logic_response_upper_camel_case_token_stream {
-            //             fn #into_response_snake_case_token_stream(self) -> #axum_response_response_token_stream {
-            //                 let mut res = axum::Json(self.#body_snake_case_token_stream).#into_response_snake_case_token_stream(); 
-            //                 *res.status_mut() = self.#status_code_snake_case_token_stream;
-            //                 res
-            //             }
-            //         }
-            //     }
-            // };
+            let impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream = {
+                quote::quote! {
+                    impl #axum_response_into_response_token_stream for #try_operation_route_logic_response_upper_camel_case_token_stream {
+                        fn #into_response_snake_case_token_stream(self) -> #axum_response_response_token_stream {
+                            let mut res = axum::Json(self.#body_snake_case_token_stream).#into_response_snake_case_token_stream(); 
+                            *res.status_mut() = self.#status_code_snake_case_token_stream;
+                            res
+                        }
+                    }
+                }
+            };
             // let try_operation_route_logic_response_variants_token_stream = {
             //     let enum_with_serialize_deserialize_logic_mapped_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
             //         let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
@@ -2533,7 +2533,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             // // println!("{impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
-                // #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
+                #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
                 // #try_operation_route_logic_response_variants_token_stream
                 // #impl_std_convert_from_try_operation_route_logic_error_named_for_try_create_many_route_logic_response_variants_token_stream
                 // #try_operation_route_logic_error_named_token_stream

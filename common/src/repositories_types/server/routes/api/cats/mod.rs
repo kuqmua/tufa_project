@@ -198,13 +198,6 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-impl axum::response::IntoResponse for TryCreateManyRouteLogicResponse {
-    fn into_response(self) -> axum::response::Response {
-        let mut res = axum::Json(self.body).into_response();
-        *res.status_mut() = self.status_code;
-        res
-    }
-}
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum TryCreateManyRouteLogicResponseVariants {
     CheckCommit {
