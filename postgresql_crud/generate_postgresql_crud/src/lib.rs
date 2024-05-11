@@ -2313,13 +2313,38 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     check_body_size: check_body_size,
                                     code_occurence,
                                 },
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::#operation_upper_camel_case_token_stream { 
-                                    #operation_snake_case_token_stream, 
-                                    code_occurence, 
-                                } => Self::#operation_upper_camel_case_token_stream { 
-                                    #operation_snake_case_token_stream,
-                                    code_occurence, 
+                                //
+                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Postgresql {
+                                    postgresql,
+                                    code_occurence,
+                                } => Self::Postgresql {
+                                    postgresql,
+                                    code_occurence,
                                 },
+                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Json {
+                                    json,
+                                    code_occurence,
+                                } => Self::Json {
+                                    json,
+                                    code_occurence,
+                                },
+                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::BindQuery {
+                                    bind_query,
+                                    code_occurence,
+                                } => Self::BindQuery {
+                                    bind_query,
+                                    code_occurence,
+                                },
+                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+                                {
+                                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                                    code_occurence,
+                                } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+                                {
+                                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                                    code_occurence,
+                                },
+                                //
                             }
                         }
                     }
@@ -2388,7 +2413,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_route_logic_response_token_stream
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
                 #try_operation_route_logic_response_variants_token_stream
-                // #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
                 // #try_operation_route_logic_error_named_token_stream
                 // #impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream
             }

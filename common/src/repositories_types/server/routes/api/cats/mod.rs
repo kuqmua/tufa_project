@@ -654,59 +654,6 @@ pub async fn try_create_many_route_logic(
         };
 }
 /////////////////////////////////////////
-impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
-    for TryCreateManyRouteLogicResponseVariants
-{
-    fn from(value: TryCreateManyRouteLogicErrorNamed) -> Self {
-        match value.into_serialize_deserialize_version() {
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit {
-                check_commit,
-                code_occurence,
-            } => Self::CheckCommit {
-                check_commit: check_commit,
-                code_occurence,
-            },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize {
-                check_body_size,
-                code_occurence,
-            } => Self::CheckBodySize {
-                check_body_size: check_body_size,
-                code_occurence,
-            },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
-                postgresql,
-                code_occurence,
-            } => Self::Postgresql {
-                postgresql,
-                code_occurence,
-            },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json {
-                json,
-                code_occurence,
-            } => Self::Json {
-                json,
-                code_occurence,
-            },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
-                bind_query,
-                code_occurence,
-            } => Self::BindQuery {
-                bind_query,
-                code_occurence,
-            },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence,
-            } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence,
-            },
-            //
-        }
-    }
-}
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryCreateManyRouteLogicErrorNamed {
     CheckCommit {
