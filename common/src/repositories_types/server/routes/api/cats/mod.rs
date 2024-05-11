@@ -198,6 +198,7 @@ pub struct Dog {
 // }
 
 ////////////////http request
+//todo add http codes to enum
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryCreateManyErrorNamed {
     SerdeJsonToString {
@@ -368,10 +369,36 @@ pub async fn try_create_many(
             code_occurence,
         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
         //
-        TryCreateManyRouteLogicResponseVariants::CreateMany {
-            create_many,
+        TryCreateManyRouteLogicResponseVariants::Postgresql {
+            postgresql,
             code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CreateMany { create_many, code_occurence },
+        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+            postgresql,
+            code_occurence,
+        },
+        TryCreateManyRouteLogicResponseVariants::Json {
+            json,
+            code_occurence,
+        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json {
+            json,
+            code_occurence,
+        },
+        TryCreateManyRouteLogicResponseVariants::BindQuery {
+            bind_query,
+            code_occurence,
+        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
+            bind_query,
+            code_occurence,
+        },
+        TryCreateManyRouteLogicResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+        {
+            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+            code_occurence,
+        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+        {
+            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+            code_occurence,
+        },
     };
     Err(TryCreateManyErrorNamed::TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize{
         try_create_many_route_logic_error_named_with_serialize_deserialize,
@@ -434,7 +461,7 @@ pub async fn try_create_many_route_logic(
         ) {
             Ok(axum::Json(value)) => CreateManyPayload::from(value),
             Err(error) => {
-                let error = TryCreateManyGeneratedRouteLogicErrorNamed::Json {
+                let error = TryCreateManyRouteLogicErrorNamed::Json {
                     json: error,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                         file!().to_owned(),
@@ -449,29 +476,11 @@ pub async fn try_create_many_route_logic(
                         }),
                     ),
                 };
-                //
-                let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
-                    create_many: error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 1644,
-                            column: 13,
-                        }),
-                    ),
-                };
                 eprintln!("{error}");
                 return TryCreateManyRouteLogicResponse {
-                    status_code,
+                    status_code: axum :: http :: StatusCode :: CREATED,
                     body: TryCreateManyRouteLogicResponseVariants::from(error),
                 };
-                //
             }
         },
     };
@@ -521,7 +530,7 @@ pub async fn try_create_many_route_logic(
         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
             Ok(value) => value,
             Err(error) => {
-                let error = TryCreateManyGeneratedRouteLogicErrorNamed::Postgresql {
+                let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
                     postgresql: error,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                         file!().to_owned(),
@@ -536,35 +545,17 @@ pub async fn try_create_many_route_logic(
                         }),
                     ),
                 };
-                //
-                let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
-                    create_many: error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 1644,
-                            column: 13,
-                        }),
-                    ),
-                };
                 eprintln!("{error}");
                 return TryCreateManyRouteLogicResponse {
-                    status_code,
+                    status_code: axum :: http :: StatusCode :: CREATED,
                     body: TryCreateManyRouteLogicResponseVariants::from(error),
                 };
-                //
             }
         };
         let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
             Ok(value) => value,
             Err(error) => {
-                let error = TryCreateManyGeneratedRouteLogicErrorNamed::Postgresql {
+                let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
                     postgresql: error,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                         file!().to_owned(),
@@ -579,29 +570,11 @@ pub async fn try_create_many_route_logic(
                         }),
                     ),
                 };
-                //
-                let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
-                    create_many: error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from(
-                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                            ),
-                            line: 1644,
-                            column: 13,
-                        }),
-                    ),
-                };
                 eprintln!("{error}");
                 return TryCreateManyRouteLogicResponse {
-                    status_code,
+                    status_code: axum :: http :: StatusCode :: CREATED,
                     body: TryCreateManyRouteLogicResponseVariants::from(error),
                 };
-                //
             }
         };
         let mut rows = binded_query.fetch(pg_connection.as_mut());
@@ -615,7 +588,7 @@ pub async fn try_create_many_route_logic(
             {
                 Ok(value) => value,
                 Err(error) => {
-                    let error = TryCreateManyGeneratedRouteLogicErrorNamed::Postgresql {
+                    let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
                         postgresql: error,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                             file!().to_owned(),
@@ -630,29 +603,11 @@ pub async fn try_create_many_route_logic(
                             }),
                         ),
                     };
-                    //
-                    let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                    let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
-                        create_many: error,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_owned(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1644,
-                                column: 13,
-                            }),
-                        ),
-                    };
                     eprintln!("{error}");
                     return TryCreateManyRouteLogicResponse {
-                        status_code,
+                        status_code: axum :: http :: StatusCode :: CREATED,
                         body: TryCreateManyRouteLogicResponseVariants::from(error),
                     };
-                    //
                 }
             }
         } {
@@ -670,7 +625,7 @@ pub async fn try_create_many_route_logic(
                     );
                 }
                 Err(error) => {
-                    let error = TryCreateManyGeneratedRouteLogicErrorNamed::Postgresql {
+                    let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
                         postgresql: error,
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                             file!().to_owned(),
@@ -685,35 +640,16 @@ pub async fn try_create_many_route_logic(
                             }),
                         ),
                     };
-                    //
-                    let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                    let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
-                        create_many: error,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_owned(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from(
-                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                ),
-                                line: 1644,
-                                column: 13,
-                            }),
-                        ),
-                    };
                     eprintln!("{error}");
                     return TryCreateManyRouteLogicResponse {
-                        status_code,
+                        status_code: axum :: http :: StatusCode :: CREATED,
                         body: TryCreateManyRouteLogicResponseVariants::from(error),
                     };
-                    //
                 }
             }
         }
-        let status_code = axum::http::StatusCode::CREATED;
         return TryCreateManyRouteLogicResponse {
-            status_code,
+            status_code: axum::http::StatusCode::CREATED,
             body: TryCreateManyRouteLogicResponseVariants::Desirable(vec_values),
         };
 }
@@ -833,10 +769,26 @@ pub enum TryCreateManyRouteLogicResponseVariants {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
-    CreateMany {
-        create_many: TryCreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
+    //
+    Postgresql {
+        postgresql: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    Json {
+        json: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    BindQuery {
+        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+    {
+        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+            std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    //
 }
 impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
     for TryCreateManyRouteLogicResponseVariants
@@ -857,13 +809,37 @@ impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
                 check_body_size: check_body_size,
                 code_occurence,
             },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CreateMany {
-                create_many,
+            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql {
+                postgresql,
                 code_occurence,
-            } => Self::CreateMany {
-                create_many,
+            } => Self::Postgresql {
+                postgresql,
                 code_occurence,
             },
+            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json {
+                json,
+                code_occurence,
+            } => Self::Json {
+                json,
+                code_occurence,
+            },
+            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery {
+                bind_query,
+                code_occurence,
+            } => Self::BindQuery {
+                bind_query,
+                code_occurence,
+            },
+            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+            {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                code_occurence,
+            } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
+            {
+                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
+                code_occurence,
+            },
+            //
         }
     }
 }
@@ -879,14 +855,6 @@ pub enum TryCreateManyRouteLogicErrorNamed {
         check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    CreateMany {
-        #[eo_error_occurence]
-        create_many: TryCreateManyGeneratedRouteLogicErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryCreateManyGeneratedRouteLogicErrorNamed {
     Postgresql {
         #[eo_to_std_string_string]
         postgresql: sqlx::Error,
@@ -909,21 +877,4 @@ pub enum TryCreateManyGeneratedRouteLogicErrorNamed {
             sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-}
-impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogicErrorNamed {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        match self
-        {
-            Self :: Postgresql { postgresql, code_occurence } => axum :: http
-            :: StatusCode :: CREATED, Self :: Json { .. } => axum :: http ::
-            StatusCode :: CREATED, Self :: BindQuery
-            { bind_query, code_occurence } => axum :: http :: StatusCode ::
-            CREATED, Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            } => axum :: http :: StatusCode :: CREATED
-        }
-    }
 }
