@@ -198,29 +198,6 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-#[derive(
-    Debug,
-    thiserror :: Error,
-    error_occurence_lib :: ErrorOccurence,
-)]
-pub enum TryCreateManyRouteLogicErrorNamed {
-    CheckCommit {
-        #[eo_error_occurence]
-        check_commit: route_validators::check_commit::CheckCommitErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckBodySize {
-        #[eo_error_occurence]
-        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-
-    CreateMany {
-        #[eo_error_occurence]
-        create_many: TryCreateManyGeneratedRouteLogicErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
 pub async fn try_create_many_route_logic(
     app_state: axum::extract::State<
         crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
