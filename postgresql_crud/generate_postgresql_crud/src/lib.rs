@@ -2686,80 +2686,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let try_operation_generated_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicSnakeCaseTokenStream::try_self_generated_route_logic_snake_case_token_stream(&operation);
                 let try_operation_generated_route_logic_error_named_upper_camel_case_token_stream =     proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_generated_route_logic_error_named_upper_camel_case_token_stream(&operation);
-                let axum_extract_rejection_json_rejection_handle_token_stream =  {
-                    let field_code_occurence_new_5a4523cb_ad14_4137_a226_679655c943ed_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    let field_code_occurence_new_65b043ed_1578_4b69_b1ea_4516cf314b39_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    let field_code_occurence_new_8d6c376c_fe49_4aff_b712_6a4e3265e5d5_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    let field_code_occurence_new_adee320d_d0a5_4da9_9ae9_87ac6867ed44_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    let field_code_occurence_new_7e54d0da_66ac_4e42_9b4c_c70ef6af8b4b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    let field_code_occurence_new_346c4341_8750_4bfe_8635_b8718bffc505_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                        file!(),
-                        line!(),
-                        column!(),
-                        &proc_macro_name_upper_camel_case_ident_stringified,
-                    );
-                    quote::quote!{
-                        match #error_value_snake_case_token_stream {
-                            axum::extract::rejection::JsonRejection::JsonDataError(value) => {
-                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonDataError {
-                                    json_data_error: value,
-                                    #field_code_occurence_new_5a4523cb_ad14_4137_a226_679655c943ed_token_stream,
-                                });
-                            },
-                            axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
-                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::JsonSyntaxError {
-                                    json_syntax_error: value,
-                                    #field_code_occurence_new_65b043ed_1578_4b69_b1ea_4516cf314b39_token_stream,
-                                });
-                            },
-                            axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
-                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::MissingJsonContentType {
-                                    missing_json_content_type: value.to_string(),
-                                    #field_code_occurence_new_8d6c376c_fe49_4aff_b712_6a4e3265e5d5_token_stream,
-                                });
-                            },
-                            axum::extract::rejection::JsonRejection::BytesRejection(value) => {
-                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::BytesRejection {
-                                    bytes_rejection: value.to_string(),
-                                    #field_code_occurence_new_adee320d_d0a5_4da9_9ae9_87ac6867ed44_token_stream,
-                                });                         
-
-                            },
-                            // this variant exists coz JsonRejection is non exhaustive
-                            _ => {
-                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::UnexpectedCase {
-                                    unexpected_case: std::string::String::from("Unknown error"),//todo reuse
-                                    #field_code_occurence_new_346c4341_8750_4bfe_8635_b8718bffc505_token_stream,
-                                });
-                            }
-                        }
-                    }
-                };
                 let try_operation_token_stream = {
                     let query_string_token_stream = {
                         let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
@@ -2982,6 +2908,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     },
                 };
+                let field_code_occurence_new_7537dde6_c766_415f_bd4b_a29f6ab3fb09_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                    file!(),
+                    line!(),
+                    column!(),
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                );
                 quote::quote! {
                     // // #swagger_open_api_token_stream
                     pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
@@ -2991,7 +2923,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                             #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
                                 Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
-                                Err(#error_value_snake_case_token_stream) => #axum_extract_rejection_json_rejection_handle_token_stream,
+                                Err(error) => {
+                                    return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Json {
+                                        json: error,
+                                        #field_code_occurence_new_7537dde6_c766_415f_bd4b_a29f6ab3fb09_token_stream,
+                                    });
+                                },
                             }
                         };
                         println!("{:#?}", #parameters_snake_case_token_stream);
@@ -3005,9 +2942,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #try_operation_generated_route_logic_error_named_token_stream
                 #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
-                // #try_operation_generated_route_logic_desirable_token_stream
-                // #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
-                // #try_operation_generated_route_logic_token_stream
+                #try_operation_generated_route_logic_desirable_token_stream
+                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
+                #try_operation_generated_route_logic_token_stream
             }
         };
         // println!("{route_handler_token_stream}");
