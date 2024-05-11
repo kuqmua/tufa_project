@@ -223,23 +223,8 @@ pub enum TryCreateManyRouteLogicResponseVariants {
     },
     Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
 
-    Postgresql { 
-        postgresql: std::string::String, 
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Json { 
-        json: std::string::String, 
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-
-    BindQuery {
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            std::string::String,
+    CreateMany {
+        create_many: TryCreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -258,28 +243,11 @@ impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
             CheckBodySize
             { check_body_size, code_occurence, },
 
+            //
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            Postgresql { postgresql, code_occurence, } => Self ::
-            Postgresql
-            { postgresql, code_occurence, },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::Json { json, code_occurence, } => Self ::
-            Json
-            { json, code_occurence, },
-
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            BindQuery { bind_query, code_occurence } => Self :: BindQuery
-            { bind_query, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            } => Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            }
+            CreateMany { create_many, code_occurence, } => Self ::
+            CreateMany
+            { create_many, code_occurence, },
         }
     }
 }
@@ -300,65 +268,10 @@ pub enum TryCreateManyRouteLogicErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 
-    Postgresql {
-        #[eo_to_std_string_string]
-        postgresql: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Json {
-        #[eo_to_std_string_string]
-        json: axum::extract::rejection::JsonRejection,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-
-    BindQuery {
+    CreateMany {
         #[eo_error_occurence]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
+        create_many: TryCreateManyGeneratedRouteLogicErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        #[eo_to_std_string_string]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyGeneratedRouteLogicErrorNamed> for TryCreateManyRouteLogicErrorNamed
-{
-    fn from(value: TryCreateManyGeneratedRouteLogicErrorNamed) -> Self {
-        match value
-        {
-            TryCreateManyGeneratedRouteLogicErrorNamed::Postgresql {
-                postgresql,
-                code_occurence,
-            } => Self::Postgresql {
-                postgresql,
-                code_occurence,
-            },
-            TryCreateManyGeneratedRouteLogicErrorNamed::Json {
-                json,
-                code_occurence,
-            } => Self::Json {
-                json,
-                code_occurence,
-            },
-
-            TryCreateManyGeneratedRouteLogicErrorNamed :: BindQuery
-            { bind_query, code_occurence } => Self :: BindQuery
-            { bind_query, code_occurence },
-            TryCreateManyGeneratedRouteLogicErrorNamed ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            } => Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
-            }
-        }
     }
 }
 pub async fn try_create_many_route_logic(
@@ -412,7 +325,21 @@ pub async fn try_create_many_route_logic(
         },
         Err(error) => {
             let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-            let error = TryCreateManyRouteLogicErrorNamed::from(error);
+            let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
+                create_many: error,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1644,
+                        column: 13,
+                    }),
+                ),
+            };
             eprintln!("{error}");
             return TryCreateManyRouteLogicResponse {
                 status_code,
@@ -429,11 +356,6 @@ pub enum TryCreateManyErrorNamed {
         serde_json_to_string: serde_json::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    // ExpectedType {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     expected_type: TryCreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
     UnexpectedStatusCode {
         #[eo_to_std_string_string]
         status_code: http::StatusCode,
@@ -597,26 +519,10 @@ pub async fn try_create_many(
             code_occurence,
         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
         //
-        TryCreateManyRouteLogicResponseVariants::Postgresql {
-            postgresql,
+        TryCreateManyRouteLogicResponseVariants::CreateMany {
+            create_many,
             code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::Json {
-            json,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json { json, code_occurence },
-
-        TryCreateManyRouteLogicResponseVariants::BindQuery {
-            bind_query,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BindQuery { bind_query, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer { 
-            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server, 
-            code_occurence 
-        },
+        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::CreateMany { create_many, code_occurence },
     };
     Err(TryCreateManyErrorNamed::TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize{
         try_create_many_route_logic_error_named_with_serialize_deserialize,
