@@ -654,39 +654,6 @@ pub async fn try_create_many_route_logic(
         };
 }
 /////////////////////////////////////////
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub enum TryCreateManyRouteLogicResponseVariants {
-    CheckCommit {
-        check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckBodySize {
-        check_body_size:
-            route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
-    //
-    Postgresql {
-        postgresql: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Json {
-        json: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-}
 impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
     for TryCreateManyRouteLogicResponseVariants
 {

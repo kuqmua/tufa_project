@@ -2269,10 +2269,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
                         #desirable_upper_camel_case_token_stream(#desirable_type_token_stream),
-                        #operation_upper_camel_case_token_stream {
-                            #operation_snake_case_token_stream: #try_operation_generated_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream,
+                        //
+                        Postgresql {
+                            postgresql: std::string::String,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
+                        Json {
+                            json: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        BindQuery {
+                            bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+                            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+                                std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        //
                     }
                 }
             };
@@ -2372,7 +2387,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
-                // #try_operation_route_logic_response_variants_token_stream
+                #try_operation_route_logic_response_variants_token_stream
                 // #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
                 // #try_operation_route_logic_error_named_token_stream
                 // #impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream
