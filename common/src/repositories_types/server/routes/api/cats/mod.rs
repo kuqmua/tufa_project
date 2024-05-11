@@ -635,24 +635,6 @@ pub async fn try_create_many(
     })
 }
 /////////////////////////////generated
-impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogicErrorNamed {
-    fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
-        match self
-        {
-            Self :: Postgresql { .. } => axum :: http
-            :: StatusCode :: CREATED, 
-            Self :: Json { .. } => axum :: http
-            :: StatusCode :: CREATED, 
-            
-            Self :: BindQuery { .. } =>
-            axum :: http :: StatusCode :: CREATED, Self ::
-            OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-            {
-                ..
-            } => axum :: http :: StatusCode :: CREATED
-        }
-    }
-}
 #[derive(Debug)]
 pub struct TryCreateManyGeneratedRouteLogicDesirable(
     std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>,
