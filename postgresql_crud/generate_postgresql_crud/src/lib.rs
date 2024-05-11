@@ -2368,11 +2368,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
-                        #operation_upper_camel_case_token_stream {
-                            #[eo_error_occurence]
-                            #operation_snake_case_token_stream: #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream,
+                        // #operation_upper_camel_case_token_stream {
+                        //     #[eo_error_occurence]
+                        //     #operation_snake_case_token_stream: #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream,
+                        //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        // },
+                        //
+                        Postgresql {
+                            #[eo_to_std_string_string]
+                            postgresql: sqlx::Error,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
+                        Json {
+                            #[eo_to_std_string_string]
+                            json: axum::extract::rejection::JsonRejection,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        BindQuery {
+                            #[eo_error_occurence]
+                            bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
+                            #[eo_to_std_string_string]
+                            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
+                                sqlx::Error,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        //
                     }
                 }
             };
@@ -2414,7 +2437,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
                 #try_operation_route_logic_response_variants_token_stream
                 #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
-                // #try_operation_route_logic_error_named_token_stream
+                #try_operation_route_logic_error_named_token_stream
                 // #impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream
             }
         };

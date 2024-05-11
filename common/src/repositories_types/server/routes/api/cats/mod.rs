@@ -653,39 +653,3 @@ pub async fn try_create_many_route_logic(
             body: TryCreateManyRouteLogicResponseVariants::Desirable(vec_values),
         };
 }
-/////////////////////////////////////////
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryCreateManyRouteLogicErrorNamed {
-    CheckCommit {
-        #[eo_error_occurence]
-        check_commit: route_validators::check_commit::CheckCommitErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckBodySize {
-        #[eo_error_occurence]
-        check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Postgresql {
-        #[eo_to_std_string_string]
-        postgresql: sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Json {
-        #[eo_to_std_string_string]
-        json: axum::extract::rejection::JsonRejection,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BindQuery {
-        #[eo_error_occurence]
-        bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-    {
-        #[eo_to_std_string_string]
-        operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-            sqlx::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
