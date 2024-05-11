@@ -227,26 +227,30 @@ pub enum TryCreateManyRouteLogicResponseVariants {
         postgresql: std::string::String, 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    Json { 
+        json: std::string::String, 
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     // JsonDataError {
     //     json_data_error: std::string::String,
     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     // },
-    JsonSyntaxError {
-        json_syntax_error: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    // JsonSyntaxError {
+    //     json_syntax_error: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // MissingJsonContentType {
+    //     missing_json_content_type: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // BytesRejection {
+    //     bytes_rejection: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // UnexpectedCase {
+    //     unexpected_case: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
     BindQuery {
         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -277,24 +281,29 @@ impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
             Postgresql { postgresql, code_occurence, } => Self ::
             Postgresql
             { postgresql, code_occurence, },
+            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::Json { json, code_occurence, } => Self ::
+            Json
+            { json, code_occurence, },
 
             // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             // JsonDataError { json_data_error, code_occurence } => Self ::
             // JsonDataError { json_data_error, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            JsonSyntaxError { json_syntax_error, code_occurence } => Self ::
-            JsonSyntaxError { json_syntax_error, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            BytesRejection { bytes_rejection, code_occurence } => Self ::
-            BytesRejection { bytes_rejection, code_occurence },
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            UnexpectedCase { unexpected_case, code_occurence } => Self ::
-            UnexpectedCase { unexpected_case, code_occurence },
+            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
+            // JsonSyntaxError { json_syntax_error, code_occurence } => Self ::
+            // JsonSyntaxError { json_syntax_error, code_occurence },
+            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
+            // MissingJsonContentType
+            // { missing_json_content_type, code_occurence } => Self ::
+            // MissingJsonContentType
+            // { missing_json_content_type, code_occurence },
+            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
+            // BytesRejection { bytes_rejection, code_occurence } => Self ::
+            // BytesRejection { bytes_rejection, code_occurence },
+            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
+            // UnexpectedCase { unexpected_case, code_occurence } => Self ::
+            // UnexpectedCase { unexpected_case, code_occurence },
+
+
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             BindQuery { bind_query, code_occurence } => Self :: BindQuery
             { bind_query, code_occurence },
@@ -334,31 +343,38 @@ pub enum TryCreateManyRouteLogicErrorNamed {
         postgresql: sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+    Json {
+        #[eo_to_std_string_string]
+        json: axum::extract::rejection::JsonRejection,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+
+
     // JsonDataError {
     //     #[eo_to_std_string_string]
     //     json_data_error: axum::extract::rejection::JsonDataError,
     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     // },
-    JsonSyntaxError {
-        #[eo_to_std_string_string]
-        json_syntax_error: axum::extract::rejection::JsonSyntaxError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        #[eo_to_std_string_string_serialize_deserialize]
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        #[eo_to_std_string_string_serialize_deserialize]
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        #[eo_to_std_string_string_serialize_deserialize]
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    // JsonSyntaxError {
+    //     #[eo_to_std_string_string]
+    //     json_syntax_error: axum::extract::rejection::JsonSyntaxError,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // MissingJsonContentType {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     missing_json_content_type: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // BytesRejection {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     bytes_rejection: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // UnexpectedCase {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     unexpected_case: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
     BindQuery {
         #[eo_error_occurence]
         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
@@ -384,24 +400,33 @@ impl std::convert::From<TryCreateManyGeneratedRouteLogicErrorNamed> for TryCreat
                 postgresql,
                 code_occurence,
             },
+            TryCreateManyGeneratedRouteLogicErrorNamed::Json {
+                json,
+                code_occurence,
+            } => Self::Json {
+                json,
+                code_occurence,
+            },
 
             // TryCreateManyGeneratedRouteLogicErrorNamed :: JsonDataError
             // { json_data_error, code_occurence } => Self :: JsonDataError
             // { json_data_error, code_occurence },
-            TryCreateManyGeneratedRouteLogicErrorNamed :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence },
-            TryCreateManyGeneratedRouteLogicErrorNamed ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence } => Self ::
-            MissingJsonContentType
-            { missing_json_content_type, code_occurence },
-            TryCreateManyGeneratedRouteLogicErrorNamed :: BytesRejection
-            { bytes_rejection, code_occurence } => Self :: BytesRejection
-            { bytes_rejection, code_occurence },
-            TryCreateManyGeneratedRouteLogicErrorNamed :: UnexpectedCase
-            { unexpected_case, code_occurence } => Self :: UnexpectedCase
-            { unexpected_case, code_occurence },
+            // TryCreateManyGeneratedRouteLogicErrorNamed :: JsonSyntaxError
+            // { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
+            // { json_syntax_error, code_occurence },
+            // TryCreateManyGeneratedRouteLogicErrorNamed ::
+            // MissingJsonContentType
+            // { missing_json_content_type, code_occurence } => Self ::
+            // MissingJsonContentType
+            // { missing_json_content_type, code_occurence },
+            // TryCreateManyGeneratedRouteLogicErrorNamed :: BytesRejection
+            // { bytes_rejection, code_occurence } => Self :: BytesRejection
+            // { bytes_rejection, code_occurence },
+            // TryCreateManyGeneratedRouteLogicErrorNamed :: UnexpectedCase
+            // { unexpected_case, code_occurence } => Self :: UnexpectedCase
+            // { unexpected_case, code_occurence },
+
+
             TryCreateManyGeneratedRouteLogicErrorNamed :: BindQuery
             { bind_query, code_occurence } => Self :: BindQuery
             { bind_query, code_occurence },
@@ -659,27 +684,31 @@ pub async fn try_create_many(
             postgresql,
             code_occurence,
         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+        TryCreateManyRouteLogicResponseVariants::Json {
+            json,
+            code_occurence,
+        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json { json, code_occurence },
         //
         // TryCreateManyRouteLogicResponseVariants::JsonDataError {
         //     json_data_error,
         //     code_occurence,
         // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonDataError { json_data_error, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::JsonSyntaxError {
-            json_syntax_error,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonSyntaxError { json_syntax_error, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::MissingJsonContentType {
-            missing_json_content_type,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::MissingJsonContentType { missing_json_content_type, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::BytesRejection {
-            bytes_rejection,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BytesRejection { bytes_rejection, code_occurence },
-        TryCreateManyRouteLogicResponseVariants::UnexpectedCase {
-            unexpected_case,
-            code_occurence,
-        } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::UnexpectedCase { unexpected_case, code_occurence },
+        // TryCreateManyRouteLogicResponseVariants::JsonSyntaxError {
+        //     json_syntax_error,
+        //     code_occurence,
+        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonSyntaxError { json_syntax_error, code_occurence },
+        // TryCreateManyRouteLogicResponseVariants::MissingJsonContentType {
+        //     missing_json_content_type,
+        //     code_occurence,
+        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::MissingJsonContentType { missing_json_content_type, code_occurence },
+        // TryCreateManyRouteLogicResponseVariants::BytesRejection {
+        //     bytes_rejection,
+        //     code_occurence,
+        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BytesRejection { bytes_rejection, code_occurence },
+        // TryCreateManyRouteLogicResponseVariants::UnexpectedCase {
+        //     unexpected_case,
+        //     code_occurence,
+        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::UnexpectedCase { unexpected_case, code_occurence },
         TryCreateManyRouteLogicResponseVariants::BindQuery {
             bind_query,
             code_occurence,
@@ -807,31 +836,37 @@ pub enum TryCreateManyGeneratedRouteLogicErrorNamed {
         postgresql: sqlx::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
+
+    Json {
+        #[eo_to_std_string_string]
+        json: axum::extract::rejection::JsonRejection,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     // JsonDataError {
     //     #[eo_to_std_string_string]
     //     json_data_error: axum::extract::rejection::JsonDataError,
     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     // },
-    JsonSyntaxError {
-        #[eo_to_std_string_string]
-        json_syntax_error: axum::extract::rejection::JsonSyntaxError,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MissingJsonContentType {
-        #[eo_to_std_string_string_serialize_deserialize]
-        missing_json_content_type: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    BytesRejection {
-        #[eo_to_std_string_string_serialize_deserialize]
-        bytes_rejection: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    UnexpectedCase {
-        #[eo_to_std_string_string_serialize_deserialize]
-        unexpected_case: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    // JsonSyntaxError {
+    //     #[eo_to_std_string_string]
+    //     json_syntax_error: axum::extract::rejection::JsonSyntaxError,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // MissingJsonContentType {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     missing_json_content_type: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // BytesRejection {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     bytes_rejection: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // UnexpectedCase {
+    //     #[eo_to_std_string_string_serialize_deserialize]
+    //     unexpected_case: std::string::String,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
     BindQuery {
         #[eo_error_occurence]
         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
@@ -849,29 +884,31 @@ impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogic
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         match self
         {
-            Self :: Postgresql { postgresql, code_occurence } => axum :: http
+            Self :: Postgresql { .. } => axum :: http
+            :: StatusCode :: CREATED, 
+            Self :: Json { .. } => axum :: http
             :: StatusCode :: CREATED, 
             
-            
             // Self :: JsonDataError
-            // { json_data_error, code_occurence } => axum :: http :: StatusCode
+            // { .. } => axum :: http :: StatusCode
             // :: CREATED, 
             
             
-            Self :: JsonSyntaxError
-            { json_syntax_error, code_occurence } => axum :: http ::
-            StatusCode :: CREATED, Self :: MissingJsonContentType
-            { missing_json_content_type, code_occurence } => axum :: http ::
-            StatusCode :: CREATED, Self :: BytesRejection
-            { bytes_rejection, code_occurence } => axum :: http :: StatusCode
-            :: CREATED, Self :: UnexpectedCase
-            { unexpected_case, code_occurence } => axum :: http :: StatusCode
-            :: CREATED, Self :: BindQuery { bind_query, code_occurence } =>
+            // Self :: JsonSyntaxError
+            // { json_syntax_error, code_occurence } => axum :: http ::
+            // StatusCode :: CREATED, Self :: MissingJsonContentType
+            // { missing_json_content_type, code_occurence } => axum :: http ::
+            // StatusCode :: CREATED, Self :: BytesRejection
+            // { bytes_rejection, code_occurence } => axum :: http :: StatusCode
+            // :: CREATED, Self :: UnexpectedCase
+            // { unexpected_case, code_occurence } => axum :: http :: StatusCode
+            // :: CREATED, 
+            
+            Self :: BindQuery { .. } =>
             axum :: http :: StatusCode :: CREATED, Self ::
             OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
             {
-                operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                code_occurence
+                ..
             } => axum :: http :: StatusCode :: CREATED
         }
     }
@@ -895,93 +932,22 @@ pub async fn try_create_many_generated_route_logic(
                 &body_bytes,
             ) {
                 Ok(axum::Json(value)) => CreateManyPayload::from(value),
-                Err(e) => {
-                    match e {
-                    //     axum::extract::rejection::JsonRejection::JsonDataError(value) => {
-                    //         return
-                    // Err(TryCreateManyGeneratedRouteLogicErrorNamed ::
-                    // JsonDataError
-                    // {
-                    //     json_data_error : value, code_occurence :
-                    //     error_occurence_lib :: code_occurence :: CodeOccurence ::
-                    //     new(file! ().to_owned(), line! (), column! (),
-                    //     Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                    //     {
-                    //         file : std :: string :: String ::
-                    //         from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    //         line : 2688, column : 25,
-                    //     })),
-                    // });
-                    //     }
-                        
-                        
-                        axum::extract::rejection::JsonRejection::JsonSyntaxError(value) => {
-                            return
-                    Err(TryCreateManyGeneratedRouteLogicErrorNamed ::
-                    JsonSyntaxError
-                    {
-                        json_syntax_error : value, code_occurence :
-                        error_occurence_lib :: code_occurence :: CodeOccurence ::
-                        new(file! ().to_owned(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 2694, column : 25,
-                        })),
+                Err(error) => {
+                    return Err(TryCreateManyGeneratedRouteLogicErrorNamed::Json {
+                        json: error,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(), 
+                            line!(), 
+                            column!(),
+                            Some(
+                                error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 2688, 
+                                    column: 25,
+                                }
+                            )
+                        ),
                     });
-                        }
-                        axum::extract::rejection::JsonRejection::MissingJsonContentType(value) => {
-                            return
-                    Err(TryCreateManyGeneratedRouteLogicErrorNamed ::
-                    MissingJsonContentType
-                    {
-                        missing_json_content_type : value.to_string(),
-                        code_occurence : error_occurence_lib :: code_occurence ::
-                        CodeOccurence ::
-                        new(file! ().to_owned(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 2700, column : 25,
-                        })),
-                    });
-                        }
-                        axum::extract::rejection::JsonRejection::BytesRejection(value) => {
-                            return
-                    Err(TryCreateManyGeneratedRouteLogicErrorNamed ::
-                    BytesRejection
-                    {
-                        bytes_rejection : value.to_string(), code_occurence :
-                        error_occurence_lib :: code_occurence :: CodeOccurence ::
-                        new(file! ().to_owned(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 2706, column : 25,
-                        })),
-                    });
-                        }
-                        _ => {
-                            return
-                    Err(TryCreateManyGeneratedRouteLogicErrorNamed ::
-                    UnexpectedCase
-                    {
-                        unexpected_case : std :: string :: String ::
-                        from("Unknown error"), code_occurence : error_occurence_lib
-                        :: code_occurence :: CodeOccurence ::
-                        new(file! ().to_owned(), line! (), column! (),
-                        Some(error_occurence_lib :: code_occurence :: MacroOccurence
-                        {
-                            file : std :: string :: String ::
-                            from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line : 2718, column : 25,
-                        })),
-                    });
-                        }
-                    }
                 }
             },
         };

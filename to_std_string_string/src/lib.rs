@@ -91,11 +91,11 @@ impl ToStdStringString for axum::extract::rejection::JsonSyntaxError {
         format!("{self}")
     }
 }
-// impl ToStdStringString for  {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
+impl ToStdStringString for axum::extract::rejection::JsonRejection {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
 // impl ToStdStringString for  {
 //     fn to_std_string_string(&self) -> std::string::String {
 //         format!("{self}")
