@@ -3023,11 +3023,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {}
         )
     };
-    proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        &proc_macro_name_upper_camel_case,
-        &create_many_token_stream,
-        &proc_macro_name_upper_camel_case_ident_stringified
-    );
+    // proc_macro_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     &proc_macro_name_upper_camel_case,
+    //     &create_many_token_stream,
+    //     &proc_macro_name_upper_camel_case_ident_stringified
+    // );
     // let (create_one_token_stream, create_one_http_request_test_token_stream) = {
     //     let operation = Operation::CreateOne;
     //     let operation_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&operation);
