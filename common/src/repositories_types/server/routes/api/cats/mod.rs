@@ -197,82 +197,7 @@ pub struct Dog {
 //     something: std::string::String,
 // }
 
-////////////////////////////////////////////////////////////////////////
-pub async fn try_create_many_route_logic(
-    app_state: axum::extract::State<
-        crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
-    >,
-    request: axum::extract::Request
-) -> TryCreateManyRouteLogicResponse {
-    let (parts, body) = request.into_parts();
-    let headers = parts.headers;
-    if let Err(error) = route_validators::check_commit::check_commit(
-        *app_state.get_enable_api_git_commit_check(),
-        &headers,
-    ) {
-        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-        let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
-            check_commit: error,
-            code_occurence: error_occurence_lib::code_occurence!(),
-        };
-        eprintln!("{error}");
-        return TryCreateManyRouteLogicResponse {
-            status_code,
-            body: TryCreateManyRouteLogicResponseVariants::from(error),
-        };
-    }
-    let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
-        Ok(value) => value,
-        Err(error) => {
-            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-            let error = TryCreateManyRouteLogicErrorNamed::CheckBodySize {
-                check_body_size: error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            };
-            eprintln!("{error}");
-            return TryCreateManyRouteLogicResponse {
-                status_code,
-                body: TryCreateManyRouteLogicResponseVariants::from(error),
-            };
-        }
-    };
-    match try_create_many_generated_route_logic(
-        app_state.get_postgres_pool(), 
-        body_bytes
-    ).await {
-        Ok(value) => {
-            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
-            return TryCreateManyRouteLogicResponse {
-                status_code,
-                body: TryCreateManyRouteLogicResponseVariants::Desirable(value.0),
-            };
-        },
-        Err(error) => {
-            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-            let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
-                create_many: error,
-                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                    file!().to_owned(),
-                    line!(),
-                    column!(),
-                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                        file: std::string::String::from(
-                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                        ),
-                        line: 1644,
-                        column: 13,
-                    }),
-                ),
-            };
-            eprintln!("{error}");
-            return TryCreateManyRouteLogicResponse {
-                status_code,
-                body: TryCreateManyRouteLogicResponseVariants::from(error),
-            };
-        }
-    }
-}
-/////////////////////////////////////////
+////////////////http request
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TryCreateManyErrorNamed {
     SerdeJsonToString {
@@ -464,3 +389,79 @@ pub async fn try_create_many(
         ),
     })
 }
+/////////////////////////route handler
+pub async fn try_create_many_route_logic(
+    app_state: axum::extract::State<
+        crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
+    >,
+    request: axum::extract::Request
+) -> TryCreateManyRouteLogicResponse {
+    let (parts, body) = request.into_parts();
+    let headers = parts.headers;
+    if let Err(error) = route_validators::check_commit::check_commit(
+        *app_state.get_enable_api_git_commit_check(),
+        &headers,
+    ) {
+        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+        let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+            check_commit: error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        };
+        eprintln!("{error}");
+        return TryCreateManyRouteLogicResponse {
+            status_code,
+            body: TryCreateManyRouteLogicResponseVariants::from(error),
+        };
+    }
+    let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+        Ok(value) => value,
+        Err(error) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+            let error = TryCreateManyRouteLogicErrorNamed::CheckBodySize {
+                check_body_size: error,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            };
+            eprintln!("{error}");
+            return TryCreateManyRouteLogicResponse {
+                status_code,
+                body: TryCreateManyRouteLogicResponseVariants::from(error),
+            };
+        }
+    };
+    match try_create_many_generated_route_logic(
+        app_state.get_postgres_pool(), 
+        body_bytes
+    ).await {
+        Ok(value) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&value);
+            return TryCreateManyRouteLogicResponse {
+                status_code,
+                body: TryCreateManyRouteLogicResponseVariants::Desirable(value.0),
+            };
+        },
+        Err(error) => {
+            let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+            let error = TryCreateManyRouteLogicErrorNamed::CreateMany {
+                create_many: error,
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from(
+                            "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                        ),
+                        line: 1644,
+                        column: 13,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            return TryCreateManyRouteLogicResponse {
+                status_code,
+                body: TryCreateManyRouteLogicResponseVariants::from(error),
+            };
+        }
+    }
+}
+/////////////////////////////////////////
