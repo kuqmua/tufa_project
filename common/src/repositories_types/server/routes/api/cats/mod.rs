@@ -231,26 +231,7 @@ pub enum TryCreateManyRouteLogicResponseVariants {
         json: std::string::String, 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    // JsonDataError {
-    //     json_data_error: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // JsonSyntaxError {
-    //     json_syntax_error: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // MissingJsonContentType {
-    //     missing_json_content_type: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // BytesRejection {
-    //     bytes_rejection: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // UnexpectedCase {
-    //     unexpected_case: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
+
     BindQuery {
         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -284,25 +265,6 @@ impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::Json { json, code_occurence, } => Self ::
             Json
             { json, code_occurence, },
-
-            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            // JsonDataError { json_data_error, code_occurence } => Self ::
-            // JsonDataError { json_data_error, code_occurence },
-            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            // JsonSyntaxError { json_syntax_error, code_occurence } => Self ::
-            // JsonSyntaxError { json_syntax_error, code_occurence },
-            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            // MissingJsonContentType
-            // { missing_json_content_type, code_occurence } => Self ::
-            // MissingJsonContentType
-            // { missing_json_content_type, code_occurence },
-            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            // BytesRejection { bytes_rejection, code_occurence } => Self ::
-            // BytesRejection { bytes_rejection, code_occurence },
-            // TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            // UnexpectedCase { unexpected_case, code_occurence } => Self ::
-            // UnexpectedCase { unexpected_case, code_occurence },
-
 
             TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
             BindQuery { bind_query, code_occurence } => Self :: BindQuery
@@ -349,32 +311,6 @@ pub enum TryCreateManyRouteLogicErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 
-
-    // JsonDataError {
-    //     #[eo_to_std_string_string]
-    //     json_data_error: axum::extract::rejection::JsonDataError,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // JsonSyntaxError {
-    //     #[eo_to_std_string_string]
-    //     json_syntax_error: axum::extract::rejection::JsonSyntaxError,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // MissingJsonContentType {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     missing_json_content_type: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // BytesRejection {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     bytes_rejection: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // UnexpectedCase {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     unexpected_case: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
     BindQuery {
         #[eo_error_occurence]
         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
@@ -407,25 +343,6 @@ impl std::convert::From<TryCreateManyGeneratedRouteLogicErrorNamed> for TryCreat
                 json,
                 code_occurence,
             },
-
-            // TryCreateManyGeneratedRouteLogicErrorNamed :: JsonDataError
-            // { json_data_error, code_occurence } => Self :: JsonDataError
-            // { json_data_error, code_occurence },
-            // TryCreateManyGeneratedRouteLogicErrorNamed :: JsonSyntaxError
-            // { json_syntax_error, code_occurence } => Self :: JsonSyntaxError
-            // { json_syntax_error, code_occurence },
-            // TryCreateManyGeneratedRouteLogicErrorNamed ::
-            // MissingJsonContentType
-            // { missing_json_content_type, code_occurence } => Self ::
-            // MissingJsonContentType
-            // { missing_json_content_type, code_occurence },
-            // TryCreateManyGeneratedRouteLogicErrorNamed :: BytesRejection
-            // { bytes_rejection, code_occurence } => Self :: BytesRejection
-            // { bytes_rejection, code_occurence },
-            // TryCreateManyGeneratedRouteLogicErrorNamed :: UnexpectedCase
-            // { unexpected_case, code_occurence } => Self :: UnexpectedCase
-            // { unexpected_case, code_occurence },
-
 
             TryCreateManyGeneratedRouteLogicErrorNamed :: BindQuery
             { bind_query, code_occurence } => Self :: BindQuery
@@ -688,27 +605,7 @@ pub async fn try_create_many(
             json,
             code_occurence,
         } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::Json { json, code_occurence },
-        //
-        // TryCreateManyRouteLogicResponseVariants::JsonDataError {
-        //     json_data_error,
-        //     code_occurence,
-        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonDataError { json_data_error, code_occurence },
-        // TryCreateManyRouteLogicResponseVariants::JsonSyntaxError {
-        //     json_syntax_error,
-        //     code_occurence,
-        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::JsonSyntaxError { json_syntax_error, code_occurence },
-        // TryCreateManyRouteLogicResponseVariants::MissingJsonContentType {
-        //     missing_json_content_type,
-        //     code_occurence,
-        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::MissingJsonContentType { missing_json_content_type, code_occurence },
-        // TryCreateManyRouteLogicResponseVariants::BytesRejection {
-        //     bytes_rejection,
-        //     code_occurence,
-        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::BytesRejection { bytes_rejection, code_occurence },
-        // TryCreateManyRouteLogicResponseVariants::UnexpectedCase {
-        //     unexpected_case,
-        //     code_occurence,
-        // } => TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize::UnexpectedCase { unexpected_case, code_occurence },
+
         TryCreateManyRouteLogicResponseVariants::BindQuery {
             bind_query,
             code_occurence,
@@ -842,31 +739,7 @@ pub enum TryCreateManyGeneratedRouteLogicErrorNamed {
         json: axum::extract::rejection::JsonRejection,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    // JsonDataError {
-    //     #[eo_to_std_string_string]
-    //     json_data_error: axum::extract::rejection::JsonDataError,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // JsonSyntaxError {
-    //     #[eo_to_std_string_string]
-    //     json_syntax_error: axum::extract::rejection::JsonSyntaxError,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // MissingJsonContentType {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     missing_json_content_type: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // BytesRejection {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     bytes_rejection: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // UnexpectedCase {
-    //     #[eo_to_std_string_string_serialize_deserialize]
-    //     unexpected_case: std::string::String,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
+
     BindQuery {
         #[eo_error_occurence]
         bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
@@ -888,21 +761,6 @@ impl postgresql_crud::GetAxumHttpStatusCode for TryCreateManyGeneratedRouteLogic
             :: StatusCode :: CREATED, 
             Self :: Json { .. } => axum :: http
             :: StatusCode :: CREATED, 
-            
-            // Self :: JsonDataError
-            // { .. } => axum :: http :: StatusCode
-            // :: CREATED, 
-            
-            
-            // Self :: JsonSyntaxError
-            // { json_syntax_error, code_occurence } => axum :: http ::
-            // StatusCode :: CREATED, Self :: MissingJsonContentType
-            // { missing_json_content_type, code_occurence } => axum :: http ::
-            // StatusCode :: CREATED, Self :: BytesRejection
-            // { bytes_rejection, code_occurence } => axum :: http :: StatusCode
-            // :: CREATED, Self :: UnexpectedCase
-            // { unexpected_case, code_occurence } => axum :: http :: StatusCode
-            // :: CREATED, 
             
             Self :: BindQuery { .. } =>
             axum :: http :: StatusCode :: CREATED, Self ::
