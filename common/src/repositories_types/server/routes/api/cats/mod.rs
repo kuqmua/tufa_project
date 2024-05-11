@@ -198,47 +198,6 @@ pub struct Dog {
 // }
 
 ////////////////////////////////////////////////////////////////////////
-#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
-pub enum TryCreateManyRouteLogicResponseVariants {
-    CheckCommit {
-        check_commit: route_validators::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    CheckBodySize {
-        check_body_size:
-            route_validators::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Desirable(std::vec::Vec<postgresql_crud::StdPrimitiveI64WithSerializeDeserialize>),
-
-    CreateMany {
-        create_many: TryCreateManyGeneratedRouteLogicErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl std::convert::From<TryCreateManyRouteLogicErrorNamed>
-    for TryCreateManyRouteLogicResponseVariants
-{
-    fn from(value: TryCreateManyRouteLogicErrorNamed) -> Self {
-        match value.into_serialize_deserialize_version()
-        {
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            CheckCommit { check_commit, code_occurence, } => Self ::
-            CheckCommit { check_commit, code_occurence, },
-
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            CheckBodySize { check_body_size, code_occurence, } => Self ::
-            CheckBodySize
-            { check_body_size, code_occurence, },
-
-            //
-            TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize ::
-            CreateMany { create_many, code_occurence, } => Self ::
-            CreateMany
-            { create_many, code_occurence, },
-        }
-    }
-}
 #[derive(
     Debug,
     thiserror :: Error,
