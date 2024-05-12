@@ -2540,29 +2540,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 // println!("{binded_query_token_stream}");
+                let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
+                    &{
+                        let field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                            file!(),
+                            line!(),
+                            column!(),
+                            &proc_macro_name_upper_camel_case_ident_stringified,
+                        );
+                        quote::quote! {
+                            let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
+                                postgresql: error,
+                                #field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream
+                            };
+                            eprintln!("{error}");
+                            return #try_operation_route_logic_response_upper_camel_case_token_stream {
+                                status_code: axum::http::StatusCode::CREATED,//todo
+                                body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
+                            };
+                        }
+                    },
+                    &pg_connection_token_stream,
+                );
                 let try_operation_token_stream = {
-                    let from_log_and_return_error_token_stream = crate::from_log_and_return_error::from_log_and_return_error(
-                        &try_operation_upper_camel_case_token_stream,
-                        &eprintln_error_token_stream,
-                        &try_operation_response_variants_token_stream,
-                    );
-                    let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
-                        &{
-                            let field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                                file!(),
-                                line!(),
-                                column!(),
-                                &proc_macro_name_upper_camel_case_ident_stringified,
-                            );
-                            quote::quote! {
-                                return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Postgresql{
-                                    postgresql: error,
-                                    #field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream
-                                });
-                            }
-                        },
-                        &pg_connection_token_stream,
-                    );
+                    // let from_log_and_return_error_token_stream = crate::from_log_and_return_error::from_log_and_return_error(
+                    //     &try_operation_upper_camel_case_token_stream,
+                    //     &eprintln_error_token_stream,
+                    //     &try_operation_response_variants_token_stream,
+                    // );
                     let field_code_occurence_new_72512bb5_747b_4847_a84d_87bb1561ce62_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
                         file!(),
                         line!(),
@@ -2580,7 +2585,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         //     #query_string_token_stream
                         // };
                         // println!("{}", #query_string_name_token_stream);
-                        #acquire_pool_and_connection_token_stream
+                        // #acquire_pool_and_connection_token_stream
                         let mut rows = #binded_query_name_token_stream.fetch(#pg_connection_token_stream.as_mut());
                         let mut vec_values = std::vec::Vec::new();
                         while let Some(row) = {
@@ -2758,56 +2763,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let #binded_query_name_token_stream = {
                             #binded_query_token_stream
                         };
-                        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
-                            Ok(value) => value,
-                            Err(error) => {
-                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
-                                    postgresql: error,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                        file!().to_owned(),
-                                        line!(),
-                                        column!(),
-                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                            file: std::string::String::from(
-                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                            ),
-                                            line: 2642,
-                                            column: 33,
-                                        }),
-                                    ),
-                                };
-                                eprintln!("{error}");
-                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                    status_code: axum :: http :: StatusCode :: CREATED,
-                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
-                                };
-                            }
-                        };
-                        let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
-                            Ok(value) => value,
-                            Err(error) => {
-                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
-                                    postgresql: error,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                        file!().to_owned(),
-                                        line!(),
-                                        column!(),
-                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                            file: std::string::String::from(
-                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                            ),
-                                            line: 2642,
-                                            column: 33,
-                                        }),
-                                    ),
-                                };
-                                eprintln!("{error}");
-                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                    status_code: axum :: http :: StatusCode :: CREATED,
-                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
-                                };
-                            }
-                        };
+                        #acquire_pool_and_connection_token_stream
                         let mut rows = binded_query.fetch(pg_connection.as_mut());
                         let mut vec_values = std::vec::Vec::new();
                         while let Some(row) = {
