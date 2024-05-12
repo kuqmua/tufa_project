@@ -1719,15 +1719,15 @@ where
     }
 }
 
-pub trait TrySelfGeneratedRouteLogicSnakeCaseStringified {
-    fn try_self_generated_route_logic_snake_case_stringified(&self) -> std::string::String;
+pub trait TrySelfRouteLogicSnakeCaseStringified {
+    fn try_self_route_logic_snake_case_stringified(&self) -> std::string::String;
 }
 
-impl<T> TrySelfGeneratedRouteLogicSnakeCaseStringified for T
+impl<T> TrySelfRouteLogicSnakeCaseStringified for T
 where
     T: proc_macro_common::naming_conventions::ToSnakeCaseStringified,
 {
-    fn try_self_generated_route_logic_snake_case_stringified(&self) -> std::string::String {
+    fn try_self_route_logic_snake_case_stringified(&self) -> std::string::String {
         format!(
             "{}_{}_{}_{}_{}",
             <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
@@ -1739,16 +1739,16 @@ where
     }
 }
 
-pub trait TrySelfGeneratedRouteLogicSnakeCaseTokenStream {
-    fn try_self_generated_route_logic_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
+pub trait TrySelfRouteLogicSnakeCaseTokenStream {
+    fn try_self_route_logic_snake_case_token_stream(&self) -> proc_macro2::TokenStream;
 }
 
-impl<T> TrySelfGeneratedRouteLogicSnakeCaseTokenStream for T
+impl<T> TrySelfRouteLogicSnakeCaseTokenStream for T
 where
-    T: TrySelfGeneratedRouteLogicSnakeCaseStringified,
+    T: TrySelfRouteLogicSnakeCaseStringified,
 {
-    fn try_self_generated_route_logic_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-        let value = self.try_self_generated_route_logic_snake_case_stringified();
+    fn try_self_route_logic_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        let value = self.try_self_route_logic_snake_case_stringified();
         value.parse::<proc_macro2::TokenStream>()
         .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }

@@ -2428,160 +2428,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            quote::quote! {
-                #try_operation_route_logic_response_token_stream
-                #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
-                #try_operation_route_logic_response_variants_token_stream
-                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
-                #try_operation_route_logic_error_named_token_stream
-            }
-        };
-        let route_handler_token_stream = {
-            let try_operation_generated_route_logic_error_named_token_stream = {
-                let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
-                    let variant_ident = &error_variant.ident;
-                    let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
-                        fields_named
-                    }
-                    else {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
-                    };
-                    let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
-                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-                            panic!(
-                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                naming_constants::FIELD_IDENT_IS_NONE
-                            )
-                        });
-                        let error_occurence_attribute = if *field_ident == *proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified() {
-                            proc_macro2::TokenStream::new()
-                        }
-                        else {
-                            let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute> = None;
-                            for element in &field.attrs {
-                                if element.path().segments.len() == 1 {
-                                    let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
-                                    if let Ok(value) = {
-                                        use std::str::FromStr;
-                                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
-                                    } {
-                                        match error_occurence_attribute {
-                                            Some(value) => panic!(
-                                                "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
-                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
-                                            ),
-                                            None => {
-                                                error_occurence_attribute = Some(value);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            error_occurence_attribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"), |value| value.to_attribute_view_token_stream())
-                        };
-                        let field_type = &field.ty;
-                        quote::quote! {
-                            #error_occurence_attribute
-                            #field_ident: #field_type
-                        }
-                    }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                    quote::quote! {
-                        #variant_ident {
-                            #(#fields_mapped_into_token_stream),*
-                        }
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                quote::quote! {
-                    #[derive(
-                        Debug,
-                        thiserror::Error,
-                        error_occurence_lib::ErrorOccurence,
-                    )]
-                    pub enum #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
-                        Postgresql {
-                            #[eo_to_std_string_string]
-                            postgresql: sqlx::Error,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Json {
-                            #[eo_to_std_string_string]
-                            json: axum::extract::rejection::JsonRejection,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        #(#variants_token_stream),*
-                    }
-                }
-            };
-            // println!("{try_operation_generated_route_logic_error_named_token_stream}");
-            let impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream = {
-                let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|{
-                    let variant_ident = &element.ident;
-                    let fields_anonymous_types_mapped_into_token_stream = if let syn::Fields::Named(fields_named) = &element.fields {
-                        fields_named.named.iter().map(|field|{
-                            field.ident.as_ref().unwrap_or_else(|| {
-                                panic!(
-                                    "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-                                    naming_constants::FIELD_IDENT_IS_NONE
-                                )
-                            })
-                        }).collect::<std::vec::Vec<&syn::Ident>>()
-                    }
-                    else {
-                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
-                    };
-                    quote::quote! {
-                        Self::#variant_ident {
-                            #(#fields_anonymous_types_mapped_into_token_stream),*
-                        } => #axum_http_status_code_token_stream::CREATED//todo status code
-                    }
-                });
-                quote::quote! {
-                    impl #postgresql_crud_get_axum_http_status_code_token_stream for #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream {
-                        fn #get_axum_http_status_code_snake_case_token_stream(&self) -> #axum_http_status_code_token_stream {
-                            match self {
-                                //
-                                Self::Postgresql { 
-                                    postgresql, code_occurence 
-                                }=> axum::http::StatusCode::CREATED,
-                                Self :: Json { .. } => axum :: http:: StatusCode :: CREATED, 
-                                //
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    }
-                }
-            };
-            let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
-            let (
-                try_operation_generated_route_logic_desirable_token_stream,
-                impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
-            ) = {
-                let try_operation_generated_route_logic_desirable_token_stream = {
-                    quote::quote! {
-                        #[derive(Debug)]
-                        pub struct #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(std::vec::Vec<#primary_key_inner_type_with_serialize_deserialize_token_stream>);
-                    }
-                };
-                let impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream = {
-                    quote::quote! {
-                        impl #postgresql_crud_get_axum_http_status_code_token_stream for #try_operation_generated_route_logic_desirable_upper_camel_case_token_stream {
-                            fn #get_axum_http_status_code_snake_case_token_stream(&self) -> #axum_http_status_code_token_stream {
-                                #axum_http_status_code_token_stream::CREATED
-                            }
-                        }
-                    }
-                };
-                (
-                    try_operation_generated_route_logic_desirable_token_stream,
-                    impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
-                )
-            };
-            // println!("{try_operation_generated_route_logic_desirable_token_stream}");
-            let try_operation_generated_route_logic_token_stream = {
+            let try_operation_route_logic_token_steram = {
                 let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-                let try_operation_generated_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicSnakeCaseTokenStream::try_self_generated_route_logic_snake_case_token_stream(&operation);
-                let try_operation_generated_route_logic_error_named_upper_camel_case_token_stream =     proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_generated_route_logic_error_named_upper_camel_case_token_stream(&operation);
+                let try_operation_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(&operation);
+                let try_operation_route_logic_error_named_upper_camel_case_token_stream =     proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
+                let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
                 let try_operation_token_stream = {
                     let query_string_token_stream = {
                         let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
@@ -2812,7 +2664,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     // // #swagger_open_api_token_stream
-                    pub async fn #try_operation_generated_route_logic_snake_case_token_stream(
+                    pub async fn #try_operation_route_logic_snake_case_token_stream(
                         pg_pool: &sqlx::PgPool,
                         #body_bytes_bytes_bytes_token_stream
                     ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
@@ -2820,7 +2672,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
                                 Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
                                 Err(error) => {
-                                    return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Json {
+                                    return Err(#try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
                                         json: error,
                                         #field_code_occurence_new_7537dde6_c766_415f_bd4b_a29f6ab3fb09_token_stream,
                                     });
@@ -2834,16 +2686,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            // println!("{try_operation_generated_route_logic_token_stream}");
             quote::quote! {
-                #try_operation_generated_route_logic_error_named_token_stream
-                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_error_named_token_stream
-                #try_operation_generated_route_logic_desirable_token_stream
-                #impl_postgresql_crud_get_axum_http_status_code_for_try_create_many_generated_route_logic_desirable_token_stream
-                #try_operation_generated_route_logic_token_stream
+                #try_operation_route_logic_response_token_stream
+                #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
+                #try_operation_route_logic_response_variants_token_stream
+                #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
+                #try_operation_route_logic_error_named_token_stream
             }
         };
-        // println!("{route_handler_token_stream}");
         // let (http_request_token_stream, http_request_test_token_stream) = {
         //     // let try_operation_error_named_token_stream = {
         //     //     let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
