@@ -2690,7 +2690,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
                         >,
                         request: axum::extract::Request
-                    ) -> TryCreateManyRouteLogicResponse {
+                    ) -> #try_operation_route_logic_response_upper_camel_case_token_stream {
                         let (parts, body) = request.into_parts();
                         let headers = parts.headers;
                         let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
@@ -2702,9 +2702,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 };
                                 eprintln!("{error}");
-                                return TryCreateManyRouteLogicResponse {
+                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                     status_code,
-                                    body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                 };
                             }
                         };
@@ -2714,14 +2714,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             &headers,
                         ) {
                             let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                            let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+                            let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckCommit {
                                 check_commit: error,
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             };
                             eprintln!("{error}");
-                            return TryCreateManyRouteLogicResponse {
+                            return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                 status_code,
-                                body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                             };
                         }
                         //end middleware logic
@@ -2731,7 +2731,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ) {
                                 Ok(axum::Json(value)) => CreateManyPayload::from(value),
                                 Err(error) => {
-                                    let error = TryCreateManyRouteLogicErrorNamed::Json {
+                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
                                         json: error,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                             file!().to_owned(),
@@ -2747,9 +2747,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    return TryCreateManyRouteLogicResponse {
+                                    return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         status_code: axum :: http :: StatusCode :: CREATED,
-                                        body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                        body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                     };
                                 }
                             },
@@ -2800,7 +2800,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
                             Ok(value) => value,
                             Err(error) => {
-                                let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
                                     postgresql: error,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                         file!().to_owned(),
@@ -2816,16 +2816,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ),
                                 };
                                 eprintln!("{error}");
-                                return TryCreateManyRouteLogicResponse {
+                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                     status_code: axum :: http :: StatusCode :: CREATED,
-                                    body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                 };
                             }
                         };
                         let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
                             Ok(value) => value,
                             Err(error) => {
-                                let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
                                     postgresql: error,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                         file!().to_owned(),
@@ -2841,9 +2841,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ),
                                 };
                                 eprintln!("{error}");
-                                return TryCreateManyRouteLogicResponse {
+                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                     status_code: axum :: http :: StatusCode :: CREATED,
-                                    body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                 };
                             }
                         };
@@ -2858,7 +2858,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             {
                                 Ok(value) => value,
                                 Err(error) => {
-                                    let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
                                         postgresql: error,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                             file!().to_owned(),
@@ -2874,9 +2874,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    return TryCreateManyRouteLogicResponse {
+                                    return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         status_code: axum :: http :: StatusCode :: CREATED,
-                                        body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                        body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                     };
                                 }
                             }
@@ -2895,7 +2895,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                 }
                                 Err(error) => {
-                                    let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
                                         postgresql: error,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
                                             file!().to_owned(),
@@ -2911,16 +2911,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    return TryCreateManyRouteLogicResponse {
+                                    return #try_operation_route_logic_response_upper_camel_case_token_stream {
                                         status_code: axum :: http :: StatusCode :: CREATED,
-                                        body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                        body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                     };
                                 }
                             }
                         }
-                        return TryCreateManyRouteLogicResponse {
+                        return #try_operation_route_logic_response_upper_camel_case_token_stream {
                             status_code: axum::http::StatusCode::CREATED,
-                            body: TryCreateManyRouteLogicResponseVariants::Desirable(vec_values),
+                            body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Desirable(vec_values),
                         };
                     }
                     ////////////////
