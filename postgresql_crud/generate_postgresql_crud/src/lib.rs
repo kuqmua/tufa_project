@@ -2434,7 +2434,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let try_operation_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(&operation);
                 let try_operation_route_logic_error_named_upper_camel_case_token_stream =     proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
                 let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
-                
+                let request_parts_preparation_token_stream = {
+                    let field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
+                    quote::quote! {
+                        let (parts, body) = request.into_parts();
+                        let headers = parts.headers;
+                        let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+                            Ok(value) => value,
+                            Err(error) => {
+                                let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckBodySize {
+                                    check_body_size: error,
+                                    #field_code_occurence_new_feac0c87_10ed_4115_ab71_81e15f09a860_token_stream,
+                                };
+                                eprintln!("{error}");
+                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
+                                    status_code,
+                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
+                                };
+                            }
+                        };
+                    }
+                };
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
@@ -2576,45 +2602,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
-                        // let mut rows = #binded_query_name_token_stream.fetch(#pg_connection_token_stream.as_mut());
-                        // let mut vec_values = std::vec::Vec::new();
-                        // while let Some(row) = {
-                        //     match {
-                        //         use futures::TryStreamExt;
-                        //         rows.try_next()
-                        //     }
-                        //     .await
-                        //     {
-                        //         Ok(value) => value,
-                        //         Err(error) => {
-                        //             return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Postgresql{
-                        //                 postgresql: error,
-                        //                 #field_code_occurence_new_72512bb5_747b_4847_a84d_87bb1561ce62_token_stream
-                        //             });
-                        //         }
-                        //     }
-                        // } {
-                        //     match {
-                        //         use #sqlx_row_token_stream;
-                        //         row.try_get::<#primary_key_original_type_token_stream, #str_ref_token_stream>(#primary_key_field_ident_quotes_token_stream)
-                        //     } {
-                        //         Ok(value) => {
-                        //             vec_values.push(
-                        //                 #primary_key_inner_type_with_serialize_deserialize_token_stream::#from_snake_case_token_stream(
-                        //                     #primary_key_inner_type_token_stream(value)
-                        //                 ),
-                        //             );
-                        //         }
-                        //         Err(error) => {
-                        //             return Err(#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::Postgresql{
-                        //                 postgresql: error,
-                        //                 #field_code_occurence_new_ced1663e_25b0_4b0a_a775_feb3035caef8_token_stream
-                        //             });
-                        //         }
-                        //     }
-                        // }
-                        // Ok(#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream(vec_values))
-                        //////
                         let mut rows = #binded_query_name_token_stream.fetch(#pg_connection_token_stream.as_mut());
                         let mut vec_values = std::vec::Vec::new();
                         while let Some(row) = {
@@ -2733,23 +2720,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         >,
                         request: axum::extract::Request
                     ) -> #try_operation_route_logic_response_upper_camel_case_token_stream {
-                        let (parts, body) = request.into_parts();
-                        let headers = parts.headers;
-                        let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
-                            Ok(value) => value,
-                            Err(error) => {
-                                let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckBodySize {
-                                    check_body_size: error,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                };
-                                eprintln!("{error}");
-                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                    status_code,
-                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
-                                };
-                            }
-                        };
+                        #request_parts_preparation_token_stream
                         //start middleware logic
                         if let Err(error) = route_validators::check_commit::check_commit(
                             *app_state.get_enable_api_git_commit_check(),
