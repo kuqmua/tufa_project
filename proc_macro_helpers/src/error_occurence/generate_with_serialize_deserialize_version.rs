@@ -1,5 +1,5 @@
 // pub fn generate_field_type_with_serialize_deserialize_version(
-//     attribute: crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute,
+//     attribute: crate::error_occurence::ErrorOccurenceFieldAttribute,
 //     supported_container: crate::error_occurence::supported_container::SupportedContainer,
 //     proc_macro_name_ident_stringified: &str,
 // ) -> proc_macro2::TokenStream {
@@ -53,7 +53,7 @@
 //         <naming_constants::Path as naming_constants::Naming>::upper_camel_case_stringified(),
 //     );
 //     match &attribute {
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringString => {
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
 //             if let crate::error_occurence::supported_container::SupportedContainer::Path { .. } = supported_container {
 //                 quote::quote! {
 //                     #std_string_string_token_stream
@@ -69,7 +69,7 @@
 //                 )
 //             }
 //         },
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
 //             match supported_container {
 //                 crate::error_occurence::supported_container::SupportedContainer::Path { path, vec_lifetime } => {
 //                     {
@@ -100,7 +100,7 @@
 //                 ),
 //             }
 //         },
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
 //             if let crate::error_occurence::supported_container::SupportedContainer::Path { path, ..} = &supported_container {
 //                 {
 //                     let type_stringified = format!("{path}{with_serialize_deserialize_upper_camel_case}");
@@ -117,7 +117,7 @@
 //                 );
 //             }
 //         },
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
 //             if let crate::error_occurence::supported_container::SupportedContainer::Vec {
 //                 path,
 //                 vec_element_type
@@ -144,7 +144,7 @@
 //                 );
 //             }
 //         },
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
 //             if let crate::error_occurence::supported_container::SupportedContainer::Vec {
 //                 path,
 //                 vec_element_type
@@ -181,7 +181,7 @@
 //                 );
 //             }
 //         },
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
 //             if let crate::error_occurence::supported_container::SupportedContainer::Vec {
 //                 path,
 //                 vec_element_type
@@ -210,9 +210,9 @@
 //                 );
 //             }
 //         },
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => todo!(),
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => todo!(),
-//         crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => todo!(),
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => todo!(),
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => todo!(),
+//         crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => todo!(),
 //     }
 // }
 
@@ -586,3 +586,12 @@
 //         _ => panic!("{proc_macro_name_ident_stringified} field.ty is not syn::Type::Path or syn::Type::Reference {error_message} (exhaustive)"),
 //     }
 // }
+
+// pub fn generate_field_type_with_serialize_deserialize_version(
+//     attribute: crate::error_occurence::ErrorOccurenceFieldAttribute,
+//     supported_container: crate::error_occurence::supported_container::SupportedContainer,
+//     proc_macro_name_ident_stringified: &str,
+// ) -> proc_macro2::TokenStream {
+
+
+

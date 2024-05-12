@@ -4,7 +4,7 @@ pub fn panic_if_not_string(
     proc_macro_name_ident_stringified: &str,
     supports_only_stringified: &str,
     as_std_collections_hashmap_key_type_stringified: &str,
-    attribute: &crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute,
+    attribute: &crate::error_occurence::ErrorOccurenceFieldAttribute,
 ) {
     assert!(
         segments_stringified == std_string_string_stringified, 

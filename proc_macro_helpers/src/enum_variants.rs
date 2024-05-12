@@ -19,7 +19,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -37,7 +37,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -54,7 +54,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["std","io","Error"],
@@ -74,7 +74,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -91,7 +91,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -108,7 +108,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -125,7 +125,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -142,7 +142,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
@@ -150,7 +150,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
                     ),
                 ),
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     "len",
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["usize"],
@@ -170,7 +170,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -183,12 +183,12 @@ pub fn sqlx_postgres_error_named_syn_variants(
         &code_occurence_field,
         vec![
             (
-                crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                 "column_decode_index", 
                 std_string_string_syn_punctuated_punctuated.clone()
             ),
             (
-                crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                 "source_handle",
                 std_string_string_syn_punctuated_punctuated.clone()
             )
@@ -204,7 +204,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -221,7 +221,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -238,7 +238,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -255,7 +255,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated
                 )
@@ -272,7 +272,7 @@ pub fn sqlx_postgres_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["sqlx","migrate","MigrateError"],
@@ -318,7 +318,7 @@ pub fn json_extractor_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["axum","extract","rejection","JsonDataError"],
@@ -338,7 +338,7 @@ pub fn json_extractor_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
                     &variant_name_snake_case_stringified,
                     crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
                         &["axum","extract","rejection","JsonSyntaxError"],
@@ -358,7 +358,7 @@ pub fn json_extractor_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated.clone()
                 )
@@ -375,7 +375,7 @@ pub fn json_extractor_error_named_syn_variants(
             &code_occurence_field,
             vec![
                 (
-                    crate::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                     &variant_name_snake_case_stringified,
                     std_string_string_syn_punctuated_punctuated
                 )

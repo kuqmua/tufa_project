@@ -53,13 +53,13 @@
 //                     proc_macro2::TokenStream::new()
 //                 }
 //                 else {
-//                     let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute> = None;
+//                     let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute> = None;
 //                     for element in &field.attrs {
 //                         if element.path().segments.len() == 1 {
 //                             let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
 //                             if let Ok(value) = {
 //                                 use std::str::FromStr;
-//                                 proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
+//                                 proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
 //                             } {
 //                                 match error_occurence_attribute {
 //                                     Some(value) => panic!(
@@ -237,7 +237,7 @@
 //                                 let attr_ident = attr.path().segments.iter().next().map_or_else(|| panic!("attr.path().segments.iter().next() is None"), |path_segment| &path_segment.ident);
 //                                 if let Ok(value) = {
 //                                     use std::str::FromStr;
-//                                     proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::from_str(&attr_ident.to_string())
+//                                     proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&attr_ident.to_string())
 //                                 } {
 //                                     if option_attribute.is_some() {
 //                                         panic!("{error_message}");
@@ -416,7 +416,7 @@
 //                                         let attr_ident = attr.path().segments.iter().next().map_or_else(|| panic!("attr.path().segments.iter().next() is None"), |path_segment| &path_segment.ident);
 //                                         if let Ok(value) = {
 //                                             use std::str::FromStr;
-//                                             proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::from_str(&attr_ident.to_string())
+//                                             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&attr_ident.to_string())
 //                                         } {
 //                                             if option_attribute.is_some() {
 //                                                 panic!("{error_message}");
@@ -683,7 +683,7 @@ pub(crate) fn construct_syn_variant(
     variant_name: &str,
     code_occurence_field: &syn::Field,
     fields: std::vec::Vec<(
-        proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute,
+        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute,
         &str,
         syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
     )>,
