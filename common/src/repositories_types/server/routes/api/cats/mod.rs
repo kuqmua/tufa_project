@@ -206,15 +206,15 @@ pub enum TryCreateManyErrorNamed {
         serde_json_to_string: serde_json::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    UnexpectedStatusCode {
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        #[eo_to_std_string_string]
-        response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    // UnexpectedStatusCode {
+    //     #[eo_to_std_string_string]
+    //     status_code: http::StatusCode,
+    //     #[eo_to_std_string_string]
+    //     headers: reqwest::header::HeaderMap,
+    //     #[eo_to_std_string_string]
+    //     response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
     FailedToGetResponseText {
         #[eo_to_std_string_string]
         reqwest: reqwest::Error,
