@@ -167,7 +167,6 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     value: &syn::Variant,
     ident_in_none_stringified: &str,
     code_occurence_snake_case_stringified: &str,
-    std_snake_case_stringified: &str,
     code_occurence_snake_case_token_stream: &proc_macro2::TokenStream,
     std_string_string_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -190,6 +189,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             let element_type = &element.ty;
             quote::quote!{#element_type}
         };
+        let std_snake_case_stringified = <naming_constants::Std as naming_constants::Naming>::snake_case_stringified();
         let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote!{
