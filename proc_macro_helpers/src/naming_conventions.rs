@@ -1729,10 +1729,9 @@ where
 {
     fn try_self_route_logic_snake_case_stringified(&self) -> std::string::String {
         format!(
-            "{}_{}_{}_{}_{}",
+            "{}_{}_{}_{}",
             <naming_constants::Try as naming_constants::Naming>::snake_case_stringified(),
             self.to_snake_case_stringified(),
-            <naming_constants::Generated as naming_constants::Naming>::snake_case_stringified(),
             <naming_constants::Route as naming_constants::Naming>::snake_case_stringified(),
             <naming_constants::Logic as naming_constants::Naming>::snake_case_stringified(),
         )

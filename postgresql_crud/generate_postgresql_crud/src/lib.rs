@@ -2428,7 +2428,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            let try_operation_route_logic_token_steram = {
+            let try_operation_route_logic_token_stream = {
                 let operation_snake_case_token_stream = operation_name_snake_case_stringified.parse::<proc_macro2::TokenStream>()
                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {operation_name_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
                 let try_operation_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(&operation);
@@ -2664,26 +2664,266 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     // // #swagger_open_api_token_stream
+                    // pub async fn #try_operation_route_logic_snake_case_token_stream(
+                    //     pg_pool: &sqlx::PgPool,
+                    //     #body_bytes_bytes_bytes_token_stream
+                    // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
+                    //     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                    //         #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
+                    //             Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
+                    //             Err(error) => {
+                    //                 return Err(#try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
+                    //                     json: error,
+                    //                     #field_code_occurence_new_7537dde6_c766_415f_bd4b_a29f6ab3fb09_token_stream,
+                    //                 });
+                    //             },
+                    //         }
+                    //     };
+                    //     println!("{:#?}", #parameters_snake_case_token_stream);
+                    //     {
+                    //         #try_operation_token_stream
+                    //     }
+                    // }
+                    ////////////////
                     pub async fn #try_operation_route_logic_snake_case_token_stream(
-                        pg_pool: &sqlx::PgPool,
-                        #body_bytes_bytes_bytes_token_stream
-                    ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
-                        let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
-                            #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
-                                Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
-                                Err(error) => {
-                                    return Err(#try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
-                                        json: error,
-                                        #field_code_occurence_new_7537dde6_c766_415f_bd4b_a29f6ab3fb09_token_stream,
-                                    });
-                                },
+                        app_state: axum::extract::State<
+                            crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
+                        >,
+                        request: axum::extract::Request
+                    ) -> TryCreateManyRouteLogicResponse {
+                        let (parts, body) = request.into_parts();
+                        let headers = parts.headers;
+                        let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+                            Ok(value) => value,
+                            Err(error) => {
+                                let status_code = http_logic::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckBodySize {
+                                    check_body_size: error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                };
+                                eprintln!("{error}");
+                                return TryCreateManyRouteLogicResponse {
+                                    status_code,
+                                    body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                };
                             }
                         };
-                        println!("{:#?}", #parameters_snake_case_token_stream);
-                        {
-                            #try_operation_token_stream
+                        //start middleware logic
+                        if let Err(error) = route_validators::check_commit::check_commit(
+                            *app_state.get_enable_api_git_commit_check(),
+                            &headers,
+                        ) {
+                            let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+                            let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+                                check_commit: error,
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            };
+                            eprintln!("{error}");
+                            return TryCreateManyRouteLogicResponse {
+                                status_code,
+                                body: TryCreateManyRouteLogicResponseVariants::from(error),
+                            };
                         }
+                        //end middleware logic
+                        let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                            #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
+                                &#body_bytes_snake_case_token_stream,
+                            ) {
+                                Ok(axum::Json(value)) => CreateManyPayload::from(value),
+                                Err(error) => {
+                                    let error = TryCreateManyRouteLogicErrorNamed::Json {
+                                        json: error,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from(
+                                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                                ),
+                                                line: 2751,
+                                                column: 21,
+                                            }),
+                                        ),
+                                    };
+                                    eprintln!("{error}");
+                                    return TryCreateManyRouteLogicResponse {
+                                        status_code: axum :: http :: StatusCode :: CREATED,
+                                        body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                    };
+                                }
+                            },
+                        };
+                        println!("{:#?}", parameters);
+                        let query_string = {
+                            "insert into dogs (std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) select std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int from unnest($1, $2, $3) as a(std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
+                        };
+                        println!("{}", query_string);
+                        let binded_query = {
+                            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+                            let current_vec_len = parameters.payload.0.len();
+                            let (
+                                std_primitive_bool_as_postgresql_bool_vec,
+                                std_primitive_i16_as_postgresql_small_int_vec,
+                                std_primitive_i32_as_postgresql_int_vec,
+                            ) = parameters.payload.0.into_iter().fold(
+                                (
+                                    std::vec::Vec::with_capacity(current_vec_len),
+                                    std::vec::Vec::with_capacity(current_vec_len),
+                                    std::vec::Vec::with_capacity(current_vec_len),
+                                ),
+                                |mut acc, element| {
+                                    acc.0.push(element.std_primitive_bool_as_postgresql_bool);
+                                    acc.1
+                                        .push(element.std_primitive_i16_as_postgresql_small_int);
+                                    acc.2.push(element.std_primitive_i32_as_postgresql_int);
+                                    acc
+                                },
+                            );
+                            query = query.bind(
+                                postgresql_crud::StdOptionOptionStdPrimitiveBool::into_inner_type_vec(
+                                    std_primitive_bool_as_postgresql_bool_vec,
+                                ),
+                            );
+                            query = query.bind(
+                                postgresql_crud::StdOptionOptionStdPrimitiveI16::into_inner_type_vec(
+                                    std_primitive_i16_as_postgresql_small_int_vec,
+                                ),
+                            );
+                            query = query.bind(
+                                postgresql_crud::StdOptionOptionStdPrimitiveI32::into_inner_type_vec(
+                                    std_primitive_i32_as_postgresql_int_vec,
+                                ),
+                            );
+                            query
+                        };
+                        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+                            Ok(value) => value,
+                            Err(error) => {
+                                let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                    postgresql: error,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from(
+                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                            ),
+                                            line: 2642,
+                                            column: 33,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                return TryCreateManyRouteLogicResponse {
+                                    status_code: axum :: http :: StatusCode :: CREATED,
+                                    body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                };
+                            }
+                        };
+                        let pg_connection = match sqlx::Acquire::acquire(&mut pool_connection).await {
+                            Ok(value) => value,
+                            Err(error) => {
+                                let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                    postgresql: error,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from(
+                                                "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                            ),
+                                            line: 2642,
+                                            column: 33,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                return TryCreateManyRouteLogicResponse {
+                                    status_code: axum :: http :: StatusCode :: CREATED,
+                                    body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                };
+                            }
+                        };
+                        let mut rows = binded_query.fetch(pg_connection.as_mut());
+                        let mut vec_values = std::vec::Vec::new();
+                        while let Some(row) = {
+                            match {
+                                use futures::TryStreamExt;
+                                rows.try_next()
+                            }
+                            .await
+                            {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                        postgresql: error,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from(
+                                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                                ),
+                                                line: 2657,
+                                                column: 25,
+                                            }),
+                                        ),
+                                    };
+                                    eprintln!("{error}");
+                                    return TryCreateManyRouteLogicResponse {
+                                        status_code: axum :: http :: StatusCode :: CREATED,
+                                        body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                    };
+                                }
+                            }
+                        } {
+                            match {
+                                use sqlx::Row;
+                                row.try_get::<std::primitive::i64, &str>(
+                                    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key",
+                                )
+                            } {
+                                Ok(value) => {
+                                    vec_values.push(
+                                        postgresql_crud::StdPrimitiveI64WithSerializeDeserialize::from(
+                                            postgresql_crud::StdPrimitiveI64(value),
+                                        ),
+                                    );
+                                }
+                                Err(error) => {
+                                    let error = TryCreateManyRouteLogicErrorNamed::Postgresql {
+                                        postgresql: error,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from(
+                                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                                ),
+                                                line: 2663,
+                                                column: 25,
+                                            }),
+                                        ),
+                                    };
+                                    eprintln!("{error}");
+                                    return TryCreateManyRouteLogicResponse {
+                                        status_code: axum :: http :: StatusCode :: CREATED,
+                                        body: TryCreateManyRouteLogicResponseVariants::from(error),
+                                    };
+                                }
+                            }
+                        }
+                        return TryCreateManyRouteLogicResponse {
+                            status_code: axum::http::StatusCode::CREATED,
+                            body: TryCreateManyRouteLogicResponseVariants::Desirable(vec_values),
+                        };
                     }
+                    ////////////////
                 }
             };
             quote::quote! {
@@ -2692,6 +2932,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_route_logic_response_variants_token_stream
                 #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
                 #try_operation_route_logic_error_named_token_stream
+                #try_operation_route_logic_token_stream
             }
         };
         // let (http_request_token_stream, http_request_test_token_stream) = {
