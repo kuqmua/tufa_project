@@ -1967,10 +1967,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     additional_http_status_codes_error_variants.iter().collect(),
                 );
             let type_variants_from_request_response_syn_variants_partial = {
-                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(3);
+                let mut type_variants_from_request_response = std::vec::Vec::with_capacity(5);
                 // for element in &common_error_syn_variants {
                 //     type_variants_from_request_response.push(element);
                 // }
+                type_variants_from_request_response.push(&postgresql_syn_variant);
+                type_variants_from_request_response.push(&json_syn_variant);
                 type_variants_from_request_response.push(&bind_query_syn_variant);
                 type_variants_from_request_response.push(&operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server_syn_variant);
                 if fields_named_excluding_primary_key_from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
@@ -2318,10 +2320,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            // //
-            // let try_operation_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
-            // let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
             let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = {
+                let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
+                    let variant_ident = &error_variant.ident;
+                    let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
+                        fields_named
+                    }
+                    else {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+                    };
+                    let fields_mapped_into_token_stream = {
+                        let fields_token_stream = fields_named.named.iter().map(|field|{
+                            &field.ident
+                        });
+                        quote::quote! {#(#fields_token_stream),*}
+                    };
+                    quote::quote! {
+                        #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::#variant_ident {
+                            #fields_mapped_into_token_stream
+                        } => Self::#variant_ident {
+                            #fields_mapped_into_token_stream
+                        }
+                    }
+                });
                 quote::quote! {
                     impl std::convert::From<#try_operation_route_logic_error_named_upper_camel_case_token_stream> for #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
                         fn from(value: #try_operation_route_logic_error_named_upper_camel_case_token_stream) -> Self {
@@ -2340,44 +2361,66 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     check_body_size: check_body_size,
                                     code_occurence,
                                 },
-                                //
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Postgresql {
-                                    postgresql,
-                                    code_occurence,
-                                } => Self::Postgresql {
-                                    postgresql,
-                                    code_occurence,
-                                },
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::Json {
-                                    json,
-                                    code_occurence,
-                                } => Self::Json {
-                                    json,
-                                    code_occurence,
-                                },
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::BindQuery {
-                                    bind_query,
-                                    code_occurence,
-                                } => Self::BindQuery {
-                                    bind_query,
-                                    code_occurence,
-                                },
-                                #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-                                {
-                                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                                    code_occurence,
-                                } => Self::OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer
-                                {
-                                    operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server,
-                                    code_occurence,
-                                },
-                                //
+                                #(#variants_token_stream),*
                             }
                         }
                     }
                 }
             };
             let try_operation_route_logic_error_named_token_stream = {
+                let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
+                    let variant_ident = &error_variant.ident;
+                    let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
+                        fields_named
+                    }
+                    else {
+                        panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
+                    };
+                    let fields_mapped_into_token_stream = fields_named.named.iter().map(|field|{
+                        let field_ident = field.ident.as_ref().unwrap_or_else(|| {
+                            panic!(
+                                "{proc_macro_name_upper_camel_case_ident_stringified} {}",
+                                naming_constants::FIELD_IDENT_IS_NONE
+                            )
+                        });
+                        let error_occurence_attribute = if *field_ident == *proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified() {
+                            proc_macro2::TokenStream::new()
+                        }
+                        else {
+                            let mut error_occurence_attribute: Option<proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute> = None;
+                            for element in &field.attrs {
+                                if element.path().segments.len() == 1 {
+                                    let segment = element.path().segments.first().unwrap_or_else(|| {panic!("{proc_macro_name_upper_camel_case_ident_stringified} element.path().segments.get(0) is None")});
+                                    if let Ok(value) = {
+                                        use std::str::FromStr;
+                                        proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
+                                    } {
+                                        match error_occurence_attribute {
+                                            Some(value) => panic!(
+                                                "{proc_macro_name_upper_camel_case_ident_stringified} duplicated attributes ({}) are not supported", 
+                                                proc_macro_common::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)
+                                            ),
+                                            None => {
+                                                error_occurence_attribute = Some(value);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            error_occurence_attribute.map_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {variant_ident} no supported attribute"), |value| value.      to_attribute_view_token_stream())
+                        };
+                        let field_type = &field.ty;
+                        quote::quote! {
+                            #error_occurence_attribute
+                            #field_ident: #field_type
+                        }
+                    });
+                    quote::quote! {
+                        #variant_ident {
+                            #(#fields_mapped_into_token_stream),*
+                        }
+                    }
+                });
                 quote::quote! {
                     #[derive(
                         Debug,
@@ -2395,77 +2438,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             check_body_size: route_validators::check_body_size::CheckBodySizeErrorNamed,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
-                        // #operation_upper_camel_case_token_stream {
-                        //     #[eo_error_occurence]
-                        //     #operation_snake_case_token_stream: #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream,
-                        //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        // },
-                        //
-                        Postgresql {
-                            #[eo_to_std_string_string]
-                            postgresql: sqlx::Error,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        Json {
-                            #[eo_to_std_string_string]
-                            json: axum::extract::rejection::JsonRejection,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        BindQuery {
-                            #[eo_error_occurence]
-                            bind_query: postgresql_crud::TryGenerateBindIncrementsErrorNamed,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        OperationDoneButPrimaryKeyInnerTypeTryFromPrimaryKeyInnerTypeWithSerializeDeserializeFailedInServer {
-                            #[eo_to_std_string_string]
-                            operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_server:
-                                sqlx::Error,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        },
-                        //
+                        #(#variants_token_stream),*
                     }
                 }
             };
-            // let impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream = {
-            //     let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
-            //         let variant_ident = &error_variant.ident;
-            //         let fields_name_mapped_into_token_stream = if let syn::Fields::Named(fields_named) = &error_variant.fields {
-            //             fields_named.named.iter().map(|field|{
-            //                 let field_ident = field.ident.as_ref().unwrap_or_else(|| {
-            //                     panic!(
-            //                         "{proc_macro_name_upper_camel_case_ident_stringified} {}",
-            //                         naming_constants::FIELD_IDENT_IS_NONE
-            //                     )
-            //                 });
-            //                 quote::quote! {#field_ident}
-            //             }).collect::<std::vec::Vec<proc_macro2::TokenStream>>()
-            //         }
-            //         else {
-            //             panic!("{proc_macro_name_upper_camel_case_ident_stringified} expected fields would be named");
-            //         };
-            //         quote::quote! {
-            //             #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream::#variant_ident{ #(#fields_name_mapped_into_token_stream),* } 
-            //             => Self::#variant_ident { #(#fields_name_mapped_into_token_stream),* }
-            //         }
-            //     });
-            //     quote::quote! {
-            //         impl std::convert::From<#try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> for #try_operation_route_logic_error_named_upper_camel_case_token_stream {
-            //             fn from(value: #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream) -> Self {
-            //                 match value {
-            //                     #(#variants_token_stream),*
-            //                 }
-            //             }
-            //         }
-            //     }
-            // };
-            // // println!("{impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
                 #try_operation_route_logic_response_variants_token_stream
                 #impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream
                 #try_operation_route_logic_error_named_token_stream
-                // #impl_std_convert_from_try_operation_generated_route_logic_error_named_for_try_operation_route_logic_error_named_token_stream
             }
         };
         let route_handler_token_stream = {
