@@ -1412,6 +1412,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             )
         ]
     );
+    let json_syn_variant = crate::type_variants_from_request_response_generator::construct_syn_variant(
+        proc_macro_helpers::status_code::StatusCode::Tvfrr400BadRequest,
+        <naming_constants::Json as naming_constants::Naming>::upper_camel_case_stringified(),
+        &code_occurence_field,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::error_occurence_field_attribute::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                <naming_constants::Json as naming_constants::Naming>::snake_case_stringified(),
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &["axum","extract","rejection","JsonRejection"],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ]
+    );
     let primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client_token_stream = quote::quote! {primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_in_client};
     //todo maybe first convert to type what can be primary key ?
     let operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_one_declaration_token_stream = quote::quote! {
