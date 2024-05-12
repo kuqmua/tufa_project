@@ -165,10 +165,6 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
 
 pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     value: &syn::Variant,
-    ident_in_none_stringified: &str,
-    code_occurence_snake_case_stringified: &str,
-    code_occurence_snake_case_token_stream: &proc_macro2::TokenStream,
-    std_string_string_token_stream: &proc_macro2::TokenStream,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
 ) -> proc_macro2::TokenStream {
     let element_ident = &value.ident;
@@ -181,10 +177,11 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             naming_constants::SUPPORTS_ONLY_STRINGIFIED
         );
     };
+    let std_string_string_token_stream = proc_macro_common::std_string_string_token_stream();
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+        *element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE) != *crate::naming_conventions::code_occurence_snake_case_stringified()
     ).map(|element|{
-        let element_ident = element.ident.as_ref().expect(ident_in_none_stringified);
+        let element_ident = element.ident.as_ref().expect(proc_macro_common::constants::IDENT_IS_NONE);
         let element_type_token_stream = {
             let element_type = &element.ty;
             quote::quote!{#element_type}
@@ -318,6 +315,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             #element_ident: #element_type_with_serialize_deserialize_token_stream,
         }
     });
+    let code_occurence_snake_case_token_stream = crate::naming_conventions::code_occurence_snake_case_token_stream();
     quote::quote! {
         #element_ident {
             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*
