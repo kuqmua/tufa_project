@@ -2274,17 +2274,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            // println!("{try_operation_route_logic_response_token_stream}");
             let impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream = {
                 quote::quote! {
                     impl #axum_response_into_response_token_stream for #try_operation_route_logic_response_upper_camel_case_token_stream {
                         fn #into_response_snake_case_token_stream(self) -> #axum_response_response_token_stream {
                             let mut res = axum::Json(self.#body_snake_case_token_stream).#into_response_snake_case_token_stream(); 
                             *res.status_mut() = self.#status_code_snake_case_token_stream;
+                            *res.version_mut() = axum::http::Version::default();
+                            *res.headers_mut() = axum::http::HeaderMap::new();
                             res
                         }
                     }
                 }
             };
+            // println!("{impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream}");
             let try_operation_route_logic_response_variants_token_stream = {
                 let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element|proc_macro_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(
                     &element,
@@ -2756,7 +2760,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
-            // println!("{try_operation_route_logic_token_stream}");
             quote::quote! {
                 #try_operation_route_logic_response_token_stream
                 #impl_axum_response_into_response_for_try_create_many_route_logic_response_token_stream
