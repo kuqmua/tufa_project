@@ -163,157 +163,166 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     args.iter().nth(1).expect("args.iter().nth(1) is None")
 }
 
-// pub fn generate_serialize_deserialize_version_of_named_syn_variant(
-//     value: &syn::Variant,
-//     ident_in_none_stringified: &str,
-//     code_occurence_snake_case_stringified: &str,
-//     proc_macro_name_upper_camel_case_ident_stringified: &str,
-// ) -> proc_macro2::TokenStream {
-//     let element_ident = &value.ident;
-//     let fields = if let syn::Fields::Named(fields) = &value.fields {
-//         &fields.named
-//     }
-//     else {
-//         panic!(
-//             "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
-//             naming_constants::SUPPORTS_ONLY_STRINGIFIED
-//         );
-//     };
-//     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
-//         *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
-//     ).map(|element|{
-//         let element_ident = element.ident.as_ref().expect(ident_in_none_stringified);
-//         let element_type_token_stream = {
-//             let element_type = &element.ty;
-//             quote::quote!{#element_type}
-//         };
-//         let element_type_with_serialize_deserialize_token_stream = match proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
-//                 quote::quote!{
-//                     #std_string_string_token_stream
-//                 }
-//             },
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
-//                 let element_type_with_serialize_deserialize_token_stream = {
-//                     let value = format!(
-//                         "{}{}",
-//                         {
-//                             let element_type = &element.ty;
-//                             quote::quote!{#element_type}
-//                         },
-//                         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
-//                     );
-//                     value
-//                     .parse::<proc_macro2::TokenStream>()
-//                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-//                 };
-//                 quote::quote!{
-//                     #element_type_with_serialize_deserialize_token_stream
-//                 }
-//             },
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
-//                 quote::quote!{
-//                     std::vec::Vec<#std_string_string_token_stream>
-//                 }
-//             },
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
-//                 let segments = if let syn::Type::Path(value) = &element.ty {
-//                     &value.path.segments
-//                 }
-//                 else {
-//                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} Type::Path(value) != &element.ty");
-//                 };
-//                 assert!(segments.len() == 3, "{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
-//                 let first_segment = segments.iter().next().expect("no .next() element");
-//                 assert!(first_segment.ident == std_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
-//                 assert!(!(first_segment.arguments != syn::PathArguments::None), "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None");
-//                 let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
-//                 {
-//                     let vec_snake_case_stringified = <naming_constants::Vec as naming_constants::Naming>::snake_case_stringified();
-//                     assert!(second_segment.ident == vec_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {vec_snake_case_stringified} {}", second_segment.ident);
-//                 };
-//                 assert!(!(second_segment.arguments != syn::PathArguments::None), "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None");
-//                 let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
-//                 {
-//                     let vec_upper_camel_case_stringified = <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified();
-//                     assert!(third_segment.ident == vec_upper_camel_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {vec_upper_camel_case_stringified} {}", third_segment.ident);
-//                 };
-//                 let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
-//                     args,
-//                     ..
-//                 }) = &third_segment.arguments {
-//                     assert!(args.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 1");
-//                     let value = format!(
-//                         "{}{}",
-//                         {
-//                             let first_arg = args.iter().next().expect("args.iter().next() is None");
-//                             quote::quote! {#first_arg}
-//                         },
-//                         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-//                     );
-//                     value
-//                     .parse::<proc_macro2::TokenStream>()
-//                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-//                 }
-//                 else {
-//                     panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
-//                 };
-//                 quote::quote!{
-//                     std::vec::Vec<#element_vec_type_with_serialize_deserialize_token_stream>
-//                 }
-//             },
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-//                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
-//                     element,
-//                     &proc_macro_name_upper_camel_case_ident_stringified,
-//                     std_snake_case_stringified,
-//                     &std_string_string_token_stream,
-//                 );
-//                 quote::quote!{
-//                     std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
-//                 }
-//             },
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-//                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
-//                     element,
-//                     &proc_macro_name_upper_camel_case_ident_stringified,
-//                     std_snake_case_stringified,
-//                     &std_string_string_token_stream,
-//                 );
-//                 element_type_token_stream
-//             },
-//             proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-//                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(
-//                     element,
-//                     &proc_macro_name_upper_camel_case_ident_stringified,
-//                     std_snake_case_stringified,
-//                     &std_string_string_token_stream,
-//                 );
-//                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
-//                     let value = format!(
-//                         "{}{}",
-//                         quote::quote! {#second_argument},
-//                         proc_macro_helpers::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
-//                     );
-//                     value
-//                     .parse::<proc_macro2::TokenStream>()
-//                     .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-//                 };
-//                 quote::quote!{
-//                     std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
-//                 }
-//             },
-//         }; 
-//         quote::quote! {
-//             #element_ident: #element_type_with_serialize_deserialize_token_stream,
-//         }
-//     });
-//     quote::quote! {
-//         #element_ident {
-//             #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*
-//             #code_occurence_snake_case_token_stream: error_occurence_lib::code_occurence::CodeOccurence,
-//         }
-//     }
-// }
+pub fn generate_serialize_deserialize_version_of_named_syn_variant(
+    value: &syn::Variant,
+    ident_in_none_stringified: &str,
+    code_occurence_snake_case_stringified: &str,
+    std_snake_case_stringified: &str,
+    code_occurence_snake_case_token_stream: &proc_macro2::TokenStream,
+    std_string_string_token_stream: &proc_macro2::TokenStream,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> proc_macro2::TokenStream {
+    let element_ident = &value.ident;
+    let fields = if let syn::Fields::Named(fields) = &value.fields {
+        &fields.named
+    }
+    else {
+        panic!(
+            "{proc_macro_name_upper_camel_case_ident_stringified} {} syn::Data::Enum",
+            naming_constants::SUPPORTS_ONLY_STRINGIFIED
+        );
+    };
+    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element|
+        *element.ident.as_ref().expect(ident_in_none_stringified) != *code_occurence_snake_case_stringified
+    ).map(|element|{
+        let element_ident = element.ident.as_ref().expect(ident_in_none_stringified);
+        let element_type_token_stream = {
+            let element_type = &element.ty;
+            quote::quote!{#element_type}
+        };
+        let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
+                quote::quote!{
+                    #std_string_string_token_stream
+                }
+            },
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+                let element_type_with_serialize_deserialize_token_stream = {
+                    let value = format!(
+                        "{}{}",
+                        {
+                            let element_type = &element.ty;
+                            quote::quote!{#element_type}
+                        },
+                        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified()
+                    );
+                    value
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                quote::quote!{
+                    #element_type_with_serialize_deserialize_token_stream
+                }
+            },
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+                quote::quote!{
+                    std::vec::Vec<#std_string_string_token_stream>
+                }
+            },
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+                let segments = if let syn::Type::Path(value) = &element.ty {
+                    &value.path.segments
+                }
+                else {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} Type::Path(value) != &element.ty");
+                };
+                assert!(segments.len() == 3, "{proc_macro_name_upper_camel_case_ident_stringified} segments.len() != 3");
+                let first_segment = segments.iter().next().expect("no .next() element");
+                assert!(first_segment.ident == std_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} first_segment.ident != {std_snake_case_stringified} {}", first_segment.ident);
+                match first_segment.arguments {
+                    syn::PathArguments::None => (),
+                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} first_segment.arguments != PathArguments::None")
+                }
+                let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
+                {
+                    let vec_snake_case_stringified = <naming_constants::Vec as naming_constants::Naming>::snake_case_stringified();
+                    assert!(second_segment.ident == vec_snake_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} second_segment.ident != {vec_snake_case_stringified} {}", second_segment.ident);
+                };
+                match second_segment.arguments {
+                    syn::PathArguments::None => (),
+                    _ => panic!("{proc_macro_name_upper_camel_case_ident_stringified} second_segment.arguments != PathArguments::None")
+                }
+                let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
+                {
+                    let vec_upper_camel_case_stringified = <naming_constants::Vec as naming_constants::Naming>::upper_camel_case_stringified();
+                    assert!(third_segment.ident == vec_upper_camel_case_stringified, "{proc_macro_name_upper_camel_case_ident_stringified} third_segment.ident != {vec_upper_camel_case_stringified} {}", third_segment.ident);
+                };
+                let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
+                    args,
+                    ..
+                }) = &third_segment.arguments {
+                    assert!(args.len() == 1, "{proc_macro_name_upper_camel_case_ident_stringified} args.len() != 1");
+                    let value = format!(
+                        "{}{}",
+                        {
+                            let first_arg = args.iter().next().expect("args.iter().next() is None");
+                            quote::quote! {#first_arg}
+                        },
+                        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                    );
+                    value
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                }
+                else {
+                    panic!("{proc_macro_name_upper_camel_case_ident_stringified} third_segment.arguments != syn::PathArguments::AngleBracketed");
+                };
+                quote::quote!{
+                    std::vec::Vec<#element_vec_type_with_serialize_deserialize_token_stream>
+                }
+            },
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
+                    element,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                    std_snake_case_stringified,
+                    &std_string_string_token_stream,
+                );
+                quote::quote!{
+                    std::collections::HashMap<#std_string_string_token_stream, #std_string_string_token_stream>
+                }
+            },
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(
+                    element,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                    std_snake_case_stringified,
+                    &std_string_string_token_stream,
+                );
+                element_type_token_stream
+            },
+            crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(
+                    element,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                    std_snake_case_stringified,
+                    &std_string_string_token_stream,
+                );
+                let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
+                    let value = format!(
+                        "{}{}",
+                        quote::quote! {#second_argument},
+                        crate::naming_conventions::with_serialize_deserialize_upper_camel_case_stringified(),
+                    );
+                    value
+                    .parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                quote::quote!{
+                    std::collections::HashMap<#std_string_string_token_stream, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
+                }
+            },
+        }; 
+        quote::quote! {
+            #element_ident: #element_type_with_serialize_deserialize_token_stream,
+        }
+    });
+    quote::quote! {
+        #element_ident {
+            #(#fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream)*
+            #code_occurence_snake_case_token_stream: error_occurence_lib::code_occurence::CodeOccurence,
+        }
+    }
+}
 
