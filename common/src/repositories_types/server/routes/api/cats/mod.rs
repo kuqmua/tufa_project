@@ -425,21 +425,6 @@ pub async fn try_create_many_route_logic(
 ) -> TryCreateManyRouteLogicResponse {
     let (parts, body) = request.into_parts();
     let headers = parts.headers;
-    if let Err(error) = route_validators::check_commit::check_commit(
-        *app_state.get_enable_api_git_commit_check(),
-        &headers,
-    ) {
-        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-        let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
-            check_commit: error,
-            code_occurence: error_occurence_lib::code_occurence!(),
-        };
-        eprintln!("{error}");
-        return TryCreateManyRouteLogicResponse {
-            status_code,
-            body: TryCreateManyRouteLogicResponseVariants::from(error),
-        };
-    }
     let body_bytes = match route_validators::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
         Ok(value) => value,
         Err(error) => {
@@ -455,6 +440,23 @@ pub async fn try_create_many_route_logic(
             };
         }
     };
+    //start middleware logic
+    if let Err(error) = route_validators::check_commit::check_commit(
+        *app_state.get_enable_api_git_commit_check(),
+        &headers,
+    ) {
+        let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+        let error = TryCreateManyRouteLogicErrorNamed::CheckCommit {
+            check_commit: error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        };
+        eprintln!("{error}");
+        return TryCreateManyRouteLogicResponse {
+            status_code,
+            body: TryCreateManyRouteLogicResponseVariants::from(error),
+        };
+    }
+    //end middleware logic
     let parameters = CreateManyParameters {
         payload: match axum::Json::<CreateManyPayloadWithSerializeDeserialize>::from_bytes(
             &body_bytes,

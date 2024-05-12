@@ -141,7 +141,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "route",
     "body",
     "env",
-    "collections"
+    "collections",
+    "postgresql"
 );
 
 #[derive(Debug, Clone, Copy)]
