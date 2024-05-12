@@ -2434,36 +2434,37 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let try_operation_route_logic_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicSnakeCaseTokenStream::try_self_route_logic_snake_case_token_stream(&operation);
                 let try_operation_route_logic_error_named_upper_camel_case_token_stream =     proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
                 let try_operation_generated_route_logic_desirable_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicDesirableUpperCamelCaseTokenStream::try_self_generated_route_logic_desirable_upper_camel_case_token_stream(&operation);
-                let try_operation_token_stream = {
-                    let query_string_token_stream = {
-                        let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
-                            let field_ident = &element.field_ident;
-                            let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
-                            if incremented_index == fields_named_excluding_primary_key_len {
-                                acc.push_str(&format!("{field_ident}"));
-                            }
-                            else {
-                                acc.push_str(&format!("{field_ident}{dot_space}"));
-                            }
-                            acc
-                        });
-                        let column_increments = {
-                            let mut column_increments = fields_named_excluding_primary_key.iter()
-                                .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
-                                    acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
-                                    acc
-                                });
-                            let _: std::option::Option<std::primitive::char> = column_increments.pop();
-                            let _: std::option::Option<std::primitive::char> = column_increments.pop();
-                            column_increments
-                        };
-                        let query_stringified = format!(
-                            "\"{insert_name_stringified} {into_name_stringified} {table_name_stringified} ({column_names}) {select_name_stringified} {column_names} {from_name_stringified} {unnest_name_stringified}({column_increments}) {as_name_stringified} a({column_names}){returning_primary_key_stringified}\""
-                        );
-                        query_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                
+                let query_string_token_stream = {
+                    let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
+                        let field_ident = &element.field_ident;
+                        let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
+                        if incremented_index == fields_named_excluding_primary_key_len {
+                            acc.push_str(&format!("{field_ident}"));
+                        }
+                        else {
+                            acc.push_str(&format!("{field_ident}{dot_space}"));
+                        }
+                        acc
+                    });
+                    let column_increments = {
+                        let mut column_increments = fields_named_excluding_primary_key.iter()
+                            .enumerate().fold(std::string::String::default(), |mut acc, (index, _)| {
+                                acc.push_str(&format!("${}, ", index.checked_add(1).unwrap_or_else(|| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {index} {}", proc_macro_common::constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE))));
+                                acc
+                            });
+                        let _: std::option::Option<std::primitive::char> = column_increments.pop();
+                        let _: std::option::Option<std::primitive::char> = column_increments.pop();
+                        column_increments
                     };
-                    // println!("{query_string_token_stream}");
+                    let query_stringified = format!(
+                        "\"{insert_name_stringified} {into_name_stringified} {table_name_stringified} ({column_names}) {select_name_stringified} {column_names} {from_name_stringified} {unnest_name_stringified}({column_increments}) {as_name_stringified} a({column_names}){returning_primary_key_stringified}\""
+                    );
+                    query_stringified.parse::<proc_macro2::TokenStream>()
+                    .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {query_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                // println!("{query_string_token_stream}");
+                let try_operation_token_stream = {
                     let binded_query_token_stream = {
                         let column_vecs_token_stream = {
                             let column_vecs_handle_token_stream = {
@@ -2575,9 +2576,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &proc_macro_name_upper_camel_case_ident_stringified,
                     );
                     quote::quote! {
-                        let #query_string_name_token_stream = {
-                            #query_string_token_stream
-                        };
+                        // let #query_string_name_token_stream = {
+                        //     #query_string_token_stream
+                        // };
                         println!("{}", #query_string_name_token_stream);
                         let #binded_query_name_token_stream = {
                             #binded_query_token_stream
@@ -2729,7 +2730,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
                                 &#body_bytes_snake_case_token_stream,
                             ) {
-                                Ok(axum::Json(value)) => CreateManyPayload::from(value),
+                                Ok(axum::Json(value)) => #operation_payload_upper_camel_case_token_stream::from(value),
                                 Err(error) => {
                                     let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
                                         json: error,
@@ -2755,9 +2756,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             },
                         };
                         println!("{:#?}", parameters);
-                        let query_string = {
-                            "insert into dogs (std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) select std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int from unnest($1, $2, $3) as a(std_primitive_bool_as_postgresql_bool, std_primitive_i16_as_postgresql_small_int, std_primitive_i32_as_postgresql_int) returning std_primitive_i64_as_postgresql_big_serial_not_null_primary_key"
-                        };
+                        let #query_string_name_token_stream = #query_string_token_stream;
                         println!("{}", query_string);
                         let binded_query = {
                             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
