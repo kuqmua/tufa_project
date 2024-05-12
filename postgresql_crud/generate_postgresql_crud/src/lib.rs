@@ -2461,6 +2461,30 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                     }
                 };
+                let additional_validators_token_stream = {
+                    let check_commit_token_stream = {
+                        quote::quote! {
+                            if let Err(error) = route_validators::check_commit::check_commit(
+                                *app_state.get_enable_api_git_commit_check(),
+                                &headers,
+                            ) {
+                                let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
+                                let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckCommit {
+                                    check_commit: error,
+                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                };
+                                eprintln!("{error}");
+                                return #try_operation_route_logic_response_upper_camel_case_token_stream {
+                                    status_code,
+                                    body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
+                                };
+                            }
+                        }
+                    };
+                    quote::quote! {
+                        #check_commit_token_stream
+                    }
+                };
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
@@ -2693,51 +2717,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     // // #swagger_open_api_token_stream
-                    // pub async fn #try_operation_route_logic_snake_case_token_stream(
-                    //     pg_pool: &sqlx::PgPool,
-                    //     #body_bytes_bytes_bytes_token_stream
-                    // ) -> Result<#try_operation_generated_route_logic_desirable_upper_camel_case_token_stream, #try_operation_generated_route_logic_error_named_upper_camel_case_token_stream> {
-                    //     let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
-                    //         #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(&#body_bytes_snake_case_token_stream) {
-                    //             Ok(axum::Json(value)) => #try_or_try_from_operation_payload_upper_camel_case_token_stream,
-                    //             Err(error) => {
-                    //                 return Err(#try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
-                    //                     json: error,
-                    //                     #field_code_occurence_new_7537dde6_c766_415f_bd4b_a29f6ab3fb09_token_stream,
-                    //                 });
-                    //             },
-                    //         }
-                    //     };
-                    //     println!("{:#?}", #parameters_snake_case_token_stream);
-                    //     {
-                    //         #try_operation_token_stream
-                    //     }
-                    // }
-                    ////////////////
                     pub async fn #try_operation_route_logic_snake_case_token_stream(
                         app_state: axum::extract::State<
                             crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits,
                         >,
-                        request: axum::extract::Request
+                        request: axum::extract::Request,
                     ) -> #try_operation_route_logic_response_upper_camel_case_token_stream {
                         #request_parts_preparation_token_stream
-                        //start middleware logic
-                        if let Err(error) = route_validators::check_commit::check_commit(
-                            *app_state.get_enable_api_git_commit_check(),
-                            &headers,
-                        ) {
-                            let status_code = postgresql_crud::GetAxumHttpStatusCode::get_axum_http_status_code(&error);
-                            let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::CheckCommit {
-                                check_commit: error,
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            };
-                            eprintln!("{error}");
-                            return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                status_code,
-                                body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
-                            };
-                        }
-                        //end middleware logic
+                        #additional_validators_token_stream
                         let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                             #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
                                 &#body_bytes_snake_case_token_stream,
@@ -2782,7 +2769,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::Desirable(value),
                         }
                     }
-                    ////////////////
                 }
             };
             // println!("{try_operation_route_logic_token_stream}");
