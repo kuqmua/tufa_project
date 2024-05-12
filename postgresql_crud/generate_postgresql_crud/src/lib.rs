@@ -2591,26 +2591,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 // println!("{binded_query_token_stream}");
                 let acquire_pool_and_connection_token_stream = crate::acquire_pool_and_connection::acquire_pool_and_connection(
-                    &{
-                        let field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
-                            file!(),
-                            line!(),
-                            column!(),
-                            &proc_macro_name_upper_camel_case_ident_stringified,
-                        );
-                        quote::quote! {
-                            let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Postgresql {
-                                postgresql: error,
-                                #field_code_occurence_new_1c62c6f3_b51a_4dc9_83dd_e73c4fe3baf1_token_stream
-                            };
-                            eprintln!("{error}");
-                            return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                status_code: axum::http::StatusCode::CREATED,//todo
-                                body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
-                            };
-                        }
-                    },
                     &pg_connection_token_stream,
+                    &proc_macro_name_upper_camel_case_ident_stringified,
+                    &try_operation_route_logic_error_named_upper_camel_case_token_stream,
+                    &try_operation_route_logic_response_upper_camel_case_token_stream,
+                    &try_operation_route_logic_response_variants_upper_camel_case_token_stream,
                 );
                 let postgresql_logic_token_stream = {
                     let field_code_occurence_new_72512bb5_747b_4847_a84d_87bb1561ce62_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
