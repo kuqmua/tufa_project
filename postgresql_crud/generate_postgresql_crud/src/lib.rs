@@ -1910,6 +1910,107 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let axum_response_into_response_token_stream = quote::quote!{axum::response::IntoResponse};
     let axum_response_response_token_stream = quote::quote!{axum::response::Response};
     let into_response_snake_case_token_stream = quote::quote!{into_response};
+    let try_operation_error_named_common_syn_variants = {
+        let serde_json_to_string_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+            &serde_json_to_string_upper_camel_case_stringified,
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&serde_json_to_string_upper_camel_case_stringified),
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["serde_json","Error"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        );
+        let failed_to_get_response_text_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+            "FailedToGetResponseText",
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "status_code",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["http","StatusCode"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "headers",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["reqwest","header","HeaderMap"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "reqwest",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["reqwest","Error"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        );
+        let deserialize_response_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+            "DeserializeResponse",
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "status_code",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["http","StatusCode"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "headers",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["reqwest","header", "HeaderMap"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                    "response_text",
+                    std_string_string_syn_punctuated_punctuated.clone(),
+                ),
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "serde",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["serde_json","Error"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        );
+        let reqwest_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+            "Reqwest",
+            &code_occurence_field,
+            vec![
+                (
+                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                    "reqwest",
+                    proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        &["reqwest","Error"],
+                        &proc_macro_name_upper_camel_case_ident_stringified
+                    ),
+                )
+            ]
+        );
+        vec![
+            serde_json_to_string_syn_variant,
+            failed_to_get_response_text_syn_variant,
+            deserialize_response_syn_variant,
+            reqwest_syn_variant,
+        ]
+    };
     let (create_many_token_stream, create_many_http_request_test_token_stream) = {
         let operation = Operation::CreateMany;
         //maybe rename as TryCreateManyGeneratedRouteLogicParameters
@@ -2765,120 +2866,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let (http_request_token_stream, http_request_test_token_stream) = {
             let try_operation_error_named_token_stream = {
                 let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
-                let serde_json_to_string_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                    &serde_json_to_string_upper_camel_case_stringified,
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            &proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&serde_json_to_string_upper_camel_case_stringified),
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["serde_json","Error"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                );
-                let failed_to_get_response_text_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                    "FailedToGetResponseText",
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "status_code",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["http","StatusCode"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        ),
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "headers",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["reqwest","header","HeaderMap"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        ),
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "reqwest",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["reqwest","Error"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                );
-                let deserialize_response_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                    "DeserializeResponse",
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "status_code",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["http","StatusCode"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        ),
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "headers",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["reqwest","header", "HeaderMap"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        ),
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                            "response_text",
-                            std_string_string_syn_punctuated_punctuated.clone(),
-                        ),
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "serde",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["serde_json","Error"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                );
-                let reqwest_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                    "Reqwest",
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "reqwest",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["reqwest","Error"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                );
-                let try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                    "TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize",
-                    &code_occurence_field,
-                    vec![
-                        (
-                            proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                            "try_create_many_route_logic_error_named_with_serialize_deserialize",
-                            proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                &["TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize"],
-                                &proc_macro_name_upper_camel_case_ident_stringified
-                            ),
-                        )
-                    ]
-                );
-                let syn_variants = vec![
-                    serde_json_to_string_syn_variant,
-                    failed_to_get_response_text_syn_variant,
-                    deserialize_response_syn_variant,
-                    reqwest_syn_variant,
-                    try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant,
-                ];
+                let syn_variants = {
+                    let mut value = std::vec::Vec::with_capacity(try_operation_error_named_common_syn_variants.len() + 1);
+                    for element in try_operation_error_named_common_syn_variants {
+                        value.push(element);
+                    }
+                    let try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+                        "TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize",
+                        &code_occurence_field,
+                        vec![
+                            (
+                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                                "try_create_many_route_logic_error_named_with_serialize_deserialize",
+                                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                                    &["TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize"],
+                                    &proc_macro_name_upper_camel_case_ident_stringified
+                                ),
+                            )
+                        ]
+                    );
+                    value.push(try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant);
+                    value
+                };
                 //todo reuse this function
                 let variants_token_stream = syn_variants.iter().map(|error_variant| {
                     let variant_ident = &error_variant.ident;
