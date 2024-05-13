@@ -2534,6 +2534,39 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #check_commit_token_stream
                     }
                 };
+                let parameters_logic_token_stream = {
+                    quote::quote! {
+                        let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
+                            #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
+                                &#body_bytes_snake_case_token_stream,
+                            ) {
+                                Ok(axum::Json(value)) => #operation_payload_upper_camel_case_token_stream::from(value),
+                                Err(error) => {
+                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
+                                        json: error,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from(
+                                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
+                                                ),
+                                                line: 2751,
+                                                column: 21,
+                                            }),
+                                        ),
+                                    };
+                                    eprintln!("{error}");
+                                    return #try_operation_route_logic_response_upper_camel_case_token_stream {
+                                        status_code: axum :: http :: StatusCode :: CREATED,
+                                        body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
+                                    };
+                                }
+                            },
+                        };
+                    }
+                };
                 let query_string_token_stream = {
                     let column_names = fields_named_excluding_primary_key.iter().enumerate().fold(std::string::String::default(), |mut acc, (index, element)| {
                         let field_ident = &element.field_ident;
@@ -2759,35 +2792,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     ) -> #try_operation_route_logic_response_upper_camel_case_token_stream {
                         #request_parts_preparation_token_stream
                         #additional_validators_token_stream
-                        let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
-                            #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
-                                &#body_bytes_snake_case_token_stream,
-                            ) {
-                                Ok(axum::Json(value)) => #operation_payload_upper_camel_case_token_stream::from(value),
-                                Err(error) => {
-                                    let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
-                                        json: error,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                            file!().to_owned(),
-                                            line!(),
-                                            column!(),
-                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                file: std::string::String::from(
-                                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                                ),
-                                                line: 2751,
-                                                column: 21,
-                                            }),
-                                        ),
-                                    };
-                                    eprintln!("{error}");
-                                    return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                        status_code: axum :: http :: StatusCode :: CREATED,
-                                        body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
-                                    };
-                                }
-                            },
-                        };
+                        #parameters_logic_token_stream
                         println!("{:#?}", parameters);
                         let #query_string_name_token_stream = #query_string_token_stream;
                         println!("{}", #query_string_name_token_stream);
