@@ -199,54 +199,45 @@ pub struct Dog {
 
 ////////////////http request
 //todo add http codes to enum
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum TryCreateManyErrorNamed {
-    SerdeJsonToString {
-        #[eo_to_std_string_string]
-        serde_json_to_string: serde_json::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    // UnexpectedStatusCode {
-    //     #[eo_to_std_string_string]
-    //     status_code: http::StatusCode,
-    //     #[eo_to_std_string_string]
-    //     headers: reqwest::header::HeaderMap,
-    //     #[eo_to_std_string_string]
-    //     response_text_result: crate::common::api_request_unexpected_error::ResponseTextResult,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    FailedToGetResponseText {
-        #[eo_to_std_string_string]
-        reqwest: reqwest::Error,
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    DeserializeResponse {
-        #[eo_to_std_string_string]
-        serde: serde_json::Error,
-        #[eo_to_std_string_string]
-        status_code: http::StatusCode,
-        #[eo_to_std_string_string]
-        headers: reqwest::header::HeaderMap,
-        #[eo_to_std_string_string_serialize_deserialize]
-        response_text: std::string::String,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    Reqwest {
-        #[eo_to_std_string_string]
-        reqwest: reqwest::Error,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    //
-    TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize {
-        #[eo_to_std_string_string]
-        try_create_many_route_logic_error_named_with_serialize_deserialize: TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
+// #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum TryCreateManyErrorNamed {
+//     SerdeJsonToString {
+//         #[eo_to_std_string_string]
+//         serde_json_to_string: serde_json::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     FailedToGetResponseText {
+//         #[eo_to_std_string_string]
+//         reqwest: reqwest::Error,
+//         #[eo_to_std_string_string]
+//         status_code: http::StatusCode,
+//         #[eo_to_std_string_string]
+//         headers: reqwest::header::HeaderMap,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     DeserializeResponse {
+//         #[eo_to_std_string_string]
+//         serde: serde_json::Error,
+//         #[eo_to_std_string_string]
+//         status_code: http::StatusCode,
+//         #[eo_to_std_string_string]
+//         headers: reqwest::header::HeaderMap,
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         response_text: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     Reqwest {
+//         #[eo_to_std_string_string]
+//         reqwest: reqwest::Error,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     //
+//     TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize {
+//         #[eo_to_std_string_string]
+//         try_create_many_route_logic_error_named_with_serialize_deserialize: TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     }
+// }
 pub async fn try_create_many(
     server_location: &str,//todo rename as endpoint location
     parameters: CreateManyParameters,

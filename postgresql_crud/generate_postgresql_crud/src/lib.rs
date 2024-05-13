@@ -1936,7 +1936,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
         let try_operation_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
         let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
-        let try_operation_generated_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_generated_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
+        let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream(&operation);
         let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
         let additional_http_status_codes_error_variants = []; //todo find out why rust analyzer crashes
                                                                   // crate::extract_syn_variants_from_proc_macro_attribute::extract_syn_variants_from_method_proc_macro_attribute(
@@ -2771,7 +2771,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let (http_request_token_stream, http_request_test_token_stream) = {
             let try_operation_error_named_token_stream = {
-                // let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
+                let try_operation_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfErrorNamedUpperCamelCaseTokenStream::try_self_error_named_upper_camel_case_token_stream(&operation);
                 // let variants_from_route_logic_token_stream = type_variants_from_request_response_syn_variants.iter().map(|error_variant| {
                 //     let code_occurence_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_upper_camel_case_stringified();
                 //     let code_occurence_snake_case_stringified = proc_macro_helpers::naming_conventions::code_occurence_snake_case_stringified();
@@ -2903,41 +2903,40 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     //
                     //
                     //
-                    // #derive_debug_thiserror_error_occurence_token_stream
-                    // pub enum #try_operation_error_named_upper_camel_case_token_stream {
-                    //     #http_request_error_named_serde_json_to_string_variant_token_stream,
-                    //     FailedToGetResponseText {
-                    //         #[eo_to_std_string_string]
-                    //         reqwest: reqwest::Error,
-                    //         #[eo_to_std_string_string]
-                    //         status_code: http::StatusCode,
-                    //         #[eo_to_std_string_string]
-                    //         headers: reqwest::header::HeaderMap,
-                    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    //     },
-                    //     DeserializeResponse {
-                    //         #[eo_to_std_string_string]
-                    //         serde: serde_json::Error,
-                    //         #[eo_to_std_string_string]
-                    //         status_code: http::StatusCode,
-                    //         #[eo_to_std_string_string]
-                    //         headers: reqwest::header::HeaderMap,
-                    //         #[eo_to_std_string_string_serialize_deserialize]
-                    //         response_text: std::string::String,
-                    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    //     },
-                    //     Reqwest {
-                    //         #[eo_to_std_string_string]
-                    //         reqwest: reqwest::Error,
-                    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    //     },
-                    //     //
-                    //     TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize {
-                    //         #[eo_to_std_string_string]
-                    //         try_create_many_route_logic_error_named_with_serialize_deserialize: TryCreateManyRouteLogicErrorNamedWithSerializeDeserialize,
-                    //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    //     }
-                    // }
+                    #derive_debug_thiserror_error_occurence_token_stream
+                    pub enum #try_operation_error_named_upper_camel_case_token_stream {
+                        #http_request_error_named_serde_json_to_string_variant_token_stream,
+                        FailedToGetResponseText {
+                            #[eo_to_std_string_string]
+                            reqwest: reqwest::Error,
+                            #[eo_to_std_string_string]
+                            status_code: http::StatusCode,
+                            #[eo_to_std_string_string]
+                            headers: reqwest::header::HeaderMap,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        DeserializeResponse {
+                            #[eo_to_std_string_string]
+                            serde: serde_json::Error,
+                            #[eo_to_std_string_string]
+                            status_code: http::StatusCode,
+                            #[eo_to_std_string_string]
+                            headers: reqwest::header::HeaderMap,
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            response_text: std::string::String,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        Reqwest {
+                            #[eo_to_std_string_string]
+                            reqwest: reqwest::Error,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream {
+                            #[eo_to_std_string_string]
+                            #try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream: #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        }
+                    }
                 }
             };
             // println!("{try_operation_error_named_token_stream}");
@@ -3037,8 +3036,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #parameters_token_stream
                 // // #operation_done_but_primary_key_inner_type_try_from_primary_key_inner_type_with_serialize_deserialize_failed_in_client_error_unnamed_token_stream
                 // // #try_operation_error_with_middleware_error_variants_token_stream
-                // #http_request_token_stream
                 #try_operation_route_logic_token_stream
+                #http_request_token_stream
                 // #route_handler_token_stream
                 
                 // // #common_middlewares_error_syn_variants_from_impls
