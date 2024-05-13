@@ -1,4 +1,4 @@
-pub fn construct_syn_variant(
+pub fn construct_syn_variant_with_status_code(
     status_code: crate::status_code::StatusCode,
     variant_name: &str,
     code_occurence_field: &syn::Field,

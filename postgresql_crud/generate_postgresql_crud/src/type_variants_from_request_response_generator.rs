@@ -678,7 +678,7 @@
 //     }
 // }
 
-pub(crate) fn construct_syn_variant(
+pub(crate) fn construct_syn_variant_with_status_code(
     tvfrr_status_code: proc_macro_helpers::status_code::StatusCode,
     variant_name: &str,
     code_occurence_field: &syn::Field,
