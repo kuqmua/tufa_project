@@ -1077,6 +1077,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
         ),
     };
+    let into_serialize_deserialize_version_snake_case_token_stream = proc_macro_helpers::naming_conventions::into_serialize_deserialize_version_snake_case_token_stream();
     let (bind_query_syn_variant, bind_query_variant_initialization_token_stream) = {
         let bind_query_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::bind_query_upper_camel_case_token_stream();
         let bind_query_snake_case_token_stream = proc_macro_helpers::naming_conventions::bind_query_snake_case_token_stream();
@@ -1103,7 +1104,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             ),
             quote::quote! {
                 #bind_query_upper_camel_case_token_stream {
-                    #bind_query_snake_case_token_stream: #error_snake_case_token_stream.into_serialize_deserialize_version(),
+                    #bind_query_snake_case_token_stream: #error_snake_case_token_stream.#into_serialize_deserialize_version_snake_case_token_stream(),
                     #field_code_occurence_new_d61d7616_3336_43be_aaa8_2144ff2d2158_token_stream
                 }
             }
@@ -2470,7 +2471,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {
                     impl std::convert::From<#try_operation_route_logic_error_named_upper_camel_case_token_stream> for #try_operation_route_logic_response_variants_upper_camel_case_token_stream {
                         fn from(value: #try_operation_route_logic_error_named_upper_camel_case_token_stream) -> Self {
-                            match value.into_serialize_deserialize_version() {
+                            match value.#into_serialize_deserialize_version_snake_case_token_stream() {
                                 #try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream::CheckCommit {
                                     check_commit,
                                     code_occurence,

@@ -143,7 +143,8 @@ gen_naming_trait_impl_vec::gen_naming_trait_impl_vec!(
     "env",
     "collections",
     "postgresql",
-    "bind"
+    "bind",
+    "version"
 );
 
 #[derive(Debug, Clone, Copy)]

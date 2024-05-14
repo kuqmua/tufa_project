@@ -507,6 +507,20 @@ pub fn bind_query_snake_case_token_stream() -> proc_macro2::TokenStream {
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+pub fn into_serialize_deserialize_version_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}_{}_{}",
+        <naming_constants::Into as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Serialize as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Deserialize as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Version as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+pub fn into_serialize_deserialize_version_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = into_serialize_deserialize_version_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 /////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {
