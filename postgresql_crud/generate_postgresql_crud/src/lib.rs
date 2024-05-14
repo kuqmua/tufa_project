@@ -2029,8 +2029,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_generated_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfGeneratedRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_generated_route_logic_error_named_upper_camel_case_token_stream(&operation);
         let operation_payload_element_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::SelfPayloadElementUpperCamelCaseTokenStream::self_payload_element_upper_camel_case_token_stream(&operation);
         let try_operation_route_logic_error_named_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedUpperCamelCaseTokenStream::try_self_route_logic_error_named_upper_camel_case_token_stream(&operation);
-        let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(&operation);
-        let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(&operation);
+        // let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(&operation);
+        // let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(&operation);
         let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_token_stream(&operation);
         let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseTokenStream::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_token_stream(&operation);
         let std_vec_vec_operation_payload_element_token_stream = operation.std_vec_vec_self_payload_element_token_stream();
@@ -2829,21 +2829,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     for element in try_operation_error_named_common_syn_variants {
                         value.push(element);
                     }
-                    let try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant = proc_macro_helpers::construct_syn_variant::construct_syn_variant(
-                        &try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified,
+                    value.push(construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
+                        &operation,
                         &code_occurence_field,
-                        vec![
-                            (
-                                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
-                                &try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified,
-                                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
-                                    &[&try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified],
-                                    &proc_macro_name_upper_camel_case_ident_stringified
-                                ),
-                            )
-                        ]
-                    );
-                    value.push(try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant);
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    ));
                     value
                 };
                 let variants_token_stream = syn_variants.iter().map(|element|generate_error_occurence_variant_token_stream(
@@ -9221,7 +9211,6 @@ fn generate_where_inner_type_from_or_try_from_where_inner_type_with_serialize_de
     }).collect()
 }
 
-//
 fn generate_error_occurence_variant_token_stream(
     error_variant: &syn::Variant,
     proc_macro_name_upper_camel_case_ident_stringified: &str,
@@ -9278,4 +9267,26 @@ fn generate_error_occurence_variant_token_stream(
         }
     }
 }
-//
+
+fn construct_try_operation_route_logic_error_named_with_serialize_deserialize_syn_variant(
+    value: &Operation,
+    code_occurence_field: &syn::Field,
+    proc_macro_name_upper_camel_case_ident_stringified: &str,
+) -> syn::Variant {
+    let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeUpperCamelCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified(*&value);
+    let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified = proc_macro_helpers::naming_conventions::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCaseStringified::try_self_route_logic_error_named_with_serialize_deserialize_snake_case_stringified(*&value);
+    proc_macro_helpers::construct_syn_variant::construct_syn_variant(
+        &try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified,
+        &code_occurence_field,
+        vec![
+            (
+                proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                &try_operation_route_logic_error_named_with_serialize_deserialize_snake_case_stringified,
+                proc_macro_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                    &[&try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case_stringified],
+                    &proc_macro_name_upper_camel_case_ident_stringified
+                ),
+            )
+        ]
+    )
+}
