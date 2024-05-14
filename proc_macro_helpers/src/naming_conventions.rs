@@ -483,6 +483,30 @@ pub fn tvfrr_extraction_logic_snake_case_stringified() -> std::string::String {
         <naming_constants::Logic as naming_constants::Naming>::snake_case_stringified(),
     )
 }
+pub fn bind_query_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}",
+        <naming_constants::Bind as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Query as naming_constants::Naming>::upper_camel_case_stringified(),
+    )
+}
+pub fn bind_query_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}",
+        <naming_constants::Bind as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Query as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+pub fn bind_query_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = bind_query_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn bind_query_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = bind_query_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 /////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {
