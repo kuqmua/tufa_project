@@ -521,6 +521,30 @@ pub fn into_serialize_deserialize_version_snake_case_token_stream() -> proc_macr
     value.parse::<proc_macro2::TokenStream>()
     .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+pub fn checked_add_upper_camel_case_stringified() -> std::string::String {
+    format!(
+        "{}{}",
+        <naming_constants::Checked as naming_constants::Naming>::upper_camel_case_stringified(),
+        <naming_constants::Add as naming_constants::Naming>::upper_camel_case_stringified(),
+    )
+}
+pub fn checked_add_snake_case_stringified() -> std::string::String {
+    format!(
+        "{}_{}",
+        <naming_constants::Checked as naming_constants::Naming>::snake_case_stringified(),
+        <naming_constants::Add as naming_constants::Naming>::snake_case_stringified(),
+    )
+}
+pub fn checked_add_upper_camel_case_token_stream() -> proc_macro2::TokenStream {
+    let value = checked_add_upper_camel_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
+pub fn checked_add_snake_case_token_stream() -> proc_macro2::TokenStream {
+    let value = checked_add_snake_case_stringified();
+    value.parse::<proc_macro2::TokenStream>()
+    .unwrap_or_else(|_| panic!("{value} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 /////////////////////////////////////////////////////////////////////
 
 pub trait SelfParametersUpperCamelCaseTokenStream {

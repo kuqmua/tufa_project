@@ -1110,47 +1110,44 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         )
     };
-    let checked_add_syn_variant = {
-        let variant_name_upper_camel_case_stringified = "CheckedAdd";
-        let variant_name_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(
-            &variant_name_upper_camel_case_stringified,
+    let (checked_add_syn_variant, checked_add_variant_initialization_token_stream) = {
+        let checked_add_snake_case_stringified = proc_macro_helpers::naming_conventions::checked_add_snake_case_stringified();
+        let checked_is_none_quotes_token_stream = proc_macro_common::generate_quotes::token_stream(
+            &format!(
+                "{checked_add_snake_case_stringified} {} {}",
+                <naming_constants::Is as naming_constants::Naming>::snake_case_stringified(),
+                <naming_constants::None as naming_constants::Naming>::upper_camel_case_stringified()
+            ),
+            &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
-            proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
-            variant_name_upper_camel_case_stringified,
-            &code_occurence_field,
-            vec![
-                (
-                    proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-                    &variant_name_snake_case_stringified,
-                    std_string_string_syn_punctuated_punctuated.clone()
-                )
-            ]
-        )
-    };
-    let checked_add_variant_initialization_token_stream = {
-        let checked_add_upper_camel_case_stringified = "CheckedAdd";
-        let checked_add_upper_camel_case_token_stream = {
-            checked_add_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_upper_camel_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        let checked_add_snake_case_token_stream = {
-            let checked_add_snake_case_stringified = proc_macro_common::naming_conventions::ToSnakeCaseStringified::to_snake_case_stringified(&checked_add_upper_camel_case_stringified);
-            checked_add_snake_case_stringified.parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| panic!("{proc_macro_name_upper_camel_case_ident_stringified} {checked_add_snake_case_stringified} {}", proc_macro_common::constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
+        let checked_add_upper_camel_case_token_stream = proc_macro_helpers::naming_conventions::checked_add_upper_camel_case_token_stream();
+        let checked_add_snake_case_token_stream = proc_macro_helpers::naming_conventions::checked_add_snake_case_token_stream();
         let field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
             file!(),
             line!(),
             column!(),
             &proc_macro_name_upper_camel_case_ident_stringified,
         );
-        quote::quote! {
-            #checked_add_upper_camel_case_token_stream { //todo remove it? refactor it?
-                #checked_add_snake_case_token_stream: #std_string_string_token_stream::#from_snake_case_token_stream("checked_add is None"),
-                #field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream,
+        (
+            crate::type_variants_from_request_response_generator::construct_syn_variant_with_status_code(
+                proc_macro_helpers::status_code::StatusCode::Tvfrr500InternalServerError,
+                &proc_macro_helpers::naming_conventions::checked_add_upper_camel_case_stringified(),
+                &code_occurence_field,
+                vec![
+                    (
+                        proc_macro_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                        &proc_macro_helpers::naming_conventions::checked_add_snake_case_stringified(),
+                        std_string_string_syn_punctuated_punctuated.clone()
+                    )
+                ]
+            ),
+            quote::quote! {
+                #checked_add_upper_camel_case_token_stream { //todo remove it? refactor it?
+                    #checked_add_snake_case_token_stream: #std_string_string_token_stream::#from_snake_case_token_stream(#checked_is_none_quotes_token_stream),
+                    #field_code_occurence_new_9afdf71d_e375_455f_87a3_a16947625a7a_token_stream,
+                }
             }
-        }
+        )
     };
     let query_upper_camel_case_stringified = <naming_constants::Query as naming_constants::Naming>::upper_camel_case_stringified();
     let query_snake_case_stringified = <naming_constants::Query as naming_constants::Naming>::snake_case_stringified();
