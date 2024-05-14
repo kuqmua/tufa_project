@@ -2537,6 +2537,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 };
                 let parameters_logic_token_stream = {
+                    let field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream = proc_macro_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
+                        file!(),
+                        line!(),
+                        column!(),
+                        &proc_macro_name_upper_camel_case_ident_stringified,
+                    );
                     quote::quote! {
                         let #parameters_snake_case_token_stream = #operation_parameters_upper_camel_case_token_stream {
                             #payload_snake_case_token_stream: match axum::Json::<#operation_payload_with_serialize_deserialize_upper_camel_case_token_stream>::from_bytes(
@@ -2546,22 +2552,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 Err(error) => {
                                     let error = #try_operation_route_logic_error_named_upper_camel_case_token_stream::Json {
                                         json: error,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                            file!().to_owned(),
-                                            line!(),
-                                            column!(),
-                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                file: std::string::String::from(
-                                                    "postgresql_crud/generate_postgresql_crud/src/lib.rs",
-                                                ),
-                                                line: 2751,
-                                                column: 21,
-                                            }),
-                                        ),
+                                        #field_code_occurence_new_699a3261_4228_40a9_944c_b68ec050288b_token_stream,
                                     };
                                     eprintln!("{error}");
                                     return #try_operation_route_logic_response_upper_camel_case_token_stream {
-                                        status_code: axum :: http :: StatusCode :: CREATED,
+                                        status_code: axum::http::StatusCode::CREATED,
                                         body: #try_operation_route_logic_response_variants_upper_camel_case_token_stream::from(error),
                                     };
                                 }
